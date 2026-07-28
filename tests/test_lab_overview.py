@@ -34,9 +34,9 @@ class LabOverviewTest(unittest.TestCase):
 
         self.assertEqual("PARTIAL", by_id["M3_PAYBENCH"]["status"])
         self.assertEqual(10, by_id["M3_PAYBENCH"]["total"])
-        self.assertEqual(6, by_id["M3_PAYBENCH"]["supported"])
-        self.assertEqual(4, by_id["M3_PAYBENCH"]["unsupported"])
-        self.assertEqual(6, by_id["M3_PAYBENCH"]["passed"])
+        self.assertEqual(8, by_id["M3_PAYBENCH"]["supported"])
+        self.assertEqual(2, by_id["M3_PAYBENCH"]["unsupported"])
+        self.assertEqual(8, by_id["M3_PAYBENCH"]["passed"])
         self.assertEqual(0, by_id["M3_PAYBENCH"]["failed"])
 
         self.assertEqual("PASS", by_id["M4_AP2"]["status"])

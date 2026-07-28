@@ -39,7 +39,7 @@ class PayBenchEntrypointTest(unittest.TestCase):
             completed = subprocess.run(
                 [
                     sys.executable,
-                    "run_paybench_challenges.py",
+                    "scripts/validation/run_paybench_challenges.py",
                     "--attempts",
                     str(attempts_path),
                     "--output",
@@ -68,7 +68,7 @@ class PayBenchEntrypointTest(unittest.TestCase):
             completed = subprocess.run(
                 [
                     sys.executable,
-                    "run_paybench_challenges.py",
+                    "scripts/validation/run_paybench_challenges.py",
                     "--current-rules",
                     "--output",
                     str(output_path),
@@ -83,13 +83,13 @@ class PayBenchEntrypointTest(unittest.TestCase):
             report = json.loads(output_path.read_text(encoding="utf-8"))
 
         self.assertEqual(0, completed.returncode, completed.stderr)
-        self.assertIn("supported=6 unsupported=4", completed.stdout)
-        self.assertIn("supported_passed=6 supported_failed=0", completed.stdout)
+        self.assertIn("supported=8 unsupported=2", completed.stdout)
+        self.assertIn("supported_passed=8 supported_failed=0", completed.stdout)
         self.assertEqual("PARTIAL", report["status"])
-        self.assertEqual(6, report["summary"]["supported"])
-        self.assertEqual(4, report["summary"]["unsupported"])
+        self.assertEqual(8, report["summary"]["supported"])
+        self.assertEqual(2, report["summary"]["unsupported"])
         self.assertEqual(
-            4,
+            2,
             len(report["unsupported_scenario_ids"]),
         )
 

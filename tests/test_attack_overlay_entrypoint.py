@@ -16,7 +16,7 @@ class AttackOverlayEntrypointTest(unittest.TestCase):
             completed = subprocess.run(
                 [
                     sys.executable,
-                    "run_attack_overlays.py",
+                    "scripts/validation/run_attack_overlays.py",
                     "--output",
                     str(output_path),
                 ],

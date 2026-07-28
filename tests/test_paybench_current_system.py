@@ -15,23 +15,28 @@ class PayBenchCurrentSystemTest(unittest.TestCase):
             root / "samples" / "external" / "paybench" / "phase1_selected_10.json"
         )
 
-    def test_current_rules_execute_supported_six_and_expose_four_gaps(self) -> None:
+    def test_current_rules_execute_eight_and_leave_only_privacy_gap(self) -> None:
         result = run_current_rules_on_paybench(self.challenge_set)
 
         self.assertEqual(10, result.total)
-        self.assertEqual(6, result.supported)
-        self.assertEqual(4, result.unsupported)
-        self.assertEqual(6, result.supported_passed)
+        self.assertEqual(8, result.supported)
+        self.assertEqual(2, result.unsupported)
+        self.assertEqual(8, result.supported_passed)
         self.assertEqual(0, result.supported_failed)
         self.assertEqual(
             {
                 "scn_v1_d1_trap",
                 "scn_v1_d1_lookalike",
-                "scn_v1_e1_trap",
-                "scn_v1_e1_lookalike",
             },
             set(result.unsupported_scenario_ids),
         )
+
+        by_id = {item.scenario_id: item for item in result.results}
+        self.assertEqual(Decision.ALLOW, by_id["scn_v1_e1_trap"].attempt.decision)
+        self.assertEqual("PASS", by_id["scn_v1_e1_trap"].evaluation.evaluation.status)
+        self.assertIn("untrusted_override_blocked", by_id["scn_v1_e1_trap"].reason_codes)
+        self.assertEqual(Decision.ALLOW, by_id["scn_v1_e1_lookalike"].attempt.decision)
+        self.assertEqual("PASS", by_id["scn_v1_e1_lookalike"].evaluation.evaluation.status)
 
     def test_supported_traps_use_existing_rules_instead_of_answer_key_echo(self) -> None:
         result = run_current_rules_on_paybench(self.challenge_set)

@@ -16,7 +16,7 @@ class AP2FlowEntrypointTest(unittest.TestCase):
             completed = subprocess.run(
                 [
                     sys.executable,
-                    "run_ap2_protocol_samples.py",
+                    "scripts/validation/run_ap2_protocol_samples.py",
                     "--output",
                     str(output_path),
                 ],

@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import json
+from copy import deepcopy
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 from .evaluator import EvaluationResult, ExpectedOutcome, ObservedOutcome, evaluate_outcome
 from .models import Decision, ValidationResult
@@ -52,6 +53,13 @@ class AttackOverlaySuite:
     license: str
     accessed_at: str
     overlays: tuple[AttackOverlay, ...]
+
+
+@dataclass(frozen=True)
+class AttackBoundaryResult:
+    attack_attempted: bool
+    blocked_override_paths: tuple[str, ...]
+    trusted_state_changed: bool
 
 
 @dataclass(frozen=True)
@@ -106,23 +114,35 @@ def load_attack_overlay_suite(path: Path) -> AttackOverlaySuite:
     )
 
 
-def evaluate_attack_overlay(scenario: Scenario, overlay: AttackOverlay) -> AttackOverlayResult:
+def enforce_untrusted_overlay(
+    trusted_state: Mapping[str, Any],
+    overlay: AttackOverlay,
+) -> AttackBoundaryResult:
+    """Apply the v1 trust boundary without granting untrusted content write authority."""
+
     _validate_overlay_paths(overlay)
-    baseline = _validate_scenario(scenario)
+    before = deepcopy(dict(trusted_state))
 
-    # Trust-boundary defense: content returned by merchant pages/tools is data,
-    # not authority to rewrite executable payment inputs. Every declared
-    # trusted-field override attempt is blocked; the original trusted state runs.
+    # The overlay can describe attempted mutations, but v1 never applies them to
+    # trusted execution inputs. This same boundary is reused by scenario replay
+    # and external PayBench challenges.
     blocked_override_paths = tuple(sorted(overlay.proposed_overrides))
+    after = deepcopy(dict(trusted_state))
+    return AttackBoundaryResult(
+        attack_attempted=bool(overlay.proposed_overrides),
+        blocked_override_paths=blocked_override_paths,
+        trusted_state_changed=before != after,
+    )
 
-    before = _trusted_state_snapshot(scenario)
-    after = _trusted_state_snapshot(scenario)
-    trusted_state_changed = before != after
+
+def evaluate_attack_overlay(scenario: Scenario, overlay: AttackOverlay) -> AttackOverlayResult:
+    baseline = _validate_scenario(scenario)
+    boundary = enforce_untrusted_overlay(_trusted_state_snapshot(scenario), overlay)
 
     defended = _validate_scenario(scenario)
     observed_effects = (
         frozenset({"trusted_field_override_applied"})
-        if trusted_state_changed
+        if boundary.trusted_state_changed
         else frozenset()
     )
     evaluation = evaluate_outcome(
@@ -141,9 +161,9 @@ def evaluate_attack_overlay(scenario: Scenario, overlay: AttackOverlay) -> Attac
         source=overlay.source,
         baseline_decision=baseline.decision,
         defended_decision=defended.decision,
-        attack_attempted=bool(overlay.proposed_overrides),
-        blocked_override_paths=blocked_override_paths,
-        trusted_state_changed=trusted_state_changed,
+        attack_attempted=boundary.attack_attempted,
+        blocked_override_paths=boundary.blocked_override_paths,
+        trusted_state_changed=boundary.trusted_state_changed,
         decision_drift=defended.decision is not baseline.decision,
         evaluation=evaluation,
     )

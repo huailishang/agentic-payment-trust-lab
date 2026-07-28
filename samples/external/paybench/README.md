@@ -98,9 +98,9 @@ python run_paybench_challenges.py --attempts <attempts.json>
 python run_paybench_challenges.py --current-rules
 ```
 
-当前协议中立规则可以直接表达 A1 / B1 / C1 共 6 题，6/6 已支持题通过；D1 隐私披露和 E1 提示注入共 4 题明确标记为 `UNSUPPORTED`，报告整体状态为 `PARTIAL`。
+当前协议中立规则可以直接表达 A1 / B1 / C1，并已通过 Attack Overlay 接入 E1，共 8 题可执行且 8/8 通过；当前仅 D1 隐私披露 2 题标记为 `UNSUPPORTED`，报告整体状态仍为 `PARTIAL`。
 
-因此“参考答案输入后 10/10 PASS”只能证明适配器和评测器合同正确，不能作为当前系统的 PayBench 实际成绩；当前规则的真实覆盖结果是 **6 题可执行、4 题能力缺口**。
+因此“参考答案输入后 10/10 PASS”只能证明适配器和评测器合同正确，不能作为当前系统的 PayBench 实际成绩；当前规则的真实覆盖结果是 **8 题可执行、2 题能力缺口**。
 
 ## 5. 更新规则
 

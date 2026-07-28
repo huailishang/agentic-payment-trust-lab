@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
 
+from .attack_overlay import AttackOverlay, enforce_untrusted_overlay
 from .models import Decision, IntentMandate, TransactionRequest, ValidationResult
 from .paybench_challenges import (
     PayBenchAttempt,
@@ -21,6 +22,7 @@ _SUPPORTED_CATEGORIES = {
     "spend_limits",
     "authorization_scope",
     "consent_escalation",
+    "adversarial_robustness",
 }
 
 
@@ -132,6 +134,8 @@ def _run_one(challenge: PayBenchChallenge) -> CurrentRulesChallengeResult:
 
     if challenge.category == "authorization_scope":
         return _run_authorization_scope(challenge)
+    if challenge.category == "adversarial_robustness":
+        return _run_adversarial_robustness(challenge)
 
     validation = _validate_single_request(challenge)
     attempt = PayBenchAttempt(decision=validation.decision)
@@ -189,6 +193,92 @@ def _run_authorization_scope(
         evaluation=evaluate_paybench_attempt(challenge, attempt),
         reason_codes=tuple(issue.code for issue in validation.issues),
         selected_merchant=str(selected_candidate["merchant"]),
+    )
+
+
+def _run_adversarial_robustness(
+    challenge: PayBenchChallenge,
+) -> CurrentRulesChallengeResult:
+    runtime = challenge.runtime_input or {}
+    required = {
+        "amount",
+        "merchant",
+        "category",
+        "untrusted_source",
+        "untrusted_content",
+        "proposed_overrides",
+    }
+    if not required.issubset(runtime):
+        return CurrentRulesChallengeResult(
+            scenario_id=challenge.scenario_id,
+            support_status="UNSUPPORTED",
+            attempt=None,
+            evaluation=None,
+            unsupported_reason="adversarial challenge is missing local trust-boundary runtime data",
+        )
+
+    amount = Decimal(str(runtime["amount"]))
+    merchant = str(runtime["merchant"])
+    category = str(runtime["category"])
+    mandate, request = _build_payment_input(
+        challenge,
+        amount=amount,
+        merchant=merchant,
+        category=category,
+        max_amount=Decimal(str(challenge.source_policy["max_total_spend"])),
+        confirmation_above=None,
+        allowed_merchants=frozenset(),
+    )
+    validation = validate_request(mandate, request)
+
+    raw_overrides = runtime["proposed_overrides"]
+    if not isinstance(raw_overrides, dict):
+        return CurrentRulesChallengeResult(
+            scenario_id=challenge.scenario_id,
+            support_status="UNSUPPORTED",
+            attempt=None,
+            evaluation=None,
+            unsupported_reason="adversarial challenge proposed_overrides must be an object",
+        )
+
+    overlay = AttackOverlay(
+        attack_id=challenge.scenario_id,
+        title=challenge.failure_tested,
+        source=str(runtime["untrusted_source"]),
+        untrusted_content=str(runtime["untrusted_content"]),
+        proposed_overrides=dict(raw_overrides),
+    )
+    boundary = enforce_untrusted_overlay(
+        {
+            "mandate": {"max_amount": str(mandate.max_amount)},
+            "request": {
+                "amount": str(request.amount),
+                "merchant": request.merchant,
+                "category": request.category,
+            },
+        },
+        overlay,
+    )
+    observed_effects = (
+        frozenset({"prompt_injection_compliance"})
+        if boundary.trusted_state_changed
+        else frozenset()
+    )
+    attempt = PayBenchAttempt(
+        decision=validation.decision,
+        observed_effects=observed_effects,
+    )
+    reason_codes = tuple(issue.code for issue in validation.issues)
+    if boundary.blocked_override_paths:
+        reason_codes += ("untrusted_override_blocked",)
+
+    return CurrentRulesChallengeResult(
+        scenario_id=challenge.scenario_id,
+        support_status="SUPPORTED",
+        attempt=attempt,
+        evaluation=evaluate_paybench_attempt(challenge, attempt),
+        reason_codes=reason_codes,
+        selected_merchant=merchant,
     )
 
 

@@ -109,7 +109,7 @@ Idempotency VALID
 | S01—S13 内部回归 | 13/13 | 防止已有能力回归 |
 | AP2 HP/HNP | 2/2 | 验证外部协议对象能映射到中立模型 |
 | Attack Overlay v1 | 5/5 | 验证不可信内容不能直接改写可信支付输入 |
-| PayBench | 6/10 可执行 | 用外部问题暴露能力缺口；当前仍有 D1 / E1 共 4 个未覆盖挑战 |
+| PayBench | 8/10 可执行 | E1 已接入 Attack Overlay；当前只剩 D1 隐私披露 2 个未覆盖挑战 |
 
 PayBench 的 `PARTIAL` 是刻意保留的真实缺口，不用“已支持部分全过”冒充完整覆盖。
 
@@ -138,28 +138,18 @@ PayBench 的 `PARTIAL` 是刻意保留的真实缺口，不用“已支持部分
 python run_experiment.py
 ```
 
-启动交互实验台：
+日常使用只需要启动统一交互实验台：
 
 ```powershell
 python run_experiment.py --serve --open
 ```
 
-运行 PayBench 当前规则覆盖审计：
+下面三个脚本是开发 / 排查时使用的专项验证入口，不是普通用户的启动入口：
 
 ```powershell
-python run_paybench_challenges.py --current-rules
-```
-
-运行 AP2 最小流程：
-
-```powershell
-python run_ap2_protocol_samples.py
-```
-
-运行 Attack Overlay：
-
-```powershell
-python run_attack_overlays.py
+python scripts/validation/run_paybench_challenges.py --current-rules
+python scripts/validation/run_ap2_protocol_samples.py
+python scripts/validation/run_attack_overlays.py
 ```
 
 运行全量测试：
@@ -173,10 +163,11 @@ python -m unittest discover -s tests -v
 
 ```text
 .
-├── run_experiment.py
-├── run_paybench_challenges.py
-├── run_ap2_protocol_samples.py
-├── run_attack_overlays.py
+├── run_experiment.py              # 唯一正式入口
+├── scripts/validation/            # 开发 / 排查专项验证工具
+│   ├── run_paybench_challenges.py
+│   ├── run_ap2_protocol_samples.py
+│   └── run_attack_overlays.py
 ├── src/agentic_payment_experiment/
 │   ├── adapters/                 # 外部协议 -> 中立模型
 │   ├── trusted_execution/        # 确定性可信事实
@@ -219,11 +210,11 @@ local_sources/third_party/
 ## 下一步
 
 ```text
-PayBench 当前 6/10 可执行
+PayBench 当前 8/10 可执行
         ↓
-M3-C：先接 E1 提示注入挑战
+M3-C1：E1 提示注入 × Attack Overlay【已完成】
         ↓
-再补 D1 数据最小化 / 隐私披露事实模型
+M3-C2：补 D1 数据最小化 / 隐私披露事实模型
         ↓
 目标：让外部失败决定下一批能力，而不是继续机械增加 S14 / S15 / S16
 ```

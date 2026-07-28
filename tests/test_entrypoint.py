@@ -23,7 +23,7 @@ class EntrypointTest(unittest.TestCase):
         self.assertIn("Summary: total=13 passed=13 failed=0", completed.stdout)
         self.assertIn("实验模块总览：部分覆盖", completed.stdout)
         self.assertIn("内部回归: PASS passed=13 failed=0 gaps=0", completed.stdout)
-        self.assertIn("PayBench 外部挑战: PARTIAL passed=6 failed=0 gaps=4", completed.stdout)
+        self.assertIn("PayBench 外部挑战: PARTIAL passed=8 failed=0 gaps=2", completed.stdout)
         self.assertIn("AP2 官方最小流程: PASS passed=2 failed=0 gaps=0", completed.stdout)
         self.assertIn("Attack Overlay: PASS passed=5 failed=0 gaps=0", completed.stdout)
         self.assertIn("内部回归基线：PASS", completed.stdout)

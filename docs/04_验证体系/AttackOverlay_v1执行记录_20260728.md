@@ -43,7 +43,7 @@ ModuleNotFoundError: agentic_payment_experiment.attack_overlay
 ```text
 src/agentic_payment_experiment/attack_overlay.py
 samples/attacks/attack_overlay_v1.json
-run_attack_overlays.py
+scripts/validation/run_attack_overlays.py
 ```
 
 并增加 CLI 回归测试：
@@ -68,7 +68,7 @@ A04 恶意扩大 mandate 金额/商户范围      攻击
 运行：
 
 ```powershell
-python run_attack_overlays.py
+python scripts/validation/run_attack_overlays.py
 ```
 
 结果：
