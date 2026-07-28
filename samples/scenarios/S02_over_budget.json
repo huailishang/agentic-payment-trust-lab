@@ -1,0 +1,40 @@
+{
+  "sample_id": "S02",
+  "title": "金额超过硬上限",
+  "question": "订单金额超过用户允许的最高金额时是否拒绝？",
+  "mandate": {
+    "mandate_id": "mandate-shoes-002",
+    "user_id": "user-001",
+    "max_amount": "550.00",
+    "confirmation_above": "500.00",
+    "allowed_merchants": ["merchant-a"],
+    "allowed_categories": ["shoes"],
+    "expires_at": "2026-07-12T12:00:00+08:00",
+    "max_count": 1,
+    "expected_agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "request": {
+    "request_id": "request-s02",
+    "amount": "560.00",
+    "merchant": "merchant-a",
+    "category": "shoes",
+    "occurred_at": "2026-07-11T12:00:00+08:00",
+    "sequence_count": 1,
+    "agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "expected": {
+    "decision": "DENY",
+    "reason_codes": ["over_budget"],
+    "evidence_codes": ["over_budget"]
+  },
+  "flow": [
+    {"actor": "用户", "action": "设置最高550元"},
+    {"actor": "Agent", "action": "提交购买请求"},
+    {"actor": "模拟商户", "action": "返回560元订单"},
+    {"actor": "验证器", "action": "发现订单超过硬上限"},
+    {"actor": "结果", "action": "DENY"}
+  ],
+  "limitations": ["拒绝结果只用于实验，不生成生产拦截规则"]
+}

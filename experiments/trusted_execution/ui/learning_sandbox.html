@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>金融 Agent 可信执行学习沙盘</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --panel-soft: #f8fafc;
+      --text: #172033;
+      --muted: #667085;
+      --line: #d8dee9;
+      --accent: #3157d5;
+      --accent-soft: #edf1ff;
+      --danger: #b42318;
+      --danger-soft: #fff0ee;
+      --success: #067647;
+      --success-soft: #ecfdf3;
+      --warning: #b54708;
+      --warning-soft: #fff7e6;
+      --shadow: 0 12px 32px rgba(16, 24, 40, 0.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    button, summary { font: inherit; }
+
+    .app {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 880px;
+    }
+
+    .demo-badge {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .lifecycle {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(90px, 1fr));
+      gap: 8px;
+      padding: 14px;
+      margin-bottom: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+    }
+
+    .lifecycle-step {
+      min-width: 90px;
+      text-align: center;
+      padding: 10px 8px;
+      border-radius: 12px;
+      color: var(--muted);
+      background: var(--panel-soft);
+      border: 1px solid transparent;
+      font-size: 13px;
+    }
+
+    .lifecycle-step.active {
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-color: #bac7ff;
+      font-weight: 800;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .sidebar,
+    .main-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+      padding: 14px;
+      position: sticky;
+      top: 16px;
+    }
+
+    .sidebar-title {
+      margin: 2px 4px 12px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .lesson-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .lesson-button {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 12px;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .lesson-button:hover { border-color: #aab7d9; }
+
+    .lesson-button.active {
+      border-color: #8ea2f1;
+      background: var(--accent-soft);
+    }
+
+    .lesson-code {
+      display: block;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+
+    .lesson-name {
+      display: block;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .sidebar-note {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background: var(--panel-soft);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .main-panel { padding: 22px; }
+
+    .scenario-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .scenario-code {
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .scenario-head h2 {
+      margin: 4px 0 4px;
+      font-size: clamp(22px, 2.5vw, 32px);
+      line-height: 1.25;
+    }
+
+    .scenario-subtitle {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .stage-pill {
+      flex: 0 0 auto;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .summary-card {
+      border: 1px solid var(--line);
+      background: var(--panel-soft);
+      border-radius: 14px;
+      padding: 16px;
+      min-height: 150px;
+    }
+
+    .summary-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .summary-card strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.45;
+      margin-bottom: 6px;
+    }
+
+    .summary-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .verification-box {
+      border: 1px solid #bac7ff;
+      background: var(--accent-soft);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .verification-row {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .verification-box h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+
+    .verification-box p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .run-button {
+      width: 100%;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 12px;
+      padding: 13px 18px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .run-button:hover { filter: brightness(0.96); }
+
+    .result-area {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .result-badge,
+    .next-action {
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: var(--panel-soft);
+    }
+
+    .result-badge.pending { color: var(--muted); }
+    .result-badge.fail { color: var(--danger); background: var(--danger-soft); border-color: #f3b8b2; }
+    .result-badge.pass { color: var(--success); background: var(--success-soft); border-color: #a6e1c1; }
+    .result-badge.block { color: var(--warning); background: var(--warning-soft); border-color: #f5cf95; }
+
+    .result-value {
+      display: block;
+      margin-top: 4px;
+      font-size: 24px;
+      font-weight: 950;
+    }
+
+    .next-action strong { display: block; margin-bottom: 4px; }
+    .next-action p { margin: 0; color: var(--muted); }
+
+    .details-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 14px 16px;
+      font-weight: 850;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: "展开";
+      float: right;
+      color: var(--accent);
+      font-size: 12px;
+    }
+
+    details[open] summary::after { content: "收起"; }
+
+    .detail-body {
+      padding: 0 16px 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .detail-body h4 {
+      color: var(--text);
+      margin: 14px 0 6px;
+    }
+
+    .detail-body p { margin: 8px 0; }
+
+    pre {
+      margin: 10px 0 0;
+      padding: 14px;
+      overflow-x: auto;
+      border-radius: 10px;
+      background: #111827;
+      color: #e5e7eb;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .boundary {
+      border-left: 4px solid #f2b84b;
+      padding: 10px 12px;
+      background: var(--warning-soft);
+      color: #7a3f00;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .secondary-button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .secondary-button:disabled {
+      cursor: not-allowed;
+      color: #a0a8b8;
+      background: var(--panel-soft);
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .lesson-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .summary-grid { grid-template-columns: 1fr; }
+      .verification-row { grid-template-columns: 1fr; }
+      .result-area { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .app { padding: 14px; }
+      .hero { flex-direction: column; }
+      .lesson-list { grid-template-columns: 1fr; }
+      .main-panel { padding: 16px; }
+      .scenario-head { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div>
+        <h1>金融 Agent 可信执行学习沙盘</h1>
+        <p>先看业务事故，再理解为什么需要验证。技术细节默认折叠；只有你主动展开时，才进入不变量、Hash、签名、幂等和状态机。</p>
+      </div>
+      <div class="demo-badge">固定教学演示 · 不调用真实底层组件</div>
+    </header>
+
+    <section class="lifecycle" id="lifecycle" aria-label="支付生命周期">
+      <div class="lifecycle-step" data-stage="用户意图">用户意图</div>
+      <div class="lifecycle-step" data-stage="Agent 提议">Agent 提议</div>
+      <div class="lifecycle-step" data-stage="授权">授权</div>
+      <div class="lifecycle-step" data-stage="订单">订单</div>
+      <div class="lifecycle-step" data-stage="支付">支付</div>
+      <div class="lifecycle-step" data-stage="履约">履约</div>
+      <div class="lifecycle-step" data-stage="退款 / 争议">退款 / 争议</div>
+    </section>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-title">第一阶段：先理解问题</div>
+        <nav class="lesson-list" id="lessonList" aria-label="教学场景"></nav>
+        <div class="sidebar-note">这 5 课只验证学习顺序和 UI 交互。所有“运行检查”均使用预设结果，不代表底层技术已经实现。</div>
+      </aside>
+
+      <section class="main-panel" aria-live="polite">
+        <div class="scenario-head">
+          <div>
+            <div class="scenario-code" id="scenarioCode"></div>
+            <h2 id="scenarioTitle"></h2>
+            <p class="scenario-subtitle" id="scenarioSubtitle"></p>
+          </div>
+          <div class="stage-pill" id="stagePill"></div>
+        </div>
+
+        <div class="summary-grid">
+          <article class="summary-card">
+            <span class="summary-label">发生了什么</span>
+            <strong id="whatHappened"></strong>
+            <p id="whatHappenedNote"></p>
+          </article>
+          <article class="summary-card">
+            <span class="summary-label">为什么危险</span>
+            <strong id="whyDangerous"></strong>
+            <p id="whyDangerousNote"></p>
+          </article>
+          <article class="summary-card">
+            <span class="summary-label">现在要验证什么</span>
+            <strong id="verificationGoal"></strong>
+            <p id="verificationGoalNote"></p>
+          </article>
+        </div>
+
+        <section class="verification-box">
+          <div class="verification-row">
+            <div>
+              <h3 id="mechanismName"></h3>
+              <p id="mechanismSummary"></p>
+            </div>
+            <button class="run-button" id="runButton" type="button">运行固定教学检查</button>
+          </div>
+        </section>
+
+        <section class="result-area">
+          <div class="result-badge pending" id="resultBadge">
+            <span class="summary-label">验证结果</span>
+            <span class="result-value" id="resultValue">待运行</span>
+          </div>
+          <div class="next-action">
+            <strong>下一步应该做什么</strong>
+            <p id="nextAction">点击“运行固定教学检查”，查看这个场景预设的验证结论。</p>
+          </div>
+        </section>
+
+        <div class="details-stack" id="detailsStack">
+          <details>
+            <summary>为什么这个环节需要可信验证？</summary>
+            <div class="detail-body" id="plainExplanation"></div>
+          </details>
+          <details>
+            <summary>这个机制大概怎么工作？</summary>
+            <div class="detail-body" id="mechanismExplanation"></div>
+          </details>
+          <details>
+            <summary>查看固定教学数据与技术细节</summary>
+            <div class="detail-body">
+              <h4>Agent Proposal / 当前输入</h4>
+              <pre id="agentProposal"></pre>
+              <h4>Trusted Input / 可信边界</h4>
+              <pre id="trustedInput"></pre>
+              <h4>固定检查过程</h4>
+              <pre id="checkProcess"></pre>
+              <div class="boundary" id="technicalBoundary"></div>
+            </div>
+          </details>
+          <details>
+            <summary>它和区块链是什么关系？</summary>
+            <div class="detail-body" id="blockchainRelation"></div>
+          </details>
+        </div>
+
+        <div class="footer-nav">
+          <button class="secondary-button" id="prevButton" type="button">上一课</button>
+          <button class="secondary-button" id="nextButton" type="button">下一课</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const lessons = [
+      {
+        id: "UI-01",
+        title: "为什么不能让 LLM 直接动钱",
+        subtitle: "先区分“模型建议”和“金融硬约束”。",
+        stage: "Agent 提议",
+        happened: "Agent 建议支付 900 元",
+        happenedNote: "用户原始委托的预算上限只有 800 元。",
+        dangerous: "模型输出可能越过硬性预算",
+        dangerousNote: "语言模型可以提出建议，但不能自己改写资金权限。",
+        goal: "支付金额是否满足预算不变量",
+        goalNote: "这是一个确定性条件，不需要模型再判断一次。",
+        mechanism: "数学 / 业务不变量",
+        mechanismSummary: "把“绝对不能突破”的金融条件写成确定规则。",
+        result: "FAIL",
+        resultClass: "fail",
+        action: "阻止继续支付，并要求 Agent 回到预算范围内重新提出候选方案。",
+        plain: "<p>这里最重要的不是区块链，而是先建立一个认知：<strong>Agent 可以提出行动，但真正动钱前必须经过独立的硬约束检查。</strong></p><p>如果用户明确说“最多 800 元”，那么 900 元无论模型解释得多合理，都不能自动通过。</p>",
+        mechanismDetail: "<p>把预算写成一个永远必须成立的条件，例如 <code>amount &lt;= budget</code>。系统只比较两个确定值，不依赖 LLM 的自然语言判断。</p><div class='boundary'>不变量只能验证已明确写出的硬条件；如果用户意图本身被模型理解错了，还需要业务语义或人工确认。</div>",
+        proposal: '{\n  "agent_proposal": {\n    "action": "PAY",\n    "amount": 900,\n    "currency": "CNY"\n  }\n}',
+        trusted: '{\n  "mandate": {\n    "budget_max": 800,\n    "currency": "CNY"\n  }\n}',
+        process: '900 <= 800\n=> false\n=> 固定教学结果: FAIL',
+        boundary: "当前只是固定教学数据。未来真实实现会由 Invariant 组件计算结果；这里还没有调用底层验证代码。",
+        blockchain: "<p><strong>这一课不需要区块链。</strong>普通确定性规则就能完成预算检查。这正是学习路线的第一条批判性原则：不要把所有可信问题都包装成“上链”。</p>"
+      },
+      {
+        id: "UI-02",
+        title: "订单有没有被换掉",
+        subtitle: "理解 Hash 能证明什么，也理解它不能证明什么。",
+        stage: "订单",
+        happened: "确认时是鞋，支付前变成会员",
+        happenedNote: "金额仍然是 780 元，但订单的关键业务内容已经变化。",
+        dangerous: "执行对象和用户确认对象可能不是同一个",
+        dangerousNote: "只看金额相同，无法发现品类或商户被替换。",
+        goal: "最终订单是否仍是原来那个版本",
+        goalNote: "需要比较对象的确定性摘要，而不是重新问模型“看起来像不像”。",
+        mechanism: "Hash / 对象绑定",
+        mechanismSummary: "给确定版本的订单生成数字摘要，变化后摘要也会变化。",
+        result: "INVALID",
+        resultClass: "fail",
+        action: "停止沿用旧确认，回到订单确认环节，让支付项目决定是否要求重新确认。",
+        plain: "<p>Hash 可以把一个确定对象变成“数字指纹”。如果订单内容被修改，重新计算出来的摘要通常会不同。</p><p>它适合回答：<strong>“现在这个对象还是不是原来的那个对象？”</strong></p>",
+        mechanismDetail: "<p>未来会先把 JSON 按统一规则规范化，再计算 SHA-256 摘要。支付前重新计算并比较授权时保存的摘要。</p><div class='boundary'>Hash 不会判断“鞋是不是好商品”，也不会判断“用户本来是否就想买这个”。它只帮助检测对象是否发生变化。</div>",
+        proposal: '{\n  "final_order": {\n    "amount": 780,\n    "merchant": "A",\n    "category": "membership"\n  }\n}',
+        trusted: '{\n  "authorized_order": {\n    "amount": 780,\n    "merchant": "A",\n    "category": "shoes"\n  },\n  "saved_hash": "demo_hash_order_v1"\n}',
+        process: 'hash(authorized_order) = demo_hash_order_v1\nhash(final_order)      = demo_hash_order_v2\n两者不同\n=> 固定教学结果: INVALID',
+        boundary: "这里的 Hash 值是教学占位符。未来才接入项目已有的 canonical_hash()；本版只验证 UI 是否能让初学者理解对象绑定。",
+        blockchain: "<p>Bitcoin 和区块链大量使用 Hash 来连接交易和历史记录，但 <strong>Hash 本身并不是区块链专属技术</strong>。银行内部系统也完全可以用 Hash 做对象完整性和审计验证。</p>"
+      },
+      {
+        id: "UI-03",
+        title: "谁授权了这个对象",
+        subtitle: "理解数字签名证明的是签署关系，不是业务合理性。",
+        stage: "授权",
+        happened: "订单版本明确，但无法证明是谁确认的",
+        happenedNote: "系统有一份订单，却缺少可验证的签署关系。",
+        dangerous: "事后无法回答“谁同意了哪个版本”",
+        dangerousNote: "仅保存“用户已确认”文字字段，可能不足以支撑强责任证据。",
+        goal: "某个主体是否对这个确定对象做过签署",
+        goalNote: "签名必须绑定到明确版本，不能只绑定模糊描述。",
+        mechanism: "数字签名 / 授权对象绑定",
+        mechanismSummary: "用测试级签名关系表达“某密钥对某确定消息签署过”。",
+        result: "MISSING_EVIDENCE",
+        resultClass: "block",
+        action: "暂停进入不可逆执行；补充可验证授权证据，或回到人工确认流程。",
+        plain: "<p>Hash 只能证明对象有没有变，不能证明是谁同意的。数字签名进一步回答：<strong>某个密钥是否对这段确定消息做过签署。</strong></p>",
+        mechanismDetail: "<p>未来实验会用测试密钥对订单摘要签名，再用对应公钥验签。对象被修改或使用错误公钥时，验签失败。</p><div class='boundary'>签名有效不等于授权范围一定正确。用户可能真的签了一个超范围授权，所以仍需不变量和业务规则。</div>",
+        proposal: '{\n  "order_hash": "demo_hash_order_v1",\n  "claimed_user_confirmation": true\n}',
+        trusted: '{\n  "required_evidence": [\n    "signer_identity",\n    "signed_order_hash",\n    "signature"\n  ],\n  "signature": null\n}',
+        process: 'required_signature = true\nsignature_present = false\n=> 无法验证签署关系\n=> 固定教学结果: MISSING_EVIDENCE',
+        boundary: "本版不生成真实密钥、不执行签名算法。下一技术阶段才实现测试密钥签名与验签。",
+        blockchain: "<p>数字签名是 Bitcoin 等系统的核心基础，但同样不是区块链专属。这里学习的是密码学授权思想；是否需要链，要看多个主体是否需要共同维护共享状态。</p>"
+      },
+      {
+        id: "UI-04",
+        title: "为什么不能重复支付",
+        subtitle: "把“网络没返回”与“交易没发生”分开。",
+        stage: "支付",
+        happened: "支付 API 超时，Agent 想再调用一次",
+        happenedNote: "第一次请求是否已经成功暂时未知。",
+        dangerous: "简单重试可能造成重复扣款",
+        dangerousNote: "网络超时只说明调用方没拿到确定结果，不代表资金动作没发生。",
+        goal: "同一金融动作是否只能有效执行一次",
+        goalNote: "需要唯一执行标识和状态查询，而不是靠 Agent 猜测。",
+        mechanism: "Idempotency Key / Nonce / 唯一执行",
+        mechanismSummary: "给同一动作绑定稳定唯一键，重复请求不再次产生有效资金变化。",
+        result: "BLOCK_RETRY",
+        resultClass: "block",
+        action: "禁止直接重做；先按原 payment_id 查询状态，再决定恢复路径。",
+        plain: "<p>金融系统里最危险的一类错误就是“我不知道刚才成功没有，所以再做一次”。</p><p>正确原则是：<strong>UNKNOWN 不等于 FAILED。</strong>先确认原动作状态，再决定是否需要恢复。</p>",
+        mechanismDetail: "<p>未来会为 payment_id 建立幂等记录。相同 payment_id 的重复调用只能复用原结果或进入查询流程。</p><div class='boundary'>幂等只能防止同一逻辑动作重复执行；如果系统错误地生成了两个不同 payment_id，仍需要更上层的业务唯一性约束。</div>",
+        proposal: '{\n  "action": "PAY_AGAIN",\n  "payment_id": "P001",\n  "reason": "previous_call_timeout"\n}',
+        trusted: '{\n  "payment_id": "P001",\n  "known_state": "UNKNOWN",\n  "retry_policy": "QUERY_BEFORE_RETRY"\n}',
+        process: 'state(P001) = UNKNOWN\npolicy = QUERY_BEFORE_RETRY\n=> 禁止直接第二次支付\n=> 固定教学结果: BLOCK_RETRY',
+        boundary: "本版没有真实 IdempotencyStore，也没有支付接口。这里只演示“未知状态不能直接重试”的认知模型。",
+        blockchain: "<p>区块链账户中的 Nonce、交易唯一性等机制体现了类似的防重放思想。但在传统支付 API 中，幂等键同样是常见且更直接的解决办法。</p>"
+      },
+      {
+        id: "UI-05",
+        title: "什么状态允许做什么动作",
+        subtitle: "让关键金融状态迁移由确定性规则控制。",
+        stage: "退款 / 争议",
+        happened: "已经退款完成，又收到一次退款请求",
+        happenedNote: "Agent 看到用户再次说“退款”，准备重新执行。",
+        dangerous: "终结状态被重复进入，可能造成超额退款",
+        dangerousNote: "自然语言请求不能直接覆盖已经确定的金融状态。",
+        goal: "当前状态是否允许进入目标状态",
+        goalNote: "状态迁移必须匹配预先定义的允许路径。",
+        mechanism: "确定性状态机",
+        mechanismSummary: "用明确状态和迁移表控制哪些动作可执行、哪些必须拒绝。",
+        result: "INVALID_TRANSITION",
+        resultClass: "fail",
+        action: "拒绝再次退款；保留原 REFUNDED 状态，并把新请求转入查询或争议处理。",
+        plain: "<p>LLM 可以理解“用户又在问退款”，但它不能据此决定再退一次钱。系统必须先看当前真实状态。</p><p><strong>REFUNDED 是已完成状态，不能直接再次进入 REFUND_PENDING。</strong></p>",
+        mechanismDetail: "<p>未来会用状态迁移表，例如 <code>PAID → REFUND_PENDING → REFUNDED</code>。任何不在允许表中的迁移都确定性失败。</p><div class='boundary'>状态机只能执行已经定义好的规则。如果状态设计本身漏掉合法恢复路径，仍然需要业务设计和人工治理修正。</div>",
+        proposal: '{\n  "requested_action": "REFUND",\n  "refund_id": "R002"\n}',
+        trusted: '{\n  "payment_id": "P001",\n  "current_state": "REFUNDED",\n  "allowed_transitions": []\n}',
+        process: 'current_state = REFUNDED\ntarget_state  = REFUND_PENDING\ntransition_allowed = false\n=> 固定教学结果: INVALID_TRANSITION',
+        boundary: "本版没有调用真实 StateMachine。等 UI 学习链路验证通过后，才实现并接入状态机组件。",
+        blockchain: "<p>智能合约常用确定性状态机表达可执行路径，但状态机并不等于智能合约。我们先在普通 Python 和本地模型里学清楚状态，再决定是否有必要研究链上合约。</p>"
+      }
+    ];
+
+    let currentIndex = 0;
+
+    const $ = (id) => document.getElementById(id);
+    const lessonList = $("lessonList");
+    const detailsStack = $("detailsStack");
+
+    function createLessonButtons() {
+      lessonList.innerHTML = "";
+      lessons.forEach((lesson, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "lesson-button";
+        button.dataset.index = String(index);
+        button.innerHTML = `<span class="lesson-code">${lesson.id}</span><span class="lesson-name">${lesson.title}</span>`;
+        button.addEventListener("click", () => renderLesson(index));
+        lessonList.appendChild(button);
+      });
+    }
+
+    function resetDetails() {
+      detailsStack.querySelectorAll("details").forEach((item) => {
+        item.open = false;
+      });
+    }
+
+    function renderLesson(index) {
+      currentIndex = index;
+      const lesson = lessons[index];
+
+      document.querySelectorAll(".lesson-button").forEach((button, buttonIndex) => {
+        button.classList.toggle("active", buttonIndex === index);
+      });
+
+      document.querySelectorAll(".lifecycle-step").forEach((step) => {
+        step.classList.toggle("active", step.dataset.stage === lesson.stage);
+      });
+
+      $("scenarioCode").textContent = lesson.id;
+      $("scenarioTitle").textContent = lesson.title;
+      $("scenarioSubtitle").textContent = lesson.subtitle;
+      $("stagePill").textContent = `当前环节：${lesson.stage}`;
+      $("whatHappened").textContent = lesson.happened;
+      $("whatHappenedNote").textContent = lesson.happenedNote;
+      $("whyDangerous").textContent = lesson.dangerous;
+      $("whyDangerousNote").textContent = lesson.dangerousNote;
+      $("verificationGoal").textContent = lesson.goal;
+      $("verificationGoalNote").textContent = lesson.goalNote;
+      $("mechanismName").textContent = `可信机制：${lesson.mechanism}`;
+      $("mechanismSummary").textContent = lesson.mechanismSummary;
+      $("plainExplanation").innerHTML = lesson.plain;
+      $("mechanismExplanation").innerHTML = lesson.mechanismDetail;
+      $("agentProposal").textContent = lesson.proposal;
+      $("trustedInput").textContent = lesson.trusted;
+      $("checkProcess").textContent = lesson.process;
+      $("technicalBoundary").textContent = lesson.boundary;
+      $("blockchainRelation").innerHTML = lesson.blockchain;
+
+      const resultBadge = $("resultBadge");
+      resultBadge.className = "result-badge pending";
+      $("resultValue").textContent = "待运行";
+      $("nextAction").textContent = "点击“运行固定教学检查”，查看这个场景预设的验证结论。";
+
+      $("prevButton").disabled = index === 0;
+      $("nextButton").disabled = index === lessons.length - 1;
+      resetDetails();
+    }
+
+    $("runButton").addEventListener("click", () => {
+      const lesson = lessons[currentIndex];
+      const resultBadge = $("resultBadge");
+      resultBadge.className = `result-badge ${lesson.resultClass}`;
+      $("resultValue").textContent = lesson.result;
+      $("nextAction").textContent = lesson.action;
+    });
+
+    $("prevButton").addEventListener("click", () => {
+      if (currentIndex > 0) renderLesson(currentIndex - 1);
+    });
+
+    $("nextButton").addEventListener("click", () => {
+      if (currentIndex < lessons.length - 1) renderLesson(currentIndex + 1);
+    });
+
+    detailsStack.querySelectorAll("details").forEach((item) => {
+      item.addEventListener("toggle", () => {
+        if (!item.open) return;
+        detailsStack.querySelectorAll("details").forEach((other) => {
+          if (other !== item) other.open = false;
+        });
+      });
+    });
+
+    createLessonButtons();
+    renderLesson(0);
+  </script>
+</body>
+</html>

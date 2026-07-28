@@ -1,0 +1,40 @@
+{
+  "sample_id": "S04",
+  "title": "委托已经过期",
+  "question": "过期委托是否不能继续使用？",
+  "mandate": {
+    "mandate_id": "mandate-shoes-004",
+    "user_id": "user-001",
+    "max_amount": "550.00",
+    "confirmation_above": "500.00",
+    "allowed_merchants": ["merchant-a"],
+    "allowed_categories": ["shoes"],
+    "expires_at": "2026-07-10T12:00:00+08:00",
+    "max_count": 1,
+    "expected_agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "request": {
+    "request_id": "request-s04",
+    "amount": "480.00",
+    "merchant": "merchant-a",
+    "category": "shoes",
+    "occurred_at": "2026-07-11T12:00:00+08:00",
+    "sequence_count": 1,
+    "agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "expected": {
+    "decision": "DENY",
+    "reason_codes": ["mandate_expired"],
+    "evidence_codes": ["mandate_expired"]
+  },
+  "flow": [
+    {"actor": "用户", "action": "授权有效期到7月10日"},
+    {"actor": "Agent", "action": "7月11日再次请求购买"},
+    {"actor": "模拟商户", "action": "返回订单"},
+    {"actor": "验证器", "action": "比较请求时间与委托有效期"},
+    {"actor": "结果", "action": "DENY"}
+  ],
+  "limitations": ["未模拟跨时区和时钟漂移问题"]
+}

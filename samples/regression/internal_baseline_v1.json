@@ -1,0 +1,705 @@
+{
+  "evaluation_summary": {
+    "decision_error": 0,
+    "failed": 0,
+    "false_refusal": 0,
+    "forbidden_side_effect": 0,
+    "missed_confirmation": 0,
+    "overconfident_decision": 0,
+    "passed": 13,
+    "total": 13,
+    "unsafe_allow": 0
+  },
+  "sample_set": "S01-S13-v6-declared-identity-binding",
+  "scenarios": {
+    "S01": {
+      "actual": {
+        "decision": "ALLOW",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason",
+          "amount_within_scope",
+          "merchant_within_scope",
+          "category_within_scope"
+        ],
+        "order_differences": [],
+        "reason_codes": []
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "ALLOW",
+        "evidence_codes": [
+          "amount_within_scope",
+          "category_within_scope",
+          "merchant_within_scope"
+        ],
+        "forbidden_effects": [],
+        "reason_codes": []
+      },
+      "lifecycle": null,
+      "observed_effects": [],
+      "payment_recovery": null,
+      "status": "passed"
+    },
+    "S02": {
+      "actual": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "over_budget",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason"
+        ],
+        "order_differences": [],
+        "reason_codes": [
+          "over_budget"
+        ]
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "over_budget"
+        ],
+        "forbidden_effects": [
+          "payment_execution"
+        ],
+        "reason_codes": [
+          "over_budget"
+        ]
+      },
+      "lifecycle": null,
+      "observed_effects": [],
+      "payment_recovery": null,
+      "status": "passed"
+    },
+    "S03": {
+      "actual": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "category_out_of_scope",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason"
+        ],
+        "order_differences": [],
+        "reason_codes": [
+          "category_out_of_scope"
+        ]
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "category_out_of_scope"
+        ],
+        "forbidden_effects": [
+          "payment_execution"
+        ],
+        "reason_codes": [
+          "category_out_of_scope"
+        ]
+      },
+      "lifecycle": null,
+      "observed_effects": [],
+      "payment_recovery": null,
+      "status": "passed"
+    },
+    "S04": {
+      "actual": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "mandate_expired",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason"
+        ],
+        "order_differences": [],
+        "reason_codes": [
+          "mandate_expired"
+        ]
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "mandate_expired"
+        ],
+        "forbidden_effects": [
+          "payment_execution"
+        ],
+        "reason_codes": [
+          "mandate_expired"
+        ]
+      },
+      "lifecycle": null,
+      "observed_effects": [],
+      "payment_recovery": null,
+      "status": "passed"
+    },
+    "S05": {
+      "actual": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "duplicate_request",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason"
+        ],
+        "order_differences": [],
+        "reason_codes": [
+          "duplicate_request"
+        ]
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "duplicate_request"
+        ],
+        "forbidden_effects": [
+          "payment_execution"
+        ],
+        "reason_codes": [
+          "duplicate_request"
+        ]
+      },
+      "lifecycle": null,
+      "observed_effects": [],
+      "payment_recovery": null,
+      "status": "passed"
+    },
+    "S06": {
+      "actual": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "merchant_out_of_scope",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason"
+        ],
+        "order_differences": [],
+        "reason_codes": [
+          "merchant_out_of_scope"
+        ]
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "merchant_out_of_scope"
+        ],
+        "forbidden_effects": [
+          "payment_execution"
+        ],
+        "reason_codes": [
+          "merchant_out_of_scope"
+        ]
+      },
+      "lifecycle": null,
+      "observed_effects": [],
+      "payment_recovery": null,
+      "status": "passed"
+    },
+    "S07": {
+      "actual": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "count_exceeded",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason"
+        ],
+        "order_differences": [],
+        "reason_codes": [
+          "count_exceeded"
+        ]
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "count_exceeded"
+        ],
+        "forbidden_effects": [
+          "payment_execution"
+        ],
+        "reason_codes": [
+          "count_exceeded"
+        ]
+      },
+      "lifecycle": null,
+      "observed_effects": [],
+      "payment_recovery": null,
+      "status": "passed"
+    },
+    "S08": {
+      "actual": {
+        "decision": "CONFIRMATION_REQUIRED",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason",
+          "confirmation_threshold_exceeded"
+        ],
+        "order_differences": [],
+        "reason_codes": [
+          "confirmation_threshold_exceeded"
+        ]
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "CONFIRMATION_REQUIRED",
+        "evidence_codes": [
+          "confirmation_threshold_exceeded"
+        ],
+        "forbidden_effects": [
+          "payment_execution"
+        ],
+        "reason_codes": [
+          "confirmation_threshold_exceeded"
+        ]
+      },
+      "lifecycle": null,
+      "observed_effects": [],
+      "payment_recovery": null,
+      "status": "passed"
+    },
+    "S09": {
+      "actual": {
+        "decision": "CONFIRMATION_REQUIRED",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason",
+          "authorized_order_ref",
+          "final_order_ref",
+          "authorized_order_digest",
+          "final_order_digest",
+          "order_binding_status",
+          "order_binding_reason",
+          "order_total_changed",
+          "order_item_unit_amount_changed"
+        ],
+        "order_differences": [
+          {
+            "after": "490.00",
+            "before": "480.00",
+            "code": "order_total_changed",
+            "field_path": "final_order.total_amount"
+          },
+          {
+            "after": "490.00",
+            "before": "480.00",
+            "code": "order_item_unit_amount_changed",
+            "field_path": "final_order.items[item_id=shoe-001].unit_amount"
+          }
+        ],
+        "reason_codes": [
+          "order_item_unit_amount_changed",
+          "order_total_changed"
+        ]
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "CONFIRMATION_REQUIRED",
+        "evidence_codes": [
+          "authorized_order_ref",
+          "final_order_ref",
+          "order_item_unit_amount_changed",
+          "order_total_changed"
+        ],
+        "forbidden_effects": [
+          "payment_execution"
+        ],
+        "reason_codes": [
+          "order_item_unit_amount_changed",
+          "order_total_changed"
+        ]
+      },
+      "lifecycle": null,
+      "observed_effects": [],
+      "payment_recovery": null,
+      "status": "passed"
+    },
+    "S10": {
+      "actual": {
+        "decision": "ALLOW",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason",
+          "authorized_order_ref",
+          "final_order_ref",
+          "authorized_order_digest",
+          "final_order_digest",
+          "order_binding_status",
+          "order_binding_reason",
+          "amount_within_scope",
+          "merchant_within_scope",
+          "category_within_scope"
+        ],
+        "order_differences": [],
+        "reason_codes": []
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "ALLOW",
+        "evidence_codes": [
+          "amount_within_scope",
+          "authorized_order_ref",
+          "category_within_scope",
+          "final_order_ref",
+          "mandate_ref",
+          "merchant_within_scope",
+          "request_ref"
+        ],
+        "forbidden_effects": [],
+        "reason_codes": []
+      },
+      "lifecycle": {
+        "dispute_status": null,
+        "evidence_codes": [
+          "lifecycle_request_ref",
+          "lifecycle_order_ref",
+          "payment_execution_ref",
+          "fulfillment_ref",
+          "payment_receipt_ref",
+          "fulfillment_evidence_ref",
+          "fulfillment_failure_code"
+        ],
+        "fulfillment_status": "FAILED",
+        "payment_status": "SUCCEEDED",
+        "reason_codes": [
+          "fulfillment_failed_after_payment"
+        ],
+        "refund_status": null,
+        "remediation": {
+          "next_action": "preserve_evidence_and_start_remediation",
+          "status": "REQUIRED"
+        },
+        "task_status": "FAILED"
+      },
+      "observed_effects": [],
+      "payment_recovery": null,
+      "status": "passed"
+    },
+    "S11": {
+      "actual": {
+        "decision": "ALLOW",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason",
+          "authorized_order_ref",
+          "final_order_ref",
+          "authorized_order_digest",
+          "final_order_digest",
+          "order_binding_status",
+          "order_binding_reason",
+          "amount_within_scope",
+          "merchant_within_scope",
+          "category_within_scope"
+        ],
+        "order_differences": [],
+        "reason_codes": []
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "ALLOW",
+        "evidence_codes": [
+          "amount_within_scope",
+          "authorized_order_ref",
+          "category_within_scope",
+          "final_order_ref",
+          "mandate_ref",
+          "merchant_within_scope",
+          "request_ref"
+        ],
+        "forbidden_effects": [],
+        "reason_codes": []
+      },
+      "lifecycle": {
+        "dispute_status": null,
+        "evidence_codes": [
+          "lifecycle_request_ref",
+          "lifecycle_order_ref",
+          "payment_execution_ref",
+          "fulfillment_ref",
+          "payment_receipt_ref",
+          "fulfillment_evidence_ref",
+          "fulfillment_failure_code",
+          "refund_record_ref",
+          "refund_payment_ref",
+          "refund_order_ref",
+          "refund_currency_ref",
+          "refund_amount_ref",
+          "refund_status_ref",
+          "refund_receipt_ref",
+          "refund_reason_code"
+        ],
+        "fulfillment_status": "FAILED",
+        "payment_status": "SUCCEEDED",
+        "reason_codes": [
+          "fulfillment_failed_after_payment"
+        ],
+        "refund_status": "SUCCEEDED",
+        "remediation": {
+          "next_action": "economic_remediation_completed_by_full_refund",
+          "status": "RESOLVED"
+        },
+        "task_status": "FAILED"
+      },
+      "observed_effects": [],
+      "payment_recovery": null,
+      "status": "passed"
+    },
+    "S12": {
+      "actual": {
+        "decision": "ALLOW",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason",
+          "authorized_order_ref",
+          "final_order_ref",
+          "authorized_order_digest",
+          "final_order_digest",
+          "order_binding_status",
+          "order_binding_reason",
+          "amount_within_scope",
+          "merchant_within_scope",
+          "category_within_scope"
+        ],
+        "order_differences": [],
+        "reason_codes": []
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "ALLOW",
+        "evidence_codes": [
+          "amount_within_scope",
+          "authorized_order_ref",
+          "category_within_scope",
+          "final_order_ref",
+          "mandate_ref",
+          "merchant_within_scope",
+          "request_ref"
+        ],
+        "forbidden_effects": [
+          "second_payment_attempt"
+        ],
+        "reason_codes": []
+      },
+      "lifecycle": null,
+      "observed_effects": [],
+      "payment_recovery": {
+        "effective_status": "SUCCEEDED",
+        "evidence_codes": [
+          "recovery_request_ref",
+          "recovery_order_ref",
+          "recovery_payment_ref",
+          "initial_payment_status",
+          "status_observation_payment_ref",
+          "status_observation_order_ref",
+          "queried_payment_status",
+          "status_observation_source",
+          "status_observed_at",
+          "recovery_provider_ref",
+          "recovery_idempotency_key",
+          "status_observation_provider_ref",
+          "status_observation_verification_status",
+          "status_observation_verification_reasons"
+        ],
+        "initial_status": "UNKNOWN",
+        "next_action": "continue_with_original_payment",
+        "observed_status": "SUCCEEDED",
+        "reason_codes": [
+          "payment_state_recovered_as_succeeded"
+        ],
+        "recovery_status": "RECOVERED",
+        "retry_allowed": false
+      },
+      "status": "passed"
+    },
+    "S13": {
+      "actual": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "mandate_ref",
+          "request_ref",
+          "agent_claim_binding_status",
+          "agent_claim_binding_reason",
+          "agent_identity_mismatch"
+        ],
+        "order_differences": [],
+        "reason_codes": [
+          "agent_identity_mismatch"
+        ]
+      },
+      "evaluation": {
+        "decision_correct": true,
+        "decision_error": false,
+        "false_refusal": false,
+        "forbidden_side_effect": false,
+        "matched_forbidden_effects": [],
+        "missed_confirmation": false,
+        "overconfident_decision": false,
+        "status": "PASS",
+        "unsafe_allow": false
+      },
+      "expected": {
+        "decision": "DENY",
+        "evidence_codes": [
+          "agent_claim_binding_reason",
+          "agent_claim_binding_status",
+          "agent_identity_mismatch"
+        ],
+        "forbidden_effects": [
+          "payment_execution"
+        ],
+        "reason_codes": [
+          "agent_identity_mismatch"
+        ]
+      },
+      "lifecycle": null,
+      "observed_effects": [],
+      "payment_recovery": null,
+      "status": "passed"
+    }
+  },
+  "schema_version": 1
+}

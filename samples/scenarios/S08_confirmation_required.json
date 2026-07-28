@@ -1,0 +1,156 @@
+{
+  "sample_id": "S08",
+  "title": "AP2金额变化需要用户确认",
+  "question": "金额超过免确认额度但未超过硬上限时，系统是否要求用户确认？",
+  "mandate": {
+    "mandate_id": "mandate-shoes-008",
+    "user_id": "user-001",
+    "max_amount": "550.00",
+    "confirmation_above": "500.00",
+    "allowed_merchants": ["merchant-a"],
+    "allowed_categories": ["shoes"],
+    "expires_at": "2026-07-12T12:00:00+08:00",
+    "max_count": 1,
+    "expected_agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "request": {
+    "request_id": "request-s08",
+    "amount": "520.00",
+    "merchant": "merchant-a",
+    "category": "shoes",
+    "occurred_at": "2026-07-11T12:00:00+08:00",
+    "sequence_count": 1,
+    "agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "protocol_demo": {
+    "protocol": "AP2",
+    "snapshot": {
+      "protocol_version": "AP2-v0.2.0-teaching-fixture",
+      "open_payment_mandate": {
+        "vct": "mandate.payment.open.1",
+        "constraints": [
+          {
+            "type": "payment.amount_range",
+            "currency": "CNY",
+            "max": 55000
+          },
+          {
+            "type": "payment.allowed_payees",
+            "allowed": [
+              {
+                "id": "merchant-a"
+              }
+            ]
+          },
+          {
+            "type": "payment.agent_recurrence",
+            "frequency": "ON_DEMAND",
+            "max_occurrences": 1
+          },
+          {
+            "type": "payment.execution_date",
+            "not_after": "2026-07-12T12:00:00+08:00"
+          }
+        ],
+        "cnf": {
+          "jwk": {
+            "kid": "fixture-only-not-verified"
+          }
+        }
+      },
+      "payment_mandate": {
+        "vct": "mandate.payment.1",
+        "transaction_id": "request-s08",
+        "payee": {
+          "id": "merchant-a"
+        },
+        "payment_amount": {
+          "currency": "CNY",
+          "value": 52000
+        },
+        "execution_date": "2026-07-11T12:00:00+08:00",
+        "payment_instrument": {
+          "id": "mock-instrument-no-real-card"
+        }
+      },
+      "experiment_context": {
+        "mandate_id": "mandate-shoes-008",
+        "user_id": "user-001",
+        "category": "shoes",
+        "allowed_categories": ["shoes"],
+        "confirmation_above_minor": 50000,
+        "agent_id": "agent-shop-001",
+        "sequence_count": 1
+      }
+    },
+    "field_mapping": [
+      {
+        "from": "open_payment_mandate.constraints[payment.amount_range].max",
+        "to": "mandate.max_amount",
+        "transform": "55000分 -> 550.00元"
+      },
+      {
+        "from": "open_payment_mandate.constraints[payment.allowed_payees].allowed",
+        "to": "mandate.allowed_merchants",
+        "transform": "提取merchant-a"
+      },
+      {
+        "from": "open_payment_mandate.constraints[payment.execution_date].not_after",
+        "to": "mandate.expires_at",
+        "transform": "保留带时区时间"
+      },
+      {
+        "from": "payment_mandate.payment_amount.value",
+        "to": "request.amount",
+        "transform": "52000分 -> 520.00元"
+      },
+      {
+        "from": "payment_mandate.payee.id",
+        "to": "request.merchant",
+        "transform": "提取merchant-a"
+      },
+      {
+        "from": "experiment_context.confirmation_above_minor",
+        "to": "mandate.confirmation_above",
+        "transform": "本地实验桥接：50000分 -> 500.00元"
+      }
+    ]
+  },
+  "expected": {
+    "decision": "CONFIRMATION_REQUIRED",
+    "reason_codes": ["confirmation_threshold_exceeded"],
+    "evidence_codes": ["confirmation_threshold_exceeded"]
+  },
+  "flow": [
+    {
+      "actor": "用户",
+      "action": "500元内可直接执行，最高可到550元"
+    },
+    {
+      "actor": "Agent",
+      "action": "选择跑鞋"
+    },
+    {
+      "actor": "模拟商户",
+      "action": "订单由500元变化为520元"
+    },
+    {
+      "actor": "AP2 Adapter",
+      "action": "把授权和支付请求转换为通用模型"
+    },
+    {
+      "actor": "验证器",
+      "action": "金额在硬上限内但超过免确认阈值"
+    },
+    {
+      "actor": "结果",
+      "action": "CONFIRMATION_REQUIRED"
+    }
+  ],
+  "limitations": [
+    "只生成确认要求，不模拟真实用户确认和后续付款",
+    "AP2快照只用于教学，不校验真实签名、委托链和收据"
+  ]
+}

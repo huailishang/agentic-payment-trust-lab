@@ -1,0 +1,16 @@
+[project]
+name = "agentic-payment-trust-lab"
+version = "0.1.0"
+description = "Offline lab for agentic payment authorization, safety, trusted execution, and evaluation"
+requires-python = ">=3.10"
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

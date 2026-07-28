@@ -1,0 +1,41 @@
+{
+  "sample_id": "S05",
+  "title": "重复请求重放",
+  "question": "同一个request_id再次出现时是否拒绝？",
+  "mandate": {
+    "mandate_id": "mandate-shoes-005",
+    "user_id": "user-001",
+    "max_amount": "550.00",
+    "confirmation_above": "500.00",
+    "allowed_merchants": ["merchant-a"],
+    "allowed_categories": ["shoes"],
+    "expires_at": "2026-07-12T12:00:00+08:00",
+    "max_count": 1,
+    "expected_agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "request": {
+    "request_id": "request-s05",
+    "amount": "480.00",
+    "merchant": "merchant-a",
+    "category": "shoes",
+    "occurred_at": "2026-07-11T12:00:00+08:00",
+    "sequence_count": 1,
+    "agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "seen_request_ids": ["request-s05"],
+  "expected": {
+    "decision": "DENY",
+    "reason_codes": ["duplicate_request"],
+    "evidence_codes": ["duplicate_request"]
+  },
+  "flow": [
+    {"actor": "用户", "action": "授权一次购买"},
+    {"actor": "Agent", "action": "重复发送同一请求"},
+    {"actor": "模拟支付方", "action": "查询已处理请求编号"},
+    {"actor": "验证器", "action": "识别request_id已出现"},
+    {"actor": "结果", "action": "DENY"}
+  ],
+  "limitations": ["仅用内存样品模拟幂等记录，不代表分布式幂等实现"]
+}

@@ -1,0 +1,148 @@
+{
+  "sample_id": "S12",
+  "title": "支付响应超时后查询原交易并防止重复扣款",
+  "question": "支付请求已经发出，但首次响应丢失导致状态未知时，系统能否先查询原支付状态，并在确认原交易成功后明确禁止再次扣款？",
+  "mandate": {
+    "mandate_id": "mandate-shoes-012",
+    "user_id": "user-001",
+    "max_amount": "550.00",
+    "confirmation_above": "500.00",
+    "allowed_merchants": ["merchant-a"],
+    "allowed_categories": ["shoes"],
+    "expires_at": "2026-07-12T12:00:00+08:00",
+    "max_count": 1,
+    "expected_agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "authorized_order": {
+    "order_id": "order-s12",
+    "order_version": "v1",
+    "merchant": "merchant-a",
+    "payee": "merchant-a",
+    "items": [
+      {
+        "item_id": "shoe-012",
+        "name": "Road Runner",
+        "category": "shoes",
+        "quantity": 1,
+        "unit_amount": "480.00",
+        "kind": "product"
+      }
+    ],
+    "total_amount": "480.00",
+    "currency": "CNY",
+    "quote_expires_at": "2026-07-11T12:30:00+08:00",
+    "fulfilment_terms": "standard delivery",
+    "mandate_ref": "mandate-shoes-012",
+    "service_id": "running-shoe-delivery",
+    "candidate_rails": ["card"]
+  },
+  "final_order": {
+    "order_id": "order-s12",
+    "order_version": "v2",
+    "merchant": "merchant-a",
+    "payee": "merchant-a",
+    "items": [
+      {
+        "item_id": "shoe-012",
+        "name": "Road Runner",
+        "category": "shoes",
+        "quantity": 1,
+        "unit_amount": "480.00",
+        "kind": "product"
+      }
+    ],
+    "total_amount": "480.00",
+    "currency": "CNY",
+    "quote_expires_at": "2026-07-11T12:30:00+08:00",
+    "fulfilment_terms": "standard delivery",
+    "mandate_ref": "mandate-shoes-012",
+    "service_id": "running-shoe-delivery",
+    "candidate_rails": ["card"]
+  },
+  "request": {
+    "request_id": "request-s12",
+    "amount": "480.00",
+    "merchant": "merchant-a",
+    "category": "shoes",
+    "occurred_at": "2026-07-11T12:00:00+08:00",
+    "sequence_count": 1,
+    "agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "payment_recovery": {
+    "initial_payment": {
+      "payment_id": "payment-s12",
+      "provider_ref": "provider-payment-s12",
+      "request_id": "request-s12",
+      "order_id": "order-s12",
+      "idempotency_key": "idem-request-s12",
+      "status": "UNKNOWN",
+      "amount": "480.00",
+      "currency": "CNY",
+      "occurred_at": "2026-07-11T12:01:00+08:00",
+      "receipt_ref": null
+    },
+    "status_observation": {
+      "payment_id": "payment-s12",
+      "provider_ref": "provider-payment-s12",
+      "order_id": "order-s12",
+      "status": "SUCCEEDED",
+      "observed_at": "2026-07-11T12:03:00+08:00",
+      "source": "offline_provider_status_query"
+    },
+    "known_attempts": []
+  },
+  "expected": {
+    "decision": "ALLOW",
+    "reason_codes": [],
+    "evidence_codes": [
+      "mandate_ref",
+      "request_ref",
+      "authorized_order_ref",
+      "final_order_ref",
+      "amount_within_scope",
+      "merchant_within_scope",
+      "category_within_scope"
+    ],
+    "forbidden_effects": [
+      "second_payment_attempt"
+    ]
+  },
+  "expected_payment_recovery": {
+    "initial_status": "UNKNOWN",
+    "observed_status": "SUCCEEDED",
+    "effective_status": "SUCCEEDED",
+    "recovery_status": "RECOVERED",
+    "retry_allowed": false,
+    "next_action": "continue_with_original_payment",
+    "reason_codes": ["payment_state_recovered_as_succeeded"],
+    "evidence_codes": [
+      "recovery_request_ref",
+      "recovery_order_ref",
+      "recovery_payment_ref",
+      "recovery_provider_ref",
+      "recovery_idempotency_key",
+      "initial_payment_status",
+      "status_observation_payment_ref",
+      "status_observation_order_ref",
+      "status_observation_provider_ref",
+      "queried_payment_status",
+      "status_observation_source",
+      "status_observed_at"
+    ]
+  },
+  "flow": [
+    {"actor": "统一验证器", "action": "确认付款请求与订单仍在用户授权范围内"},
+    {"actor": "模拟支付执行层", "action": "提交支付请求，但首次响应超时，初始状态记录为 UNKNOWN"},
+    {"actor": "Payment State / Recovery Manager", "action": "使用原 payment_id、provider_ref 和幂等身份查询原交易"},
+    {"actor": "固定离线状态查询", "action": "返回原 payment-s12 已经 SUCCEEDED"},
+    {"actor": "Payment Recovery Manager", "action": "恢复可信支付状态并设置 retry_allowed=false，禁止第二次扣款"}
+  ],
+  "limitations": [
+    "UNKNOWN 和 SUCCEEDED 都是固定离线样品中的状态观察，不代表真实支付机构响应",
+    "retry_allowed=false 由 Python 后端恢复规则产生，UI 只展示结果",
+    "本场景不执行第二次支付、不连接生产 PSP、不创建真实扣款",
+    "支付状态恢复成功不代表履约成功，也不推断用户任务已经完成"
+  ]
+}

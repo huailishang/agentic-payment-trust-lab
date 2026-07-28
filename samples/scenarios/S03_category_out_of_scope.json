@@ -1,0 +1,40 @@
+{
+  "sample_id": "S03",
+  "title": "商品品类越权",
+  "question": "Agent购买非授权品类时是否拒绝？",
+  "mandate": {
+    "mandate_id": "mandate-shoes-003",
+    "user_id": "user-001",
+    "max_amount": "550.00",
+    "confirmation_above": "500.00",
+    "allowed_merchants": ["merchant-a"],
+    "allowed_categories": ["shoes"],
+    "expires_at": "2026-07-12T12:00:00+08:00",
+    "max_count": 1,
+    "expected_agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "request": {
+    "request_id": "request-s03",
+    "amount": "99.00",
+    "merchant": "merchant-a",
+    "category": "subscription",
+    "occurred_at": "2026-07-11T12:00:00+08:00",
+    "sequence_count": 1,
+    "agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "expected": {
+    "decision": "DENY",
+    "reason_codes": ["category_out_of_scope"],
+    "evidence_codes": ["category_out_of_scope"]
+  },
+  "flow": [
+    {"actor": "用户", "action": "只授权购买鞋类"},
+    {"actor": "Agent", "action": "提交订阅服务请求"},
+    {"actor": "模拟商户", "action": "返回订阅订单"},
+    {"actor": "验证器", "action": "发现品类不在委托范围"},
+    {"actor": "结果", "action": "DENY"}
+  ],
+  "limitations": ["品类码为模拟值，不等同真实商户分类码"]
+}

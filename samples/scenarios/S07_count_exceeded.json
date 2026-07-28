@@ -1,0 +1,40 @@
+{
+  "sample_id": "S07",
+  "title": "执行次数超限",
+  "question": "只允许一次的委托被用于第二次请求时是否拒绝？",
+  "mandate": {
+    "mandate_id": "mandate-shoes-007",
+    "user_id": "user-001",
+    "max_amount": "550.00",
+    "confirmation_above": "500.00",
+    "allowed_merchants": ["merchant-a"],
+    "allowed_categories": ["shoes"],
+    "expires_at": "2026-07-12T12:00:00+08:00",
+    "max_count": 1,
+    "expected_agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "request": {
+    "request_id": "request-s07",
+    "amount": "480.00",
+    "merchant": "merchant-a",
+    "category": "shoes",
+    "occurred_at": "2026-07-11T12:00:00+08:00",
+    "sequence_count": 2,
+    "agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "expected": {
+    "decision": "DENY",
+    "reason_codes": ["count_exceeded"],
+    "evidence_codes": ["count_exceeded"]
+  },
+  "flow": [
+    {"actor": "用户", "action": "授权最多执行一次"},
+    {"actor": "Agent", "action": "发起第二次请求"},
+    {"actor": "模拟商户", "action": "返回第二笔订单"},
+    {"actor": "验证器", "action": "累计次数超过委托上限"},
+    {"actor": "结果", "action": "DENY"}
+  ],
+  "limitations": ["sequence_count由样品提供，尚未实现持久化累计"]
+}

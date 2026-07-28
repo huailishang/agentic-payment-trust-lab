@@ -1,0 +1,66 @@
+{
+  "sample_id": "S13",
+  "title": "声明的智能体标识与委托指定标识不一致",
+  "question": "当前付款请求声明的智能体是否仍与用户委托中指定的智能体标识绑定一致？",
+  "mandate": {
+    "mandate_id": "mandate-s13",
+    "user_id": "user-001",
+    "max_amount": "550.00",
+    "confirmation_above": "500.00",
+    "allowed_merchants": ["merchant-a"],
+    "allowed_categories": ["shoes"],
+    "expires_at": "2026-07-28T12:00:00+08:00",
+    "max_count": 1,
+    "expected_agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "request": {
+    "request_id": "request-s13",
+    "amount": "480.00",
+    "merchant": "merchant-a",
+    "category": "shoes",
+    "occurred_at": "2026-07-27T09:00:00+08:00",
+    "sequence_count": 1,
+    "agent_id": "agent-shop-other",
+    "currency": "CNY"
+  },
+  "expected": {
+    "decision": "DENY",
+    "reason_codes": ["agent_identity_mismatch"],
+    "evidence_codes": [
+      "agent_claim_binding_status",
+      "agent_claim_binding_reason",
+      "agent_identity_mismatch"
+    ]
+  },
+  "flow": [
+    {
+      "actor": "用户",
+      "action": "委托指定智能体执行跑鞋购买任务",
+      "data": {"指定智能体": "agent-shop-001"}
+    },
+    {
+      "actor": "付款请求",
+      "action": "请求声明由另一个智能体发起",
+      "data": {"请求智能体": "agent-shop-other"}
+    },
+    {
+      "actor": "可信执行域",
+      "action": "只比较声明的智能体标识引用",
+      "data": {"结果": "INVALID", "边界": "不代表真实身份认证"}
+    },
+    {
+      "actor": "委托验证器",
+      "action": "根据用户委托规则阻止当前付款请求"
+    },
+    {
+      "actor": "结果",
+      "action": "DENY"
+    }
+  ],
+  "limitations": [
+    "只验证固定离线标识引用，不执行真实身份核验或认证",
+    "字符串标识一致只能证明声明引用一致，不能证明智能体真实身份、凭证持有或密钥控制",
+    "不执行真实支付"
+  ]
+}

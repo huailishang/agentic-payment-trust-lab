@@ -1,0 +1,73 @@
+{
+  "_source": {
+    "protocol": "AP2",
+    "release": "v0.2.0",
+    "commit": "b4587ac",
+    "repository": "google-agentic-commerce/AP2",
+    "scenario": "code/samples/python/scenarios/a2a/human-present/cards",
+    "license": "Apache-2.0",
+    "capture_type": "normalized_offline_fixture"
+  },
+  "protocol_version": "AP2-v0.2.0",
+  "flow_mode": "HUMAN_PRESENT",
+  "intent_mandate": {
+    "user_cart_confirmation_required": true,
+    "natural_language_description": "Buy the selected coffee maker after I confirm the final cart.",
+    "merchants": ["merchant-a"],
+    "requires_refundability": false,
+    "intent_expiry": "2026-07-28T12:00:00+00:00"
+  },
+  "cart_mandate": {
+    "contents": {
+      "id": "cart-hp-001",
+      "user_cart_confirmation_required": true,
+      "payment_request": {
+        "method_data": [
+          {"supported_methods": "card", "data": {"tokenized": true}}
+        ],
+        "details": {
+          "id": "payment-request-hp-001",
+          "display_items": [
+            {
+              "label": "Coffee maker",
+              "amount": {"currency": "USD", "value": 120.0},
+              "refund_period": 30
+            }
+          ],
+          "total": {
+            "label": "Total",
+            "amount": {"currency": "USD", "value": 120.0},
+            "refund_period": 30
+          }
+        }
+      },
+      "cart_expiry": "2026-07-27T13:00:00+00:00",
+      "merchant_name": "merchant-a"
+    },
+    "merchant_authorization": "fixture-merchant-jwt"
+  },
+  "payment_mandate": {
+    "payment_mandate_contents": {
+      "payment_mandate_id": "payment-mandate-hp-001",
+      "payment_details_id": "payment-request-hp-001",
+      "payment_details_total": {
+        "label": "Total",
+        "amount": {"currency": "USD", "value": 120.0},
+        "refund_period": 30
+      },
+      "payment_response": {
+        "request_id": "payment-request-hp-001",
+        "method_name": "card",
+        "details": {"instrument_id": "fixture-dpan"}
+      },
+      "merchant_agent": "merchant-a",
+      "timestamp": "2026-07-27T12:30:00+00:00"
+    },
+    "user_authorization": "fixture-user-authorization"
+  },
+  "experiment_context": {
+    "user_id": "user-hp-001",
+    "category": "coffee_maker",
+    "agent_id": "shopping-agent-001"
+  }
+}

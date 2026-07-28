@@ -1,0 +1,85 @@
+{
+  "protocol_version": "ACP-2026-04-17-teaching-fixture",
+  "authorized_checkout": {
+    "id": "order-s09",
+    "currency": "CNY",
+    "line_items": [
+      {
+        "id": "li-shoe-001",
+        "item": {
+          "id": "shoe-001",
+          "name": "Road Runner",
+          "unit_amount": 48000
+        },
+        "quantity": 1,
+        "name": "Road Runner",
+        "unit_amount": 48000,
+        "totals": [
+          {
+            "type": "total",
+            "display_text": "Total",
+            "amount": 48000
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "type": "total",
+        "display_text": "Total",
+        "amount": 48000
+      }
+    ]
+  },
+  "final_checkout": {
+    "id": "order-s09",
+    "currency": "CNY",
+    "line_items": [
+      {
+        "id": "li-shoe-001",
+        "item": {
+          "id": "shoe-001",
+          "name": "Road Runner",
+          "unit_amount": 49000
+        },
+        "quantity": 1,
+        "name": "Road Runner",
+        "unit_amount": 49000,
+        "totals": [
+          {
+            "type": "total",
+            "display_text": "Total",
+            "amount": 49000
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "type": "total",
+        "display_text": "Total",
+        "amount": 49000
+      }
+    ]
+  },
+  "experiment_context": {
+    "authorized_order_version": "v1",
+    "final_order_version": "v2",
+    "seller_id": "merchant-a",
+    "payee": "merchant-a",
+    "minor_unit_scale": 2,
+    "item_semantics": {
+      "shoe-001": {
+        "category": "shoes",
+        "kind": "product"
+      }
+    },
+    "quote_expires_at": "2026-07-11T12:30:00+08:00",
+    "fulfilment_terms": "standard delivery",
+    "mandate_ref": "mandate-shoes-009",
+    "service_id": "running-shoe-order",
+    "candidate_rails": [
+      "card"
+    ]
+  }
+}

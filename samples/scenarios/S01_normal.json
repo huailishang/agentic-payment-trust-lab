@@ -1,0 +1,40 @@
+{
+  "sample_id": "S01",
+  "title": "正常委托范围内支付",
+  "question": "请求是否完整落在用户委托范围内？",
+  "mandate": {
+    "mandate_id": "mandate-shoes-001",
+    "user_id": "user-001",
+    "max_amount": "550.00",
+    "confirmation_above": "500.00",
+    "allowed_merchants": ["merchant-a"],
+    "allowed_categories": ["shoes"],
+    "expires_at": "2026-07-12T12:00:00+08:00",
+    "max_count": 1,
+    "expected_agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "request": {
+    "request_id": "request-s01",
+    "amount": "480.00",
+    "merchant": "merchant-a",
+    "category": "shoes",
+    "occurred_at": "2026-07-11T12:00:00+08:00",
+    "sequence_count": 1,
+    "agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "expected": {
+    "decision": "ALLOW",
+    "reason_codes": [],
+    "evidence_codes": ["amount_within_scope", "merchant_within_scope", "category_within_scope"]
+  },
+  "flow": [
+    {"actor": "用户", "action": "授权购买跑鞋", "data": {"免确认上限": "500元", "硬上限": "550元"}},
+    {"actor": "Agent", "action": "选择商品并提交购买请求", "data": {"商品": "跑鞋"}},
+    {"actor": "模拟商户", "action": "返回订单", "data": {"金额": "480元", "商户": "merchant-a"}},
+    {"actor": "验证器", "action": "核对金额、商户、品类、有效期和次数"},
+    {"actor": "结果", "action": "ALLOW"}
+  ],
+  "limitations": ["只验证离线规则，不代表真实支付已获授权"]
+}

@@ -1,0 +1,94 @@
+{
+  "sample_id": "S09",
+  "title": "最终订单涨价需要重新确认",
+  "question": "最终价格仍低于免确认阈值，但与用户确认过的订单不同，系统是否要求重新确认？",
+  "mandate": {
+    "mandate_id": "mandate-shoes-009",
+    "user_id": "user-001",
+    "max_amount": "550.00",
+    "confirmation_above": "500.00",
+    "allowed_merchants": ["merchant-a"],
+    "allowed_categories": ["shoes"],
+    "expires_at": "2026-07-12T12:00:00+08:00",
+    "max_count": 1,
+    "expected_agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "authorized_order": {
+    "order_id": "order-s09",
+    "order_version": "v1",
+    "merchant": "merchant-a",
+    "payee": "merchant-a",
+    "items": [
+      {
+        "item_id": "shoe-001",
+        "name": "Road Runner",
+        "category": "shoes",
+        "quantity": 1,
+        "unit_amount": "480.00",
+        "kind": "product"
+      }
+    ],
+    "total_amount": "480.00",
+    "currency": "CNY",
+    "quote_expires_at": "2026-07-11T12:30:00+08:00",
+    "fulfilment_terms": "standard delivery",
+    "mandate_ref": "mandate-shoes-009",
+    "service_id": "running-shoe-order",
+    "candidate_rails": ["card"]
+  },
+  "final_order": {
+    "order_id": "order-s09",
+    "order_version": "v2",
+    "merchant": "merchant-a",
+    "payee": "merchant-a",
+    "items": [
+      {
+        "item_id": "shoe-001",
+        "name": "Road Runner",
+        "category": "shoes",
+        "quantity": 1,
+        "unit_amount": "490.00",
+        "kind": "product"
+      }
+    ],
+    "total_amount": "490.00",
+    "currency": "CNY",
+    "quote_expires_at": "2026-07-11T12:30:00+08:00",
+    "fulfilment_terms": "standard delivery",
+    "mandate_ref": "mandate-shoes-009",
+    "service_id": "running-shoe-order",
+    "candidate_rails": ["card"]
+  },
+  "request": {
+    "request_id": "request-s09",
+    "amount": "490.00",
+    "merchant": "merchant-a",
+    "category": "shoes",
+    "occurred_at": "2026-07-11T12:00:00+08:00",
+    "sequence_count": 1,
+    "agent_id": "agent-shop-001",
+    "currency": "CNY"
+  },
+  "expected": {
+    "decision": "CONFIRMATION_REQUIRED",
+    "reason_codes": ["order_total_changed", "order_item_unit_amount_changed"],
+    "evidence_codes": [
+      "authorized_order_ref",
+      "final_order_ref",
+      "order_total_changed",
+      "order_item_unit_amount_changed"
+    ]
+  },
+  "flow": [
+    {"actor": "用户", "action": "确认480元的跑鞋订单"},
+    {"actor": "Agent", "action": "准备按已确认订单付款"},
+    {"actor": "模拟商户", "action": "把最终订单更新为490元"},
+    {"actor": "验证器", "action": "比较授权订单v1与最终订单v2"},
+    {"actor": "结果", "action": "CONFIRMATION_REQUIRED"}
+  ],
+  "limitations": [
+    "本主样品验证同一商品单价与订单总额同步变化；其他S09语义由订单专属单元测试覆盖",
+    "只生成重新确认要求，不模拟真实用户确认和付款"
+  ]
+}
