@@ -25,9 +25,19 @@ _HTML_TEMPLATE = r"""<!doctype html>
     .pill { background: #eef2f7; padding: 5px 9px; border-radius: 999px; font-size: 12px; }
     .layout { min-height: calc(100vh - 140px); }
     main { padding: 18px; min-width: 0; max-width: 1280px; width: 100%; margin: 0 auto; }
-    .scenario-selector { margin-left: auto; display: flex; gap: 8px; align-items: center; }
-    .scenario-selector label { color: #596579; font-size: 12px; font-weight: 700; }
-    .scenario-selector select { min-width: 260px; border: 1px solid #cad1da; border-radius: 8px; padding: 8px 10px; background: #fff; font: inherit; }
+    .module-controls { display: grid; grid-template-columns: minmax(220px, 0.7fr) minmax(280px, 1.3fr); gap: 10px; align-items: end; }
+    .module-field { display: grid; gap: 5px; }
+    .module-field label { color: #596579; font-size: 12px; font-weight: 700; }
+    .module-field select { width: 100%; border: 1px solid #cad1da; border-radius: 8px; padding: 9px 10px; background: #fff; font: inherit; }
+    .module-result { margin-top: 12px; padding-top: 12px; border-top: 1px solid #e5e9ef; }
+    .module-result p { margin: 6px 0; }
+    .module-result-title { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .module-result-title h2 { margin: 0; }
+    .module-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+    .module-detail-row { background: #f7f9fc; border-radius: 8px; padding: 9px 10px; font-size: 13px; }
+    .PASS { background: #e5f6eb; color: #176637; }
+    .PARTIAL { background: #fff3d8; color: #825400; }
+    .UNSUPPORTED { background: #eceef2; color: #414b5a; }
     .variant-button { width: 100%; text-align: left; border: 1px solid #dfe4ea; background: #fff; border-radius: 10px; padding: 11px; margin-bottom: 8px; cursor: pointer; }
     .variant-button:hover, .variant-button.active { border-color: #3559c7; background: #f1f4ff; }
     .card { background: #fff; border: 1px solid #dfe4ea; border-radius: 12px; padding: 16px; margin-bottom: 14px; }
@@ -145,8 +155,7 @@ _HTML_TEMPLATE = r"""<!doctype html>
     @media (max-width: 850px) {
       .learning-grid, .data-grid, .reason-grid, .step-facts, .protocol-guide, .unified-grid, .order-slots, .key-stage-grid, .interactive-grid { grid-template-columns: 1fr; }
       .unified-panel.wide { grid-column: auto; }
-      .scenario-selector { margin-left: 0; width: 100%; }
-      .scenario-selector select { min-width: 0; flex: 1; }
+      .module-controls, .module-detail-grid { grid-template-columns: 1fr; }
       .check-row { grid-template-columns: 1fr; }
       .progress { margin-left: 0; width: 100%; }
       .flow { flex-direction: column; overflow-x: visible; }
@@ -158,22 +167,33 @@ _HTML_TEMPLATE = r"""<!doctype html>
 </head>
 <body>
 <header>
-  <h1>智能体支付交互沙盘 · 中文学习版</h1>
-  <p>选择场景，先通过支付生命周期异常矩阵定位问题，再用“当前场景关键环节”和“可信执行侧支”理解业务环节与确定性验证如何配合。</p>
+  <h1>智能体支付可信实验室 · 中文交互版</h1>
+  <p>先选择实验模块，再选择对应场景或流程；M2 展开内部 S 场景，其他模块直接展示外部挑战、协议、攻击和统一评测结果。</p>
   <div class="offline-warning">⚠ 离线模拟，不执行真实支付，不连接银行卡、商户或支付网络。</div>
   <div class="summary" id="summary"></div>
 </header>
 <div class="layout">
   <main>
+    <section class="card" aria-label="实验模块选择">
+      <div class="module-controls">
+        <div class="module-field">
+          <label for="module-select">选择模块</label>
+          <select id="module-select" aria-label="选择实验模块"></select>
+        </div>
+        <div class="module-field">
+          <label for="module-item-select">选择场景 / 流程</label>
+          <select id="module-item-select" aria-label="选择模块内场景或流程"></select>
+        </div>
+      </div>
+      <div class="module-result" id="module-result"></div>
+    </section>
+
+    <div id="m2-scenario-area">
     <section class="card" aria-labelledby="scenario-title">
       <div class="title-row">
         <h2 id="scenario-title"></h2>
         <span id="protocol-badge" class="badge"></span>
         <span id="validation-badge" class="badge validation-badge"></span>
-        <div class="scenario-selector">
-          <label for="scenario-select">切换场景</label>
-          <select id="scenario-select" aria-label="切换学习场景"></select>
-        </div>
       </div>
       <div class="learning-grid">
         <div class="learning-box"><h3>这个场景要学什么</h3><p id="objective"></p><p id="story"></p></div>
@@ -228,13 +248,15 @@ _HTML_TEMPLATE = r"""<!doctype html>
       <p class="muted">这些结果均由 Python 后端调用真实验证器预先计算；按钮只切换展示，不在浏览器重新判断。</p>
       <div class="variant-buttons" id="variant-buttons"></div>
     </section>
+    </div>
 
   </main>
 </div>
 <script>
 const card = __CARD_JSON__;
-const state = { scenarioIndex: 0, variantIndex: null, interactivePresentation: null };
-const scenarioSelect = document.getElementById('scenario-select');
+const state = { scenarioIndex: 0, moduleIndex: 0, moduleItemIndex: 0, variantIndex: null, interactivePresentation: null };
+const moduleSelect = document.getElementById('module-select');
+const moduleItemSelect = document.getElementById('module-item-select');
 
 function text(tag, value, className) {
   const node = document.createElement(tag);
@@ -263,32 +285,119 @@ function view() {
 function displayView() { return state.interactivePresentation || view(); }
 function currentStep() { return view().walkthrough[state.stepIndex]; }
 
+function navigationModules() { return card.lab_overview?.navigation_modules || []; }
+function currentModule() { return navigationModules()[state.moduleIndex]; }
+function currentModuleItem() { return currentModule()?.items?.[state.moduleItemIndex] || null; }
+
 function renderSummary() {
   const box = document.getElementById('summary');
-  const items = [`场景 ${card.summary.total}`, `符合预期 ${card.summary.passed}`, `不一致 ${card.summary.failed}`];
-  Object.entries(card.decision_distribution).forEach(([code, count]) => {
-    const label = card.presentation_catalog.decisions[code].label_zh;
-    items.push(`${label} ${count}`);
-  });
-  items.forEach(value => box.appendChild(text('span', value, 'pill')));
+  box.replaceChildren();
+  const byId = Object.fromEntries((card.lab_overview?.modules || []).map(item => [item.id, item]));
+  const values = [
+    'M2 内部回归 ' + (byId.M2_INTERNAL?.passed || 0) + '/' + (byId.M2_INTERNAL?.total || 0),
+    'M3 PayBench ' + (byId.M3_PAYBENCH?.supported || 0) + '/' + (byId.M3_PAYBENCH?.total || 0) + ' 可执行',
+    'M4 AP2 ' + (byId.M4_AP2?.passed || 0) + '/' + (byId.M4_AP2?.total || 0),
+    'Attack Overlay ' + (byId.ATTACK_OVERLAY?.passed || 0) + '/' + (byId.ATTACK_OVERLAY?.total || 0),
+    'M5 风险失败 ' + (card.lab_overview?.modules || []).reduce((sum, item) => sum + (item.m5?.failed || 0), 0),
+  ];
+  values.forEach(value => box.appendChild(text('span', value, 'pill')));
 }
 
-function renderScenarioSelector() {
-  scenarioSelect.replaceChildren();
-  card.scenarios.forEach((item, index) => {
+function renderModuleSelectors() {
+  moduleSelect.replaceChildren();
+  navigationModules().forEach((item, index) => {
     const option = document.createElement('option');
     option.value = String(index);
-    option.textContent = `${item.sample_id} · ${item.title}`;
-    scenarioSelect.appendChild(option);
+    option.textContent = item.nav_name_zh + ' · ' + (item.status_label_zh || item.status);
+    moduleSelect.appendChild(option);
   });
-  scenarioSelect.addEventListener('change', () => selectScenario(Number(scenarioSelect.value)));
+  moduleSelect.addEventListener('change', () => selectModule(Number(moduleSelect.value)));
+  moduleItemSelect.addEventListener('change', () => selectModuleItem(Number(moduleItemSelect.value)));
+}
+
+function populateModuleItems() {
+  moduleItemSelect.replaceChildren();
+  (currentModule()?.items || []).forEach((item, index) => {
+    const option = document.createElement('option');
+    option.value = String(index);
+    option.textContent = item.id + ' · ' + item.name_zh;
+    moduleItemSelect.appendChild(option);
+  });
+  moduleItemSelect.value = String(state.moduleItemIndex);
+}
+
+function selectModule(index) {
+  state.moduleIndex = index;
+  state.moduleItemIndex = 0;
+  moduleSelect.value = String(index);
+  populateModuleItems();
+  renderModuleSelection();
+}
+
+function selectModuleItem(index) {
+  state.moduleItemIndex = index;
+  moduleItemSelect.value = String(index);
+  renderModuleSelection();
+}
+
+function renderModuleSelection() {
+  const module = currentModule();
+  const item = currentModuleItem();
+  const panel = document.getElementById('module-result');
+  panel.replaceChildren();
+  if (!module || !item) return;
+
+  const titleRow = text('div', '', 'module-result-title');
+  titleRow.appendChild(text('h2', module.nav_name_zh));
+  titleRow.appendChild(text('span', module.status_label_zh || module.status, 'badge ' + module.status));
+  panel.appendChild(titleRow);
+  panel.appendChild(text('p', module.headline_zh || module.purpose_zh, 'muted'));
+
+  const itemTitle = text('p', '');
+  itemTitle.appendChild(text('strong', item.id + ' · ' + item.name_zh + '：'));
+  itemTitle.appendChild(document.createTextNode(item.headline_zh || ''));
+  panel.appendChild(itemTitle);
+
+  if (module.id === 'M3_PAYBENCH' && item.scenarios) {
+    const grid = text('div', '', 'module-detail-grid');
+    item.scenarios.forEach(row => {
+      const kind = row.pair_type === 'trap' ? '危险案例' : '安全对照';
+      const value = row.support_status === 'SUPPORTED'
+        ? kind + ' · ' + row.evaluation_status + ' · ' + row.decision
+        : kind + ' · 暂未支持';
+      grid.appendChild(text('div', value, 'module-detail-row'));
+    });
+    panel.appendChild(grid);
+  } else if (module.id === 'M5_UNIFIED' && item.details) {
+    const grid = text('div', '', 'module-detail-grid');
+    const metrics = [
+      ['通过 / 总数', item.details.passed + '/' + item.details.total],
+      ['错误放行', item.details.unsafe_allow],
+      ['错误拒绝', item.details.false_refusal],
+      ['漏人工确认', item.details.missed_confirmation],
+      ['过度武断', item.details.overconfident_decision],
+      ['禁止副作用', item.details.forbidden_side_effect],
+    ];
+    metrics.forEach(([label, value]) => grid.appendChild(text('div', label + '：' + value, 'module-detail-row')));
+    panel.appendChild(grid);
+  } else if ((module.id === 'M4_AP2' || module.id === 'ATTACK_OVERLAY') && item.details) {
+    const grid = text('div', '', 'module-detail-grid');
+    Object.entries(item.details).slice(0, 6).forEach(([key, value]) => {
+      grid.appendChild(text('div', key + '：' + displayValue(value), 'module-detail-row'));
+    });
+    panel.appendChild(grid);
+  }
+
+  const m2Area = document.getElementById('m2-scenario-area');
+  const isM2 = module.id === 'M2_INTERNAL';
+  m2Area.classList.toggle('hidden', !isM2);
+  if (isM2 && Number.isInteger(item.scenario_index)) selectScenario(item.scenario_index);
 }
 
 function selectScenario(index) {
   state.scenarioIndex = index;
   state.variantIndex = null;
   state.interactivePresentation = null;
-  scenarioSelect.value = String(index);
   renderScenario();
 }
 
@@ -869,9 +978,8 @@ function togglePlayback() {
 }
 
 renderSummary();
-renderScenarioSelector();
-const defaultIndex = card.scenarios.findIndex(item => item.sample_id === 'S11');
-selectScenario(defaultIndex >= 0 ? defaultIndex : 0);
+renderModuleSelectors();
+selectModule(0);
 </script>
 </body>
 </html>

@@ -51,7 +51,26 @@ class LabOverviewTest(unittest.TestCase):
         self.assertEqual(4, by_id["ATTACK_OVERLAY"]["attack_cases"])
         self.assertEqual(4, by_id["ATTACK_OVERLAY"]["blocked_attack_cases"])
 
-    def test_runner_keeps_overview_data_but_does_not_render_static_overview_ui(self) -> None:
+    def test_overview_exposes_linked_navigation_items_for_frontend(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            card = run_scenarios(
+                scenarios_dir=self.root / "samples" / "scenarios",
+                artifacts_dir=Path(temp_dir),
+            )
+            overview = card["lab_overview"]
+
+        navigation = {item["id"]: item for item in overview["navigation_modules"]}
+        self.assertEqual(
+            ["M2_INTERNAL", "M3_PAYBENCH", "M4_AP2", "M5_UNIFIED", "ATTACK_OVERLAY"],
+            [item["id"] for item in overview["navigation_modules"]],
+        )
+        self.assertEqual(13, len(navigation["M2_INTERNAL"]["items"]))
+        self.assertEqual(["A1", "B1", "C1", "D1", "E1"], [item["id"] for item in navigation["M3_PAYBENCH"]["items"]])
+        self.assertEqual(["HP", "HNP"], [item["id"] for item in navigation["M4_AP2"]["items"]])
+        self.assertEqual(5, len(navigation["ATTACK_OVERLAY"]["items"]))
+        self.assertEqual(4, len(navigation["M5_UNIFIED"]["items"]))
+
+    def test_runner_renders_compact_linked_module_navigation_ui(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             artifacts = Path(temp_dir)
             card = run_scenarios(
@@ -62,6 +81,9 @@ class LabOverviewTest(unittest.TestCase):
 
         self.assertIn("lab_overview", card)
         self.assertEqual("PARTIAL", card["lab_overview"]["status"])
+        self.assertIn('id="module-select"', html)
+        self.assertIn('id="module-item-select"', html)
+        self.assertIn('id="module-result"', html)
         self.assertNotIn("实验模块总览", html)
         self.assertNotIn("关于本实验（边界说明）", html)
         self.assertIn("交互式实验", html)

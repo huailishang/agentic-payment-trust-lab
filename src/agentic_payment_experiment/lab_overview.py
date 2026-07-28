@@ -34,10 +34,12 @@ def build_lab_overview(card: dict[str, Any], *, root: Path) -> dict[str, Any]:
     else:
         status = "PASS"
 
+    module_list = list(modules)
     return {
         "status": status,
         "status_label_zh": _status_label(status),
-        "modules": list(modules),
+        "modules": module_list,
+        "navigation_modules": _build_navigation_modules(card, module_list),
         "summary": {
             "module_count": len(modules),
             "passed_modules": sum(module["status"] == "PASS" for module in modules),
@@ -105,6 +107,7 @@ def _build_paybench_module(root: Path) -> dict[str, Any]:
         "m5": _m5_from_evaluations(evaluations),
         "details": {
             "unsupported_scenario_ids": list(result.unsupported_scenario_ids),
+            "pairs": _paybench_pairs(challenge_set, result),
             "source_repository": challenge_set.source_repository,
             "source_commit": challenge_set.source_commit,
         },
@@ -194,6 +197,17 @@ def _build_attack_module(root: Path) -> dict[str, Any]:
         ),
         "m5": _m5_from_evaluations(evaluations),
         "details": {
+            "cases": [
+                {
+                    "id": result.attack_id,
+                    "title_zh": result.title,
+                    "status": result.evaluation.status,
+                    "decision": result.defended_decision.value,
+                    "attack_attempted": result.attack_attempted,
+                    "blocked_override_paths": list(result.blocked_override_paths),
+                }
+                for result in batch.results
+            ],
             "decision_drifts": batch.decision_drifts,
             "trusted_state_mutations": batch.trusted_state_mutations,
             "source_repository": suite.source_repository,
@@ -205,6 +219,137 @@ def _build_attack_module(root: Path) -> dict[str, Any]:
             ],
         },
     }
+
+
+_PAYBENCH_PAIR_LABELS = {
+    "A1": "预算限制",
+    "B1": "商户授权",
+    "C1": "人工确认",
+    "D1": "数据最小化",
+    "E1": "提示注入",
+}
+
+
+def _paybench_pairs(challenge_set: Any, result: Any) -> list[dict[str, Any]]:
+    result_by_id = {item.scenario_id: item for item in result.results}
+    pairs: list[dict[str, Any]] = []
+    for pair_id in ("A1", "B1", "C1", "D1", "E1"):
+        challenges = [item for item in challenge_set.challenges if item.pair_id == pair_id]
+        rows = []
+        for challenge in challenges:
+            current = result_by_id[challenge.scenario_id]
+            rows.append(
+                {
+                    "scenario_id": challenge.scenario_id,
+                    "pair_type": challenge.pair_type,
+                    "situation_zh": challenge.situation,
+                    "support_status": current.support_status,
+                    "evaluation_status": (
+                        current.evaluation.evaluation.status if current.evaluation is not None else None
+                    ),
+                    "decision": current.attempt.decision.value if current.attempt is not None else None,
+                    "reason_codes": list(current.reason_codes),
+                }
+            )
+        supported = sum(row["support_status"] == "SUPPORTED" for row in rows)
+        passed = sum(row["evaluation_status"] == "PASS" for row in rows)
+        pairs.append(
+            {
+                "id": pair_id,
+                "name_zh": _PAYBENCH_PAIR_LABELS[pair_id],
+                "total": len(rows),
+                "supported": supported,
+                "passed": passed,
+                "unsupported": len(rows) - supported,
+                "status": "PASS" if passed == len(rows) else ("PARTIAL" if supported else "UNSUPPORTED"),
+                "scenarios": rows,
+            }
+        )
+    return pairs
+
+
+def _build_navigation_modules(card: dict[str, Any], modules: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    by_id = {item["id"]: item for item in modules}
+    m2 = by_id["M2_INTERNAL"]
+    m3 = by_id["M3_PAYBENCH"]
+    m4 = by_id["M4_AP2"]
+    attack = by_id["ATTACK_OVERLAY"]
+
+    m2_items = [
+        {
+            "id": scenario["sample_id"],
+            "name_zh": scenario["title"],
+            "status": scenario["evaluation"]["status"],
+            "headline_zh": scenario["learning"]["objective_zh"],
+            "scenario_index": index,
+        }
+        for index, scenario in enumerate(card["scenarios"])
+    ]
+    m3_items = [
+        {
+            **pair,
+            "headline_zh": (
+                f"{pair['passed']}/{pair['total']} 通过"
+                if pair["unsupported"] == 0
+                else f"{pair['supported']}/{pair['total']} 可执行，仍有 {pair['unsupported']} 个能力缺口"
+            ),
+        }
+        for pair in m3["details"]["pairs"]
+    ]
+    m4_items = [
+        {
+            "id": "HP" if row["flow_mode"] == "HUMAN_PRESENT" else "HNP",
+            "name_zh": "人在场流程" if row["flow_mode"] == "HUMAN_PRESENT" else "人不在场流程",
+            "status": row["m5_status"],
+            "headline_zh": f"AP2 {row['flow_mode']} → {row['decision']}，M5 {row['m5_status']}",
+            "details": row,
+        }
+        for row in m4["details"]["flows"]
+    ]
+    attack_items = [
+        {
+            "id": row["id"],
+            "name_zh": row["title_zh"],
+            "status": row["status"],
+            "headline_zh": (
+                f"阻断字段：{', '.join(row['blocked_override_paths'])}"
+                if row["blocked_override_paths"]
+                else "正常不可信内容，没有尝试改写可信支付字段"
+            ),
+            "details": row,
+        }
+        for row in attack["details"]["cases"]
+    ]
+    m5_items = [
+        {
+            "id": module["id"],
+            "name_zh": module["name_zh"],
+            "status": "PASS" if module["m5"]["failed"] == 0 else "FAIL",
+            "headline_zh": (
+                f"M5 已评测 {module['m5']['total']} 个结果："
+                f"{module['m5']['passed']} 通过，{module['m5']['failed']} 失败"
+            ),
+            "details": module["m5"],
+        }
+        for module in modules
+    ]
+
+    return [
+        {**m2, "nav_name_zh": "M2 内部回归", "items": m2_items},
+        {**m3, "nav_name_zh": "M3 PayBench", "items": m3_items},
+        {**m4, "nav_name_zh": "M4 AP2", "items": m4_items},
+        {
+            "id": "M5_UNIFIED",
+            "nav_name_zh": "M5 统一评测",
+            "name_zh": "统一评测",
+            "purpose_zh": "用同一套风险口径检查内部回归、外部挑战、协议适配和攻击覆盖层。",
+            "status": "PASS" if all(item["m5"]["failed"] == 0 for item in modules) else "FAIL",
+            "status_label_zh": "通过" if all(item["m5"]["failed"] == 0 for item in modules) else "失败",
+            "headline_zh": "统一看错误放行、错误拒绝、漏确认、过度武断和禁止副作用。",
+            "items": m5_items,
+        },
+        {**attack, "nav_name_zh": "Attack Overlay", "items": attack_items},
+    ]
 
 
 def _m5_from_summary(summary: dict[str, Any]) -> dict[str, int]:

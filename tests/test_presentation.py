@@ -428,8 +428,11 @@ class PresentationTest(unittest.TestCase):
         self.assertNotIn("选择学习场景", html)
         self.assertNotIn('id="scenario-list"', html)
         self.assertNotIn("<aside", html)
-        self.assertIn('id="scenario-select"', html)
-        self.assertIn("切换场景", html)
+        self.assertNotIn('id="scenario-select"', html)
+        self.assertIn('id="module-select"', html)
+        self.assertIn('id="module-item-select"', html)
+        self.assertIn("选择模块", html)
+        self.assertIn("选择场景 / 流程", html)
         self.assertNotIn("当前异常 / 当前场景卡片", template_source)
         self.assertNotIn("统一支付生命周期 L1—L9", template_source)
         self.assertNotRegex(html, re.compile(r"(?:src|href)=[\"']https?://", re.IGNORECASE))
@@ -437,7 +440,8 @@ class PresentationTest(unittest.TestCase):
         self.assertNotIn("<link ", html)
         self.assertNotIn("innerHTML", html)
         self.assertIn("textContent", html)
-        self.assertIn("item.sample_id === 'S11'", html)
+        self.assertIn("renderModuleSelectors();", html)
+        self.assertIn("selectModule(0);", html)
 
     def test_script_end_tag_in_data_is_escaped(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
