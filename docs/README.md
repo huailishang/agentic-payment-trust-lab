@@ -68,6 +68,7 @@
 - `reference/sunrate/`
 - `reference/权威资料台账.md`
 - `reference/开源项目台账.md`
+- `reference/Agent身份与运行时授权开源项目参考_20260729.md`
 - `reference/可验证执行与智能体身份项目核验-20260725.md`
 
 公开仓库不再分发第三方原始 PDF；本地原件统一保存在 Git 忽略目录 `local_sources/third_party/`。研究材料回答“我们怎么理解”，参考资料回答“依据是什么、来源和版本怎样追溯”。

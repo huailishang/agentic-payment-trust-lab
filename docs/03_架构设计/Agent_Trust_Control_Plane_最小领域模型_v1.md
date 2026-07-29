@@ -31,11 +31,15 @@ Agent Identity / Executor
    ↓ 执行某个受托动作
 Transaction Object
    ↓ 形成具体订单 / 支付请求
+Runtime Authorization Gate
+   ↓ 执行前统一裁决
 Payment Execution
    ↓ 发生真实或模拟执行
 Evidence / Replay Event
-   ↑ 全程记录授权、绑定、变化、确认和执行事实
+   ↑ 全程记录授权、绑定、变化、裁决和执行事实
 ```
+
+注意：`Runtime Authorization Gate` **不是第 7 个领域对象**。它是一个控制点 / Enforcement Point，把前面多个对象和上下文组织成一次“当前动作是否允许产生副作用”的确定性裁决。六个核心对象保持不变。
 
 ## 2. 为什么只保留这 6 个对象
 
@@ -477,6 +481,55 @@ Evidence / Replay Events
 ```
 
 必须能还原完整因果链。
+
+### R6. Runtime Authorization Gate：关系汇合后的执行前裁决
+
+Gate 的最小输入不是一个 `agent_id` 或一个 `amount`，而是一组有来源、有版本的执行事实：
+
+```text
+subject_ref
+agent_ref / executor_ref
+authority_ref + authority_version
+transaction_object_ref + object_version
+current_action
+trusted_context
+prior_action_summary
+policy_version
+```
+
+最小职责：
+
+```text
+1. 在产生真实副作用前拦截动作
+2. 检查当前动作是否仍在 Delegated Authority 内
+3. 检查 Agent / Transaction / Payment Binding 是否成立
+4. 检查当前上下文中是否出现低可信覆盖或关键事实冲突
+5. 根据 Policy 输出业务可消费的裁决事实
+6. 为 P5 Evidence / Replay 生成结构化决策记录
+```
+
+当前项目先保持四类业务决策：
+
+```text
+ALLOW
+DENY
+CONFIRMATION_REQUIRED
+INDETERMINATE
+```
+
+与 AARM 等外部运行时安全规范的概念映射仅用于参考：
+
+```text
+ALLOW   -> ALLOW
+DENY    -> DENY
+STEP_UP -> CONFIRMATION_REQUIRED
+DEFER   -> INDETERMINATE / WAIT
+MODIFY  -> 当前不自动映射
+```
+
+支付场景尤其不应默认接受 `MODIFY`：如果 Gate 自动修改金额、payee、商品或授权对象后继续执行，可能直接破坏用户已经确认的对象绑定。因此关键支付字段变化应优先重新裁决 / 重新确认，而不是静默改写。
+
+外部实现与规范参考见 [Agent 身份与运行时授权开源项目参考](../reference/Agent身份与运行时授权开源项目参考_20260729.md)。
 
 ## 10. 最小状态变化规则
 

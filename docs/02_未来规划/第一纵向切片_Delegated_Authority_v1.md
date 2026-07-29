@@ -26,6 +26,22 @@ Replay Evidence 解释原因
 
 这次不解决完整 Agent 身份认证、签名、PKI、真实用户交互或真实支付。
 
+结合 2026-07-29 的外部信源复核，本切片还明确承担一个架构职责：**先提供未来 Runtime Authorization Gate 所需的 Authority / Confirmation 输入，但本轮不提前实现通用 Gate。**
+
+```text
+P1 本轮输出
+authority_ref
++ authority_version
++ confirmation_policy
++ confirmation_binding_fact
+        ↓
+未来和 P2 / P3 / P4 输入汇合
+        ↓
+Runtime Authorization Gate
+```
+
+外部参考见 [Agent 身份与运行时授权开源项目参考](../reference/Agent身份与运行时授权开源项目参考_20260729.md)。
+
 ## 2. 为什么复用 S08 / S09
 
 ### S08 已经有
