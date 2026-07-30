@@ -126,7 +126,7 @@ PayBench 的 `PARTIAL` 是刻意保留的真实缺口，不用“已支持部分
 是否产生禁止副作用
 ```
 
-当前完整自动化回归为 **200 tests OK**；P1 核心、验证器与主结果专项为 **32 passed（含 4 个 subtests）**。正式入口中 S01—S13 为 **13/13 PASS**，内部冻结基线和 M5 均通过。它证明当前离线实现和固定证据契约一致，但不等于生产支付安全。
+当前完整自动化回归为 **210 tests OK**；P2 连续绑定核心为 **8 passed（含 3 个 subtests）**，P2 核心、生命周期、恢复、主结果与最小 UI 契约专项为 **60 passed（含 130 个 subtests）**。正式入口中 S01—S13 为 **13/13 PASS**，内部冻结基线和 M5 均通过。它证明当前离线实现和固定证据契约一致，但不等于生产支付安全。
 
 ## 本地运行
 
@@ -172,6 +172,7 @@ python -m unittest discover -s tests -v
 │   ├── adapters/                 # 外部协议 -> 中立模型
 │   ├── trusted_execution/        # 确定性可信事实
 │   ├── validator.py              # 付款前业务规则
+│   ├── payment_execution.py      # P2 连续绑定与执行前副作用闸门
 │   ├── lifecycle.py              # 支付生命周期
 │   ├── payment_recovery.py       # UNKNOWN / PENDING 恢复
 │   ├── evaluator.py              # M5 统一评测
@@ -216,9 +217,11 @@ M3-C1：E1 提示注入 × Attack Overlay【已完成】
     ↓
 P1 Delegated Authority v1【已完成】
     ↓
-P2：把 Authority → Order 的绑定继续延伸到 Payment Request / Payment Execution
+P2 连续 Binding 到 Payment【已完成】
     ↓
-仍不直接跳去 S14 / D1，也不重构主 UI
+P3 Agent / Executor Identity【当前下一步】
+    ↓
+P 系列完成前只维护最小 UI 契约，不重构主 UI
 ```
 
 ## 文档

@@ -60,6 +60,7 @@ def run_scenarios(
                 scenario.final_order,
                 scenario.payment_execution,
                 scenario.fulfillment,
+                mandate=mandate,
             )
             if scenario.refund is not None or scenario.dispute is not None:
                 lifecycle_result = assess_remediation(
@@ -79,6 +80,9 @@ def run_scenarios(
                 scenario.payment_recovery_initial,
                 scenario.payment_status_observation,
                 known_attempts=scenario.known_payment_attempts,
+                mandate=mandate,
+                request=request,
+                order=scenario.final_order,
             )
 
         runtime_input = {

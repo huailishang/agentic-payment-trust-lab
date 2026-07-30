@@ -539,15 +539,19 @@ class PresentationTest(unittest.TestCase):
         l5 = stage_views["L5"]["trusted_execution"]
         l6 = stage_views["L6"]["trusted_execution"]
         self.assertEqual("PROTOTYPE", l5["status_code"])
-        self.assertEqual("已接入 S12", l5["status_zh"])
+        self.assertEqual("已接入 S10-S12", l5["status_zh"])
+        self.assertIn("Continuous Binding", l5["capabilities"])
         self.assertIn("Idempotency", l5["capabilities"])
-        self.assertIn("是否可重试仍由 Payment Domain 决定", l5["does_not_decide_zh"])
+        self.assertIn("是否执行及是否可重试仍由 Payment Domain 决定", l5["does_not_decide_zh"])
         self.assertEqual("PROTOTYPE", l6["status_code"])
         self.assertIn("Status Observation", l6["capabilities"])
         self.assertIn("S12 已消费 TE04", l6["current_state_zh"])
         self.assertIn("不决定等待、再次查询", l6["does_not_decide_zh"])
 
         evidence_codes = {item["code"] for item in stage_views["L6"]["evidence"]}
+        self.assertIn("payment_execution_binding_status", evidence_codes)
+        self.assertIn("payment_execution_request_ref", evidence_codes)
+        self.assertIn("payment_execution_transaction_object_ref", evidence_codes)
         self.assertIn("status_observation_verification_status", evidence_codes)
         self.assertIn("status_observation_verification_reasons", evidence_codes)
 

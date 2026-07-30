@@ -2,6 +2,10 @@
 
 from .lifecycle import assess_lifecycle
 from .payment_recovery import assess_payment_recovery
+from .payment_execution import (
+    PaymentExecutionGateOutcome,
+    execute_with_payment_binding_gate,
+)
 from .models import (
     AgentIdentity,
     Decision,
@@ -46,6 +50,7 @@ __all__ = [
     "OrderDifference",
     "OrderItem",
     "PaymentExecutionRecord",
+    "PaymentExecutionGateOutcome",
     "PaymentRecoveryResult",
     "PaymentRecoveryStatus",
     "PaymentStatus",
@@ -60,6 +65,7 @@ __all__ = [
     "ValidationResult",
     "assess_lifecycle",
     "assess_payment_recovery",
+    "execute_with_payment_binding_gate",
     "assess_remediation",
     "validate_request",
 ]

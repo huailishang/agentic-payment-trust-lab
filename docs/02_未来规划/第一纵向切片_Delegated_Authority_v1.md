@@ -349,7 +349,7 @@ execute_with_confirmation_gate()
 
 验证结果：P1 核心、验证器与主结果专项 `32 passed, 4 subtests passed`；完整 `unittest` 为 `200 tests OK`；正式入口 S01—S13 `13/13 PASS`，M5 与内部冻结基线 PASS。订单版本标签单独变化不替代内容 Hash，也不会无条件误杀；商品展示顺序变化也不会产生假失效；授权版本变化、关键内容变化、确认过期或证据缺失会阻断静默执行。
 
-P1 Gate 已满足，下一工作包进入 P2 连续 Binding 到 Payment；实现记录见 [P1 授权绑定与执行前核验执行记录](../04_验证体系/P1授权绑定与执行前核验执行记录_20260730.md)。
+P1 Gate 已满足；后续 P2 连续 Binding 到 Payment 也已完成，详见 [P1 授权绑定与执行前核验执行记录](../04_验证体系/P1授权绑定与执行前核验执行记录_20260730.md) 与 [P2 连续支付绑定执行记录](../04_验证体系/P2连续支付绑定执行记录_20260730.md)。
 
 ## 10. P1 完整验收后再决定什么
 
@@ -374,5 +374,7 @@ S08 / S09 专项验证【已完成】
     ↓
 P1 Gate【PASS】
     ↓
-P2 连续 Binding 到 Payment【下一步】
+P2 连续 Binding 到 Payment【已完成】
+    ↓
+P3 Agent / Executor Identity【当前下一步】
 ```

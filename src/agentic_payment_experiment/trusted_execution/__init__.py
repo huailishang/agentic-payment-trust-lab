@@ -27,6 +27,10 @@ from .execution_facts import (
     verify_execution_identity,
 )
 from .hashing import canonical_hash, canonical_json, canonicalize, verify_hash
+from .payment_binding import (
+    PaymentExecutionBindingFact,
+    verify_payment_execution_binding,
+)
 
 __all__ = [
     "BindingResult",
@@ -35,6 +39,7 @@ __all__ = [
     "ConfirmationRecord",
     "ConfirmationStatus",
     "PaymentGateOutcome",
+    "PaymentExecutionBindingFact",
     "ExecutionAttemptFact",
     "IdempotencyFact",
     "VerificationResult",
@@ -52,4 +57,5 @@ __all__ = [
     "verify_declared_identity_binding",
     "verify_execution_identity",
     "verify_hash",
+    "verify_payment_execution_binding",
 ]

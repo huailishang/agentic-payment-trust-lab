@@ -151,6 +151,26 @@ def load_scenario(path: Path) -> Scenario:
         sequence_count=int(request_data.get("sequence_count", 1)),
         agent_id=request_data.get("agent_id"),
         currency=str(request_data.get("currency", "CNY")),
+        order_ref=(
+            str(request_data["order_ref"])
+            if request_data.get("order_ref") is not None
+            else None
+        ),
+        authority_ref=(
+            str(request_data["authority_ref"])
+            if request_data.get("authority_ref") is not None
+            else None
+        ),
+        authority_version_ref=(
+            str(request_data["authority_version_ref"])
+            if request_data.get("authority_version_ref") is not None
+            else None
+        ),
+        payee=(
+            str(request_data["payee"])
+            if request_data.get("payee") is not None
+            else None
+        ),
     )
     authorized_order_data = raw.get("authorized_order")
     final_order_data = raw.get("final_order")
@@ -455,6 +475,18 @@ def _load_payment_execution(
         idempotency_key=(
             str(data["idempotency_key"]) if data.get("idempotency_key") is not None else None
         ),
+        authority_ref=(
+            str(data["authority_ref"]) if data.get("authority_ref") is not None else None
+        ),
+        agent_ref=(
+            str(data["agent_ref"]) if data.get("agent_ref") is not None else None
+        ),
+        transaction_object_ref=(
+            str(data["transaction_object_ref"])
+            if data.get("transaction_object_ref") is not None
+            else None
+        ),
+        payee=(str(data["payee"]) if data.get("payee") is not None else None),
     )
 
 

@@ -357,7 +357,7 @@ def build_result_card(records: list[dict[str, Any]]) -> dict[str, Any]:
     ]
     return {
         "project": "agentic-payment-trust-lab",
-        "sample_set": "S01-S13-v6-declared-identity-binding",
+        "sample_set": "S01-S13-v7-continuous-payment-binding",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "summary": {
             "total": len(records),

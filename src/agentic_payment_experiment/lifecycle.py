@@ -4,6 +4,7 @@ from .models import (
     EvidenceRef,
     FulfillmentRecord,
     FulfillmentStatus,
+    IntentMandate,
     LifecycleResult,
     Order,
     PaymentExecutionRecord,
@@ -14,6 +15,11 @@ from .models import (
     TransactionRequest,
     ValidationIssue,
 )
+from .payment_execution import (
+    payment_execution_binding_evidence,
+    payment_execution_binding_issues,
+)
+from .trusted_execution import verify_payment_execution_binding
 
 
 def assess_lifecycle(
@@ -21,6 +27,8 @@ def assess_lifecycle(
     order: Order,
     payment: PaymentExecutionRecord,
     fulfillment: FulfillmentRecord,
+    *,
+    mandate: IntentMandate | None = None,
 ) -> LifecycleResult:
     """Assess one offline post-payment lifecycle snapshot.
 
@@ -49,7 +57,31 @@ def assess_lifecycle(
             )
         )
 
-    binding_issues = _binding_issues(request, order, payment, fulfillment)
+    if mandate is not None:
+        payment_binding = verify_payment_execution_binding(
+            mandate,
+            order,
+            request,
+            payment,
+        )
+        evidence.extend(
+            payment_execution_binding_evidence(
+                payment_binding,
+                mandate,
+                order,
+                request,
+                payment,
+            )
+        )
+        binding_issues = list(payment_execution_binding_issues(payment_binding))
+        binding_issues.extend(_fulfillment_binding_issues(order, fulfillment))
+    else:
+        binding_issues = _legacy_binding_issues(
+            request,
+            order,
+            payment,
+            fulfillment,
+        )
     if binding_issues:
         return LifecycleResult(
             payment_status=payment.status,
@@ -180,7 +212,7 @@ def assess_lifecycle(
     )
 
 
-def _binding_issues(
+def _legacy_binding_issues(
     request: TransactionRequest,
     order: Order,
     payment: PaymentExecutionRecord,
@@ -208,6 +240,30 @@ def _binding_issues(
             "payment_currency_binding_mismatch",
             "payment currency does not match the validated request",
         ),
+        (
+            fulfillment.order_id != order.order_id,
+            "fulfillment_order_binding_mismatch",
+            "fulfilment record does not reference the expected order",
+        ),
+        (
+            bool(order.service_id and fulfillment.service_id)
+            and order.service_id != fulfillment.service_id,
+            "fulfillment_service_binding_mismatch",
+            "fulfilment record references a different service",
+        ),
+    )
+    for failed, code, message in checks:
+        if failed:
+            issues.append(ValidationIssue(code, message))
+    return issues
+
+
+def _fulfillment_binding_issues(
+    order: Order,
+    fulfillment: FulfillmentRecord,
+) -> list[ValidationIssue]:
+    issues: list[ValidationIssue] = []
+    checks = (
         (
             fulfillment.order_id != order.order_id,
             "fulfillment_order_binding_mismatch",
