@@ -1,7 +1,7 @@
 # 第一纵向切片：Delegated Authority v1
 
 > 日期：2026-07-29
-> 状态：P1.1 已实现；P1.2 待接入主领域模型与回归样品
+> 状态：已实现并通过 P1 Gate
 > 目标：把 Agent Trust Control Plane 的第一条 P0 能力真正接入现有代码，而不是继续增加 S14 / D1。
 
 ## 1. 这次只解决一个问题
@@ -330,7 +330,7 @@ UI 只在现有字段消费确实报错时做最小兼容修复。
 
 ## 9. 2026-07-30 实施状态
 
-已实现 P1.1（独立、可测试的最小闭环）：
+已实现并接入主链：
 
 ```text
 ConfirmationRecord
@@ -345,19 +345,15 @@ execute_with_confirmation_gate()
     -> 仅 VALID 执行回调；INVALID -> CONFIRMATION_REQUIRED；缺证据 -> INDETERMINATE
 ```
 
-专项组合测试覆盖价格、数量、确认过期、状态失效、授权/订单版本变化以及记录或订单缺失；结果为 `35 passed, 32 subtests passed`。实现记录见 [P1 授权绑定与执行前核验执行记录](../04_验证体系/P1授权绑定与执行前核验执行记录_20260730.md)。
+`IntentMandate.authority_version`、`Order.authority_version_ref`、Scenario Loader、`validate_request()`、S09、交互实验、ACP 对照、结果卡和冻结回归基线均已接入。S08 仍只表达确认阈值，不与“已确认对象发生变化”混为一条规则。
 
-未完成且不能混同为已验收：
+验证结果：P1 核心、验证器与主结果专项 `32 passed, 4 subtests passed`；完整 `unittest` 为 `200 tests OK`；正式入口 S01—S13 `13/13 PASS`，M5 与内部冻结基线 PASS。订单版本标签单独变化不替代内容 Hash，也不会无条件误杀；商品展示顺序变化也不会产生假失效；授权版本变化、关键内容变化、确认过期或证据缺失会阻断静默执行。
 
-- `IntentMandate.authority_version` 与 `Order.authority_version_ref` 尚未落入主领域模型；
-- S08/S09 尚未在真实场景加载、`validate_request()` 与 M5 结果卡中消费 `ConfirmationRecord`；
-- 当前完整 pytest 有 3 个既有中文编码断言失败，尚未取得全量绿灯。
-
-因此下一工作包固定为 P1.2：最小字段接入、S08/S09 证据升级、M5 冻结与环境无关的全量复核；在此之前不启动 P2。
+P1 Gate 已满足，下一工作包进入 P2 连续 Binding 到 Payment；实现记录见 [P1 授权绑定与执行前核验执行记录](../04_验证体系/P1授权绑定与执行前核验执行记录_20260730.md)。
 
 ## 10. P1 完整验收后再决定什么
 
-只有这个切片通过以后，再判断：
+本切片通过后的判断：
 
 1. `IntentMandate` 是否值得正式重命名 / 拆成 Delegated Authority。
 2. `TransactionRequest` 是否需要拆出独立 Payment Request 对象。
@@ -370,13 +366,13 @@ execute_with_confirmation_gate()
 ```text
 领域模型【已冻结】
     ↓
-本切片 TDD 实现
+P1 TDD 实现【已完成】
     ↓
-S08 / S09 专项验证
+S08 / S09 专项验证【已完成】
     ↓
-全量回归 + M5
+全量回归 + M5【已完成】
     ↓
-复评
+P1 Gate【PASS】
     ↓
-再决定下一能力
+P2 连续 Binding 到 Payment【下一步】
 ```

@@ -44,6 +44,7 @@ class ACPOrderAdapterTest(unittest.TestCase):
             seen_request_ids=self.scenario.seen_request_ids,
             authorized_order=self.scenario.authorized_order,
             final_order=self.scenario.final_order,
+            confirmation_record=self.scenario.confirmation_record,
         )
         protocol_result = validate_request(
             self.scenario.mandate,
@@ -51,6 +52,7 @@ class ACPOrderAdapterTest(unittest.TestCase):
             seen_request_ids=self.scenario.seen_request_ids,
             authorized_order=adapted.authorized_order,
             final_order=adapted.final_order,
+            confirmation_record=self.scenario.confirmation_record,
         )
 
         self.assertEqual(neutral_result.decision, protocol_result.decision)

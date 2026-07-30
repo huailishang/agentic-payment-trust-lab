@@ -26,6 +26,12 @@ from .models import (
     TaskStatus,
     TransactionRequest,
 )
+from .trusted_execution import (
+    ConfirmationRecord,
+    ConfirmationStatus,
+    canonical_hash,
+    confirmation_order_payload,
+)
 
 
 @dataclass(frozen=True)
@@ -69,6 +75,7 @@ class Scenario:
     request: TransactionRequest
     authorized_order: Order | None
     final_order: Order | None
+    confirmation_record: ConfirmationRecord | None
     seen_request_ids: frozenset[str]
     payment_execution: PaymentExecutionRecord | None
     fulfillment: FulfillmentRecord | None
@@ -133,6 +140,7 @@ def load_scenario(path: Path) -> Scenario:
         ),
         expected_agent_id=mandate_data.get("expected_agent_id"),
         currency=str(mandate_data.get("currency", "CNY")),
+        authority_version=str(mandate_data.get("authority_version", "v1")),
     )
     request = TransactionRequest(
         request_id=_required_text(request_data, "request_id", path),
@@ -156,6 +164,14 @@ def load_scenario(path: Path) -> Scenario:
     final_order = (
         _load_order(final_order_data, path, "final_order")
         if final_order_data is not None
+        else None
+    )
+    confirmation_data = raw.get("confirmation_record")
+    if confirmation_data is not None and authorized_order is None:
+        raise ValueError(f"{path} confirmation_record requires authorized_order")
+    confirmation_record = (
+        _load_confirmation_record(confirmation_data, authorized_order, path)
+        if confirmation_data is not None and authorized_order is not None
         else None
     )
 
@@ -379,6 +395,7 @@ def load_scenario(path: Path) -> Scenario:
         request=request,
         authorized_order=authorized_order,
         final_order=final_order,
+        confirmation_record=confirmation_record,
         seen_request_ids=frozenset(str(item) for item in raw.get("seen_request_ids", [])),
         payment_execution=payment_execution,
         fulfillment=fulfillment,
@@ -468,4 +485,45 @@ def _load_order(data: dict[str, Any], path: Path, field: str) -> Order:
         mandate_ref=_required_text(data, "mandate_ref", path),
         service_id=(str(data["service_id"]) if data.get("service_id") is not None else None),
         candidate_rails=tuple(str(item) for item in data.get("candidate_rails", [])),
+        authority_version_ref=(
+            str(data["authority_version_ref"])
+            if data.get("authority_version_ref") is not None
+            else None
+        ),
+    )
+
+
+def _load_confirmation_record(
+    data: dict[str, Any],
+    authorized_order: Order,
+    path: Path,
+) -> ConfirmationRecord:
+    if not isinstance(data, dict):
+        raise ValueError(f"{path} confirmation_record must be an object")
+    declared_hash = _required_text(data, "authorized_order_hash", path).lower()
+    content = confirmation_order_payload(authorized_order)
+    actual_hash = canonical_hash(content)
+    if declared_hash != actual_hash:
+        raise ValueError(
+            f"{path} confirmation_record.authorized_order_hash does not match authorized_order"
+        )
+    try:
+        status = ConfirmationStatus(str(data.get("status", "CONFIRMED")))
+    except ValueError as exc:
+        raise ValueError(f"{path} has an invalid confirmation_record.status") from exc
+    return ConfirmationRecord(
+        confirmation_id=_required_text(data, "confirmation_id", path),
+        authority_id=_required_text(data, "authority_id", path),
+        authority_version=_required_text(data, "authority_version", path),
+        authorized_order_id=_required_text(data, "authorized_order_id", path),
+        authorized_order_version=_required_text(data, "authorized_order_version", path),
+        authorized_order_hash=declared_hash,
+        confirmed_at=_parse_datetime(
+            data["confirmed_at"], path, "confirmation_record.confirmed_at"
+        ),
+        expires_at=_parse_datetime(
+            data["expires_at"], path, "confirmation_record.expires_at"
+        ),
+        status=status,
+        authorized_order_content=content,
     )

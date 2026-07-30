@@ -12,7 +12,14 @@ from .models import (
     ValidationResult,
 )
 from .order_validation import validate_order
-from .trusted_execution import VerificationStatus, verify_declared_identity_binding
+from .trusted_execution import (
+    BindingStatus,
+    ConfirmationBindingFact,
+    ConfirmationRecord,
+    VerificationStatus,
+    verify_confirmation_binding,
+    verify_declared_identity_binding,
+)
 
 
 def validate_request(
@@ -22,6 +29,7 @@ def validate_request(
     seen_request_ids: Collection[str] = (),
     authorized_order: Order | None = None,
     final_order: Order | None = None,
+    confirmation_record: ConfirmationRecord | None = None,
 ) -> ValidationResult:
     """Validate one simulated payment request against a user mandate.
 
@@ -158,6 +166,29 @@ def validate_request(
             evidence=tuple(evidence),
         )
 
+    confirmation_fact: ConfirmationBindingFact | None = None
+    p1_required = confirmation_record is not None or any(
+        order is not None and order.authority_version_ref is not None
+        for order in (authorized_order, final_order)
+    )
+    if p1_required:
+        confirmation_fact = verify_confirmation_binding(
+            confirmation_record,
+            final_order,
+            authority_id=mandate.mandate_id,
+            authority_version=mandate.authority_version,
+            checked_at=request.occurred_at,
+        )
+        evidence.extend(
+            _confirmation_evidence(
+                mandate,
+                authorized_order,
+                final_order,
+                confirmation_record,
+                confirmation_fact,
+            )
+        )
+
     order_result = validate_order(
         mandate,
         request,
@@ -166,7 +197,7 @@ def validate_request(
     )
     if order_result is not None:
         evidence.extend(order_result.evidence)
-        if order_result.decision is not None:
+        if order_result.decision in {Decision.DENY, Decision.INDETERMINATE}:
             return ValidationResult(
                 decision=order_result.decision,
                 issues=order_result.issues,
@@ -175,6 +206,77 @@ def validate_request(
                 limitations=order_result.limitations,
                 order_differences=order_result.differences,
             )
+
+    if (
+        confirmation_fact is not None
+        and confirmation_fact.status is BindingStatus.MISSING_EVIDENCE
+    ):
+        evidence.append(
+            EvidenceRef(
+                "confirmation_binding_missing_evidence",
+                "trusted_execution.confirmation_binding.status",
+                confirmation_fact.status.value,
+                BindingStatus.VALID.value,
+            )
+        )
+        return ValidationResult(
+            decision=Decision.INDETERMINATE,
+            issues=(
+                ValidationIssue(
+                    "confirmation_binding_missing_evidence",
+                    "confirmation binding evidence is incomplete",
+                ),
+            ),
+            evidence=tuple(evidence),
+            rule_version="confirmation-binding-rules-v1",
+            limitations=(
+                "simulation_only",
+                "confirmation_hash_is_not_tamper_proof_storage",
+                "missing_confirmation_evidence_fails_closed",
+            ),
+            order_differences=(
+                order_result.differences if order_result is not None else ()
+            ),
+        )
+
+    if order_result is not None and order_result.decision is not None:
+        return ValidationResult(
+            decision=order_result.decision,
+            issues=order_result.issues,
+            evidence=tuple(evidence),
+            rule_version=order_result.rule_version,
+            limitations=order_result.limitations,
+            order_differences=order_result.differences,
+        )
+
+    if (
+        confirmation_fact is not None
+        and confirmation_fact.status is BindingStatus.INVALID
+    ):
+        evidence.append(
+            EvidenceRef(
+                "confirmation_binding_invalid",
+                "trusted_execution.confirmation_binding.status",
+                confirmation_fact.status.value,
+                BindingStatus.VALID.value,
+            )
+        )
+        return ValidationResult(
+            decision=Decision.CONFIRMATION_REQUIRED,
+            issues=(
+                ValidationIssue(
+                    "confirmation_binding_invalid",
+                    "the current transaction is no longer bound to the saved confirmation",
+                ),
+            ),
+            evidence=tuple(evidence),
+            rule_version="confirmation-binding-rules-v1",
+            limitations=(
+                "simulation_only",
+                "confirmation_hash_is_not_tamper_proof_storage",
+                "payment_domain_maps_binding_fact_to_reconfirmation",
+            ),
+        )
 
     if mandate.confirmation_above is not None and request.amount > mandate.confirmation_above:
         confirmation_issue = ValidationIssue(
@@ -235,3 +337,85 @@ def _missing_required_fields(
         "request.currency": request.currency,
     }
     return tuple(path for path, value in values.items() if not str(value).strip())
+
+
+def _confirmation_evidence(
+    mandate: IntentMandate,
+    authorized_order: Order | None,
+    final_order: Order | None,
+    record: ConfirmationRecord | None,
+    fact: ConfirmationBindingFact,
+) -> tuple[EvidenceRef, ...]:
+    missing = "<missing>"
+    return (
+        EvidenceRef(
+            "confirmation_record_ref",
+            "confirmation_record.confirmation_id",
+            record.confirmation_id if record is not None else missing,
+        ),
+        EvidenceRef(
+            "authority_ref",
+            "mandate.mandate_id",
+            mandate.mandate_id,
+            record.authority_id if record is not None else missing,
+        ),
+        EvidenceRef(
+            "authority_version",
+            "mandate.authority_version",
+            mandate.authority_version,
+            record.authority_version if record is not None else missing,
+        ),
+        EvidenceRef(
+            "authorized_order_authority_version_ref",
+            "authorized_order.authority_version_ref",
+            (
+                authorized_order.authority_version_ref
+                if authorized_order is not None
+                and authorized_order.authority_version_ref is not None
+                else missing
+            ),
+            mandate.authority_version,
+        ),
+        EvidenceRef(
+            "final_order_authority_version_ref",
+            "final_order.authority_version_ref",
+            (
+                final_order.authority_version_ref
+                if final_order is not None and final_order.authority_version_ref is not None
+                else missing
+            ),
+            mandate.authority_version,
+        ),
+        EvidenceRef(
+            "confirmation_binding_status",
+            "trusted_execution.confirmation_binding.status",
+            fact.status.value,
+            BindingStatus.VALID.value,
+        ),
+        EvidenceRef(
+            "confirmation_binding_reason",
+            "trusted_execution.confirmation_binding.reason",
+            fact.reason,
+        ),
+        EvidenceRef(
+            "confirmation_expected_order_hash",
+            "trusted_execution.confirmation_binding.expected_order_hash",
+            fact.expected_order_hash or missing,
+        ),
+        EvidenceRef(
+            "confirmation_actual_order_hash",
+            "trusted_execution.confirmation_binding.actual_order_hash",
+            fact.actual_order_hash or missing,
+            fact.expected_order_hash,
+        ),
+        EvidenceRef(
+            "confirmation_invalidated_by",
+            "trusted_execution.confirmation_binding.invalidated_by",
+            fact.invalidated_by or "<none>",
+        ),
+        EvidenceRef(
+            "confirmation_checked_at",
+            "trusted_execution.confirmation_binding.checked_at",
+            fact.checked_at.isoformat(),
+        ),
+    )

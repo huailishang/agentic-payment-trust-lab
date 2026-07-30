@@ -142,7 +142,12 @@ class PresentationTest(unittest.TestCase):
             "quote_expired": "CONFIRMATION_REQUIRED",
             "missing_snapshot": "INDETERMINATE",
         }
-        mandate = next(item.mandate for item in load_scenarios(self.root / "samples" / "scenarios") if item.sample_id == "S09")
+        base_scenario = next(
+            item
+            for item in load_scenarios(self.root / "samples" / "scenarios")
+            if item.sample_id == "S09"
+        )
+        mandate = base_scenario.mandate
         for variant in s09["learning_variants"]:
             with self.subTest(variant=variant["variant_id"]):
                 input_data = variant["input"]
@@ -154,6 +159,7 @@ class PresentationTest(unittest.TestCase):
                     request,
                     authorized_order=authorized,
                     final_order=final,
+                    confirmation_record=base_scenario.confirmation_record,
                 )
                 self.assertEqual(expected_decisions[variant["variant_id"]], variant["actual"]["decision"])
                 self.assertEqual(direct.decision.value, variant["actual"]["decision"])
@@ -809,6 +815,7 @@ class PresentationTest(unittest.TestCase):
             mandate_ref=data["mandate_ref"],
             service_id=data.get("service_id"),
             candidate_rails=tuple(data.get("candidate_rails", [])),
+            authority_version_ref=data.get("authority_version_ref"),
         )
 
 

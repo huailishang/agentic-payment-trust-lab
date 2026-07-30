@@ -115,6 +115,7 @@ def _build_order(
         "experiment_context.quote_expires_at": context.get("quote_expires_at"),
         "experiment_context.fulfilment_terms": context.get("fulfilment_terms"),
         "experiment_context.mandate_ref": context.get("mandate_ref"),
+        "experiment_context.authority_version_ref": context.get("authority_version_ref"),
     }
     missing.extend(path for path, value in required_values.items() if value in (None, ""))
 
@@ -194,6 +195,7 @@ def _build_order(
             else None
         ),
         candidate_rails=tuple(str(item) for item in context.get("candidate_rails", [])),
+        authority_version_ref=str(context["authority_version_ref"]),
     )
 
 

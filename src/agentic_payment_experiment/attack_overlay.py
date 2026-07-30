@@ -18,6 +18,7 @@ _TRUSTED_EXECUTION_ROOTS = frozenset(
         "request",
         "authorized_order",
         "final_order",
+        "confirmation_record",
         "payment_execution",
         "payment_status_observation",
         "known_payment_attempts",
@@ -260,6 +261,9 @@ def _trusted_state_snapshot(scenario: Scenario) -> dict[str, Any]:
         "request": asdict(scenario.request),
         "authorized_order": asdict(scenario.authorized_order) if scenario.authorized_order else None,
         "final_order": asdict(scenario.final_order) if scenario.final_order else None,
+        "confirmation_record": (
+            asdict(scenario.confirmation_record) if scenario.confirmation_record else None
+        ),
     }
 
 
@@ -270,4 +274,5 @@ def _validate_scenario(scenario: Scenario) -> ValidationResult:
         seen_request_ids=scenario.seen_request_ids,
         authorized_order=scenario.authorized_order,
         final_order=scenario.final_order,
+        confirmation_record=scenario.confirmation_record,
     )

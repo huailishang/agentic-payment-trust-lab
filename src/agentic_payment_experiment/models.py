@@ -98,6 +98,7 @@ class IntentMandate:
     confirmation_above: Decimal | None = None
     expected_agent_id: str | None = None
     currency: str = "CNY"
+    authority_version: str = "v1"
 
 
 @dataclass(frozen=True)
@@ -136,6 +137,7 @@ class Order:
     mandate_ref: str
     service_id: str | None = None
     candidate_rails: tuple[str, ...] = ()
+    authority_version_ref: str | None = None
 
 
 @dataclass(frozen=True)

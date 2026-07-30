@@ -1,5 +1,6 @@
 import sys
 import unittest
+from dataclasses import replace
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
@@ -14,6 +15,7 @@ from agentic_payment_experiment import (
     TransactionRequest,
     validate_request,
 )
+from agentic_payment_experiment.trusted_execution import create_confirmation_record
 
 
 class ValidatorTest(unittest.TestCase):
@@ -30,6 +32,7 @@ class ValidatorTest(unittest.TestCase):
             expires_at=now + timedelta(hours=1),
             max_count=1,
             expected_agent_id="agent-shop-001",
+            authority_version="v1",
         )
 
     def request(self, **changes: object) -> TransactionRequest:
@@ -201,6 +204,81 @@ class ValidatorTest(unittest.TestCase):
         self.assert_order_issue(
             "authorized_order_currency_mismatch",
             self.order(currency="USD"),
+        )
+
+    def confirmation(self, order: Order):
+        return create_confirmation_record(
+            confirmation_id="confirmation-009",
+            authority_id=self.mandate.mandate_id,
+            authority_version=self.mandate.authority_version,
+            order=order,
+            confirmed_at=self.now - timedelta(minutes=1),
+            expires_at=self.now + timedelta(minutes=10),
+        )
+
+    def test_confirmation_binding_fact_is_consumed_before_payment(self) -> None:
+        authorized = self.order(authority_version_ref="v1")
+        final = self.order(
+            order_version="v2",
+            total_amount=Decimal("490.00"),
+            authority_version_ref="v1",
+        )
+        result = validate_request(
+            self.mandate,
+            self.request(amount=Decimal("490.00")),
+            authorized_order=authorized,
+            final_order=final,
+            confirmation_record=self.confirmation(authorized),
+        )
+
+        self.assertEqual(Decision.CONFIRMATION_REQUIRED, result.decision)
+        evidence = {item.code: item for item in result.evidence}
+        self.assertEqual("INVALID", evidence["confirmation_binding_status"].observed)
+        self.assertEqual("order_hash_mismatch", evidence["confirmation_binding_reason"].observed)
+        self.assertEqual("total_amount_changed", evidence["confirmation_invalidated_by"].observed)
+        self.assertEqual("v1", evidence["authority_version"].observed)
+
+    def test_missing_confirmation_record_fails_closed_for_versioned_order(self) -> None:
+        result = validate_request(
+            self.mandate,
+            self.request(),
+            authorized_order=self.order(authority_version_ref="v1"),
+            final_order=self.order(order_version="v2", authority_version_ref="v1"),
+        )
+        self.assertEqual(Decision.INDETERMINATE, result.decision)
+        self.assertEqual(
+            {"confirmation_binding_missing_evidence"},
+            {item.code for item in result.issues},
+        )
+
+    def test_same_confirmed_content_with_new_order_label_remains_valid(self) -> None:
+        authorized = self.order(authority_version_ref="v1")
+        result = validate_request(
+            self.mandate,
+            self.request(),
+            authorized_order=authorized,
+            final_order=self.order(order_version="v2", authority_version_ref="v1"),
+            confirmation_record=self.confirmation(authorized),
+        )
+        self.assertEqual(Decision.ALLOW, result.decision)
+        evidence = {item.code: item for item in result.evidence}
+        self.assertEqual("VALID", evidence["confirmation_binding_status"].observed)
+
+    def test_authority_version_change_requires_new_confirmation(self) -> None:
+        authorized = self.order(authority_version_ref="v1")
+        record = self.confirmation(authorized)
+        changed_mandate = replace(self.mandate, authority_version="v2")
+        result = validate_request(
+            changed_mandate,
+            self.request(),
+            authorized_order=authorized,
+            final_order=self.order(order_version="v2", authority_version_ref="v2"),
+            confirmation_record=record,
+        )
+        self.assertEqual(Decision.CONFIRMATION_REQUIRED, result.decision)
+        self.assertEqual(
+            {"confirmation_binding_invalid"},
+            {item.code for item in result.issues},
         )
 
 
