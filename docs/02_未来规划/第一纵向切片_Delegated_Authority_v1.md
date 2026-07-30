@@ -1,7 +1,7 @@
 # 第一纵向切片：Delegated Authority v1
 
 > 日期：2026-07-29
-> 状态：待实现
+> 状态：P1.1 已实现；P1.2 待接入主领域模型与回归样品
 > 目标：把 Agent Trust Control Plane 的第一条 P0 能力真正接入现有代码，而不是继续增加 S14 / D1。
 
 ## 1. 这次只解决一个问题
@@ -328,7 +328,34 @@ UI 只在现有字段消费确实报错时做最小兼容修复。
 [ ] 不重构主 UI
 ```
 
-## 9. 实现完成后再决定什么
+## 9. 2026-07-30 实施状态
+
+已实现 P1.1（独立、可测试的最小闭环）：
+
+```text
+ConfirmationRecord
+    -> 保存 authority_id / authority_version / order_id / order_version
+    -> 保存确认时关键交易内容的 canonical SHA-256 摘要
+    -> 保存 confirmed_at / expires_at / status
+当前订单
+    -> 重新计算同一关键内容摘要
+verify_confirmation_binding()
+    -> VALID / INVALID / MISSING_EVIDENCE + reason + invalidated_by
+execute_with_confirmation_gate()
+    -> 仅 VALID 执行回调；INVALID -> CONFIRMATION_REQUIRED；缺证据 -> INDETERMINATE
+```
+
+专项组合测试覆盖价格、数量、确认过期、状态失效、授权/订单版本变化以及记录或订单缺失；结果为 `35 passed, 32 subtests passed`。实现记录见 [P1 授权绑定与执行前核验执行记录](../04_验证体系/P1授权绑定与执行前核验执行记录_20260730.md)。
+
+未完成且不能混同为已验收：
+
+- `IntentMandate.authority_version` 与 `Order.authority_version_ref` 尚未落入主领域模型；
+- S08/S09 尚未在真实场景加载、`validate_request()` 与 M5 结果卡中消费 `ConfirmationRecord`；
+- 当前完整 pytest 有 3 个既有中文编码断言失败，尚未取得全量绿灯。
+
+因此下一工作包固定为 P1.2：最小字段接入、S08/S09 证据升级、M5 冻结与环境无关的全量复核；在此之前不启动 P2。
+
+## 10. P1 完整验收后再决定什么
 
 只有这个切片通过以后，再判断：
 
@@ -338,7 +365,7 @@ UI 只在现有字段消费确实报错时做最小兼容修复。
 4. UI 是否开始从 M/S 导航改成“授权 / 身份 / 绑定 / 执行 / 恢复 / 审计”。
 5. 第二条纵向切片应该是 Agent Identity，还是 Trust Source / Replay。
 
-## 10. 当前执行顺序
+## 11. 当前执行顺序
 
 ```text
 领域模型【已冻结】
