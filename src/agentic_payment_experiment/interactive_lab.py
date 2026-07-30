@@ -19,6 +19,7 @@ from .remediation import assess_remediation
 from .result_card import scenario_result_record
 from .scenario_loader import Scenario, load_scenarios
 from .validator import validate_request
+from .trusted_execution import canonical_hash, confirmation_order_payload
 
 
 # M1 deliberately exposes only a few business-significant controls per scenario.
@@ -192,6 +193,7 @@ def evaluate_interactive_scenario(
         seen_request_ids=updated.seen_request_ids,
         authorized_order=updated.authorized_order,
         final_order=updated.final_order,
+        confirmation_record=updated.confirmation_record,
     )
 
     lifecycle_result = None
@@ -299,6 +301,8 @@ def _runtime_input_for_scenario(scenario: Scenario) -> dict[str, Any]:
         data["authorized_order"] = _json_ready(asdict(scenario.authorized_order))
     if scenario.final_order is not None:
         data["final_order"] = _json_ready(asdict(scenario.final_order))
+    if scenario.confirmation_record is not None:
+        data["confirmation_record"] = _json_ready(asdict(scenario.confirmation_record))
     if scenario.payment_execution is not None:
         data["payment_execution"] = _json_ready(asdict(scenario.payment_execution))
     if scenario.fulfillment is not None:
@@ -368,9 +372,22 @@ def _apply_override(
     if key == "authorized_order.total_amount":
         if scenario.authorized_order is None:
             raise ValueError("scenario has no authorized_order")
+        updated_order = _replace_simple_order_total(scenario.authorized_order, value)
+        updated_confirmation = scenario.confirmation_record
+        if updated_confirmation is not None:
+            updated_confirmation = replace(
+                updated_confirmation,
+                authorized_order_id=updated_order.order_id,
+                authorized_order_version=updated_order.order_version,
+                authorized_order_hash=canonical_hash(
+                    confirmation_order_payload(updated_order)
+                ),
+                authorized_order_content=confirmation_order_payload(updated_order),
+            )
         return replace(
             scenario,
-            authorized_order=_replace_simple_order_total(scenario.authorized_order, value),
+            authorized_order=updated_order,
+            confirmation_record=updated_confirmation,
         )
 
     if key == "final_order_and_request.total_amount":

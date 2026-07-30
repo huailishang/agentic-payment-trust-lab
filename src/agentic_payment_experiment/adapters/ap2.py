@@ -208,6 +208,7 @@ def adapt_ap2_flow_snapshot(snapshot: Mapping[str, Any]) -> AP2FlowAdaptation:
         confirmation_above=None,
         expected_agent_id=bridge.get("agent_id"),
         currency=cart_currency,
+        authority_version=str(bridge.get("authority_version", "v1")),
     )
     request = TransactionRequest(
         request_id=cart_payment_id,
@@ -444,6 +445,7 @@ def adapt_ap2_snapshot(snapshot: Mapping[str, Any]) -> AP2Adaptation:
         max_count=int(_first_present(recurrence, "max_occurrences") or bridge.get("max_count") or 1),
         expected_agent_id=bridge.get("agent_id"),
         currency=currency,
+        authority_version=str(bridge.get("authority_version", "v1")),
     )
     request = TransactionRequest(
         request_id=str(payment_mandate["transaction_id"]),

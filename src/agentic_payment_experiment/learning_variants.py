@@ -30,7 +30,7 @@ def build_s09_learning_variants(
     """Precompute clickable S09 examples with the real Python validator."""
 
     base_item = authorized_order.items[0]
-    same_order = replace(authorized_order, order_version="v2")
+    same_order = authorized_order
     replacement = replace(
         base_item,
         item_id="shoe-002",
@@ -121,6 +121,7 @@ def build_s09_learning_variants(
             variant_request,
             authorized_order=authorized,
             final_order=final,
+            confirmation_record=scenario.confirmation_record,
         )
         actual = validation_result_data(result)
         enrich_actual_presentation(actual)
@@ -131,6 +132,10 @@ def build_s09_learning_variants(
             "authorized_order": _json_ready(asdict(authorized)),
             "final_order": _json_ready(asdict(final)) if final is not None else None,
         }
+        if scenario.confirmation_record is not None:
+            runtime_input["confirmation_record"] = _json_ready(
+                asdict(scenario.confirmation_record)
+            )
         walkthrough = enrich_walkthrough(build_walkthrough(scenario, runtime_input, actual, protocol))
         unified_view = build_unified_view(
             input_data=runtime_input,

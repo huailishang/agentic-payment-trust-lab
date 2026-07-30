@@ -47,6 +47,7 @@ def run_scenarios(
             seen_request_ids=scenario.seen_request_ids,
             authorized_order=scenario.authorized_order,
             final_order=scenario.final_order,
+            confirmation_record=scenario.confirmation_record,
         )
         lifecycle_result = None
         if scenario.payment_execution is not None and scenario.fulfillment is not None:
@@ -88,6 +89,10 @@ def run_scenarios(
         if scenario.authorized_order is not None and scenario.final_order is not None:
             runtime_input["authorized_order"] = _json_ready(asdict(scenario.authorized_order))
             runtime_input["final_order"] = _json_ready(asdict(scenario.final_order))
+        if scenario.confirmation_record is not None:
+            runtime_input["confirmation_record"] = _json_ready(
+                asdict(scenario.confirmation_record)
+            )
         if scenario.payment_execution is not None:
             runtime_input["payment_execution"] = _json_ready(asdict(scenario.payment_execution))
         if scenario.fulfillment is not None:

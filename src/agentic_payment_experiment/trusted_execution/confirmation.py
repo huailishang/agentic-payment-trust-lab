@@ -84,7 +84,7 @@ def confirmation_order_payload(order: Order) -> dict[str, Any]:
                 "unit_amount": item.unit_amount,
                 "kind": item.kind,
             }
-            for item in order.items
+            for item in sorted(order.items, key=lambda value: value.item_id)
         ),
         "total_amount": order.total_amount,
         "currency": order.currency,
@@ -133,7 +133,12 @@ def verify_confirmation_binding(
         return _missing("current_order_missing", checked_at, record)
     if not _nonempty_record_fields(record):
         return _missing("confirmation_record_incomplete", checked_at, record)
-    if not _is_aware(record.confirmed_at) or not _is_aware(record.expires_at) or not _is_aware(checked_at):
+    if (
+        not _is_aware(record.confirmed_at)
+        or not _is_aware(record.expires_at)
+        or not _is_aware(checked_at)
+        or record.confirmed_at > record.expires_at
+    ):
         return _missing("confirmation_timestamp_invalid", checked_at, record)
     expected = _normalize_expected_digest(record.authorized_order_hash, 32)
     if expected is None:
@@ -144,14 +149,18 @@ def verify_confirmation_binding(
         return _invalid(record, actual, checked_at, "confirmation_not_active", "confirmation_status_changed")
     if checked_at > record.expires_at:
         return _invalid(record, actual, checked_at, "confirmation_expired", "confirmation_expired")
+    if not str(authority_id or "").strip() or not str(authority_version or "").strip():
+        return _missing("current_authority_reference_missing", checked_at, record)
     if authority_id != record.authority_id:
         return _invalid(record, actual, checked_at, "authority_id_mismatch", "authority_id_changed")
     if authority_version != record.authority_version:
         return _invalid(record, actual, checked_at, "authority_version_mismatch", "authority_version_changed")
+    if not str(current_order.authority_version_ref or "").strip():
+        return _missing("order_authority_version_reference_missing", checked_at, record)
+    if current_order.authority_version_ref != authority_version:
+        return _invalid(record, actual, checked_at, "order_authority_version_mismatch", "order_authority_version_changed")
     if current_order.order_id != record.authorized_order_id:
         return _invalid(record, actual, checked_at, "order_id_mismatch", "order_id_changed")
-    if current_order.order_version != record.authorized_order_version:
-        return _invalid(record, actual, checked_at, "order_version_mismatch", "order_version_changed")
     if expected != actual:
         return _invalid(record, actual, checked_at, "order_hash_mismatch", _changed_field(record, current_order))
     return ConfirmationBindingFact(BindingStatus.VALID, expected, actual, authority_version, "confirmation_binding_match", None, checked_at)
@@ -190,9 +199,41 @@ def _changed_field(record: ConfirmationRecord, order: Order) -> str:
     if expected is None:
         return "confirmed_transaction_content_changed"
     actual = confirmation_order_payload(order)
-    for field in ("merchant", "payee", "items", "total_amount", "currency", "service_id", "fulfilment_terms"):
+    changes: list[str] = []
+    for field in (
+        "merchant",
+        "payee",
+        "total_amount",
+        "currency",
+        "service_id",
+        "fulfilment_terms",
+    ):
         if expected.get(field) != actual[field]:
-            return f"{field}_changed"
-    return "confirmed_transaction_content_changed"
-    if not str(authority_id or "").strip() or not str(authority_version or "").strip():
-        return _missing("current_authority_reference_missing", checked_at, record)
+            changes.append(f"{field}_changed")
+    if expected.get("items") != actual["items"]:
+        changes.extend(_item_change_reasons(expected.get("items"), actual["items"]))
+    return ",".join(changes) or "confirmed_transaction_content_changed"
+
+
+def _item_change_reasons(expected: Any, actual: Any) -> list[str]:
+    if not isinstance(expected, (list, tuple)) or not isinstance(actual, (list, tuple)):
+        return ["items_changed"]
+    expected_by_id = {str(item.get("item_id")): item for item in expected if isinstance(item, dict)}
+    actual_by_id = {str(item.get("item_id")): item for item in actual if isinstance(item, dict)}
+    if set(expected_by_id) != set(actual_by_id):
+        return ["items_changed"]
+    changes: list[str] = []
+    fields = (
+        ("name", "item_name_changed"),
+        ("category", "item_category_changed"),
+        ("quantity", "item_quantity_changed"),
+        ("unit_amount", "item_unit_amount_changed"),
+        ("kind", "item_kind_changed"),
+    )
+    for item_id in sorted(expected_by_id):
+        before = expected_by_id[item_id]
+        after = actual_by_id[item_id]
+        for field, reason in fields:
+            if before.get(field) != after.get(field) and reason not in changes:
+                changes.append(reason)
+    return changes or ["items_changed"]

@@ -37,7 +37,7 @@ S01—S13 固定场景覆盖：
 - 退款、部分退款与争议；
 - 支付状态 `UNKNOWN` 后查询原交易并防止盲目重复扣款；
 - 声明 Agent 标识与委托预期标识不一致。
-- P1.1：用户确认的具体订单摘要、确认有效期与付款前 fail-closed 核验；订单、授权或订单版本变化时不复用旧确认。
+- P1：用户确认的具体订单摘要、确认有效期与付款前 fail-closed 核验；关键交易内容或授权版本变化时不复用旧确认。
 
 启动交互实验台：
 
@@ -92,7 +92,7 @@ Idempotency VALID
 - TE02：规范化（Canonicalization）；
 - TE03：对象绑定（Binding）；
 - TE04：执行身份、状态观察与幂等事实（Execution Facts）。
-- P1.1：确认记录与确认—订单绑定事实（Confirmation Binding）。
+- P1：确认记录与确认—订单绑定事实（Confirmation Binding），已接入 S09 与主验证路径。
 
 ### 3. 外部协议与外部挑战
 
@@ -126,7 +126,7 @@ PayBench 的 `PARTIAL` 是刻意保留的真实缺口，不用“已支持部分
 是否产生禁止副作用
 ```
 
-P1.1 专项组合测试为 **35 passed（含 32 个 subtests）**；S01—S13 冻结样品仍为 **13/13 PASS**。完整 pytest 在当前 Conda 子进程下有 3 个既有中文编码断言失败，尚不能写成“全量回归通过”。它们都不涉及 P1 逻辑，但仍需作为环境问题复核。
+当前完整自动化回归为 **200 tests OK**；P1 核心、验证器与主结果专项为 **32 passed（含 4 个 subtests）**。正式入口中 S01—S13 为 **13/13 PASS**，内部冻结基线和 M5 均通过。它证明当前离线实现和固定证据契约一致，但不等于生产支付安全。
 
 ## 本地运行
 
@@ -214,9 +214,11 @@ PayBench 当前 8/10 可执行
         ↓
 M3-C1：E1 提示注入 × Attack Overlay【已完成】
     ↓
-P1.2：将确认记录接入 `IntentMandate` / `Order` / S08、S09 主验证路径，并冻结 M5 证据
+P1 Delegated Authority v1【已完成】
     ↓
-再决定 P2 连续绑定；不直接跳去 S14 / D1
+P2：把 Authority → Order 的绑定继续延伸到 Payment Request / Payment Execution
+    ↓
+仍不直接跳去 S14 / D1，也不重构主 UI
 ```
 
 ## 文档

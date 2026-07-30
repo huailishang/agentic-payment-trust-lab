@@ -12,7 +12,8 @@
     "expires_at": "2026-07-12T12:00:00+08:00",
     "max_count": 1,
     "expected_agent_id": "agent-shop-001",
-    "currency": "CNY"
+    "currency": "CNY",
+    "authority_version": "v1"
   },
   "authorized_order": {
     "order_id": "order-s09",
@@ -35,7 +36,8 @@
     "fulfilment_terms": "standard delivery",
     "mandate_ref": "mandate-shoes-009",
     "service_id": "running-shoe-order",
-    "candidate_rails": ["card"]
+    "candidate_rails": ["card"],
+    "authority_version_ref": "v1"
   },
   "final_order": {
     "order_id": "order-s09",
@@ -58,7 +60,19 @@
     "fulfilment_terms": "standard delivery",
     "mandate_ref": "mandate-shoes-009",
     "service_id": "running-shoe-order",
-    "candidate_rails": ["card"]
+    "candidate_rails": ["card"],
+    "authority_version_ref": "v1"
+  },
+  "confirmation_record": {
+    "confirmation_id": "confirmation-s09",
+    "authority_id": "mandate-shoes-009",
+    "authority_version": "v1",
+    "authorized_order_id": "order-s09",
+    "authorized_order_version": "v1",
+    "authorized_order_hash": "e725cb209cebd8039fe961937adc8ff07a472ffaddbf6c748bb74004dd8a4fa2",
+    "confirmed_at": "2026-07-11T11:55:00+08:00",
+    "expires_at": "2026-07-11T12:15:00+08:00",
+    "status": "CONFIRMED"
   },
   "request": {
     "request_id": "request-s09",
@@ -76,6 +90,11 @@
     "evidence_codes": [
       "authorized_order_ref",
       "final_order_ref",
+      "confirmation_record_ref",
+      "authority_version",
+      "confirmation_binding_status",
+      "confirmation_binding_reason",
+      "confirmation_invalidated_by",
       "order_total_changed",
       "order_item_unit_amount_changed"
     ]

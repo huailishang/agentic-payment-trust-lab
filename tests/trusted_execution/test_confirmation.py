@@ -30,6 +30,7 @@ class ConfirmationBindingTests(unittest.TestCase):
             items=(OrderItem("shoe-1", "鞋", "shoes", 1, Decimal("480.00")),),
             total_amount=Decimal("480.00"), currency="CNY", quote_expires_at=self.now + timedelta(hours=1),
             fulfilment_terms="standard", mandate_ref="mandate-1",
+            authority_version_ref="v1",
         )
         self.record = create_confirmation_record(
             confirmation_id="confirmation-1", authority_id="mandate-1", authority_version="v1",
@@ -67,7 +68,10 @@ class ConfirmationBindingTests(unittest.TestCase):
         changed_item = replace(self.order.items[0], quantity=2)
         fact = self.verify(order=replace(self.order, items=(changed_item,), total_amount=Decimal("960.00")))
         self.assertEqual(BindingStatus.INVALID, fact.status)
-        self.assertEqual("items_changed", fact.invalidated_by)
+        self.assertEqual(
+            "total_amount_changed,item_quantity_changed",
+            fact.invalidated_by,
+        )
 
     def test_missing_record_or_current_order_fails_closed(self) -> None:
         for record, order, reason in ((None, self.order, "confirmation_record_missing"), (self.record, None, "current_order_missing")):
@@ -80,11 +84,45 @@ class ConfirmationBindingTests(unittest.TestCase):
                 self.assertFalse(outcome.executed)
                 self.assertEqual([], calls)
 
-    def test_expired_confirmation_and_version_change_are_invalid(self) -> None:
+    def test_missing_current_authority_reference_fails_closed(self) -> None:
+        for changes in ({"authority_id": None}, {"authority_version": None}):
+            with self.subTest(changes=changes):
+                fact = self.verify(**changes)
+                self.assertEqual(BindingStatus.MISSING_EVIDENCE, fact.status)
+                self.assertEqual("current_authority_reference_missing", fact.reason)
+
+    def test_expired_confirmation_and_authority_version_change_are_invalid(self) -> None:
         expired = self.verify(checked_at=self.now + timedelta(minutes=11))
-        version_changed = self.verify(order=replace(self.order, order_version="v2"))
+        version_changed = self.verify(authority_version="v2")
         self.assertEqual((BindingStatus.INVALID, "confirmation_expired"), (expired.status, expired.invalidated_by))
-        self.assertEqual((BindingStatus.INVALID, "order_version_changed"), (version_changed.status, version_changed.invalidated_by))
+        self.assertEqual((BindingStatus.INVALID, "authority_version_changed"), (version_changed.status, version_changed.invalidated_by))
+
+    def test_order_version_label_alone_does_not_replace_content_hash(self) -> None:
+        fact = self.verify(order=replace(self.order, order_version="v2"))
+        self.assertEqual(BindingStatus.VALID, fact.status)
+
+    def test_item_display_order_alone_does_not_invalidate_confirmation(self) -> None:
+        second = OrderItem("lace-1", "鞋带", "shoes", 1, Decimal("0.00"))
+        confirmed_order = replace(
+            self.order,
+            items=(self.order.items[0], second),
+        )
+        record = create_confirmation_record(
+            confirmation_id="confirmation-ordered",
+            authority_id="mandate-1",
+            authority_version="v1",
+            order=confirmed_order,
+            confirmed_at=self.now,
+            expires_at=self.now + timedelta(minutes=10),
+        )
+        fact = verify_confirmation_binding(
+            record,
+            replace(confirmed_order, items=(second, self.order.items[0])),
+            authority_id="mandate-1",
+            authority_version="v1",
+            checked_at=self.now + timedelta(minutes=1),
+        )
+        self.assertEqual(BindingStatus.VALID, fact.status)
 
     def test_inactive_confirmation_cannot_be_reused(self) -> None:
         fact = self.verify(record=replace(self.record, status=ConfirmationStatus.INVALIDATED))

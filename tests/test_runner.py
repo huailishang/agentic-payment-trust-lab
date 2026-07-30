@@ -88,6 +88,18 @@ class ScenarioRunnerTest(unittest.TestCase):
             self.assertEqual("480.00", order_scenario["input"]["authorized_order"]["total_amount"])
             self.assertEqual("490.00", order_scenario["input"]["final_order"]["total_amount"])
             self.assertEqual("order-change-rules-v0.3", order_scenario["actual"]["rule_version"])
+            confirmation_evidence = {
+                item["code"]: item for item in order_scenario["actual"]["evidence"]
+            }
+            self.assertEqual("INVALID", confirmation_evidence["confirmation_binding_status"]["observed"])
+            self.assertEqual("order_hash_mismatch", confirmation_evidence["confirmation_binding_reason"]["observed"])
+            self.assertEqual(
+                "total_amount_changed,item_unit_amount_changed",
+                confirmation_evidence["confirmation_invalidated_by"]["observed"],
+            )
+            self.assertEqual("v1", order_scenario["input"]["mandate"]["authority_version"])
+            self.assertEqual("v1", order_scenario["input"]["authorized_order"]["authority_version_ref"])
+            self.assertEqual("confirmation-s09", order_scenario["input"]["confirmation_record"]["confirmation_id"])
             self.assertEqual(
                 ["order_total_changed", "order_item_unit_amount_changed"],
                 [item["code"] for item in order_scenario["actual"]["order_differences"]],
