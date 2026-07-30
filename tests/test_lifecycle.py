@@ -32,6 +32,7 @@ class LifecycleTest(unittest.TestCase):
             self.scenario.final_order,
             payment or self.scenario.payment_execution,
             fulfillment or self.scenario.fulfillment,
+            mandate=self.scenario.mandate,
         )
 
     def test_s10_separates_prepayment_allow_from_failed_user_task(self) -> None:
@@ -40,6 +41,7 @@ class LifecycleTest(unittest.TestCase):
             self.scenario.request,
             authorized_order=self.scenario.authorized_order,
             final_order=self.scenario.final_order,
+            confirmation_record=self.scenario.confirmation_record,
         )
         lifecycle = self.assess()
 
@@ -68,6 +70,22 @@ class LifecycleTest(unittest.TestCase):
         )
         self.assertEqual("delivery_failed", evidence["fulfillment_failure_code"].observed)
         self.assertEqual(
+            "VALID",
+            evidence["payment_execution_binding_status"].observed,
+        )
+        self.assertEqual(
+            "request-s10",
+            evidence["payment_execution_request_ref"].observed,
+        )
+        self.assertEqual(
+            "request-s10",
+            evidence["payment_execution_transaction_object_ref"].observed,
+        )
+        self.assertEqual(
+            "mandate-shoes-010",
+            evidence["payment_authority_ref"].observed,
+        )
+        self.assertEqual(
             "preserve_evidence_and_start_remediation",
             lifecycle.remediation.next_action,
         )
@@ -92,6 +110,25 @@ class LifecycleTest(unittest.TestCase):
         self.assertEqual(RemediationStatus.REQUIRED, lifecycle.remediation.status)
         self.assertIn(
             "payment_order_binding_mismatch",
+            {item.code for item in lifecycle.issues},
+        )
+        evidence = {item.code: item for item in lifecycle.evidence}
+        self.assertEqual(
+            "INVALID",
+            evidence["payment_execution_binding_status"].observed,
+        )
+
+    def test_missing_p2_reference_fails_closed_before_lifecycle_success(self) -> None:
+        payment = replace(
+            self.scenario.payment_execution,
+            transaction_object_ref=None,
+        )
+        lifecycle = self.assess(payment=payment)
+
+        self.assertEqual(TaskStatus.UNKNOWN, lifecycle.task_status)
+        self.assertEqual(RemediationStatus.REQUIRED, lifecycle.remediation.status)
+        self.assertEqual(
+            {"payment_execution_binding_missing_evidence"},
             {item.code for item in lifecycle.issues},
         )
 

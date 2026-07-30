@@ -205,6 +205,7 @@ def evaluate_interactive_scenario(
             updated.final_order,
             updated.payment_execution,
             updated.fulfillment,
+            mandate=updated.mandate,
         )
         if updated.refund is not None or updated.dispute is not None:
             lifecycle_result = assess_remediation(
@@ -224,6 +225,9 @@ def evaluate_interactive_scenario(
             updated.payment_recovery_initial,
             updated.payment_status_observation,
             known_attempts=updated.known_payment_attempts,
+            mandate=updated.mandate,
+            request=updated.request,
+            order=updated.final_order,
         )
 
     runtime_input = _runtime_input_for_scenario(updated)

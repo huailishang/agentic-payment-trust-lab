@@ -111,6 +111,10 @@ class TransactionRequest:
     sequence_count: int = 1
     agent_id: str | None = None
     currency: str = "CNY"
+    order_ref: str | None = None
+    authority_ref: str | None = None
+    authority_version_ref: str | None = None
+    payee: str | None = None
 
 
 @dataclass(frozen=True)
@@ -152,6 +156,10 @@ class PaymentExecutionRecord:
     receipt_ref: str | None = None
     provider_ref: str | None = None
     idempotency_key: str | None = None
+    authority_ref: str | None = None
+    agent_ref: str | None = None
+    transaction_object_ref: str | None = None
+    payee: str | None = None
 
 
 @dataclass(frozen=True)

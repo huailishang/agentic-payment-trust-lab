@@ -12,7 +12,8 @@
     "expires_at": "2026-07-12T12:00:00+08:00",
     "max_count": 1,
     "expected_agent_id": "agent-shop-001",
-    "currency": "CNY"
+    "currency": "CNY",
+    "authority_version": "v1"
   },
   "authorized_order": {
     "order_id": "order-s12",
@@ -35,7 +36,8 @@
     "fulfilment_terms": "standard delivery",
     "mandate_ref": "mandate-shoes-012",
     "service_id": "running-shoe-delivery",
-    "candidate_rails": ["card"]
+    "candidate_rails": ["card"],
+    "authority_version_ref": "v1"
   },
   "final_order": {
     "order_id": "order-s12",
@@ -58,7 +60,19 @@
     "fulfilment_terms": "standard delivery",
     "mandate_ref": "mandate-shoes-012",
     "service_id": "running-shoe-delivery",
-    "candidate_rails": ["card"]
+    "candidate_rails": ["card"],
+    "authority_version_ref": "v1"
+  },
+  "confirmation_record": {
+    "confirmation_id": "confirmation-s12",
+    "authority_id": "mandate-shoes-012",
+    "authority_version": "v1",
+    "authorized_order_id": "order-s12",
+    "authorized_order_version": "v1",
+    "authorized_order_hash": "042c8db3c122f589fe749ce8be247a18809474fac0d45abee05a47cb52a25eb2",
+    "confirmed_at": "2026-07-11T11:55:00+08:00",
+    "expires_at": "2026-07-11T12:15:00+08:00",
+    "status": "CONFIRMED"
   },
   "request": {
     "request_id": "request-s12",
@@ -68,7 +82,11 @@
     "occurred_at": "2026-07-11T12:00:00+08:00",
     "sequence_count": 1,
     "agent_id": "agent-shop-001",
-    "currency": "CNY"
+    "currency": "CNY",
+    "order_ref": "order-s12",
+    "authority_ref": "mandate-shoes-012",
+    "authority_version_ref": "v1",
+    "payee": "merchant-a"
   },
   "payment_recovery": {
     "initial_payment": {
@@ -81,7 +99,11 @@
       "amount": "480.00",
       "currency": "CNY",
       "occurred_at": "2026-07-11T12:01:00+08:00",
-      "receipt_ref": null
+      "receipt_ref": null,
+      "authority_ref": "mandate-shoes-012",
+      "agent_ref": "agent-shop-001",
+      "transaction_object_ref": "request-s12",
+      "payee": "merchant-a"
     },
     "status_observation": {
       "payment_id": "payment-s12",
@@ -123,6 +145,19 @@
       "recovery_payment_ref",
       "recovery_provider_ref",
       "recovery_idempotency_key",
+      "payment_execution_binding_status",
+      "payment_execution_binding_reasons",
+      "payment_authority_ref",
+      "payment_authority_version_ref",
+      "payment_request_order_ref",
+      "payment_execution_request_ref",
+      "payment_execution_transaction_object_ref",
+      "payment_execution_order_ref",
+      "payment_execution_agent_ref",
+      "payment_execution_payee_ref",
+      "payment_execution_amount_ref",
+      "payment_execution_currency_ref",
+      "payment_execution_identity_ref",
       "initial_payment_status",
       "status_observation_payment_ref",
       "status_observation_order_ref",
@@ -134,7 +169,8 @@
   },
   "flow": [
     {"actor": "统一验证器", "action": "确认付款请求与订单仍在用户授权范围内"},
-    {"actor": "模拟支付执行层", "action": "提交支付请求，但首次响应超时，初始状态记录为 UNKNOWN"},
+    {"actor": "P2执行前绑定闸门", "action": "连续绑定有效后才允许提交原支付请求"},
+    {"actor": "模拟支付执行层", "action": "提交已绑定的支付请求，但首次响应超时，初始状态记录为 UNKNOWN"},
     {"actor": "Payment State / Recovery Manager", "action": "使用原 payment_id、provider_ref 和幂等身份查询原交易"},
     {"actor": "固定离线状态查询", "action": "返回原 payment-s12 已经 SUCCEEDED"},
     {"actor": "Payment Recovery Manager", "action": "恢复可信支付状态并设置 retry_allowed=false，禁止第二次扣款"}
@@ -143,6 +179,7 @@
     "UNKNOWN 和 SUCCEEDED 都是固定离线样品中的状态观察，不代表真实支付机构响应",
     "retry_allowed=false 由 Python 后端恢复规则产生，UI 只展示结果",
     "本场景不执行第二次支付、不连接生产 PSP、不创建真实扣款",
-    "支付状态恢复成功不代表履约成功，也不推断用户任务已经完成"
+    "支付状态恢复成功不代表履约成功，也不推断用户任务已经完成",
+    "P2 连续绑定先于 UNKNOWN 恢复，但仍只基于固定离线证据"
   ]
 }

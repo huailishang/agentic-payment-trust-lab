@@ -12,7 +12,8 @@
     "expires_at": "2026-07-12T12:00:00+08:00",
     "max_count": 1,
     "expected_agent_id": "agent-shop-001",
-    "currency": "CNY"
+    "currency": "CNY",
+    "authority_version": "v1"
   },
   "authorized_order": {
     "order_id": "order-s10",
@@ -35,7 +36,8 @@
     "fulfilment_terms": "standard delivery",
     "mandate_ref": "mandate-shoes-010",
     "service_id": "running-shoe-delivery",
-    "candidate_rails": ["card"]
+    "candidate_rails": ["card"],
+    "authority_version_ref": "v1"
   },
   "final_order": {
     "order_id": "order-s10",
@@ -58,7 +60,19 @@
     "fulfilment_terms": "standard delivery",
     "mandate_ref": "mandate-shoes-010",
     "service_id": "running-shoe-delivery",
-    "candidate_rails": ["card"]
+    "candidate_rails": ["card"],
+    "authority_version_ref": "v1"
+  },
+  "confirmation_record": {
+    "confirmation_id": "confirmation-s10",
+    "authority_id": "mandate-shoes-010",
+    "authority_version": "v1",
+    "authorized_order_id": "order-s10",
+    "authorized_order_version": "v1",
+    "authorized_order_hash": "d1febd2b8c5bad1545c83beaab76117b371336cc0730ded2c0f949cc597fbe4c",
+    "confirmed_at": "2026-07-11T11:55:00+08:00",
+    "expires_at": "2026-07-11T12:15:00+08:00",
+    "status": "CONFIRMED"
   },
   "request": {
     "request_id": "request-s10",
@@ -68,7 +82,11 @@
     "occurred_at": "2026-07-11T12:00:00+08:00",
     "sequence_count": 1,
     "agent_id": "agent-shop-001",
-    "currency": "CNY"
+    "currency": "CNY",
+    "order_ref": "order-s10",
+    "authority_ref": "mandate-shoes-010",
+    "authority_version_ref": "v1",
+    "payee": "merchant-a"
   },
   "lifecycle": {
     "payment": {
@@ -79,7 +97,11 @@
       "amount": "480.00",
       "currency": "CNY",
       "occurred_at": "2026-07-11T12:01:00+08:00",
-      "receipt_ref": "receipt-s10"
+      "receipt_ref": "receipt-s10",
+      "authority_ref": "mandate-shoes-010",
+      "agent_ref": "agent-shop-001",
+      "transaction_object_ref": "request-s10",
+      "payee": "merchant-a"
     },
     "fulfillment": {
       "fulfillment_id": "fulfillment-s10",
@@ -115,6 +137,19 @@
       "lifecycle_order_ref",
       "payment_execution_ref",
       "payment_receipt_ref",
+      "payment_execution_binding_status",
+      "payment_execution_binding_reasons",
+      "payment_authority_ref",
+      "payment_authority_version_ref",
+      "payment_request_order_ref",
+      "payment_execution_request_ref",
+      "payment_execution_transaction_object_ref",
+      "payment_execution_order_ref",
+      "payment_execution_agent_ref",
+      "payment_execution_payee_ref",
+      "payment_execution_amount_ref",
+      "payment_execution_currency_ref",
+      "payment_execution_identity_ref",
       "fulfillment_ref",
       "fulfillment_evidence_ref",
       "fulfillment_failure_code"
@@ -122,7 +157,8 @@
   },
   "flow": [
     {"actor": "统一验证器", "action": "确认付款请求与订单仍在用户授权范围内"},
-    {"actor": "模拟支付执行层", "action": "记录付款执行成功和付款回执引用"},
+    {"actor": "P2执行前绑定闸门", "action": "重新核验授权、订单、支付请求与计划执行记录的连续引用及关键字段"},
+    {"actor": "模拟支付执行层", "action": "连续绑定有效后记录付款执行成功和付款回执引用"},
     {"actor": "模拟商户履约层", "action": "记录商品交付失败和失败证据引用"},
     {"actor": "生命周期评估层", "action": "区分支付成功、履约失败和用户任务失败"},
     {"actor": "补救状态", "action": "标记需要保留证据并启动后续补救，但本轮不执行退款或争议"}
@@ -130,6 +166,7 @@
   "limitations": [
     "payment=SUCCEEDED 是固定离线样品中的观察状态，不代表真实银行、卡组织或支付机构已经扣款",
     "本场景只标记 remediation=REQUIRED，不创建退款、部分退款或争议对象，这些属于 S11",
-    "本场景保留责任分析所需的关联证据，但不判定法律责任主体"
+    "本场景保留责任分析所需的关联证据，但不判定法律责任主体",
+    "P2 只验证固定离线引用与关键字段，不证明生产支付记录不可篡改"
   ]
 }

@@ -29,6 +29,9 @@ class PaymentRecoveryTest(unittest.TestCase):
             payment or self.payment,
             observation or self.observation,
             known_attempts=tuple(attempts),
+            mandate=self.scenario.mandate,
+            request=self.scenario.request,
+            order=self.scenario.final_order,
         )
 
     def test_unknown_to_succeeded_recovers_original_payment_and_forbids_retry(self) -> None:
@@ -53,10 +56,29 @@ class PaymentRecoveryTest(unittest.TestCase):
         self.assertEqual("SUCCEEDED", evidence["queried_payment_status"].observed)
         self.assertEqual("VALID", evidence["status_observation_verification_status"].observed)
         self.assertEqual(
+            "VALID",
+            evidence["payment_execution_binding_status"].observed,
+        )
+        self.assertEqual(
             "execution_identity_match",
             evidence["status_observation_verification_reasons"].observed,
         )
         self.assertEqual("payment-recovery-rules-v0.2", result.rule_version)
+
+    def test_invalid_p2_binding_blocks_status_recovery(self) -> None:
+        payment = replace(self.payment, transaction_object_ref="request-other")
+        result = self.assess(payment=payment)
+
+        self.assertEqual(PaymentRecoveryStatus.BLOCKED, result.recovery_status)
+        self.assertFalse(result.retry_allowed)
+        self.assertEqual(
+            "investigate_payment_execution_binding",
+            result.next_action,
+        )
+        self.assertIn(
+            "payment_request_binding_mismatch",
+            {item.code for item in result.issues},
+        )
 
     def test_unknown_to_unknown_forbids_retry_and_remains_unresolved(self) -> None:
         observation = replace(self.observation, status=PaymentStatus.UNKNOWN)

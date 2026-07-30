@@ -2,12 +2,19 @@ from __future__ import annotations
 
 from .models import (
     EvidenceRef,
+    IntentMandate,
+    Order,
     PaymentExecutionRecord,
     PaymentRecoveryResult,
     PaymentRecoveryStatus,
     PaymentStatus,
     PaymentStatusObservation,
+    TransactionRequest,
     ValidationIssue,
+)
+from .payment_execution import (
+    payment_execution_binding_evidence,
+    payment_execution_binding_issues,
 )
 from .trusted_execution import (
     ExecutionAttemptFact,
@@ -16,6 +23,7 @@ from .trusted_execution import (
     VerificationStatus,
     check_idempotency,
     validate_status_observation,
+    verify_payment_execution_binding,
 )
 
 
@@ -24,6 +32,9 @@ def assess_payment_recovery(
     observation: PaymentStatusObservation,
     *,
     known_attempts: tuple[PaymentExecutionRecord, ...] = (),
+    mandate: IntentMandate | None = None,
+    request: TransactionRequest | None = None,
+    order: Order | None = None,
 ) -> PaymentRecoveryResult:
     """Recover one uncertain offline payment state without executing a retry.
 
@@ -34,6 +45,36 @@ def assess_payment_recovery(
     successful or unresolved attempt exists for the same business request.
     """
 
+    evidence = list(_base_evidence(payment, observation))
+    if any(value is not None for value in (mandate, request, order)):
+        payment_binding = verify_payment_execution_binding(
+            mandate,
+            order,
+            request,
+            payment,
+        )
+        evidence.extend(
+            payment_execution_binding_evidence(
+                payment_binding,
+                mandate,
+                order,
+                request,
+                payment,
+            )
+        )
+        binding_issues = payment_execution_binding_issues(payment_binding)
+        if binding_issues:
+            return PaymentRecoveryResult(
+                initial_status=payment.status,
+                observed_status=observation.status,
+                effective_status=payment.status,
+                recovery_status=PaymentRecoveryStatus.BLOCKED,
+                next_action="investigate_payment_execution_binding",
+                retry_allowed=False,
+                issues=binding_issues,
+                evidence=tuple(evidence),
+            )
+
     observation_fact = validate_status_observation(
         expected_execution_id=payment.payment_id,
         observed_execution_id=observation.payment_id,
@@ -42,7 +83,6 @@ def assess_payment_recovery(
         expected_provider_ref=payment.provider_ref,
         observed_provider_ref=observation.provider_ref,
     )
-    evidence = list(_base_evidence(payment, observation))
     evidence.extend(_observation_fact_evidence(observation_fact))
     binding_issues = _observation_binding_issues(observation_fact)
     if binding_issues:

@@ -124,6 +124,25 @@ class ScenarioRunnerTest(unittest.TestCase):
             self.assertTrue(
                 lifecycle_scenario["checks"]["lifecycle_evidence_codes"]
             )
+            lifecycle_evidence = {
+                item["code"]: item for item in lifecycle_scenario["lifecycle"]["evidence"]
+            }
+            self.assertEqual(
+                "VALID",
+                lifecycle_evidence["payment_execution_binding_status"]["observed"],
+            )
+            self.assertEqual(
+                "request-s10",
+                lifecycle_evidence["payment_execution_request_ref"]["observed"],
+            )
+            self.assertEqual(
+                "request-s10",
+                lifecycle_evidence["payment_execution_transaction_object_ref"]["observed"],
+            )
+            self.assertEqual(
+                "request-s10",
+                lifecycle_scenario["input"]["payment_execution"]["transaction_object_ref"],
+            )
 
             remediation_scenario = next(
                 item for item in card["scenarios"] if item["sample_id"] == "S11"
@@ -159,6 +178,13 @@ class ScenarioRunnerTest(unittest.TestCase):
             )
             self.assertTrue(recovery_scenario["checks"]["payment_recovery_retry_allowed"])
             self.assertTrue(recovery_scenario["checks"]["payment_recovery_evidence_codes"])
+            recovery_evidence = {
+                item["code"]: item for item in recovery_scenario["payment_recovery"]["evidence"]
+            }
+            self.assertEqual(
+                "VALID",
+                recovery_evidence["payment_execution_binding_status"]["observed"],
+            )
 
             identity_scenario = next(
                 item for item in card["scenarios"] if item["sample_id"] == "S13"
@@ -184,7 +210,7 @@ class ScenarioRunnerTest(unittest.TestCase):
 
             saved_card = json.loads(json_path.read_text(encoding="utf-8"))
             self.assertEqual(13, saved_card["summary"]["passed"])
-            self.assertEqual("S01-S13-v6-declared-identity-binding", saved_card["sample_set"])
+            self.assertEqual("S01-S13-v7-continuous-payment-binding", saved_card["sample_set"])
 
             html = html_path.read_text(encoding="utf-8")
             self.assertIn("智能体支付交互沙盘", html)
@@ -210,6 +236,7 @@ class ScenarioRunnerTest(unittest.TestCase):
             self.assertIn("provider-payment-s12", html)
             self.assertIn("idem-request-s12", html)
             self.assertIn("continue_with_original_payment", html)
+            self.assertIn("payment_execution_binding_status", html)
             self.assertIn('"retry_allowed": false', html)
             for old_entry in (
                 "展开旧版统一字段面板",
@@ -230,6 +257,7 @@ class ScenarioRunnerTest(unittest.TestCase):
             seen_request_ids=scenario.seen_request_ids,
             authorized_order=scenario.authorized_order,
             final_order=scenario.final_order,
+            confirmation_record=scenario.confirmation_record,
         )
 
         record = scenario_result_record(
