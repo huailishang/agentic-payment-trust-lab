@@ -5,12 +5,16 @@
 ```yaml
 workflow: evaluator-executor-workflow/v1
 task_id: P3-AGENT-EXECUTOR-IDENTITY-V1
+round: 2
 state: CONTRACT_FROZEN
 current_role: Executor
 baseline_commit: dd093ff272f34e4a2e2c9a19ffa2ca4f0dd2b873
 contract_path: docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/TASK_CONTRACT.md
-executor_report_path: docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/EXECUTOR_REPORT.md
-evaluator_review_path: docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/EVALUATOR_REVIEW.md
+executor_report_path: NONE
+evaluator_review_path: NONE
+round_dispatch_path: docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/ROUND_2_REPAIR_DISPATCH.md
+prior_executor_report_path: docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/EXECUTOR_REPORT.md
+prior_evaluator_review_path: docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/EVALUATOR_REVIEW.md
 next_artifact_path: docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/EXECUTOR_REPORT_R2.md
 ```
 
