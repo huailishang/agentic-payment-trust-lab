@@ -46,10 +46,19 @@ class LabOverviewTest(unittest.TestCase):
         self.assertEqual(2, by_id["M4_AP2"]["m5"]["passed"])
 
         self.assertEqual("PASS", by_id["ATTACK_OVERLAY"]["status"])
-        self.assertEqual(5, by_id["ATTACK_OVERLAY"]["total"])
-        self.assertEqual(5, by_id["ATTACK_OVERLAY"]["passed"])
-        self.assertEqual(4, by_id["ATTACK_OVERLAY"]["attack_cases"])
+        self.assertEqual(6, by_id["ATTACK_OVERLAY"]["total"])
+        self.assertEqual(6, by_id["ATTACK_OVERLAY"]["passed"])
+        self.assertEqual(5, by_id["ATTACK_OVERLAY"]["attack_cases"])
         self.assertEqual(4, by_id["ATTACK_OVERLAY"]["blocked_attack_cases"])
+        provider = next(
+            item
+            for item in by_id["ATTACK_OVERLAY"]["details"]["cases"]
+            if item["id"] == "A05_PROVIDER_STATUS"
+        )
+        self.assertEqual(
+            ["payment_status_observation.status"], provider["applied_paths"]
+        )
+        self.assertTrue(provider["trusted_state_changed"])
 
     def test_overview_exposes_linked_navigation_items_for_frontend(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -67,7 +76,7 @@ class LabOverviewTest(unittest.TestCase):
         self.assertEqual(13, len(navigation["M2_INTERNAL"]["items"]))
         self.assertEqual(["A1", "B1", "C1", "D1", "E1"], [item["id"] for item in navigation["M3_PAYBENCH"]["items"]])
         self.assertEqual(["HP", "HNP"], [item["id"] for item in navigation["M4_AP2"]["items"]])
-        self.assertEqual(5, len(navigation["ATTACK_OVERLAY"]["items"]))
+        self.assertEqual(6, len(navigation["ATTACK_OVERLAY"]["items"]))
         self.assertEqual(4, len(navigation["M5_UNIFIED"]["items"]))
 
     def test_runner_renders_compact_linked_module_navigation_ui(self) -> None:

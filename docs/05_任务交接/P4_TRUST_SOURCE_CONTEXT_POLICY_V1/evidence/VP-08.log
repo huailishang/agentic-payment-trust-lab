@@ -1,0 +1,151 @@
+Command: rg -n -i "cedar|open policy agent|openfga|authenticated source|来源认证|生产策略|生产安全|合规" README.md docs src tests
+Working directory: D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab
+Exit code: 0
+--- STDOUT ---
+README.md:25:本项目只用于学习、研究、回放和开发者验证，不接生产支付、真实银行卡、真实客户数据、真实资金、生产私钥或清算网络。实验通过不等于生产安全、业务合法或监管合规。
+README.md:132:P4 开发前冻结基线为 **218 tests OK**。P4 候选实现把来源规则接入付款回调、Attack Overlay、正式结果卡和最小 UI 契约。来源标签只是本地规则输入，不证明来源已认证；离线矩阵不等于生产策略、生产安全或监管合规。
+src\agentic_payment_experiment\exception_matrix.py:27:    "F7": "安全、欺诈与合规异常",
+docs\01_项目现状\项目中控.md:78:2026-07-30 P1 Delegated Authority v1 已验收：`IntentMandate.authority_version`、`Order.authority_version_ref` 和 `ConfirmationRecord` 已进入主领域与场景加载；`verify_confirmation_binding()` 在执行前重新计算当前订单摘要，返回 `VALID / INVALID / MISSING_EVIDENCE` 与多字段失效原因；`validate_request()` 已消费该事实，缺证据时 fail-closed；`execute_with_confirmation_gate()` 只在 `VALID` 时调用支付回调。S08 继续验证确认阈值，S09 已使用保存的确认记录验证具体交易内容变化。它没有接真实支付，也没有把生产安全、身份认证或防篡改存储能力写进 P1。详见 [P1 执行记录](../04_验证体系/P1授权绑定与执行前核验执行记录_20260730.md)。
+docs\01_项目现状\项目中控.md:86:2026-07-31 P4 Trust Source / Context / Policy Input v1 已形成执行者候选实现，等待独立评估：封闭的来源类型 × 事实域矩阵默认阻断未声明写入；低信任来源不能覆盖授权、确认订单、付款请求或执行身份，提供方只可更新支付状态。上下文采用深拷贝合并，被安全阻断的尝试保留证据但不自动拒付，实际污染可信状态才映射为 `INVALID → DENY`。Attack Overlay、付款回调、正式结果卡和最小 UI 消费同一规则。来源标签不证明来源已认证，本地规则不等于生产策略或合规结论。
+docs\01_项目现状\项目中控.md:156:- 不把 哈希/签名验证通过写成“业务合法”“支付安全”或“监管合规”。
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:47:| Cedar | 细粒度授权 Policy Language / Engine；`principal + action + resource + context` | Runtime Gate / P4 | **Policy Engine 候选参考**。先借授权请求模型和测试方法，不现在替换现有 Python 规则 |
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:48:| Open Policy Agent (OPA) | 通用 Policy-as-Code；业务代码把结构化输入交给独立 Policy Engine | Runtime Gate / P4 | **Cedar 的替代对照**。重点借“决策与执行解耦” |
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:49:| OpenFGA | Relationship-Based / Fine-Grained Authorization | P1 / P3 | **委托与关系模型参考**。适合表达 user → agent → resource 关系，不适合作为全部运行时安全逻辑 |
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:197:## 6. Cedar：最值得参考的 Policy Request 模型
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:201:- https://github.com/cedar-policy/cedar
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:202:- https://docs.cedarpolicy.com/
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:204:Cedar 的授权请求核心是：
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:226:当前不马上把 Python 规则改写成 Cedar，因为：
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:232:等 P4 后可以设计一个小型对照实验：同一组 Runtime Authorization Inputs，由现有 Python evaluator 和 Cedar evaluator 分别判断，再做差异测试。
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:263:### Cedar vs OPA 当前决策
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:268:Cedar：更贴近 authorization request / fine-grained policy
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:274:## 8. OpenFGA：委托和关系图参考
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:278:- https://openfga.dev/
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:279:- https://github.com/openfga/openfga
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:281:OpenFGA 更擅长表达：
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:337:  <- OpenFGA 的关系表达
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:350:  <- Cedar / OPA Policy Input
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:387:完整 Cedar / OPA 引擎替换
+docs\research\智能体支付分层框架.md:235:链上笔数只证明协议地址发生了可识别活动。判断真实采用还需要独立付费主体、留存、买方和商户集中度、非激励交易、成功履约、退款争议和净收入。公开安全榜单则必须核查数据来源、标签方法、类别权重、工具可见信息、提交验证状态和主办方利益关系。PaymentBench可用于提炼攻击样品，但其二元批准/拒绝标签不能覆盖本项目的人工确认和不可判定状态，自有Harness在自有数据上的成绩也不能视作独立生产安全证明。
+docs\research\智能体支付分层框架.md:315:央行数字货币（CBDC）/数字人民币更偏主权信用、监管可控、受控场景、补贴和合规自动结算。稳定币更偏全球化、跨境、链上服务、接口（API）调用、算力、数据和机器间微支付。
+docs\research\智能体支付分层框架.md:406:2. 不改联机授权、反欺诈、清算和合规链路。
+docs\research\智能体支付分层框架.md:417:对本项目来说，最合理的姿态不是马上接入某个协议，而是先把协议中立语义、离线影子评估、结构化审计和客户健康约束沉淀下来。等真实业务、合规、安全和外部接口条件成熟后，再评估是否进入生产协议适配。
+docs\02_未来规划\整体修正执行计划_20260729.md:125:外部参考与开源实现见 [Agent 身份与运行时授权开源项目参考](../reference/Agent身份与运行时授权开源项目参考_20260729.md)。当前主要借鉴 AARM / Microsoft Agent Governance Toolkit 的执行前拦截与 Receipt 思路，SPIFFE/SPIRE 的 Workload Identity，Cedar/OPA 的 Policy Engine，以及 OpenFGA 的关系授权模型；暂不直接引入这些依赖。
+docs\reference\开源项目台账.md:26:该专项不再按 M1—M5 组织，而按当前 P1—P5 能力链组织，重点跟踪：AARM、Microsoft Agent Governance Toolkit、SPIFFE/SPIRE、Cedar、OPA、OpenFGA，以及 RFC 8693 / AAuth 等开放标准方向。
+docs\05_任务交接\P4_TRUST_SOURCE_CONTEXT_POLICY_V1\TASK_CONTRACT.md:77:- 把 source_type 标签描述成已经完成来源认证。
+docs\05_任务交接\P4_TRUST_SOURCE_CONTEXT_POLICY_V1\TASK_CONTRACT.md:174:- 中文边界说明明确“来源标签未认证来源真实性”“离线规则不等于生产策略/合规”；
+docs\05_任务交接\P4_TRUST_SOURCE_CONTEXT_POLICY_V1\TASK_CONTRACT.md:179:- 把本地规则写成生产风控、监管合规或外部策略引擎结论。
+docs\05_任务交接\P4_TRUST_SOURCE_CONTEXT_POLICY_V1\TASK_CONTRACT.md:200:- 声称接入 Cedar/OPA/OpenFGA、真实来源认证、生产支付安全或监管合规。
+docs\05_任务交接\P4_TRUST_SOURCE_CONTEXT_POLICY_V1\TASK_CONTRACT.md:245:- Cedar、OPA、OpenFGA 或其他外部策略引擎；
+docs\05_任务交接\P4_TRUST_SOURCE_CONTEXT_POLICY_V1\TASK_CONTRACT.md:246:- 网络策略服务、数据库、来源认证、签名验证或远程查询；
+docs\05_任务交接\P4_TRUST_SOURCE_CONTEXT_POLICY_V1\TASK_CONTRACT.md:278:| VP-08 | claim | `rg -n -i "cedar|open policy agent|openfga|authenticated source|来源认证|生产策略|生产安全|合规" README.md docs src tests` | 命中均为限制说明、研究材料或明确未实现项 | AC-07 |
+docs\05_任务交接\P4_TRUST_SOURCE_CONTEXT_POLICY_V1\TASK_CONTRACT.md:293:- 只有接入外部策略引擎、真实来源认证、网络或生产支付才能满足目标。
+docs\05_任务交接\P4_TRUST_SOURCE_CONTEXT_POLICY_V1\TASK_CONTRACT.md:301:- “允许更新”只表示该来源在该事实域具备本地规则允许的写入语义，不等于业务合法或监管合规。
+docs\03_架构设计\支付生命周期异常矩阵.md:58:| F7 安全、欺诈与合规异常 | 请求是否真实、安全、合规 | 冒用、签名异常、篡改、欺诈、敏感数据过度索取、合规检查失败 |
+docs\03_架构设计\支付生命周期异常矩阵.md:116:| S01 | 正常合规支付 | L4 付款前检查 | 基线对照，无异常 | 委托验证器（Mandate Validator） | 允许进入后续模拟 |
+docs\03_架构设计\支付生命周期异常矩阵.md:134:| S19 | 支付请求索取过量个人信息 | L2-L4 智能体到付款前 | F7 安全、欺诈与合规 | 数据策略/隐私验证器（Data Policy/Privacy Validator） | 阻止或进入复核，执行数据最小化 |
+docs\reference\可验证执行与智能体身份项目核验-20260725.md:5:适用范围：本地离线的智能体支付可信执行实验，不构成产品选型、生产安全评估、法律意见或监管合规结论。
+docs\reference\可验证执行与智能体身份项目核验-20260725.md:27:| NexArt CER | 基本确认 | CER 使用规范化字段和 SHA-256 形成 `certificateHash`；可选节点证明使用 Ed25519；官方提供本地/浏览器验证说明 | “Certified”在此指密码学证据记录，不是监管认证或合规认证；生态采用和独立审计情况待证 |
+docs\reference\可验证执行与智能体身份项目核验-20260725.md:83:| NexArt CER | 参考最小、可移植、带 `schema_version` 的执行证据包，以及本地独立验证方式 | TE03/TE04 | 不使用“认证”措辞暗示合规或第三方背书 |
+docs\reference\sunrate\寻汇白皮书对项目影响-20260721.md:46:| 外汇与跨境支付 | L4—L7 | 报价有效期、币种、金额、目的地、合规资料和重复执行 |
+docs\reference\sunrate\寻汇白皮书对项目影响-20260721.md:74:白皮书案例中的采购、合规、外汇、付款和对账可以分别由专用智能体协作，但项目应坚持：
+docs\research\MoltsPay项目借鉴分析.md:82:- 余额轨道存在强认证可关闭、管理端点需要额外保护、部分充值路径依赖运营方信任等边界，不能作为生产安全基线。
+docs\research\MoltsPay项目借鉴分析.md:98:本记录基于2026-07-17读取的 [Yaqing2023/moltspay](https://github.com/Yaqing2023/moltspay) 公开README和其中链接的设计说明，重点参考v2.4.0公开描述。仓库活跃度、功能声明和演示不能替代独立代码审计、安全测试、许可证复核或生产合规评估。
+docs\02_未来规划\可信执行模块路线.md:45:当前全量自动化回归为 `210 tests OK`。TE01—TE04、P1 Confirmation Binding 与 P2 Continuous Payment Binding 只证明确定性事实接口、连续绑定和现有消费者没有回归，不代表生产身份、签名、确认记录或支付记录防篡改、合规或真实支付安全已经成立。
+docs\02_未来规划\可信执行模块路线.md:143:- 不把哈希、签名、状态机或审计验证通过表述为业务合法、生产安全或监管合规。
+docs\04_验证体系\样品驱动验证计划.md:24:- 开源演示程序（Demo）的安全、合规和性能满足银行生产要求。
+docs\04_验证体系\样品驱动验证计划.md:134:还必须存在明确的内部业务问题、支付或风控接口方、合规责任、模拟或沙箱接口，以及人工审批和停止方案。当前项目不满足这些条件时，不推动生产接入。
+docs\03_架构设计\支付与可信执行模块边界.md:125:`SourceType` 是声明的规则输入，不是来源认证。`PAYMENT_PROVIDER_OBSERVED` 可更新支付状态，但不能改授权、付款请求或执行身份；未声明的来源 × 事实域组合默认阻断。
+src\agentic_payment_experiment\runner.py:380:            "离线矩阵也不等于生产策略、生产安全或监管合规。"
+docs\research\IMF_智能体AI如何重塑支付.md:30:  - 智能体合规解决方案
+docs\research\IMF_智能体AI如何重塑支付.md:45:本文梳理了这些进展，探讨智能体AI可能如何影响支付系统的运作，包括授权、流动性管理、结算、合规和运营韧性等方面。本文并不试图给出定论或提出规范性的政策建议，而是旨在梳理随着采用不断演进可能需要关注的关键设计问题、架构张力和风险渠道。
+docs\research\IMF_智能体AI如何重塑支付.md:73:越来越多的行业参与者，包括支付网络、科技平台（例如以太坊等开源软件）和AI模型提供商，都在竞相试验这些能力。尽管目前的实现大多仍集中于改善人们发现和比较商品的方式，但实验正迅速扩展到广泛的支付相关应用场景，从欺诈检测、合规监测，到资金管理优化、跨境支付编排，反映出智能体AI试点在整个生态系统中不断扩大的范围（Boston Consulting Group 2025）。当前的创新速度意味着，过去需要数年才能实现的进展，如今可能在数月内就发生，这表明更快速、更实质性的变革可能即将到来。
+docs\research\IMF_智能体AI如何重塑支付.md:105:不确定性还体现在"幻觉"现象上，即模型以高置信度生成看似合理但实际错误的陈述。尽管新一代模型的幻觉率有所下降，但该风险并未被消除，在支付、合规和结算场景中仍是一个重要关切（Omar等 2025）。
+docs\research\IMF_智能体AI如何重塑支付.md:141:综上，这些技术共同定义了第二层：一个严格基于规则的授权边界——只有满足可验证授权指令、政策约束和监管核验要求的结构化意图，才能被接受。任何在此层被接受的内容都成为可在第三层进行确定性执行的、经授权的支付指令；任何未通过的内容将被拒绝或退回智能体进行修改。这种分离确保了问责制、可审计性和合规性，即使上游智能体系统引入了更高程度的自动化。
+docs\research\IMF_智能体AI如何重塑支付.md:162:| 智能体协调 | 使多个智能体（买方、商家、资金、合规、风险）能够交换计划、协商行动并委派子任务 | A2A协议；多智能体编排框架 | L1 |
+docs\research\IMF_智能体AI如何重塑支付.md:166:| 实时合规与欺诈风险筛查 | 在授权前检测异常、制裁风险或政策违规 | ML/AI欺诈系统；通过AP2实现的授权指令约束；自适应AML模型 | L2 |
+docs\research\IMF_智能体AI如何重塑支付.md:177:智能体AI在支付领域可以为广泛的应用场景带来益处。专家将智能体AI描述为处理整个任务的AI智能体"数字工厂"，人工仅在例外情况和监督环节中被需要（McKinsey & Company 2025b）。对支付相关任务的自主管理和执行，可以降低交易和运营成本、改善流动性、提升合规流程效率并减少欺诈。减少人工延迟和行政摩擦，有望提升效率、加快资本周转并提高生产力。
+docs\research\IMF_智能体AI如何重塑支付.md:205:智能体AI系统的能力超越了智能自动化的范畴。它们能够跨金融分布式网络自主协调和执行多步骤工作流。智能体AI可以像电商场景中所观察到的那样，编排整个跨境支付链条——从支付发起、优化路由选项（包括代理行、本地合作方和代币化轨道），到触发合规检查，以及监控结算和结算后的异常情况。支持者认为，这种自动化的支付流程可以减少因人工干预和僵化流程而产生的延迟（Convera 2025）。这一论点颇具说服力：通过对实时交易数据的分析，以及基于过往经验和不断变化的上下文（包括各异的成本、费用和渠道表现）进行推理的能力，AI智能体能够动态选择最高效的支付路径，并针对具体情况进行调整（Capco 2025）。智能体AI还可以在执行交易时主动参与流动性的自主管理，例如根据预设参数和实时市场状况重新分配资金。BIS的研究发现，生成式AI系统无需专门训练即可执行诸如维持预防性流动性缓冲、优先处理紧急支付，以及在流动性成本与结算延迟之间权衡等现金管理职能（BIS 2025）。
+docs\research\IMF_智能体AI如何重塑支付.md:211:### 智能体合规解决方案
+docs\research\IMF_智能体AI如何重塑支付.md:213:智能体AI有潜力通过将监管逻辑直接嵌入运营工作流，显著改善合规流程。与传统自动化工具不同，智能体系统能够理解目标、实时监测活动，并在预设保障机制内自主采取行动，例如标记可疑交易、升级高风险案例，或在触及监管阈值时调整控制措施。通过将持续监测、可解释性和审计留痕融入其核心架构，智能体AI使合规职能能够以与现代数字系统相匹配的速度和规模运作，从而在增强一致性、可追溯性和监管一致性的同时，减少运营负担和人为错误。
+docs\research\IMF_智能体AI如何重塑支付.md:215:智能体使得实时合规监测成为可能，能够持续评估交易和活动，而非依赖定期或批量审核。多家公司已推出基于AI的合规监测和欺诈检测工具。万事达的AI驱动"决策智能"系统在毫秒级评估交易的欺诈风险，实现交易速度下的实时合规筛查，在授权前评估上下文风险（Mastercard 2024）。Visa为账户对账户支付开发了实时风险评分解决方案，基于实时上下文数据在毫秒内对交易评分，自动批准、拒绝或标记交易（Visa 2026）。该方案将欺诈、制裁标记和风险规则等合规逻辑嵌入实时交易流程，从而在网络层面实现"设计即合规"。
+docs\research\IMF_智能体AI如何重塑支付.md:217:智能体AI系统引入了自动化规则执行能力，能够在决策时点以程序化方式应用监管要求和治理框架。一项学术原型提出了一个参考架构，用于处理AML和了解你的客户（KYC）合规任务的智能体AI，并集成了可解释性和可追溯性。它展示了智能体合规如何在无需人工干预的情况下，将监管逻辑直接嵌入、解读并执行于自主系统中（Axelsen, Licht, and Damsgaard 2025）。通过将来源验证和基于策略的访问控制等身份保障机制直接嵌入代码，机构能够将监管从一种约束转变为系统层面的实用赋能因素（Preis 2026）。
+docs\research\IMF_智能体AI如何重塑支付.md:219:设计即治理的AI理念将伦理、法律和社会价值嵌入智能体系统，从而支持前瞻性的风险管理（Joshi 2025）。这些系统有助于实现合规任务的自动化，削减错误率、降低成本，并借助自主智能体处理常规工作、将复杂案例上报人工处理来扩大运营规模（McKinsey & Company 2025a）。用于欺诈检测的AI也可以成为数字金融基础设施的一部分，正如印度统一支付接口（UPI）的情形。UPI将支付、数据与智能整合为统一的技术栈，嵌入了用于实时欺诈检测、替代性信用评分和自动对账的AI功能。这一架构通过数字公共基础设施的输出，支持国内和国际层面的扩展（Shivam 2026）。
+docs\research\IMF_智能体AI如何重塑支付.md:221:多智能体系统可以将合规任务分配到各专业领域，而联邦式协调机制则能确保跨辖区的一致性（Onyekaonwu, Igba, and Peter-Anyebe 2024）。智能体之间通过安全协议通信，在保持数据主权的同时交换监管情报。将此应用于合规场景，可以由一个专门的智能体执行监管变化扫描，另一个进行风险评分，第三个进行控制映射，第四个执行补救措施，所有环节由一个协调者统一编排，负责任务分派、冲突解决、故障回退和优先级排序。基于本文提出的三层框架，一个智能体可以在意图/编排层发起合规检查，另一个智能体可以在控制层扫描并标记监管要求的变化，而第三个智能体则可以在结算层对合规检查进行验证。
+docs\research\IMF_智能体AI如何重塑支付.md:225:智能体AI系统能够自主理解目标、采取多步骤行动，并动态适应不断变化的环境。它们代表着金融服务领域下一波创新浪潮。在消费金融、支付、合规和监管领域，通过将复杂的金融和监管任务自动化，它们有望显著减轻认知和运营负担。然而，其自主性、不透明性和非确定性行为也给消费者保护、市场稳定和监管监督带来了实质性风险。尽管智能体AI对经济活动的影响范围广泛，本文的重点在于这些技术如何影响支付系统的运作，包括流动性管理、授权、结算和支付基础设施的运营稳定性。表3根据风险来源和潜在影响对主要风险进行了分类。
+docs\research\IMF_智能体AI如何重塑支付.md:231:生成式AI模型容易产生"幻觉"，即以高置信度生成虚假信息。在金融场景中，此类错误可能带来重大后果（Aldasoro等 2024）。许多AI系统的"黑箱"特性进一步使问责和纠错复杂化。AI系统的不透明性和非线性特征，使监管者难以充分理解模型输出，限制了其及时发现潜在系统性风险的能力。智能体行为的高度相关性也可能带来重大系统性风险（Aldasoro等 2024）。AI可能催生更复杂的风险评估模型，改善对机构失败的预测、发现市场操纵行为，或识别合规相关问题。尽管生成式AI在通过与智能体的交互式沟通支持监管报告和合规方面潜力巨大，但此类方法的常规化应用尚未确立。
+docs\research\IMF_智能体AI如何重塑支付.md:241:更具体的缺口涉及对智能体的身份认证或KYC要求。能够发起交易的自主AI智能体，对支付领域现有的身份和认证框架构成挑战。传统的授权机制，包括KYC流程和多因素认证，都是围绕明确批准交易的人类用户而设计的。当支付由在授权指令下运作的软件智能体自主发起时，验证智能体身份和背后用户意图都变得显著更加复杂。这一转变提出了关于身份认证、问责和合规的新问题，而现有支付系统正是围绕人类行为者设计的（Acharya 2025）。关于自主智能体的法律责任也存在模糊之处。现行的责任制度假定人类的意图和直接因果关系，但当自主智能体独立做出决策时，这些假定就变得模糊了。当智能体代表委托人参与交易时，纠纷情形下的责任认定取决于智能体是否在其权限范围内行事，以及损害是源于智能体自身行为还是委托人的指令。因此，委托人和智能体都可能根据具体情况承担责任，但法律责任的界定并不清晰（Shukanayev 2025）。总体上，关于支付领域智能体问责和责任的监管明确性普遍缺失。现行法规在智能体产生幻觉并误导资金去向时，难以区分"未经授权使用"与"用户过失"（Aldasoro等 2024）。
+docs\research\IMF_智能体AI如何重塑支付.md:248:| 智能体决策的不透明性 | AI开发者和部署方设计不可解释的模型；将智能体整合进支付流程的平台 | 用户（缺乏救济）；支付服务提供商（合规失败）；监管者（监督能力下降） | 是。信息不对称与不可验证的决策过程 |
+docs\research\IMF_智能体AI如何重塑支付.md:271:鉴于生成式模型的非确定性本质，智能体AI系统不应在缺乏结构性保障的情况下直接执行不可逆交易。前文提出的决策层与执行层架构分离，可以作为一项重要的缓释因素。决策层中的智能体提出或发起一项行动，而确定性的执行层则执行合规检查或独立控制，并最终执行交易（Acharya 2025）。
+docs\research\IMF_智能体AI如何重塑支付.md:289:智能体AI代表着支付系统潜在的变革性发展。能够理解目标、协调交易并自主与数字服务交互的软件智能体，可以大幅扩展金融活动的自动化程度。早期实验表明，智能体系统能够提升电子商务交易效率、优化跨境支付路由、增强流动性管理，并支持实时合规监测。
+src\agentic_payment_experiment\presentation_zh.py:243:    "S03": ("看懂金额合规不代表商品品类合规", "金额不高，但智能体准备购买未授权品类。", "只要金额小就没有风险。", "用户授权包含买什么，而不只是最多花多少。"),
+src\agentic_payment_experiment\presentation_zh.py:247:    "S07": ("看懂交易次数限制与单笔金额不同", "每笔金额都不高，但本次会超过允许次数。", "每一笔都合规就可以无限执行。", "累计次数是独立的授权边界。"),
+src\agentic_payment_experiment\presentation_zh.py:584:        "does_not_decide_zh": "不把审计完整性等同于业务合法、生产安全或法律终局。",
+docs\04_验证体系\TE03绑定与S09接入执行记录_20260727.md:159:- 不把 Binding 结果表述为业务合法、生产安全或监管合规。
+docs\03_架构设计\总体架构.md:302:- 不把哈希、签名、幂等或状态机验证通过写成“业务合法”“生产安全”或“监管合规”；
+docs\04_验证体系\AttackOverlay_v1执行记录_20260728.md:111:- 已达到生产支付安全或合规要求。
+docs\04_验证体系\P3_Agent_Executor_Identity_执行记录_20260731.md:111:- 生产凭证、生产级记录防篡改、生产支付安全或监管合规；
+docs\04_验证体系\P2连续支付绑定执行记录_20260730.md:72:- 满足生产安全、合规或审计要求。
+docs\04_验证体系\S12与TE02执行记录_20260727.md:82:| `set` / `frozenset` | 作为无序集合规范排序，并使用集合类型标签 |
+docs\04_验证体系\P4_Trust_Source_Context_Policy_执行记录_20260731.md:24:- 本地离线矩阵不等于生产策略、生产安全、业务合法或监管合规。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\EXECUTOR_REPORT_R2.md:179:Purpose: 检查 authenticated / authentication / verified / 认证 / 已验证 / 生产安全 / 合规相关声明是否符合当前离线最高 BOUND 的边界。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\EXECUTOR_REPORT_R2.md:182:Command: rg -n -i "authenticated|authentication|verified|认证|已验证|生产安全|合规" README.md docs src tests
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\EXECUTOR_REPORT_R2.md:186:Observed result: 命中为限制性说明、保留枚举、测试名或历史研究材料；P3 未宣称真实认证、生产安全或合规成立。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:131:- “已完成真实 Agent 身份认证”“生产安全/合规已成立”等无证据结论。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:195:| VP-06 | claim audit | `rg -n -i "authenticated|authentication|verified|认证|已验证|生产安全|合规" README.md docs src tests` | 所有命中均与实际保证等级和限制一致，无夸大声明 | AC-01, AC-06 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:2:command=rg -n -i "authenticated|authentication|verified|认证|已验证|生产安全|合规" README.md docs src tests
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:3:README.md:25:本项目只用于学习、研究、回放和开发者验证，不接生产支付、真实银行卡、真实客户数据、真实资金、生产私钥或清算网络。实验通过不等于生产安全、业务合法或监管合规。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:15:src\agentic_payment_experiment\exception_matrix.py:27:    "F7": "安全、欺诈与合规异常",
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:20:docs\01_项目现状\项目中控.md:78:2026-07-30 P1 Delegated Authority v1 已验收：`IntentMandate.authority_version`、`Order.authority_version_ref` 和 `ConfirmationRecord` 已进入主领域与场景加载；`verify_confirmation_binding()` 在执行前重新计算当前订单摘要，返回 `VALID / INVALID / MISSING_EVIDENCE` 与多字段失效原因；`validate_request()` 已消费该事实，缺证据时 fail-closed；`execute_with_confirmation_gate()` 只在 `VALID` 时调用支付回调。S08 继续验证确认阈值，S09 已使用保存的确认记录验证具体交易内容变化。它没有接真实支付，也没有把生产安全、身份认证或防篡改存储能力写进 P1。详见 [P1 执行记录](../04_验证体系/P1授权绑定与执行前核验执行记录_20260730.md)。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:22:docs\01_项目现状\项目中控.md:152:- 不把 哈希/签名验证通过写成“业务合法”“支付安全”或“监管合规”。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:24:docs\02_未来规划\可信执行模块路线.md:45:当前全量自动化回归为 `210 tests OK`。TE01—TE04、P1 Confirmation Binding 与 P2 Continuous Payment Binding 只证明确定性事实接口、连续绑定和现有消费者没有回归，不代表生产身份、签名、确认记录或支付记录防篡改、合规或真实支付安全已经成立。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:26:docs\02_未来规划\可信执行模块路线.md:143:- 不把哈希、签名、状态机或审计验证通过表述为业务合法、生产安全或监管合规。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:30:docs\04_验证体系\AttackOverlay_v1执行记录_20260728.md:111:- 已达到生产支付安全或合规要求。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:48:docs\03_架构设计\总体架构.md:302:- 不把哈希、签名、幂等或状态机验证通过写成“业务合法”“生产安全”或“监管合规”；
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:65:docs\research\智能体支付分层框架.md:235:链上笔数只证明协议地址发生了可识别活动。判断真实采用还需要独立付费主体、留存、买方和商户集中度、非激励交易、成功履约、退款争议和净收入。公开安全榜单则必须核查数据来源、标签方法、类别权重、工具可见信息、提交验证状态和主办方利益关系。PaymentBench可用于提炼攻击样品，但其二元批准/拒绝标签不能覆盖本项目的人工确认和不可判定状态，自有Harness在自有数据上的成绩也不能视作独立生产安全证明。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:66:docs\research\智能体支付分层框架.md:315:央行数字货币（CBDC）/数字人民币更偏主权信用、监管可控、受控场景、补贴和合规自动结算。稳定币更偏全球化、跨境、链上服务、接口（API）调用、算力、数据和机器间微支付。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:68:docs\research\智能体支付分层框架.md:406:2. 不改联机授权、反欺诈、清算和合规链路。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:69:docs\research\智能体支付分层框架.md:417:对本项目来说，最合理的姿态不是马上接入某个协议，而是先把协议中立语义、离线影子评估、结构化审计和客户健康约束沉淀下来。等真实业务、合规、安全和外部接口条件成熟后，再评估是否进入生产协议适配。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:70:docs\03_架构设计\支付生命周期异常矩阵.md:58:| F7 安全、欺诈与合规异常 | 请求是否真实、安全、合规 | 冒用、签名异常、篡改、欺诈、敏感数据过度索取、合规检查失败 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:71:docs\03_架构设计\支付生命周期异常矩阵.md:116:| S01 | 正常合规支付 | L4 付款前检查 | 基线对照，无异常 | 委托验证器（Mandate Validator） | 允许进入后续模拟 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:72:docs\03_架构设计\支付生命周期异常矩阵.md:134:| S19 | 支付请求索取过量个人信息 | L2-L4 智能体到付款前 | F7 安全、欺诈与合规 | 数据策略/隐私验证器（Data Policy/Privacy Validator） | 阻止或进入复核，执行数据最小化 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:77:docs\research\MoltsPay项目借鉴分析.md:82:- 余额轨道存在强认证可关闭、管理端点需要额外保护、部分充值路径依赖运营方信任等边界，不能作为生产安全基线。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:78:docs\research\MoltsPay项目借鉴分析.md:98:本记录基于2026-07-17读取的 [Yaqing2023/moltspay](https://github.com/Yaqing2023/moltspay) 公开README和其中链接的设计说明，重点参考v2.4.0公开描述。仓库活跃度、功能声明和演示不能替代独立代码审计、安全测试、许可证复核或生产合规评估。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:82:docs\research\IMF_智能体AI如何重塑支付.md:30:  - 智能体合规解决方案
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:83:docs\research\IMF_智能体AI如何重塑支付.md:45:本文梳理了这些进展，探讨智能体AI可能如何影响支付系统的运作，包括授权、流动性管理、结算、合规和运营韧性等方面。本文并不试图给出定论或提出规范性的政策建议，而是旨在梳理随着采用不断演进可能需要关注的关键设计问题、架构张力和风险渠道。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:84:docs\research\IMF_智能体AI如何重塑支付.md:73:越来越多的行业参与者，包括支付网络、科技平台（例如以太坊等开源软件）和AI模型提供商，都在竞相试验这些能力。尽管目前的实现大多仍集中于改善人们发现和比较商品的方式，但实验正迅速扩展到广泛的支付相关应用场景，从欺诈检测、合规监测，到资金管理优化、跨境支付编排，反映出智能体AI试点在整个生态系统中不断扩大的范围（Boston Consulting Group 2025）。当前的创新速度意味着，过去需要数年才能实现的进展，如今可能在数月内就发生，这表明更快速、更实质性的变革可能即将到来。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:85:docs\research\IMF_智能体AI如何重塑支付.md:105:不确定性还体现在"幻觉"现象上，即模型以高置信度生成看似合理但实际错误的陈述。尽管新一代模型的幻觉率有所下降，但该风险并未被消除，在支付、合规和结算场景中仍是一个重要关切（Omar等 2025）。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:87:docs\research\IMF_智能体AI如何重塑支付.md:141:综上，这些技术共同定义了第二层：一个严格基于规则的授权边界——只有满足可验证授权指令、政策约束和监管核验要求的结构化意图，才能被接受。任何在此层被接受的内容都成为可在第三层进行确定性执行的、经授权的支付指令；任何未通过的内容将被拒绝或退回智能体进行修改。这种分离确保了问责制、可审计性和合规性，即使上游智能体系统引入了更高程度的自动化。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:88:docs\research\IMF_智能体AI如何重塑支付.md:162:| 智能体协调 | 使多个智能体（买方、商家、资金、合规、风险）能够交换计划、协商行动并委派子任务 | A2A协议；多智能体编排框架 | L1 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:89:docs\research\IMF_智能体AI如何重塑支付.md:166:| 实时合规与欺诈风险筛查 | 在授权前检测异常、制裁风险或政策违规 | ML/AI欺诈系统；通过AP2实现的授权指令约束；自适应AML模型 | L2 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:90:docs\research\IMF_智能体AI如何重塑支付.md:177:智能体AI在支付领域可以为广泛的应用场景带来益处。专家将智能体AI描述为处理整个任务的AI智能体"数字工厂"，人工仅在例外情况和监督环节中被需要（McKinsey & Company 2025b）。对支付相关任务的自主管理和执行，可以降低交易和运营成本、改善流动性、提升合规流程效率并减少欺诈。减少人工延迟和行政摩擦，有望提升效率、加快资本周转并提高生产力。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:91:docs\research\IMF_智能体AI如何重塑支付.md:205:智能体AI系统的能力超越了智能自动化的范畴。它们能够跨金融分布式网络自主协调和执行多步骤工作流。智能体AI可以像电商场景中所观察到的那样，编排整个跨境支付链条——从支付发起、优化路由选项（包括代理行、本地合作方和代币化轨道），到触发合规检查，以及监控结算和结算后的异常情况。支持者认为，这种自动化的支付流程可以减少因人工干预和僵化流程而产生的延迟（Convera 2025）。这一论点颇具说服力：通过对实时交易数据的分析，以及基于过往经验和不断变化的上下文（包括各异的成本、费用和渠道表现）进行推理的能力，AI智能体能够动态选择最高效的支付路径，并针对具体情况进行调整（Capco 2025）。智能体AI还可以在执行交易时主动参与流动性的自主管理，例如根据预设参数和实时市场状况重新分配资金。BIS的研究发现，生成式AI系统无需专门训练即可执行诸如维持预防性流动性缓冲、优先处理紧急支付，以及在流动性成本与结算延迟之间权衡等现金管理职能（BIS 2025）。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:92:docs\research\IMF_智能体AI如何重塑支付.md:211:### 智能体合规解决方案
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:93:docs\research\IMF_智能体AI如何重塑支付.md:213:智能体AI有潜力通过将监管逻辑直接嵌入运营工作流，显著改善合规流程。与传统自动化工具不同，智能体系统能够理解目标、实时监测活动，并在预设保障机制内自主采取行动，例如标记可疑交易、升级高风险案例，或在触及监管阈值时调整控制措施。通过将持续监测、可解释性和审计留痕融入其核心架构，智能体AI使合规职能能够以与现代数字系统相匹配的速度和规模运作，从而在增强一致性、可追溯性和监管一致性的同时，减少运营负担和人为错误。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:94:docs\research\IMF_智能体AI如何重塑支付.md:215:智能体使得实时合规监测成为可能，能够持续评估交易和活动，而非依赖定期或批量审核。多家公司已推出基于AI的合规监测和欺诈检测工具。万事达的AI驱动"决策智能"系统在毫秒级评估交易的欺诈风险，实现交易速度下的实时合规筛查，在授权前评估上下文风险（Mastercard 2024）。Visa为账户对账户支付开发了实时风险评分解决方案，基于实时上下文数据在毫秒内对交易评分，自动批准、拒绝或标记交易（Visa 2026）。该方案将欺诈、制裁标记和风险规则等合规逻辑嵌入实时交易流程，从而在网络层面实现"设计即合规"。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:95:docs\research\IMF_智能体AI如何重塑支付.md:217:智能体AI系统引入了自动化规则执行能力，能够在决策时点以程序化方式应用监管要求和治理框架。一项学术原型提出了一个参考架构，用于处理AML和了解你的客户（KYC）合规任务的智能体AI，并集成了可解释性和可追溯性。它展示了智能体合规如何在无需人工干预的情况下，将监管逻辑直接嵌入、解读并执行于自主系统中（Axelsen, Licht, and Damsgaard 2025）。通过将来源验证和基于策略的访问控制等身份保障机制直接嵌入代码，机构能够将监管从一种约束转变为系统层面的实用赋能因素（Preis 2026）。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:96:docs\research\IMF_智能体AI如何重塑支付.md:219:设计即治理的AI理念将伦理、法律和社会价值嵌入智能体系统，从而支持前瞻性的风险管理（Joshi 2025）。这些系统有助于实现合规任务的自动化，削减错误率、降低成本，并借助自主智能体处理常规工作、将复杂案例上报人工处理来扩大运营规模（McKinsey & Company 2025a）。用于欺诈检测的AI也可以成为数字金融基础设施的一部分，正如印度统一支付接口（UPI）的情形。UPI将支付、数据与智能整合为统一的技术栈，嵌入了用于实时欺诈检测、替代性信用评分和自动对账的AI功能。这一架构通过数字公共基础设施的输出，支持国内和国际层面的扩展（Shivam 2026）。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:97:docs\research\IMF_智能体AI如何重塑支付.md:221:多智能体系统可以将合规任务分配到各专业领域，而联邦式协调机制则能确保跨辖区的一致性（Onyekaonwu, Igba, and Peter-Anyebe 2024）。智能体之间通过安全协议通信，在保持数据主权的同时交换监管情报。将此应用于合规场景，可以由一个专门的智能体执行监管变化扫描，另一个进行风险评分，第三个进行控制映射，第四个执行补救措施，所有环节由一个协调者统一编排，负责任务分派、冲突解决、故障回退和优先级排序。基于本文提出的三层框架，一个智能体可以在意图/编排层发起合规检查，另一个智能体可以在控制层扫描并标记监管要求的变化，而第三个智能体则可以在结算层对合规检查进行验证。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:98:docs\research\IMF_智能体AI如何重塑支付.md:225:智能体AI系统能够自主理解目标、采取多步骤行动，并动态适应不断变化的环境。它们代表着金融服务领域下一波创新浪潮。在消费金融、支付、合规和监管领域，通过将复杂的金融和监管任务自动化，它们有望显著减轻认知和运营负担。然而，其自主性、不透明性和非确定性行为也给消费者保护、市场稳定和监管监督带来了实质性风险。尽管智能体AI对经济活动的影响范围广泛，本文的重点在于这些技术如何影响支付系统的运作，包括流动性管理、授权、结算和支付基础设施的运营稳定性。表3根据风险来源和潜在影响对主要风险进行了分类。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:99:docs\research\IMF_智能体AI如何重塑支付.md:231:生成式AI模型容易产生"幻觉"，即以高置信度生成虚假信息。在金融场景中，此类错误可能带来重大后果（Aldasoro等 2024）。许多AI系统的"黑箱"特性进一步使问责和纠错复杂化。AI系统的不透明性和非线性特征，使监管者难以充分理解模型输出，限制了其及时发现潜在系统性风险的能力。智能体行为的高度相关性也可能带来重大系统性风险（Aldasoro等 2024）。AI可能催生更复杂的风险评估模型，改善对机构失败的预测、发现市场操纵行为，或识别合规相关问题。尽管生成式AI在通过与智能体的交互式沟通支持监管报告和合规方面潜力巨大，但此类方法的常规化应用尚未确立。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:100:docs\research\IMF_智能体AI如何重塑支付.md:241:更具体的缺口涉及对智能体的身份认证或KYC要求。能够发起交易的自主AI智能体，对支付领域现有的身份和认证框架构成挑战。传统的授权机制，包括KYC流程和多因素认证，都是围绕明确批准交易的人类用户而设计的。当支付由在授权指令下运作的软件智能体自主发起时，验证智能体身份和背后用户意图都变得显著更加复杂。这一转变提出了关于身份认证、问责和合规的新问题，而现有支付系统正是围绕人类行为者设计的（Acharya 2025）。关于自主智能体的法律责任也存在模糊之处。现行的责任制度假定人类的意图和直接因果关系，但当自主智能体独立做出决策时，这些假定就变得模糊了。当智能体代表委托人参与交易时，纠纷情形下的责任认定取决于智能体是否在其权限范围内行事，以及损害是源于智能体自身行为还是委托人的指令。因此，委托人和智能体都可能根据具体情况承担责任，但法律责任的界定并不清晰（Shukanayev 2025）。总体上，关于支付领域智能体问责和责任的监管明确性普遍缺失。现行法规在智能体产生幻觉并误导资金去向时，难以区分"未经授权使用"与"用户过失"（Aldasoro等 2024）。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:101:docs\research\IMF_智能体AI如何重塑支付.md:248:| 智能体决策的不透明性 | AI开发者和部署方设计不可解释的模型；将智能体整合进支付流程的平台 | 用户（缺乏救济）；支付服务提供商（合规失败）；监管者（监督能力下降） | 是。信息不对称与不可验证的决策过程 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:102:docs\research\IMF_智能体AI如何重塑支付.md:271:鉴于生成式模型的非确定性本质，智能体AI系统不应在缺乏结构性保障的情况下直接执行不可逆交易。前文提出的决策层与执行层架构分离，可以作为一项重要的缓释因素。决策层中的智能体提出或发起一项行动，而确定性的执行层则执行合规检查或独立控制，并最终执行交易（Acharya 2025）。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:106:docs\research\IMF_智能体AI如何重塑支付.md:289:智能体AI代表着支付系统潜在的变革性发展。能够理解目标、协调交易并自主与数字服务交互的软件智能体，可以大幅扩展金融活动的自动化程度。早期实验表明，智能体系统能够提升电子商务交易效率、优化跨境支付路由、增强流动性管理，并支持实时合规监测。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:119:docs\04_验证体系\P2连续支付绑定执行记录_20260730.md:72:- 满足生产安全、合规或审计要求。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:120:docs\04_验证体系\S12与TE02执行记录_20260727.md:82:| `set` / `frozenset` | 作为无序集合规范排序，并使用集合类型标签 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:122:src\agentic_payment_experiment\presentation_zh.py:243:    "S03": ("看懂金额合规不代表商品品类合规", "金额不高，但智能体准备购买未授权品类。", "只要金额小就没有风险。", "用户授权包含买什么，而不只是最多花多少。"),
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:123:src\agentic_payment_experiment\presentation_zh.py:247:    "S07": ("看懂交易次数限制与单笔金额不同", "每笔金额都不高，但本次会超过允许次数。", "每一笔都合规就可以无限执行。", "累计次数是独立的授权边界。"),
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:127:src\agentic_payment_experiment\presentation_zh.py:584:        "does_not_decide_zh": "不把审计完整性等同于业务合法、生产安全或法律终局。",
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:136:docs\04_验证体系\TE03绑定与S09接入执行记录_20260727.md:159:- 不把 Binding 结果表述为业务合法、生产安全或监管合规。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:143:docs\04_验证体系\样品驱动验证计划.md:24:- 开源演示程序（Demo）的安全、合规和性能满足银行生产要求。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:144:docs\04_验证体系\样品驱动验证计划.md:134:还必须存在明确的内部业务问题、支付或风控接口方、合规责任、模拟或沙箱接口，以及人工审批和停止方案。当前项目不满足这些条件时，不推动生产接入。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:160:docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:131:- “已完成真实 Agent 身份认证”“生产安全/合规已成立”等无证据结论。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:162:docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:195:| VP-06 | claim audit | `rg -n -i "authenticated|authentication|verified|认证|已验证|生产安全|合规" README.md docs src tests` | 所有命中均与实际保证等级和限制一致，无夸大声明 | AC-01, AC-06 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:166:docs\reference\可验证执行与智能体身份项目核验-20260725.md:5:适用范围：本地离线的智能体支付可信执行实验，不构成产品选型、生产安全评估、法律意见或监管合规结论。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:168:docs\reference\可验证执行与智能体身份项目核验-20260725.md:27:| NexArt CER | 基本确认 | CER 使用规范化字段和 SHA-256 形成 `certificateHash`；可选节点证明使用 Ed25519；官方提供本地/浏览器验证说明 | “Certified”在此指密码学证据记录，不是监管认证或合规认证；生态采用和独立审计情况待证 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:171:docs\reference\可验证执行与智能体身份项目核验-20260725.md:83:| NexArt CER | 参考最小、可移植、带 `schema_version` 的执行证据包，以及本地独立验证方式 | TE03/TE04 | 不使用“认证”措辞暗示合规或第三方背书 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:176:docs\reference\sunrate\寻汇白皮书对项目影响-20260721.md:46:| 外汇与跨境支付 | L4—L7 | 报价有效期、币种、金额、目的地、合规资料和重复执行 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-09_VP-06_claim_audit.log:177:docs\reference\sunrate\寻汇白皮书对项目影响-20260721.md:74:白皮书案例中的采购、合规、外汇、付款和对账可以分别由专用智能体协作，但项目应坚持：
+
+--- STDERR ---

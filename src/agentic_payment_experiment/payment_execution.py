@@ -1,4 +1,4 @@
-"""Payment-domain mapping and fail-closed gates for P2/P3 execution facts."""
+"""Payment-domain mapping and fail-closed gates for P2/P3/P4 execution facts."""
 
 from __future__ import annotations
 
@@ -17,10 +17,12 @@ from .models import (
     ValidationIssue,
 )
 from .trusted_execution import (
+    ContextPolicyFact,
     IdentityAssuranceFact,
     IdentityAssuranceLevel,
     PaymentExecutionBindingFact,
     VerificationStatus,
+    missing_context_policy_fact,
     verify_agent_executor_identity,
     verify_payment_execution_binding,
 )
@@ -28,11 +30,12 @@ from .trusted_execution import (
 
 @dataclass(frozen=True)
 class PaymentExecutionGateOutcome:
-    """Payment-domain decision with the callback gated on P2 and P3 facts."""
+    """Payment-domain decision with the callback gated on P2, P3, and P4 facts."""
 
     decision: Decision
     binding_fact: PaymentExecutionBindingFact
     identity_fact: IdentityAssuranceFact
+    context_policy_fact: ContextPolicyFact
     executed: bool
     execution_result: Any | None = None
 
@@ -49,8 +52,9 @@ def execute_with_payment_binding_gate(
     current_provider_ref: str | None = None,
     current_executor_instance_ref: str | None = None,
     current_credential_ref: str | None = None,
+    context_policy_fact: ContextPolicyFact | None = None,
 ) -> PaymentExecutionGateOutcome:
-    """Invoke the callback only after upstream, P2, and P3 checks all pass."""
+    """Invoke the callback only after upstream and P2-P4 checks all pass."""
 
     binding_fact = verify_payment_execution_binding(mandate, order, request, execution)
     identity_fact = verify_agent_executor_identity(
@@ -64,11 +68,13 @@ def execute_with_payment_binding_gate(
         current_executor_instance_ref=current_executor_instance_ref,
         current_credential_ref=current_credential_ref,
     )
+    policy_fact = context_policy_fact or missing_context_policy_fact()
     if prepayment_decision is not Decision.ALLOW:
         return PaymentExecutionGateOutcome(
             prepayment_decision,
             binding_fact,
             identity_fact,
+            policy_fact,
             False,
         )
     if binding_fact.status is VerificationStatus.MISSING_EVIDENCE:
@@ -76,6 +82,7 @@ def execute_with_payment_binding_gate(
             Decision.INDETERMINATE,
             binding_fact,
             identity_fact,
+            policy_fact,
             False,
         )
     if binding_fact.status is VerificationStatus.INVALID:
@@ -83,6 +90,7 @@ def execute_with_payment_binding_gate(
             Decision.DENY,
             binding_fact,
             identity_fact,
+            policy_fact,
             False,
         )
     if identity_fact.status is VerificationStatus.MISSING_EVIDENCE:
@@ -90,6 +98,7 @@ def execute_with_payment_binding_gate(
             Decision.INDETERMINATE,
             binding_fact,
             identity_fact,
+            policy_fact,
             False,
         )
     if identity_fact.status is VerificationStatus.INVALID:
@@ -97,6 +106,7 @@ def execute_with_payment_binding_gate(
             Decision.DENY,
             binding_fact,
             identity_fact,
+            policy_fact,
             False,
         )
     if identity_fact.assurance_level not in {
@@ -107,12 +117,41 @@ def execute_with_payment_binding_gate(
             Decision.INDETERMINATE,
             binding_fact,
             identity_fact,
+            policy_fact,
+            False,
+        )
+    if policy_fact.status is VerificationStatus.MISSING_EVIDENCE:
+        return PaymentExecutionGateOutcome(
+            Decision.INDETERMINATE,
+            binding_fact,
+            identity_fact,
+            policy_fact,
+            False,
+        )
+    if (
+        policy_fact.status is VerificationStatus.INVALID
+        or policy_fact.unauthorized_state_change_detected
+    ):
+        return PaymentExecutionGateOutcome(
+            Decision.DENY,
+            binding_fact,
+            identity_fact,
+            policy_fact,
+            False,
+        )
+    if not policy_fact.policy_version or not policy_fact.current_action:
+        return PaymentExecutionGateOutcome(
+            Decision.INDETERMINATE,
+            binding_fact,
+            identity_fact,
+            policy_fact,
             False,
         )
     return PaymentExecutionGateOutcome(
         Decision.ALLOW,
         binding_fact,
         identity_fact,
+        policy_fact,
         True,
         execute_payment(),
     )

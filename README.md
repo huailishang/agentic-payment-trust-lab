@@ -94,7 +94,8 @@ Idempotency VALID
 - TE04：执行身份、状态观察与幂等事实（Execution Facts）。
 - P1：确认记录与确认—订单绑定事实（Confirmation Binding），已接入 S09 与主验证路径。
 - P2：Authority → Order → Payment Request → Payment Execution 连续绑定。
-- P3 候选实现：`DECLARED / BOUND / VERIFIED` 保证等级、Agent / executor 确定性绑定事实，以及支付回调前的 fail-closed 身份闸门；当前离线路径最高只能达到 `BOUND`，等待独立评估者验收。
+- P3：`DECLARED / BOUND / VERIFIED` 保证等级、Agent / executor 确定性绑定事实，以及支付回调前的 fail-closed 身份闸门；当前离线路径最高只能达到 `BOUND`。
+- P4 执行者候选：封闭 `SourceType × FactDomain` 写入矩阵、不可变上下文合并和执行前 P4 门禁；低信任来源不能覆盖关键支付事实，提供方只能更新支付状态。
 
 ### 3. 外部协议与外部挑战
 
@@ -110,7 +111,7 @@ Idempotency VALID
 |---|---:|---|
 | S01—S13 内部回归 | 13/13 | 防止已有能力回归 |
 | AP2 HP/HNP | 2/2 | 验证外部协议对象能映射到中立模型 |
-| Attack Overlay v1 | 5/5 | 验证不可信内容不能直接改写可信支付输入 |
+| Attack Overlay v1 | 6/6 | 4 个越权更新被阻断，1 个提供方状态更新获准，正常文本不误报 |
 | PayBench | 8/10 可执行 | E1 已接入 Attack Overlay；当前只剩 D1 隐私披露 2 个未覆盖挑战 |
 
 PayBench 的 `PARTIAL` 是刻意保留的真实缺口，不用“已支持部分全过”冒充完整覆盖。
@@ -128,7 +129,7 @@ PayBench 的 `PARTIAL` 是刻意保留的真实缺口，不用“已支持部分
 是否产生禁止副作用
 ```
 
-P3 开发前冻结基线为 **210 tests OK**。P3 候选实现新增身份保证、冲突聚合和支付回调前 fail-closed 测试；最终回归与正式入口证据见 [P3 执行者记录](docs/04_验证体系/P3_Agent_Executor_Identity_执行记录_20260731.md)。这些离线测试只能证明当前固定引用和证据契约一致，不等于真实身份认证或生产支付安全。
+P4 开发前冻结基线为 **218 tests OK**。P4 候选实现把来源规则接入付款回调、Attack Overlay、正式结果卡和最小 UI 契约。来源标签只是本地规则输入，不证明来源已认证；离线矩阵不等于生产策略、生产安全或监管合规。
 
 ## 本地运行
 
@@ -174,7 +175,7 @@ python -m unittest discover -s tests -v
 │   ├── adapters/                 # 外部协议 -> 中立模型
 │   ├── trusted_execution/        # 确定性可信事实
 │   ├── validator.py              # 付款前业务规则
-│   ├── payment_execution.py      # P2 连续绑定 + P3 身份保证的执行前副作用闸门
+│   ├── payment_execution.py      # P2/P3/P4 执行前副作用闸门
 │   ├── lifecycle.py              # 支付生命周期
 │   ├── payment_recovery.py       # UNKNOWN / PENDING 恢复
 │   ├── evaluator.py              # M5 统一评测
@@ -221,9 +222,11 @@ P1 Delegated Authority v1【已完成】
     ↓
 P2 连续 Binding 到 Payment【已完成】
     ↓
-P3 Agent / Executor Identity【执行者候选已完成，待独立评估】
+P3 Agent / Executor Identity【已验收】
     ↓
-评估者 PASS 后再进入 P4；P 系列完成前只维护最小 UI 契约
+P4 Trust Source / Context / Policy Input【执行者候选已完成，待独立评估】
+    ↓
+评估者 PASS 后再进入 P5；P 系列完成前只维护最小 UI 契约
 ```
 
 ## 文档
@@ -235,6 +238,7 @@ P3 Agent / Executor Identity【执行者候选已完成，待独立评估】
 - [支付与可信执行模块边界](docs/03_架构设计/支付与可信执行模块边界.md)
 - [P1 授权绑定与执行前核验执行记录](docs/04_验证体系/P1授权绑定与执行前核验执行记录_20260730.md)
 - [P3 Agent / Executor Identity 执行者记录](docs/04_验证体系/P3_Agent_Executor_Identity_执行记录_20260731.md)
+- [P4 Trust Source / Context / Policy Input 执行记录](docs/04_验证体系/P4_Trust_Source_Context_Policy_执行记录_20260731.md)
 - [外部项目与开源参考台账](docs/reference/开源项目台账.md)
 
 ## License

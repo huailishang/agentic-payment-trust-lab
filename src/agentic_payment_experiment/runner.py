@@ -27,6 +27,13 @@ from .presentation_zh import (
 )
 from .result_card import build_result_card, scenario_result_record, write_result_card
 from .scenario_loader import Scenario, load_scenarios
+from .trusted_execution import (
+    POLICY_VERSION,
+    CandidateFactUpdate,
+    FactDomain,
+    SourceType,
+    evaluate_context_policy,
+)
 from .validator import validate_request
 
 
@@ -152,6 +159,7 @@ def run_scenarios(
         raise ValueError(f"missing Chinese reason mappings: {', '.join(sorted(missing_mappings))}")
 
     card = build_result_card(records)
+    card["context_policy"] = _build_context_policy_result()
     card["identity_assurance"] = _build_identity_assurance_result(scenarios)
     card["presentation_catalog"] = {"decisions": DECISION_PRESENTATION_ZH}
     card["interactive"] = build_interactive_catalog(scenarios_dir=scenario_path)
@@ -228,6 +236,11 @@ def _build_identity_assurance_result(
     )
 
     results: list[dict[str, Any]] = []
+    valid_context_fact = evaluate_context_policy(
+        {},
+        policy_version=POLICY_VERSION,
+        current_action="execute_payment",
+    ).fact
     for case_id, description, identity, current_provider, current_executor in cases:
         callback_calls: list[str] = []
         outcome = execute_with_payment_binding_gate(
@@ -241,6 +254,7 @@ def _build_identity_assurance_result(
             agent_identity=identity,
             current_provider_ref=current_provider,
             current_executor_instance_ref=current_executor,
+            context_policy_fact=valid_context_fact,
         )
         results.append(
             {
@@ -268,6 +282,104 @@ def _build_identity_assurance_result(
             "不执行真实身份认证、凭证有效性或持有证明。"
         ),
         "cases": results,
+    }
+
+
+def _build_context_policy_result() -> dict[str, Any]:
+    """Build independent deterministic P4 cases for the formal result card."""
+
+    trusted = {
+        "request": {"amount": "480.00", "payee": "payee-1"},
+        "payment_status_observation": {"status": "PENDING"},
+    }
+    sources = {
+        "request.amount": SourceType.USER_CONFIRMED,
+        "request.payee": SourceType.USER_CONFIRMED,
+        "payment_status_observation.status": SourceType.PAYMENT_PROVIDER_OBSERVED,
+    }
+    cases = (
+        (
+            "P4-ALLOWED-PROVIDER-STATUS",
+            (
+                CandidateFactUpdate(
+                    SourceType.PAYMENT_PROVIDER_OBSERVED,
+                    FactDomain.PAYMENT_STATUS,
+                    "payment_status_observation.status",
+                    "SUCCEEDED",
+                    source_ref="offline-provider-status",
+                ),
+            ),
+            {},
+        ),
+        (
+            "P4-BLOCKED-WEB-AMOUNT",
+            (
+                CandidateFactUpdate(
+                    SourceType.WEB_UNTRUSTED,
+                    FactDomain.PAYMENT_REQUEST,
+                    "request.amount",
+                    "699.00",
+                    source_ref="offline-web-content",
+                ),
+            ),
+            {},
+        ),
+        (
+            "P4-MISSING-SOURCE-REF",
+            (
+                CandidateFactUpdate(
+                    SourceType.LLM_GENERATED,
+                    FactDomain.PAYMENT_REQUEST,
+                    "request.payee",
+                    "payee-evil",
+                    source_ref=None,
+                ),
+            ),
+            {},
+        ),
+        (
+            "P4-INVALID-STATE-POLLUTION",
+            (),
+            {
+                "observed_state_after": {
+                    **trusted,
+                    "request": {**trusted["request"], "amount": "699.00"},
+                }
+            },
+        ),
+    )
+    output = []
+    for case_id, updates, extra in cases:
+        result = evaluate_context_policy(
+            trusted,
+            updates,
+            trusted_sources=sources,
+            policy_version=POLICY_VERSION,
+            current_action="execute_payment",
+            **extra,
+        )
+        output.append(
+            {
+                "case_id": case_id,
+                "status": result.fact.status.value,
+                "policy_version": result.fact.policy_version,
+                "current_action": result.fact.current_action,
+                "applied_paths": list(result.fact.applied_paths),
+                "blocked_paths": list(result.fact.blocked_paths),
+                "reason_codes": list(result.fact.reason_codes),
+                "trusted_state_changed": result.fact.trusted_state_changed,
+                "unauthorized_state_change_detected": (
+                    result.fact.unauthorized_state_change_detected
+                ),
+            }
+        )
+    return {
+        "contract": "P4 Trust Source / Context / Policy Input v1",
+        "boundary_zh": (
+            "来源标签只是本地规则输入，不证明来源真实或已认证；"
+            "离线矩阵也不等于生产策略、生产安全或监管合规。"
+        ),
+        "cases": output,
     }
 
 

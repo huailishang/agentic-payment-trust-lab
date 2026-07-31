@@ -21,8 +21,13 @@ from agentic_payment_experiment.payment_execution import (
     execute_with_payment_binding_gate,
 )
 from agentic_payment_experiment.trusted_execution import (
+    POLICY_VERSION,
+    CandidateFactUpdate,
+    FactDomain,
     IdentityAssuranceLevel,
+    SourceType,
     VerificationStatus,
+    evaluate_context_policy,
     verify_payment_execution_binding,
 )
 
@@ -114,8 +119,15 @@ class PaymentExecutionBindingTests(unittest.TestCase):
         provider_ref="offline-provider-1",
         executor_ref="executor-1",
         credential_ref=None,
+        context_policy_fact=None,
     ):
         calls: list[str] = []
+        if context_policy_fact is None:
+            context_policy_fact = evaluate_context_policy(
+                {},
+                current_action="execute_payment",
+                policy_version=POLICY_VERSION,
+            ).fact
         outcome = execute_with_payment_binding_gate(
             decision,
             mandate if mandate is not None else self.mandate,
@@ -127,6 +139,7 @@ class PaymentExecutionBindingTests(unittest.TestCase):
             current_provider_ref=provider_ref,
             current_executor_instance_ref=executor_ref,
             current_credential_ref=credential_ref,
+            context_policy_fact=context_policy_fact,
         )
         return outcome, calls
 
@@ -144,6 +157,41 @@ class PaymentExecutionBindingTests(unittest.TestCase):
         )
         self.assertTrue(outcome.executed)
         self.assertEqual("provider-payment-1", outcome.execution_result)
+        self.assertEqual(["paid"], calls)
+
+    def test_p4_missing_invalid_and_safely_blocked_paths_gate_callback(self) -> None:
+        missing = evaluate_context_policy(
+            {}, current_action=None, policy_version=POLICY_VERSION
+        ).fact
+        outcome, calls = self.execute(context_policy_fact=missing)
+        self.assertEqual(Decision.INDETERMINATE, outcome.decision)
+        self.assertEqual([], calls)
+
+        invalid = evaluate_context_policy(
+            {},
+            current_action="execute_payment",
+            observed_state_after={"request": {"amount": "699.00"}},
+        ).fact
+        outcome, calls = self.execute(context_policy_fact=invalid)
+        self.assertEqual(Decision.DENY, outcome.decision)
+        self.assertEqual([], calls)
+
+        blocked = evaluate_context_policy(
+            {"request": {"amount": "480.00"}},
+            (
+                CandidateFactUpdate(
+                    SourceType.WEB_UNTRUSTED,
+                    FactDomain.PAYMENT_REQUEST,
+                    "request.amount",
+                    "699.00",
+                    source_ref="offline-web",
+                ),
+            ),
+            trusted_sources={"request.amount": SourceType.USER_CONFIRMED},
+            current_action="execute_payment",
+        ).fact
+        outcome, calls = self.execute(context_policy_fact=blocked)
+        self.assertEqual(Decision.ALLOW, outcome.decision)
         self.assertEqual(["paid"], calls)
 
     def test_request_must_bind_the_current_order_and_authority_version(self) -> None:

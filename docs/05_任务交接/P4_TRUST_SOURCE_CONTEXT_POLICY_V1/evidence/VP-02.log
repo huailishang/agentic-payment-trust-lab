@@ -1,0 +1,22 @@
+Command: $env:PYTHONUTF8='1'; python -m unittest tests.trusted_execution.test_payment_binding -v
+Working directory: D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab
+Exit code: 0
+--- STDOUT ---
+
+--- STDERR ---
+test_authority_and_agent_cannot_be_swapped_at_execution (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_authority_and_agent_cannot_be_swapped_at_execution) ... ok
+test_critical_payment_fields_cannot_change_silently (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_critical_payment_fields_cannot_change_silently) ... ok
+test_execution_must_bind_the_validated_request_and_order (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_execution_must_bind_the_validated_request_and_order) ... ok
+test_invalid_p3_identity_is_denied_before_callback (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_invalid_p3_identity_is_denied_before_callback) ... ok
+test_missing_continuous_references_fail_closed (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_missing_continuous_references_fail_closed) ... ok
+test_missing_p3_executor_evidence_is_indeterminate_before_callback (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_missing_p3_executor_evidence_is_indeterminate_before_callback) ... ok
+test_p4_missing_invalid_and_safely_blocked_paths_gate_callback (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_p4_missing_invalid_and_safely_blocked_paths_gate_callback) ... ok
+test_reference_collision_or_execution_before_request_is_invalid (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_reference_collision_or_execution_before_request_is_invalid) ... ok
+test_request_must_bind_the_current_order_and_authority_version (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_request_must_bind_the_current_order_and_authority_version) ... ok
+test_upstream_non_allow_decision_blocks_even_a_valid_payment_binding (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_upstream_non_allow_decision_blocks_even_a_valid_payment_binding) ... ok
+test_valid_continuous_binding_is_the_only_path_that_executes (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_valid_continuous_binding_is_the_only_path_that_executes) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.010s
+
+OK
