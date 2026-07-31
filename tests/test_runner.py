@@ -203,6 +203,39 @@ class ScenarioRunnerTest(unittest.TestCase):
                 identity_evidence["agent_claim_binding_reason"]["observed"],
             )
 
+            p3_cases = {
+                item["case_id"]: item for item in card["identity_assurance"]["cases"]
+            }
+            self.assertEqual("S10", card["identity_assurance"]["source_scenario"])
+            self.assertIn(
+                "不执行真实身份认证",
+                card["identity_assurance"]["boundary_zh"],
+            )
+            self.assertEqual("BOUND", p3_cases["P3-BOUND"]["assurance_level"])
+            self.assertEqual("VALID", p3_cases["P3-BOUND"]["identity_status"])
+            self.assertEqual("ALLOW", p3_cases["P3-BOUND"]["decision"])
+            self.assertEqual(1, p3_cases["P3-BOUND"]["callback_count"])
+            self.assertEqual("INVALID", p3_cases["P3-AGENT-SUBSTITUTED"]["identity_status"])
+            self.assertEqual("DENY", p3_cases["P3-AGENT-SUBSTITUTED"]["decision"])
+            self.assertEqual(0, p3_cases["P3-AGENT-SUBSTITUTED"]["callback_count"])
+            self.assertEqual(
+                "MISSING_EVIDENCE",
+                p3_cases["P3-EXECUTOR-MISSING"]["identity_status"],
+            )
+            self.assertEqual(
+                "INDETERMINATE",
+                p3_cases["P3-EXECUTOR-MISSING"]["decision"],
+            )
+            self.assertEqual(0, p3_cases["P3-EXECUTOR-MISSING"]["callback_count"])
+            for case in p3_cases.values():
+                evidence_codes = {item["code"] for item in case["evidence"]}
+                self.assertIn("identity_assurance_status", evidence_codes)
+                self.assertIn("identity_assurance_level", evidence_codes)
+                self.assertIn("identity_authorized_agent_ref", evidence_codes)
+                self.assertIn("identity_executor_instance_ref", evidence_codes)
+                self.assertIn("identity_provider_ref", evidence_codes)
+                self.assertIn("identity_credential_available", evidence_codes)
+
             json_path = artifacts_dir / "scenario_result_card.json"
             html_path = artifacts_dir / "scenario_report.html"
             self.assertTrue(json_path.exists())
@@ -237,6 +270,9 @@ class ScenarioRunnerTest(unittest.TestCase):
             self.assertIn("idem-request-s12", html)
             self.assertIn("continue_with_original_payment", html)
             self.assertIn("payment_execution_binding_status", html)
+            self.assertIn("P3 Agent / Executor Identity v1", html)
+            self.assertIn("不执行真实身份认证", html)
+            self.assertIn("identity_assurance_level", html)
             self.assertIn('"retry_allowed": false', html)
             for old_entry in (
                 "展开旧版统一字段面板",

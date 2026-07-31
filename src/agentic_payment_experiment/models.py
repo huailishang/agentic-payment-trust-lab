@@ -82,6 +82,7 @@ class TaskStatus(str, Enum):
 class AgentIdentity:
     agent_id: str
     provider: str
+    executor_instance_id: str | None = None
     status: str = "active"
     credential_ref: str | None = None
 
