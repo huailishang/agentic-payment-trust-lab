@@ -1,0 +1,14 @@
+working_directory=D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab
+command=$env:PYTHONUTF8='1'; python -m unittest tests.trusted_execution.test_identity_assurance -v
+test_assurance_levels_are_stable_serializable_values (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_assurance_levels_are_stable_serializable_values) ... ok
+test_complete_offline_binding_is_valid_and_bound_only (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_complete_offline_binding_is_valid_and_bound_only) ... ok
+test_credential_reference_alone_never_upgrades_to_verified (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_credential_reference_alone_never_upgrades_to_verified) ... ok
+test_inactive_revoked_and_unsupported_statuses_are_invalid (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_inactive_revoked_and_unsupported_statuses_are_invalid) ... ok
+test_missing_identity_and_executor_evidence_fails_closed (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_missing_identity_and_executor_evidence_fails_closed) ... ok
+test_same_layer_conflicts_are_aggregated_in_stable_order (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_same_layer_conflicts_are_aggregated_in_stable_order) ... ok
+System.Management.Automation.RemoteException
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+System.Management.Automation.RemoteException
+OK
+exit_code=0

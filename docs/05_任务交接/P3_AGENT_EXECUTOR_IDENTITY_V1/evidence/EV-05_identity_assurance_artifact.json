@@ -1,0 +1,251 @@
+{
+    "contract":  "P3 Agent / Executor Identity v1",
+    "source_scenario":  "S10",
+    "boundary_zh":  "这里只证明固定离线引用的确定性绑定，最高为 BOUND；不执行真实身份认证、凭证有效性或持有证明。",
+    "cases":  [
+                  {
+                      "case_id":  "P3-BOUND",
+                      "description_zh":  "执行主体与授权 Agent、请求和执行记录确定性绑定",
+                      "decision":  "ALLOW",
+                      "executed":  true,
+                      "callback_count":  1,
+                      "p2_status":  "VALID",
+                      "identity_status":  "VALID",
+                      "assurance_level":  "BOUND",
+                      "reason_codes":  [
+                                           "identity_executor_binding_match"
+                                       ],
+                      "evidence":  [
+                                       {
+                                           "code":  "identity_assurance_status",
+                                           "field_path":  "trusted_execution.identity.status",
+                                           "observed":  "VALID",
+                                           "expected":  "VALID"
+                                       },
+                                       {
+                                           "code":  "identity_assurance_level",
+                                           "field_path":  "trusted_execution.identity.assurance_level",
+                                           "observed":  "BOUND",
+                                           "expected":  "BOUND"
+                                       },
+                                       {
+                                           "code":  "identity_assurance_reasons",
+                                           "field_path":  "trusted_execution.identity.reason_codes",
+                                           "observed":  "identity_executor_binding_match",
+                                           "expected":  null
+                                       },
+                                       {
+                                           "code":  "identity_authorized_agent_ref",
+                                           "field_path":  "trusted_execution.identity.authorized_agent_ref",
+                                           "observed":  "agent-shop-001",
+                                           "expected":  null
+                                       },
+                                       {
+                                           "code":  "identity_request_agent_ref",
+                                           "field_path":  "trusted_execution.identity.request_agent_ref",
+                                           "observed":  "agent-shop-001",
+                                           "expected":  "agent-shop-001"
+                                       },
+                                       {
+                                           "code":  "identity_execution_agent_ref",
+                                           "field_path":  "trusted_execution.identity.execution_agent_ref",
+                                           "observed":  "agent-shop-001",
+                                           "expected":  "agent-shop-001"
+                                       },
+                                       {
+                                           "code":  "identity_object_agent_ref",
+                                           "field_path":  "trusted_execution.identity.identity_agent_ref",
+                                           "observed":  "agent-shop-001",
+                                           "expected":  "agent-shop-001"
+                                       },
+                                       {
+                                           "code":  "identity_provider_ref",
+                                           "field_path":  "trusted_execution.identity.provider_ref",
+                                           "observed":  "offline-identity-provider",
+                                           "expected":  "offline-identity-provider"
+                                       },
+                                       {
+                                           "code":  "identity_executor_instance_ref",
+                                           "field_path":  "trusted_execution.identity.executor_instance_ref",
+                                           "observed":  "executor-s10-001",
+                                           "expected":  "executor-s10-001"
+                                       },
+                                       {
+                                           "code":  "identity_credential_available",
+                                           "field_path":  "trusted_execution.identity.credential_available",
+                                           "observed":  "false",
+                                           "expected":  null
+                                       },
+                                       {
+                                           "code":  "identity_credential_ref",
+                                           "field_path":  "trusted_execution.identity.credential_ref",
+                                           "observed":  "\u003cmissing\u003e",
+                                           "expected":  "\u003cmissing\u003e"
+                                       }
+                                   ]
+                  },
+                  {
+                      "case_id":  "P3-AGENT-SUBSTITUTED",
+                      "description_zh":  "身份对象中的 Agent 引用在支付前被替换",
+                      "decision":  "DENY",
+                      "executed":  false,
+                      "callback_count":  0,
+                      "p2_status":  "VALID",
+                      "identity_status":  "INVALID",
+                      "assurance_level":  "DECLARED",
+                      "reason_codes":  [
+                                           "identity_object_agent_ref_mismatch"
+                                       ],
+                      "evidence":  [
+                                       {
+                                           "code":  "identity_assurance_status",
+                                           "field_path":  "trusted_execution.identity.status",
+                                           "observed":  "INVALID",
+                                           "expected":  "VALID"
+                                       },
+                                       {
+                                           "code":  "identity_assurance_level",
+                                           "field_path":  "trusted_execution.identity.assurance_level",
+                                           "observed":  "DECLARED",
+                                           "expected":  "BOUND"
+                                       },
+                                       {
+                                           "code":  "identity_assurance_reasons",
+                                           "field_path":  "trusted_execution.identity.reason_codes",
+                                           "observed":  "identity_object_agent_ref_mismatch",
+                                           "expected":  null
+                                       },
+                                       {
+                                           "code":  "identity_authorized_agent_ref",
+                                           "field_path":  "trusted_execution.identity.authorized_agent_ref",
+                                           "observed":  "agent-shop-001",
+                                           "expected":  null
+                                       },
+                                       {
+                                           "code":  "identity_request_agent_ref",
+                                           "field_path":  "trusted_execution.identity.request_agent_ref",
+                                           "observed":  "agent-shop-001",
+                                           "expected":  "agent-shop-001"
+                                       },
+                                       {
+                                           "code":  "identity_execution_agent_ref",
+                                           "field_path":  "trusted_execution.identity.execution_agent_ref",
+                                           "observed":  "agent-shop-001",
+                                           "expected":  "agent-shop-001"
+                                       },
+                                       {
+                                           "code":  "identity_object_agent_ref",
+                                           "field_path":  "trusted_execution.identity.identity_agent_ref",
+                                           "observed":  "agent-shop-other",
+                                           "expected":  "agent-shop-001"
+                                       },
+                                       {
+                                           "code":  "identity_provider_ref",
+                                           "field_path":  "trusted_execution.identity.provider_ref",
+                                           "observed":  "offline-identity-provider",
+                                           "expected":  "offline-identity-provider"
+                                       },
+                                       {
+                                           "code":  "identity_executor_instance_ref",
+                                           "field_path":  "trusted_execution.identity.executor_instance_ref",
+                                           "observed":  "executor-s10-001",
+                                           "expected":  "executor-s10-001"
+                                       },
+                                       {
+                                           "code":  "identity_credential_available",
+                                           "field_path":  "trusted_execution.identity.credential_available",
+                                           "observed":  "false",
+                                           "expected":  null
+                                       },
+                                       {
+                                           "code":  "identity_credential_ref",
+                                           "field_path":  "trusted_execution.identity.credential_ref",
+                                           "observed":  "\u003cmissing\u003e",
+                                           "expected":  "\u003cmissing\u003e"
+                                       }
+                                   ]
+                  },
+                  {
+                      "case_id":  "P3-EXECUTOR-MISSING",
+                      "description_zh":  "缺少当前 executor instance 绑定证据",
+                      "decision":  "INDETERMINATE",
+                      "executed":  false,
+                      "callback_count":  0,
+                      "p2_status":  "VALID",
+                      "identity_status":  "MISSING_EVIDENCE",
+                      "assurance_level":  "DECLARED",
+                      "reason_codes":  [
+                                           "identity_expected_executor_ref_missing",
+                                           "identity_current_executor_ref_missing"
+                                       ],
+                      "evidence":  [
+                                       {
+                                           "code":  "identity_assurance_status",
+                                           "field_path":  "trusted_execution.identity.status",
+                                           "observed":  "MISSING_EVIDENCE",
+                                           "expected":  "VALID"
+                                       },
+                                       {
+                                           "code":  "identity_assurance_level",
+                                           "field_path":  "trusted_execution.identity.assurance_level",
+                                           "observed":  "DECLARED",
+                                           "expected":  "BOUND"
+                                       },
+                                       {
+                                           "code":  "identity_assurance_reasons",
+                                           "field_path":  "trusted_execution.identity.reason_codes",
+                                           "observed":  "identity_expected_executor_ref_missing,identity_current_executor_ref_missing",
+                                           "expected":  null
+                                       },
+                                       {
+                                           "code":  "identity_authorized_agent_ref",
+                                           "field_path":  "trusted_execution.identity.authorized_agent_ref",
+                                           "observed":  "agent-shop-001",
+                                           "expected":  null
+                                       },
+                                       {
+                                           "code":  "identity_request_agent_ref",
+                                           "field_path":  "trusted_execution.identity.request_agent_ref",
+                                           "observed":  "agent-shop-001",
+                                           "expected":  "agent-shop-001"
+                                       },
+                                       {
+                                           "code":  "identity_execution_agent_ref",
+                                           "field_path":  "trusted_execution.identity.execution_agent_ref",
+                                           "observed":  "agent-shop-001",
+                                           "expected":  "agent-shop-001"
+                                       },
+                                       {
+                                           "code":  "identity_object_agent_ref",
+                                           "field_path":  "trusted_execution.identity.identity_agent_ref",
+                                           "observed":  "agent-shop-001",
+                                           "expected":  "agent-shop-001"
+                                       },
+                                       {
+                                           "code":  "identity_provider_ref",
+                                           "field_path":  "trusted_execution.identity.provider_ref",
+                                           "observed":  "offline-identity-provider",
+                                           "expected":  "offline-identity-provider"
+                                       },
+                                       {
+                                           "code":  "identity_executor_instance_ref",
+                                           "field_path":  "trusted_execution.identity.executor_instance_ref",
+                                           "observed":  "\u003cmissing\u003e",
+                                           "expected":  "\u003cmissing\u003e"
+                                       },
+                                       {
+                                           "code":  "identity_credential_available",
+                                           "field_path":  "trusted_execution.identity.credential_available",
+                                           "observed":  "false",
+                                           "expected":  null
+                                       },
+                                       {
+                                           "code":  "identity_credential_ref",
+                                           "field_path":  "trusted_execution.identity.credential_ref",
+                                           "observed":  "\u003cmissing\u003e",
+                                           "expected":  "\u003cmissing\u003e"
+                                       }
+                                   ]
+                  }
+              ]
+}

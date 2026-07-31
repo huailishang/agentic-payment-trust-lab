@@ -13,6 +13,11 @@ from .interactive_lab import build_interactive_catalog
 from .lab_overview import build_lab_overview
 from .learning_variants import build_s09_learning_variants
 from .lifecycle import assess_lifecycle
+from .models import AgentIdentity, Decision
+from .payment_execution import (
+    execute_with_payment_binding_gate,
+    identity_assurance_evidence,
+)
 from .payment_recovery import assess_payment_recovery
 from .remediation import assess_remediation
 from .presentation_zh import (
@@ -38,8 +43,9 @@ def run_scenarios(
     scenario_path = scenarios_dir or root / "samples" / "scenarios"
     output_path = artifacts_dir or root / "artifacts"
 
+    scenarios = load_scenarios(scenario_path)
     records: list[dict[str, Any]] = []
-    for scenario in load_scenarios(scenario_path):
+    for scenario in scenarios:
         mandate, request, protocol_trace = _runtime_input(scenario)
         result = validate_request(
             mandate,
@@ -146,6 +152,7 @@ def run_scenarios(
         raise ValueError(f"missing Chinese reason mappings: {', '.join(sorted(missing_mappings))}")
 
     card = build_result_card(records)
+    card["identity_assurance"] = _build_identity_assurance_result(scenarios)
     card["presentation_catalog"] = {"decisions": DECISION_PRESENTATION_ZH}
     card["interactive"] = build_interactive_catalog(scenarios_dir=scenario_path)
     card["lab_overview"] = build_lab_overview(card, root=root)
@@ -158,6 +165,110 @@ def run_scenarios(
     write_result_card(card, json_path)
     write_html_report(card, html_path)
     return card
+
+
+def _build_identity_assurance_result(
+    scenarios: tuple[Scenario, ...],
+) -> dict[str, Any]:
+    """Build three offline P3 cases through the real payment callback gate."""
+
+    source = next(
+        (
+            scenario
+            for scenario in scenarios
+            if scenario.sample_id == "S10"
+            and scenario.final_order is not None
+            and scenario.payment_execution is not None
+        ),
+        None,
+    )
+    if source is None:
+        raise ValueError("P3 identity result requires the complete S10 payment path")
+
+    provider_ref = "offline-identity-provider"
+    executor_ref = "executor-s10-001"
+    bound_identity = AgentIdentity(
+        agent_id=source.mandate.expected_agent_id or "",
+        provider=provider_ref,
+        executor_instance_id=executor_ref,
+        status="active",
+    )
+    cases = (
+        (
+            "P3-BOUND",
+            "执行主体与授权 Agent、请求和执行记录确定性绑定",
+            bound_identity,
+            provider_ref,
+            executor_ref,
+        ),
+        (
+            "P3-AGENT-SUBSTITUTED",
+            "身份对象中的 Agent 引用在支付前被替换",
+            AgentIdentity(
+                agent_id="agent-shop-other",
+                provider=provider_ref,
+                executor_instance_id=executor_ref,
+                status="active",
+            ),
+            provider_ref,
+            executor_ref,
+        ),
+        (
+            "P3-EXECUTOR-MISSING",
+            "缺少当前 executor instance 绑定证据",
+            AgentIdentity(
+                agent_id=source.mandate.expected_agent_id or "",
+                provider=provider_ref,
+                executor_instance_id=None,
+                status="active",
+            ),
+            provider_ref,
+            None,
+        ),
+    )
+
+    results: list[dict[str, Any]] = []
+    for case_id, description, identity, current_provider, current_executor in cases:
+        callback_calls: list[str] = []
+        outcome = execute_with_payment_binding_gate(
+            Decision.ALLOW,
+            source.mandate,
+            source.final_order,
+            source.request,
+            source.payment_execution,
+            lambda: callback_calls.append("simulated_payment_callback")
+            or "offline-payment-result",
+            agent_identity=identity,
+            current_provider_ref=current_provider,
+            current_executor_instance_ref=current_executor,
+        )
+        results.append(
+            {
+                "case_id": case_id,
+                "description_zh": description,
+                "decision": outcome.decision.value,
+                "executed": outcome.executed,
+                "callback_count": len(callback_calls),
+                "p2_status": outcome.binding_fact.status.value,
+                "identity_status": outcome.identity_fact.status.value,
+                "assurance_level": outcome.identity_fact.assurance_level.value,
+                "reason_codes": list(outcome.identity_fact.reason_codes),
+                "evidence": [
+                    asdict(item)
+                    for item in identity_assurance_evidence(outcome.identity_fact)
+                ],
+            }
+        )
+
+    return {
+        "contract": "P3 Agent / Executor Identity v1",
+        "source_scenario": source.sample_id,
+        "boundary_zh": (
+            "这里只证明固定离线引用的确定性绑定，最高为 BOUND；"
+            "不执行真实身份认证、凭证有效性或持有证明。"
+        ),
+        "cases": results,
+    }
 
 
 def print_summary(card: dict[str, Any]) -> None:

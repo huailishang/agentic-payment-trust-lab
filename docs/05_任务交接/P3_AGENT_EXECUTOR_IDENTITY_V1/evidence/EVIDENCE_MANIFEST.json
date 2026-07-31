@@ -1,0 +1,42 @@
+[
+    {
+        "Name":  "EV-01_VP-01_identity_focused.log",
+        "Bytes":  1548,
+        "SHA256":  "43000BDE650F4CFB9288817A6939CB6BA128FA98353C12348A664213E3FD2806"
+    },
+    {
+        "Name":  "EV-02_EV-09_VP-07_scope.log",
+        "Bytes":  3651,
+        "SHA256":  "C5E4EE8CD9FD3AD14ECA0FEF05D9C599C4FAC7D022EFE440E89F3023F783A442"
+    },
+    {
+        "Name":  "EV-04_EV-06_VP-02_gate_regression.log",
+        "Bytes":  7954,
+        "SHA256":  "850CC7B51C412B4A5BB37D90158799FB20491F5ACE7E38C6FC8D84F6B7EC693B"
+    },
+    {
+        "Name":  "EV-05_identity_assurance_artifact.json",
+        "Bytes":  16501,
+        "SHA256":  "170EA56B9B4F5BC894EF4C8F1CB51C12FFD1F2D37FBF1F7A573FB744E1B90E5E"
+    },
+    {
+        "Name":  "EV-05_VP-03_integration.log",
+        "Bytes":  7696,
+        "SHA256":  "F1CE42F65B6468A498D8F385FD2E9140E7EA7D476B551F8D96F1096911D9CD80"
+    },
+    {
+        "Name":  "EV-07_VP-04_full_regression.log",
+        "Bytes":  35614,
+        "SHA256":  "E34B907D6B6A073A56628F92787422B89CDDB1F650862A60618A2BE579AF76E1"
+    },
+    {
+        "Name":  "EV-08_VP-05_formal_entrypoint.log",
+        "Bytes":  1916,
+        "SHA256":  "E663F877BE34E6B1DCA20A4A5633C2733EE158C93C4ECA3B5978C6D548E58066"
+    },
+    {
+        "Name":  "EV-09_VP-06_claim_audit.log",
+        "Bytes":  48347,
+        "SHA256":  "D3BCDE94C863DB2C6F5274CF99B51F73C224675C87D5D045B682D9D4E49B04AB"
+    }
+]

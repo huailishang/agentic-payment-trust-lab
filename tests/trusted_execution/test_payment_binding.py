@@ -8,6 +8,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 
 from agentic_payment_experiment.models import (
+    AgentIdentity,
     Decision,
     IntentMandate,
     Order,
@@ -20,6 +21,7 @@ from agentic_payment_experiment.payment_execution import (
     execute_with_payment_binding_gate,
 )
 from agentic_payment_experiment.trusted_execution import (
+    IdentityAssuranceLevel,
     VerificationStatus,
     verify_payment_execution_binding,
 )
@@ -85,6 +87,12 @@ class PaymentExecutionBindingTests(unittest.TestCase):
             transaction_object_ref="request-1",
             payee="payee-1",
         )
+        self.identity = AgentIdentity(
+            agent_id="agent-1",
+            provider="offline-provider-1",
+            executor_instance_id="executor-1",
+            status="active",
+        )
 
     def verify(self, *, mandate=None, order=None, request=None, payment=None):
         return verify_payment_execution_binding(
@@ -94,7 +102,19 @@ class PaymentExecutionBindingTests(unittest.TestCase):
             payment if payment is not None else self.payment,
         )
 
-    def execute(self, *, decision=Decision.ALLOW, mandate=None, order=None, request=None, payment=None):
+    def execute(
+        self,
+        *,
+        decision=Decision.ALLOW,
+        mandate=None,
+        order=None,
+        request=None,
+        payment=None,
+        identity=None,
+        provider_ref="offline-provider-1",
+        executor_ref="executor-1",
+        credential_ref=None,
+    ):
         calls: list[str] = []
         outcome = execute_with_payment_binding_gate(
             decision,
@@ -103,6 +123,10 @@ class PaymentExecutionBindingTests(unittest.TestCase):
             request if request is not None else self.request,
             payment if payment is not None else self.payment,
             lambda: calls.append("paid") or "provider-payment-1",
+            agent_identity=self.identity if identity is None else identity,
+            current_provider_ref=provider_ref,
+            current_executor_instance_ref=executor_ref,
+            current_credential_ref=credential_ref,
         )
         return outcome, calls
 
@@ -113,6 +137,11 @@ class PaymentExecutionBindingTests(unittest.TestCase):
         self.assertEqual(VerificationStatus.VALID, fact.status)
         self.assertEqual(("payment_execution_binding_match",), fact.reason_codes)
         self.assertEqual(Decision.ALLOW, outcome.decision)
+        self.assertEqual(VerificationStatus.VALID, outcome.identity_fact.status)
+        self.assertEqual(
+            IdentityAssuranceLevel.BOUND,
+            outcome.identity_fact.assurance_level,
+        )
         self.assertTrue(outcome.executed)
         self.assertEqual("provider-payment-1", outcome.execution_result)
         self.assertEqual(["paid"], calls)
@@ -260,6 +289,36 @@ class PaymentExecutionBindingTests(unittest.TestCase):
                 self.assertEqual(VerificationStatus.VALID, outcome.binding_fact.status)
                 self.assertFalse(outcome.executed)
                 self.assertEqual([], calls)
+
+    def test_missing_p3_executor_evidence_is_indeterminate_before_callback(self) -> None:
+        identity = replace(self.identity, executor_instance_id=None)
+        outcome, calls = self.execute(
+            identity=identity,
+            executor_ref=None,
+        )
+
+        self.assertEqual(VerificationStatus.VALID, outcome.binding_fact.status)
+        self.assertEqual(
+            VerificationStatus.MISSING_EVIDENCE,
+            outcome.identity_fact.status,
+        )
+        self.assertEqual(Decision.INDETERMINATE, outcome.decision)
+        self.assertFalse(outcome.executed)
+        self.assertEqual([], calls)
+
+    def test_invalid_p3_identity_is_denied_before_callback(self) -> None:
+        identity = replace(self.identity, agent_id="agent-other")
+        outcome, calls = self.execute(identity=identity)
+
+        self.assertEqual(VerificationStatus.VALID, outcome.binding_fact.status)
+        self.assertEqual(VerificationStatus.INVALID, outcome.identity_fact.status)
+        self.assertEqual(
+            ("identity_object_agent_ref_mismatch",),
+            outcome.identity_fact.reason_codes,
+        )
+        self.assertEqual(Decision.DENY, outcome.decision)
+        self.assertFalse(outcome.executed)
+        self.assertEqual([], calls)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-"""Payment-domain mapping and fail-closed gate for P2 continuous binding."""
+"""Payment-domain mapping and fail-closed gates for P2/P3 execution facts."""
 
 from __future__ import annotations
 
@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from .models import (
+    AgentIdentity,
     Decision,
     EvidenceRef,
     IntentMandate,
@@ -16,18 +17,22 @@ from .models import (
     ValidationIssue,
 )
 from .trusted_execution import (
+    IdentityAssuranceFact,
+    IdentityAssuranceLevel,
     PaymentExecutionBindingFact,
     VerificationStatus,
+    verify_agent_executor_identity,
     verify_payment_execution_binding,
 )
 
 
 @dataclass(frozen=True)
 class PaymentExecutionGateOutcome:
-    """Payment-domain decision with the callback gated on the full P2 chain."""
+    """Payment-domain decision with the callback gated on P2 and P3 facts."""
 
     decision: Decision
     binding_fact: PaymentExecutionBindingFact
+    identity_fact: IdentityAssuranceFact
     executed: bool
     execution_result: Any | None = None
 
@@ -39,21 +44,150 @@ def execute_with_payment_binding_gate(
     request: TransactionRequest | None,
     execution: PaymentExecutionRecord | None,
     execute_payment: Callable[[], Any],
+    *,
+    agent_identity: AgentIdentity | None = None,
+    current_provider_ref: str | None = None,
+    current_executor_instance_ref: str | None = None,
+    current_credential_ref: str | None = None,
 ) -> PaymentExecutionGateOutcome:
-    """Re-verify P2 facts and invoke the callback only after every gate passes."""
+    """Invoke the callback only after upstream, P2, and P3 checks all pass."""
 
-    fact = verify_payment_execution_binding(mandate, order, request, execution)
+    binding_fact = verify_payment_execution_binding(mandate, order, request, execution)
+    identity_fact = verify_agent_executor_identity(
+        authorized_agent_ref=(
+            mandate.expected_agent_id if mandate is not None else None
+        ),
+        request_agent_ref=request.agent_id if request is not None else None,
+        execution_agent_ref=execution.agent_ref if execution is not None else None,
+        identity=agent_identity,
+        current_provider_ref=current_provider_ref,
+        current_executor_instance_ref=current_executor_instance_ref,
+        current_credential_ref=current_credential_ref,
+    )
     if prepayment_decision is not Decision.ALLOW:
-        return PaymentExecutionGateOutcome(prepayment_decision, fact, False)
-    if fact.status is VerificationStatus.MISSING_EVIDENCE:
-        return PaymentExecutionGateOutcome(Decision.INDETERMINATE, fact, False)
-    if fact.status is VerificationStatus.INVALID:
-        return PaymentExecutionGateOutcome(Decision.DENY, fact, False)
+        return PaymentExecutionGateOutcome(
+            prepayment_decision,
+            binding_fact,
+            identity_fact,
+            False,
+        )
+    if binding_fact.status is VerificationStatus.MISSING_EVIDENCE:
+        return PaymentExecutionGateOutcome(
+            Decision.INDETERMINATE,
+            binding_fact,
+            identity_fact,
+            False,
+        )
+    if binding_fact.status is VerificationStatus.INVALID:
+        return PaymentExecutionGateOutcome(
+            Decision.DENY,
+            binding_fact,
+            identity_fact,
+            False,
+        )
+    if identity_fact.status is VerificationStatus.MISSING_EVIDENCE:
+        return PaymentExecutionGateOutcome(
+            Decision.INDETERMINATE,
+            binding_fact,
+            identity_fact,
+            False,
+        )
+    if identity_fact.status is VerificationStatus.INVALID:
+        return PaymentExecutionGateOutcome(
+            Decision.DENY,
+            binding_fact,
+            identity_fact,
+            False,
+        )
+    if identity_fact.assurance_level not in {
+        IdentityAssuranceLevel.BOUND,
+        IdentityAssuranceLevel.VERIFIED,
+    }:
+        return PaymentExecutionGateOutcome(
+            Decision.INDETERMINATE,
+            binding_fact,
+            identity_fact,
+            False,
+        )
     return PaymentExecutionGateOutcome(
         Decision.ALLOW,
-        fact,
+        binding_fact,
+        identity_fact,
         True,
         execute_payment(),
+    )
+
+
+def identity_assurance_evidence(
+    fact: IdentityAssuranceFact,
+) -> tuple[EvidenceRef, ...]:
+    """Expose the P3 fact without exposing credential contents."""
+
+    missing = "<missing>"
+    return (
+        EvidenceRef(
+            "identity_assurance_status",
+            "trusted_execution.identity.status",
+            fact.status.value,
+            VerificationStatus.VALID.value,
+        ),
+        EvidenceRef(
+            "identity_assurance_level",
+            "trusted_execution.identity.assurance_level",
+            fact.assurance_level.value,
+            IdentityAssuranceLevel.BOUND.value,
+        ),
+        EvidenceRef(
+            "identity_assurance_reasons",
+            "trusted_execution.identity.reason_codes",
+            ",".join(fact.reason_codes),
+        ),
+        EvidenceRef(
+            "identity_authorized_agent_ref",
+            "trusted_execution.identity.authorized_agent_ref",
+            fact.authorized_agent_ref or missing,
+        ),
+        EvidenceRef(
+            "identity_request_agent_ref",
+            "trusted_execution.identity.request_agent_ref",
+            fact.request_agent_ref or missing,
+            fact.authorized_agent_ref or missing,
+        ),
+        EvidenceRef(
+            "identity_execution_agent_ref",
+            "trusted_execution.identity.execution_agent_ref",
+            fact.execution_agent_ref or missing,
+            fact.authorized_agent_ref or missing,
+        ),
+        EvidenceRef(
+            "identity_object_agent_ref",
+            "trusted_execution.identity.identity_agent_ref",
+            fact.identity_agent_ref or missing,
+            fact.authorized_agent_ref or missing,
+        ),
+        EvidenceRef(
+            "identity_provider_ref",
+            "trusted_execution.identity.provider_ref",
+            fact.provider_ref or missing,
+            fact.identity_provider_ref or missing,
+        ),
+        EvidenceRef(
+            "identity_executor_instance_ref",
+            "trusted_execution.identity.executor_instance_ref",
+            fact.executor_instance_ref or missing,
+            fact.identity_executor_instance_ref or missing,
+        ),
+        EvidenceRef(
+            "identity_credential_available",
+            "trusted_execution.identity.credential_available",
+            str(fact.credential_available).lower(),
+        ),
+        EvidenceRef(
+            "identity_credential_ref",
+            "trusted_execution.identity.credential_ref",
+            fact.credential_ref or missing,
+            fact.identity_credential_ref or missing,
+        ),
     )
 
 

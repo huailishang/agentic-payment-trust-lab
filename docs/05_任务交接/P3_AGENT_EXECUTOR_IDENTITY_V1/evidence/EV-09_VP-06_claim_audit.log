@@ -1,0 +1,193 @@
+working_directory=D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab
+command=rg -n -i "authenticated|authentication|verified|认证|已验证|生产安全|合规" README.md docs src tests
+README.md:25:本项目只用于学习、研究、回放和开发者验证，不接生产支付、真实银行卡、真实客户数据、真实资金、生产私钥或清算网络。实验通过不等于生产安全、业务合法或监管合规。
+README.md:86:!= 真实身份认证已经成立
+README.md:97:- P3 候选实现：`DECLARED / BOUND / VERIFIED` 保证等级、Agent / executor 确定性绑定事实，以及支付回调前的 fail-closed 身份闸门；当前离线路径最高只能达到 `BOUND`，等待独立评估者验收。
+README.md:131:P3 开发前冻结基线为 **210 tests OK**。P3 候选实现新增身份保证、冲突聚合和支付回调前 fail-closed 测试；最终回归与正式入口证据见 [P3 执行者记录](docs/04_验证体系/P3_Agent_Executor_Identity_执行记录_20260731.md)。这些离线测试只能证明当前固定引用和证据契约一致，不等于真实身份认证或生产支付安全。
+tests\test_ap2_adapter.py:63:        self.assertIn("sd_jwt_delegation_chain_not_verified", adapted.unmapped_fields)
+tests\test_ap2_flow_adapter.py:45:        self.assertIn("ap2_user_authorization_signature_not_verified", adapted.unmapped_fields)
+tests\test_ap2_flow_adapter.py:70:        self.assertIn("ap2_intent_authorization_signature_not_verified", adapted.unmapped_fields)
+tests\test_ap2_flow_entrypoint.py:42:        self.assertTrue(report["limitations"]["cryptographic_signatures_not_verified"])
+tests\test_acp_adapter.py:78:    def test_bridge_fields_and_unverified_boundaries_remain_explicit(self) -> None:
+tests\test_acp_adapter.py:83:            "seller_identity_from_endpoint_context_not_verified",
+tests\test_acp_adapter.py:84:            "payee_identity_not_verified",
+tests\test_acp_adapter.py:89:            "order_webhook_signature_not_verified",
+src\agentic_payment_experiment\exception_matrix.py:27:    "F7": "安全、欺诈与合规异常",
+src\agentic_payment_experiment\exception_matrix.py:155:        "handler_status": "只阻止当前离线请求并记录标识绑定证据；未执行真实身份核验、认证器验证或凭证链验证。",
+src\agentic_payment_experiment\exception_matrix.py:157:        "final_impact": "付款前被阻止；字符串标识比较不被表述为真实身份认证。",
+docs\01_项目现状\项目中控.md:56:- S13：声明 Agent 标识与委托中的预期标识不一致时拒绝，但不把“标识一致”宣称为真实身份认证。
+docs\01_项目现状\项目中控.md:74:已有 TE01 哈希（Hash）、TE02 规范化、TE03 绑定与 TE04 执行事实能力。S09 已真实消费订单绑定事实；S12 已真实消费状态观察与幂等事实；S13 已让付款前委托验证消费“声明标识绑定事实”。P3 候选实现新增 `IdentityAssuranceLevel`、可回放的 Agent / executor 绑定事实和支付回调前身份闸门。最关键的边界仍保持：Binding `INVALID` 不自动等于 `DENY`，Idempotency `VALID` 不自动等于允许再次扣款，`BOUND` 也不等于真实身份已认证。
+docs\01_项目现状\项目中控.md:78:2026-07-30 P1 Delegated Authority v1 已验收：`IntentMandate.authority_version`、`Order.authority_version_ref` 和 `ConfirmationRecord` 已进入主领域与场景加载；`verify_confirmation_binding()` 在执行前重新计算当前订单摘要，返回 `VALID / INVALID / MISSING_EVIDENCE` 与多字段失效原因；`validate_request()` 已消费该事实，缺证据时 fail-closed；`execute_with_confirmation_gate()` 只在 `VALID` 时调用支付回调。S08 继续验证确认阈值，S09 已使用保存的确认记录验证具体交易内容变化。它没有接真实支付，也没有把生产安全、身份认证或防篡改存储能力写进 P1。详见 [P1 执行记录](../04_验证体系/P1授权绑定与执行前核验执行记录_20260730.md)。
+docs\01_项目现状\项目中控.md:82:2026-07-31 P3 Agent / Executor Identity v1 已形成执行者候选实现，**尚待独立评估者给出 verdict**：`DECLARED / BOUND / VERIFIED` 是封闭保证等级；当前离线核验最多返回 `BOUND`，凭证引用本身不会升级为 `VERIFIED`；Agent、provider、executor、credential 和状态冲突会稳定聚合；支付回调只有在上游 `ALLOW`、P2 `VALID`、P3 `VALID` 且至少 `BOUND` 时执行。正式结果卡新增 BOUND、身份替换 INVALID、缺 executor MISSING_EVIDENCE 三条离线路径，不新增 S14，也不重构主 UI。详见 [P3 执行者记录](../04_验证体系/P3_Agent_Executor_Identity_执行记录_20260731.md)。
+docs\01_项目现状\项目中控.md:152:- 不把 哈希/签名验证通过写成“业务合法”“支付安全”或“监管合规”。
+docs\02_未来规划\可信执行模块路线.md:43:- S13 使用最小声明标识绑定事实检查委托中的预期 Agent 引用，但明确不等同真实身份认证。
+docs\02_未来规划\可信执行模块路线.md:45:当前全量自动化回归为 `210 tests OK`。TE01—TE04、P1 Confirmation Binding 与 P2 Continuous Payment Binding 只证明确定性事实接口、连续绑定和现有消费者没有回归，不代表生产身份、签名、确认记录或支付记录防篡改、合规或真实支付安全已经成立。
+docs\02_未来规划\可信执行模块路线.md:102:**P3 最小 Agent / Executor Identity 是当前下一步，但不等于自动建设完整 TE05 签名体系。** P3 先冻结 `DECLARED / BOUND / VERIFIED` 等保证等级、证据缺失和 fail-closed 边界；只有明确场景证明密钥签名是最小必要能力时，才进入完整签名与凭证实现。
+docs\02_未来规划\可信执行模块路线.md:143:- 不把哈希、签名、状态机或审计验证通过表述为业务合法、生产安全或监管合规。
+docs\02_未来规划\可信执行模块路线.md:155:S13 已完成，只实现声明标识引用绑定，不冒充真实身份认证
+src\agentic_payment_experiment\html_report.py:955:  item.protocol.unverified_gaps.forEach(value => gaps.appendChild(text('li', value)));
+docs\02_未来规划\后续任务包.md:154:P3 候选实现严格区分 `DECLARED / BOUND / VERIFIED`：当前固定离线证据最高为 `BOUND`；字符串相等、字段非空或 `credential_ref` 存在都不能产出 `VERIFIED`。支付回调要求上游 `ALLOW`、P2 `VALID`、P3 `VALID` 且至少 `BOUND`。当前工作流状态为 `READY_FOR_REVIEW`，只有独立评估者可以给出 PASS；在此之前不把 P4 标记为已开始。执行证据见 [P3 执行者记录](../04_验证体系/P3_Agent_Executor_Identity_执行记录_20260731.md)。
+docs\04_验证体系\AttackOverlay_v1执行记录_20260728.md:111:- 已达到生产支付安全或合规要求。
+docs\03_架构设计\Agent_Trust_Control_Plane_最小领域模型_v1.md:192:Verified Executor Fact
+docs\03_架构设计\Agent_Trust_Control_Plane_最小领域模型_v1.md:226:VERIFIED
+docs\03_架构设计\Agent_Trust_Control_Plane_最小领域模型_v1.md:230:当前项目只能到 `DECLARED / BOUND`，不能自称 `VERIFIED`。
+docs\03_架构设计\Agent_Trust_Control_Plane_最小领域模型_v1.md:387:PROTOCOL_VERIFIED
+docs\03_架构设计\Agent_Trust_Control_Plane_最小领域模型_v1.md:405:    X 不能直接改写 PROTOCOL_VERIFIED payee
+docs\03_架构设计\协议映射.md:9:| ACP | 买方智能体（Buyer Agent）—商户结账—支付提供方 | 测试阶段（Beta）的开放标准 | 结账会话、支付处理器、订单与认证 | Beta状态不代表生产稳定性或全球适用性 |
+docs\03_架构设计\协议映射.md:98:当前只做离线字段和绑定验证，不验证 AP2 加密签名、自然语言 Intent 真值或真实支付执行，因此不是 AP2 一致性认证（Conformance Test）。
+docs\02_未来规划\整体修正执行计划_20260729.md:397:VERIFIED
+docs\02_未来规划\整体修正执行计划_20260729.md:401:项目当前预计只真正实现到 `DECLARED / BOUND`，`VERIFIED` 先保留接口。
+docs\02_未来规划\整体修正执行计划_20260729.md:408:[ ] 不把字符串相等描述成真实身份认证
+docs\02_未来规划\整体修正执行计划_20260729.md:429:PROTOCOL_VERIFIED
+docs\02_未来规划\整体修正执行计划_20260729.md:447:  X 不能修改已验证 payee
+docs\02_未来规划\整体修正执行计划_20260729.md:765:> **执行 P3：在不把字符串相等冒充真实认证的前提下，冻结 Agent / Executor Identity 的最小保证等级、证据缺失规则和执行前 fail-closed 测试；P 系列完成前不重构主 UI。**
+docs\04_验证体系\M1交互式实验台执行记录_20260727.md:78:已验证输入变化会真实改变 Python 结果：
+docs\04_验证体系\M1交互式实验台执行记录_20260727.md:126:已验证：
+docs\03_架构设计\总体架构.md:147:声明 Agent 标识与委托预期标识不一致；只验证标识引用绑定，不宣称真实身份认证
+docs\03_架构设计\总体架构.md:181:- S13 继续消费最小“声明标识绑定事实”，但不把标识引用一致宣称为真实身份认证。
+docs\03_架构设计\总体架构.md:302:- 不把哈希、签名、幂等或状态机验证通过写成“业务合法”“生产安全”或“监管合规”；
+src\agentic_payment_experiment\adapters\acp.py:237:        "seller_identity_from_endpoint_context_not_verified",
+src\agentic_payment_experiment\adapters\acp.py:238:        "payee_identity_not_verified",
+src\agentic_payment_experiment\adapters\acp.py:243:        "order_webhook_signature_not_verified",
+docs\03_架构设计\支付与可信执行模块边界.md:98:真实 `Order` / `OrderItem` 已可直接规范化和计算摘要；P1 的 `ConfirmationRecord`、授权版本引用和执行前确认绑定已接入 S09 与主验证路径；P2 连续支付绑定已接入 S10—S12，S12 原有状态观察与幂等事实保持不变；S13 已真实消费声明标识绑定事实。P3 候选实现的 `verify_agent_executor_identity()` 只输出 `VALID / INVALID / MISSING_EVIDENCE`、原因和 `DECLARED / BOUND / VERIFIED` 保证等级；支付域把它映射为业务动作，并在回调前同时消费 P2/P3。
+docs\03_架构设计\支付与可信执行模块边界.md:100:S13 的 `verify_declared_identity_binding()` 只比较给定标识引用，**不是身份核验或认证**。P3 的离线确定性绑定最多达到 `BOUND`；`credential_ref` 只是引用，没有 credential validity、possession、provider attestation、PKI 或 federation verifier 时不得产生 `VERIFIED`。P3 当前为执行者候选、等待独立评估，不按编号进入 S14，也不提前重构主 UI。
+src\agentic_payment_experiment\adapters\ap2.py:170:        "ap2_cart_payment_hash_binding_not_verified",
+src\agentic_payment_experiment\adapters\ap2.py:171:        "ap2_merchant_authorization_signature_not_verified",
+src\agentic_payment_experiment\adapters\ap2.py:172:        "ap2_natural_language_intent_not_machine_verified",
+src\agentic_payment_experiment\adapters\ap2.py:176:        unmapped.append("ap2_user_authorization_signature_not_verified")
+src\agentic_payment_experiment\adapters\ap2.py:178:        unmapped.append("ap2_intent_authorization_signature_not_verified")
+src\agentic_payment_experiment\adapters\ap2.py:243:        "ap2_crypto_not_verified",
+src\agentic_payment_experiment\adapters\ap2.py:520:        "cnf_and_key_binding_not_verified",
+src\agentic_payment_experiment\adapters\ap2.py:521:        "sd_jwt_delegation_chain_not_verified",
+src\agentic_payment_experiment\adapters\ap2.py:525:        "checkout_reference_not_verified",
+src\agentic_payment_experiment\adapters\ap2.py:526:        "receipt_not_verified",
+docs\02_未来规划\第一纵向切片_Delegated_Authority_v1.md:27:这次不解决完整 Agent 身份认证、签名、PKI、真实用户交互或真实支付。
+docs\research\智能体支付分层框架.md:235:链上笔数只证明协议地址发生了可识别活动。判断真实采用还需要独立付费主体、留存、买方和商户集中度、非激励交易、成功履约、退款争议和净收入。公开安全榜单则必须核查数据来源、标签方法、类别权重、工具可见信息、提交验证状态和主办方利益关系。PaymentBench可用于提炼攻击样品，但其二元批准/拒绝标签不能覆盖本项目的人工确认和不可判定状态，自有Harness在自有数据上的成绩也不能视作独立生产安全证明。
+docs\research\智能体支付分层框架.md:315:央行数字货币（CBDC）/数字人民币更偏主权信用、监管可控、受控场景、补贴和合规自动结算。稳定币更偏全球化、跨境、链上服务、接口（API）调用、算力、数据和机器间微支付。
+docs\research\智能体支付分层框架.md:390:协议规范中的字段和流程图通常不是最难部分。行业标准真正困难的是让智能体平台、商户、支付机构、银行、卡组织和监管相关方接受同一套语义，并处理互操作、认证、版本升级、责任、争议和存量系统兼容。因此个人开发者不应把主要目标设为“再规定一套字段”，而应围绕标准落地过程提供可验证资产。
+docs\research\智能体支付分层框架.md:406:2. 不改联机授权、反欺诈、清算和合规链路。
+docs\research\智能体支付分层框架.md:417:对本项目来说，最合理的姿态不是马上接入某个协议，而是先把协议中立语义、离线影子评估、结构化审计和客户健康约束沉淀下来。等真实业务、合规、安全和外部接口条件成熟后，再评估是否进入生产协议适配。
+docs\03_架构设计\支付生命周期异常矩阵.md:58:| F7 安全、欺诈与合规异常 | 请求是否真实、安全、合规 | 冒用、签名异常、篡改、欺诈、敏感数据过度索取、合规检查失败 |
+docs\03_架构设计\支付生命周期异常矩阵.md:116:| S01 | 正常合规支付 | L4 付款前检查 | 基线对照，无异常 | 委托验证器（Mandate Validator） | 允许进入后续模拟 |
+docs\03_架构设计\支付生命周期异常矩阵.md:134:| S19 | 支付请求索取过量个人信息 | L2-L4 智能体到付款前 | F7 安全、欺诈与合规 | 数据策略/隐私验证器（Data Policy/Privacy Validator） | 阻止或进入复核，执行数据最小化 |
+docs\03_架构设计\智能体支付架构基线_v1.md:136:| Declared Agent Identity Binding | Agent Control Plane | 保留，但当前不是完整身份认证 |
+docs\03_架构设计\能力归位与缺口分析_v1.md:96:| `expected_agent_id` + `verify_declared_identity_binding()` | B Agent Control Plane | 很初级 | 保留但必须降噪：现在只比较声明引用，不是真实 Agent 身份认证 |
+docs\03_架构设计\能力归位与缺口分析_v1.md:289:merchant_signed / protocol_verified
+docs\research\MoltsPay项目借鉴分析.md:42:- `last_verified_at`
+docs\research\MoltsPay项目借鉴分析.md:82:- 余额轨道存在强认证可关闭、管理端点需要额外保护、部分充值路径依赖运营方信任等边界，不能作为生产安全基线。
+docs\research\MoltsPay项目借鉴分析.md:98:本记录基于2026-07-17读取的 [Yaqing2023/moltspay](https://github.com/Yaqing2023/moltspay) 公开README和其中链接的设计说明，重点参考v2.4.0公开描述。仓库活跃度、功能声明和演示不能替代独立代码审计、安全测试、许可证复核或生产合规评估。
+docs\04_验证体系\M4_AP2官方最小流程执行记录_20260727.md:190:这两个 PASS 指固定离线流程映射与规则执行通过，不是外部官方认证分数。
+tests\test_presentation.py:558:    def test_s13_declared_identity_binding_is_not_presented_as_authentication(self) -> None:
+tests\test_presentation.py:569:        self.assertIn("标识一致不等于身份已认证", l2["does_not_decide_zh"])
+docs\research\IMF_智能体AI如何重塑支付.md:30:  - 智能体合规解决方案
+docs\research\IMF_智能体AI如何重塑支付.md:45:本文梳理了这些进展，探讨智能体AI可能如何影响支付系统的运作，包括授权、流动性管理、结算、合规和运营韧性等方面。本文并不试图给出定论或提出规范性的政策建议，而是旨在梳理随着采用不断演进可能需要关注的关键设计问题、架构张力和风险渠道。
+docs\research\IMF_智能体AI如何重塑支付.md:73:越来越多的行业参与者，包括支付网络、科技平台（例如以太坊等开源软件）和AI模型提供商，都在竞相试验这些能力。尽管目前的实现大多仍集中于改善人们发现和比较商品的方式，但实验正迅速扩展到广泛的支付相关应用场景，从欺诈检测、合规监测，到资金管理优化、跨境支付编排，反映出智能体AI试点在整个生态系统中不断扩大的范围（Boston Consulting Group 2025）。当前的创新速度意味着，过去需要数年才能实现的进展，如今可能在数月内就发生，这表明更快速、更实质性的变革可能即将到来。
+docs\research\IMF_智能体AI如何重塑支付.md:105:不确定性还体现在"幻觉"现象上，即模型以高置信度生成看似合理但实际错误的陈述。尽管新一代模型的幻觉率有所下降，但该风险并未被消除，在支付、合规和结算场景中仍是一个重要关切（Omar等 2025）。
+docs\research\IMF_智能体AI如何重塑支付.md:131:该层的核心机制是AP2，它将智能体发起的行动与可加密验证的"授权指令（mandate）"绑定，指令中明确规定范围、限额、行动者身份和许可条件。AP2标准还支持x402扩展，从而实现稳定币集成。这些授权指令确保下游的授权反映的是用户的明确同意，而非模型生成的推断。一些较为成熟的网络身份验证技术，如OAuth 2.0或OpenID Connect，常被用于通过经认证的智能体身份实现稳健的"了解你的智能体"（Know Your Agent）验证（World Economic Forum 2026）。
+docs\research\IMF_智能体AI如何重塑支付.md:141:综上，这些技术共同定义了第二层：一个严格基于规则的授权边界——只有满足可验证授权指令、政策约束和监管核验要求的结构化意图，才能被接受。任何在此层被接受的内容都成为可在第三层进行确定性执行的、经授权的支付指令；任何未通过的内容将被拒绝或退回智能体进行修改。这种分离确保了问责制、可审计性和合规性，即使上游智能体系统引入了更高程度的自动化。
+docs\research\IMF_智能体AI如何重塑支付.md:162:| 智能体协调 | 使多个智能体（买方、商家、资金、合规、风险）能够交换计划、协商行动并委派子任务 | A2A协议；多智能体编排框架 | L1 |
+docs\research\IMF_智能体AI如何重塑支付.md:166:| 实时合规与欺诈风险筛查 | 在授权前检测异常、制裁风险或政策违规 | ML/AI欺诈系统；通过AP2实现的授权指令约束；自适应AML模型 | L2 |
+docs\research\IMF_智能体AI如何重塑支付.md:177:智能体AI在支付领域可以为广泛的应用场景带来益处。专家将智能体AI描述为处理整个任务的AI智能体"数字工厂"，人工仅在例外情况和监督环节中被需要（McKinsey & Company 2025b）。对支付相关任务的自主管理和执行，可以降低交易和运营成本、改善流动性、提升合规流程效率并减少欺诈。减少人工延迟和行政摩擦，有望提升效率、加快资本周转并提高生产力。
+docs\research\IMF_智能体AI如何重塑支付.md:205:智能体AI系统的能力超越了智能自动化的范畴。它们能够跨金融分布式网络自主协调和执行多步骤工作流。智能体AI可以像电商场景中所观察到的那样，编排整个跨境支付链条——从支付发起、优化路由选项（包括代理行、本地合作方和代币化轨道），到触发合规检查，以及监控结算和结算后的异常情况。支持者认为，这种自动化的支付流程可以减少因人工干预和僵化流程而产生的延迟（Convera 2025）。这一论点颇具说服力：通过对实时交易数据的分析，以及基于过往经验和不断变化的上下文（包括各异的成本、费用和渠道表现）进行推理的能力，AI智能体能够动态选择最高效的支付路径，并针对具体情况进行调整（Capco 2025）。智能体AI还可以在执行交易时主动参与流动性的自主管理，例如根据预设参数和实时市场状况重新分配资金。BIS的研究发现，生成式AI系统无需专门训练即可执行诸如维持预防性流动性缓冲、优先处理紧急支付，以及在流动性成本与结算延迟之间权衡等现金管理职能（BIS 2025）。
+docs\research\IMF_智能体AI如何重塑支付.md:211:### 智能体合规解决方案
+docs\research\IMF_智能体AI如何重塑支付.md:213:智能体AI有潜力通过将监管逻辑直接嵌入运营工作流，显著改善合规流程。与传统自动化工具不同，智能体系统能够理解目标、实时监测活动，并在预设保障机制内自主采取行动，例如标记可疑交易、升级高风险案例，或在触及监管阈值时调整控制措施。通过将持续监测、可解释性和审计留痕融入其核心架构，智能体AI使合规职能能够以与现代数字系统相匹配的速度和规模运作，从而在增强一致性、可追溯性和监管一致性的同时，减少运营负担和人为错误。
+docs\research\IMF_智能体AI如何重塑支付.md:215:智能体使得实时合规监测成为可能，能够持续评估交易和活动，而非依赖定期或批量审核。多家公司已推出基于AI的合规监测和欺诈检测工具。万事达的AI驱动"决策智能"系统在毫秒级评估交易的欺诈风险，实现交易速度下的实时合规筛查，在授权前评估上下文风险（Mastercard 2024）。Visa为账户对账户支付开发了实时风险评分解决方案，基于实时上下文数据在毫秒内对交易评分，自动批准、拒绝或标记交易（Visa 2026）。该方案将欺诈、制裁标记和风险规则等合规逻辑嵌入实时交易流程，从而在网络层面实现"设计即合规"。
+docs\research\IMF_智能体AI如何重塑支付.md:217:智能体AI系统引入了自动化规则执行能力，能够在决策时点以程序化方式应用监管要求和治理框架。一项学术原型提出了一个参考架构，用于处理AML和了解你的客户（KYC）合规任务的智能体AI，并集成了可解释性和可追溯性。它展示了智能体合规如何在无需人工干预的情况下，将监管逻辑直接嵌入、解读并执行于自主系统中（Axelsen, Licht, and Damsgaard 2025）。通过将来源验证和基于策略的访问控制等身份保障机制直接嵌入代码，机构能够将监管从一种约束转变为系统层面的实用赋能因素（Preis 2026）。
+docs\research\IMF_智能体AI如何重塑支付.md:219:设计即治理的AI理念将伦理、法律和社会价值嵌入智能体系统，从而支持前瞻性的风险管理（Joshi 2025）。这些系统有助于实现合规任务的自动化，削减错误率、降低成本，并借助自主智能体处理常规工作、将复杂案例上报人工处理来扩大运营规模（McKinsey & Company 2025a）。用于欺诈检测的AI也可以成为数字金融基础设施的一部分，正如印度统一支付接口（UPI）的情形。UPI将支付、数据与智能整合为统一的技术栈，嵌入了用于实时欺诈检测、替代性信用评分和自动对账的AI功能。这一架构通过数字公共基础设施的输出，支持国内和国际层面的扩展（Shivam 2026）。
+docs\research\IMF_智能体AI如何重塑支付.md:221:多智能体系统可以将合规任务分配到各专业领域，而联邦式协调机制则能确保跨辖区的一致性（Onyekaonwu, Igba, and Peter-Anyebe 2024）。智能体之间通过安全协议通信，在保持数据主权的同时交换监管情报。将此应用于合规场景，可以由一个专门的智能体执行监管变化扫描，另一个进行风险评分，第三个进行控制映射，第四个执行补救措施，所有环节由一个协调者统一编排，负责任务分派、冲突解决、故障回退和优先级排序。基于本文提出的三层框架，一个智能体可以在意图/编排层发起合规检查，另一个智能体可以在控制层扫描并标记监管要求的变化，而第三个智能体则可以在结算层对合规检查进行验证。
+docs\research\IMF_智能体AI如何重塑支付.md:225:智能体AI系统能够自主理解目标、采取多步骤行动，并动态适应不断变化的环境。它们代表着金融服务领域下一波创新浪潮。在消费金融、支付、合规和监管领域，通过将复杂的金融和监管任务自动化，它们有望显著减轻认知和运营负担。然而，其自主性、不透明性和非确定性行为也给消费者保护、市场稳定和监管监督带来了实质性风险。尽管智能体AI对经济活动的影响范围广泛，本文的重点在于这些技术如何影响支付系统的运作，包括流动性管理、授权、结算和支付基础设施的运营稳定性。表3根据风险来源和潜在影响对主要风险进行了分类。
+docs\research\IMF_智能体AI如何重塑支付.md:231:生成式AI模型容易产生"幻觉"，即以高置信度生成虚假信息。在金融场景中，此类错误可能带来重大后果（Aldasoro等 2024）。许多AI系统的"黑箱"特性进一步使问责和纠错复杂化。AI系统的不透明性和非线性特征，使监管者难以充分理解模型输出，限制了其及时发现潜在系统性风险的能力。智能体行为的高度相关性也可能带来重大系统性风险（Aldasoro等 2024）。AI可能催生更复杂的风险评估模型，改善对机构失败的预测、发现市场操纵行为，或识别合规相关问题。尽管生成式AI在通过与智能体的交互式沟通支持监管报告和合规方面潜力巨大，但此类方法的常规化应用尚未确立。
+docs\research\IMF_智能体AI如何重塑支付.md:241:更具体的缺口涉及对智能体的身份认证或KYC要求。能够发起交易的自主AI智能体，对支付领域现有的身份和认证框架构成挑战。传统的授权机制，包括KYC流程和多因素认证，都是围绕明确批准交易的人类用户而设计的。当支付由在授权指令下运作的软件智能体自主发起时，验证智能体身份和背后用户意图都变得显著更加复杂。这一转变提出了关于身份认证、问责和合规的新问题，而现有支付系统正是围绕人类行为者设计的（Acharya 2025）。关于自主智能体的法律责任也存在模糊之处。现行的责任制度假定人类的意图和直接因果关系，但当自主智能体独立做出决策时，这些假定就变得模糊了。当智能体代表委托人参与交易时，纠纷情形下的责任认定取决于智能体是否在其权限范围内行事，以及损害是源于智能体自身行为还是委托人的指令。因此，委托人和智能体都可能根据具体情况承担责任，但法律责任的界定并不清晰（Shukanayev 2025）。总体上，关于支付领域智能体问责和责任的监管明确性普遍缺失。现行法规在智能体产生幻觉并误导资金去向时，难以区分"未经授权使用"与"用户过失"（Aldasoro等 2024）。
+docs\research\IMF_智能体AI如何重塑支付.md:248:| 智能体决策的不透明性 | AI开发者和部署方设计不可解释的模型；将智能体整合进支付流程的平台 | 用户（缺乏救济）；支付服务提供商（合规失败）；监管者（监督能力下降） | 是。信息不对称与不可验证的决策过程 |
+docs\research\IMF_智能体AI如何重塑支付.md:271:鉴于生成式模型的非确定性本质，智能体AI系统不应在缺乏结构性保障的情况下直接执行不可逆交易。前文提出的决策层与执行层架构分离，可以作为一项重要的缓释因素。决策层中的智能体提出或发起一项行动，而确定性的执行层则执行合规检查或独立控制，并最终执行交易（Acharya 2025）。
+docs\research\IMF_智能体AI如何重塑支付.md:275:支付网络宜致力于成为可信的基础设施层。这包括推出内嵌支出控制和实时预算管理的"智能体就绪"卡产品；构建具备身份验证、声誉评分和欺诈监测功能的全球智能体注册系统；引入针对AI发起交易、责任划分明确的争议解决框架；以及开发跨AI平台通用的开放协议标准以实现互操作性（Singh 2025）。数字钱包提供商应部署"智能体就绪"能力，构建基于密钥（passkey）和生物识别验证、且能在对话式界面中运作的智能体友好型认证机制，并保持商户关系，确保即使交易通过智能体发起，商家仍保持"记录商户"身份（Singh 2025）。
+docs\research\IMF_智能体AI如何重塑支付.md:277:对私营部门参与者而言，实现对干净、一致数据的实时访问，并全面整合各类功能以支持多种AI类型、技术保障措施和人工审核的融合十分重要（RegTechLab 2025）。金融机构和支付公司需要投资于培训和招聘，以打造能够开发、实施和维护安全、稳健且可互操作的AI系统的团队（Uppuduri 2025）。最后，在将智能体AI引入支付领域时，稳健的网络安全态势至关重要。自主AI智能体通常与多个外部系统、工具和接口（API）交互，扩大了攻击面，使机构面临数据泄露、工具滥用和跨系统权限提升等风险。因此，在将AI智能体与运营基础设施整合时，缓释措施需要强身份认证、范围限定的授权和安全的接口（API）治理（Errico, Ngiam, and Sojan 2025）。
+docs\research\IMF_智能体AI如何重塑支付.md:281:从公共部门的角度看，智能体AI要求监管者考虑从"了解你的客户"向"了解你的智能体"要求转变的影响，即为金融机器人建立与法律实体关联的可验证身份要求（WEF 2026）。传统欺诈模型依赖人类行为模式，而当交易由自主智能体发起时，这类模型将失效。因此，开发能够同时验证AI智能体身份和用户委托权限的认证框架至关重要。表2所述的部分技术旨在支持支付智能体实现可审计性、日志记录和可解释性，以应对部分监管要求。
+docs\research\IMF_智能体AI如何重塑支付.md:289:智能体AI代表着支付系统潜在的变革性发展。能够理解目标、协调交易并自主与数字服务交互的软件智能体，可以大幅扩展金融活动的自动化程度。早期实验表明，智能体系统能够提升电子商务交易效率、优化跨境支付路由、增强流动性管理，并支持实时合规监测。
+docs\research\IMF_智能体AI如何重塑支付.md:295:与此同时，若干风险依然突出。自主智能体可能误解用户意图、通过高度相关的行动放大市场波动，或在网络安全、身份管理和责任框架方面制造新的脆弱性。机器发起交易的兴起，也对围绕人类用户构建的现行监管体系提出了挑战，带来关于身份认证、问责和争议解决的新问题。
+tests\test_remediation.py:161:            "dispute_resolution_outcome_unverified",
+src\agentic_payment_experiment\order_validation.py:219:                "the payee changed and its identity cannot be verified locally",
+tests\test_runner.py:211:                "不执行真实身份认证",
+tests\test_runner.py:274:            self.assertIn("不执行真实身份认证", html)
+docs\04_验证体系\P1授权绑定与执行前核验执行记录_20260730.md:16:这保持了边界：可信执行域先给出绑定事实，支付域的闸门才映射动作；Hash 不被表述为防篡改存储、身份认证或生产支付安全。
+docs\04_验证体系\P1授权绑定与执行前核验执行记录_20260730.md:18:## 2. 已验证行为
+docs\04_验证体系\P1授权绑定与执行前核验执行记录_20260730.md:55:P1 仍不声称确认记录不可篡改、完成用户/Agent 身份认证、抵御订单与记录同时被改写，或达到生产支付安全。当前闸门是离线确定性控制；真实支付执行仍未接入。
+src\agentic_payment_experiment\payment_execution.py:104:        IdentityAssuranceLevel.VERIFIED,
+tests\test_validator.py:141:    def test_matching_declared_agent_reference_is_not_claimed_as_authentication(self) -> None:
+tests\test_validator.py:149:        self.assertNotIn("agent_authenticated", evidence)
+docs\04_验证体系\P2连续支付绑定执行记录_20260730.md:70:- Agent / Executor 已完成真实身份认证；
+docs\04_验证体系\P2连续支付绑定执行记录_20260730.md:72:- 满足生产安全、合规或审计要求。
+docs\04_验证体系\S12与TE02执行记录_20260727.md:82:| `set` / `frozenset` | 作为无序集合规范排序，并使用集合类型标签 |
+src\agentic_payment_experiment\presentation_zh.py:81:    "dispute_resolution_outcome_unverified": ("争议结果尚未验证", "争议虽然有状态变化，但经济补救结果仍无法独立确认。", "继续核对最终退款、赔付或其他补救证据。"),
+src\agentic_payment_experiment\presentation_zh.py:243:    "S03": ("看懂金额合规不代表商品品类合规", "金额不高，但智能体准备购买未授权品类。", "只要金额小就没有风险。", "用户授权包含买什么，而不只是最多花多少。"),
+src\agentic_payment_experiment\presentation_zh.py:247:    "S07": ("看懂交易次数限制与单笔金额不同", "每笔金额都不高，但本次会超过允许次数。", "每一笔都合规就可以无限执行。", "累计次数是独立的授权边界。"),
+src\agentic_payment_experiment\presentation_zh.py:253:    "S13": ("看懂声明标识一致与真实身份认证不是一回事", "用户委托指定 agent-shop-001，但付款请求声明自己来自 agent-shop-other。", "只要系统里有一个 agent_id 字符串，就已经完成了真实身份认证。", "可信执行层只能确定声明标识是否与委托指定标识一致；不一致时支付域阻止请求，真正的身份核验和认证仍需要后续凭证与认证器能力。"),
+src\agentic_payment_experiment\presentation_zh.py:512:        "current_state_zh": "S13 已消费声明标识绑定事实；这里只比较给定标识引用，不执行真实身份核验或认证器验证。",
+src\agentic_payment_experiment\presentation_zh.py:514:        "does_not_decide_zh": "标识一致不等于身份已认证；ALLOW / DENY 仍由 Payment Domain 的委托规则决定。",
+src\agentic_payment_experiment\presentation_zh.py:584:        "does_not_decide_zh": "不把审计完整性等同于业务合法、生产安全或法律终局。",
+docs\04_验证体系\S13声明标识绑定执行记录_20260727.md:38:界面是否明确区分“标识引用一致”和“真实身份认证”？
+docs\04_验证体系\S13声明标识绑定执行记录_20260727.md:69:> `VALID` 只表示两个给定的标识引用字符串一致，不表示完成了身份核验（identity proofing）、认证（authentication）、认证器验证、凭证验证、联邦身份保证或密钥控制证明。
+docs\04_验证体系\S13声明标识绑定执行记录_20260727.md:71:因此接口没有 `authenticated=true` 一类字段。
+docs\04_验证体系\S13声明标识绑定执行记录_20260727.md:128:- 不验证认证器、证书、签名或密钥。
+docs\04_验证体系\S13声明标识绑定执行记录_20260727.md:129:- 不因为字符串标识一致就声称身份已认证。
+docs\04_验证体系\S13声明标识绑定执行记录_20260727.md:136:NIST SP 800-63-4 将数字身份保证拆分为身份核验、认证与联邦等不同问题，并把认证建立在认证过程与认证器之上。因此本项目把当前能力严格命名为“声明标识引用绑定”，不称为真正的身份认证。
+docs\04_验证体系\S13声明标识绑定执行记录_20260727.md:154:- `VALID` 结果不包含 `authenticated` 声明。
+docs\04_验证体系\S13声明标识绑定执行记录_20260727.md:156:- 教学界面明确写出“标识一致不等于身份已认证”。
+docs\04_验证体系\TE03绑定与S09接入执行记录_20260727.md:159:- 不把 Binding 结果表述为业务合法、生产安全或监管合规。
+docs\04_验证体系\TE04执行事实与S12接入执行记录_20260727.md:275:    -> 未把字符串一致冒充为真实身份认证
+src\agentic_payment_experiment\remediation.py:186:                    "dispute_resolution_outcome_unverified",
+src\agentic_payment_experiment\result_card.py:206:        "unverified_gaps": [],
+src\agentic_payment_experiment\result_card.py:389:            "S13 only compares declared agent identifier references and does not perform identity proofing, authentication, authenticator validation, or credential verification",
+src\agentic_payment_experiment\result_card.py:390:            "P3 identity assurance is a separate fixed offline Agent/executor reference-binding result; it can reach BOUND but not VERIFIED and is not real authentication",
+src\agentic_payment_experiment\result_card.py:508:                "gaps": protocol["unverified_gaps"],
+docs\04_验证体系\样品驱动验证计划.md:24:- 开源演示程序（Demo）的安全、合规和性能满足银行生产要求。
+docs\04_验证体系\样品驱动验证计划.md:134:还必须存在明确的内部业务问题、支付或风控接口方、合规责任、模拟或沙箱接口，以及人工审批和停止方案。当前项目不满足这些条件时，不推动生产接入。
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:46:| SPIFFE / SPIRE | Workload Identity、运行实例 Attestation、短期可验证身份 | P3 Agent Identity | **P3 重点参考**。借 `Declared → Bound → Verified` 的实现方向，不现在部署 SPIRE |
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:183:VERIFIED
+docs\reference\Agent身份与运行时授权开源项目参考_20260729.md:187:SPIFFE / SPIRE 主要对应最后一层 `VERIFIED`。
+tests\trusted_execution\test_execution_facts.py:23:    def test_declared_identity_reference_match_is_valid_but_not_authentication(self) -> None:
+tests\trusted_execution\test_execution_facts.py:30:        self.assertFalse(hasattr(result, "authenticated"))
+src\agentic_payment_experiment\runner.py:268:            "不执行真实身份认证、凭证有效性或持有证明。"
+src\agentic_payment_experiment\runner.py:376:        "unverified_gaps": list(adapted.unmapped_fields),
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:20:在不引入真实身份认证或外部副作用的前提下，建立协议中立的 Agent / Executor Identity v1：明确区分声明身份与已绑定执行主体事实，输出可审计的身份保证等级，并在模拟支付回调发生前 fail-closed 消费该事实。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:22:本任务最多证明固定离线证据达到 `DECLARED` 或 `BOUND`。没有真实 credential verifier、provider attestation、workload identity 或同等验证器时，任何路径都不得产生或宣称 `VERIFIED`。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:33:- 保证等级使用稳定、可序列化的 DECLARED / BOUND / VERIFIED 枚举或等价封闭类型；
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:36:- VERIFIED 仅能由显式的额外验证证据与验证结果产生，不能由字符串相等、字段非空或 credential_ref 存在自动升级。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:38:- 把 declared identity reference match 命名为 authenticated、verified 或等价生产身份结论；
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:57:- 缺失 provider/credential 被静默当作 VERIFIED；
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:93:- 用户可见文案明确这是离线确定性绑定，不是真实身份认证。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:126:- 文档准确描述 DECLARED、BOUND、VERIFIED 的差异；
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:131:- “已完成真实 Agent 身份认证”“生产安全/合规已成立”等无证据结论。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:166:- 把 credential_ref 非空视作 credential 已验证；
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:195:| VP-06 | claim audit | `rg -n -i "authenticated|authentication|verified|认证|已验证|生产安全|合规" README.md docs src tests` | 所有命中均与实际保证等级和限制一致，无夸大声明 | AC-01, AC-06 |
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:209:- 执行者发现必须宣称 VERIFIED 才能让正向路径通过。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:214:- `VerificationStatus.VALID` 表示“给定证据足够且内部一致”，不等于 `IdentityAssuranceLevel.VERIFIED`。
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\TASK_CONTRACT.md:217:- `VERIFIED` 可作为模型中的未来值存在，但本任务不要求、也默认不允许固定离线路径产出该等级。
+docs\reference\可验证执行与智能体身份项目核验-20260725.md:5:适用范围：本地离线的智能体支付可信执行实验，不构成产品选型、生产安全评估、法律意见或监管合规结论。
+docs\reference\可验证执行与智能体身份项目核验-20260725.md:16:- DNSid 提出了持久、可解析的智能体归属锚点，但截至核验日仍是 IETF individual Internet-Draft，不是已批准标准，也不负责运行时认证、授权或策略执行。
+docs\reference\可验证执行与智能体身份项目核验-20260725.md:27:| NexArt CER | 基本确认 | CER 使用规范化字段和 SHA-256 形成 `certificateHash`；可选节点证明使用 Ed25519；官方提供本地/浏览器验证说明 | “Certified”在此指密码学证据记录，不是监管认证或合规认证；生态采用和独立审计情况待证 |
+docs\reference\可验证执行与智能体身份项目核验-20260725.md:29:| 身份（Identity） Digital Innovation Labs / DNSid | 已确认但须降格描述 | 2026-04 发布 DNS 锚定智能体身份方案；IETF 有公开 Internet-Draft | 属 individual submission，不是 IETF 共识或批准标准；DNSid 提供归属锚点，不认证智能体、不授予支付权限、不判断责任主体是否可信或具备法律资格 |
+docs\reference\可验证执行与智能体身份项目核验-20260725.md:70:因此身份、认证、授权、执行证据和业务归责应保持分层。
+docs\reference\可验证执行与智能体身份项目核验-20260725.md:83:| NexArt CER | 参考最小、可移植、带 `schema_version` 的执行证据包，以及本地独立验证方式 | TE03/TE04 | 不使用“认证”措辞暗示合规或第三方背书 |
+tests\trusted_execution\test_identity_assurance.py:40:            ["DECLARED", "BOUND", "VERIFIED"],
+tests\trusted_execution\test_identity_assurance.py:58:    def test_credential_reference_alone_never_upgrades_to_verified(self) -> None:
+tests\trusted_execution\test_identity_assurance.py:67:        self.assertNotEqual(IdentityAssuranceLevel.VERIFIED, fact.assurance_level)
+docs\reference\权威资料台账.md:27:| [Visa Intelligent Commerce开发者说明](https://developer.visa.com/capabilities/visa-intelligent-commerce/overview) | 开发和部署中，部分能力可能因市场不同 | 智能体专属Token、认证、支付指令、交易信号和争议 |
+docs\reference\sunrate\寻汇白皮书对项目影响-20260721.md:46:| 外汇与跨境支付 | L4—L7 | 报价有效期、币种、金额、目的地、合规资料和重复执行 |
+docs\reference\sunrate\寻汇白皮书对项目影响-20260721.md:74:白皮书案例中的采购、合规、外汇、付款和对账可以分别由专用智能体协作，但项目应坚持：
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-01_VP-01_identity_focused.log:5:test_credential_reference_alone_never_upgrades_to_verified (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_credential_reference_alone_never_upgrades_to_verified) ... ok
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-04_EV-06_VP-02_gate_regression.log:24:test_matching_declared_agent_reference_is_not_claimed_as_authentication (tests.test_validator.ValidatorTest.test_matching_declared_agent_reference_is_not_claimed_as_authentication) ... ok
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-05_identity_assurance_artifact.json:4:    "boundary_zh":  "这里只证明固定离线引用的确定性绑定，最高为 BOUND；不执行真实身份认证、凭证有效性或持有证明。",
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-05_VP-03_integration.log:34:test_s13_declared_identity_binding_is_not_presented_as_authentication (tests.test_presentation.PresentationTest.test_s13_declared_identity_binding_is_not_presented_as_authentication) ... ok
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-07_VP-04_full_regression.log:4:test_bridge_fields_and_unverified_boundaries_remain_explicit (test_acp_adapter.ACPOrderAdapterTest.test_bridge_fields_and_unverified_boundaries_remain_explicit) ... ok
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-07_VP-04_full_regression.log:116:test_s13_declared_identity_binding_is_not_presented_as_authentication (test_presentation.PresentationTest.test_s13_declared_identity_binding_is_not_presented_as_authentication) ... ok
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-07_VP-04_full_regression.log:144:test_matching_declared_agent_reference_is_not_claimed_as_authentication (test_validator.ValidatorTest.test_matching_declared_agent_reference_is_not_claimed_as_authentication) ... ok
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-07_VP-04_full_regression.log:170:test_declared_identity_reference_match_is_valid_but_not_authentication (trusted_execution.test_execution_facts.ExecutionFactsTests.test_declared_identity_reference_match_is_valid_but_not_authentication) ... ok
+docs\05_任务交接\P3_AGENT_EXECUTOR_IDENTITY_V1\evidence\EV-07_VP-04_full_regression.log:202:test_credential_reference_alone_never_upgrades_to_verified (trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_credential_reference_alone_never_upgrades_to_verified) ... ok
+src\agentic_payment_experiment\trusted_execution\confirmation.py:70:    and candidate rails are intentionally excluded.  A version is verified as a
+src\agentic_payment_experiment\trusted_execution\execution_facts.py:27:    VERIFIED = "VERIFIED"
+src\agentic_payment_experiment\trusted_execution\execution_facts.py:40:    """Replayable P3 identity fact, not an authentication assertion.
+src\agentic_payment_experiment\trusted_execution\execution_facts.py:42:    ``VERIFIED`` is reserved for a future explicit credential verifier or
+src\agentic_payment_experiment\trusted_execution\execution_facts.py:114:    federation verifier and therefore never emits ``VERIFIED``.
+src\agentic_payment_experiment\trusted_execution\execution_facts.py:285:    """Compare two declared identity references without claiming authentication.
+exit_code=0

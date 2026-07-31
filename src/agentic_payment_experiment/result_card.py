@@ -387,6 +387,7 @@ def build_result_card(records: list[dict[str, Any]]) -> dict[str, Any]:
             "S10/S11 payment, fulfillment, refund, and dispute statuses are fixed offline observations, not real funds transfer or remediation execution",
             "S12 payment status query and retry eligibility are fixed offline recovery semantics and do not execute a second payment",
             "S13 only compares declared agent identifier references and does not perform identity proofing, authentication, authenticator validation, or credential verification",
+            "P3 identity assurance is a separate fixed offline Agent/executor reference-binding result; it can reach BOUND but not VERIFIED and is not real authentication",
             "AP2 teaching snapshot does not verify signatures, mandate chains, or receipts",
             "ACP, UCP, and x402 production compatibility is not established",
         ],
