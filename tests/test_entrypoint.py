@@ -25,7 +25,7 @@ class EntrypointTest(unittest.TestCase):
         self.assertIn("内部回归: PASS passed=13 failed=0 gaps=0", completed.stdout)
         self.assertIn("PayBench 外部挑战: PARTIAL passed=8 failed=0 gaps=2", completed.stdout)
         self.assertIn("AP2 官方最小流程: PASS passed=2 failed=0 gaps=0", completed.stdout)
-        self.assertIn("Attack Overlay: PASS passed=5 failed=0 gaps=0", completed.stdout)
+        self.assertIn("Attack Overlay: PASS passed=6 failed=0 gaps=0", completed.stdout)
         self.assertIn("内部回归基线：PASS", completed.stdout)
         self.assertTrue((root / "artifacts" / "scenario_report.html").exists())
         self.assertTrue((root / "artifacts" / "scenario_result_card.json").exists())

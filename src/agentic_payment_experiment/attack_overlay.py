@@ -9,6 +9,14 @@ from typing import Any, Mapping
 from .evaluator import EvaluationResult, ExpectedOutcome, ObservedOutcome, evaluate_outcome
 from .models import Decision, ValidationResult
 from .scenario_loader import Scenario, load_scenario
+from .trusted_execution import (
+    POLICY_VERSION,
+    CandidateFactUpdate,
+    FactDomain,
+    SourceType,
+    evaluate_context_policy,
+    infer_fact_domain,
+)
 from .validator import validate_request
 
 
@@ -43,6 +51,8 @@ class AttackOverlay:
     source: str
     untrusted_content: str
     proposed_overrides: dict[str, Any]
+    source_type: SourceType = SourceType.EXTERNAL_TOOL_UNTRUSTED
+    source_ref: str = "legacy-untrusted-overlay"
 
 
 @dataclass(frozen=True)
@@ -59,8 +69,12 @@ class AttackOverlaySuite:
 @dataclass(frozen=True)
 class AttackBoundaryResult:
     attack_attempted: bool
+    applied_paths: tuple[str, ...]
     blocked_override_paths: tuple[str, ...]
     trusted_state_changed: bool
+    reason_codes: tuple[str, ...]
+    policy_version: str | None
+    unauthorized_state_change_detected: bool
 
 
 @dataclass(frozen=True)
@@ -68,11 +82,16 @@ class AttackOverlayResult:
     attack_id: str
     title: str
     source: str
+    source_type: SourceType
+    source_ref: str
     baseline_decision: Decision
     defended_decision: Decision
     attack_attempted: bool
+    applied_paths: tuple[str, ...]
     blocked_override_paths: tuple[str, ...]
     trusted_state_changed: bool
+    reason_codes: tuple[str, ...]
+    policy_version: str | None
     decision_drift: bool
     evaluation: EvaluationResult
 
@@ -97,6 +116,8 @@ def load_attack_overlay_suite(path: Path) -> AttackOverlaySuite:
             attack_id=str(item["attack_id"]),
             title=str(item["title"]),
             source=str(item["source"]),
+            source_type=SourceType(str(item["source_type"])),
+            source_ref=str(item["source_ref"]),
             untrusted_content=str(item["untrusted_content"]),
             proposed_overrides=dict(item.get("proposed_overrides", {})),
         )
@@ -119,20 +140,41 @@ def enforce_untrusted_overlay(
     trusted_state: Mapping[str, Any],
     overlay: AttackOverlay,
 ) -> AttackBoundaryResult:
-    """Apply the v1 trust boundary without granting untrusted content write authority."""
+    """Evaluate every proposed write through the shared P4 source matrix."""
 
     _validate_overlay_paths(overlay)
-    before = deepcopy(dict(trusted_state))
-
-    # The overlay can describe attempted mutations, but v1 never applies them to
-    # trusted execution inputs. This same boundary is reused by scenario replay
-    # and external PayBench challenges.
-    blocked_override_paths = tuple(sorted(overlay.proposed_overrides))
-    after = deepcopy(dict(trusted_state))
+    sources = {
+        path: SourceType.USER_CONFIRMED
+        for path in overlay.proposed_overrides
+        if _path_exists(trusted_state, path)
+    }
+    updates = tuple(
+        CandidateFactUpdate(
+            source_type=overlay.source_type,
+            target_domain=infer_fact_domain(path) or FactDomain.POLICY_CONTEXT,
+            target_path=path,
+            value=value,
+            source_ref=overlay.source_ref,
+        )
+        for path, value in overlay.proposed_overrides.items()
+    )
+    result = evaluate_context_policy(
+        trusted_state,
+        updates,
+        trusted_sources=sources,
+        policy_version=POLICY_VERSION,
+        current_action="evaluate_payment_context",
+    )
     return AttackBoundaryResult(
         attack_attempted=bool(overlay.proposed_overrides),
-        blocked_override_paths=blocked_override_paths,
-        trusted_state_changed=before != after,
+        applied_paths=result.fact.applied_paths,
+        blocked_override_paths=result.fact.blocked_paths,
+        trusted_state_changed=result.fact.trusted_state_changed,
+        reason_codes=result.fact.reason_codes,
+        policy_version=result.fact.policy_version,
+        unauthorized_state_change_detected=(
+            result.fact.unauthorized_state_change_detected
+        ),
     )
 
 
@@ -143,7 +185,7 @@ def evaluate_attack_overlay(scenario: Scenario, overlay: AttackOverlay) -> Attac
     defended = _validate_scenario(scenario)
     observed_effects = (
         frozenset({"trusted_field_override_applied"})
-        if boundary.trusted_state_changed
+        if boundary.unauthorized_state_change_detected
         else frozenset()
     )
     evaluation = evaluate_outcome(
@@ -160,11 +202,16 @@ def evaluate_attack_overlay(scenario: Scenario, overlay: AttackOverlay) -> Attac
         attack_id=overlay.attack_id,
         title=overlay.title,
         source=overlay.source,
+        source_type=overlay.source_type,
+        source_ref=overlay.source_ref,
         baseline_decision=baseline.decision,
         defended_decision=defended.decision,
         attack_attempted=boundary.attack_attempted,
+        applied_paths=boundary.applied_paths,
         blocked_override_paths=boundary.blocked_override_paths,
         trusted_state_changed=boundary.trusted_state_changed,
+        reason_codes=boundary.reason_codes,
+        policy_version=boundary.policy_version,
         decision_drift=defended.decision is not baseline.decision,
         evaluation=evaluation,
     )
@@ -228,10 +275,15 @@ def write_attack_overlay_report(
                 "attack_id": result.attack_id,
                 "title": result.title,
                 "source": result.source,
+                "source_type": result.source_type.value,
+                "source_ref": result.source_ref,
                 "baseline_decision": result.baseline_decision.value,
                 "defended_decision": result.defended_decision.value,
                 "attack_attempted": result.attack_attempted,
+                "applied_paths": list(result.applied_paths),
                 "blocked_override_paths": list(result.blocked_override_paths),
+                "reason_codes": list(result.reason_codes),
+                "policy_version": result.policy_version,
                 "trusted_state_changed": result.trusted_state_changed,
                 "decision_drift": result.decision_drift,
                 "evaluation": asdict(result.evaluation),
@@ -253,6 +305,15 @@ def _validate_overlay_paths(overlay: AttackOverlay) -> None:
             raise ValueError(
                 f"attack overlay {overlay.attack_id!r} targets unsupported field path: {path!r}"
             )
+
+
+def _path_exists(state: Mapping[str, Any], path: str) -> bool:
+    cursor: Any = state
+    for part in path.split("."):
+        if not isinstance(cursor, Mapping) or part not in cursor:
+            return False
+        cursor = cursor[part]
+    return True
 
 
 def _trusted_state_snapshot(scenario: Scenario) -> dict[str, Any]:

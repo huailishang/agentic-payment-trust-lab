@@ -236,6 +236,27 @@ class ScenarioRunnerTest(unittest.TestCase):
                 self.assertIn("identity_provider_ref", evidence_codes)
                 self.assertIn("identity_credential_available", evidence_codes)
 
+            p4_cases = {
+                item["case_id"]: item for item in card["context_policy"]["cases"]
+            }
+            self.assertIn("来源标签只是本地规则输入", card["context_policy"]["boundary_zh"])
+            self.assertEqual(
+                ["payment_status_observation.status"],
+                p4_cases["P4-ALLOWED-PROVIDER-STATUS"]["applied_paths"],
+            )
+            self.assertEqual(
+                ["request.amount"],
+                p4_cases["P4-BLOCKED-WEB-AMOUNT"]["blocked_paths"],
+            )
+            self.assertEqual(
+                "MISSING_EVIDENCE",
+                p4_cases["P4-MISSING-SOURCE-REF"]["status"],
+            )
+            self.assertEqual(
+                "INVALID",
+                p4_cases["P4-INVALID-STATE-POLLUTION"]["status"],
+            )
+
             json_path = artifacts_dir / "scenario_result_card.json"
             html_path = artifacts_dir / "scenario_report.html"
             self.assertTrue(json_path.exists())
@@ -273,6 +294,8 @@ class ScenarioRunnerTest(unittest.TestCase):
             self.assertIn("P3 Agent / Executor Identity v1", html)
             self.assertIn("不执行真实身份认证", html)
             self.assertIn("identity_assurance_level", html)
+            self.assertIn("P4 Trust Source / Context / Policy Input v1", html)
+            self.assertIn("来源标签只是本地规则输入", html)
             self.assertIn('"retry_allowed": false', html)
             for old_entry in (
                 "展开旧版统一字段面板",

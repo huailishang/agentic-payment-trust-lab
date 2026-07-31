@@ -192,8 +192,9 @@ def _build_attack_module(root: Path) -> dict[str, Any]:
         "attack_cases": batch.attack_cases,
         "blocked_attack_cases": batch.blocked_attack_cases,
         "headline_zh": (
-            f"{batch.total}/{batch.total} 已执行；{batch.attack_cases} 个攻击中 "
-            f"{batch.blocked_attack_cases} 个越权字段改写全部被阻断。"
+            f"{batch.total}/{batch.total} 已执行；"
+            f"{batch.blocked_attack_cases} 个越权更新被阻断，"
+            f"{batch.trusted_state_mutations} 个获准状态更新被应用。"
         ),
         "m5": _m5_from_evaluations(evaluations),
         "details": {
@@ -204,7 +205,13 @@ def _build_attack_module(root: Path) -> dict[str, Any]:
                     "status": result.evaluation.status,
                     "decision": result.defended_decision.value,
                     "attack_attempted": result.attack_attempted,
+                    "source_type": result.source_type.value,
+                    "source_ref": result.source_ref,
+                    "applied_paths": list(result.applied_paths),
                     "blocked_override_paths": list(result.blocked_override_paths),
+                    "reason_codes": list(result.reason_codes),
+                    "policy_version": result.policy_version,
+                    "trusted_state_changed": result.trusted_state_changed,
                 }
                 for result in batch.results
             ],
