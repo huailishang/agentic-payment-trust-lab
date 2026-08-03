@@ -23,6 +23,7 @@ from .context_policy import (
     ContextPolicyResult,
     FactDomain,
     SourceType,
+    SourceCoverage,
     evaluate_context_policy,
     infer_fact_domain,
     missing_context_policy_fact,
@@ -40,13 +41,45 @@ from .execution_facts import (
     verify_declared_identity_binding,
     verify_execution_identity,
 )
+from .fact_lineage import (
+    FactLineageNode,
+    FactLineageResult,
+    ResolvedFactLineage,
+    resolve_fact_lineage,
+)
+from .governed_action import (
+    ActionReversibility,
+    GovernedActionBindingFact,
+    GovernedActionType,
+    GovernedPaymentAction,
+    SideEffectClass,
+    verify_governed_payment_action,
+)
 from .hashing import canonical_hash, canonical_json, canonicalize, verify_hash
 from .payment_binding import (
     PaymentExecutionBindingFact,
     verify_payment_execution_binding,
 )
+from .original_transaction import FollowUpAction, OriginalTransactionBindingFact, verify_original_transaction
+from .replay import (
+    ReplayEvent,
+    ReplayEventType,
+    ReplayResult,
+    ReplaySourceType,
+    ReplayStatus,
+    RuntimeGateRecord,
+    replay_events,
+)
 
 __all__ = [
+    "ResolvedFactLineage",
+    "FactLineageResult",
+    "FactLineageNode",
+    "SideEffectClass",
+    "GovernedPaymentAction",
+    "GovernedActionType",
+    "GovernedActionBindingFact",
+    "ActionReversibility",
     "BindingResult",
     "BindingStatus",
     "ConfirmationBindingFact",
@@ -54,6 +87,14 @@ __all__ = [
     "ConfirmationStatus",
     "PaymentGateOutcome",
     "PaymentExecutionBindingFact",
+    "FollowUpAction",
+    "OriginalTransactionBindingFact",
+    "ReplayEvent",
+    "ReplayEventType",
+    "ReplayResult",
+    "ReplaySourceType",
+    "ReplayStatus",
+    "RuntimeGateRecord",
     "CandidateFactUpdate",
     "ContextPolicyFact",
     "ContextPolicyResult",
@@ -63,6 +104,7 @@ __all__ = [
     "IdentityAssuranceLevel",
     "FactDomain",
     "SourceType",
+    "SourceCoverage",
     "POLICY_VERSION",
     "VerificationResult",
     "VerificationStatus",
@@ -81,7 +123,11 @@ __all__ = [
     "verify_declared_identity_binding",
     "verify_execution_identity",
     "verify_hash",
+    "verify_governed_payment_action",
     "infer_fact_domain",
     "missing_context_policy_fact",
     "verify_payment_execution_binding",
+    "verify_original_transaction",
+    "replay_events",
+    "resolve_fact_lineage",
 ]

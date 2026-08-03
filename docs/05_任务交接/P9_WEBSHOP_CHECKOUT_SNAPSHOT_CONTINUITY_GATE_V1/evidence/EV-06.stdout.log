@@ -1,0 +1,12 @@
+HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+HASHES
+3b73bcffcbed410455c4b124cd07d56afdb905b2cfa615aea4f6308cf8ea3830  src/agentic_payment_experiment/webshop_runtime_gate.py
+804cb2e334717a662d49a9cc3f69cf4a5680b25a7e6731917e516c58a94acdba  tests/test_webshop_runtime_gate.py
+72fba6edfecf12bba1e4467c455a915f84862943f705608cb54f3f933eede0c9  samples/external/webshop/checkout_snapshot_anomalies_v1.json
+9b743da578a692178c67908620291cbb61c6e1ede6b46958f388aedb24f2deb5  scripts/validation/webshop/run_checkout_snapshot_anomalies.py
+PROTECTED_TRACKED_DIFFS
+STATIC_REUSE
+116:        authorized_order=authorized_snapshot.order,
+117:        final_order=adaptation.order,
+AUTHORIZATIONS
+network=false api=false dependency_install=false create_environment=false webshop_runtime=false buy_now=false payment_side_effect=false commit=false push=false history_rewrite=false

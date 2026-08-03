@@ -1,0 +1,66 @@
+{
+  "base_url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/",
+  "description": "checksum-verified mirror copies of the WebShop small assets",
+  "destination_dir": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data",
+  "files": {
+    "items_human_ins.json": {
+      "bytes": 5137548,
+      "filename": "items_human_ins.json",
+      "google_drive_id": "14Kb5SPBk_jfdLZ_CDBNitW98QLDlKR5O",
+      "json_type": "dict",
+      "path": "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec\\items_human_ins.json",
+      "sha256": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3",
+      "source": {
+        "base_url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/",
+        "filename": "items_human_ins.json",
+        "repository": "YWZBrandon/webshop-data",
+        "revision": "ce990fff5aee388db2706f07820c578ab68e0453",
+        "url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_human_ins.json"
+      },
+      "top_level_count": 10136
+    },
+    "items_ins_v2_1000.json": {
+      "bytes": 147099,
+      "filename": "items_ins_v2_1000.json",
+      "google_drive_id": "1IduG0xl544V_A_jv3tHXC0kyFi7PnyBu",
+      "json_type": "dict",
+      "path": "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec\\items_ins_v2_1000.json",
+      "sha256": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f",
+      "source": {
+        "base_url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/",
+        "filename": "items_ins_v2_1000.json",
+        "repository": "YWZBrandon/webshop-data",
+        "revision": "ce990fff5aee388db2706f07820c578ab68e0453",
+        "url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_ins_v2_1000.json"
+      },
+      "top_level_count": 1000
+    },
+    "items_shuffle_1000.json": {
+      "bytes": 4467013,
+      "filename": "items_shuffle_1000.json",
+      "google_drive_id": "1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib",
+      "json_type": "list",
+      "path": "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec\\items_shuffle_1000.json",
+      "sha256": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269",
+      "source": {
+        "base_url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/",
+        "filename": "items_shuffle_1000.json",
+        "repository": "YWZBrandon/webshop-data",
+        "revision": "ce990fff5aee388db2706f07820c578ab68e0453",
+        "url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_shuffle_1000.json"
+      },
+      "top_level_count": 1000
+    }
+  },
+  "overall_pass": true,
+  "promoted": true,
+  "promoted_paths": [
+    "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_shuffle_1000.json",
+    "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_ins_v2_1000.json",
+    "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_human_ins.json"
+  ],
+  "repository": "YWZBrandon/webshop-data",
+  "revision": "ce990fff5aee388db2706f07820c578ab68e0453",
+  "schema": "webshop-small-mirror-assets/v1",
+  "staging_dir": "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec"
+}

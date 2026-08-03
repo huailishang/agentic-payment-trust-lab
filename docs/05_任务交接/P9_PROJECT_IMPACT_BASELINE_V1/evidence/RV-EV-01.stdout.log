@@ -1,0 +1,37 @@
+{
+  "ac08_package_completeness": {
+    "final_git_status_artifact_present": false,
+    "initial_status_present": true,
+    "saved_diff_artifact_present": false,
+    "saved_diff_sha256_present": false
+  },
+  "t10": {
+    "actual_callback_count": 1,
+    "business_goal": "同一请求已有成功付款时不产生第二次付款副作用",
+    "corrected_expected_callback_count": 0,
+    "corrected_gesr_count_upper_bound": 4,
+    "duplicate_callback_executed": true,
+    "duplicate_payment_blocked_after_callback": true,
+    "fixture_expected_callback_count": 1,
+    "known_successful_attempt_present": true,
+    "reported_duplicate_side_effect_rate": {
+      "count": 0,
+      "denominator": 12,
+      "rate": "0.000000"
+    },
+    "reported_gesr_count": 5,
+    "runner_marked_matched": true
+  },
+  "trace_measurement": {
+    "classification": "evaluator_synthesized_replay_not_product_observed_trace",
+    "runner_calls_replay_events": true,
+    "runner_constructs_replay_events": true,
+    "trace_valid_tasks": [
+      "T01",
+      "T09",
+      "T10",
+      "T11",
+      "T12"
+    ]
+  }
+}

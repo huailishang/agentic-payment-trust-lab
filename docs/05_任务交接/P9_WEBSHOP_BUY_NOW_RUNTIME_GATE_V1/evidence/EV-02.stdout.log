@@ -1,0 +1,361 @@
+{
+  "all_callbacks_blocked": true,
+  "case_count": 14,
+  "cases": [
+    {
+      "binding_reason_codes": [
+        "payment_execution_request_ref_mismatch"
+      ],
+      "binding_status": "INVALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p2_request_ref_mismatch",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "decision": "DENY",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_request_ref_mismatch",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_transaction_object_ref_mismatch"
+      ],
+      "binding_status": "INVALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p2_transaction_object_ref_mismatch",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "decision": "DENY",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_transaction_object_ref_mismatch",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_order_ref_mismatch"
+      ],
+      "binding_status": "INVALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p2_order_ref_mismatch",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "decision": "DENY",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_order_ref_mismatch",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_authority_ref_mismatch"
+      ],
+      "binding_status": "INVALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p2_authority_ref_mismatch",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "decision": "DENY",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_authority_ref_mismatch",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_agent_ref_mismatch"
+      ],
+      "binding_status": "INVALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p2_agent_ref_mismatch",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "decision": "DENY",
+      "identity_reason_codes": [
+        "identity_execution_agent_ref_mismatch"
+      ],
+      "identity_status": "INVALID",
+      "reason_codes": [
+        "p2:payment_execution_agent_ref_mismatch",
+        "p3:identity_execution_agent_ref_mismatch",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_payee_mismatch"
+      ],
+      "binding_status": "INVALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p2_payee_mismatch",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "decision": "DENY",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_payee_mismatch",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_amount_mismatch"
+      ],
+      "binding_status": "INVALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p2_amount_mismatch",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "decision": "DENY",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_amount_mismatch",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_currency_mismatch"
+      ],
+      "binding_status": "INVALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p2_currency_mismatch",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "decision": "DENY",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_currency_mismatch",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_binding_match"
+      ],
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p3_identity_evidence_missing",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "decision": "INDETERMINATE",
+      "identity_reason_codes": [
+        "identity_object_agent_ref_missing",
+        "identity_provider_ref_missing",
+        "identity_expected_executor_ref_missing",
+        "identity_status_missing"
+      ],
+      "identity_status": "MISSING_EVIDENCE",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_expected_executor_ref_missing",
+        "p3:identity_object_agent_ref_missing",
+        "p3:identity_provider_ref_missing",
+        "p3:identity_status_missing",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_binding_match"
+      ],
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p3_executor_mismatch",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "decision": "DENY",
+      "identity_reason_codes": [
+        "identity_executor_instance_ref_mismatch"
+      ],
+      "identity_status": "INVALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_instance_ref_mismatch",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_binding_match"
+      ],
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p4_context_missing",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "required_fact_missing:final_order.order_id",
+        "required_fact_missing:mandate.mandate_id",
+        "required_fact_missing:request.agent_id",
+        "required_fact_missing:request.amount",
+        "required_fact_missing:request.currency",
+        "required_fact_missing:request.payee",
+        "required_fact_missing:request.request_id"
+      ],
+      "context_policy_status": "MISSING_EVIDENCE",
+      "decision": "INDETERMINATE",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:required_fact_missing:final_order.order_id",
+        "p4:required_fact_missing:mandate.mandate_id",
+        "p4:required_fact_missing:request.agent_id",
+        "p4:required_fact_missing:request.amount",
+        "p4:required_fact_missing:request.currency",
+        "p4:required_fact_missing:request.payee",
+        "p4:required_fact_missing:request.request_id"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_binding_match"
+      ],
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p4_unauthorized_state_change",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "unauthorized_trusted_state_change_detected"
+      ],
+      "context_policy_status": "INVALID",
+      "decision": "DENY",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:unauthorized_trusted_state_change_detected"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_binding_match"
+      ],
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p4_stale_wrong_action",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "decision": "INDETERMINATE",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_reason_codes": [
+        "payment_execution_binding_match"
+      ],
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "calls": [],
+      "case": "p4_value_digest_mismatch",
+      "checkout_executed": false,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "decision": "INDETERMINATE",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    }
+  ],
+  "schema": "webshop-runtime-gate-mismatch-matrix/v1"
+}

@@ -1,0 +1,48 @@
+HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+BASELINE=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+HEAD_BASELINE_UNCHANGED=True
+MISSING_REPAIR_FILES=[]
+PARENT_INPUT_TO_REPAIR_OUTPUT=
+  src/agentic_payment_experiment/adapters/x402.py: parent=d863aa463cb0dce6b3c1bd262d68179b8bb4ec907e3d7e4f5247cd919a4d2812 current=146317c4e54cffd2c7616d5ad0c77086da888141e0549d400ff5ce7a1f8e94a3 changed=True
+  tests/test_x402_adapter.py: parent=521e604a05809f69b2aa8ff8e2aeefa0f4dc1b6cfdec9470c5c5bc5cf85e257f current=1e51fdf8db040308d9cc2ebd0aa7cd801e1260cb1d388ee4755936ccbfa7f3c5 changed=True
+PARENT_PRESERVED_HASHES=
+  src/agentic_payment_experiment/x402_conformance.py: expected=5240369a4620b5339538f62a294564fe2d4cda06c11b5a4aefb00fdb16cc9b2e actual=5240369a4620b5339538f62a294564fe2d4cda06c11b5a4aefb00fdb16cc9b2e matches=True
+  tests/test_x402_conformance.py: expected=78f952ec07d6b3a8a90296a001bbaeaef8de96c3ebec34744d115fc72d001526 actual=78f952ec07d6b3a8a90296a001bbaeaef8de96c3ebec34744d115fc72d001526 matches=True
+  samples/protocols/x402/x402_offline_cases_v1.json: expected=5e34d70667faf7c2d91e0bf7b70086a7bb106bb552a85989f6f6f12915292153 actual=5e34d70667faf7c2d91e0bf7b70086a7bb106bb552a85989f6f6f12915292153 matches=True
+  src/agentic_payment_experiment/adapters/__init__.py: expected=d6ea7127d18c791b51e15e603966ca03e8ed90f3ec7af21ae19ce1f9074e6754 actual=d6ea7127d18c791b51e15e603966ca03e8ed90f3ec7af21ae19ce1f9074e6754 matches=True
+  docs/04_验证体系/x402离线一致性验证方案_v1.md: expected=5edd674080d1526aca16bd8370d2bee83123dbcaec68c04cebdc2e271653a9d6 actual=5edd674080d1526aca16bd8370d2bee83123dbcaec68c04cebdc2e271653a9d6 matches=True
+REPAIR_FILE_WHITESPACE_FINDINGS=0
+FORBIDDEN_NETWORK_OR_PROCESS_IMPORTS=[]
+FORBIDDEN_EXTERNAL_TEXT_COERCIONS=[]
+MISSING_STRICT_VALIDATION_MARKERS=[]
+REPAIR_FILE_SHA256=
+  146317c4e54cffd2c7616d5ad0c77086da888141e0549d400ff5ce7a1f8e94a3  src/agentic_payment_experiment/adapters/x402.py
+  1e51fdf8db040308d9cc2ebd0aa7cd801e1260cb1d388ee4755936ccbfa7f3c5  tests/test_x402_adapter.py
+  b62bae36756f363ebc1ab9869c0e7cf2a0e7533121d43858bc70304ae4ef3a0a  docs/05_任务交接/P8_X402_STRICT_REFERENCE_TYPE_REPAIR_V1/REPORT.md
+  bcb24f6d929b8474ca2ccc51458cc9af6fd33c5b2a8b6f185cb827c0dce6d83c  docs/05_任务交接/P8_X402_STRICT_REFERENCE_TYPE_REPAIR_V1/evidence/EV-02_rv_ev_07_counterexample.py
+  d4dd363a924ebcb1b7c37e131f47b7efaa869ad260783d7160019dddeaba2a82  docs/05_任务交接/P8_X402_STRICT_REFERENCE_TYPE_REPAIR_V1/evidence/EV-07_scope_check.py
+GLOBAL_GIT_DIFF_CHECK_EXIT=2
+GLOBAL_GIT_DIFF_CHECK_LINES=4422
+GLOBAL_FINDINGS_CLASSIFICATION=inherited/out-of-scope unless listed as a repair file
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:1: trailing whitespace.
+  +working_directory=D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:2: trailing whitespace.
+  +command=$env:PYTHONUTF8='1'; python -m unittest tests.trusted_execution.test_identity_assurance -v
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:3: trailing whitespace.
+  +test_assurance_levels_are_stable_serializable_values (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_assurance_levels_are_stable_serializable_values) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:4: trailing whitespace.
+  +test_complete_offline_binding_is_valid_and_bound_only (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_complete_offline_binding_is_valid_and_bound_only) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:5: trailing whitespace.
+  +test_credential_reference_alone_never_upgrades_to_verified (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_credential_reference_alone_never_upgrades_to_verified) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:6: trailing whitespace.
+  +test_inactive_revoked_and_unsupported_statuses_are_invalid (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_inactive_revoked_and_unsupported_statuses_are_invalid) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:7: trailing whitespace.
+  +test_missing_identity_and_executor_evidence_fails_closed (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_missing_identity_and_executor_evidence_fails_closed) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:8: trailing whitespace.
+  +test_same_layer_conflicts_are_aggregated_in_stable_order (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_same_layer_conflicts_are_aggregated_in_stable_order) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:9: trailing whitespace.
+  +System.Management.Automation.RemoteException
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:10: trailing whitespace.
+  +----------------------------------------------------------------------
+AI_BRIDGE_EXISTS=False
+REPAIR_SCOPE_RESULT=PASS

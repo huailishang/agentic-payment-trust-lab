@@ -1,0 +1,21 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-01",
+  "command_argv": [
+    "env",
+    "PYTHONPATH=src",
+    "python3",
+    "scripts/validation/webshop/run_checkout_snapshot_anomalies.py"
+  ],
+  "command_display": "env PYTHONPATH=src python3 scripts/validation/webshop/run_checkout_snapshot_anomalies.py",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-03T01:34:53.771712+00:00",
+  "finished_at_utc": "2026-08-03T01:34:54.110990+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-01.stdout.log",
+  "stderr_path": "EV-01.stderr.log",
+  "stdout_bytes": 9713,
+  "stderr_bytes": 0,
+  "stdout_sha256": "0a847b6726c711167db96201ff944b1e350a35beffe35d78106359d1ce8a690e",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

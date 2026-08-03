@@ -1,0 +1,39 @@
+{
+  "label": "EV-26",
+  "started_at_utc": "2026-08-02T04:57:12.691692+00:00",
+  "finished_at_utc": "2026-08-02T05:09:57.992384+00:00",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "command_display": "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe install -n webshop38 --override-channels -c https://conda.anaconda.org/pytorch -c https://conda.anaconda.org/conda-forge --strict-channel-priority mkl=2021.4.0 intel-openmp=2021.4.0 transformers=4.19.2 -y",
+  "command_argv": [
+    "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+    "install",
+    "-n",
+    "webshop38",
+    "--override-channels",
+    "-c",
+    "https://conda.anaconda.org/pytorch",
+    "-c",
+    "https://conda.anaconda.org/conda-forge",
+    "--strict-channel-priority",
+    "mkl=2021.4.0",
+    "intel-openmp=2021.4.0",
+    "transformers=4.19.2",
+    "-y"
+  ],
+  "exit_code": 0,
+  "purpose": "install explicit Pyserini runtime compatibility stack after terminating only the stale EV-25 process",
+  "stale_process_recovery": {
+    "terminated_own_pids": [
+      309,
+      284
+    ],
+    "reason": "tool timeout left original P9 Conda install holding environment lock"
+  },
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-26.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-26.stderr.log",
+  "stdout_sha256": "bcf617e42cd5e6dd510df9d8f71ab8d2ca99ae650d348236203204e9f7265158",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 2749,
+  "stderr_bytes": 0
+}

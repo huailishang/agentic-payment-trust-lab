@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-01",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "\n  echo HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6\n  echo BRANCH=main\n  echo --- GIT STATUS ---\n  git status --short\n  echo --- GIT DIFF STAT ---\n  git diff --stat\n  echo --- PROTECTED SRC HASHES ---\n  find src -type f -name \"*.py\" -print0 | sort -z | xargs -0 sha256sum\n"
+  ],
+  "command_display": "bash -lc '\n  echo HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6\n  echo BRANCH=main\n  echo --- GIT STATUS ---\n  git status --short\n  echo --- GIT DIFF STAT ---\n  git diff --stat\n  echo --- PROTECTED SRC HASHES ---\n  find src -type f -name \"*.py\" -print0 | sort -z | xargs -0 sha256sum\n'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-03T08:41:41.832409+00:00",
+  "finished_at_utc": "2026-08-03T08:41:45.059052+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-01.stdout.log",
+  "stderr_path": "EV-01.stderr.log",
+  "stdout_bytes": 24023,
+  "stderr_bytes": 0,
+  "stdout_sha256": "a6cc287310e25455ae92cd7716d2dd858b8939a7e502be62fc7512b52b868f24",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

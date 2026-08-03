@@ -1,0 +1,15 @@
+===== COMMAND 1 STDERR =====
+===== COMMAND 2 STDERR =====
+===== COMMAND 3 STDERR =====
+===== COMMAND 4 STDERR =====
+===== COMMAND 5 STDERR =====
+===== COMMAND 6 STDERR =====
+===== COMMAND 7 STDERR =====
+===== COMMAND 8 STDERR =====
+===== COMMAND 9 STDERR =====
+===== COMMAND 10 STDERR =====
+openjdk version "11.0.30" 2026-01-20 LTS
+OpenJDK Runtime Environment Zulu11.86+21-CA (build 11.0.30+7-LTS)
+OpenJDK 64-Bit Server VM Zulu11.86+21-CA (build 11.0.30+7-LTS, mixed mode)
+
+===== COMMAND 11 STDERR =====

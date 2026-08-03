@@ -1,0 +1,195 @@
+{
+  "acquisition_statements": {
+    "browser_started": false,
+    "dataset_downloaded": false,
+    "dependency_installed": false,
+    "model_downloaded": false,
+    "payment_or_testnet_action": false,
+    "service_started": false,
+    "webshop_imported": false
+  },
+  "actual_commit": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+  "actual_origin": "https://github.com/princeton-nlp/WebShop.git",
+  "branch_context": [
+    "origin/master"
+  ],
+  "checkout_path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop",
+  "contracts": [
+    {
+      "detail": "checkout directory exists",
+      "name": "checkout_directory",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop"
+    },
+    {
+      "detail": "Git metadata exists",
+      "name": "git_checkout",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/.git"
+    },
+    {
+      "detail": "origin matches https://github.com/princeton-nlp/WebShop.git",
+      "name": "official_origin",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/.git/config"
+    },
+    {
+      "detail": "HEAD matches pinned commit 64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+      "name": "pinned_commit",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/.git/HEAD"
+    },
+    {
+      "detail": "checkout is detached from moving branches",
+      "name": "detached_head",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/.git/HEAD"
+    },
+    {
+      "detail": "upstream checkout has no local source modifications",
+      "name": "clean_worktree",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop"
+    },
+    {
+      "detail": "required upstream file exists",
+      "name": "required_file:README.md",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/README.md"
+    },
+    {
+      "detail": "required upstream file exists",
+      "name": "required_file:LICENSE.md",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/LICENSE.md"
+    },
+    {
+      "detail": "required upstream file exists",
+      "name": "required_file:setup.sh",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/setup.sh"
+    },
+    {
+      "detail": "required upstream file exists",
+      "name": "required_file:requirements.txt",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/requirements.txt"
+    },
+    {
+      "detail": "required upstream file exists",
+      "name": "required_file:web_agent_site/envs/__init__.py",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/web_agent_site/envs/__init__.py"
+    },
+    {
+      "detail": "required upstream file exists",
+      "name": "required_file:web_agent_site/envs/web_agent_text_env.py",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/web_agent_site/envs/web_agent_text_env.py"
+    },
+    {
+      "detail": "required upstream file exists",
+      "name": "required_file:web_agent_site/engine/engine.py",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/web_agent_site/engine/engine.py"
+    },
+    {
+      "detail": "MIT license text identified",
+      "name": "mit_license",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/LICENSE.md"
+    },
+    {
+      "detail": "WebAgentTextEnv-v0 registration targets WebAgentTextEnv",
+      "name": "text_environment_registration",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/web_agent_site/envs/__init__.py"
+    },
+    {
+      "detail": "WebAgentTextEnv class exists",
+      "name": "web_agent_text_env_class",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/web_agent_site/envs/web_agent_text_env.py"
+    },
+    {
+      "detail": "WebAgentTextEnv.step(action) exists",
+      "name": "web_agent_text_env_step",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/web_agent_site/envs/web_agent_text_env.py"
+    },
+    {
+      "detail": "WebAgentTextEnv.reset(...) exists",
+      "name": "web_agent_text_env_reset",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/web_agent_site/envs/web_agent_text_env.py"
+    },
+    {
+      "detail": "step contract documents search[...] and click[...] grammar",
+      "name": "action_grammar",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/web_agent_site/envs/web_agent_text_env.py"
+    },
+    {
+      "detail": "END_BUTTON resolves to Buy Now",
+      "name": "end_button",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/web_agent_site/engine/engine.py"
+    },
+    {
+      "detail": "SimServer.receive routes Buy Now to done() and marks terminal status",
+      "name": "buy_now_routes_to_done",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/web_agent_site/envs/web_agent_text_env.py"
+    },
+    {
+      "detail": "SimServer.done records purchase, calculates reward and sets terminal state",
+      "name": "done_records_purchase_reward_terminal_state",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/web_agent_site/envs/web_agent_text_env.py"
+    },
+    {
+      "detail": "small setup path and 1000-product subset are documented",
+      "name": "small_1000_product_path",
+      "passed": true,
+      "path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop/README.md"
+    }
+  ],
+  "detached_head": true,
+  "expected_commit": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+  "expected_origin": "https://github.com/princeton-nlp/WebShop.git",
+  "generated_at_utc": "2026-08-01T12:13:20.411803+00:00",
+  "license": "MIT",
+  "overall_pass": true,
+  "required_files": {
+    "LICENSE.md": {
+      "exists": true,
+      "sha256": "8872dbf8660b00890b5e07ce1ea1f7a44fa7ae4e1857da56caba172b51dab3cb"
+    },
+    "README.md": {
+      "exists": true,
+      "sha256": "79b7a90a1413a52deb53142b5bbd81ecf40f61743bd4601c2835e91375898ec0"
+    },
+    "requirements.txt": {
+      "exists": true,
+      "sha256": "b4e83b7e9c670c724215fcb79e43f52f591de354a8f70870ba4553c88de26d2d"
+    },
+    "setup.sh": {
+      "exists": true,
+      "sha256": "0df1dbe7673b94e161b2d9064037af35f7fee3eb1d8131c63b21dd3385323912"
+    },
+    "web_agent_site/engine/engine.py": {
+      "exists": true,
+      "sha256": "9b86ffc82951124f5c4a7eb8103de14100dbee11ba8869951ed6fb8feaeef804"
+    },
+    "web_agent_site/envs/__init__.py": {
+      "exists": true,
+      "sha256": "7cdf100d019fd715d605ff0cd0f0d3d4285d7f7b2dbe4e4634e9a1266ab5e854"
+    },
+    "web_agent_site/envs/web_agent_text_env.py": {
+      "exists": true,
+      "sha256": "f4efee238c2a69ad76ff5372716a16051c67ea0351c7006491834822ea9afda3"
+    }
+  },
+  "schema": "webshop-upstream-preflight/v1",
+  "tag_context": []
+}

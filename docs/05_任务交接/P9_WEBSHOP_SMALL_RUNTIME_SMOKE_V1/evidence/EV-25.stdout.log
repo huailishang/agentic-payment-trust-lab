@@ -1,0 +1,6 @@
+The command was started by the EV-25 driver. The tool transport timed out before subprocess.run returned, so the child output remained buffered and was not available to the driver.
+Read-only diagnosis found the driver and Conda child still running with zero observed CPU after the transport timeout and holding the webshop38 environment lock.
+A second install attempt returned Resource deadlock avoided and did not change the environment.
+The stale EV-25-owned processes were later terminated specifically by PID before EV-26; no unrelated process was targeted.
+At recovery time webshop38 still reported MKL 2024.2.2 and Intel OpenMP 2024.2.1.
+No Lucene query, runtime smoke, Buy Now action, commit, or push occurred in EV-25.

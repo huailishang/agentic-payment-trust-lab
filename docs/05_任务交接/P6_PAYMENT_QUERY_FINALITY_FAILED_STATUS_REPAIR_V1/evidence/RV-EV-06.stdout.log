@@ -1,0 +1,5 @@
+trusted_failed=QUERY_CONFIRMED/terminal
+pending=QUERY_UNRESOLVED/non-terminal
+conflict=QUERY_BLOCKED/non-terminal
+inconsistent_initial_and_observed=ValueError
+upper_layer_claims=false

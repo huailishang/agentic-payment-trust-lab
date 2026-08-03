@@ -1,0 +1,7 @@
+adversarial_cases=PASS
+missing_payment_ref=PASS
+missing_order_ref=PASS
+mismatched_payment_order_provider=PASS
+unknown_action_reason=PASS
+wrong_action_binding=BLOCKED
+stronger_success_flags=false

@@ -60,7 +60,7 @@ class PaymentRecoveryTest(unittest.TestCase):
             evidence["payment_execution_binding_status"].observed,
         )
         self.assertEqual(
-            "execution_identity_match",
+            "original_transaction_binding_match",
             evidence["status_observation_verification_reasons"].observed,
         )
         self.assertEqual("payment-recovery-rules-v0.2", result.rule_version)
@@ -79,6 +79,19 @@ class PaymentRecoveryTest(unittest.TestCase):
             "payment_request_binding_mismatch",
             {item.code for item in result.issues},
         )
+
+    def test_missing_provider_or_order_blocks_original_transaction_recovery(self) -> None:
+        for observation in (
+            replace(self.observation, provider_ref=None),
+            replace(self.observation, order_id=None),
+        ):
+            with self.subTest(observation=observation):
+                result = self.assess(observation=observation)
+                self.assertEqual(PaymentRecoveryStatus.BLOCKED, result.recovery_status)
+                self.assertFalse(result.retry_allowed)
+                self.assertEqual("investigate_status_observation_binding", result.next_action)
+                evidence = {item.code: item for item in result.evidence}
+                self.assertNotEqual("VALID", evidence["status_observation_verification_status"].observed)
 
     def test_unknown_to_unknown_forbids_retry_and_remains_unresolved(self) -> None:
         observation = replace(self.observation, status=PaymentStatus.UNKNOWN)

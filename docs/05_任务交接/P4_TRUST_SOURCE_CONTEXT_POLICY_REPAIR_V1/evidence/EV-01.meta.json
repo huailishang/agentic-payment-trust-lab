@@ -1,0 +1,22 @@
+{
+    "schema":  "evaluator-executor-evidence/v1",
+    "label":  "EV-01",
+    "command_argv":  [
+                         "python",
+                         "-m",
+                         "unittest",
+                         "tests.trusted_execution.test_context_policy",
+                         "-v"
+                     ],
+    "command_display":  "python -m unittest tests.trusted_execution.test_context_policy -v",
+    "working_directory":  "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+    "started_at_utc":  "2026-07-31T07:12:01.6199380+00:00",
+    "finished_at_utc":  "2026-07-31T07:12:02.6451636+00:00",
+    "exit_code":  0,
+    "stdout_path":  "EV-01.stdout.log",
+    "stderr_path":  "EV-01.stderr.log",
+    "stdout_bytes":  0,
+    "stderr_bytes":  1988,
+    "stdout_sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256":  "241f9113e70c5df4a452617a8684631a30a0f31ca5f2f91717188a684cac931f"
+}

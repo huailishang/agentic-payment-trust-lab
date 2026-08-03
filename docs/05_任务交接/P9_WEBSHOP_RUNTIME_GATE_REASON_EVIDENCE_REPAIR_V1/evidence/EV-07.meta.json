@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-07",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_WEBSHOP_RUNTIME_GATE_REASON_EVIDENCE_REPAIR_V1/evidence/EV-07_scope_audit.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_WEBSHOP_RUNTIME_GATE_REASON_EVIDENCE_REPAIR_V1/evidence/EV-07_scope_audit.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T13:37:59.804511+00:00",
+  "finished_at_utc": "2026-08-02T13:38:02.807566+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-07.stdout.log",
+  "stderr_path": "EV-07.stderr.log",
+  "stdout_bytes": 2613,
+  "stderr_bytes": 0,
+  "stdout_sha256": "b94a26d0dc8a42a12593866a7e6cbc73331425ef6d60d7afdc61e6387ffd73bc",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,10 @@
+labels= ['EV-01', 'EV-02', 'EV-03', 'EV-04', 'EV-05', 'EV-06', 'EV-07', 'EV-08']
+EV-01 True
+EV-02 True
+EV-03 True
+EV-04 True
+EV-05 True
+EV-06 True
+EV-07 True
+EV-08 True
+failure_count= 0

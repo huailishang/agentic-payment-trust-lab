@@ -1,0 +1,9 @@
+=== agent_after_conda_list ===
+=== nested_head ===
+=== nested_status ===
+=== main_task_status ===
+=== current_diff ===
+=== diff_check_bootstrap_webshop_small.ps1 ===
+=== diff_check_verify_webshop_small_assets.py ===
+=== diff_check_smoke_webshop_small.py ===
+=== diff_check_test_webshop_small_runtime_contract.py ===

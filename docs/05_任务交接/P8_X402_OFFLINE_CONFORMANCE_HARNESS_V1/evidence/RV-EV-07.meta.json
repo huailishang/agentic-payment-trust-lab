@@ -1,0 +1,21 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-07",
+  "command_argv": [
+    "env",
+    "PYTHONPATH=src",
+    "python3",
+    "docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/RV-EV-07_malformed_reference_types.py"
+  ],
+  "command_display": "env PYTHONPATH=src python3 'docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/RV-EV-07_malformed_reference_types.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-01T07:22:12.880963+00:00",
+  "finished_at_utc": "2026-08-01T07:22:13.628101+00:00",
+  "exit_code": 1,
+  "stdout_path": "RV-EV-07.stdout.log",
+  "stderr_path": "RV-EV-07.stderr.log",
+  "stdout_bytes": 173,
+  "stderr_bytes": 0,
+  "stdout_sha256": "ad094ca0ac7dfd8b6e5a148a496d50b24d9bbf705d7e95cf84c584949c5efcfa",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

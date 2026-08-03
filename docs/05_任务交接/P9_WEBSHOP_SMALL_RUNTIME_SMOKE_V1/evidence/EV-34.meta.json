@@ -1,0 +1,213 @@
+{
+  "label": "EV-34",
+  "exit_code": 0,
+  "command_display": "final workspace, environment, agent fingerprint, nested checkout, ignored runtime scope, result artifacts and changed-file inventory audit",
+  "command_argv": [
+    "multiple commands; see records"
+  ],
+  "records": [
+    {
+      "sequence": 1,
+      "command_argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 2,
+      "command_argv": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 3,
+      "command_argv": [
+        "git",
+        "-C",
+        "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 4,
+      "command_argv": [
+        "git",
+        "-C",
+        "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop",
+        "status",
+        "--short"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 5,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "env",
+        "list",
+        "--json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 6,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 7,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "java",
+        "-version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 8,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "list",
+        "-n",
+        "webshop38"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 9,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "list",
+        "-n",
+        "webshop38",
+        "--explicit"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 10,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "-m",
+        "pip",
+        "freeze"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 11,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "list",
+        "-n",
+        "agent",
+        "--json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 12,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "list",
+        "-n",
+        "webshop38",
+        "--json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 13,
+      "command_argv": [
+        "git",
+        "check-ignore",
+        "-v",
+        "local_sources/third_party/webshop/data/items_shuffle_1000.json",
+        "local_sources/third_party/webshop/search_engine/resources_1k/documents.jsonl",
+        "local_sources/third_party/webshop/search_engine/indexes_1k/segments_1"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T05:42:13.118549+00:00",
+  "finished_at_utc": "2026-08-02T05:42:26.048520+00:00",
+  "baseline_head": "8acaa9e4319240d258f14d8a23b1f15cc71d09b6",
+  "main_head": "8acaa9e4319240d258f14d8a23b1f15cc71d09b6",
+  "nested_webshop_head": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+  "webshop38_paths": [
+    "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38"
+  ],
+  "agent_before_sha256": "4539e11540ef6bdae7d4ce8adc6e9cc9c1b45891a36a5218ece046db3ad1622c",
+  "agent_after_sha256": "4539e11540ef6bdae7d4ce8adc6e9cc9c1b45891a36a5218ece046db3ad1622c",
+  "agent_fingerprint_match": true,
+  "webshop38_normalized_conda_list_sha256": "76ff7f69922c2e943ac0802dffac10bc3be1022fbee19bd8b93c7c8b3307b526",
+  "changed_files": [
+    {
+      "path": "scripts/validation/webshop/bootstrap_webshop_small.ps1",
+      "bytes": 14180,
+      "sha256": "164d16b44d30714c790fa0097a00466e3e76f8ad628ac98836adfc950d779169"
+    },
+    {
+      "path": "scripts/validation/webshop/verify_webshop_small_assets.py",
+      "bytes": 24901,
+      "sha256": "c8e8d49de928c87710317cc88f77d253f1411cd6389e019f855813a82feff571"
+    },
+    {
+      "path": "scripts/validation/webshop/smoke_webshop_small.py",
+      "bytes": 11170,
+      "sha256": "8628023cbee0c131ff496f0810090d6cc1fb8509cda0333b9474a19aa47d953d"
+    },
+    {
+      "path": "tests/test_webshop_small_runtime_contract.py",
+      "bytes": 12624,
+      "sha256": "e3617c9a0f8e30b1c7f92848c4c8d6b05a5a07f7826bbe1adeabd37a072f6f13"
+    },
+    {
+      "path": "docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md",
+      "bytes": 11292,
+      "sha256": "e5dbed07c0c6f6204f3b78d0a16d4a46b4eb4a110741a7377b86295de968a12c"
+    },
+    {
+      "path": "docs/02_未来规划/验证体系与后续环境统一路线_20260801.md",
+      "bytes": 16141,
+      "sha256": "9da59f0ebca51a180e3be623814eeb666f4cc8d42cd9eba237616552359ad808"
+    },
+    {
+      "path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/CONTRACT.md",
+      "bytes": 22037,
+      "sha256": "cf00f3174a070c816d2ad5678ad743f3d967afc7a357a4730e1531c92a2b98ff"
+    }
+  ],
+  "buy_now_executed": false,
+  "commit_executed": false,
+  "push_executed": false,
+  "stdout_path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-34.stdout.log",
+  "stderr_path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-34.stderr.log",
+  "stdout_bytes": 163278,
+  "stderr_bytes": 564,
+  "stdout_sha256": "da79344f30c958ea9c1b75a8b0276cd626206afd605f18e8661d8cffd81129f8",
+  "stderr_sha256": "627ea12791ff6fdc640d0be4b4ee0f46645b24f60a7d9aacadec865953e1d1dd"
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-16",
+  "command_argv": [
+    "python",
+    "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\P4_TRUST_SOURCE_CONTEXT_POLICY_V1\\evidence\\RV-EV-16_counterexample_empty_context_gate.py"
+  ],
+  "command_display": "python D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\P4_TRUST_SOURCE_CONTEXT_POLICY_V1\\evidence\\RV-EV-16_counterexample_empty_context_gate.py",
+  "working_directory": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+  "started_at_utc": "2026-07-31T06:31:00.427181+00:00",
+  "finished_at_utc": "2026-07-31T06:31:00.606019+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-16.stdout.log",
+  "stderr_path": "RV-EV-16.stderr.log",
+  "stdout_bytes": 110,
+  "stderr_bytes": 0,
+  "stdout_sha256": "df57a276df83259a489980afa7d5ae7f3744e3e41c15ad8eed19536b918bd9b4",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

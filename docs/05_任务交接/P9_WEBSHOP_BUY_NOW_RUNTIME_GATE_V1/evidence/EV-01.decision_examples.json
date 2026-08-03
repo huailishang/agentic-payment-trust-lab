@@ -1,0 +1,165 @@
+{
+  "allow": {
+    "bound_request_agent_id": "webshop-agent-1",
+    "callback_count": 1,
+    "callback_result_ref": "simulated-webshop-checkout",
+    "calls": [
+      "checkout"
+    ],
+    "checkout_executed": true,
+    "decision": "ALLOW",
+    "limitations": [
+      "offline_interception_only",
+      "no_webshop_runtime_execution",
+      "no_real_buy_now_execution",
+      "no_real_payment_or_fulfilment",
+      "instruction_is_not_authorization_mandate",
+      "checkout_callback_is_injected_test_seam"
+    ],
+    "prepayment_decision": "ALLOW",
+    "reason_codes": [
+      "p2:payment_execution_binding_match",
+      "p3:identity_executor_binding_match",
+      "p4:context_policy_valid"
+    ],
+    "runtime_gate": {
+      "binding_reason_codes": [
+        "payment_execution_binding_match"
+      ],
+      "binding_status": "VALID",
+      "callback_count": 1,
+      "callback_executed": true,
+      "callback_result_ref": "simulated-webshop-checkout",
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "final_decision": "ALLOW",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "preliminary_decision": "ALLOW",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    }
+  },
+  "callback_exception": {
+    "bound_request_agent_id": "webshop-agent-1",
+    "callback_count": 1,
+    "callback_result_ref": null,
+    "calls": [
+      "attempt"
+    ],
+    "checkout_executed": false,
+    "decision": "INDETERMINATE",
+    "limitations": [
+      "offline_interception_only",
+      "no_webshop_runtime_execution",
+      "no_real_buy_now_execution",
+      "no_real_payment_or_fulfilment",
+      "instruction_is_not_authorization_mandate",
+      "checkout_callback_is_injected_test_seam"
+    ],
+    "prepayment_decision": "ALLOW",
+    "reason_codes": [
+      "checkout_callback_exception:RuntimeError",
+      "p2:payment_execution_binding_match",
+      "p3:identity_executor_binding_match",
+      "p4:context_policy_valid"
+    ],
+    "runtime_gate": {
+      "binding_reason_codes": [
+        "payment_execution_binding_match"
+      ],
+      "binding_status": "VALID",
+      "callback_count": 1,
+      "callback_executed": true,
+      "callback_result_ref": null,
+      "context_policy_reason_codes": [
+        "context_policy_valid"
+      ],
+      "context_policy_status": "VALID",
+      "final_decision": "INDETERMINATE",
+      "identity_reason_codes": [
+        "identity_executor_binding_match"
+      ],
+      "identity_status": "VALID",
+      "preliminary_decision": "ALLOW",
+      "reason_codes": [
+        "checkout_callback_exception:RuntimeError",
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    }
+  },
+  "confirmation_required": {
+    "bound_request_agent_id": "webshop-agent-1",
+    "callback_count": 0,
+    "callback_result_ref": null,
+    "calls": [],
+    "checkout_executed": false,
+    "decision": "CONFIRMATION_REQUIRED",
+    "limitations": [
+      "offline_interception_only",
+      "no_webshop_runtime_execution",
+      "no_real_buy_now_execution",
+      "no_real_payment_or_fulfilment",
+      "instruction_is_not_authorization_mandate",
+      "checkout_callback_is_injected_test_seam"
+    ],
+    "prepayment_decision": "CONFIRMATION_REQUIRED",
+    "reason_codes": [
+      "p1:confirmation_binding_invalid"
+    ],
+    "runtime_gate": null
+  },
+  "deny_restrictive_mandate": {
+    "bound_request_agent_id": "webshop-agent-1",
+    "callback_count": 0,
+    "callback_result_ref": null,
+    "calls": [],
+    "checkout_executed": false,
+    "decision": "DENY",
+    "limitations": [
+      "offline_interception_only",
+      "no_webshop_runtime_execution",
+      "no_real_buy_now_execution",
+      "no_real_payment_or_fulfilment",
+      "instruction_is_not_authorization_mandate",
+      "checkout_callback_is_injected_test_seam"
+    ],
+    "prepayment_decision": "DENY",
+    "reason_codes": [
+      "p1:over_budget",
+      "p1:category_out_of_scope"
+    ],
+    "runtime_gate": null
+  },
+  "indeterminate_missing_confirmation": {
+    "bound_request_agent_id": "webshop-agent-1",
+    "callback_count": 0,
+    "callback_result_ref": null,
+    "calls": [],
+    "checkout_executed": false,
+    "decision": "INDETERMINATE",
+    "limitations": [
+      "offline_interception_only",
+      "no_webshop_runtime_execution",
+      "no_real_buy_now_execution",
+      "no_real_payment_or_fulfilment",
+      "instruction_is_not_authorization_mandate",
+      "checkout_callback_is_injected_test_seam"
+    ],
+    "prepayment_decision": "INDETERMINATE",
+    "reason_codes": [
+      "p1:confirmation_binding_missing_evidence"
+    ],
+    "runtime_gate": null
+  },
+  "schema": "webshop-buy-now-gate-examples/v1"
+}

@@ -1,0 +1,70 @@
+{
+  "baseline_head": "8acaa9e4319240d258f14d8a23b1f15cc71d09b6",
+  "buy_now_executed": false,
+  "commit_executed": false,
+  "context_policy_hash_preserved": true,
+  "environment_or_dependency_changed": false,
+  "history_rewrite_executed": false,
+  "main_head": "8acaa9e4319240d258f14d8a23b1f15cc71d09b6",
+  "main_head_matches_baseline": true,
+  "models_diff_empty": true,
+  "network_or_api_called": false,
+  "p9_b1_hashes_preserved": true,
+  "payment_or_fulfilment_executed": false,
+  "push_executed": false,
+  "schema": "runtime-gate-reason-repair-scope-audit/v1",
+  "simserver_done_called": false,
+  "task_files": [
+    {
+      "bytes": 19485,
+      "path": "src/agentic_payment_experiment/payment_execution.py",
+      "sha256": "25113d7c067a6ba43bcae7a182c60ec77404a50229987b0314805b1c10e0ce71"
+    },
+    {
+      "bytes": 36060,
+      "path": "tests/trusted_execution/test_payment_binding.py",
+      "sha256": "2f18ca0f41ddb94174bad779738a6cddc5711e7dee7a21c1ecfe21e32ae7ea69"
+    },
+    {
+      "bytes": 20604,
+      "path": "tests/test_webshop_runtime_gate.py",
+      "sha256": "0b370c909209970981671d983cafb024f0c601646b74e3e105a8ac8e2794d4a4"
+    },
+    {
+      "bytes": 13597,
+      "path": "docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md",
+      "sha256": "e7b51baa54c90f27b3cb2917c5841e4e934df3aa268f8b38e05597ef421c511a"
+    },
+    {
+      "bytes": 17847,
+      "path": "docs/02_未来规划/验证体系与后续环境统一路线_20260801.md",
+      "sha256": "00e2bea16afd8afa7030599aa3b29309c6f2800fd896d7a122e760a0acbf79b9"
+    }
+  ],
+  "ui_modified": false,
+  "unchanged_protected_files": [
+    {
+      "path": "src/agentic_payment_experiment/trusted_execution/context_policy.py",
+      "sha256": "be5a343ac0f48967b4b861f9b0a0c041d3f87406e6d82df1c366cb6ca810ac56"
+    },
+    {
+      "path": "src/agentic_payment_experiment/webshop_runtime_gate.py",
+      "sha256": "5aadec69b787825dc7909276d1ea6881f1620d911d4b7f83839bf3400f39e368"
+    },
+    {
+      "path": "src/agentic_payment_experiment/adapters/webshop.py",
+      "sha256": "035e6bb20d44b0a52be3f6adab2830c402e01f53839e917698343761c5481ec4"
+    },
+    {
+      "path": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+      "sha256": "6e9d67c3b787cc2d9202bd22b30dec88bf9f920dfa3741bdeb364108a2a3c8e5"
+    },
+    {
+      "path": "scripts/validation/webshop/export_webshop_commerce_fixture.py",
+      "sha256": "aae4c6109586f20e6e78c35ba48b6c94dfee76e478134842731140f50a9382f0"
+    }
+  ],
+  "validator_diff_empty": true,
+  "webshop_runtime_executed": false,
+  "webshop_wrapper_hash_preserved": true
+}

@@ -1,0 +1,2 @@
+Could not fetch URL https://pypi.org/simple/beautifulsoup4/: There was a problem confirming the ssl certificate: HTTPSConnectionPool(host='pypi.org', port=443): Max retries exceeded with url: /simple/beautifulsoup4/ (Caused by SSLError(SSLError(142, '[ASN1: NOT_ENOUGH_DATA] not enough data (_ssl.c:4176)'))) - skipping
+

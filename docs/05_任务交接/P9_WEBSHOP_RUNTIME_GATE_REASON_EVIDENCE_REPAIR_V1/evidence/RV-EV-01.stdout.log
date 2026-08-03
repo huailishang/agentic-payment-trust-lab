@@ -1,0 +1,198 @@
+{
+  "all_non_allow_have_causal_reason": true,
+  "branches": {
+    "allow": {
+      "callback_count": 1,
+      "decision": "ALLOW",
+      "expected_reason": "runtime:allow",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "runtime:allow"
+      ]
+    },
+    "p2_invalid": {
+      "callback_count": 0,
+      "decision": "DENY",
+      "expected_reason": "p2:binding_invalid",
+      "reason_codes": [
+        "p2:binding_invalid",
+        "p2:payment_execution_request_ref_mismatch",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    "p2_missing": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "expected_reason": "p2:binding_missing",
+      "reason_codes": [
+        "p2:binding_missing",
+        "p2:payment_execution_request_ref_missing",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    "p3_assurance": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "expected_reason": "p3:assurance_insufficient",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:assurance_insufficient",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    "p3_invalid": {
+      "callback_count": 0,
+      "decision": "DENY",
+      "expected_reason": "p3:identity_invalid",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_instance_ref_mismatch",
+        "p3:identity_invalid",
+        "p4:context_policy_valid"
+      ]
+    },
+    "p3_missing": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "expected_reason": "p3:identity_missing",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_expected_executor_ref_missing",
+        "p3:identity_missing",
+        "p3:identity_object_agent_ref_missing",
+        "p3:identity_provider_ref_missing",
+        "p3:identity_status_missing",
+        "p4:context_policy_valid"
+      ]
+    },
+    "p4_covered_paths": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "expected_reason": "p4:covered_source_paths_mismatch",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:covered_source_paths_mismatch"
+      ]
+    },
+    "p4_current_action": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "expected_reason": "p4:current_action_mismatch",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:current_action_mismatch"
+      ]
+    },
+    "p4_digest": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "expected_reason": "p4:source_coverage_value_mismatch",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:source_coverage_value_mismatch"
+      ]
+    },
+    "p4_invalid": {
+      "callback_count": 0,
+      "decision": "DENY",
+      "expected_reason": "p4:context_invalid",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_invalid",
+        "p4:synthetic_invalid"
+      ]
+    },
+    "p4_missing": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "expected_reason": "p4:context_missing",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_missing",
+        "p4:synthetic_missing"
+      ]
+    },
+    "p4_missing_paths": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "expected_reason": "p4:missing_source_paths",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:missing_source_paths"
+      ]
+    },
+    "p4_policy_version": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "expected_reason": "p4:policy_version_mismatch",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:policy_version_mismatch"
+      ]
+    },
+    "p4_required_paths": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "expected_reason": "p4:required_source_paths_mismatch",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:required_source_paths_mismatch"
+      ]
+    },
+    "upstream": {
+      "callback_count": 0,
+      "decision": "DENY",
+      "expected_reason": "p1:upstream_prepayment_non_allow",
+      "reason_codes": [
+        "p1:upstream_prepayment_non_allow",
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    }
+  },
+  "shared_branch_count": 15,
+  "webshop_counterexamples": {
+    "digest_mismatch": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:source_coverage_value_mismatch"
+      ],
+      "reason_equality": true
+    },
+    "wrong_action": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:current_action_mismatch"
+      ],
+      "reason_equality": true
+    }
+  }
+}

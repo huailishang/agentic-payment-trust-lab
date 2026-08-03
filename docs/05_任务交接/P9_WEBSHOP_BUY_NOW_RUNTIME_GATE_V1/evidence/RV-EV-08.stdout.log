@@ -1,0 +1,39 @@
+OK: v2 routing and required artifacts are structurally valid
+HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+CURRENT_ROUTE
+# Evaluator → Executor Current State
+
+<!-- evaluator-executor-workflow:v2 -->
+
+```yaml
+workflow: evaluator-executor-workflow/v2
+task_id: P9-WEBSHOP-RUNTIME-GATE-REASON-EVIDENCE-REPAIR-V1
+state: CONTRACT_FROZEN
+current_role: Executor
+baseline_commit: 8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+contract_path: docs/05_任务交接/P9_WEBSHOP_RUNTIME_GATE_REASON_EVIDENCE_REPAIR_V1/CONTRACT.md
+executor_report_path: docs/05_任务交接/P9_WEBSHOP_RUNTIME_GATE_REASON_EVIDENCE_REPAIR_V1/REPORT.md
+evaluator_review_path: docs/05_任务交接/P9_WEBSHOP_RUNTIME_GATE_REASON_EVIDENCE_REPAIR_V1/REVIEW.md
+next_artifact_path: docs/05_任务交接/P9_WEBSHOP_RUNTIME_GATE_REASON_EVIDENCE_REPAIR_V1/REPORT.md
+authorization_commit: false
+authorization_push: false
+authorization_history_rewrite: false
+authorization_api_call: false
+authorization_network_call: false
+authorization_create_environment: false
+authorization_dependency_install: false
+authorization_data_download: false
+authorization_webshop_runtime_execution: false
+authorization_buy_now_execution: false
+authorization_payment_or_order_side_effect: false
+```
+
+## Current action
+
+```text
+Executor executes the bounded P9-B2 reason-evidence repair. Reproduce the evaluator counterexamples where wrong current_action and value-digest mismatch correctly return INDETERMINATE with zero callbacks but expose only p4:context_policy_valid. Repair the shared Runtime Gate evidence so every non-ALLOW branch carries a stable causal stage-prefixed gate reason. Keep the decision and callback behavior unchanged. The WebShop wrapper may only consume shared reasons; do not duplicate P4 expected-value logic in WebShop-specific code.
+```
+
+## Handoff rule
+
+Do not modify models.py, validator.py, trusted_execution/context_policy.py, P9-B1 adapter/fixture/helper, WebShop runtime, Buy Now, payment, fulfilment or UI. Run targeted shared-gate and WebShop tests, full regression and the 13/13 formal entrypoint. Save complete EV triplets and REPORT.md. Keep routing Executor-owned until the workflow validator reports no BLOCKING, then route atomically to READY_FOR_REVIEW / Evaluator. Commit and push remain unauthorized.

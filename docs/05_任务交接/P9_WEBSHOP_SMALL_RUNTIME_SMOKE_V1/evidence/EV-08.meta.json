@@ -1,0 +1,48 @@
+{
+  "label": "EV-08",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T02:35:36.193995+00:00",
+  "finished_at_utc": "2026-08-02T02:36:16.075083+00:00",
+  "steps": [
+    {
+      "step": 1,
+      "command": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "install",
+        "-n",
+        "webshop38",
+        "--override-channels",
+        "-c",
+        "https://conda.anaconda.org/pytorch",
+        "-c",
+        "https://conda.anaconda.org/conda-forge",
+        "--strict-channel-priority",
+        "typing_extensions=4.1.1",
+        "-y"
+      ],
+      "exit_code": 0
+    },
+    {
+      "step": 2,
+      "command": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "-c",
+        "import gym,rank_bm25,pyserini,spacy,torch,typing_extensions; nlp=spacy.load(\"en_core_web_sm\"); print(\"gym\",gym.__version__); print(\"pyserini\",pyserini.__file__); print(\"spacy\",spacy.__version__); print(\"torch\",torch.__version__); print(\"model\",nlp.meta[\"version\"])"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "exit_code": 0,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-08.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-08.stderr.log",
+  "stdout_sha256": "528c674ae17052440941f762c26823ef76f4c2f7bc114be401afd73a69cf115f",
+  "stderr_sha256": "5b26fe91366c329f556b2af9b2b82c108ebe3317d979d3c4cb65cd7acd99b561",
+  "command_display": "multiple commands; see original steps[].command records in this metadata",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 1319,
+  "stderr_bytes": 262
+}

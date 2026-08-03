@@ -1,0 +1,1 @@
+{'p4_status': 'VALID', 'required_paths': ('final_order.order_id', 'mandate.mandate_id', 'request.agent_id', 'request.request_id'), 'uncovered_critical_paths': ('request.amount', 'request.payee', 'request.currency'), 'decision': 'ALLOW', 'executed': True, 'callback_calls': ['paid']}

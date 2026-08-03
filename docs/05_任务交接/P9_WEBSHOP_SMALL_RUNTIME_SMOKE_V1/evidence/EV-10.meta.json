@@ -1,0 +1,27 @@
+{
+  "label": "EV-10",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T02:52:13.507122+00:00",
+  "finished_at_utc": "2026-08-02T02:52:21.464092+00:00",
+  "command": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "='SilentlyContinue'; Invoke-WebRequest -UseBasicParsing -TimeoutSec 120 -Uri 'https://drive.google.com/uc?export=download&id=1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib' -OutFile 'D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1\\evidence\\approved_drive_probe.tmp'"
+  ],
+  "exit_code": 0,
+  "semantic_result": "BLOCKED_INVALID_AUTH_HTML",
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-10.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-10.stderr.log",
+  "stdout_sha256": "df8a8e740f69032d7b86133796c8fd2c7552dba9d3670a281735b83e4bdb056b",
+  "stderr_sha256": "5a50940ce5867e7c93dd8cd0bae7971af06d76f391358f6d21e95edd56f7b48a",
+  "command_argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "='SilentlyContinue'; Invoke-WebRequest -UseBasicParsing -TimeoutSec 120 -Uri 'https://drive.google.com/uc?export=download&id=1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib' -OutFile 'D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1\\evidence\\approved_drive_probe.tmp'"
+  ],
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 845,
+  "stderr_bytes": 514
+}

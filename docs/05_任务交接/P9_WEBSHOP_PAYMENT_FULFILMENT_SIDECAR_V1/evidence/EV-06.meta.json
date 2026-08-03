@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-06",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/evidence/EV-06_scope_audit.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/evidence/EV-06_scope_audit.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T14:05:16.661021+00:00",
+  "finished_at_utc": "2026-08-02T14:05:18.711064+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-06.stdout.log",
+  "stderr_path": "EV-06.stderr.log",
+  "stdout_bytes": 3934,
+  "stderr_bytes": 0,
+  "stdout_sha256": "1d4a3f1c92a9018c6fd43c576d2ea502eeaf96081a82d13ab0ddc0032a56b268",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

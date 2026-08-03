@@ -1,0 +1,23 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-06",
+  "command_argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.trusted_execution.test_governed_action",
+    "tests.test_webshop_runtime_gate",
+    "-v"
+  ],
+  "command_display": "python3 -m unittest tests.trusted_execution.test_governed_action tests.test_webshop_runtime_gate -v",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-03T07:58:22.415427+00:00",
+  "finished_at_utc": "2026-08-03T07:58:23.010799+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-06.stdout.log",
+  "stderr_path": "RV-EV-06.stderr.log",
+  "stdout_bytes": 0,
+  "stderr_bytes": 8522,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "ebf3ad71fbc6344334649d228508c31213d7aed88dadbee059427d83ab25553a"
+}

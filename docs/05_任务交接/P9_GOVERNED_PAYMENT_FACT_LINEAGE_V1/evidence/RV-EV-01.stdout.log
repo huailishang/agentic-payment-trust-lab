@@ -1,0 +1,155 @@
+{
+  "agent_declared_untrusted": {
+    "contains_untrusted_ancestry": true,
+    "direct_source_type": "AGENT_DECLARED",
+    "effective_source_types": [
+      "AGENT_DECLARED"
+    ],
+    "fact_path": "request.amount",
+    "fact_ref": "declared",
+    "transformation_ref": null,
+    "trust_upgrade_evidence_ref": null,
+    "upstream_fact_refs": [],
+    "value_digest": "40ac76903ce2d540c4585c4c0abea86a06f3996eb1cf5eac8d0672f57ff1ded3"
+  },
+  "clean_chain": [
+    {
+      "contains_untrusted_ancestry": false,
+      "direct_source_type": "USER_CONFIRMED",
+      "effective_source_types": [
+        "SYSTEM_POLICY",
+        "USER_CONFIRMED"
+      ],
+      "fact_path": "request.amount",
+      "fact_ref": "confirmed",
+      "transformation_ref": "rv-transform-v1",
+      "trust_upgrade_evidence_ref": null,
+      "upstream_fact_refs": [
+        "policy"
+      ],
+      "value_digest": "de22c8bcdd5896db2f51d44e17e1b93a89b105d6a78869ad445af2baad2a6b53"
+    },
+    {
+      "contains_untrusted_ancestry": false,
+      "direct_source_type": "SYSTEM_POLICY",
+      "effective_source_types": [
+        "SYSTEM_POLICY"
+      ],
+      "fact_path": "request.amount",
+      "fact_ref": "policy",
+      "transformation_ref": null,
+      "trust_upgrade_evidence_ref": null,
+      "upstream_fact_refs": [],
+      "value_digest": "aad079c2b23828e0b17d0814c1121278da69dae3a5119e6c4fd7743245733a0a"
+    }
+  ],
+  "cycle": {
+    "reason_codes": [
+      "fact_lineage_cycle_detected"
+    ],
+    "resolved_facts": [],
+    "status": "INVALID",
+    "unresolved_fact_refs": [
+      "cycle-a",
+      "cycle-b"
+    ]
+  },
+  "deterministic_order_independent": true,
+  "frozen_contract": true,
+  "invalid_exact_type_boundary": {
+    "exploding_proxy": {
+      "reason_codes": [
+        "fact_lineage_node_invalid_type"
+      ],
+      "resolved_facts": [],
+      "status": "INVALID",
+      "unresolved_fact_refs": []
+    },
+    "list": {
+      "reason_codes": [
+        "fact_lineage_node_invalid_type"
+      ],
+      "resolved_facts": [],
+      "status": "INVALID",
+      "unresolved_fact_refs": []
+    },
+    "mutable_lookalike": {
+      "reason_codes": [
+        "fact_lineage_node_invalid_type"
+      ],
+      "resolved_facts": [],
+      "status": "INVALID",
+      "unresolved_fact_refs": []
+    },
+    "serialized_dict": {
+      "reason_codes": [
+        "fact_lineage_node_invalid_type"
+      ],
+      "resolved_facts": [],
+      "status": "INVALID",
+      "unresolved_fact_refs": []
+    },
+    "string": {
+      "reason_codes": [
+        "fact_lineage_node_invalid_type"
+      ],
+      "resolved_facts": [],
+      "status": "INVALID",
+      "unresolved_fact_refs": []
+    },
+    "subclass": {
+      "reason_codes": [
+        "fact_lineage_node_invalid_type"
+      ],
+      "resolved_facts": [],
+      "status": "INVALID",
+      "unresolved_fact_refs": []
+    }
+  },
+  "missing_upstream": {
+    "reason_codes": [
+      "upstream_fact_missing:absent"
+    ],
+    "resolved_facts": [],
+    "status": "MISSING_EVIDENCE",
+    "unresolved_fact_refs": [
+      "absent"
+    ]
+  },
+  "multi_source": {
+    "contains_untrusted_ancestry": true,
+    "direct_source_type": "AGENT_INFERRED",
+    "effective_source_types": [
+      "AGENT_INFERRED",
+      "USER_CONFIRMED",
+      "WEB_UNTRUSTED"
+    ],
+    "fact_path": "request.amount",
+    "fact_ref": "derived",
+    "transformation_ref": "rv-transform-v1",
+    "trust_upgrade_evidence_ref": null,
+    "upstream_fact_refs": [
+      "user",
+      "web"
+    ],
+    "value_digest": "bbdcb0969fb7bf79e77e833231bd2eadf5b62125549c8049a08f0842f90c19b6"
+  },
+  "primitive_serialization": true,
+  "pure_resolver_static_audit": true,
+  "trust_upgrade": {
+    "contains_untrusted_ancestry": true,
+    "direct_source_type": "USER_CONFIRMED",
+    "effective_source_types": [
+      "USER_CONFIRMED",
+      "WEB_UNTRUSTED"
+    ],
+    "fact_path": "request.amount",
+    "fact_ref": "claimed",
+    "transformation_ref": "rv-transform-v1",
+    "trust_upgrade_evidence_ref": "confirmation-1",
+    "upstream_fact_refs": [
+      "web"
+    ],
+    "value_digest": "1b26c47e272e21913f7fc0c355101f5f495b5daaa429b44f06afd9977256887e"
+  }
+}

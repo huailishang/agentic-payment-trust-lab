@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-01",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "PYTHONPATH=src:. python3 docs/05_任务交接/P9_GOVERNED_PAYMENT_ACTION_CONTRACT_V1/evidence/RV-EV-01_action_object_type_boundary.py"
+  ],
+  "command_display": "bash -lc 'PYTHONPATH=src:. python3 docs/05_任务交接/P9_GOVERNED_PAYMENT_ACTION_CONTRACT_V1/evidence/RV-EV-01_action_object_type_boundary.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-03T02:33:16.345046+00:00",
+  "finished_at_utc": "2026-08-03T02:33:16.991070+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-01.stdout.log",
+  "stderr_path": "RV-EV-01.stderr.log",
+  "stdout_bytes": 948,
+  "stderr_bytes": 0,
+  "stdout_sha256": "90b16676b68678ce492669d34816e5ab154f7e9e27422a59d82fde22670914d9",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,35 @@
+{
+  "F-01": {
+    "duplicate_payment_blocked": false,
+    "effective_payment_is_null": false,
+    "lifecycle_is_null": false,
+    "ready": true,
+    "reason_codes": [
+      "payment:initial_status:unknown",
+      "lifecycle:payment_status:unknown",
+      "lifecycle:fulfillment_status:pending",
+      "lifecycle:task_status:unknown",
+      "lifecycle:remediation:required",
+      "lifecycle:payment_status_unknown",
+      "retry:not_allowed"
+    ],
+    "retry_allowed": false
+  },
+  "F-02": {
+    "duplicate_payment_blocked": false,
+    "query_recovery_is_null": true,
+    "ready": true,
+    "reason_codes": [
+      "payment:initial_status:unknown",
+      "lifecycle:payment_status:unknown",
+      "lifecycle:fulfillment_status:pending",
+      "lifecycle:task_status:unknown",
+      "lifecycle:remediation:required",
+      "lifecycle:payment_status_unknown",
+      "retry:not_allowed"
+    ],
+    "retry_allowed": false
+  },
+  "phase": "before_repair",
+  "reconstructed_parent_sha256": "a7950308864d71a25b36c43ff11aed8cfeef1f0fe4d373ab305849b770f95c3b"
+}

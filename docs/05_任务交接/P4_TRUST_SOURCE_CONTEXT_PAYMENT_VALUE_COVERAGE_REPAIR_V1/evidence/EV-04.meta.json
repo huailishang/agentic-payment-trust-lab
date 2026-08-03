@@ -1,0 +1,13 @@
+﻿{
+    "stdout_path":  "EV-04.stdout.log",
+    "command_display":  "python -m unittest discover -s tests -v",
+    "stdout_sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "label":  "EV-04",
+    "working_directory":  "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+    "stderr_path":  "EV-04.stderr.log",
+    "stderr_bytes":  38011,
+    "schema":  "evaluator-executor-evidence/v1",
+    "exit_code":  0,
+    "stdout_bytes":  0,
+    "stderr_sha256":  "4767d023a90b5a336d52c2d7a7ccda504c54e06ab4fdd31f5d66523adac52407"
+}

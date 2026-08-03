@@ -1,0 +1,30 @@
+PURE_LOOKALIKE
+status= INVALID
+action_id= None
+reasons= ('governed_action_invalid_type',)
+checked= (None, None, None, None)
+exception=NONE
+PURE_DICT
+status= INVALID
+action_id= None
+reasons= ('governed_action_invalid_type',)
+checked= (None, None, None, None)
+exception=NONE
+GATE_LOOKALIKE
+decision= DENY
+checkout_executed= False
+callback_count= 0
+calls= 0
+runtime_gate_record= None
+fact_status= INVALID
+reasons= ('action:governed_action_invalid_type',)
+exception=NONE
+GATE_DICT
+decision= DENY
+checkout_executed= False
+callback_count= 0
+calls= 0
+runtime_gate_record= None
+fact_status= INVALID
+reasons= ('action:governed_action_invalid_type',)
+exception=NONE

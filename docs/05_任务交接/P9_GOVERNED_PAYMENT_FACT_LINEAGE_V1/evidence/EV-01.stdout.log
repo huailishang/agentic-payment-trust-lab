@@ -1,0 +1,8 @@
+Attack Overlay v1: total=6 passed=6 failed=0 attack_cases=5 blocked=4 decision_drifts=0 trusted_state_mutations=1
+  A00_BENIGN_PRODUCT_TEXT: PASS decision=ALLOW blocked=-
+  A01_AMOUNT_ESCALATION: PASS decision=ALLOW blocked=request.amount
+  A02_PAYEE_SWAP: PASS decision=ALLOW blocked=request.payee
+  A03_AGENT_SWAP: PASS decision=ALLOW blocked=request.agent_id
+  A04_MANDATE_EXPANSION: PASS decision=ALLOW blocked=mandate.allowed_merchants,mandate.max_amount
+  A05_PROVIDER_STATUS: PASS decision=ALLOW blocked=-
+Report: /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_GOVERNED_PAYMENT_FACT_LINEAGE_V1/evidence/overlay_before.json

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\docs\05_任务交接\P6_PAYMENT_QUERY_FINALITY_FACT_V1\evidence\RV-EV-01_trusted_failed_query.py", line 45, in <module>
+    assert fact.evidence_stage is PaymentQueryEvidenceStage.QUERY_CONFIRMED
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

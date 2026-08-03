@@ -22,7 +22,8 @@ from .trusted_execution import (
     VerificationResult,
     VerificationStatus,
     check_idempotency,
-    validate_status_observation,
+    FollowUpAction,
+    verify_original_transaction,
     verify_payment_execution_binding,
 )
 
@@ -75,13 +76,8 @@ def assess_payment_recovery(
                 evidence=tuple(evidence),
             )
 
-    observation_fact = validate_status_observation(
-        expected_execution_id=payment.payment_id,
-        observed_execution_id=observation.payment_id,
-        expected_object_id=payment.order_id,
-        observed_object_id=observation.order_id,
-        expected_provider_ref=payment.provider_ref,
-        observed_provider_ref=observation.provider_ref,
+    observation_fact = verify_original_transaction(
+        FollowUpAction.STATUS_QUERY, payment, observation
     )
     evidence.extend(_observation_fact_evidence(observation_fact))
     binding_issues = _observation_binding_issues(observation_fact)
@@ -272,24 +268,36 @@ def _observation_binding_issues(
     fact: VerificationResult,
 ) -> list[ValidationIssue]:
     issue_map = {
-        "execution_reference_mismatch": ValidationIssue(
+        "original_transaction_payment_ref_mismatch": ValidationIssue(
             "payment_status_observation_payment_mismatch",
             "the status observation does not reference the original payment",
         ),
-        "object_reference_mismatch": ValidationIssue(
+        "original_transaction_order_ref_mismatch": ValidationIssue(
             "payment_status_observation_order_mismatch",
             "the status observation does not reference the original order",
         ),
-        "provider_reference_mismatch": ValidationIssue(
+        "original_transaction_provider_ref_mismatch": ValidationIssue(
             "payment_status_observation_provider_mismatch",
             "the status observation references a different provider payment reference",
         ),
-        "required_execution_reference_missing": ValidationIssue(
+        "original_transaction_provider_ref_missing": ValidationIssue(
+            "payment_status_observation_provider_missing",
+            "the status observation is missing the original provider payment reference",
+        ),
+        "original_transaction_required_reference_missing": ValidationIssue(
             "payment_status_observation_reference_missing",
             "the status observation is missing a required payment or order reference",
         ),
     }
-    return [issue_map[reason] for reason in fact.reason_codes if reason in issue_map]
+    issues = [issue_map[reason] for reason in fact.reason_codes if reason in issue_map]
+    if fact.status is not VerificationStatus.VALID and not issues:
+        issues.append(
+            ValidationIssue(
+                "payment_status_observation_binding_invalid",
+                "the status observation cannot be bound to the original transaction",
+            )
+        )
+    return issues
 
 
 def _observation_fact_evidence(fact: VerificationResult) -> tuple[EvidenceRef, ...]:

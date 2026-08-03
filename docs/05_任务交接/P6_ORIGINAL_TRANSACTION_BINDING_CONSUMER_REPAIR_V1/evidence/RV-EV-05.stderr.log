@@ -1,0 +1,12 @@
+warning: in the working copy of 'CURRENT.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/agentic_payment_experiment/payment_execution.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/agentic_payment_experiment/payment_recovery.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/agentic_payment_experiment/remediation.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/agentic_payment_experiment/runner.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/agentic_payment_experiment/trusted_execution/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/agentic_payment_experiment/trusted_execution/context_policy.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_payment_recovery.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_remediation.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_runner.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/trusted_execution/test_context_policy.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/trusted_execution/test_payment_binding.py', LF will be replaced by CRLF the next time Git touches it

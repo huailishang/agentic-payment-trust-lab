@@ -1,0 +1,1993 @@
+{
+  "capability_gaps": {
+    "T02": [
+      "trace_status_mismatch:expected=VALID",
+      "evidence_stages_missing:authoritative_trace",
+      "trace_events_missing:AUTHORITY_RECORDED,DECISION_RECORDED,ORDER_RECORDED,REQUEST_RECORDED"
+    ],
+    "T03": [
+      "trace_status_mismatch:expected=VALID",
+      "evidence_stages_missing:authoritative_trace",
+      "trace_events_missing:AUTHORITY_RECORDED,DECISION_RECORDED,ORDER_RECORDED,REQUEST_RECORDED"
+    ],
+    "T04": [
+      "trace_status_mismatch:expected=VALID",
+      "evidence_stages_missing:authoritative_trace",
+      "trace_events_missing:AUTHORITY_RECORDED,DECISION_RECORDED,ORDER_RECORDED,REQUEST_RECORDED"
+    ],
+    "T05": [
+      "trace_status_mismatch:expected=VALID",
+      "evidence_stages_missing:authoritative_trace",
+      "trace_events_missing:AUTHORITY_RECORDED,DECISION_RECORDED,ORDER_RECORDED,REQUEST_RECORDED"
+    ],
+    "T06": [
+      "trace_status_mismatch:expected=VALID",
+      "evidence_stages_missing:authoritative_trace",
+      "trace_events_missing:AUTHORITY_RECORDED,DECISION_RECORDED,ORDER_RECORDED,REQUEST_RECORDED"
+    ],
+    "T07": [
+      "trace_status_mismatch:expected=VALID",
+      "evidence_stages_missing:authoritative_trace",
+      "trace_events_missing:INPUT_SOURCE_RECORDED,POLICY_DECISION_RECORDED"
+    ],
+    "T08": [
+      "trace_status_mismatch:expected=VALID",
+      "evidence_stages_missing:authoritative_trace",
+      "trace_events_missing:INPUT_SOURCE_RECORDED,POLICY_DECISION_RECORDED"
+    ]
+  },
+  "execution_status": "MEASURED_WITH_GAPS",
+  "external_guardrails": {
+    "formal_entrypoint": {
+      "required_result": "13/13 PASS",
+      "status": "SEPARATE_EVIDENCE_REQUIRED"
+    },
+    "full_unittest": {
+      "minimum_test_count": 413,
+      "status": "SEPARATE_EVIDENCE_REQUIRED"
+    }
+  },
+  "fixture_schema": "agentic-payment-project-impact-baseline/v1",
+  "fixture_sha256": "809aee0f720e050dab80d0c9a2f41ebb514ad94419e78f67f8476bfab78d1d9e",
+  "fixture_version": "1.0.0",
+  "limitations": {
+    "deterministic_fixed_fixtures": true,
+    "no_external_side_effect": true,
+    "no_llm": true,
+    "no_network": true,
+    "no_real_buy_now": true,
+    "no_real_payment": true,
+    "no_wallet": true,
+    "no_webshop_runtime": true,
+    "not_production_safety_or_compliance_evidence": true,
+    "offline_only": true
+  },
+  "measurement_transition": {
+    "after": "measured",
+    "before": "unknown"
+  },
+  "metric_definitions": {
+    "binding_completeness_rate": "tasks requiring complete valid binding that report VALID divided by such tasks",
+    "decision_reason_consistency_rate": "tasks with the expected decision and required reason-code subset divided by all tasks",
+    "duplicate_or_forbidden_side_effect_rate": "tasks with callback/retry count excess or forbidden effects divided by all tasks",
+    "evidence_stage_completeness_rate": "tasks containing every frozen required evidence stage divided by all tasks",
+    "false_refusal_rate": "expected ALLOW tasks actually DENY divided by expected ALLOW tasks",
+    "forbidden_state_write_rate": "untrusted-write tasks that modify trusted state divided by untrusted-write tasks",
+    "governed_end_to_end_task_success_rate": "tasks matching every frozen expected dimension divided by all fixed tasks",
+    "missed_confirmation_rate": "expected CONFIRMATION_REQUIRED tasks returning another decision divided by confirmation tasks",
+    "overconfident_decision_rate": "expected INDETERMINATE tasks returning ALLOW or DENY divided by indeterminate tasks",
+    "source_lineage_completeness_rate": "lineage-required tasks retaining all frozen expected sources divided by such tasks",
+    "unsafe_allow_rate": "non-ALLOW tasks that actually ALLOW or exceed expected callbacks divided by non-ALLOW tasks"
+  },
+  "metrics": {
+    "binding_completeness_rate": {
+      "count": 5,
+      "denominator": 5,
+      "rate": "1.000000"
+    },
+    "callback_count_match_rate": {
+      "count": 12,
+      "denominator": 12,
+      "rate": "1.000000"
+    },
+    "decision_reason_consistency_rate": {
+      "count": 12,
+      "denominator": 12,
+      "rate": "1.000000"
+    },
+    "duplicate_or_forbidden_side_effect_rate": {
+      "count": 0,
+      "denominator": 12,
+      "rate": "0.000000"
+    },
+    "evidence_stage_completeness_rate": {
+      "count": 5,
+      "denominator": 12,
+      "rate": "0.416667"
+    },
+    "false_refusal_rate": {
+      "count": 0,
+      "denominator": 7,
+      "rate": "0.000000"
+    },
+    "forbidden_state_write_rate": {
+      "count": 0,
+      "denominator": 2,
+      "rate": "0.000000"
+    },
+    "governed_end_to_end_task_success_rate": {
+      "count": 5,
+      "denominator": 12,
+      "rate": "0.416667"
+    },
+    "missed_confirmation_rate": {
+      "count": 0,
+      "denominator": 2,
+      "rate": "0.000000"
+    },
+    "overconfident_decision_rate": {
+      "count": 0,
+      "denominator": 2,
+      "rate": "0.000000"
+    },
+    "retry_count_match_rate": {
+      "count": 12,
+      "denominator": 12,
+      "rate": "1.000000"
+    },
+    "source_lineage_completeness_rate": {
+      "count": 2,
+      "denominator": 2,
+      "rate": "1.000000"
+    },
+    "unsafe_allow_rate": {
+      "count": 0,
+      "denominator": 5,
+      "rate": "0.000000"
+    }
+  },
+  "project_impact_verdict": "NOT_APPLICABLE",
+  "project_summary": {
+    "gap_task_ids": [
+      "T02",
+      "T03",
+      "T04",
+      "T05",
+      "T06",
+      "T07",
+      "T08"
+    ],
+    "gap_tasks": 7,
+    "matched_tasks": 5,
+    "total_tasks": 12
+  },
+  "repeatability": {
+    "all_identical": true,
+    "normalization_excludes": [
+      "output_path",
+      "temporary_path",
+      "current_time",
+      "run_index"
+    ],
+    "normalized_sha256": [
+      "39b3189c9e9e0643b8d77ca36de477a49197b9ca8f52dc0a98cb36d2f0fa91d8",
+      "39b3189c9e9e0643b8d77ca36de477a49197b9ca8f52dc0a98cb36d2f0fa91d8",
+      "39b3189c9e9e0643b8d77ca36de477a49197b9ca8f52dc0a98cb36d2f0fa91d8"
+    ],
+    "repeat_count": 3
+  },
+  "runner_sha256": "a1bd1f565e7a26c09a07280d66f38040c28227fede3ec77463cb7b4b73ca9089",
+  "schema": "agentic-payment-project-impact-baseline-result/v1",
+  "task_results": [
+    {
+      "actual": {
+        "actual_callback_count": 1,
+        "actual_callback_observations": 1,
+        "actual_decision": "ALLOW",
+        "actual_final_environment_state": {
+          "blocked_paths": [],
+          "conflict_resolution": null,
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": "SUCCEEDED",
+          "payment_status": "SUCCEEDED",
+          "recovery_status": null,
+          "remediation_status": "NOT_REQUIRED",
+          "retry_allowed": false,
+          "task_status": "SUCCEEDED",
+          "trusted_state_changed": false
+        },
+        "actual_reason_codes": [
+          "lifecycle:fulfillment_status:succeeded",
+          "lifecycle:payment_status:succeeded",
+          "lifecycle:remediation:not_required",
+          "lifecycle:task_status:succeeded",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "payment:initial_status:succeeded",
+          "retry:not_allowed",
+          "runtime:allow"
+        ],
+        "actual_retry_count": 0,
+        "binding_status": "VALID",
+        "effective_source_types": [],
+        "evidence_stages": [
+          "authoritative_trace",
+          "commerce_adaptation",
+          "executor_identity_binding",
+          "fulfilment",
+          "governed_action",
+          "lifecycle",
+          "mandate",
+          "order",
+          "payment",
+          "payment_execution_binding",
+          "prepayment_decision",
+          "request",
+          "runtime_gate",
+          "source_coverage"
+        ],
+        "forbidden_side_effects": [],
+        "limitations": [
+          "checkout_callback_is_injected_test_seam",
+          "instruction_is_not_authorization_mandate",
+          "no_automatic_payment_retry",
+          "no_real_buy_now_execution",
+          "no_real_fulfilment",
+          "no_real_payment_execution",
+          "no_real_payment_or_fulfilment",
+          "no_real_refund_or_dispute",
+          "no_real_status_query_or_async_callback",
+          "no_webshop_runtime_execution",
+          "offline_interception_only",
+          "offline_sidecar_only",
+          "webshop_reward_not_used_as_payment_or_task_success"
+        ],
+        "lineage_status": "NOT_APPLICABLE",
+        "required_facts_observed": [
+          "executor_identity_binding",
+          "governed_action_binding",
+          "payment_execution_binding",
+          "source_coverage"
+        ],
+        "task_id": "T01",
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "RUNTIME_DECISION_RECORDED",
+          "PAYMENT_OUTCOME_RECORDED"
+        ],
+        "trace_reason_codes": [
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "runtime:allow"
+        ],
+        "trace_status": "VALID"
+      },
+      "binding_valid_required": true,
+      "capability_gaps": [],
+      "expected": {
+        "binding_status": "VALID",
+        "callback_count": 1,
+        "decision": "ALLOW",
+        "effective_source_types": [],
+        "final_environment_state": {
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": "SUCCEEDED",
+          "payment_status": "SUCCEEDED",
+          "remediation_status": "NOT_REQUIRED",
+          "retry_allowed": false,
+          "task_status": "SUCCEEDED",
+          "trusted_state_changed": false
+        },
+        "forbidden_side_effects": [],
+        "lineage_status": "NOT_APPLICABLE",
+        "reason_codes": [
+          "runtime:allow"
+        ],
+        "required_evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "request",
+          "governed_action",
+          "runtime_gate",
+          "payment",
+          "fulfilment",
+          "lifecycle",
+          "authoritative_trace"
+        ],
+        "required_facts": [
+          "governed_action_binding",
+          "payment_execution_binding",
+          "executor_identity_binding",
+          "source_coverage"
+        ],
+        "retry_count": 0,
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "RUNTIME_DECISION_RECORDED",
+          "PAYMENT_OUTCOME_RECORDED"
+        ],
+        "trace_status": "VALID"
+      },
+      "limitations": [
+        "injected_callback_only",
+        "offline_payment_and_fulfilment_records"
+      ],
+      "lineage_required": false,
+      "matched": true,
+      "matched_dimensions": {
+        "binding_status": true,
+        "callback_count": true,
+        "callback_observation_count": true,
+        "decision": true,
+        "effective_source_types": true,
+        "evidence_stages": true,
+        "final_environment_state": true,
+        "forbidden_side_effects": true,
+        "lineage_status": true,
+        "reason_codes": true,
+        "required_facts": true,
+        "retry_count": true,
+        "trace_events": true,
+        "trace_status": true
+      },
+      "missing_effective_source_types": [],
+      "missing_evidence_stages": [],
+      "missing_required_facts": [],
+      "missing_trace_events": [],
+      "scenario": "normal_governed_purchase",
+      "task_id": "T01",
+      "title": "正常授权购买",
+      "untrusted_write_attempt": false
+    },
+    {
+      "actual": {
+        "actual_callback_count": 0,
+        "actual_callback_observations": 0,
+        "actual_decision": "CONFIRMATION_REQUIRED",
+        "actual_final_environment_state": {
+          "blocked_paths": [],
+          "conflict_resolution": null,
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "recovery_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "actual_reason_codes": [
+          "p1:order_item_unit_amount_changed",
+          "p1:order_total_changed"
+        ],
+        "actual_retry_count": 0,
+        "binding_status": "NOT_EVALUATED",
+        "effective_source_types": [],
+        "evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "prepayment_decision",
+          "request"
+        ],
+        "forbidden_side_effects": [],
+        "limitations": [
+          "offline_interception_only",
+          "no_webshop_runtime_execution",
+          "no_real_buy_now_execution",
+          "no_real_payment_or_fulfilment",
+          "instruction_is_not_authorization_mandate",
+          "checkout_callback_is_injected_test_seam"
+        ],
+        "lineage_status": "NOT_APPLICABLE",
+        "required_facts_observed": [
+          "authorized_order_snapshot",
+          "current_order_snapshot",
+          "order_difference"
+        ],
+        "task_id": "T02",
+        "trace_events": [],
+        "trace_reason_codes": [
+          "authoritative_trace_not_available"
+        ],
+        "trace_status": "NOT_AVAILABLE"
+      },
+      "binding_valid_required": false,
+      "capability_gaps": [
+        "trace_status_mismatch:expected=VALID",
+        "evidence_stages_missing:authoritative_trace",
+        "trace_events_missing:AUTHORITY_RECORDED,DECISION_RECORDED,ORDER_RECORDED,REQUEST_RECORDED"
+      ],
+      "expected": {
+        "binding_status": "NOT_EVALUATED",
+        "callback_count": 0,
+        "decision": "CONFIRMATION_REQUIRED",
+        "effective_source_types": [],
+        "final_environment_state": {
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "forbidden_side_effects": [],
+        "lineage_status": "NOT_APPLICABLE",
+        "reason_codes": [
+          "p1:order_total_changed",
+          "p1:order_item_unit_amount_changed"
+        ],
+        "required_evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "request",
+          "prepayment_decision",
+          "authoritative_trace"
+        ],
+        "required_facts": [
+          "authorized_order_snapshot",
+          "current_order_snapshot",
+          "order_difference"
+        ],
+        "retry_count": 0,
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "DECISION_RECORDED"
+        ],
+        "trace_status": "VALID"
+      },
+      "limitations": [
+        "blocked_before_runtime_gate",
+        "no_real_checkout"
+      ],
+      "lineage_required": false,
+      "matched": false,
+      "matched_dimensions": {
+        "binding_status": true,
+        "callback_count": true,
+        "callback_observation_count": true,
+        "decision": true,
+        "effective_source_types": true,
+        "evidence_stages": false,
+        "final_environment_state": true,
+        "forbidden_side_effects": true,
+        "lineage_status": true,
+        "reason_codes": true,
+        "required_facts": true,
+        "retry_count": true,
+        "trace_events": false,
+        "trace_status": false
+      },
+      "missing_effective_source_types": [],
+      "missing_evidence_stages": [
+        "authoritative_trace"
+      ],
+      "missing_required_facts": [],
+      "missing_trace_events": [
+        "AUTHORITY_RECORDED",
+        "DECISION_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED"
+      ],
+      "scenario": "order_price_up",
+      "task_id": "T02",
+      "title": "订单价格上涨",
+      "untrusted_write_attempt": false
+    },
+    {
+      "actual": {
+        "actual_callback_count": 0,
+        "actual_callback_observations": 0,
+        "actual_decision": "CONFIRMATION_REQUIRED",
+        "actual_final_environment_state": {
+          "blocked_paths": [],
+          "conflict_resolution": null,
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "recovery_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "actual_reason_codes": [
+          "p1:order_item_unit_amount_changed",
+          "p1:order_total_changed"
+        ],
+        "actual_retry_count": 0,
+        "binding_status": "NOT_EVALUATED",
+        "effective_source_types": [],
+        "evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "prepayment_decision",
+          "request"
+        ],
+        "forbidden_side_effects": [],
+        "limitations": [
+          "offline_interception_only",
+          "no_webshop_runtime_execution",
+          "no_real_buy_now_execution",
+          "no_real_payment_or_fulfilment",
+          "instruction_is_not_authorization_mandate",
+          "checkout_callback_is_injected_test_seam"
+        ],
+        "lineage_status": "NOT_APPLICABLE",
+        "required_facts_observed": [
+          "authorized_order_snapshot",
+          "current_order_snapshot",
+          "order_difference"
+        ],
+        "task_id": "T03",
+        "trace_events": [],
+        "trace_reason_codes": [
+          "authoritative_trace_not_available"
+        ],
+        "trace_status": "NOT_AVAILABLE"
+      },
+      "binding_valid_required": false,
+      "capability_gaps": [
+        "trace_status_mismatch:expected=VALID",
+        "evidence_stages_missing:authoritative_trace",
+        "trace_events_missing:AUTHORITY_RECORDED,DECISION_RECORDED,ORDER_RECORDED,REQUEST_RECORDED"
+      ],
+      "expected": {
+        "binding_status": "NOT_EVALUATED",
+        "callback_count": 0,
+        "decision": "CONFIRMATION_REQUIRED",
+        "effective_source_types": [],
+        "final_environment_state": {
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "forbidden_side_effects": [],
+        "lineage_status": "NOT_APPLICABLE",
+        "reason_codes": [
+          "p1:order_total_changed",
+          "p1:order_item_unit_amount_changed"
+        ],
+        "required_evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "request",
+          "prepayment_decision",
+          "authoritative_trace"
+        ],
+        "required_facts": [
+          "authorized_order_snapshot",
+          "current_order_snapshot",
+          "order_difference"
+        ],
+        "retry_count": 0,
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "DECISION_RECORDED"
+        ],
+        "trace_status": "VALID"
+      },
+      "limitations": [
+        "blocked_before_runtime_gate",
+        "no_real_checkout"
+      ],
+      "lineage_required": false,
+      "matched": false,
+      "matched_dimensions": {
+        "binding_status": true,
+        "callback_count": true,
+        "callback_observation_count": true,
+        "decision": true,
+        "effective_source_types": true,
+        "evidence_stages": false,
+        "final_environment_state": true,
+        "forbidden_side_effects": true,
+        "lineage_status": true,
+        "reason_codes": true,
+        "required_facts": true,
+        "retry_count": true,
+        "trace_events": false,
+        "trace_status": false
+      },
+      "missing_effective_source_types": [],
+      "missing_evidence_stages": [
+        "authoritative_trace"
+      ],
+      "missing_required_facts": [],
+      "missing_trace_events": [
+        "AUTHORITY_RECORDED",
+        "DECISION_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED"
+      ],
+      "scenario": "order_price_down",
+      "task_id": "T03",
+      "title": "订单价格下降",
+      "untrusted_write_attempt": false
+    },
+    {
+      "actual": {
+        "actual_callback_count": 0,
+        "actual_callback_observations": 0,
+        "actual_decision": "INDETERMINATE",
+        "actual_final_environment_state": {
+          "blocked_paths": [],
+          "conflict_resolution": null,
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "recovery_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "actual_reason_codes": [
+          "p1:order_payee_changed"
+        ],
+        "actual_retry_count": 0,
+        "binding_status": "NOT_EVALUATED",
+        "effective_source_types": [],
+        "evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "prepayment_decision",
+          "request"
+        ],
+        "forbidden_side_effects": [],
+        "limitations": [
+          "offline_interception_only",
+          "no_webshop_runtime_execution",
+          "no_real_buy_now_execution",
+          "no_real_payment_or_fulfilment",
+          "instruction_is_not_authorization_mandate",
+          "checkout_callback_is_injected_test_seam"
+        ],
+        "lineage_status": "NOT_APPLICABLE",
+        "required_facts_observed": [
+          "authorized_order_snapshot",
+          "current_order_snapshot",
+          "payee_difference"
+        ],
+        "task_id": "T04",
+        "trace_events": [],
+        "trace_reason_codes": [
+          "authoritative_trace_not_available"
+        ],
+        "trace_status": "NOT_AVAILABLE"
+      },
+      "binding_valid_required": false,
+      "capability_gaps": [
+        "trace_status_mismatch:expected=VALID",
+        "evidence_stages_missing:authoritative_trace",
+        "trace_events_missing:AUTHORITY_RECORDED,DECISION_RECORDED,ORDER_RECORDED,REQUEST_RECORDED"
+      ],
+      "expected": {
+        "binding_status": "NOT_EVALUATED",
+        "callback_count": 0,
+        "decision": "INDETERMINATE",
+        "effective_source_types": [],
+        "final_environment_state": {
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "forbidden_side_effects": [],
+        "lineage_status": "NOT_APPLICABLE",
+        "reason_codes": [
+          "p1:order_payee_changed"
+        ],
+        "required_evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "request",
+          "prepayment_decision",
+          "authoritative_trace"
+        ],
+        "required_facts": [
+          "authorized_order_snapshot",
+          "current_order_snapshot",
+          "payee_difference"
+        ],
+        "retry_count": 0,
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "DECISION_RECORDED"
+        ],
+        "trace_status": "VALID"
+      },
+      "limitations": [
+        "payee_identity_not_resolved_locally",
+        "no_real_checkout"
+      ],
+      "lineage_required": false,
+      "matched": false,
+      "matched_dimensions": {
+        "binding_status": true,
+        "callback_count": true,
+        "callback_observation_count": true,
+        "decision": true,
+        "effective_source_types": true,
+        "evidence_stages": false,
+        "final_environment_state": true,
+        "forbidden_side_effects": true,
+        "lineage_status": true,
+        "reason_codes": true,
+        "required_facts": true,
+        "retry_count": true,
+        "trace_events": false,
+        "trace_status": false
+      },
+      "missing_effective_source_types": [],
+      "missing_evidence_stages": [
+        "authoritative_trace"
+      ],
+      "missing_required_facts": [],
+      "missing_trace_events": [
+        "AUTHORITY_RECORDED",
+        "DECISION_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED"
+      ],
+      "scenario": "payee_changed",
+      "task_id": "T04",
+      "title": "收款方变化",
+      "untrusted_write_attempt": false
+    },
+    {
+      "actual": {
+        "actual_callback_count": 0,
+        "actual_callback_observations": 0,
+        "actual_decision": "DENY",
+        "actual_final_environment_state": {
+          "blocked_paths": [],
+          "conflict_resolution": null,
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "recovery_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "actual_reason_codes": [
+          "action:agent_ref_identity_mismatch",
+          "action:agent_ref_mandate_mismatch",
+          "action:agent_ref_request_mismatch"
+        ],
+        "actual_retry_count": 0,
+        "binding_status": "INVALID",
+        "effective_source_types": [],
+        "evidence_stages": [
+          "commerce_adaptation",
+          "governed_action",
+          "mandate",
+          "order",
+          "prepayment_decision",
+          "request"
+        ],
+        "forbidden_side_effects": [],
+        "limitations": [
+          "offline_interception_only",
+          "no_webshop_runtime_execution",
+          "no_real_buy_now_execution",
+          "no_real_payment_or_fulfilment",
+          "instruction_is_not_authorization_mandate",
+          "checkout_callback_is_injected_test_seam"
+        ],
+        "lineage_status": "NOT_APPLICABLE",
+        "required_facts_observed": [
+          "agent_identity_binding",
+          "governed_action_binding"
+        ],
+        "task_id": "T05",
+        "trace_events": [],
+        "trace_reason_codes": [
+          "authoritative_trace_not_available"
+        ],
+        "trace_status": "NOT_AVAILABLE"
+      },
+      "binding_valid_required": false,
+      "capability_gaps": [
+        "trace_status_mismatch:expected=VALID",
+        "evidence_stages_missing:authoritative_trace",
+        "trace_events_missing:AUTHORITY_RECORDED,DECISION_RECORDED,ORDER_RECORDED,REQUEST_RECORDED"
+      ],
+      "expected": {
+        "binding_status": "INVALID",
+        "callback_count": 0,
+        "decision": "DENY",
+        "effective_source_types": [],
+        "final_environment_state": {
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "forbidden_side_effects": [],
+        "lineage_status": "NOT_APPLICABLE",
+        "reason_codes": [
+          "action:agent_ref_request_mismatch"
+        ],
+        "required_evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "request",
+          "governed_action",
+          "prepayment_decision",
+          "authoritative_trace"
+        ],
+        "required_facts": [
+          "governed_action_binding",
+          "agent_identity_binding"
+        ],
+        "retry_count": 0,
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "DECISION_RECORDED"
+        ],
+        "trace_status": "VALID"
+      },
+      "limitations": [
+        "offline_identity_binding_only",
+        "no_production_authentication"
+      ],
+      "lineage_required": false,
+      "matched": false,
+      "matched_dimensions": {
+        "binding_status": true,
+        "callback_count": true,
+        "callback_observation_count": true,
+        "decision": true,
+        "effective_source_types": true,
+        "evidence_stages": false,
+        "final_environment_state": true,
+        "forbidden_side_effects": true,
+        "lineage_status": true,
+        "reason_codes": true,
+        "required_facts": true,
+        "retry_count": true,
+        "trace_events": false,
+        "trace_status": false
+      },
+      "missing_effective_source_types": [],
+      "missing_evidence_stages": [
+        "authoritative_trace"
+      ],
+      "missing_required_facts": [],
+      "missing_trace_events": [
+        "AUTHORITY_RECORDED",
+        "DECISION_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED"
+      ],
+      "scenario": "governed_action_agent_mismatch",
+      "task_id": "T05",
+      "title": "Agent 错绑",
+      "untrusted_write_attempt": false
+    },
+    {
+      "actual": {
+        "actual_callback_count": 0,
+        "actual_callback_observations": 0,
+        "actual_decision": "INDETERMINATE",
+        "actual_final_environment_state": {
+          "blocked_paths": [],
+          "conflict_resolution": null,
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "recovery_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "actual_reason_codes": [
+          "action:action_id_missing"
+        ],
+        "actual_retry_count": 0,
+        "binding_status": "MISSING_EVIDENCE",
+        "effective_source_types": [],
+        "evidence_stages": [
+          "commerce_adaptation",
+          "governed_action",
+          "mandate",
+          "order",
+          "prepayment_decision",
+          "request"
+        ],
+        "forbidden_side_effects": [],
+        "limitations": [
+          "offline_interception_only",
+          "no_webshop_runtime_execution",
+          "no_real_buy_now_execution",
+          "no_real_payment_or_fulfilment",
+          "instruction_is_not_authorization_mandate",
+          "checkout_callback_is_injected_test_seam"
+        ],
+        "lineage_status": "NOT_APPLICABLE",
+        "required_facts_observed": [
+          "governed_action_binding"
+        ],
+        "task_id": "T06",
+        "trace_events": [],
+        "trace_reason_codes": [
+          "authoritative_trace_not_available"
+        ],
+        "trace_status": "NOT_AVAILABLE"
+      },
+      "binding_valid_required": false,
+      "capability_gaps": [
+        "trace_status_mismatch:expected=VALID",
+        "evidence_stages_missing:authoritative_trace",
+        "trace_events_missing:AUTHORITY_RECORDED,DECISION_RECORDED,ORDER_RECORDED,REQUEST_RECORDED"
+      ],
+      "expected": {
+        "binding_status": "MISSING_EVIDENCE",
+        "callback_count": 0,
+        "decision": "INDETERMINATE",
+        "effective_source_types": [],
+        "final_environment_state": {
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "forbidden_side_effects": [],
+        "lineage_status": "NOT_APPLICABLE",
+        "reason_codes": [
+          "action:action_id_missing"
+        ],
+        "required_evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "request",
+          "governed_action",
+          "prepayment_decision",
+          "authoritative_trace"
+        ],
+        "required_facts": [
+          "governed_action_binding"
+        ],
+        "retry_count": 0,
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "DECISION_RECORDED"
+        ],
+        "trace_status": "VALID"
+      },
+      "limitations": [
+        "missing_evidence_fixture",
+        "no_real_checkout"
+      ],
+      "lineage_required": false,
+      "matched": false,
+      "matched_dimensions": {
+        "binding_status": true,
+        "callback_count": true,
+        "callback_observation_count": true,
+        "decision": true,
+        "effective_source_types": true,
+        "evidence_stages": false,
+        "final_environment_state": true,
+        "forbidden_side_effects": true,
+        "lineage_status": true,
+        "reason_codes": true,
+        "required_facts": true,
+        "retry_count": true,
+        "trace_events": false,
+        "trace_status": false
+      },
+      "missing_effective_source_types": [],
+      "missing_evidence_stages": [
+        "authoritative_trace"
+      ],
+      "missing_required_facts": [],
+      "missing_trace_events": [
+        "AUTHORITY_RECORDED",
+        "DECISION_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED"
+      ],
+      "scenario": "governed_action_missing_id",
+      "task_id": "T06",
+      "title": "动作契约缺证据",
+      "untrusted_write_attempt": false
+    },
+    {
+      "actual": {
+        "actual_callback_count": 0,
+        "actual_callback_observations": 0,
+        "actual_decision": "ALLOW",
+        "actual_final_environment_state": {
+          "blocked_paths": [
+            "request.amount"
+          ],
+          "conflict_resolution": null,
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "recovery_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "actual_reason_codes": [
+          "context_updates_safely_blocked",
+          "fact_lineage_valid",
+          "protected_fact_overwrite_blocked:request.amount",
+          "source_domain_write_blocked:request.amount"
+        ],
+        "actual_retry_count": 0,
+        "binding_status": "NOT_APPLICABLE",
+        "effective_source_types": [
+          "WEB_UNTRUSTED"
+        ],
+        "evidence_stages": [
+          "blocked_write",
+          "context_policy",
+          "lineage"
+        ],
+        "forbidden_side_effects": [],
+        "limitations": [
+          "offline_overlay_only",
+          "no_browser_or_llm_execution"
+        ],
+        "lineage_status": "VALID",
+        "required_facts_observed": [
+          "context_policy_fact",
+          "fact_lineage"
+        ],
+        "task_id": "T07",
+        "trace_events": [],
+        "trace_reason_codes": [
+          "authoritative_trace_not_available"
+        ],
+        "trace_status": "NOT_AVAILABLE"
+      },
+      "binding_valid_required": false,
+      "capability_gaps": [
+        "trace_status_mismatch:expected=VALID",
+        "evidence_stages_missing:authoritative_trace",
+        "trace_events_missing:INPUT_SOURCE_RECORDED,POLICY_DECISION_RECORDED"
+      ],
+      "expected": {
+        "binding_status": "NOT_APPLICABLE",
+        "callback_count": 0,
+        "decision": "ALLOW",
+        "effective_source_types": [
+          "WEB_UNTRUSTED"
+        ],
+        "final_environment_state": {
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "forbidden_side_effects": [],
+        "lineage_status": "VALID",
+        "reason_codes": [
+          "context_updates_safely_blocked",
+          "fact_lineage_valid"
+        ],
+        "required_evidence_stages": [
+          "context_policy",
+          "lineage",
+          "blocked_write",
+          "authoritative_trace"
+        ],
+        "required_facts": [
+          "context_policy_fact",
+          "fact_lineage"
+        ],
+        "retry_count": 0,
+        "trace_events": [
+          "INPUT_SOURCE_RECORDED",
+          "POLICY_DECISION_RECORDED"
+        ],
+        "trace_status": "VALID"
+      },
+      "limitations": [
+        "offline_overlay_only",
+        "no_browser_or_llm_execution"
+      ],
+      "lineage_required": true,
+      "matched": false,
+      "matched_dimensions": {
+        "binding_status": true,
+        "callback_count": true,
+        "callback_observation_count": true,
+        "decision": true,
+        "effective_source_types": true,
+        "evidence_stages": false,
+        "final_environment_state": true,
+        "forbidden_side_effects": true,
+        "lineage_status": true,
+        "reason_codes": true,
+        "required_facts": true,
+        "retry_count": true,
+        "trace_events": false,
+        "trace_status": false
+      },
+      "missing_effective_source_types": [],
+      "missing_evidence_stages": [
+        "authoritative_trace"
+      ],
+      "missing_required_facts": [],
+      "missing_trace_events": [
+        "INPUT_SOURCE_RECORDED",
+        "POLICY_DECISION_RECORDED"
+      ],
+      "scenario": "untrusted_web_amount_override",
+      "task_id": "T07",
+      "title": "不可信网页金额覆盖",
+      "untrusted_write_attempt": true
+    },
+    {
+      "actual": {
+        "actual_callback_count": 0,
+        "actual_callback_observations": 0,
+        "actual_decision": "ALLOW",
+        "actual_final_environment_state": {
+          "blocked_paths": [
+            "request.payee"
+          ],
+          "conflict_resolution": null,
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "recovery_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "actual_reason_codes": [
+          "context_updates_safely_blocked",
+          "fact_lineage_valid",
+          "protected_fact_overwrite_blocked:request.payee",
+          "source_domain_write_blocked:request.payee"
+        ],
+        "actual_retry_count": 0,
+        "binding_status": "NOT_APPLICABLE",
+        "effective_source_types": [
+          "LLM_GENERATED"
+        ],
+        "evidence_stages": [
+          "blocked_write",
+          "context_policy",
+          "lineage"
+        ],
+        "forbidden_side_effects": [],
+        "limitations": [
+          "offline_overlay_only",
+          "no_browser_or_llm_execution"
+        ],
+        "lineage_status": "VALID",
+        "required_facts_observed": [
+          "context_policy_fact",
+          "fact_lineage"
+        ],
+        "task_id": "T08",
+        "trace_events": [],
+        "trace_reason_codes": [
+          "authoritative_trace_not_available"
+        ],
+        "trace_status": "NOT_AVAILABLE"
+      },
+      "binding_valid_required": false,
+      "capability_gaps": [
+        "trace_status_mismatch:expected=VALID",
+        "evidence_stages_missing:authoritative_trace",
+        "trace_events_missing:INPUT_SOURCE_RECORDED,POLICY_DECISION_RECORDED"
+      ],
+      "expected": {
+        "binding_status": "NOT_APPLICABLE",
+        "callback_count": 0,
+        "decision": "ALLOW",
+        "effective_source_types": [
+          "LLM_GENERATED"
+        ],
+        "final_environment_state": {
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": null,
+          "payment_status": null,
+          "remediation_status": null,
+          "retry_allowed": false,
+          "task_status": null,
+          "trusted_state_changed": false
+        },
+        "forbidden_side_effects": [],
+        "lineage_status": "VALID",
+        "reason_codes": [
+          "context_updates_safely_blocked",
+          "fact_lineage_valid"
+        ],
+        "required_evidence_stages": [
+          "context_policy",
+          "lineage",
+          "blocked_write",
+          "authoritative_trace"
+        ],
+        "required_facts": [
+          "context_policy_fact",
+          "fact_lineage"
+        ],
+        "retry_count": 0,
+        "trace_events": [
+          "INPUT_SOURCE_RECORDED",
+          "POLICY_DECISION_RECORDED"
+        ],
+        "trace_status": "VALID"
+      },
+      "limitations": [
+        "offline_overlay_only",
+        "no_browser_or_llm_execution"
+      ],
+      "lineage_required": true,
+      "matched": false,
+      "matched_dimensions": {
+        "binding_status": true,
+        "callback_count": true,
+        "callback_observation_count": true,
+        "decision": true,
+        "effective_source_types": true,
+        "evidence_stages": false,
+        "final_environment_state": true,
+        "forbidden_side_effects": true,
+        "lineage_status": true,
+        "reason_codes": true,
+        "required_facts": true,
+        "retry_count": true,
+        "trace_events": false,
+        "trace_status": false
+      },
+      "missing_effective_source_types": [],
+      "missing_evidence_stages": [
+        "authoritative_trace"
+      ],
+      "missing_required_facts": [],
+      "missing_trace_events": [
+        "INPUT_SOURCE_RECORDED",
+        "POLICY_DECISION_RECORDED"
+      ],
+      "scenario": "untrusted_payee_override",
+      "task_id": "T08",
+      "title": "不可信 payee 覆盖",
+      "untrusted_write_attempt": true
+    },
+    {
+      "actual": {
+        "actual_callback_count": 1,
+        "actual_callback_observations": 1,
+        "actual_decision": "ALLOW",
+        "actual_final_environment_state": {
+          "blocked_paths": [],
+          "conflict_resolution": null,
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": "SUCCEEDED",
+          "payment_status": "SUCCEEDED",
+          "recovery_status": "RECOVERED",
+          "remediation_status": "NOT_REQUIRED",
+          "retry_allowed": false,
+          "task_status": "SUCCEEDED",
+          "trusted_state_changed": false
+        },
+        "actual_reason_codes": [
+          "lifecycle:fulfillment_status:succeeded",
+          "lifecycle:payment_status:succeeded",
+          "lifecycle:remediation:not_required",
+          "lifecycle:task_status:succeeded",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "payment:initial_status:unknown",
+          "recovery:next_action:continue_with_original_payment",
+          "recovery:payment_state_recovered_as_succeeded",
+          "recovery:status:recovered",
+          "retry:not_allowed",
+          "runtime:allow"
+        ],
+        "actual_retry_count": 0,
+        "binding_status": "VALID",
+        "effective_source_types": [],
+        "evidence_stages": [
+          "authoritative_trace",
+          "commerce_adaptation",
+          "executor_identity_binding",
+          "fulfilment",
+          "governed_action",
+          "lifecycle",
+          "mandate",
+          "order",
+          "payment",
+          "payment_execution_binding",
+          "payment_recovery",
+          "prepayment_decision",
+          "request",
+          "runtime_gate",
+          "source_coverage"
+        ],
+        "forbidden_side_effects": [],
+        "limitations": [
+          "checkout_callback_is_injected_test_seam",
+          "instruction_is_not_authorization_mandate",
+          "no_automatic_payment_retry",
+          "no_real_buy_now_execution",
+          "no_real_fulfilment",
+          "no_real_payment_execution",
+          "no_real_payment_or_fulfilment",
+          "no_real_refund_or_dispute",
+          "no_real_status_query_or_async_callback",
+          "no_webshop_runtime_execution",
+          "offline_interception_only",
+          "offline_sidecar_only",
+          "webshop_reward_not_used_as_payment_or_task_success"
+        ],
+        "lineage_status": "NOT_APPLICABLE",
+        "required_facts_observed": [
+          "governed_action_binding",
+          "original_transaction_binding",
+          "query_recovery"
+        ],
+        "task_id": "T09",
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "RUNTIME_DECISION_RECORDED",
+          "PAYMENT_OUTCOME_RECORDED"
+        ],
+        "trace_reason_codes": [
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "runtime:allow"
+        ],
+        "trace_status": "VALID"
+      },
+      "binding_valid_required": true,
+      "capability_gaps": [],
+      "expected": {
+        "binding_status": "VALID",
+        "callback_count": 1,
+        "decision": "ALLOW",
+        "effective_source_types": [],
+        "final_environment_state": {
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": "SUCCEEDED",
+          "payment_status": "SUCCEEDED",
+          "recovery_status": "RECOVERED",
+          "remediation_status": "NOT_REQUIRED",
+          "retry_allowed": false,
+          "task_status": "SUCCEEDED",
+          "trusted_state_changed": false
+        },
+        "forbidden_side_effects": [],
+        "lineage_status": "NOT_APPLICABLE",
+        "reason_codes": [
+          "recovery:status:recovered"
+        ],
+        "required_evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "request",
+          "governed_action",
+          "runtime_gate",
+          "payment",
+          "payment_recovery",
+          "fulfilment",
+          "lifecycle",
+          "authoritative_trace"
+        ],
+        "required_facts": [
+          "governed_action_binding",
+          "original_transaction_binding",
+          "query_recovery"
+        ],
+        "retry_count": 0,
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "RUNTIME_DECISION_RECORDED",
+          "PAYMENT_OUTCOME_RECORDED"
+        ],
+        "trace_status": "VALID"
+      },
+      "limitations": [
+        "query_observation_is_fixed_offline_fixture",
+        "no_real_retry"
+      ],
+      "lineage_required": false,
+      "matched": true,
+      "matched_dimensions": {
+        "binding_status": true,
+        "callback_count": true,
+        "callback_observation_count": true,
+        "decision": true,
+        "effective_source_types": true,
+        "evidence_stages": true,
+        "final_environment_state": true,
+        "forbidden_side_effects": true,
+        "lineage_status": true,
+        "reason_codes": true,
+        "required_facts": true,
+        "retry_count": true,
+        "trace_events": true,
+        "trace_status": true
+      },
+      "missing_effective_source_types": [],
+      "missing_evidence_stages": [],
+      "missing_required_facts": [],
+      "missing_trace_events": [],
+      "scenario": "unknown_payment_query_original",
+      "task_id": "T09",
+      "title": "支付状态 UNKNOWN",
+      "untrusted_write_attempt": false
+    },
+    {
+      "actual": {
+        "actual_callback_count": 1,
+        "actual_callback_observations": 1,
+        "actual_decision": "ALLOW",
+        "actual_final_environment_state": {
+          "blocked_paths": [],
+          "conflict_resolution": null,
+          "duplicate_payment_blocked": true,
+          "fulfilment_status": "PENDING",
+          "payment_status": "UNKNOWN",
+          "recovery_status": null,
+          "remediation_status": "REQUIRED",
+          "retry_allowed": false,
+          "task_status": "UNKNOWN",
+          "trusted_state_changed": false
+        },
+        "actual_reason_codes": [
+          "duplicate:known_successful_attempt",
+          "duplicate:payment_blocked",
+          "lifecycle:fulfillment_status:pending",
+          "lifecycle:payment_status:unknown",
+          "lifecycle:payment_status_unknown",
+          "lifecycle:remediation:required",
+          "lifecycle:task_status:unknown",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "payment:initial_status:unknown",
+          "retry:not_allowed",
+          "runtime:allow"
+        ],
+        "actual_retry_count": 0,
+        "binding_status": "VALID",
+        "effective_source_types": [],
+        "evidence_stages": [
+          "authoritative_trace",
+          "commerce_adaptation",
+          "duplicate_protection",
+          "executor_identity_binding",
+          "fulfilment",
+          "governed_action",
+          "lifecycle",
+          "mandate",
+          "order",
+          "payment",
+          "payment_execution_binding",
+          "prepayment_decision",
+          "request",
+          "runtime_gate",
+          "source_coverage"
+        ],
+        "forbidden_side_effects": [],
+        "limitations": [
+          "checkout_callback_is_injected_test_seam",
+          "instruction_is_not_authorization_mandate",
+          "no_automatic_payment_retry",
+          "no_real_buy_now_execution",
+          "no_real_fulfilment",
+          "no_real_payment_execution",
+          "no_real_payment_or_fulfilment",
+          "no_real_refund_or_dispute",
+          "no_real_status_query_or_async_callback",
+          "no_webshop_runtime_execution",
+          "offline_interception_only",
+          "offline_sidecar_only",
+          "webshop_reward_not_used_as_payment_or_task_success"
+        ],
+        "lineage_status": "NOT_APPLICABLE",
+        "required_facts_observed": [
+          "duplicate_attempt_inventory",
+          "governed_action_binding",
+          "idempotency_boundary"
+        ],
+        "task_id": "T10",
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "RUNTIME_DECISION_RECORDED",
+          "PAYMENT_OUTCOME_RECORDED"
+        ],
+        "trace_reason_codes": [
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "runtime:allow"
+        ],
+        "trace_status": "VALID"
+      },
+      "binding_valid_required": true,
+      "capability_gaps": [],
+      "expected": {
+        "binding_status": "VALID",
+        "callback_count": 1,
+        "decision": "ALLOW",
+        "effective_source_types": [],
+        "final_environment_state": {
+          "duplicate_payment_blocked": true,
+          "fulfilment_status": "PENDING",
+          "payment_status": "UNKNOWN",
+          "remediation_status": "REQUIRED",
+          "retry_allowed": false,
+          "task_status": "UNKNOWN",
+          "trusted_state_changed": false
+        },
+        "forbidden_side_effects": [],
+        "lineage_status": "NOT_APPLICABLE",
+        "reason_codes": [
+          "duplicate:payment_blocked"
+        ],
+        "required_evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "request",
+          "governed_action",
+          "runtime_gate",
+          "payment",
+          "duplicate_protection",
+          "fulfilment",
+          "lifecycle",
+          "authoritative_trace"
+        ],
+        "required_facts": [
+          "governed_action_binding",
+          "idempotency_boundary",
+          "duplicate_attempt_inventory"
+        ],
+        "retry_count": 0,
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "RUNTIME_DECISION_RECORDED",
+          "PAYMENT_OUTCOME_RECORDED"
+        ],
+        "trace_status": "VALID"
+      },
+      "limitations": [
+        "existing_attempt_is_fixed_offline_fixture",
+        "no_second_payment_executed"
+      ],
+      "lineage_required": false,
+      "matched": true,
+      "matched_dimensions": {
+        "binding_status": true,
+        "callback_count": true,
+        "callback_observation_count": true,
+        "decision": true,
+        "effective_source_types": true,
+        "evidence_stages": true,
+        "final_environment_state": true,
+        "forbidden_side_effects": true,
+        "lineage_status": true,
+        "reason_codes": true,
+        "required_facts": true,
+        "retry_count": true,
+        "trace_events": true,
+        "trace_status": true
+      },
+      "missing_effective_source_types": [],
+      "missing_evidence_stages": [],
+      "missing_required_facts": [],
+      "missing_trace_events": [],
+      "scenario": "duplicate_payment_attempt",
+      "task_id": "T10",
+      "title": "重复请求或重复付款",
+      "untrusted_write_attempt": false
+    },
+    {
+      "actual": {
+        "actual_callback_count": 1,
+        "actual_callback_observations": 1,
+        "actual_decision": "ALLOW",
+        "actual_final_environment_state": {
+          "blocked_paths": [],
+          "conflict_resolution": null,
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": "FAILED",
+          "payment_status": "SUCCEEDED",
+          "recovery_status": null,
+          "remediation_status": "REQUIRED",
+          "retry_allowed": false,
+          "task_status": "FAILED",
+          "trusted_state_changed": false
+        },
+        "actual_reason_codes": [
+          "lifecycle:fulfillment_failed_after_payment",
+          "lifecycle:fulfillment_status:failed",
+          "lifecycle:payment_status:succeeded",
+          "lifecycle:remediation:required",
+          "lifecycle:task_status:failed",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "payment:initial_status:succeeded",
+          "retry:not_allowed",
+          "runtime:allow"
+        ],
+        "actual_retry_count": 0,
+        "binding_status": "VALID",
+        "effective_source_types": [],
+        "evidence_stages": [
+          "authoritative_trace",
+          "commerce_adaptation",
+          "executor_identity_binding",
+          "fulfilment",
+          "governed_action",
+          "lifecycle",
+          "mandate",
+          "order",
+          "payment",
+          "payment_execution_binding",
+          "prepayment_decision",
+          "request",
+          "runtime_gate",
+          "source_coverage"
+        ],
+        "forbidden_side_effects": [],
+        "limitations": [
+          "checkout_callback_is_injected_test_seam",
+          "instruction_is_not_authorization_mandate",
+          "no_automatic_payment_retry",
+          "no_real_buy_now_execution",
+          "no_real_fulfilment",
+          "no_real_payment_execution",
+          "no_real_payment_or_fulfilment",
+          "no_real_refund_or_dispute",
+          "no_real_status_query_or_async_callback",
+          "no_webshop_runtime_execution",
+          "offline_interception_only",
+          "offline_sidecar_only",
+          "webshop_reward_not_used_as_payment_or_task_success"
+        ],
+        "lineage_status": "NOT_APPLICABLE",
+        "required_facts_observed": [
+          "fulfilment_binding",
+          "governed_action_binding",
+          "payment_execution_binding",
+          "remediation_state"
+        ],
+        "task_id": "T11",
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "RUNTIME_DECISION_RECORDED",
+          "PAYMENT_OUTCOME_RECORDED"
+        ],
+        "trace_reason_codes": [
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "runtime:allow"
+        ],
+        "trace_status": "VALID"
+      },
+      "binding_valid_required": true,
+      "capability_gaps": [],
+      "expected": {
+        "binding_status": "VALID",
+        "callback_count": 1,
+        "decision": "ALLOW",
+        "effective_source_types": [],
+        "final_environment_state": {
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": "FAILED",
+          "payment_status": "SUCCEEDED",
+          "remediation_status": "REQUIRED",
+          "retry_allowed": false,
+          "task_status": "FAILED",
+          "trusted_state_changed": false
+        },
+        "forbidden_side_effects": [],
+        "lineage_status": "NOT_APPLICABLE",
+        "reason_codes": [
+          "lifecycle:fulfillment_failed_after_payment"
+        ],
+        "required_evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "request",
+          "governed_action",
+          "runtime_gate",
+          "payment",
+          "fulfilment",
+          "lifecycle",
+          "authoritative_trace"
+        ],
+        "required_facts": [
+          "governed_action_binding",
+          "payment_execution_binding",
+          "fulfilment_binding",
+          "remediation_state"
+        ],
+        "retry_count": 0,
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "RUNTIME_DECISION_RECORDED",
+          "PAYMENT_OUTCOME_RECORDED"
+        ],
+        "trace_status": "VALID"
+      },
+      "limitations": [
+        "offline_fulfilment_observation",
+        "no_real_remediation_action"
+      ],
+      "lineage_required": false,
+      "matched": true,
+      "matched_dimensions": {
+        "binding_status": true,
+        "callback_count": true,
+        "callback_observation_count": true,
+        "decision": true,
+        "effective_source_types": true,
+        "evidence_stages": true,
+        "final_environment_state": true,
+        "forbidden_side_effects": true,
+        "lineage_status": true,
+        "reason_codes": true,
+        "required_facts": true,
+        "retry_count": true,
+        "trace_events": true,
+        "trace_status": true
+      },
+      "missing_effective_source_types": [],
+      "missing_evidence_stages": [],
+      "missing_required_facts": [],
+      "missing_trace_events": [],
+      "scenario": "payment_succeeded_fulfilment_failed",
+      "task_id": "T11",
+      "title": "支付成功但履约失败",
+      "untrusted_write_attempt": false
+    },
+    {
+      "actual": {
+        "actual_callback_count": 1,
+        "actual_callback_observations": 1,
+        "actual_decision": "ALLOW",
+        "actual_final_environment_state": {
+          "blocked_paths": [],
+          "conflict_resolution": "CONFLICT",
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": "SUCCEEDED",
+          "payment_status": "UNKNOWN",
+          "recovery_status": "RECOVERED",
+          "remediation_status": "REQUIRED",
+          "retry_allowed": false,
+          "task_status": "UNKNOWN",
+          "trusted_state_changed": false
+        },
+        "actual_reason_codes": [
+          "conflict:payment_status_opposite_terminal_claims",
+          "conflict:resolution:conflict",
+          "lifecycle:fulfillment_status:succeeded",
+          "lifecycle:payment_status:unknown",
+          "lifecycle:payment_status_unknown",
+          "lifecycle:remediation:required",
+          "lifecycle:task_status:unknown",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "payment:initial_status:unknown",
+          "recovery:next_action:continue_with_original_payment",
+          "recovery:payment_state_recovered_as_succeeded",
+          "recovery:status:recovered",
+          "retry:not_allowed",
+          "runtime:allow",
+          "sidecar:status_evidence_conflict"
+        ],
+        "actual_retry_count": 0,
+        "binding_status": "VALID",
+        "effective_source_types": [],
+        "evidence_stages": [
+          "authoritative_trace",
+          "commerce_adaptation",
+          "executor_identity_binding",
+          "fulfilment",
+          "governed_action",
+          "lifecycle",
+          "mandate",
+          "order",
+          "payment",
+          "payment_execution_binding",
+          "payment_recovery",
+          "prepayment_decision",
+          "request",
+          "runtime_gate",
+          "source_coverage",
+          "status_conflict"
+        ],
+        "forbidden_side_effects": [],
+        "limitations": [
+          "checkout_callback_is_injected_test_seam",
+          "instruction_is_not_authorization_mandate",
+          "no_automatic_payment_retry",
+          "no_real_buy_now_execution",
+          "no_real_fulfilment",
+          "no_real_payment_execution",
+          "no_real_payment_or_fulfilment",
+          "no_real_refund_or_dispute",
+          "no_real_status_query_or_async_callback",
+          "no_webshop_runtime_execution",
+          "offline_interception_only",
+          "offline_sidecar_only",
+          "webshop_reward_not_used_as_payment_or_task_success"
+        ],
+        "lineage_status": "NOT_APPLICABLE",
+        "required_facts_observed": [
+          "async_binding",
+          "governed_action_binding",
+          "query_binding",
+          "status_conflict_fact"
+        ],
+        "task_id": "T12",
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "RUNTIME_DECISION_RECORDED",
+          "PAYMENT_OUTCOME_RECORDED"
+        ],
+        "trace_reason_codes": [
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "runtime:allow"
+        ],
+        "trace_status": "VALID"
+      },
+      "binding_valid_required": true,
+      "capability_gaps": [],
+      "expected": {
+        "binding_status": "VALID",
+        "callback_count": 1,
+        "decision": "ALLOW",
+        "effective_source_types": [],
+        "final_environment_state": {
+          "conflict_resolution": "CONFLICT",
+          "duplicate_payment_blocked": false,
+          "fulfilment_status": "SUCCEEDED",
+          "payment_status": "UNKNOWN",
+          "remediation_status": "REQUIRED",
+          "retry_allowed": false,
+          "task_status": "UNKNOWN",
+          "trusted_state_changed": false
+        },
+        "forbidden_side_effects": [],
+        "lineage_status": "NOT_APPLICABLE",
+        "reason_codes": [
+          "sidecar:status_evidence_conflict"
+        ],
+        "required_evidence_stages": [
+          "commerce_adaptation",
+          "mandate",
+          "order",
+          "request",
+          "governed_action",
+          "runtime_gate",
+          "payment",
+          "payment_recovery",
+          "status_conflict",
+          "fulfilment",
+          "lifecycle",
+          "authoritative_trace"
+        ],
+        "required_facts": [
+          "governed_action_binding",
+          "query_binding",
+          "async_binding",
+          "status_conflict_fact"
+        ],
+        "retry_count": 0,
+        "trace_events": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED",
+          "REQUEST_RECORDED",
+          "RUNTIME_DECISION_RECORDED",
+          "PAYMENT_OUTCOME_RECORDED"
+        ],
+        "trace_status": "VALID"
+      },
+      "limitations": [
+        "fixed_offline_conflicting_observations",
+        "no_automatic_resolution"
+      ],
+      "lineage_required": false,
+      "matched": true,
+      "matched_dimensions": {
+        "binding_status": true,
+        "callback_count": true,
+        "callback_observation_count": true,
+        "decision": true,
+        "effective_source_types": true,
+        "evidence_stages": true,
+        "final_environment_state": true,
+        "forbidden_side_effects": true,
+        "lineage_status": true,
+        "reason_codes": true,
+        "required_facts": true,
+        "retry_count": true,
+        "trace_events": true,
+        "trace_status": true
+      },
+      "missing_effective_source_types": [],
+      "missing_evidence_stages": [],
+      "missing_required_facts": [],
+      "missing_trace_events": [],
+      "scenario": "payment_status_terminal_conflict",
+      "task_id": "T12",
+      "title": "支付与异步状态冲突",
+      "untrusted_write_attempt": false
+    }
+  ]
+}

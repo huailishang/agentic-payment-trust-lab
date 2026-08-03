@@ -1,0 +1,71 @@
+{
+  "experiment_context_origin": "explicit_experiment_context_not_webshop_verified",
+  "limitations": [
+    "instruction_product_match_not_assessed",
+    "instruction_is_not_authorization_mandate",
+    "merchant_and_payee_from_experiment_context",
+    "no_runtime_authorization_decision",
+    "no_purchase_or_payment_executed",
+    "offline_mapping_only",
+    "webshop_reward_not_mapped"
+  ],
+  "missing_fields": [],
+  "order": {
+    "authority_version_ref": "experiment-authority-v1",
+    "candidate_rails": [],
+    "currency": "USD",
+    "fulfilment_terms": "offline_experiment_only_no_fulfilment_commitment",
+    "items": [
+      {
+        "category": "home_furniture",
+        "item_id": "B06Y3VLDFB",
+        "kind": "product",
+        "name": "Vhomes Lights Reclaimed Wood Console Table The Genessis Collection Sofa-Tables",
+        "quantity": 1,
+        "unit_amount": "877.80"
+      }
+    ],
+    "mandate_ref": "experiment-context-mandate-ref-v1",
+    "merchant": "webshop-experiment-merchant-v1",
+    "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+    "order_version": "webshop-v1",
+    "payee": "webshop-experiment-payee-v1",
+    "quote_expires_at": "2026-08-03T05:00:00+00:00",
+    "service_id": null,
+    "total_amount": "877.80"
+  },
+  "payment_request": {
+    "agent_id": null,
+    "amount": "877.80",
+    "authority_ref": "experiment-context-mandate-ref-v1",
+    "authority_version_ref": "experiment-authority-v1",
+    "category": "home_furniture",
+    "currency": "USD",
+    "merchant": "webshop-experiment-merchant-v1",
+    "occurred_at": "2026-08-02T05:00:00+00:00",
+    "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+    "payee": "webshop-experiment-payee-v1",
+    "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+    "sequence_count": 1
+  },
+  "ready": true,
+  "selected_options": [],
+  "source_asset_hashes": [
+    [
+      "items_human_ins.json",
+      "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3"
+    ],
+    [
+      "items_ins_v2_1000.json",
+      "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f"
+    ],
+    [
+      "items_shuffle_1000.json",
+      "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269"
+    ]
+  ],
+  "source_commit": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+  "source_smoke_sha256": "d1998c49a7afa14ee4534cd266d4e9e9c386ff2c2c8d85114aad19c304467e74",
+  "unmapped_fields": [],
+  "user_intent_text": "hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars"
+}

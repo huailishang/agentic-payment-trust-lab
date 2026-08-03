@@ -1,0 +1,39 @@
+{
+  "label": "EV-27",
+  "exit_code": 124,
+  "command_display": "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe install -n webshop38 --override-channels -c https://conda.anaconda.org/pytorch -c https://conda.anaconda.org/conda-forge --strict-channel-priority --freeze-installed faiss-cpu=1.7.2 libfaiss=1.7.2 -y",
+  "command_argv": [
+    "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+    "install",
+    "-n",
+    "webshop38",
+    "--override-channels",
+    "-c",
+    "https://conda.anaconda.org/pytorch",
+    "-c",
+    "https://conda.anaconda.org/conda-forge",
+    "--strict-channel-priority",
+    "--freeze-installed",
+    "faiss-cpu=1.7.2",
+    "libfaiss=1.7.2",
+    "-y"
+  ],
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "status": "TIMED_OUT_NO_ENVIRONMENT_CHANGE",
+  "environment_after": {
+    "faiss_cpu": "1.7.4",
+    "libfaiss": "1.7.4",
+    "mkl": "2021.4.0"
+  },
+  "buy_now_executed": false,
+  "commit_executed": false,
+  "push_executed": false,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-27.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-27.stderr.log",
+  "stdout_bytes": 677,
+  "stderr_bytes": 85,
+  "stdout_sha256": "791062c8536264b1bb4c6c5480ff85cf1d583db97cabec9c7ef451e61f137e55",
+  "stderr_sha256": "c754961cb7bec0f76a970372a2d3d58159a349a63e8fed5a438562e0ae524063",
+  "finished_at_utc": "2026-08-02T05:36:39.969004+00:00"
+}

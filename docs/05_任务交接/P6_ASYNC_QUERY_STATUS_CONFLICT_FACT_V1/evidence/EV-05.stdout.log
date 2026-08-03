@@ -1,0 +1,31 @@
+head=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+task_scoped_git_diff_check_exit_code=0
+task_file_whitespace_findings=0
+task_scoped_status_begin
+ M src/agentic_payment_experiment/__init__.py
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P6_ASYNC_QUERY_STATUS_CONFLICT_FACT_V1/CONTRACT.md"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P6_ASYNC_QUERY_STATUS_CONFLICT_FACT_V1/REPORT.md"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P6_ASYNC_QUERY_STATUS_CONFLICT_FACT_V1/evidence/EV-05_scope_check.py"
+?? src/agentic_payment_experiment/payment_status_conflict.py
+?? src/agentic_payment_experiment/trusted_execution/original_transaction.py
+?? tests/test_payment_status_conflict.py
+?? tests/trusted_execution/test_original_transaction.py
+task_scoped_status_end
+global_git_diff_check_exit_code=2
+global_git_diff_check_output_lines=4422
+global_git_diff_check_first_findings_begin
+docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:1: trailing whitespace.
++working_directory=D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab
+docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:2: trailing whitespace.
++command=$env:PYTHONUTF8='1'; python -m unittest tests.trusted_execution.test_identity_assurance -v
+docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:3: trailing whitespace.
++test_assurance_levels_are_stable_serializable_values (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_assurance_levels_are_stable_serializable_values) ... ok
+docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:4: trailing whitespace.
++test_complete_offline_binding_is_valid_and_bound_only (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_complete_offline_binding_is_valid_and_bound_only) ... ok
+docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:5: trailing whitespace.
++test_credential_reference_alone_never_upgrades_to_verified (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_credential_reference_alone_never_upgrades_to_verified) ... ok
+docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:6: trailing whitespace.
++test_inactive_revoked_and_unsupported_statuses_are_invalid (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_inactive_revoked_and_unsupported_statuses_are_invalid) ... ok
+global_git_diff_check_first_findings_end
+global_findings_classification=inherited_out_of_scope_P3_evidence
+task_scope_result=PASS

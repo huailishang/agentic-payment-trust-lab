@@ -1,0 +1,104 @@
+{
+  "confirmation_cases": {
+    "content_changed": {
+      "callback_count": 0,
+      "decision": "CONFIRMATION_REQUIRED",
+      "order_differences": [
+        "order_item_name_changed"
+      ]
+    },
+    "fulfilment_changed": {
+      "callback_count": 0,
+      "decision": "CONFIRMATION_REQUIRED",
+      "order_differences": [
+        "order_fulfilment_terms_changed"
+      ]
+    },
+    "option_changed": {
+      "callback_count": 0,
+      "decision": "CONFIRMATION_REQUIRED",
+      "order_differences": [
+        "order_item_name_changed"
+      ]
+    },
+    "price_down": {
+      "callback_count": 0,
+      "decision": "CONFIRMATION_REQUIRED",
+      "order_differences": [
+        "order_item_unit_amount_changed",
+        "order_total_changed"
+      ]
+    },
+    "price_up": {
+      "callback_count": 0,
+      "decision": "CONFIRMATION_REQUIRED",
+      "order_differences": [
+        "order_item_unit_amount_changed",
+        "order_total_changed"
+      ]
+    },
+    "quantity_changed": {
+      "callback_count": 0,
+      "decision": "CONFIRMATION_REQUIRED",
+      "order_differences": [
+        "order_item_quantity_changed",
+        "order_total_changed"
+      ]
+    }
+  },
+  "hard_cases": {
+    "category_out_of_scope": {
+      "callback_count": 0,
+      "decision": "DENY",
+      "reason_codes": [
+        "p1:category_out_of_scope"
+      ]
+    },
+    "currency_changed": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "reason_codes": [
+        "p1:currency_mismatch"
+      ]
+    },
+    "merchant_changed": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "reason_codes": [
+        "p1:authorized_order_merchant_mismatch"
+      ]
+    },
+    "payee_changed": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "reason_codes": [
+        "p1:order_payee_changed"
+      ]
+    },
+    "product_changed": {
+      "callback_count": 0,
+      "decision": "INDETERMINATE",
+      "reason_codes": [
+        "p1:order_id_mismatch"
+      ]
+    }
+  },
+  "incomplete_authorized": {
+    "callback_count": 0,
+    "decision": "INDETERMINATE",
+    "reason_codes": [
+      "authorized_commerce_adaptation_not_ready"
+    ]
+  },
+  "inputs_immutable": true,
+  "p1_p4_preserved": {
+    "p2": "DENY",
+    "p3": "DENY",
+    "p4": "INDETERMINATE"
+  },
+  "unchanged": {
+    "callback_count": 1,
+    "decision": "ALLOW",
+    "order_differences": []
+  }
+}

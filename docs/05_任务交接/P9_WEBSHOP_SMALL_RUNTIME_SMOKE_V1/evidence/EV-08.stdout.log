@@ -1,0 +1,43 @@
+=== STEP 1 ===
+Channels:
+ - pytorch
+ - conda-forge
+Platform: win-64
+Collecting package metadata (repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38
+
+  added / updated specs:
+    - typing_extensions=4.1.1
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    typing-extensions-4.1.1    |       hd8ed1ab_0           8 KB  conda-forge
+    typing_extensions-4.1.1    |     pyha770c72_0          29 KB  conda-forge
+    ------------------------------------------------------------
+                                           Total:          37 KB
+
+The following packages will be DOWNGRADED:
+
+  typing-extensions                       4.12.2-hd8ed1ab_0 --> 4.1.1-hd8ed1ab_0 
+  typing_extensions                     4.12.2-pyha770c72_0 --> 4.1.1-pyha770c72_0 
+
+
+
+Downloading and Extracting Packages: ...working... done
+Preparing transaction: ...working... done
+Verifying transaction: ...working... done
+Executing transaction: ...working... done
+=== STEP 2 ===
+gym 0.24.0
+pyserini D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\pyserini\__init__.py
+spacy 3.3.0
+torch 1.11.0
+model 3.3.0
+

@@ -1,0 +1,85 @@
+{
+  "adapter_imports": [
+    "__future__",
+    "dataclasses",
+    "datetime",
+    "decimal",
+    "hashlib",
+    "models",
+    "typing"
+  ],
+  "allowed_scope_git_status": [
+    " M src/agentic_payment_experiment/adapters/__init__.py",
+    "?? \"docs/02_\\346\\234\\252\\346\\235\\245\\350\\247\\204\\345\\210\\222/\\351\\252\\214\\350\\257\\201\\344\\275\\223\\347\\263\\273\\344\\270\\216\\345\\220\\216\\347\\273\\255\\347\\216\\257\\345\\242\\203\\347\\273\\237\\344\\270\\200\\350\\267\\257\\347\\272\\277_20260801.md\"",
+    "?? \"docs/reference/WebShop\\345\\244\\226\\351\\203\\250\\345\\225\\206\\345\\237\\216\\346\\216\\245\\345\\205\\245\\345\\210\\206\\346\\236\\220\\344\\270\\216\\345\\210\\206\\346\\211\\271\\346\\211\\247\\350\\241\\214\\350\\267\\257\\347\\272\\277_20260801.md\"",
+    "?? samples/external/webshop/pre_buy_now_candidate_v1.json",
+    "?? scripts/validation/webshop/export_webshop_commerce_fixture.py",
+    "?? src/agentic_payment_experiment/adapters/webshop.py",
+    "?? tests/test_webshop_adapter.py"
+  ],
+  "authorization_decision_created": false,
+  "baseline_head": "8acaa9e4319240d258f14d8a23b1f15cc71d09b6",
+  "buy_now_executed": false,
+  "commit_executed": false,
+  "environment_changed": false,
+  "fixture": {
+    "actions_executed": [
+      "search[vhomes lights reclaimed]",
+      "click[b06y3vldfb]"
+    ],
+    "buy_now_available": true,
+    "buy_now_executed": false,
+    "bytes": 2003,
+    "product_count": 1,
+    "sha256": "6e9d67c3b787cc2d9202bd22b30dec88bf9f920dfa3741bdeb364108a2a3c8e5"
+  },
+  "inherited_excluded_status_preserved": [
+    " M src/agentic_payment_experiment/html_report.py",
+    " M src/agentic_payment_experiment/payment_execution.py",
+    " M src/agentic_payment_experiment/runner.py"
+  ],
+  "main_head": "8acaa9e4319240d258f14d8a23b1f15cc71d09b6",
+  "main_head_matches_baseline": true,
+  "models_diff_empty": true,
+  "network_or_api_called": false,
+  "payment_or_order_side_effect_created": false,
+  "push_executed": false,
+  "task_files": [
+    {
+      "bytes": 17523,
+      "path": "src/agentic_payment_experiment/adapters/webshop.py",
+      "sha256": "035e6bb20d44b0a52be3f6adab2830c402e01f53839e917698343761c5481ec4"
+    },
+    {
+      "bytes": 1010,
+      "path": "src/agentic_payment_experiment/adapters/__init__.py",
+      "sha256": "910791fdc3a36fef28b3839fedf36e83f7cb920a3af62b631cbbed7a5388e055"
+    },
+    {
+      "bytes": 10548,
+      "path": "scripts/validation/webshop/export_webshop_commerce_fixture.py",
+      "sha256": "aae4c6109586f20e6e78c35ba48b6c94dfee76e478134842731140f50a9382f0"
+    },
+    {
+      "bytes": 2003,
+      "path": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+      "sha256": "6e9d67c3b787cc2d9202bd22b30dec88bf9f920dfa3741bdeb364108a2a3c8e5"
+    },
+    {
+      "bytes": 19234,
+      "path": "tests/test_webshop_adapter.py",
+      "sha256": "c815dbe1515d5326562540d7f732c79484af4a5f3d42f8a6e1b0c45c44277f20"
+    },
+    {
+      "bytes": 11724,
+      "path": "docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md",
+      "sha256": "7056c3eab259f5237d74319b37ec13d2bcaaec3e0d136ce6961f86c0e58d5665"
+    },
+    {
+      "bytes": 16549,
+      "path": "docs/02_未来规划/验证体系与后续环境统一路线_20260801.md",
+      "sha256": "948753ca9f28aa3968b9780313f7cdd0b9767aefea00779ec3dc54a75709011f"
+    }
+  ],
+  "webshop_runtime_executed": false
+}

@@ -1,0 +1,11 @@
+test_overview_exposes_capability_first_navigation (tests.test_lab_overview.LabOverviewTest.test_overview_exposes_capability_first_navigation) ... ok
+test_overview_normalizes_four_validation_modules (tests.test_lab_overview.LabOverviewTest.test_overview_normalizes_four_validation_modules) ... ok
+test_runner_renders_business_capability_navigation_ui (tests.test_lab_overview.LabOverviewTest.test_runner_renders_business_capability_navigation_ui) ... ok
+test_cli_help_uses_stable_current_scenario_set_wording (tests.test_entrypoint.EntrypointTest.test_cli_help_uses_stable_current_scenario_set_wording) ... ok
+test_run_experiment_entrypoint (tests.test_entrypoint.EntrypointTest.test_run_experiment_entrypoint) ... ok
+test_run_experiment_fails_when_internal_baseline_drifts (tests.test_entrypoint.EntrypointTest.test_run_experiment_fails_when_internal_baseline_drifts) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 5.177s
+
+OK

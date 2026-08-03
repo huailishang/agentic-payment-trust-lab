@@ -1,0 +1,5 @@
+malformed_proof_ref_type=list
+adapter_status=READY
+reason_codes=[]
+mapped_payment_id=['proof-as-list']
+RESULT=FAIL: malformed reference type was coerced instead of rejected

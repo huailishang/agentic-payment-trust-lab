@@ -1,0 +1,6 @@
+PYTHONUTF8=1 python run_experiment.py
+
+Summary: total=13 passed=13 failed=0
+内部回归: PASS passed=13 failed=0 gaps=0
+Attack Overlay: PASS passed=6 failed=0 gaps=0
+验证通过。HTML报告：D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\artifacts\scenario_report.html

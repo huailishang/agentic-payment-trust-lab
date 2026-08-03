@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-07",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "git rev-parse HEAD; sha256sum src/agentic_payment_experiment/webshop_payment_sidecar.py src/agentic_payment_experiment/__init__.py tests/test_webshop_payment_sidecar.py src/agentic_payment_experiment/webshop_runtime_gate.py src/agentic_payment_experiment/adapters/webshop.py src/agentic_payment_experiment/payment_recovery.py src/agentic_payment_experiment/payment_status_conflict.py src/agentic_payment_experiment/lifecycle.py src/agentic_payment_experiment/remediation.py; python3 /mnt/c/Users/HuailiShang/.codex/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md"
+  ],
+  "command_display": "bash -lc 'git rev-parse HEAD; sha256sum src/agentic_payment_experiment/webshop_payment_sidecar.py src/agentic_payment_experiment/__init__.py tests/test_webshop_payment_sidecar.py src/agentic_payment_experiment/webshop_runtime_gate.py src/agentic_payment_experiment/adapters/webshop.py src/agentic_payment_experiment/payment_recovery.py src/agentic_payment_experiment/payment_status_conflict.py src/agentic_payment_experiment/lifecycle.py src/agentic_payment_experiment/remediation.py; python3 /mnt/c/Users/HuailiShang/.codex/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-03T00:59:18.495469+00:00",
+  "finished_at_utc": "2026-08-03T00:59:19.270761+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-07.stdout.log",
+  "stderr_path": "RV-EV-07.stderr.log",
+  "stdout_bytes": 1140,
+  "stderr_bytes": 0,
+  "stdout_sha256": "ee56a56049ad62ec2473222cf4f9a974bd5dacaf88802f49be045b69ae6080c8",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

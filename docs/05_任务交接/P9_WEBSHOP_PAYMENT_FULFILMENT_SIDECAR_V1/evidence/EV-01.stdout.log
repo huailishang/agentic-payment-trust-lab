@@ -1,0 +1,2012 @@
+{
+  "duplicate_successful_attempt_blocked": {
+    "duplicate_payment_blocked": true,
+    "effective_payment": {
+      "agent_ref": "webshop-agent-1",
+      "amount": "877.80",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "currency": "USD",
+      "idempotency_key": "idem-webshop-request-1",
+      "occurred_at": "2026-08-02T05:00:01+00:00",
+      "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+      "payee": "webshop-experiment-payee-v1",
+      "payment_id": "webshop-payment-1",
+      "provider_ref": "offline-provider-payment-1",
+      "receipt_ref": "offline-receipt-1",
+      "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "status": "FAILED",
+      "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+    },
+    "initial_payment": {
+      "agent_ref": "webshop-agent-1",
+      "amount": "877.80",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "currency": "USD",
+      "idempotency_key": "idem-webshop-request-1",
+      "occurred_at": "2026-08-02T05:00:01+00:00",
+      "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+      "payee": "webshop-experiment-payee-v1",
+      "payment_id": "webshop-payment-1",
+      "provider_ref": "offline-provider-payment-1",
+      "receipt_ref": "offline-receipt-1",
+      "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "status": "UNKNOWN",
+      "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+    },
+    "lifecycle": {
+      "dispute_status": null,
+      "evidence": [
+        {
+          "code": "lifecycle_request_ref",
+          "expected": null,
+          "field_path": "request.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "lifecycle_order_ref",
+          "expected": null,
+          "field_path": "order.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "fulfillment_ref",
+          "expected": null,
+          "field_path": "fulfillment.fulfillment_id",
+          "observed": "webshop-fulfillment-1"
+        },
+        {
+          "code": "payment_receipt_ref",
+          "expected": null,
+          "field_path": "payment.receipt_ref",
+          "observed": "offline-receipt-1"
+        },
+        {
+          "code": "fulfillment_evidence_ref",
+          "expected": null,
+          "field_path": "fulfillment.evidence_ref",
+          "observed": "offline-fulfillment-evidence-1"
+        },
+        {
+          "code": "payment_execution_binding_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.payment_execution_binding.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "payment_execution_binding_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.payment_execution_binding.reason_codes",
+          "observed": "payment_execution_binding_match"
+        },
+        {
+          "code": "payment_authority_ref",
+          "expected": "experiment-context-mandate-ref-v1",
+          "field_path": "payment.authority_ref",
+          "observed": "experiment-context-mandate-ref-v1"
+        },
+        {
+          "code": "payment_authority_version_ref",
+          "expected": "experiment-authority-v1",
+          "field_path": "request.authority_version_ref",
+          "observed": "experiment-authority-v1"
+        },
+        {
+          "code": "payment_request_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "request.order_ref",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_request_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_transaction_object_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.transaction_object_ref",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_agent_ref",
+          "expected": "webshop-agent-1",
+          "field_path": "payment.agent_ref",
+          "observed": "webshop-agent-1"
+        },
+        {
+          "code": "payment_execution_payee_ref",
+          "expected": "webshop-experiment-payee-v1",
+          "field_path": "payment.payee",
+          "observed": "webshop-experiment-payee-v1"
+        },
+        {
+          "code": "payment_execution_amount_ref",
+          "expected": "877.80",
+          "field_path": "payment.amount",
+          "observed": "877.80"
+        },
+        {
+          "code": "payment_execution_currency_ref",
+          "expected": "USD",
+          "field_path": "payment.currency",
+          "observed": "USD"
+        },
+        {
+          "code": "payment_execution_identity_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        }
+      ],
+      "fulfillment_status": "PENDING",
+      "issues": [
+        {
+          "code": "payment_execution_failed",
+          "message": "the simulated payment execution failed"
+        }
+      ],
+      "limitations": [
+        "simulation_only",
+        "post_payment_statuses_are_fixture_observations",
+        "does_not_execute_real_refund_or_dispute",
+        "does_not_assign_legal_liability"
+      ],
+      "payment_status": "FAILED",
+      "refund_status": null,
+      "remediation": {
+        "case_ref": null,
+        "next_action": "do_not_treat_task_as_successful",
+        "status": "NOT_REQUIRED"
+      },
+      "rule_version": "lifecycle-rules-v0.1",
+      "task_status": "FAILED"
+    },
+    "limitations": [
+      "offline_sidecar_only",
+      "no_real_payment_execution",
+      "no_real_status_query_or_async_callback",
+      "no_real_fulfilment",
+      "no_automatic_payment_retry",
+      "no_real_refund_or_dispute",
+      "webshop_reward_not_used_as_payment_or_task_success"
+    ],
+    "query_recovery": {
+      "effective_status": "FAILED",
+      "evidence": [
+        {
+          "code": "recovery_request_ref",
+          "expected": null,
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "recovery_order_ref",
+          "expected": null,
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "recovery_payment_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "initial_payment_status",
+          "expected": null,
+          "field_path": "payment.status",
+          "observed": "UNKNOWN"
+        },
+        {
+          "code": "status_observation_payment_ref",
+          "expected": "webshop-payment-1",
+          "field_path": "payment_status_observation.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "status_observation_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment_status_observation.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "queried_payment_status",
+          "expected": null,
+          "field_path": "payment_status_observation.status",
+          "observed": "FAILED"
+        },
+        {
+          "code": "status_observation_source",
+          "expected": null,
+          "field_path": "payment_status_observation.source",
+          "observed": "query"
+        },
+        {
+          "code": "status_observed_at",
+          "expected": null,
+          "field_path": "payment_status_observation.observed_at",
+          "observed": "2026-08-02T05:01:01+00:00"
+        },
+        {
+          "code": "recovery_provider_ref",
+          "expected": null,
+          "field_path": "payment.provider_ref",
+          "observed": "offline-provider-payment-1"
+        },
+        {
+          "code": "recovery_idempotency_key",
+          "expected": null,
+          "field_path": "payment.idempotency_key",
+          "observed": "idem-webshop-request-1"
+        },
+        {
+          "code": "status_observation_provider_ref",
+          "expected": "offline-provider-payment-1",
+          "field_path": "payment_status_observation.provider_ref",
+          "observed": "offline-provider-payment-1"
+        },
+        {
+          "code": "payment_execution_binding_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.payment_execution_binding.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "payment_execution_binding_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.payment_execution_binding.reason_codes",
+          "observed": "payment_execution_binding_match"
+        },
+        {
+          "code": "payment_authority_ref",
+          "expected": "experiment-context-mandate-ref-v1",
+          "field_path": "payment.authority_ref",
+          "observed": "experiment-context-mandate-ref-v1"
+        },
+        {
+          "code": "payment_authority_version_ref",
+          "expected": "experiment-authority-v1",
+          "field_path": "request.authority_version_ref",
+          "observed": "experiment-authority-v1"
+        },
+        {
+          "code": "payment_request_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "request.order_ref",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_request_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_transaction_object_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.transaction_object_ref",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_agent_ref",
+          "expected": "webshop-agent-1",
+          "field_path": "payment.agent_ref",
+          "observed": "webshop-agent-1"
+        },
+        {
+          "code": "payment_execution_payee_ref",
+          "expected": "webshop-experiment-payee-v1",
+          "field_path": "payment.payee",
+          "observed": "webshop-experiment-payee-v1"
+        },
+        {
+          "code": "payment_execution_amount_ref",
+          "expected": "877.80",
+          "field_path": "payment.amount",
+          "observed": "877.80"
+        },
+        {
+          "code": "payment_execution_currency_ref",
+          "expected": "USD",
+          "field_path": "payment.currency",
+          "observed": "USD"
+        },
+        {
+          "code": "payment_execution_identity_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "status_observation_verification_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.status_observation.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "status_observation_verification_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.status_observation.reason_codes",
+          "observed": "original_transaction_binding_match"
+        },
+        {
+          "code": "idempotency_verification_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.idempotency.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "idempotency_verification_reason",
+          "expected": null,
+          "field_path": "trusted_execution.idempotency.reason_code",
+          "observed": "idempotency_boundary_present"
+        },
+        {
+          "code": "idempotency_related_attempt_count",
+          "expected": null,
+          "field_path": "trusted_execution.idempotency.related_attempts",
+          "observed": "1"
+        },
+        {
+          "code": "existing_successful_attempt_1_payment_ref",
+          "expected": null,
+          "field_path": "known_attempts[0].payment_id",
+          "observed": "webshop-payment-success-existing"
+        },
+        {
+          "code": "existing_successful_attempt_1_status",
+          "expected": null,
+          "field_path": "known_attempts[0].status",
+          "observed": "SUCCEEDED"
+        }
+      ],
+      "initial_status": "UNKNOWN",
+      "issues": [
+        {
+          "code": "existing_successful_payment_attempt",
+          "message": "another payment attempt for the same business request is already successful"
+        }
+      ],
+      "limitations": [
+        "simulation_only",
+        "does_not_execute_real_payment_retry",
+        "trusted_execution_facts_do_not_choose_recovery_action",
+        "status_observations_are_fixed_offline_fixtures"
+      ],
+      "next_action": "use_existing_successful_attempt",
+      "observed_status": "FAILED",
+      "recovery_status": "BLOCKED",
+      "retry_allowed": false,
+      "rule_version": "payment-recovery-rules-v0.2"
+    },
+    "ready": true,
+    "reason_codes": [
+      "payment:initial_status:unknown",
+      "recovery:status:blocked",
+      "recovery:next_action:use_existing_successful_attempt",
+      "recovery:existing_successful_payment_attempt",
+      "duplicate:payment_blocked",
+      "lifecycle:payment_status:failed",
+      "lifecycle:fulfillment_status:pending",
+      "lifecycle:task_status:failed",
+      "lifecycle:remediation:not_required",
+      "lifecycle:payment_execution_failed",
+      "retry:not_allowed"
+    ],
+    "retry_allowed": false,
+    "status_conflict": null
+  },
+  "payment_and_fulfilment_succeeded": {
+    "duplicate_payment_blocked": false,
+    "effective_payment": {
+      "agent_ref": "webshop-agent-1",
+      "amount": "877.80",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "currency": "USD",
+      "idempotency_key": "idem-webshop-request-1",
+      "occurred_at": "2026-08-02T05:00:01+00:00",
+      "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+      "payee": "webshop-experiment-payee-v1",
+      "payment_id": "webshop-payment-1",
+      "provider_ref": "offline-provider-payment-1",
+      "receipt_ref": "offline-receipt-1",
+      "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "status": "SUCCEEDED",
+      "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+    },
+    "initial_payment": {
+      "agent_ref": "webshop-agent-1",
+      "amount": "877.80",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "currency": "USD",
+      "idempotency_key": "idem-webshop-request-1",
+      "occurred_at": "2026-08-02T05:00:01+00:00",
+      "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+      "payee": "webshop-experiment-payee-v1",
+      "payment_id": "webshop-payment-1",
+      "provider_ref": "offline-provider-payment-1",
+      "receipt_ref": "offline-receipt-1",
+      "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "status": "SUCCEEDED",
+      "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+    },
+    "lifecycle": {
+      "dispute_status": null,
+      "evidence": [
+        {
+          "code": "lifecycle_request_ref",
+          "expected": null,
+          "field_path": "request.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "lifecycle_order_ref",
+          "expected": null,
+          "field_path": "order.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "fulfillment_ref",
+          "expected": null,
+          "field_path": "fulfillment.fulfillment_id",
+          "observed": "webshop-fulfillment-1"
+        },
+        {
+          "code": "payment_receipt_ref",
+          "expected": null,
+          "field_path": "payment.receipt_ref",
+          "observed": "offline-receipt-1"
+        },
+        {
+          "code": "fulfillment_evidence_ref",
+          "expected": null,
+          "field_path": "fulfillment.evidence_ref",
+          "observed": "offline-fulfillment-evidence-1"
+        },
+        {
+          "code": "payment_execution_binding_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.payment_execution_binding.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "payment_execution_binding_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.payment_execution_binding.reason_codes",
+          "observed": "payment_execution_binding_match"
+        },
+        {
+          "code": "payment_authority_ref",
+          "expected": "experiment-context-mandate-ref-v1",
+          "field_path": "payment.authority_ref",
+          "observed": "experiment-context-mandate-ref-v1"
+        },
+        {
+          "code": "payment_authority_version_ref",
+          "expected": "experiment-authority-v1",
+          "field_path": "request.authority_version_ref",
+          "observed": "experiment-authority-v1"
+        },
+        {
+          "code": "payment_request_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "request.order_ref",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_request_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_transaction_object_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.transaction_object_ref",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_agent_ref",
+          "expected": "webshop-agent-1",
+          "field_path": "payment.agent_ref",
+          "observed": "webshop-agent-1"
+        },
+        {
+          "code": "payment_execution_payee_ref",
+          "expected": "webshop-experiment-payee-v1",
+          "field_path": "payment.payee",
+          "observed": "webshop-experiment-payee-v1"
+        },
+        {
+          "code": "payment_execution_amount_ref",
+          "expected": "877.80",
+          "field_path": "payment.amount",
+          "observed": "877.80"
+        },
+        {
+          "code": "payment_execution_currency_ref",
+          "expected": "USD",
+          "field_path": "payment.currency",
+          "observed": "USD"
+        },
+        {
+          "code": "payment_execution_identity_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        }
+      ],
+      "fulfillment_status": "SUCCEEDED",
+      "issues": [],
+      "limitations": [
+        "simulation_only",
+        "post_payment_statuses_are_fixture_observations",
+        "does_not_execute_real_refund_or_dispute",
+        "does_not_assign_legal_liability"
+      ],
+      "payment_status": "SUCCEEDED",
+      "refund_status": null,
+      "remediation": {
+        "case_ref": null,
+        "next_action": "none",
+        "status": "NOT_REQUIRED"
+      },
+      "rule_version": "lifecycle-rules-v0.1",
+      "task_status": "SUCCEEDED"
+    },
+    "limitations": [
+      "offline_sidecar_only",
+      "no_real_payment_execution",
+      "no_real_status_query_or_async_callback",
+      "no_real_fulfilment",
+      "no_automatic_payment_retry",
+      "no_real_refund_or_dispute",
+      "webshop_reward_not_used_as_payment_or_task_success"
+    ],
+    "query_recovery": null,
+    "ready": true,
+    "reason_codes": [
+      "payment:initial_status:succeeded",
+      "lifecycle:payment_status:succeeded",
+      "lifecycle:fulfillment_status:succeeded",
+      "lifecycle:task_status:succeeded",
+      "lifecycle:remediation:not_required",
+      "retry:not_allowed"
+    ],
+    "retry_allowed": false,
+    "status_conflict": null
+  },
+  "payment_succeeded_fulfilment_failed": {
+    "duplicate_payment_blocked": false,
+    "effective_payment": {
+      "agent_ref": "webshop-agent-1",
+      "amount": "877.80",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "currency": "USD",
+      "idempotency_key": "idem-webshop-request-1",
+      "occurred_at": "2026-08-02T05:00:01+00:00",
+      "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+      "payee": "webshop-experiment-payee-v1",
+      "payment_id": "webshop-payment-1",
+      "provider_ref": "offline-provider-payment-1",
+      "receipt_ref": "offline-receipt-1",
+      "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "status": "SUCCEEDED",
+      "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+    },
+    "initial_payment": {
+      "agent_ref": "webshop-agent-1",
+      "amount": "877.80",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "currency": "USD",
+      "idempotency_key": "idem-webshop-request-1",
+      "occurred_at": "2026-08-02T05:00:01+00:00",
+      "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+      "payee": "webshop-experiment-payee-v1",
+      "payment_id": "webshop-payment-1",
+      "provider_ref": "offline-provider-payment-1",
+      "receipt_ref": "offline-receipt-1",
+      "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "status": "SUCCEEDED",
+      "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+    },
+    "lifecycle": {
+      "dispute_status": null,
+      "evidence": [
+        {
+          "code": "lifecycle_request_ref",
+          "expected": null,
+          "field_path": "request.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "lifecycle_order_ref",
+          "expected": null,
+          "field_path": "order.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "fulfillment_ref",
+          "expected": null,
+          "field_path": "fulfillment.fulfillment_id",
+          "observed": "webshop-fulfillment-1"
+        },
+        {
+          "code": "payment_receipt_ref",
+          "expected": null,
+          "field_path": "payment.receipt_ref",
+          "observed": "offline-receipt-1"
+        },
+        {
+          "code": "fulfillment_evidence_ref",
+          "expected": null,
+          "field_path": "fulfillment.evidence_ref",
+          "observed": "offline-fulfillment-evidence-1"
+        },
+        {
+          "code": "payment_execution_binding_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.payment_execution_binding.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "payment_execution_binding_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.payment_execution_binding.reason_codes",
+          "observed": "payment_execution_binding_match"
+        },
+        {
+          "code": "payment_authority_ref",
+          "expected": "experiment-context-mandate-ref-v1",
+          "field_path": "payment.authority_ref",
+          "observed": "experiment-context-mandate-ref-v1"
+        },
+        {
+          "code": "payment_authority_version_ref",
+          "expected": "experiment-authority-v1",
+          "field_path": "request.authority_version_ref",
+          "observed": "experiment-authority-v1"
+        },
+        {
+          "code": "payment_request_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "request.order_ref",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_request_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_transaction_object_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.transaction_object_ref",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_agent_ref",
+          "expected": "webshop-agent-1",
+          "field_path": "payment.agent_ref",
+          "observed": "webshop-agent-1"
+        },
+        {
+          "code": "payment_execution_payee_ref",
+          "expected": "webshop-experiment-payee-v1",
+          "field_path": "payment.payee",
+          "observed": "webshop-experiment-payee-v1"
+        },
+        {
+          "code": "payment_execution_amount_ref",
+          "expected": "877.80",
+          "field_path": "payment.amount",
+          "observed": "877.80"
+        },
+        {
+          "code": "payment_execution_currency_ref",
+          "expected": "USD",
+          "field_path": "payment.currency",
+          "observed": "USD"
+        },
+        {
+          "code": "payment_execution_identity_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "fulfillment_failure_code",
+          "expected": "successful fulfilment",
+          "field_path": "fulfillment.failure_code",
+          "observed": "merchant_did_not_fulfil"
+        }
+      ],
+      "fulfillment_status": "FAILED",
+      "issues": [
+        {
+          "code": "fulfillment_failed_after_payment",
+          "message": "payment succeeded but the purchased good or service was not fulfilled"
+        }
+      ],
+      "limitations": [
+        "simulation_only",
+        "post_payment_statuses_are_fixture_observations",
+        "does_not_execute_real_refund_or_dispute",
+        "does_not_assign_legal_liability"
+      ],
+      "payment_status": "SUCCEEDED",
+      "refund_status": null,
+      "remediation": {
+        "case_ref": null,
+        "next_action": "preserve_evidence_and_start_remediation",
+        "status": "REQUIRED"
+      },
+      "rule_version": "lifecycle-rules-v0.1",
+      "task_status": "FAILED"
+    },
+    "limitations": [
+      "offline_sidecar_only",
+      "no_real_payment_execution",
+      "no_real_status_query_or_async_callback",
+      "no_real_fulfilment",
+      "no_automatic_payment_retry",
+      "no_real_refund_or_dispute",
+      "webshop_reward_not_used_as_payment_or_task_success"
+    ],
+    "query_recovery": null,
+    "ready": true,
+    "reason_codes": [
+      "payment:initial_status:succeeded",
+      "lifecycle:payment_status:succeeded",
+      "lifecycle:fulfillment_status:failed",
+      "lifecycle:task_status:failed",
+      "lifecycle:remediation:required",
+      "lifecycle:fulfillment_failed_after_payment",
+      "retry:not_allowed"
+    ],
+    "retry_allowed": false,
+    "status_conflict": null
+  },
+  "query_async_terminal_conflict": {
+    "duplicate_payment_blocked": false,
+    "effective_payment": {
+      "agent_ref": "webshop-agent-1",
+      "amount": "877.80",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "currency": "USD",
+      "idempotency_key": "idem-webshop-request-1",
+      "occurred_at": "2026-08-02T05:00:01+00:00",
+      "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+      "payee": "webshop-experiment-payee-v1",
+      "payment_id": "webshop-payment-1",
+      "provider_ref": "offline-provider-payment-1",
+      "receipt_ref": "offline-receipt-1",
+      "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "status": "UNKNOWN",
+      "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+    },
+    "initial_payment": {
+      "agent_ref": "webshop-agent-1",
+      "amount": "877.80",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "currency": "USD",
+      "idempotency_key": "idem-webshop-request-1",
+      "occurred_at": "2026-08-02T05:00:01+00:00",
+      "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+      "payee": "webshop-experiment-payee-v1",
+      "payment_id": "webshop-payment-1",
+      "provider_ref": "offline-provider-payment-1",
+      "receipt_ref": "offline-receipt-1",
+      "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "status": "UNKNOWN",
+      "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+    },
+    "lifecycle": {
+      "dispute_status": null,
+      "evidence": [
+        {
+          "code": "lifecycle_request_ref",
+          "expected": null,
+          "field_path": "request.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "lifecycle_order_ref",
+          "expected": null,
+          "field_path": "order.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "fulfillment_ref",
+          "expected": null,
+          "field_path": "fulfillment.fulfillment_id",
+          "observed": "webshop-fulfillment-1"
+        },
+        {
+          "code": "payment_receipt_ref",
+          "expected": null,
+          "field_path": "payment.receipt_ref",
+          "observed": "offline-receipt-1"
+        },
+        {
+          "code": "fulfillment_evidence_ref",
+          "expected": null,
+          "field_path": "fulfillment.evidence_ref",
+          "observed": "offline-fulfillment-evidence-1"
+        },
+        {
+          "code": "payment_execution_binding_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.payment_execution_binding.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "payment_execution_binding_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.payment_execution_binding.reason_codes",
+          "observed": "payment_execution_binding_match"
+        },
+        {
+          "code": "payment_authority_ref",
+          "expected": "experiment-context-mandate-ref-v1",
+          "field_path": "payment.authority_ref",
+          "observed": "experiment-context-mandate-ref-v1"
+        },
+        {
+          "code": "payment_authority_version_ref",
+          "expected": "experiment-authority-v1",
+          "field_path": "request.authority_version_ref",
+          "observed": "experiment-authority-v1"
+        },
+        {
+          "code": "payment_request_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "request.order_ref",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_request_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_transaction_object_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.transaction_object_ref",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_agent_ref",
+          "expected": "webshop-agent-1",
+          "field_path": "payment.agent_ref",
+          "observed": "webshop-agent-1"
+        },
+        {
+          "code": "payment_execution_payee_ref",
+          "expected": "webshop-experiment-payee-v1",
+          "field_path": "payment.payee",
+          "observed": "webshop-experiment-payee-v1"
+        },
+        {
+          "code": "payment_execution_amount_ref",
+          "expected": "877.80",
+          "field_path": "payment.amount",
+          "observed": "877.80"
+        },
+        {
+          "code": "payment_execution_currency_ref",
+          "expected": "USD",
+          "field_path": "payment.currency",
+          "observed": "USD"
+        },
+        {
+          "code": "payment_execution_identity_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        }
+      ],
+      "fulfillment_status": "SUCCEEDED",
+      "issues": [
+        {
+          "code": "payment_status_unknown",
+          "message": "the simulated payment execution status is unknown"
+        }
+      ],
+      "limitations": [
+        "simulation_only",
+        "post_payment_statuses_are_fixture_observations",
+        "does_not_execute_real_refund_or_dispute",
+        "does_not_assign_legal_liability"
+      ],
+      "payment_status": "UNKNOWN",
+      "refund_status": null,
+      "remediation": {
+        "case_ref": null,
+        "next_action": "preserve_evidence_and_investigate_payment_status",
+        "status": "REQUIRED"
+      },
+      "rule_version": "lifecycle-rules-v0.1",
+      "task_status": "UNKNOWN"
+    },
+    "limitations": [
+      "offline_sidecar_only",
+      "no_real_payment_execution",
+      "no_real_status_query_or_async_callback",
+      "no_real_fulfilment",
+      "no_automatic_payment_retry",
+      "no_real_refund_or_dispute",
+      "webshop_reward_not_used_as_payment_or_task_success"
+    ],
+    "query_recovery": {
+      "effective_status": "SUCCEEDED",
+      "evidence": [
+        {
+          "code": "recovery_request_ref",
+          "expected": null,
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "recovery_order_ref",
+          "expected": null,
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "recovery_payment_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "initial_payment_status",
+          "expected": null,
+          "field_path": "payment.status",
+          "observed": "UNKNOWN"
+        },
+        {
+          "code": "status_observation_payment_ref",
+          "expected": "webshop-payment-1",
+          "field_path": "payment_status_observation.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "status_observation_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment_status_observation.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "queried_payment_status",
+          "expected": null,
+          "field_path": "payment_status_observation.status",
+          "observed": "SUCCEEDED"
+        },
+        {
+          "code": "status_observation_source",
+          "expected": null,
+          "field_path": "payment_status_observation.source",
+          "observed": "query"
+        },
+        {
+          "code": "status_observed_at",
+          "expected": null,
+          "field_path": "payment_status_observation.observed_at",
+          "observed": "2026-08-02T05:01:01+00:00"
+        },
+        {
+          "code": "recovery_provider_ref",
+          "expected": null,
+          "field_path": "payment.provider_ref",
+          "observed": "offline-provider-payment-1"
+        },
+        {
+          "code": "recovery_idempotency_key",
+          "expected": null,
+          "field_path": "payment.idempotency_key",
+          "observed": "idem-webshop-request-1"
+        },
+        {
+          "code": "status_observation_provider_ref",
+          "expected": "offline-provider-payment-1",
+          "field_path": "payment_status_observation.provider_ref",
+          "observed": "offline-provider-payment-1"
+        },
+        {
+          "code": "payment_execution_binding_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.payment_execution_binding.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "payment_execution_binding_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.payment_execution_binding.reason_codes",
+          "observed": "payment_execution_binding_match"
+        },
+        {
+          "code": "payment_authority_ref",
+          "expected": "experiment-context-mandate-ref-v1",
+          "field_path": "payment.authority_ref",
+          "observed": "experiment-context-mandate-ref-v1"
+        },
+        {
+          "code": "payment_authority_version_ref",
+          "expected": "experiment-authority-v1",
+          "field_path": "request.authority_version_ref",
+          "observed": "experiment-authority-v1"
+        },
+        {
+          "code": "payment_request_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "request.order_ref",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_request_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_transaction_object_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.transaction_object_ref",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_agent_ref",
+          "expected": "webshop-agent-1",
+          "field_path": "payment.agent_ref",
+          "observed": "webshop-agent-1"
+        },
+        {
+          "code": "payment_execution_payee_ref",
+          "expected": "webshop-experiment-payee-v1",
+          "field_path": "payment.payee",
+          "observed": "webshop-experiment-payee-v1"
+        },
+        {
+          "code": "payment_execution_amount_ref",
+          "expected": "877.80",
+          "field_path": "payment.amount",
+          "observed": "877.80"
+        },
+        {
+          "code": "payment_execution_currency_ref",
+          "expected": "USD",
+          "field_path": "payment.currency",
+          "observed": "USD"
+        },
+        {
+          "code": "payment_execution_identity_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "status_observation_verification_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.status_observation.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "status_observation_verification_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.status_observation.reason_codes",
+          "observed": "original_transaction_binding_match"
+        }
+      ],
+      "initial_status": "UNKNOWN",
+      "issues": [
+        {
+          "code": "payment_state_recovered_as_succeeded",
+          "message": "a later trusted status query confirmed that the original payment succeeded"
+        }
+      ],
+      "limitations": [
+        "simulation_only",
+        "does_not_execute_real_payment_retry",
+        "trusted_execution_facts_do_not_choose_recovery_action",
+        "status_observations_are_fixed_offline_fixtures"
+      ],
+      "next_action": "continue_with_original_payment",
+      "observed_status": "SUCCEEDED",
+      "recovery_status": "RECOVERED",
+      "retry_allowed": false,
+      "rule_version": "payment-recovery-rules-v0.2"
+    },
+    "ready": true,
+    "reason_codes": [
+      "payment:initial_status:unknown",
+      "recovery:status:recovered",
+      "recovery:next_action:continue_with_original_payment",
+      "recovery:payment_state_recovered_as_succeeded",
+      "conflict:resolution:conflict",
+      "conflict:payment_status_opposite_terminal_claims",
+      "sidecar:status_evidence_conflict",
+      "lifecycle:payment_status:unknown",
+      "lifecycle:fulfillment_status:succeeded",
+      "lifecycle:task_status:unknown",
+      "lifecycle:remediation:required",
+      "lifecycle:payment_status_unknown",
+      "retry:not_allowed"
+    ],
+    "retry_allowed": false,
+    "status_conflict": {
+      "async_observed_at": "2026-08-02T05:02:01+00:00",
+      "async_status": "FAILED",
+      "business_success_confirmed": false,
+      "effective_status": "UNKNOWN",
+      "effective_status_terminal": false,
+      "fulfillment_confirmed": false,
+      "initial_status": "UNKNOWN",
+      "legal_finality_confirmed": false,
+      "query_observed_at": "2026-08-02T05:01:01+00:00",
+      "query_status": "SUCCEEDED",
+      "reason_codes": [
+        "payment_status_opposite_terminal_claims"
+      ],
+      "reconciliation_confirmed": false,
+      "resolution": "CONFLICT",
+      "settlement_confirmed": false,
+      "user_task_success_confirmed": false
+    }
+  },
+  "query_recovered_to_succeeded": {
+    "duplicate_payment_blocked": false,
+    "effective_payment": {
+      "agent_ref": "webshop-agent-1",
+      "amount": "877.80",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "currency": "USD",
+      "idempotency_key": "idem-webshop-request-1",
+      "occurred_at": "2026-08-02T05:00:01+00:00",
+      "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+      "payee": "webshop-experiment-payee-v1",
+      "payment_id": "webshop-payment-1",
+      "provider_ref": "offline-provider-payment-1",
+      "receipt_ref": "offline-receipt-1",
+      "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "status": "SUCCEEDED",
+      "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+    },
+    "initial_payment": {
+      "agent_ref": "webshop-agent-1",
+      "amount": "877.80",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "currency": "USD",
+      "idempotency_key": "idem-webshop-request-1",
+      "occurred_at": "2026-08-02T05:00:01+00:00",
+      "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+      "payee": "webshop-experiment-payee-v1",
+      "payment_id": "webshop-payment-1",
+      "provider_ref": "offline-provider-payment-1",
+      "receipt_ref": "offline-receipt-1",
+      "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "status": "UNKNOWN",
+      "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+    },
+    "lifecycle": {
+      "dispute_status": null,
+      "evidence": [
+        {
+          "code": "lifecycle_request_ref",
+          "expected": null,
+          "field_path": "request.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "lifecycle_order_ref",
+          "expected": null,
+          "field_path": "order.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "fulfillment_ref",
+          "expected": null,
+          "field_path": "fulfillment.fulfillment_id",
+          "observed": "webshop-fulfillment-1"
+        },
+        {
+          "code": "payment_receipt_ref",
+          "expected": null,
+          "field_path": "payment.receipt_ref",
+          "observed": "offline-receipt-1"
+        },
+        {
+          "code": "fulfillment_evidence_ref",
+          "expected": null,
+          "field_path": "fulfillment.evidence_ref",
+          "observed": "offline-fulfillment-evidence-1"
+        },
+        {
+          "code": "payment_execution_binding_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.payment_execution_binding.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "payment_execution_binding_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.payment_execution_binding.reason_codes",
+          "observed": "payment_execution_binding_match"
+        },
+        {
+          "code": "payment_authority_ref",
+          "expected": "experiment-context-mandate-ref-v1",
+          "field_path": "payment.authority_ref",
+          "observed": "experiment-context-mandate-ref-v1"
+        },
+        {
+          "code": "payment_authority_version_ref",
+          "expected": "experiment-authority-v1",
+          "field_path": "request.authority_version_ref",
+          "observed": "experiment-authority-v1"
+        },
+        {
+          "code": "payment_request_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "request.order_ref",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_request_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_transaction_object_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.transaction_object_ref",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_agent_ref",
+          "expected": "webshop-agent-1",
+          "field_path": "payment.agent_ref",
+          "observed": "webshop-agent-1"
+        },
+        {
+          "code": "payment_execution_payee_ref",
+          "expected": "webshop-experiment-payee-v1",
+          "field_path": "payment.payee",
+          "observed": "webshop-experiment-payee-v1"
+        },
+        {
+          "code": "payment_execution_amount_ref",
+          "expected": "877.80",
+          "field_path": "payment.amount",
+          "observed": "877.80"
+        },
+        {
+          "code": "payment_execution_currency_ref",
+          "expected": "USD",
+          "field_path": "payment.currency",
+          "observed": "USD"
+        },
+        {
+          "code": "payment_execution_identity_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        }
+      ],
+      "fulfillment_status": "SUCCEEDED",
+      "issues": [],
+      "limitations": [
+        "simulation_only",
+        "post_payment_statuses_are_fixture_observations",
+        "does_not_execute_real_refund_or_dispute",
+        "does_not_assign_legal_liability"
+      ],
+      "payment_status": "SUCCEEDED",
+      "refund_status": null,
+      "remediation": {
+        "case_ref": null,
+        "next_action": "none",
+        "status": "NOT_REQUIRED"
+      },
+      "rule_version": "lifecycle-rules-v0.1",
+      "task_status": "SUCCEEDED"
+    },
+    "limitations": [
+      "offline_sidecar_only",
+      "no_real_payment_execution",
+      "no_real_status_query_or_async_callback",
+      "no_real_fulfilment",
+      "no_automatic_payment_retry",
+      "no_real_refund_or_dispute",
+      "webshop_reward_not_used_as_payment_or_task_success"
+    ],
+    "query_recovery": {
+      "effective_status": "SUCCEEDED",
+      "evidence": [
+        {
+          "code": "recovery_request_ref",
+          "expected": null,
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "recovery_order_ref",
+          "expected": null,
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "recovery_payment_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "initial_payment_status",
+          "expected": null,
+          "field_path": "payment.status",
+          "observed": "UNKNOWN"
+        },
+        {
+          "code": "status_observation_payment_ref",
+          "expected": "webshop-payment-1",
+          "field_path": "payment_status_observation.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "status_observation_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment_status_observation.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "queried_payment_status",
+          "expected": null,
+          "field_path": "payment_status_observation.status",
+          "observed": "SUCCEEDED"
+        },
+        {
+          "code": "status_observation_source",
+          "expected": null,
+          "field_path": "payment_status_observation.source",
+          "observed": "query"
+        },
+        {
+          "code": "status_observed_at",
+          "expected": null,
+          "field_path": "payment_status_observation.observed_at",
+          "observed": "2026-08-02T05:01:01+00:00"
+        },
+        {
+          "code": "recovery_provider_ref",
+          "expected": null,
+          "field_path": "payment.provider_ref",
+          "observed": "offline-provider-payment-1"
+        },
+        {
+          "code": "recovery_idempotency_key",
+          "expected": null,
+          "field_path": "payment.idempotency_key",
+          "observed": "idem-webshop-request-1"
+        },
+        {
+          "code": "status_observation_provider_ref",
+          "expected": "offline-provider-payment-1",
+          "field_path": "payment_status_observation.provider_ref",
+          "observed": "offline-provider-payment-1"
+        },
+        {
+          "code": "payment_execution_binding_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.payment_execution_binding.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "payment_execution_binding_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.payment_execution_binding.reason_codes",
+          "observed": "payment_execution_binding_match"
+        },
+        {
+          "code": "payment_authority_ref",
+          "expected": "experiment-context-mandate-ref-v1",
+          "field_path": "payment.authority_ref",
+          "observed": "experiment-context-mandate-ref-v1"
+        },
+        {
+          "code": "payment_authority_version_ref",
+          "expected": "experiment-authority-v1",
+          "field_path": "request.authority_version_ref",
+          "observed": "experiment-authority-v1"
+        },
+        {
+          "code": "payment_request_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "request.order_ref",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_request_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_transaction_object_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.transaction_object_ref",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_agent_ref",
+          "expected": "webshop-agent-1",
+          "field_path": "payment.agent_ref",
+          "observed": "webshop-agent-1"
+        },
+        {
+          "code": "payment_execution_payee_ref",
+          "expected": "webshop-experiment-payee-v1",
+          "field_path": "payment.payee",
+          "observed": "webshop-experiment-payee-v1"
+        },
+        {
+          "code": "payment_execution_amount_ref",
+          "expected": "877.80",
+          "field_path": "payment.amount",
+          "observed": "877.80"
+        },
+        {
+          "code": "payment_execution_currency_ref",
+          "expected": "USD",
+          "field_path": "payment.currency",
+          "observed": "USD"
+        },
+        {
+          "code": "payment_execution_identity_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "status_observation_verification_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.status_observation.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "status_observation_verification_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.status_observation.reason_codes",
+          "observed": "original_transaction_binding_match"
+        }
+      ],
+      "initial_status": "UNKNOWN",
+      "issues": [
+        {
+          "code": "payment_state_recovered_as_succeeded",
+          "message": "a later trusted status query confirmed that the original payment succeeded"
+        }
+      ],
+      "limitations": [
+        "simulation_only",
+        "does_not_execute_real_payment_retry",
+        "trusted_execution_facts_do_not_choose_recovery_action",
+        "status_observations_are_fixed_offline_fixtures"
+      ],
+      "next_action": "continue_with_original_payment",
+      "observed_status": "SUCCEEDED",
+      "recovery_status": "RECOVERED",
+      "retry_allowed": false,
+      "rule_version": "payment-recovery-rules-v0.2"
+    },
+    "ready": true,
+    "reason_codes": [
+      "payment:initial_status:unknown",
+      "recovery:status:recovered",
+      "recovery:next_action:continue_with_original_payment",
+      "recovery:payment_state_recovered_as_succeeded",
+      "lifecycle:payment_status:succeeded",
+      "lifecycle:fulfillment_status:succeeded",
+      "lifecycle:task_status:succeeded",
+      "lifecycle:remediation:not_required",
+      "retry:not_allowed"
+    ],
+    "retry_allowed": false,
+    "status_conflict": null
+  },
+  "schema": "webshop-payment-fulfilment-sidecar-examples/v1",
+  "side_effects_executed": {
+    "async_callback": false,
+    "dispute": false,
+    "fulfilment": false,
+    "payment": false,
+    "refund": false,
+    "retry": false,
+    "status_query": false
+  },
+  "terminal_failed_offline_retry_candidate": {
+    "duplicate_payment_blocked": false,
+    "effective_payment": {
+      "agent_ref": "webshop-agent-1",
+      "amount": "877.80",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "currency": "USD",
+      "idempotency_key": "idem-webshop-request-1",
+      "occurred_at": "2026-08-02T05:00:01+00:00",
+      "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+      "payee": "webshop-experiment-payee-v1",
+      "payment_id": "webshop-payment-1",
+      "provider_ref": "offline-provider-payment-1",
+      "receipt_ref": "offline-receipt-1",
+      "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "status": "FAILED",
+      "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+    },
+    "initial_payment": {
+      "agent_ref": "webshop-agent-1",
+      "amount": "877.80",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "currency": "USD",
+      "idempotency_key": "idem-webshop-request-1",
+      "occurred_at": "2026-08-02T05:00:01+00:00",
+      "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+      "payee": "webshop-experiment-payee-v1",
+      "payment_id": "webshop-payment-1",
+      "provider_ref": "offline-provider-payment-1",
+      "receipt_ref": "offline-receipt-1",
+      "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "status": "UNKNOWN",
+      "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+    },
+    "lifecycle": {
+      "dispute_status": null,
+      "evidence": [
+        {
+          "code": "lifecycle_request_ref",
+          "expected": null,
+          "field_path": "request.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "lifecycle_order_ref",
+          "expected": null,
+          "field_path": "order.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "fulfillment_ref",
+          "expected": null,
+          "field_path": "fulfillment.fulfillment_id",
+          "observed": "webshop-fulfillment-1"
+        },
+        {
+          "code": "payment_receipt_ref",
+          "expected": null,
+          "field_path": "payment.receipt_ref",
+          "observed": "offline-receipt-1"
+        },
+        {
+          "code": "fulfillment_evidence_ref",
+          "expected": null,
+          "field_path": "fulfillment.evidence_ref",
+          "observed": "offline-fulfillment-evidence-1"
+        },
+        {
+          "code": "payment_execution_binding_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.payment_execution_binding.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "payment_execution_binding_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.payment_execution_binding.reason_codes",
+          "observed": "payment_execution_binding_match"
+        },
+        {
+          "code": "payment_authority_ref",
+          "expected": "experiment-context-mandate-ref-v1",
+          "field_path": "payment.authority_ref",
+          "observed": "experiment-context-mandate-ref-v1"
+        },
+        {
+          "code": "payment_authority_version_ref",
+          "expected": "experiment-authority-v1",
+          "field_path": "request.authority_version_ref",
+          "observed": "experiment-authority-v1"
+        },
+        {
+          "code": "payment_request_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "request.order_ref",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_request_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_transaction_object_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.transaction_object_ref",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_agent_ref",
+          "expected": "webshop-agent-1",
+          "field_path": "payment.agent_ref",
+          "observed": "webshop-agent-1"
+        },
+        {
+          "code": "payment_execution_payee_ref",
+          "expected": "webshop-experiment-payee-v1",
+          "field_path": "payment.payee",
+          "observed": "webshop-experiment-payee-v1"
+        },
+        {
+          "code": "payment_execution_amount_ref",
+          "expected": "877.80",
+          "field_path": "payment.amount",
+          "observed": "877.80"
+        },
+        {
+          "code": "payment_execution_currency_ref",
+          "expected": "USD",
+          "field_path": "payment.currency",
+          "observed": "USD"
+        },
+        {
+          "code": "payment_execution_identity_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        }
+      ],
+      "fulfillment_status": "PENDING",
+      "issues": [
+        {
+          "code": "payment_execution_failed",
+          "message": "the simulated payment execution failed"
+        }
+      ],
+      "limitations": [
+        "simulation_only",
+        "post_payment_statuses_are_fixture_observations",
+        "does_not_execute_real_refund_or_dispute",
+        "does_not_assign_legal_liability"
+      ],
+      "payment_status": "FAILED",
+      "refund_status": null,
+      "remediation": {
+        "case_ref": null,
+        "next_action": "do_not_treat_task_as_successful",
+        "status": "NOT_REQUIRED"
+      },
+      "rule_version": "lifecycle-rules-v0.1",
+      "task_status": "FAILED"
+    },
+    "limitations": [
+      "offline_sidecar_only",
+      "no_real_payment_execution",
+      "no_real_status_query_or_async_callback",
+      "no_real_fulfilment",
+      "no_automatic_payment_retry",
+      "no_real_refund_or_dispute",
+      "webshop_reward_not_used_as_payment_or_task_success"
+    ],
+    "query_recovery": {
+      "effective_status": "FAILED",
+      "evidence": [
+        {
+          "code": "recovery_request_ref",
+          "expected": null,
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "recovery_order_ref",
+          "expected": null,
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "recovery_payment_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "initial_payment_status",
+          "expected": null,
+          "field_path": "payment.status",
+          "observed": "UNKNOWN"
+        },
+        {
+          "code": "status_observation_payment_ref",
+          "expected": "webshop-payment-1",
+          "field_path": "payment_status_observation.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "status_observation_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment_status_observation.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "queried_payment_status",
+          "expected": null,
+          "field_path": "payment_status_observation.status",
+          "observed": "FAILED"
+        },
+        {
+          "code": "status_observation_source",
+          "expected": null,
+          "field_path": "payment_status_observation.source",
+          "observed": "query"
+        },
+        {
+          "code": "status_observed_at",
+          "expected": null,
+          "field_path": "payment_status_observation.observed_at",
+          "observed": "2026-08-02T05:01:01+00:00"
+        },
+        {
+          "code": "recovery_provider_ref",
+          "expected": null,
+          "field_path": "payment.provider_ref",
+          "observed": "offline-provider-payment-1"
+        },
+        {
+          "code": "recovery_idempotency_key",
+          "expected": null,
+          "field_path": "payment.idempotency_key",
+          "observed": "idem-webshop-request-1"
+        },
+        {
+          "code": "status_observation_provider_ref",
+          "expected": "offline-provider-payment-1",
+          "field_path": "payment_status_observation.provider_ref",
+          "observed": "offline-provider-payment-1"
+        },
+        {
+          "code": "payment_execution_binding_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.payment_execution_binding.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "payment_execution_binding_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.payment_execution_binding.reason_codes",
+          "observed": "payment_execution_binding_match"
+        },
+        {
+          "code": "payment_authority_ref",
+          "expected": "experiment-context-mandate-ref-v1",
+          "field_path": "payment.authority_ref",
+          "observed": "experiment-context-mandate-ref-v1"
+        },
+        {
+          "code": "payment_authority_version_ref",
+          "expected": "experiment-authority-v1",
+          "field_path": "request.authority_version_ref",
+          "observed": "experiment-authority-v1"
+        },
+        {
+          "code": "payment_request_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "request.order_ref",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_request_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.request_id",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_transaction_object_ref",
+          "expected": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "field_path": "payment.transaction_object_ref",
+          "observed": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "code": "payment_execution_order_ref",
+          "expected": "webshop-order-9eccab2b0154fca4af27f322",
+          "field_path": "payment.order_id",
+          "observed": "webshop-order-9eccab2b0154fca4af27f322"
+        },
+        {
+          "code": "payment_execution_agent_ref",
+          "expected": "webshop-agent-1",
+          "field_path": "payment.agent_ref",
+          "observed": "webshop-agent-1"
+        },
+        {
+          "code": "payment_execution_payee_ref",
+          "expected": "webshop-experiment-payee-v1",
+          "field_path": "payment.payee",
+          "observed": "webshop-experiment-payee-v1"
+        },
+        {
+          "code": "payment_execution_amount_ref",
+          "expected": "877.80",
+          "field_path": "payment.amount",
+          "observed": "877.80"
+        },
+        {
+          "code": "payment_execution_currency_ref",
+          "expected": "USD",
+          "field_path": "payment.currency",
+          "observed": "USD"
+        },
+        {
+          "code": "payment_execution_identity_ref",
+          "expected": null,
+          "field_path": "payment.payment_id",
+          "observed": "webshop-payment-1"
+        },
+        {
+          "code": "status_observation_verification_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.status_observation.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "status_observation_verification_reasons",
+          "expected": null,
+          "field_path": "trusted_execution.status_observation.reason_codes",
+          "observed": "original_transaction_binding_match"
+        },
+        {
+          "code": "idempotency_verification_status",
+          "expected": "VALID",
+          "field_path": "trusted_execution.idempotency.status",
+          "observed": "VALID"
+        },
+        {
+          "code": "idempotency_verification_reason",
+          "expected": null,
+          "field_path": "trusted_execution.idempotency.reason_code",
+          "observed": "idempotency_boundary_present"
+        },
+        {
+          "code": "idempotency_related_attempt_count",
+          "expected": null,
+          "field_path": "trusted_execution.idempotency.related_attempts",
+          "observed": "0"
+        }
+      ],
+      "initial_status": "UNKNOWN",
+      "issues": [
+        {
+          "code": "payment_confirmed_failed_retry_candidate",
+          "message": "the original payment is terminal failed and no successful or unresolved parallel attempt exists"
+        }
+      ],
+      "limitations": [
+        "simulation_only",
+        "does_not_execute_real_payment_retry",
+        "trusted_execution_facts_do_not_choose_recovery_action",
+        "status_observations_are_fixed_offline_fixtures"
+      ],
+      "next_action": "safe_retry_candidate_with_same_idempotency_boundary",
+      "observed_status": "FAILED",
+      "recovery_status": "RETRY_CANDIDATE",
+      "retry_allowed": true,
+      "rule_version": "payment-recovery-rules-v0.2"
+    },
+    "ready": true,
+    "reason_codes": [
+      "payment:initial_status:unknown",
+      "recovery:status:retry_candidate",
+      "recovery:next_action:safe_retry_candidate_with_same_idempotency_boundary",
+      "recovery:payment_confirmed_failed_retry_candidate",
+      "lifecycle:payment_status:failed",
+      "lifecycle:fulfillment_status:pending",
+      "lifecycle:task_status:failed",
+      "lifecycle:remediation:not_required",
+      "lifecycle:payment_execution_failed",
+      "retry:offline_candidate_only"
+    ],
+    "retry_allowed": true,
+    "status_conflict": null
+  }
+}

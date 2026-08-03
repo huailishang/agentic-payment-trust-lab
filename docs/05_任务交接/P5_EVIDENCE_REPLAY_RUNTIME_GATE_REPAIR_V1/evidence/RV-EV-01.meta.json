@@ -1,0 +1,21 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-01",
+  "command_argv": [
+    "powershell",
+    "-NoProfile",
+    "-Command",
+    "Get-Content src\\agentic_payment_experiment\\runner.py | Select-Object -Skip 259 -First 70"
+  ],
+  "command_display": "powershell -NoProfile -Command \"Get-Content src\\agentic_payment_experiment\\runner.py | Select-Object -Skip 259 -First 70\"",
+  "working_directory": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+  "started_at_utc": "2026-07-31T09:01:30.435558+00:00",
+  "finished_at_utc": "2026-07-31T09:01:30.818044+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-01.stdout.log",
+  "stderr_path": "RV-EV-01.stderr.log",
+  "stdout_bytes": 3029,
+  "stderr_bytes": 0,
+  "stdout_sha256": "e52f08ef2fac9ea08dd8ce61ffef13676d0713d06f586122b8bebcbffdc32428",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

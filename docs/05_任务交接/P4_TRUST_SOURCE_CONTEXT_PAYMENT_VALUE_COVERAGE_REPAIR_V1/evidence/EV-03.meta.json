@@ -1,0 +1,13 @@
+﻿{
+    "stdout_path":  "EV-03.stdout.log",
+    "command_display":  "python -m unittest tests.trusted_execution.test_context_policy tests.trusted_execution.test_payment_binding tests.test_runner -v",
+    "stdout_sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "label":  "EV-03",
+    "working_directory":  "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+    "stderr_path":  "EV-03.stderr.log",
+    "stderr_bytes":  5283,
+    "schema":  "evaluator-executor-evidence/v1",
+    "exit_code":  0,
+    "stdout_bytes":  0,
+    "stderr_sha256":  "7bd5ec112550b130a6a22695409d801f309ed5b119658b44febd6de945340b2b"
+}

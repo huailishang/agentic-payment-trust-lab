@@ -1,0 +1,16 @@
+APPROVED_FILE_ID=1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib
+APPROVED_FILENAME=items_shuffle_1000.json
+PROBE_URL=https://drive.google.com/uc?export=download&id=1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib
+POWERSHELL_EXIT_CODE=0
+RESPONSE_BYTES=939351
+RESPONSE_SHA256=5f6b4123aa266c4f7ff11d9739c57112435db4ea3aaeb6c629b5910d5394064c
+RESPONSE_PREFIX=b'<!doctype html><html lang="en-US" dir="ltr"><head><base href="https://accounts.google.com/v3/signin/"><link rel="preconnect" href="//www.gstatic.com"><meta name="referrer" content='
+IS_JSON_PREFIX=False
+IS_GOOGLE_SIGNIN_HTML=True
+DATA_PRESENT[items_shuffle_1000.json]=False
+DATA_PRESENT[items_ins_v2_1000.json]=False
+DATA_PRESENT[items_human_ins.json]=False
+STOP_CONDITION=small data cannot be fetched using the approved ID as valid JSON
+INDEX_BUILD_EXECUTED=False
+RUNTIME_SMOKE_EXECUTED=False
+BUY_NOW_EXECUTED=False

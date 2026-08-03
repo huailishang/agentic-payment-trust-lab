@@ -1,0 +1,21 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-02",
+  "command_argv": [
+    "env",
+    "PYTHONPATH=src",
+    "python3",
+    "docs/05_任务交接/P9_WEBSHOP_COMMERCE_ADAPTER_V1/evidence/RV-EV-02_mapping_check.py"
+  ],
+  "command_display": "env PYTHONPATH=src python3 'docs/05_任务交接/P9_WEBSHOP_COMMERCE_ADAPTER_V1/evidence/RV-EV-02_mapping_check.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T09:19:53.886410+00:00",
+  "finished_at_utc": "2026-08-02T09:19:54.852052+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-02.stdout.log",
+  "stderr_path": "RV-EV-02.stderr.log",
+  "stdout_bytes": 783,
+  "stderr_bytes": 0,
+  "stdout_sha256": "4256155393daa9eb5e59fcd87cc06e661879085f0413a1be6990862fe4b03e8f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

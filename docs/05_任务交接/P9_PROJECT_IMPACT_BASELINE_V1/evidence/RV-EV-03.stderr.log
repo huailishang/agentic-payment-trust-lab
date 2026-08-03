@@ -1,0 +1,17 @@
+test_cli_exits_zero_with_honestly_reported_capability_gaps (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_cli_exits_zero_with_honestly_reported_capability_gaps) ... ok
+test_current_baseline_records_five_complete_tasks_and_seven_trace_gaps (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_current_baseline_records_five_complete_tasks_and_seven_trace_gaps) ... ok
+test_expected_values_are_not_generated_from_actual_output (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_expected_values_are_not_generated_from_actual_output) ... ok
+test_external_regressions_are_separate_guardrails_not_the_main_metric (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_external_regressions_are_separate_guardrails_not_the_main_metric) ... ok
+test_fixture_freezes_t01_t12_in_order_and_covers_four_decisions (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_fixture_freezes_t01_t12_in_order_and_covers_four_decisions) ... ok
+test_four_task_spot_checks_use_actual_public_api_evidence (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_four_task_spot_checks_use_actual_public_api_evidence) ... ok
+test_invalid_fixture_fails_before_measurement (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_invalid_fixture_fails_before_measurement) ... ok
+test_main_metric_and_guardrails_match_hand_calculation (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_main_metric_and_guardrails_match_hand_calculation) ... ok
+test_repeat_three_has_identical_normalized_digests (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_repeat_three_has_identical_normalized_digests) ... ok
+test_report_is_machine_readable_primitive_only_and_records_hashes (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_report_is_machine_readable_primitive_only_and_records_hashes) ... ok
+test_runner_static_boundary_has_no_product_patch_network_or_second_rule_engine (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_runner_static_boundary_has_no_product_patch_network_or_second_rule_engine) ... ok
+test_unknown_duplicate_and_conflict_tasks_preserve_safe_semantics (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_unknown_duplicate_and_conflict_tasks_preserve_safe_semantics) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 3.177s
+
+OK

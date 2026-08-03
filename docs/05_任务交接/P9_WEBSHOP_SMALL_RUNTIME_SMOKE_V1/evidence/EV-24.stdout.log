@@ -1,0 +1,44 @@
+===== COMMAND 1 =====
+ARGV=["/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe", "install", "-n", "webshop38", "--override-channels", "-c", "https://conda.anaconda.org/pytorch", "-c", "https://conda.anaconda.org/conda-forge", "--strict-channel-priority", "faiss-cpu=1.7.4", "-y"]
+EXIT_CODE=0
+Channels:
+ - pytorch
+ - conda-forge
+Platform: win-64
+Collecting package metadata (repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38
+
+  added / updated specs:
+    - faiss-cpu=1.7.4
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    faiss-cpu-1.7.4            |py3.8_h2272212_0_cpu         1.4 MB  pytorch
+    libfaiss-1.7.4             |   h2e52968_0_cpu         1.2 MB  pytorch
+    ------------------------------------------------------------
+                                           Total:         2.6 MB
+
+The following NEW packages will be INSTALLED:
+
+  faiss-cpu          pytorch/win-64::faiss-cpu-1.7.4-py3.8_h2272212_0_cpu 
+  libfaiss           pytorch/win-64::libfaiss-1.7.4-h2e52968_0_cpu 
+
+
+
+Downloading and Extracting Packages: ...working... done
+Preparing transaction: ...working... done
+Verifying transaction: ...working... done
+Executing transaction: ...working... done
+===== COMMAND 2 =====
+ARGV=["/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe", "run", "-n", "webshop38", "python", "-c", "import faiss, pyserini; print(\"faiss\", faiss.__version__); print(\"pyserini\", getattr(pyserini,\"__version__\",\"0.17.0\"))"]
+EXIT_CODE=1
+BUY_NOW_EXECUTED=False
+COMMIT_EXECUTED=False
+PUSH_EXECUTED=False

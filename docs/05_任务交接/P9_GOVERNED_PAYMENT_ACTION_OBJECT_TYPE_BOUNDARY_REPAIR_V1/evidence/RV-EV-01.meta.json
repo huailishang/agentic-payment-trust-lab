@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-01",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "PYTHONPATH=src:. python3 docs/05_任务交接/P9_GOVERNED_PAYMENT_ACTION_OBJECT_TYPE_BOUNDARY_REPAIR_V1/evidence/RV-EV-01_independent_type_boundary.py"
+  ],
+  "command_display": "bash -lc 'PYTHONPATH=src:. python3 docs/05_任务交接/P9_GOVERNED_PAYMENT_ACTION_OBJECT_TYPE_BOUNDARY_REPAIR_V1/evidence/RV-EV-01_independent_type_boundary.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-03T05:44:42.115931+00:00",
+  "finished_at_utc": "2026-08-03T05:44:43.159406+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-01.stdout.log",
+  "stderr_path": "RV-EV-01.stderr.log",
+  "stdout_bytes": 4781,
+  "stderr_bytes": 0,
+  "stdout_sha256": "fb9d91605eca37b0aef9e79c40f10806dec17fd9add0bd64a8a1c68d1b10fc8e",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

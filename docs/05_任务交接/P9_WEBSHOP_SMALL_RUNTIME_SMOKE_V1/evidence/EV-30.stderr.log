@@ -1,0 +1,18 @@
+===== COMMAND 1 STDERR =====
+===== COMMAND 2 STDERR =====
+Warning: Gym version v0.24.0 has a number of critical issues with `gym.make` such that the `reset` and `step` functions are called before returning the environment. It is recommend to downgrading to v0.23.1 or upgrading to v0.25.1
+D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\jnius_config.py:72: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+  from pkg_resources import resource_filename
+D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\pkg_resources\__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google')`.
+Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+  declare_namespace(pkg)
+D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\faiss\loader.py:28: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if LooseVersion(numpy.__version__) >= "1.19":
+D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\setuptools\_distutils\version.py:337: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  other = LooseVersion(other)
+
+  0%|          | 0/1000 [00:00<?, ?it/s]
+100%|██████████| 1000/1000 [00:00<00:00, 48967.99it/s]
+D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\bs4\element.py:784: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  warnings.warn(
+

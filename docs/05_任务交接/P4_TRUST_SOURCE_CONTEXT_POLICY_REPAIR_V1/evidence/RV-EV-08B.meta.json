@@ -1,0 +1,21 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-08B",
+  "command_argv": [
+    "git",
+    "status",
+    "--short",
+    "--untracked-files=all"
+  ],
+  "command_display": "git status --short --untracked-files=all",
+  "working_directory": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+  "started_at_utc": "2026-07-31T07:20:07.806763+00:00",
+  "finished_at_utc": "2026-07-31T07:20:07.871567+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-08B.stdout.log",
+  "stderr_path": "RV-EV-08B.stderr.log",
+  "stdout_bytes": 15051,
+  "stderr_bytes": 0,
+  "stdout_sha256": "b6ad8ad360e467700eaf88287fb460e89c7ef375ae74bd49a1666aa402efe707",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,127 @@
+{
+  "label": "EV-17",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T03:29:35.272230+00:00",
+  "finished_at_utc": "2026-08-02T03:29:53.508783+00:00",
+  "exit_code": 0,
+  "semantic_result": "GOOGLE_DRIVE_PERMISSION_CONFIRMED; THREE_MIRROR_SHA256_CONSENSUS",
+  "gdown_version": "6.1.0",
+  "diagnostic_python": "3.12.3",
+  "records": [
+    {
+      "name": "gdown_version",
+      "exit_code": 0
+    },
+    {
+      "name": "gdown_default_items_shuffle_1000.json",
+      "command": [
+        "/mnt/c/Users/HUAILI~1/AppData/Local/Temp/webshop-gdown610-7fzl53eh/venv/Scripts/python.exe",
+        "-m",
+        "gdown",
+        "https://drive.google.com/uc?id=1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib",
+        "-O",
+        "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-gdown610-7fzl53eh\\ev17_default_items_shuffle_1000.json"
+      ],
+      "exit_code": 1
+    },
+    {
+      "name": "gdown_no_cookies_items_shuffle_1000.json",
+      "command": [
+        "/mnt/c/Users/HUAILI~1/AppData/Local/Temp/webshop-gdown610-7fzl53eh/venv/Scripts/python.exe",
+        "-m",
+        "gdown",
+        "https://drive.google.com/uc?id=1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib",
+        "-O",
+        "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-gdown610-7fzl53eh\\ev17_no_cookies_items_shuffle_1000.json",
+        "--no-cookies"
+      ],
+      "exit_code": 1
+    },
+    {
+      "name": "gdown_default_items_ins_v2_1000.json",
+      "command": [
+        "/mnt/c/Users/HUAILI~1/AppData/Local/Temp/webshop-gdown610-7fzl53eh/venv/Scripts/python.exe",
+        "-m",
+        "gdown",
+        "https://drive.google.com/uc?id=1IduG0xl544V_A_jv3tHXC0kyFi7PnyBu",
+        "-O",
+        "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-gdown610-7fzl53eh\\ev17_default_items_ins_v2_1000.json"
+      ],
+      "exit_code": 1
+    },
+    {
+      "name": "gdown_no_cookies_items_ins_v2_1000.json",
+      "command": [
+        "/mnt/c/Users/HUAILI~1/AppData/Local/Temp/webshop-gdown610-7fzl53eh/venv/Scripts/python.exe",
+        "-m",
+        "gdown",
+        "https://drive.google.com/uc?id=1IduG0xl544V_A_jv3tHXC0kyFi7PnyBu",
+        "-O",
+        "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-gdown610-7fzl53eh\\ev17_no_cookies_items_ins_v2_1000.json",
+        "--no-cookies"
+      ],
+      "exit_code": 1
+    },
+    {
+      "name": "gdown_default_items_human_ins.json",
+      "command": [
+        "/mnt/c/Users/HUAILI~1/AppData/Local/Temp/webshop-gdown610-7fzl53eh/venv/Scripts/python.exe",
+        "-m",
+        "gdown",
+        "https://drive.google.com/uc?id=14Kb5SPBk_jfdLZ_CDBNitW98QLDlKR5O",
+        "-O",
+        "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-gdown610-7fzl53eh\\ev17_default_items_human_ins.json"
+      ],
+      "exit_code": 1
+    },
+    {
+      "name": "gdown_no_cookies_items_human_ins.json",
+      "command": [
+        "/mnt/c/Users/HUAILI~1/AppData/Local/Temp/webshop-gdown610-7fzl53eh/venv/Scripts/python.exe",
+        "-m",
+        "gdown",
+        "https://drive.google.com/uc?id=14Kb5SPBk_jfdLZ_CDBNitW98QLDlKR5O",
+        "-O",
+        "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-gdown610-7fzl53eh\\ev17_no_cookies_items_human_ins.json",
+        "--no-cookies"
+      ],
+      "exit_code": 1
+    }
+  ],
+  "consensus": {
+    "items_shuffle_1000.json": {
+      "hashes": {
+        "HongbangYuan": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269",
+        "YWZBrandon": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269",
+        "Merlin-Hongru": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269"
+      },
+      "all_equal": true
+    },
+    "items_ins_v2_1000.json": {
+      "hashes": {
+        "HongbangYuan": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f",
+        "YWZBrandon": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f",
+        "Merlin-Hongru": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f"
+      },
+      "all_equal": true
+    },
+    "items_human_ins.json": {
+      "hashes": {
+        "HongbangYuan": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3",
+        "YWZBrandon": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3",
+        "Merlin-Hongru": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3"
+      },
+      "all_equal": true
+    }
+  },
+  "mirror_files_copied_to_runtime": false,
+  "runtime_smoke_executed": false,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-17.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-17.stderr.log",
+  "stdout_sha256": "7ef9f0da053cb084662d1e62899b5f952c669ae2a7884fe20d43ac9eb0ebe70e",
+  "stderr_sha256": "c90ebb4b3e201848156843a783c97767226c77650070d7802fd0807e714d5272",
+  "command_display": "multiple commands and diagnostics; see original records[] and immutable stdout/stderr evidence",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 8041,
+  "stderr_bytes": 2916
+}

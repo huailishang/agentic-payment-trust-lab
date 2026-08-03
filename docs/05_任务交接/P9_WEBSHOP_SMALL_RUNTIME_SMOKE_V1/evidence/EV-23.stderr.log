@@ -1,0 +1,37 @@
+===== checkout_only STDERR =====
+===== download_items_shuffle_1000.json STDERR =====
+===== download_items_ins_v2_1000.json STDERR =====
+===== download_items_human_ins.json STDERR =====
+===== validate_and_promote STDERR =====
+===== validate_promoted_data STDERR =====
+===== build_resources_1k STDERR =====
+===== build_indexes_1k STDERR =====
+===== direct_lucene_query STDERR =====
+Traceback (most recent call last):
+  File "D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\scripts\validation\webshop\verify_webshop_small_assets.py", line 551, in query_index_1k
+    from pyserini.search.lucene import LuceneSearcher
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\pyserini\search\__init__.py", line 19, in <module>
+    from .lucene import JLuceneSearcherResult, LuceneSimilarities, LuceneFusionSearcher, LuceneSearcher
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\pyserini\search\lucene\__init__.py", line 18, in <module>
+    from ._impact_searcher import JImpactSearcherResult, LuceneImpactSearcher
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\pyserini\search\lucene\_impact_searcher.py", line 28, in <module>
+    from pyserini.encode import QueryEncoder, TokFreqQueryEncoder, UniCoilQueryEncoder, \
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\pyserini\encode\__init__.py", line 17, in <module>
+    from ._base import DocumentEncoder, QueryEncoder, JsonlCollectionIterator,\
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\pyserini\encode\_base.py", line 19, in <module>
+    import faiss
+ModuleNotFoundError: No module named 'faiss'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\scripts\validation\webshop\verify_webshop_small_assets.py", line 667, in <module>
+    raise SystemExit(main())
+  File "D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\scripts\validation\webshop\verify_webshop_small_assets.py", line 655, in main
+    payload = query_index_1k(args.checkout)
+  File "D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\scripts\validation\webshop\verify_webshop_small_assets.py", line 553, in query_index_1k
+    raise WebShopSmallContractError("pyserini is required for direct index query") from exc
+__main__.WebShopSmallContractError: pyserini is required for direct index query
+
+ERROR conda.cli.main_run:execute(124): `conda run python D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\scripts\validation\webshop\verify_webshop_small_assets.py --checkout D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\local_sources\third_party\webshop --expected-commit 64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd --query-index --output D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\docs\05_���񽻽�\P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1\evidence\webshop_small_index_query.json` failed. (See above for error)
+DRIVER_EXCEPTION=RuntimeError('direct_lucene_query failed with exit 1')

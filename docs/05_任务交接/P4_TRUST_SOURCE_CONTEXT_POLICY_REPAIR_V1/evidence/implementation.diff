@@ -1,0 +1,713 @@
+diff --git a/CURRENT.md b/CURRENT.md
+index 5f97a5c..7feaac9 100644
+--- a/CURRENT.md
++++ b/CURRENT.md
+@@ -1,42 +1,43 @@
+-# Evaluator → Executor Current State
++# Evaluator ↔ Executor Current State
+ 
+-<!-- evaluator-executor-workflow:v1 -->
++<!-- evaluator-executor-workflow:v2 -->
+ 
+ ```yaml
+-workflow: evaluator-executor-workflow/v1
+-task_id: P4-TRUST-SOURCE-CONTEXT-POLICY-V1
+-round: 1
+-state: CONTRACT_FROZEN
++workflow: evaluator-executor-workflow/v2
++task_id: P4-TRUST-SOURCE-CONTEXT-POLICY-REPAIR-V1
++state: EXECUTING
+ current_role: Executor
+-baseline_commit: 063dd539589d8e50258b9d2c6225ec45763a776c
+-contract_path: docs/05_任务交接/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/TASK_CONTRACT.md
++baseline_commit: 8acaa9e4319240d258f14d8a23b1f15cc71d09b6
++contract_path: docs/05_任务交接/P4_TRUST_SOURCE_CONTEXT_POLICY_REPAIR_V1/CONTRACT.md
+ executor_report_path: NONE
+ evaluator_review_path: NONE
+-round_dispatch_path: NONE
+-prior_executor_report_path: NONE
+-prior_evaluator_review_path: NONE
+-next_artifact_path: docs/05_任务交接/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/EXECUTOR_REPORT.md
++next_artifact_path: docs/05_任务交接/P4_TRUST_SOURCE_CONTEXT_POLICY_REPAIR_V1/REPORT.md
++authorization_commit: false
++authorization_push: false
++authorization_history_rewrite: false
++authorization_api_call: false
+ ```
+ 
+ ## Current action
+ 
+ ```text
+ Read:
+-- docs/05_任务交接/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/TASK_CONTRACT.md
+-- docs/03_架构设计/Agent_Trust_Control_Plane_最小领域模型_v1.md
+-- docs/02_未来规划/整体修正执行计划_20260729.md
++- docs/05_任务交接/P4_TRUST_SOURCE_CONTEXT_POLICY_REPAIR_V1/CONTRACT.md
++- docs/05_任务交接/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/EVALUATOR_REVIEW.md
+ 
+ Do:
+-- 仅按冻结契约实现 P4 Trust Source / Context / Policy Input v1。
+-- 为每个 AC-* 保存完整、可复现的 EV-* 原始证据。
+-- 创建 next_artifact_path 指定的执行者报告，状态只能是 READY_FOR_REVIEW、PARTIAL 或 BLOCKED。
++- 先把 CURRENT.md 从 CONTRACT_FROZEN 切换为 EXECUTING，角色保持 Executor。
++- 仅修复 value_ref 未解析写入和关键支付事实来源覆盖绕过。
++- 按 CONTRACT.md 生成 EV-* 三件套和 REPORT.md 草稿。
++- 报告格式问题在 EXECUTING 状态原位修正，不创建新 round。
+ 
+ Do not:
+-- 不修改 CURRENT.md、冻结契约或 P3 历史交接产物。
+-- 不接入外部策略/身份服务，不实现 P5 Replay，不执行真实支付。
+-- 不签发 PASS、REJECTED、HUMAN_REQUIRED 或 REWORK。
++- 不修改原 P4 的报告、评估和 RV-EV-* 证据。
++- 不 commit、不 push、不调用外部 API、不改写历史。
++- 不接入外部解析器、策略/身份服务、P5 Replay 或真实支付。
++- 不签发 PASS、REJECTED 或 HUMAN_REQUIRED。
+ ```
+ 
+ ## Handoff rule
+ 
+-创建 `next_artifact_path` 指定的执行者报告后停止。由评估者验证 task_id、基线、实现提交和证据路径后接管评审。
++执行者在 REPORT.md 草稿和 EV-* 证据通过工作流校验前保持 EXECUTING。完成后停止，由 Evaluator 接管并切换 READY_FOR_REVIEW。
+diff --git a/src/agentic_payment_experiment/payment_execution.py b/src/agentic_payment_experiment/payment_execution.py
+index 6a37649..c113186 100644
+--- a/src/agentic_payment_experiment/payment_execution.py
++++ b/src/agentic_payment_experiment/payment_execution.py
+@@ -17,16 +17,28 @@ from .models import (
+     ValidationIssue,
+ )
+ from .trusted_execution import (
++    POLICY_VERSION,
+     ContextPolicyFact,
+     IdentityAssuranceFact,
+     IdentityAssuranceLevel,
+     PaymentExecutionBindingFact,
+     VerificationStatus,
++    SourceCoverage,
++    SourceType,
++    canonical_hash,
+     missing_context_policy_fact,
+     verify_agent_executor_identity,
+     verify_payment_execution_binding,
+ )
+ 
++PAYMENT_CONTEXT_ACTION = "execute_payment"
++PAYMENT_REQUIRED_SOURCE_PATHS = (
++    "final_order.order_id",
++    "mandate.mandate_id",
++    "request.agent_id",
++    "request.request_id",
++)
++
+ 
+ @dataclass(frozen=True)
+ class PaymentExecutionGateOutcome:
+@@ -139,7 +151,15 @@ def execute_with_payment_binding_gate(
+             policy_fact,
+             False,
+         )
+-    if not policy_fact.policy_version or not policy_fact.current_action:
++    if (
++        policy_fact.policy_version != POLICY_VERSION
++        or policy_fact.current_action != PAYMENT_CONTEXT_ACTION
++        or policy_fact.required_source_paths != PAYMENT_REQUIRED_SOURCE_PATHS
++        or policy_fact.covered_source_paths != PAYMENT_REQUIRED_SOURCE_PATHS
++        or policy_fact.missing_source_paths
++        or policy_fact.source_coverage
++        != _expected_payment_source_coverage(mandate, order, request)
++    ):
+         return PaymentExecutionGateOutcome(
+             Decision.INDETERMINATE,
+             binding_fact,
+@@ -157,6 +177,25 @@ def execute_with_payment_binding_gate(
+     )
+ 
+ 
++def _expected_payment_source_coverage(
++    mandate: IntentMandate | None,
++    order: Order | None,
++    request: TransactionRequest | None,
++) -> tuple[SourceCoverage, ...]:
++    if mandate is None or order is None or request is None:
++        return ()
++    values = (
++        ("final_order.order_id", SourceType.USER_CONFIRMED, order.order_id),
++        ("mandate.mandate_id", SourceType.USER_CONFIRMED, mandate.mandate_id),
++        ("request.agent_id", SourceType.USER_CONFIRMED, request.agent_id),
++        ("request.request_id", SourceType.PROTOCOL_VERIFIED, request.request_id),
++    )
++    return tuple(
++        SourceCoverage(path, source, canonical_hash(value))
++        for path, source, value in values
++    )
++
++
+ def identity_assurance_evidence(
+     fact: IdentityAssuranceFact,
+ ) -> tuple[EvidenceRef, ...]:
+diff --git a/src/agentic_payment_experiment/runner.py b/src/agentic_payment_experiment/runner.py
+index bc46f76..1060a18 100644
+--- a/src/agentic_payment_experiment/runner.py
++++ b/src/agentic_payment_experiment/runner.py
+@@ -15,6 +15,8 @@ from .learning_variants import build_s09_learning_variants
+ from .lifecycle import assess_lifecycle
+ from .models import AgentIdentity, Decision
+ from .payment_execution import (
++    PAYMENT_CONTEXT_ACTION,
++    PAYMENT_REQUIRED_SOURCE_PATHS,
+     execute_with_payment_binding_gate,
+     identity_assurance_evidence,
+ )
+@@ -237,9 +239,23 @@ def _build_identity_assurance_result(
+ 
+     results: list[dict[str, Any]] = []
+     valid_context_fact = evaluate_context_policy(
+-        {},
++        {
++            "mandate": {"mandate_id": source.mandate.mandate_id},
++            "final_order": {"order_id": source.final_order.order_id},
++            "request": {
++                "request_id": source.request.request_id,
++                "agent_id": source.request.agent_id,
++            },
++        },
++        trusted_sources={
++            "mandate.mandate_id": SourceType.USER_CONFIRMED,
++            "final_order.order_id": SourceType.USER_CONFIRMED,
++            "request.request_id": SourceType.PROTOCOL_VERIFIED,
++            "request.agent_id": SourceType.USER_CONFIRMED,
++        },
++        required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
+         policy_version=POLICY_VERSION,
+-        current_action="execute_payment",
++        current_action=PAYMENT_CONTEXT_ACTION,
+     ).fact
+     for case_id, description, identity, current_provider, current_executor in cases:
+         callback_calls: list[str] = []
+@@ -289,10 +305,21 @@ def _build_context_policy_result() -> dict[str, Any]:
+     """Build independent deterministic P4 cases for the formal result card."""
+ 
+     trusted = {
+-        "request": {"amount": "480.00", "payee": "payee-1"},
++        "mandate": {"mandate_id": "mandate-p4"},
++        "final_order": {"order_id": "order-p4"},
++        "request": {
++            "request_id": "request-p4",
++            "agent_id": "agent-p4",
++            "amount": "480.00",
++            "payee": "payee-1",
++        },
+         "payment_status_observation": {"status": "PENDING"},
+     }
+     sources = {
++        "mandate.mandate_id": SourceType.USER_CONFIRMED,
++        "final_order.order_id": SourceType.USER_CONFIRMED,
++        "request.request_id": SourceType.PROTOCOL_VERIFIED,
++        "request.agent_id": SourceType.USER_CONFIRMED,
+         "request.amount": SourceType.USER_CONFIRMED,
+         "request.payee": SourceType.USER_CONFIRMED,
+         "payment_status_observation.status": SourceType.PAYMENT_PROVIDER_OBSERVED,
+@@ -354,8 +381,9 @@ def _build_context_policy_result() -> dict[str, Any]:
+             trusted,
+             updates,
+             trusted_sources=sources,
++            required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
+             policy_version=POLICY_VERSION,
+-            current_action="execute_payment",
++            current_action=PAYMENT_CONTEXT_ACTION,
+             **extra,
+         )
+         output.append(
+@@ -367,6 +395,12 @@ def _build_context_policy_result() -> dict[str, Any]:
+                 "applied_paths": list(result.fact.applied_paths),
+                 "blocked_paths": list(result.fact.blocked_paths),
+                 "reason_codes": list(result.fact.reason_codes),
++                "required_source_paths": list(result.fact.required_source_paths),
++                "covered_source_paths": list(result.fact.covered_source_paths),
++                "missing_source_paths": list(result.fact.missing_source_paths),
++                "source_coverage": [
++                    asdict(item) for item in result.fact.source_coverage
++                ],
+                 "trusted_state_changed": result.fact.trusted_state_changed,
+                 "unauthorized_state_change_detected": (
+                     result.fact.unauthorized_state_change_detected
+diff --git a/src/agentic_payment_experiment/trusted_execution/__init__.py b/src/agentic_payment_experiment/trusted_execution/__init__.py
+index 81b8891..d79c21e 100644
+--- a/src/agentic_payment_experiment/trusted_execution/__init__.py
++++ b/src/agentic_payment_experiment/trusted_execution/__init__.py
+@@ -23,6 +23,7 @@ from .context_policy import (
+     ContextPolicyResult,
+     FactDomain,
+     SourceType,
++    SourceCoverage,
+     evaluate_context_policy,
+     infer_fact_domain,
+     missing_context_policy_fact,
+@@ -63,6 +64,7 @@ __all__ = [
+     "IdentityAssuranceLevel",
+     "FactDomain",
+     "SourceType",
++    "SourceCoverage",
+     "POLICY_VERSION",
+     "VerificationResult",
+     "VerificationStatus",
+diff --git a/src/agentic_payment_experiment/trusted_execution/context_policy.py b/src/agentic_payment_experiment/trusted_execution/context_policy.py
+index 2bdb243..f666207 100644
+--- a/src/agentic_payment_experiment/trusted_execution/context_policy.py
++++ b/src/agentic_payment_experiment/trusted_execution/context_policy.py
+@@ -13,6 +13,7 @@ from enum import Enum
+ from typing import Any, Mapping
+ 
+ from .execution_facts import VerificationStatus
++from .hashing import canonical_hash
+ 
+ 
+ class SourceType(str, Enum):
+@@ -47,6 +48,13 @@ class CandidateFactUpdate:
+     source_ref: str | None = None
+ 
+ 
++@dataclass(frozen=True)
++class SourceCoverage:
++    target_path: str
++    source_type: SourceType
++    value_digest: str
++
++
+ @dataclass(frozen=True)
+ class ContextPolicyFact:
+     status: VerificationStatus
+@@ -56,6 +64,10 @@ class ContextPolicyFact:
+     applied_paths: tuple[str, ...]
+     blocked_paths: tuple[str, ...]
+     source_refs: tuple[str, ...]
++    required_source_paths: tuple[str, ...]
++    covered_source_paths: tuple[str, ...]
++    missing_source_paths: tuple[str, ...]
++    source_coverage: tuple[SourceCoverage, ...]
+     trusted_state_changed: bool
+     unauthorized_state_change_detected: bool
+ 
+@@ -92,6 +104,16 @@ _PROTECTED_EXISTING_SOURCES = frozenset(
+     }
+ )
+ 
++_COVERAGE_SOURCE_TYPES = frozenset(
++    {
++        SourceType.USER_CONFIRMED,
++        SourceType.SYSTEM_POLICY,
++        SourceType.MERCHANT_PROVIDED,
++        SourceType.PROTOCOL_VERIFIED,
++        SourceType.PAYMENT_PROVIDER_OBSERVED,
++    }
++)
++
+ 
+ def infer_fact_domain(target_path: str) -> FactDomain | None:
+     """Map a concrete trusted-state path to its closed fact domain."""
+@@ -120,6 +142,7 @@ def evaluate_context_policy(
+     updates: tuple[CandidateFactUpdate, ...] = (),
+     *,
+     trusted_sources: Mapping[str, SourceType] | None = None,
++    required_source_paths: tuple[str, ...] = (),
+     policy_version: str | None = POLICY_VERSION,
+     current_action: str | None,
+     observed_state_after: Mapping[str, Any] | None = None,
+@@ -133,6 +156,10 @@ def evaluate_context_policy(
+     blocked: list[str] = []
+     reasons: list[str] = []
+     refs: list[str] = []
++    required_paths = tuple(sorted(set(required_source_paths)))
++    covered_paths: list[str] = []
++    missing_paths: list[str] = []
++    coverage: list[SourceCoverage] = []
+     missing = not policy_version or not current_action
+     if not policy_version:
+         reasons.append("context_policy_version_missing")
+@@ -159,8 +186,13 @@ def evaluate_context_policy(
+             allowed = False
+         else:
+             refs.append(update.source_ref)
+-        if update.value is None and not update.value_ref:
+-            reasons.append(f"candidate_value_missing:{path}")
++        if update.value is None:
++            reason = (
++                f"value_ref_unresolved:{path}"
++                if update.value_ref
++                else f"candidate_value_missing:{path}"
++            )
++            reasons.append(reason)
+             missing = True
+             allowed = False
+         if inferred is None or domain is not inferred:
+@@ -186,6 +218,31 @@ def evaluate_context_policy(
+         else:
+             blocked.append(path)
+ 
++    for path in required_paths:
++        source = _enum_value(SourceType, merged_sources.get(path))
++        domain = infer_fact_domain(path)
++        if not _path_exists(merged, path):
++            reasons.append(f"required_fact_missing:{path}")
++            missing_paths.append(path)
++            missing = True
++        elif (
++            source not in _COVERAGE_SOURCE_TYPES
++            or domain is None
++            or (source, domain) not in _ALLOWED_WRITES
++        ):
++            reasons.append(f"required_source_missing_or_invalid:{path}")
++            missing_paths.append(path)
++            missing = True
++        else:
++            covered_paths.append(path)
++            coverage.append(
++                SourceCoverage(
++                    target_path=path,
++                    source_type=source,
++                    value_digest=canonical_hash(_get_path(merged, path)),
++                )
++            )
++
+     unauthorized = False
+     if observed_state_after is not None and deepcopy(dict(observed_state_after)) != merged:
+         unauthorized = True
+@@ -210,6 +267,10 @@ def evaluate_context_policy(
+         applied_paths=tuple(sorted(applied)),
+         blocked_paths=tuple(sorted(set(blocked))),
+         source_refs=tuple(sorted(set(refs))),
++        required_source_paths=required_paths,
++        covered_source_paths=tuple(sorted(covered_paths)),
++        missing_source_paths=tuple(sorted(missing_paths)),
++        source_coverage=tuple(sorted(coverage, key=lambda item: item.target_path)),
+         trusted_state_changed=before != merged,
+         unauthorized_state_change_detected=unauthorized,
+     )
+@@ -225,6 +286,10 @@ def missing_context_policy_fact() -> ContextPolicyFact:
+         applied_paths=(),
+         blocked_paths=(),
+         source_refs=(),
++        required_source_paths=(),
++        covered_source_paths=(),
++        missing_source_paths=(),
++        source_coverage=(),
+         trusted_state_changed=False,
+         unauthorized_state_change_detected=False,
+     )
+@@ -251,3 +316,19 @@ def _set_path(target: dict[str, Any], path: str, value: Any) -> None:
+             raise ValueError(f"target path crosses a non-object: {path}")
+         cursor = child
+     cursor[parts[-1]] = value
++
++
++def _path_exists(state: Mapping[str, Any], path: str) -> bool:
++    cursor: Any = state
++    for part in path.split("."):
++        if not isinstance(cursor, Mapping) or part not in cursor:
++            return False
++        cursor = cursor[part]
++    return True
++
++
++def _get_path(state: Mapping[str, Any], path: str) -> Any:
++    cursor: Any = state
++    for part in path.split("."):
++        cursor = cursor[part]
++    return cursor
+diff --git a/tests/test_runner.py b/tests/test_runner.py
+index 444585d..3811f96 100644
+--- a/tests/test_runner.py
++++ b/tests/test_runner.py
+@@ -256,6 +256,14 @@ class ScenarioRunnerTest(unittest.TestCase):
+                 "INVALID",
+                 p4_cases["P4-INVALID-STATE-POLLUTION"]["status"],
+             )
++            self.assertEqual(
++                4,
++                len(
++                    p4_cases["P4-ALLOWED-PROVIDER-STATUS"][
++                        "source_coverage"
++                    ]
++                ),
++            )
+ 
+             json_path = artifacts_dir / "scenario_result_card.json"
+             html_path = artifacts_dir / "scenario_report.html"
+diff --git a/tests/trusted_execution/test_context_policy.py b/tests/trusted_execution/test_context_policy.py
+index 85bd5d3..6bc598e 100644
+--- a/tests/trusted_execution/test_context_policy.py
++++ b/tests/trusted_execution/test_context_policy.py
+@@ -2,6 +2,7 @@ from __future__ import annotations
+ 
+ import unittest
+ import sys
++from copy import deepcopy
+ from pathlib import Path
+ 
+ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
+@@ -157,6 +158,78 @@ class ContextPolicyTests(unittest.TestCase):
+         self.assertIn("context_policy_version_missing", result.fact.reason_codes)
+         self.assertIn("context_current_action_missing", result.fact.reason_codes)
+ 
++    def test_unresolved_value_ref_is_blocked_without_writing_none(self) -> None:
++        before = deepcopy(self.state)
++        update = CandidateFactUpdate(
++            SourceType.PAYMENT_PROVIDER_OBSERVED,
++            FactDomain.PAYMENT_STATUS,
++            "payment_status_observation.status",
++            value_ref="provider://status/1",
++            source_ref="offline-provider",
++        )
++        result = self.evaluate(update)
++        self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.fact.status)
++        self.assertEqual((), result.fact.applied_paths)
++        self.assertEqual(
++            ("payment_status_observation.status",), result.fact.blocked_paths
++        )
++        self.assertIn(
++            "value_ref_unresolved:payment_status_observation.status",
++            result.fact.reason_codes,
++        )
++        self.assertNotIn("payment_status_observation", result.trusted_state)
++        self.assertEqual(before, self.state)
++
++    def test_required_source_coverage_is_missing_partial_or_complete(self) -> None:
++        required = (
++            "mandate.max_amount",
++            "request.agent_id",
++            "request.amount",
++        )
++        cases = (
++            ("empty", {}, VerificationStatus.MISSING_EVIDENCE, required),
++            (
++                "partial",
++                {"mandate.max_amount": SourceType.USER_CONFIRMED},
++                VerificationStatus.MISSING_EVIDENCE,
++                ("request.agent_id", "request.amount"),
++            ),
++            (
++                "complete",
++                self.sources,
++                VerificationStatus.VALID,
++                (),
++            ),
++        )
++        for name, sources, expected_status, missing in cases:
++            with self.subTest(name=name):
++                result = evaluate_context_policy(
++                    self.state,
++                    trusted_sources=sources,
++                    required_source_paths=required,
++                    current_action="execute_payment",
++                )
++                self.assertEqual(expected_status, result.fact.status)
++                self.assertEqual(tuple(sorted(missing)), result.fact.missing_source_paths)
++                self.assertEqual(
++                    tuple(path for path in required if path not in missing),
++                    result.fact.covered_source_paths,
++                )
++
++    def test_unknown_or_untrusted_source_does_not_count_as_coverage(self) -> None:
++        for source in ("UNKNOWN", SourceType.WEB_UNTRUSTED):
++            with self.subTest(source=source):
++                result = evaluate_context_policy(
++                    self.state,
++                    trusted_sources={"request.amount": source},
++                    required_source_paths=("request.amount",),
++                    current_action="execute_payment",
++                )
++                self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.fact.status)
++                self.assertEqual(
++                    ("request.amount",), result.fact.missing_source_paths
++                )
++
+ 
+ if __name__ == "__main__":
+     unittest.main()
+diff --git a/tests/trusted_execution/test_payment_binding.py b/tests/trusted_execution/test_payment_binding.py
+index 6d6fd98..589c7be 100644
+--- a/tests/trusted_execution/test_payment_binding.py
++++ b/tests/trusted_execution/test_payment_binding.py
+@@ -18,6 +18,8 @@ from agentic_payment_experiment.models import (
+     TransactionRequest,
+ )
+ from agentic_payment_experiment.payment_execution import (
++    PAYMENT_CONTEXT_ACTION,
++    PAYMENT_REQUIRED_SOURCE_PATHS,
+     execute_with_payment_binding_gate,
+ )
+ from agentic_payment_experiment.trusted_execution import (
+@@ -124,8 +126,22 @@ class PaymentExecutionBindingTests(unittest.TestCase):
+         calls: list[str] = []
+         if context_policy_fact is None:
+             context_policy_fact = evaluate_context_policy(
+-                {},
+-                current_action="execute_payment",
++                {
++                    "mandate": {"mandate_id": self.mandate.mandate_id},
++                    "final_order": {"order_id": self.order.order_id},
++                    "request": {
++                        "request_id": self.request.request_id,
++                        "agent_id": self.request.agent_id,
++                    },
++                },
++                trusted_sources={
++                    "mandate.mandate_id": SourceType.USER_CONFIRMED,
++                    "final_order.order_id": SourceType.USER_CONFIRMED,
++                    "request.request_id": SourceType.PROTOCOL_VERIFIED,
++                    "request.agent_id": SourceType.USER_CONFIRMED,
++                },
++                required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
++                current_action=PAYMENT_CONTEXT_ACTION,
+                 policy_version=POLICY_VERSION,
+             ).fact
+         outcome = execute_with_payment_binding_gate(
+@@ -161,7 +177,10 @@ class PaymentExecutionBindingTests(unittest.TestCase):
+ 
+     def test_p4_missing_invalid_and_safely_blocked_paths_gate_callback(self) -> None:
+         missing = evaluate_context_policy(
+-            {}, current_action=None, policy_version=POLICY_VERSION
++            {},
++            required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
++            current_action=None,
++            policy_version=POLICY_VERSION,
+         ).fact
+         outcome, calls = self.execute(context_policy_fact=missing)
+         self.assertEqual(Decision.INDETERMINATE, outcome.decision)
+@@ -169,7 +188,7 @@ class PaymentExecutionBindingTests(unittest.TestCase):
+ 
+         invalid = evaluate_context_policy(
+             {},
+-            current_action="execute_payment",
++            current_action=PAYMENT_CONTEXT_ACTION,
+             observed_state_after={"request": {"amount": "699.00"}},
+         ).fact
+         outcome, calls = self.execute(context_policy_fact=invalid)
+@@ -177,7 +196,15 @@ class PaymentExecutionBindingTests(unittest.TestCase):
+         self.assertEqual([], calls)
+ 
+         blocked = evaluate_context_policy(
+-            {"request": {"amount": "480.00"}},
++            {
++                "mandate": {"mandate_id": self.mandate.mandate_id},
++                "final_order": {"order_id": self.order.order_id},
++                "request": {
++                    "request_id": self.request.request_id,
++                    "agent_id": self.request.agent_id,
++                    "amount": "480.00",
++                },
++            },
+             (
+                 CandidateFactUpdate(
+                     SourceType.WEB_UNTRUSTED,
+@@ -187,13 +214,109 @@ class PaymentExecutionBindingTests(unittest.TestCase):
+                     source_ref="offline-web",
+                 ),
+             ),
+-            trusted_sources={"request.amount": SourceType.USER_CONFIRMED},
+-            current_action="execute_payment",
++            trusted_sources={
++                "mandate.mandate_id": SourceType.USER_CONFIRMED,
++                "final_order.order_id": SourceType.USER_CONFIRMED,
++                "request.request_id": SourceType.PROTOCOL_VERIFIED,
++                "request.agent_id": SourceType.USER_CONFIRMED,
++                "request.amount": SourceType.USER_CONFIRMED,
++            },
++            required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
++            current_action=PAYMENT_CONTEXT_ACTION,
+         ).fact
+         outcome, calls = self.execute(context_policy_fact=blocked)
+         self.assertEqual(Decision.ALLOW, outcome.decision)
+         self.assertEqual(["paid"], calls)
+ 
++    def test_p4_gate_rejects_empty_partial_action_and_policy_mismatch(self) -> None:
++        base_state = {
++            "mandate": {"mandate_id": self.mandate.mandate_id},
++            "final_order": {"order_id": self.order.order_id},
++            "request": {
++                "request_id": self.request.request_id,
++                "agent_id": self.request.agent_id,
++            },
++        }
++        full_sources = {
++            "mandate.mandate_id": SourceType.USER_CONFIRMED,
++            "final_order.order_id": SourceType.USER_CONFIRMED,
++            "request.request_id": SourceType.PROTOCOL_VERIFIED,
++            "request.agent_id": SourceType.USER_CONFIRMED,
++        }
++        cases = (
++            (
++                "empty",
++                evaluate_context_policy(
++                    {},
++                    trusted_sources={},
++                    required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
++                    current_action=PAYMENT_CONTEXT_ACTION,
++                ).fact,
++            ),
++            (
++                "partial",
++                evaluate_context_policy(
++                    base_state,
++                    trusted_sources={
++                        "mandate.mandate_id": SourceType.USER_CONFIRMED
++                    },
++                    required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
++                    current_action=PAYMENT_CONTEXT_ACTION,
++                ).fact,
++            ),
++            (
++                "wrong_action",
++                evaluate_context_policy(
++                    base_state,
++                    trusted_sources=full_sources,
++                    required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
++                    current_action="refund_payment",
++                ).fact,
++            ),
++            (
++                "wrong_policy",
++                evaluate_context_policy(
++                    base_state,
++                    trusted_sources=full_sources,
++                    required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
++                    current_action=PAYMENT_CONTEXT_ACTION,
++                    policy_version="unsupported-policy",
++                ).fact,
++            ),
++        )
++        for name, fact in cases:
++            with self.subTest(name=name):
++                outcome, calls = self.execute(context_policy_fact=fact)
++                self.assertEqual(Decision.INDETERMINATE, outcome.decision)
++                self.assertFalse(outcome.executed)
++                self.assertEqual([], calls)
++
++    def test_p4_gate_rejects_complete_coverage_bound_to_another_payment(self) -> None:
++        fact = evaluate_context_policy(
++            {
++                "mandate": {"mandate_id": "mandate-other"},
++                "final_order": {"order_id": "order-other"},
++                "request": {
++                    "request_id": "request-other",
++                    "agent_id": "agent-other",
++                },
++            },
++            trusted_sources={
++                "mandate.mandate_id": SourceType.USER_CONFIRMED,
++                "final_order.order_id": SourceType.USER_CONFIRMED,
++                "request.request_id": SourceType.PROTOCOL_VERIFIED,
++                "request.agent_id": SourceType.USER_CONFIRMED,
++            },
++            required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
++            current_action=PAYMENT_CONTEXT_ACTION,
++        ).fact
++        self.assertEqual(VerificationStatus.VALID, fact.status)
++
++        outcome, calls = self.execute(context_policy_fact=fact)
++        self.assertEqual(Decision.INDETERMINATE, outcome.decision)
++        self.assertFalse(outcome.executed)
++        self.assertEqual([], calls)
++
+     def test_request_must_bind_the_current_order_and_authority_version(self) -> None:
+         request = replace(
+             self.request,

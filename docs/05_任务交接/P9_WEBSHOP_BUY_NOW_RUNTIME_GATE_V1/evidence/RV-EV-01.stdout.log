@@ -1,0 +1,92 @@
+{
+  "allow": {
+    "bound_agent_id": "webshop-agent-1",
+    "callback_count": 1,
+    "callback_result_ref": "simulated-webshop-checkout",
+    "calls": [
+      "checkout"
+    ],
+    "checkout_executed": true,
+    "decision": "ALLOW",
+    "prepayment_decision": "ALLOW",
+    "reason_codes": [
+      "p2:payment_execution_binding_match",
+      "p3:identity_executor_binding_match",
+      "p4:context_policy_valid"
+    ],
+    "runtime_final_decision": "ALLOW"
+  },
+  "callback_exception": {
+    "bound_agent_id": "webshop-agent-1",
+    "callback_count": 1,
+    "callback_result_ref": null,
+    "calls": [
+      "attempt"
+    ],
+    "checkout_executed": false,
+    "decision": "INDETERMINATE",
+    "prepayment_decision": "ALLOW",
+    "reason_codes": [
+      "checkout_callback_exception:RuntimeError",
+      "p2:payment_execution_binding_match",
+      "p3:identity_executor_binding_match",
+      "p4:context_policy_valid"
+    ],
+    "runtime_final_decision": "INDETERMINATE"
+  },
+  "confirmation_required": {
+    "bound_agent_id": "webshop-agent-1",
+    "callback_count": 0,
+    "callback_result_ref": null,
+    "calls": [],
+    "checkout_executed": false,
+    "decision": "CONFIRMATION_REQUIRED",
+    "prepayment_decision": "CONFIRMATION_REQUIRED",
+    "reason_codes": [
+      "p1:confirmation_binding_invalid"
+    ],
+    "runtime_final_decision": null
+  },
+  "deny": {
+    "bound_agent_id": "webshop-agent-1",
+    "callback_count": 0,
+    "callback_result_ref": null,
+    "calls": [],
+    "checkout_executed": false,
+    "decision": "DENY",
+    "prepayment_decision": "DENY",
+    "reason_codes": [
+      "p1:over_budget",
+      "p1:category_out_of_scope"
+    ],
+    "runtime_final_decision": null
+  },
+  "p1_indeterminate": {
+    "bound_agent_id": "webshop-agent-1",
+    "callback_count": 0,
+    "callback_result_ref": null,
+    "calls": [],
+    "checkout_executed": false,
+    "decision": "INDETERMINATE",
+    "prepayment_decision": "INDETERMINATE",
+    "reason_codes": [
+      "p1:confirmation_binding_missing_evidence"
+    ],
+    "runtime_final_decision": null
+  },
+  "p4_value_mismatch": {
+    "bound_agent_id": "webshop-agent-1",
+    "callback_count": 0,
+    "callback_result_ref": null,
+    "calls": [],
+    "checkout_executed": false,
+    "decision": "INDETERMINATE",
+    "prepayment_decision": "ALLOW",
+    "reason_codes": [
+      "p2:payment_execution_binding_match",
+      "p3:identity_executor_binding_match",
+      "p4:context_policy_valid"
+    ],
+    "runtime_final_decision": "INDETERMINATE"
+  }
+}

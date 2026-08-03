@@ -1,0 +1,71 @@
+{
+  "label": "EV-31",
+  "exit_code": 0,
+  "command_display": "compile Python helpers, parse PowerShell bootstrap with zero parser stderr, run 14 contract tests, and import-probe final webshop38 runtime",
+  "command_argv": [
+    "multiple commands; see records"
+  ],
+  "records": [
+    {
+      "sequence": 1,
+      "command_argv": [
+        "python3",
+        "-m",
+        "py_compile",
+        "scripts/validation/webshop/verify_webshop_small_assets.py",
+        "scripts/validation/webshop/smoke_webshop_small.py",
+        "tests/test_webshop_small_runtime_contract.py"
+      ],
+      "process_exit_code": 0,
+      "semantic_exit_code": 0
+    },
+    {
+      "sequence": 2,
+      "command_argv": [
+        "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "-NoProfile",
+        "-Command",
+        "[scriptblock]::Create([IO.File]::ReadAllText('D:/SoftWare/VScode/install/Project/agentic-payment-trust-lab/scripts/validation/webshop/bootstrap_webshop_small.ps1')) | Out-Null; Write-Output 'POWERSHELL_PARSE_OK'"
+      ],
+      "process_exit_code": 0,
+      "semantic_exit_code": 0
+    },
+    {
+      "sequence": 3,
+      "command_argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "tests.test_webshop_small_runtime_contract",
+        "-v"
+      ],
+      "process_exit_code": 0,
+      "semantic_exit_code": 0
+    },
+    {
+      "sequence": 4,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "-c",
+        "import faiss,gym,numpy,onnxruntime,spacy,torch,transformers,yaml; from pyserini.search.lucene import LuceneSearcher; nlp=spacy.load('en_core_web_sm'); print({'faiss':faiss.__version__,'gym':gym.__version__,'numpy':numpy.__version__,'onnxruntime':onnxruntime.__version__,'spacy':spacy.__version__,'spacy_model':nlp.meta['version'],'torch':torch.__version__,'transformers':transformers.__version__,'pyyaml':yaml.__version__,'searcher':LuceneSearcher.__name__})"
+      ],
+      "process_exit_code": 0,
+      "semantic_exit_code": 0
+    }
+  ],
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T05:38:57.385518+00:00",
+  "finished_at_utc": "2026-08-02T05:39:03.704145+00:00",
+  "test_count": 14,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-31.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-31.stderr.log",
+  "stdout_bytes": 1608,
+  "stderr_bytes": 3464,
+  "stdout_sha256": "f719846737b5756b6e87bbac0aac464db47917d7a94b440b3c80c3a1186b1e2f",
+  "stderr_sha256": "588871a420d6cc7dc3ccc9594b0c59f41b26bdd8c8563d7174bd64170b913706"
+}

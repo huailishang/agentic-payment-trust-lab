@@ -1,0 +1,53 @@
+{
+  "label": "EV-11",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T02:53:07.510596+00:00",
+  "finished_at_utc": "2026-08-02T02:53:08.268929+00:00",
+  "steps": [
+    {
+      "step": 1,
+      "command": [
+        "python3",
+        "-m",
+        "py_compile",
+        "scripts/validation/webshop/verify_webshop_small_assets.py",
+        "scripts/validation/webshop/smoke_webshop_small.py",
+        "tests/test_webshop_small_runtime_contract.py"
+      ],
+      "process_exit_code": 0,
+      "semantic_exit_code": 0
+    },
+    {
+      "step": 2,
+      "command": [
+        "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "-NoProfile",
+        "-Command",
+        "[scriptblock]::Create([IO.File]::ReadAllText('D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\bootstrap_webshop_small.ps1')) | Out-Null; Write-Output 'POWERSHELL_PARSE_OK'"
+      ],
+      "process_exit_code": 0,
+      "semantic_exit_code": 0
+    },
+    {
+      "step": 3,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "tests.test_webshop_small_runtime_contract",
+        "-v"
+      ],
+      "process_exit_code": 0,
+      "semantic_exit_code": 0
+    }
+  ],
+  "exit_code": 0,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-11.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-11.stderr.log",
+  "stdout_sha256": "9aebe50ef28261707a8fac71adf7068745245298848b802454eb8f4d1d22778f",
+  "stderr_sha256": "646bed14dd012b72ab809d3899ea3aa4f531d4141b193a20efef4c3bee28f44f",
+  "command_display": "multiple commands; see original steps[].command records in this metadata",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 603,
+  "stderr_bytes": 2018
+}

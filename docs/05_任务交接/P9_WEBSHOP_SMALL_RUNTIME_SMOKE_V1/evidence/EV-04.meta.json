@@ -1,0 +1,42 @@
+{
+  "label": "EV-04",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T01:59:59.670365+00:00",
+  "finished_at_utc": "2026-08-02T02:04:48.211650+00:00",
+  "command": [
+    "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+    "create",
+    "-n",
+    "webshop38",
+    "--override-channels",
+    "-c",
+    "https://conda.anaconda.org/conda-forge",
+    "--strict-channel-priority",
+    "python=3.8.13",
+    "openjdk=11",
+    "pip",
+    "-y"
+  ],
+  "exit_code": 0,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-04.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-04.stderr.log",
+  "stdout_sha256": "25be5bd8c85ebf12df01f98bee9f7e1f96abef19d08373350c606841c8a1e9b8",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "command_argv": [
+    "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+    "create",
+    "-n",
+    "webshop38",
+    "--override-channels",
+    "-c",
+    "https://conda.anaconda.org/conda-forge",
+    "--strict-channel-priority",
+    "python=3.8.13",
+    "openjdk=11",
+    "pip",
+    "-y"
+  ],
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 4103,
+  "stderr_bytes": 0
+}

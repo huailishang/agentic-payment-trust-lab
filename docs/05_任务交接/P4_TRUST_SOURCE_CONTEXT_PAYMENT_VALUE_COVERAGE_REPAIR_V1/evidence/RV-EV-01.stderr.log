@@ -1,0 +1,7 @@
+test_p4_gate_requires_each_payment_value_source_and_current_digest (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_p4_gate_requires_each_payment_value_source_and_current_digest) ... ok
+test_valid_continuous_binding_is_the_only_path_that_executes (tests.trusted_execution.test_payment_binding.PaymentExecutionBindingTests.test_valid_continuous_binding_is_the_only_path_that_executes) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+OK

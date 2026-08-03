@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-03",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "set -e; python3 docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-04_toolchain_inventory.py; echo EXTRA_CHECKOUT_FILES_BEGIN; git -C local_sources/third_party/webshop clean -ndx; echo EXTRA_CHECKOUT_FILES_END; /mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe env list; if /mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe env list | grep -Eq '(^|[[:space:]])webshop38([[:space:]]|$)'; then echo WEBSHOP38_EXISTS=true; exit 1; else echo WEBSHOP38_EXISTS=false; fi"
+  ],
+  "command_display": "bash -lc 'set -e; python3 docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-04_toolchain_inventory.py; echo EXTRA_CHECKOUT_FILES_BEGIN; git -C local_sources/third_party/webshop clean -ndx; echo EXTRA_CHECKOUT_FILES_END; /mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe env list; if /mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe env list | grep -Eq '\"'\"'(^|[[:space:]])webshop38([[:space:]]|$)'\"'\"'; then echo WEBSHOP38_EXISTS=true; exit 1; else echo WEBSHOP38_EXISTS=false; fi'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-01T13:25:09.018925+00:00",
+  "finished_at_utc": "2026-08-01T13:25:11.524127+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-03.stdout.log",
+  "stderr_path": "RV-EV-03.stderr.log",
+  "stdout_bytes": 4681,
+  "stderr_bytes": 0,
+  "stdout_sha256": "1d7f0391aaac74e19c4d0ca530fb0b2ffc032d49a7587181cb278895fbf20530",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

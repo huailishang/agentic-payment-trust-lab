@@ -1,0 +1,16 @@
+=== STEP 1: python3 -m py_compile scripts/validation/webshop/verify_webshop_small_assets.py scripts/validation/webshop/smoke_webshop_small.py tests/test_webshop_small_runtime_contract.py ===
+=== STEP 2: /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -Command [scriptblock]::Create([IO.File]::ReadAllText('D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\scripts\validation\webshop\bootstrap_webshop_small.ps1')) | Out-Null; Write-Output 'POWERSHELL_PARSE_OK' ===
+=== STEP 3: python3 -m unittest tests.test_webshop_small_runtime_contract -v ===
+test_build_resources_writes_only_1k_document_file (tests.test_webshop_small_runtime_contract.WebShopSmallRuntimeContractTest.test_build_resources_writes_only_1k_document_file) ... ok
+test_checkout_at_wrong_commit_fails (tests.test_webshop_small_runtime_contract.WebShopSmallRuntimeContractTest.test_checkout_at_wrong_commit_fails) ... ok
+test_execution_plan_with_buy_now_fails_closed (tests.test_webshop_small_runtime_contract.WebShopSmallRuntimeContractTest.test_execution_plan_with_buy_now_fails_closed) ... ok
+test_missing_indexes_1k_fails_before_runtime (tests.test_webshop_small_runtime_contract.WebShopSmallRuntimeContractTest.test_missing_indexes_1k_fails_before_runtime) ... ok
+test_missing_one_small_data_file_fails (tests.test_webshop_small_runtime_contract.WebShopSmallRuntimeContractTest.test_missing_one_small_data_file_fails) ... ok
+test_product_count_other_than_1000_fails (tests.test_webshop_small_runtime_contract.WebShopSmallRuntimeContractTest.test_product_count_other_than_1000_fails) ... ok
+test_valid_data_can_be_checked_without_index (tests.test_webshop_small_runtime_contract.WebShopSmallRuntimeContractTest.test_valid_data_can_be_checked_without_index) ... ok
+test_valid_fixture_metadata_passes (tests.test_webshop_small_runtime_contract.WebShopSmallRuntimeContractTest.test_valid_fixture_metadata_passes) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.257s
+
+OK

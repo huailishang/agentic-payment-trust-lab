@@ -1,0 +1,39 @@
+{
+  "label": "EV-25",
+  "exit_code": 124,
+  "command_display": "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe install -n webshop38 --override-channels -c https://conda.anaconda.org/pytorch -c https://conda.anaconda.org/conda-forge --strict-channel-priority mkl=2021.4.0 intel-openmp=2021.4.0 -y",
+  "command_argv": [
+    "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+    "install",
+    "-n",
+    "webshop38",
+    "--override-channels",
+    "-c",
+    "https://conda.anaconda.org/pytorch",
+    "-c",
+    "https://conda.anaconda.org/conda-forge",
+    "--strict-channel-priority",
+    "mkl=2021.4.0",
+    "intel-openmp=2021.4.0",
+    "-y"
+  ],
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "status": "INTERRUPTED_AND_RECOVERED",
+  "buy_now_executed": false,
+  "commit_executed": false,
+  "push_executed": false,
+  "recovery": {
+    "terminated_only_own_stale_wsl_pids": [
+      309,
+      284
+    ]
+  },
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-25.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-25.stderr.log",
+  "stdout_bytes": 727,
+  "stderr_bytes": 118,
+  "stdout_sha256": "4e16a19df65d1d594fad4849e8b3a7063561fd1b64be3d2a16fef20b0da6f21e",
+  "stderr_sha256": "981f2dcb3818462c732f756e6b94c149407c74695c2acc0bcf82ebec68ddf3d0",
+  "finished_at_utc": "2026-08-02T05:05:20.242430+00:00"
+}

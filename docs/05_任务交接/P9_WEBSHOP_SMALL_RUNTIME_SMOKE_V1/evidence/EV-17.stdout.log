@@ -1,0 +1,41 @@
+GDOWN_TEMP_PYTHON=C:\Users\HUAILI~1\AppData\Local\Temp\webshop-gdown610-7fzl53eh\venv\Scripts\python.exe
+=== GDOWN VERSION ===
+3.12.3 | packaged by Anaconda, Inc. | (main, May  6 2024, 19:42:21) [MSC v.1916 64 bit (AMD64)]
+6.1.0
+=== GDOWN default items_shuffle_1000.json ===
+COMMAND=['/mnt/c/Users/HUAILI~1/AppData/Local/Temp/webshop-gdown610-7fzl53eh/venv/Scripts/python.exe', '-m', 'gdown', 'https://drive.google.com/uc?id=1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib', '-O', 'C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-gdown610-7fzl53eh\\ev17_default_items_shuffle_1000.json']
+EXIT_CODE=1
+=== GDOWN no_cookies items_shuffle_1000.json ===
+COMMAND=['/mnt/c/Users/HUAILI~1/AppData/Local/Temp/webshop-gdown610-7fzl53eh/venv/Scripts/python.exe', '-m', 'gdown', 'https://drive.google.com/uc?id=1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib', '-O', 'C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-gdown610-7fzl53eh\\ev17_no_cookies_items_shuffle_1000.json', '--no-cookies']
+EXIT_CODE=1
+=== GDOWN default items_ins_v2_1000.json ===
+COMMAND=['/mnt/c/Users/HUAILI~1/AppData/Local/Temp/webshop-gdown610-7fzl53eh/venv/Scripts/python.exe', '-m', 'gdown', 'https://drive.google.com/uc?id=1IduG0xl544V_A_jv3tHXC0kyFi7PnyBu', '-O', 'C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-gdown610-7fzl53eh\\ev17_default_items_ins_v2_1000.json']
+EXIT_CODE=1
+=== GDOWN no_cookies items_ins_v2_1000.json ===
+COMMAND=['/mnt/c/Users/HUAILI~1/AppData/Local/Temp/webshop-gdown610-7fzl53eh/venv/Scripts/python.exe', '-m', 'gdown', 'https://drive.google.com/uc?id=1IduG0xl544V_A_jv3tHXC0kyFi7PnyBu', '-O', 'C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-gdown610-7fzl53eh\\ev17_no_cookies_items_ins_v2_1000.json', '--no-cookies']
+EXIT_CODE=1
+=== GDOWN default items_human_ins.json ===
+COMMAND=['/mnt/c/Users/HUAILI~1/AppData/Local/Temp/webshop-gdown610-7fzl53eh/venv/Scripts/python.exe', '-m', 'gdown', 'https://drive.google.com/uc?id=14Kb5SPBk_jfdLZ_CDBNitW98QLDlKR5O', '-O', 'C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-gdown610-7fzl53eh\\ev17_default_items_human_ins.json']
+EXIT_CODE=1
+=== GDOWN no_cookies items_human_ins.json ===
+COMMAND=['/mnt/c/Users/HUAILI~1/AppData/Local/Temp/webshop-gdown610-7fzl53eh/venv/Scripts/python.exe', '-m', 'gdown', 'https://drive.google.com/uc?id=14Kb5SPBk_jfdLZ_CDBNitW98QLDlKR5O', '-O', 'C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-gdown610-7fzl53eh\\ev17_no_cookies_items_human_ins.json', '--no-cookies']
+EXIT_CODE=1
+MIRROR_TEMP_ROOT=C:\Users\HUAILI~1\AppData\Local\Temp\webshop-hf-verify-vewxym1h
+MIRROR_FILE={"mirror": "HongbangYuan", "name": "items_shuffle_1000.json", "url": "https://huggingface.co/datasets/HongbangYuan/webshop/resolve/main/items_shuffle_1000.json?download=true", "path": "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-hf-verify-vewxym1h\\HongbangYuan\\items_shuffle_1000.json", "exists": true, "bytes": 4467013, "sha256": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269", "json_type": "list", "count": 1000, "first_asin": "B06Y3VLDFB", "last_asin": "B00BT1QVW0"}
+MIRROR_FILE={"mirror": "HongbangYuan", "name": "items_ins_v2_1000.json", "url": "https://huggingface.co/datasets/HongbangYuan/webshop/resolve/main/items_ins_v2_1000.json?download=true", "path": "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-hf-verify-vewxym1h\\HongbangYuan\\items_ins_v2_1000.json", "exists": true, "bytes": 147099, "sha256": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f", "json_type": "dict", "count": 1000}
+MIRROR_FILE={"mirror": "HongbangYuan", "name": "items_human_ins.json", "url": "https://huggingface.co/datasets/HongbangYuan/webshop/resolve/main/items_human_ins.json?download=true", "path": "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-hf-verify-vewxym1h\\HongbangYuan\\items_human_ins.json", "exists": true, "bytes": 5137548, "sha256": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3", "json_type": "dict", "count": 10136}
+MIRROR_FILE={"mirror": "YWZBrandon", "name": "items_shuffle_1000.json", "url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/main/items_shuffle_1000.json?download=true", "path": "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-hf-verify-vewxym1h\\YWZBrandon\\items_shuffle_1000.json", "exists": true, "bytes": 4467013, "sha256": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269", "json_type": "list", "count": 1000, "first_asin": "B06Y3VLDFB", "last_asin": "B00BT1QVW0"}
+MIRROR_FILE={"mirror": "YWZBrandon", "name": "items_ins_v2_1000.json", "url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/main/items_ins_v2_1000.json?download=true", "path": "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-hf-verify-vewxym1h\\YWZBrandon\\items_ins_v2_1000.json", "exists": true, "bytes": 147099, "sha256": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f", "json_type": "dict", "count": 1000}
+MIRROR_FILE={"mirror": "YWZBrandon", "name": "items_human_ins.json", "url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/main/items_human_ins.json?download=true", "path": "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-hf-verify-vewxym1h\\YWZBrandon\\items_human_ins.json", "exists": true, "bytes": 5137548, "sha256": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3", "json_type": "dict", "count": 10136}
+MIRROR_FILE={"mirror": "Merlin-Hongru", "name": "items_shuffle_1000.json", "url": "https://huggingface.co/Merlin-Hongru/tmp-files/resolve/main/items_shuffle_1000.json?download=true", "path": "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-hf-verify-vewxym1h\\Merlin-Hongru\\items_shuffle_1000.json", "exists": true, "bytes": 4467013, "sha256": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269", "json_type": "list", "count": 1000, "first_asin": "B06Y3VLDFB", "last_asin": "B00BT1QVW0"}
+MIRROR_FILE={"mirror": "Merlin-Hongru", "name": "items_ins_v2_1000.json", "url": "https://huggingface.co/Merlin-Hongru/tmp-files/resolve/main/items_ins_v2_1000.json?download=true", "path": "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-hf-verify-vewxym1h\\Merlin-Hongru\\items_ins_v2_1000.json", "exists": true, "bytes": 147099, "sha256": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f", "json_type": "dict", "count": 1000}
+MIRROR_FILE={"mirror": "Merlin-Hongru", "name": "items_human_ins.json", "url": "https://huggingface.co/Merlin-Hongru/tmp-files/resolve/main/items_human_ins.json?download=true", "path": "C:\\Users\\HUAILI~1\\AppData\\Local\\Temp\\webshop-hf-verify-vewxym1h\\Merlin-Hongru\\items_human_ins.json", "exists": true, "bytes": 5137548, "sha256": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3", "json_type": "dict", "count": 10136}
+CONSENSUS={"name": "items_shuffle_1000.json", "hashes": {"HongbangYuan": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269", "YWZBrandon": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269", "Merlin-Hongru": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269"}, "all_equal": true}
+CONSENSUS={"name": "items_ins_v2_1000.json", "hashes": {"HongbangYuan": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f", "YWZBrandon": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f", "Merlin-Hongru": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f"}, "all_equal": true}
+CONSENSUS={"name": "items_human_ins.json", "hashes": {"HongbangYuan": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3", "YWZBrandon": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3", "Merlin-Hongru": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3"}, "all_equal": true}
+LOCAL_TRACKED_HUMAN_SHA256=cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3
+LOCAL_TRACKED_HUMAN_MATCHES_ALL_MIRRORS=True
+MIRROR_FILES_COPIED_TO_WEBSHOP_DATA=False
+INDEX_BUILD_EXECUTED=False
+RUNTIME_SMOKE_EXECUTED=False
+CONTRACT_STATE=BLOCKED_PENDING_EVALUATOR_APPROVAL_FOR_CHECKSUM_VERIFIED_MIRROR_FALLBACK

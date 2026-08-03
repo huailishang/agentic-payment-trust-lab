@@ -1,0 +1,13 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-02",
+  "command_display": "python -m unittest tests.test_payment_finality tests.test_runner -v",
+  "working_directory": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+  "exit_code": 0,
+  "stdout_path": "EV-02.stdout.log",
+  "stderr_path": "EV-02.stderr.log",
+  "stdout_bytes": 167,
+  "stderr_bytes": 1,
+  "stdout_sha256": "5fba96f0bf1e6853aa48c67efee934c700ea19d42021a13ad76596da11c164e9",
+  "stderr_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+}

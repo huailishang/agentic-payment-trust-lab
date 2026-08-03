@@ -1,0 +1,28 @@
+HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+BRANCH=main
+CORE_HASHES
+035e6bb20d44b0a52be3f6adab2830c402e01f53839e917698343761c5481ec4  src/agentic_payment_experiment/adapters/webshop.py
+910791fdc3a36fef28b3839fedf36e83f7cb920a3af62b631cbbed7a5388e055  src/agentic_payment_experiment/adapters/__init__.py
+aae4c6109586f20e6e78c35ba48b6c94dfee76e478134842731140f50a9382f0  scripts/validation/webshop/export_webshop_commerce_fixture.py
+6e9d67c3b787cc2d9202bd22b30dec88bf9f920dfa3741bdeb364108a2a3c8e5  samples/external/webshop/pre_buy_now_candidate_v1.json
+c815dbe1515d5326562540d7f732c79484af4a5f3d42f8a6e1b0c45c44277f20  tests/test_webshop_adapter.py
+MODELS_DIFF
+ROADMAP_STATUS
+docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md:423:P9-B1 Commerce Adapter                     READY_FOR_REVIEW
+docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md:424:P9-B2 Buy Now 拦截 + Runtime Gate          未开始
+docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md:427:P9-E 购买轨迹可视化 UI                     已规划，后置执行
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:406:P9-B1 Commerce Adapter
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:409:P9-B2 Buy Now 拦截 + Runtime Authorization Gate
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:416:P9-E 购买轨迹可视化 UI
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:447:P9-B1 Commerce Adapter                     READY_FOR_REVIEW
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:448:P9-B2 Buy Now 拦截 + Runtime Gate          未开始
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:451:P9-E 购买轨迹可视化 UI                     已规划，基础能力完成后执行
+TIMES
+2026-08-02 17:02:00.169177900 +0800 docs/05_任务交接/P9_WEBSHOP_COMMERCE_ADAPTER_V1/REPORT.md
+2026-08-02 17:02:33.535587400 +0800 docs/05_任务交接/P9_WEBSHOP_COMMERCE_ADAPTER_V1/evidence/EV-12.meta.json
+2026-08-02 17:12:13.147486400 +0800 docs/02_未来规划/WebShop购买轨迹可视化UI规划_20260802.md
+2026-08-02 17:12:38.141133800 +0800 docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md
+2026-08-02 17:12:55.692676000 +0800 docs/02_未来规划/验证体系与后续环境统一路线_20260801.md
+WORKFLOW
+OK: v2 routing and required artifacts are structurally valid
+DIFF_CHECK

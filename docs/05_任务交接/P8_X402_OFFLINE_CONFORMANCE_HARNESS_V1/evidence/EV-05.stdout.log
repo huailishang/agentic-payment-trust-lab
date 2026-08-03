@@ -1,0 +1,75 @@
+HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+BASELINE=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+HEAD_BASELINE_UNCHANGED=True
+MISSING_TASK_FILES=[]
+TASK_ATTRIBUTED_PATHS=
+  docs/04_验证体系/x402离线一致性验证方案_v1.md
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/CONTRACT.md
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/REPORT.md
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-01.meta.json
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-01.stderr.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-01.stdout.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-02.meta.json
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-02.stderr.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-02.stdout.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-03.meta.json
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-03.stderr.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-03.stdout.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-04.meta.json
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-04.stderr.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-04.stdout.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-05.meta.json
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-05.stderr.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-05.stdout.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-05_scope_check.py
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-06.meta.json
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-06.stderr.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-06.stdout.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-07.meta.json
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-07.stderr.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-07.stdout.log
+  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-07_case_matrix.py
+  samples/protocols/x402/x402_offline_cases_v1.json
+  src/agentic_payment_experiment/adapters/__init__.py
+  src/agentic_payment_experiment/adapters/x402.py
+  src/agentic_payment_experiment/x402_conformance.py
+  tests/test_x402_adapter.py
+  tests/test_x402_conformance.py
+UNEXPECTED_TASK_PATHS=[]
+TASK_SCOPED_GIT_DIFF_CHECK_EXIT=0
+TASK_FILE_WHITESPACE_FINDINGS=0
+FORBIDDEN_NETWORK_OR_PROCESS_IMPORTS=[]
+AI_BRIDGE_EXISTS=False
+TASK_FILE_SHA256=
+  d863aa463cb0dce6b3c1bd262d68179b8bb4ec907e3d7e4f5247cd919a4d2812  src/agentic_payment_experiment/adapters/x402.py
+  5240369a4620b5339538f62a294564fe2d4cda06c11b5a4aefb00fdb16cc9b2e  src/agentic_payment_experiment/x402_conformance.py
+  d6ea7127d18c791b51e15e603966ca03e8ed90f3ec7af21ae19ce1f9074e6754  src/agentic_payment_experiment/adapters/__init__.py
+  521e604a05809f69b2aa8ff8e2aeefa0f4dc1b6cfdec9470c5c5bc5cf85e257f  tests/test_x402_adapter.py
+  78f952ec07d6b3a8a90296a001bbaeaef8de96c3ebec34744d115fc72d001526  tests/test_x402_conformance.py
+  5e34d70667faf7c2d91e0bf7b70086a7bb106bb552a85989f6f6f12915292153  samples/protocols/x402/x402_offline_cases_v1.json
+  5edd674080d1526aca16bd8370d2bee83123dbcaec68c04cebdc2e271653a9d6  docs/04_验证体系/x402离线一致性验证方案_v1.md
+  a016427a1c95befff2256625791f834435cca0b64702d2f891b6275902655074  docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/REPORT.md
+GLOBAL_GIT_DIFF_CHECK_EXIT=2
+GLOBAL_GIT_DIFF_CHECK_LINES=4422
+GLOBAL_FINDINGS_CLASSIFICATION=inherited/out-of-scope unless path is listed above
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:1: trailing whitespace.
+  +working_directory=D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:2: trailing whitespace.
+  +command=$env:PYTHONUTF8='1'; python -m unittest tests.trusted_execution.test_identity_assurance -v
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:3: trailing whitespace.
+  +test_assurance_levels_are_stable_serializable_values (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_assurance_levels_are_stable_serializable_values) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:4: trailing whitespace.
+  +test_complete_offline_binding_is_valid_and_bound_only (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_complete_offline_binding_is_valid_and_bound_only) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:5: trailing whitespace.
+  +test_credential_reference_alone_never_upgrades_to_verified (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_credential_reference_alone_never_upgrades_to_verified) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:6: trailing whitespace.
+  +test_inactive_revoked_and_unsupported_statuses_are_invalid (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_inactive_revoked_and_unsupported_statuses_are_invalid) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:7: trailing whitespace.
+  +test_missing_identity_and_executor_evidence_fails_closed (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_missing_identity_and_executor_evidence_fails_closed) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:8: trailing whitespace.
+  +test_same_layer_conflicts_are_aggregated_in_stable_order (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_same_layer_conflicts_are_aggregated_in_stable_order) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:9: trailing whitespace.
+  +System.Management.Automation.RemoteException
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:10: trailing whitespace.
+  +----------------------------------------------------------------------
+TASK_SCOPE_RESULT=PASS

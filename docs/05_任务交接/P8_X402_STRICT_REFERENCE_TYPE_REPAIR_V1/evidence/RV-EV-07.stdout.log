@@ -1,0 +1,8 @@
+required_text_paths_checked=45
+optional_failure_code_checked=true
+delivery_attempt_text_paths_checked=5
+linked_counterexample_status=INVALID
+blank_counterexample_status=INVALID
+valid_fixture_statuses=['READY', 'READY', 'READY', 'READY', 'READY', 'READY']
+failure_count=0
+RESULT=PASS

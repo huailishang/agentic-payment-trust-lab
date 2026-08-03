@@ -1,0 +1,7 @@
+The bounded Faiss 1.7.2 downgrade attempt was started with --freeze-installed.
+Python subprocess.run reached its explicit 240-second timeout and terminated that child process.
+No EV-27 subprocess output was returned before termination.
+A subsequent inventory confirmed faiss-cpu/libfaiss remained at 1.7.4, MKL remained 2021.4.0, and no partial downgrade occurred.
+The candidate was abandoned because official libfaiss 1.7.2 requires MKL <2021, which would broaden the compatibility downgrade.
+The accepted bounded repair instead retained Faiss 1.7.4 and moved NumPy 1.22.4 to 1.23.5 in EV-28.
+No Lucene query, WebShop smoke, click[buy now], commit, or push occurred in EV-27.

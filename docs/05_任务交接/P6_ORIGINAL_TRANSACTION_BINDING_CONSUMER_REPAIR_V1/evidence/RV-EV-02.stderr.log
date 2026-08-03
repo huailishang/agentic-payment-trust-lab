@@ -1,0 +1,23 @@
+test_conflicting_failed_observation_cannot_override_known_success (tests.test_payment_recovery.PaymentRecoveryTest.test_conflicting_failed_observation_cannot_override_known_success) ... ok
+test_existing_successful_attempt_for_same_request_blocks_retry (tests.test_payment_recovery.PaymentRecoveryTest.test_existing_successful_attempt_for_same_request_blocks_retry) ... ok
+test_existing_unknown_or_pending_attempt_for_same_request_blocks_retry (tests.test_payment_recovery.PaymentRecoveryTest.test_existing_unknown_or_pending_attempt_for_same_request_blocks_retry) ... ok
+test_failed_observation_without_idempotency_boundary_is_blocked (tests.test_payment_recovery.PaymentRecoveryTest.test_failed_observation_without_idempotency_boundary_is_blocked) ... ok
+test_invalid_p2_binding_blocks_status_recovery (tests.test_payment_recovery.PaymentRecoveryTest.test_invalid_p2_binding_blocks_status_recovery) ... ok
+test_missing_provider_or_order_blocks_original_transaction_recovery (tests.test_payment_recovery.PaymentRecoveryTest.test_missing_provider_or_order_blocks_original_transaction_recovery) ... ok
+test_pending_to_pending_forbids_retry (tests.test_payment_recovery.PaymentRecoveryTest.test_pending_to_pending_forbids_retry) ... ok
+test_status_observation_binding_errors_are_blocked (tests.test_payment_recovery.PaymentRecoveryTest.test_status_observation_binding_errors_are_blocked) ... ok
+test_unknown_to_failed_is_only_a_safe_retry_candidate (tests.test_payment_recovery.PaymentRecoveryTest.test_unknown_to_failed_is_only_a_safe_retry_candidate) ... ok
+test_unknown_to_succeeded_recovers_original_payment_and_forbids_retry (tests.test_payment_recovery.PaymentRecoveryTest.test_unknown_to_succeeded_recovers_original_payment_and_forbids_retry) ... ok
+test_unknown_to_unknown_forbids_retry_and_remains_unresolved (tests.test_payment_recovery.PaymentRecoveryTest.test_unknown_to_unknown_forbids_retry_and_remains_unresolved) ... ok
+test_dispute_binding_errors_never_resolve_remediation (tests.test_remediation.RemediationTest.test_dispute_binding_errors_never_resolve_remediation) ... ok
+test_full_refund_resolves_economic_remediation_but_not_original_task (tests.test_remediation.RemediationTest.test_full_refund_resolves_economic_remediation_but_not_original_task) ... ok
+test_missing_original_transaction_references_never_resolve_refund_or_dispute (tests.test_remediation.RemediationTest.test_missing_original_transaction_references_never_resolve_refund_or_dispute) ... ok
+test_open_or_under_review_dispute_stays_in_progress (tests.test_remediation.RemediationTest.test_open_or_under_review_dispute_stays_in_progress) ... ok
+test_refund_binding_errors_never_resolve_remediation (tests.test_remediation.RemediationTest.test_refund_binding_errors_never_resolve_remediation) ... ok
+test_resolved_dispute_without_outcome_does_not_resolve_economic_remediation (tests.test_remediation.RemediationTest.test_resolved_dispute_without_outcome_does_not_resolve_economic_remediation) ... ok
+test_successful_partial_refund_does_not_resolve_remediation (tests.test_remediation.RemediationTest.test_successful_partial_refund_does_not_resolve_remediation) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.020s
+
+OK

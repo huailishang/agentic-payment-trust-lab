@@ -1,0 +1,923 @@
+{
+  "cases": [
+    {
+      "actual_contains_untrusted_ancestry": false,
+      "actual_effective_source_types": [
+        "USER_CONFIRMED"
+      ],
+      "actual_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "actual_resolved_refs": [
+        "root-user"
+      ],
+      "actual_status": "VALID",
+      "actual_unresolved_refs": [],
+      "case_id": "root_user_confirmed",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": false,
+      "expected_effective_source_types": [
+        "USER_CONFIRMED"
+      ],
+      "expected_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "expected_resolved_refs": [
+        "root-user"
+      ],
+      "expected_status": "VALID",
+      "expected_unresolved_refs": [],
+      "facts": [
+        {
+          "contains_untrusted_ancestry": false,
+          "direct_source_type": "USER_CONFIRMED",
+          "effective_source_types": [
+            "USER_CONFIRMED"
+          ],
+          "fact_path": "request.amount",
+          "fact_ref": "root-user",
+          "transformation_ref": null,
+          "trust_upgrade_evidence_ref": null,
+          "upstream_fact_refs": [],
+          "value_digest": "451795fec7bc40ebfb086d5fa0d1c7f16d7fb5918a7d9edf7f21fa21b92cdc3e"
+        }
+      ],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "root_user_confirmed"
+    },
+    {
+      "actual_contains_untrusted_ancestry": true,
+      "actual_effective_source_types": [
+        "WEB_UNTRUSTED"
+      ],
+      "actual_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "actual_resolved_refs": [
+        "root-web"
+      ],
+      "actual_status": "VALID",
+      "actual_unresolved_refs": [],
+      "case_id": "root_web_untrusted",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": true,
+      "expected_effective_source_types": [
+        "WEB_UNTRUSTED"
+      ],
+      "expected_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "expected_resolved_refs": [
+        "root-web"
+      ],
+      "expected_status": "VALID",
+      "expected_unresolved_refs": [],
+      "facts": [
+        {
+          "contains_untrusted_ancestry": true,
+          "direct_source_type": "WEB_UNTRUSTED",
+          "effective_source_types": [
+            "WEB_UNTRUSTED"
+          ],
+          "fact_path": "request.amount",
+          "fact_ref": "root-web",
+          "transformation_ref": null,
+          "trust_upgrade_evidence_ref": null,
+          "upstream_fact_refs": [],
+          "value_digest": "451795fec7bc40ebfb086d5fa0d1c7f16d7fb5918a7d9edf7f21fa21b92cdc3e"
+        }
+      ],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "root_web_untrusted"
+    },
+    {
+      "actual_contains_untrusted_ancestry": true,
+      "actual_effective_source_types": [
+        "LLM_GENERATED",
+        "WEB_UNTRUSTED"
+      ],
+      "actual_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "actual_resolved_refs": [
+        "llm-summary",
+        "web-price"
+      ],
+      "actual_status": "VALID",
+      "actual_unresolved_refs": [],
+      "case_id": "web_to_llm_summary",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": true,
+      "expected_effective_source_types": [
+        "LLM_GENERATED",
+        "WEB_UNTRUSTED"
+      ],
+      "expected_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "expected_resolved_refs": [
+        "llm-summary",
+        "web-price"
+      ],
+      "expected_status": "VALID",
+      "expected_unresolved_refs": [],
+      "facts": [
+        {
+          "contains_untrusted_ancestry": true,
+          "direct_source_type": "LLM_GENERATED",
+          "effective_source_types": [
+            "LLM_GENERATED",
+            "WEB_UNTRUSTED"
+          ],
+          "fact_path": "request.amount",
+          "fact_ref": "llm-summary",
+          "transformation_ref": "llm-summary-v1",
+          "trust_upgrade_evidence_ref": null,
+          "upstream_fact_refs": [
+            "web-price"
+          ],
+          "value_digest": "451795fec7bc40ebfb086d5fa0d1c7f16d7fb5918a7d9edf7f21fa21b92cdc3e"
+        },
+        {
+          "contains_untrusted_ancestry": true,
+          "direct_source_type": "WEB_UNTRUSTED",
+          "effective_source_types": [
+            "WEB_UNTRUSTED"
+          ],
+          "fact_path": "request.amount",
+          "fact_ref": "web-price",
+          "transformation_ref": null,
+          "trust_upgrade_evidence_ref": null,
+          "upstream_fact_refs": [],
+          "value_digest": "451795fec7bc40ebfb086d5fa0d1c7f16d7fb5918a7d9edf7f21fa21b92cdc3e"
+        }
+      ],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "web_to_llm_summary"
+    },
+    {
+      "actual_contains_untrusted_ancestry": true,
+      "actual_effective_source_types": [
+        "AGENT_INFERRED",
+        "USER_CONFIRMED",
+        "WEB_UNTRUSTED"
+      ],
+      "actual_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "actual_resolved_refs": [
+        "derived-multi",
+        "user-budget",
+        "web-price"
+      ],
+      "actual_status": "VALID",
+      "actual_unresolved_refs": [],
+      "case_id": "multi_source_user_and_web",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": true,
+      "expected_effective_source_types": [
+        "AGENT_INFERRED",
+        "USER_CONFIRMED",
+        "WEB_UNTRUSTED"
+      ],
+      "expected_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "expected_resolved_refs": [
+        "derived-multi",
+        "user-budget",
+        "web-price"
+      ],
+      "expected_status": "VALID",
+      "expected_unresolved_refs": [],
+      "facts": [
+        {
+          "contains_untrusted_ancestry": true,
+          "direct_source_type": "AGENT_INFERRED",
+          "effective_source_types": [
+            "AGENT_INFERRED",
+            "USER_CONFIRMED",
+            "WEB_UNTRUSTED"
+          ],
+          "fact_path": "request.amount",
+          "fact_ref": "derived-multi",
+          "transformation_ref": "compare-v1",
+          "trust_upgrade_evidence_ref": null,
+          "upstream_fact_refs": [
+            "user-budget",
+            "web-price"
+          ],
+          "value_digest": "451795fec7bc40ebfb086d5fa0d1c7f16d7fb5918a7d9edf7f21fa21b92cdc3e"
+        },
+        {
+          "contains_untrusted_ancestry": false,
+          "direct_source_type": "USER_CONFIRMED",
+          "effective_source_types": [
+            "USER_CONFIRMED"
+          ],
+          "fact_path": "request.amount",
+          "fact_ref": "user-budget",
+          "transformation_ref": null,
+          "trust_upgrade_evidence_ref": null,
+          "upstream_fact_refs": [],
+          "value_digest": "451795fec7bc40ebfb086d5fa0d1c7f16d7fb5918a7d9edf7f21fa21b92cdc3e"
+        },
+        {
+          "contains_untrusted_ancestry": true,
+          "direct_source_type": "WEB_UNTRUSTED",
+          "effective_source_types": [
+            "WEB_UNTRUSTED"
+          ],
+          "fact_path": "request.amount",
+          "fact_ref": "web-price",
+          "transformation_ref": null,
+          "trust_upgrade_evidence_ref": null,
+          "upstream_fact_refs": [],
+          "value_digest": "451795fec7bc40ebfb086d5fa0d1c7f16d7fb5918a7d9edf7f21fa21b92cdc3e"
+        }
+      ],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "multi_source_user_and_web"
+    },
+    {
+      "actual_contains_untrusted_ancestry": true,
+      "actual_effective_source_types": [
+        "USER_CONFIRMED",
+        "WEB_UNTRUSTED"
+      ],
+      "actual_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "actual_resolved_refs": [
+        "claimed-user",
+        "web-origin"
+      ],
+      "actual_status": "VALID",
+      "actual_unresolved_refs": [],
+      "case_id": "claimed_user_confirmation_with_web_ancestor",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": true,
+      "expected_effective_source_types": [
+        "USER_CONFIRMED",
+        "WEB_UNTRUSTED"
+      ],
+      "expected_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "expected_resolved_refs": [
+        "claimed-user",
+        "web-origin"
+      ],
+      "expected_status": "VALID",
+      "expected_unresolved_refs": [],
+      "facts": [
+        {
+          "contains_untrusted_ancestry": true,
+          "direct_source_type": "USER_CONFIRMED",
+          "effective_source_types": [
+            "USER_CONFIRMED",
+            "WEB_UNTRUSTED"
+          ],
+          "fact_path": "request.amount",
+          "fact_ref": "claimed-user",
+          "transformation_ref": null,
+          "trust_upgrade_evidence_ref": null,
+          "upstream_fact_refs": [
+            "web-origin"
+          ],
+          "value_digest": "451795fec7bc40ebfb086d5fa0d1c7f16d7fb5918a7d9edf7f21fa21b92cdc3e"
+        },
+        {
+          "contains_untrusted_ancestry": true,
+          "direct_source_type": "WEB_UNTRUSTED",
+          "effective_source_types": [
+            "WEB_UNTRUSTED"
+          ],
+          "fact_path": "request.amount",
+          "fact_ref": "web-origin",
+          "transformation_ref": null,
+          "trust_upgrade_evidence_ref": null,
+          "upstream_fact_refs": [],
+          "value_digest": "451795fec7bc40ebfb086d5fa0d1c7f16d7fb5918a7d9edf7f21fa21b92cdc3e"
+        }
+      ],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "claimed_user_confirmation_with_web_ancestor"
+    },
+    {
+      "actual_contains_untrusted_ancestry": true,
+      "actual_effective_source_types": [
+        "USER_CONFIRMED",
+        "WEB_UNTRUSTED"
+      ],
+      "actual_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "actual_resolved_refs": [
+        "claimed-upgrade",
+        "web-origin"
+      ],
+      "actual_status": "VALID",
+      "actual_unresolved_refs": [],
+      "case_id": "claimed_upgrade_with_evidence_and_web_ancestor",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": true,
+      "expected_effective_source_types": [
+        "USER_CONFIRMED",
+        "WEB_UNTRUSTED"
+      ],
+      "expected_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "expected_resolved_refs": [
+        "claimed-upgrade",
+        "web-origin"
+      ],
+      "expected_status": "VALID",
+      "expected_unresolved_refs": [],
+      "facts": [
+        {
+          "contains_untrusted_ancestry": true,
+          "direct_source_type": "USER_CONFIRMED",
+          "effective_source_types": [
+            "USER_CONFIRMED",
+            "WEB_UNTRUSTED"
+          ],
+          "fact_path": "request.amount",
+          "fact_ref": "claimed-upgrade",
+          "transformation_ref": null,
+          "trust_upgrade_evidence_ref": "confirmation-record-1",
+          "upstream_fact_refs": [
+            "web-origin"
+          ],
+          "value_digest": "451795fec7bc40ebfb086d5fa0d1c7f16d7fb5918a7d9edf7f21fa21b92cdc3e"
+        },
+        {
+          "contains_untrusted_ancestry": true,
+          "direct_source_type": "WEB_UNTRUSTED",
+          "effective_source_types": [
+            "WEB_UNTRUSTED"
+          ],
+          "fact_path": "request.amount",
+          "fact_ref": "web-origin",
+          "transformation_ref": null,
+          "trust_upgrade_evidence_ref": null,
+          "upstream_fact_refs": [],
+          "value_digest": "451795fec7bc40ebfb086d5fa0d1c7f16d7fb5918a7d9edf7f21fa21b92cdc3e"
+        }
+      ],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "claimed_upgrade_with_evidence_and_web_ancestor"
+    },
+    {
+      "actual_contains_untrusted_ancestry": null,
+      "actual_effective_source_types": [],
+      "actual_reason_codes": [
+        "upstream_fact_missing:missing-root"
+      ],
+      "actual_resolved_refs": [],
+      "actual_status": "MISSING_EVIDENCE",
+      "actual_unresolved_refs": [
+        "missing-root"
+      ],
+      "case_id": "missing_upstream",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": null,
+      "expected_effective_source_types": [],
+      "expected_reason_codes": [
+        "upstream_fact_missing:missing-root"
+      ],
+      "expected_resolved_refs": [],
+      "expected_status": "MISSING_EVIDENCE",
+      "expected_unresolved_refs": [
+        "missing-root"
+      ],
+      "facts": [],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "missing_upstream"
+    },
+    {
+      "actual_contains_untrusted_ancestry": null,
+      "actual_effective_source_types": [],
+      "actual_reason_codes": [
+        "upstream_self_reference:self"
+      ],
+      "actual_resolved_refs": [],
+      "actual_status": "INVALID",
+      "actual_unresolved_refs": [],
+      "case_id": "self_reference",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": null,
+      "expected_effective_source_types": [],
+      "expected_reason_codes": [
+        "upstream_self_reference:self"
+      ],
+      "expected_resolved_refs": [],
+      "expected_status": "INVALID",
+      "expected_unresolved_refs": [],
+      "facts": [],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "self_reference"
+    },
+    {
+      "actual_contains_untrusted_ancestry": null,
+      "actual_effective_source_types": [],
+      "actual_reason_codes": [
+        "fact_lineage_cycle_detected"
+      ],
+      "actual_resolved_refs": [],
+      "actual_status": "INVALID",
+      "actual_unresolved_refs": [
+        "cycle-a",
+        "cycle-b"
+      ],
+      "case_id": "multi_node_cycle",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": null,
+      "expected_effective_source_types": [],
+      "expected_reason_codes": [
+        "fact_lineage_cycle_detected"
+      ],
+      "expected_resolved_refs": [],
+      "expected_status": "INVALID",
+      "expected_unresolved_refs": [
+        "cycle-a",
+        "cycle-b"
+      ],
+      "facts": [],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "multi_node_cycle"
+    },
+    {
+      "actual_contains_untrusted_ancestry": null,
+      "actual_effective_source_types": [],
+      "actual_reason_codes": [
+        "duplicate_fact_ref:dup"
+      ],
+      "actual_resolved_refs": [],
+      "actual_status": "INVALID",
+      "actual_unresolved_refs": [],
+      "case_id": "duplicate_fact_ref",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": null,
+      "expected_effective_source_types": [],
+      "expected_reason_codes": [
+        "duplicate_fact_ref:dup"
+      ],
+      "expected_resolved_refs": [],
+      "expected_status": "INVALID",
+      "expected_unresolved_refs": [],
+      "facts": [],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "duplicate_fact_ref"
+    },
+    {
+      "actual_contains_untrusted_ancestry": null,
+      "actual_effective_source_types": [],
+      "actual_reason_codes": [
+        "duplicate_upstream_fact_ref:derived:root"
+      ],
+      "actual_resolved_refs": [],
+      "actual_status": "INVALID",
+      "actual_unresolved_refs": [],
+      "case_id": "duplicate_upstream_ref",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": null,
+      "expected_effective_source_types": [],
+      "expected_reason_codes": [
+        "duplicate_upstream_fact_ref:derived:root"
+      ],
+      "expected_resolved_refs": [],
+      "expected_status": "INVALID",
+      "expected_unresolved_refs": [],
+      "facts": [],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "duplicate_upstream_ref"
+    },
+    {
+      "actual_contains_untrusted_ancestry": null,
+      "actual_effective_source_types": [],
+      "actual_reason_codes": [
+        "direct_source_type_invalid:bad-source"
+      ],
+      "actual_resolved_refs": [],
+      "actual_status": "INVALID",
+      "actual_unresolved_refs": [],
+      "case_id": "invalid_direct_source_type",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": null,
+      "expected_effective_source_types": [],
+      "expected_reason_codes": [
+        "direct_source_type_invalid:bad-source"
+      ],
+      "expected_resolved_refs": [],
+      "expected_status": "INVALID",
+      "expected_unresolved_refs": [],
+      "facts": [],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "invalid_direct_source_type"
+    },
+    {
+      "actual_contains_untrusted_ancestry": null,
+      "actual_effective_source_types": [],
+      "actual_reason_codes": [
+        "fact_lineage_node_invalid_type"
+      ],
+      "actual_resolved_refs": [],
+      "actual_status": "INVALID",
+      "actual_unresolved_refs": [],
+      "case_id": "mutable_lookalike_node",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": null,
+      "expected_effective_source_types": [],
+      "expected_reason_codes": [
+        "fact_lineage_node_invalid_type"
+      ],
+      "expected_resolved_refs": [],
+      "expected_status": "INVALID",
+      "expected_unresolved_refs": [],
+      "facts": [],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "mutable_lookalike_node"
+    },
+    {
+      "actual_contains_untrusted_ancestry": null,
+      "actual_effective_source_types": [],
+      "actual_reason_codes": [
+        "fact_lineage_node_invalid_type"
+      ],
+      "actual_resolved_refs": [],
+      "actual_status": "INVALID",
+      "actual_unresolved_refs": [],
+      "case_id": "serialized_dict_node",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "fact_lineage_resolver",
+      "expected_contains_untrusted_ancestry": null,
+      "expected_effective_source_types": [],
+      "expected_reason_codes": [
+        "fact_lineage_node_invalid_type"
+      ],
+      "expected_resolved_refs": [],
+      "expected_status": "INVALID",
+      "expected_unresolved_refs": [],
+      "facts": [],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "serialized_dict_node"
+    },
+    {
+      "actual_contains_untrusted_ancestry": true,
+      "actual_effective_source_types": [
+        "WEB_UNTRUSTED"
+      ],
+      "actual_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "actual_resolved_refs": [
+        "overlay:MATRIX-AMOUNT:request.amount"
+      ],
+      "actual_status": "VALID",
+      "actual_unresolved_refs": [],
+      "case_id": "overlay_untrusted_amount_override",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "attack_overlay",
+      "expected_contains_untrusted_ancestry": true,
+      "expected_effective_source_types": [
+        "WEB_UNTRUSTED"
+      ],
+      "expected_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "expected_resolved_refs": [
+        "overlay:MATRIX-AMOUNT:request.amount"
+      ],
+      "expected_status": "VALID",
+      "expected_unresolved_refs": [],
+      "facts": [
+        {
+          "contains_untrusted_ancestry": true,
+          "direct_source_type": "WEB_UNTRUSTED",
+          "effective_source_types": [
+            "WEB_UNTRUSTED"
+          ],
+          "fact_path": "request.amount",
+          "fact_ref": "overlay:MATRIX-AMOUNT:request.amount",
+          "source_ref": "matrix-page-amount",
+          "value_digest": "9991a0d7865be3945c7e556eca3624813c74c2555fd5ed987e3717f43a7ee569"
+        }
+      ],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "overlay_untrusted_amount_override"
+    },
+    {
+      "actual_contains_untrusted_ancestry": true,
+      "actual_effective_source_types": [
+        "LLM_GENERATED"
+      ],
+      "actual_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "actual_resolved_refs": [
+        "overlay:MATRIX-PAYEE:request.payee"
+      ],
+      "actual_status": "VALID",
+      "actual_unresolved_refs": [],
+      "case_id": "overlay_untrusted_payee_override",
+      "comparisons": {
+        "contains_untrusted_ancestry": true,
+        "effective_source_types": true,
+        "reason_codes": true,
+        "resolved_refs": true,
+        "status": true,
+        "unresolved_refs": true
+      },
+      "consumer": "attack_overlay",
+      "expected_contains_untrusted_ancestry": true,
+      "expected_effective_source_types": [
+        "LLM_GENERATED"
+      ],
+      "expected_reason_codes": [
+        "fact_lineage_valid"
+      ],
+      "expected_resolved_refs": [
+        "overlay:MATRIX-PAYEE:request.payee"
+      ],
+      "expected_status": "VALID",
+      "expected_unresolved_refs": [],
+      "facts": [
+        {
+          "contains_untrusted_ancestry": true,
+          "direct_source_type": "LLM_GENERATED",
+          "effective_source_types": [
+            "LLM_GENERATED"
+          ],
+          "fact_path": "request.payee",
+          "fact_ref": "overlay:MATRIX-PAYEE:request.payee",
+          "source_ref": "matrix-llm-payee",
+          "value_digest": "c0b3142e32caa3c619ff5728de91ed772e3c38d05bb9876546ffc6c0c16ed3e0"
+        }
+      ],
+      "limitations": {
+        "no_buy_now": true,
+        "no_llm": true,
+        "no_network": true,
+        "no_payment": true,
+        "no_webshop": true,
+        "offline_deterministic_only": true
+      },
+      "matched": true,
+      "scenario": "overlay_untrusted_payee_override"
+    }
+  ],
+  "limitations": {
+    "no_buy_now": true,
+    "no_llm": true,
+    "no_network": true,
+    "no_payment": true,
+    "no_webshop": true,
+    "offline_deterministic_only": true
+  },
+  "schema": "fact-lineage-matrix/v1",
+  "summary": {
+    "failed": 0,
+    "matched": 16,
+    "total": 16
+  }
+}

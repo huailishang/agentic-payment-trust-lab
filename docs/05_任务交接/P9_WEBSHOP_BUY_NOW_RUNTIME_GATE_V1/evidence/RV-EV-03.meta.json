@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-03",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "python3 -m py_compile src/agentic_payment_experiment/webshop_runtime_gate.py tests/test_webshop_runtime_gate.py && python3 -m unittest tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_production_gate_has_no_file_network_process_environment_or_webshop_dependency tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_public_api_is_exported_from_package_root -v"
+  ],
+  "command_display": "bash -lc 'python3 -m py_compile src/agentic_payment_experiment/webshop_runtime_gate.py tests/test_webshop_runtime_gate.py && python3 -m unittest tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_production_gate_has_no_file_network_process_environment_or_webshop_dependency tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_public_api_is_exported_from_package_root -v'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T13:12:03.077656+00:00",
+  "finished_at_utc": "2026-08-02T13:12:04.365540+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-03.stdout.log",
+  "stderr_path": "RV-EV-03.stderr.log",
+  "stdout_bytes": 0,
+  "stderr_bytes": 484,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "3cb548c667d01ee0444987712314598247781f9a70565ec5e26c5ca2d9f16b8b"
+}

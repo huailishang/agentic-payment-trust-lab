@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-03",
+  "command_argv": [
+    "python",
+    "-c",
+    "import os,subprocess,sys; env=dict(os.environ,PYTHONUTF8='1'); sys.exit(subprocess.call([sys.executable,'-m','unittest','discover','-s','tests','-v'],env=env))"
+  ],
+  "command_display": "python -c \"import os,subprocess,sys; env=dict(os.environ,PYTHONUTF8='1'); sys.exit(subprocess.call([sys.executable,'-m','unittest','discover','-s','tests','-v'],env=env))\"",
+  "working_directory": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+  "started_at_utc": "2026-07-31T12:19:25.138885+00:00",
+  "finished_at_utc": "2026-07-31T12:19:31.794614+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-03.stdout.log",
+  "stderr_path": "RV-EV-03.stderr.log",
+  "stdout_bytes": 0,
+  "stderr_bytes": 39227,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "d01d0d07d4789035f034c172c0e57e23d4de52b9dbbbb429d09718eb1475f109"
+}

@@ -1,0 +1,6 @@
+D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\scripts\validation\webshop\bootstrap_webshop_small.ps1 : 
+�޷��ڹܵ��м������ĵ�: D:\SoftWare\Anaconda\install\Scripts\conda.exe��
+    + CategoryInfo          : InvalidOperation: (D:\SoftWare\Ana...ripts\conda.exe:String) [bootstrap_webshop_small.ps 
+   1]��RuntimeException
+    + FullyQualifiedErrorId : CantActivateDocumentInPipeline,bootstrap_webshop_small.ps1
+ 

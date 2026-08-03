@@ -1,0 +1,215 @@
+===== checkout_only =====
+ARGV=["/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe", "run", "-n", "webshop38", "python", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py", "--checkout", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop", "--expected-commit", "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd", "--checkout-only"]
+CWD=/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab
+EXIT_CODE=0
+{
+  "actual_commit": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+  "checkout": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop",
+  "expected_commit": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+  "git_clean": true,
+  "overall_pass": true
+}
+
+INITIAL_DATA_FILES=[]
+===== download_items_shuffle_1000.json =====
+ARGV=["/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe", "-NoProfile", "-Command", "Invoke-WebRequest -UseBasicParsing -TimeoutSec 300 -Uri 'https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_shuffle_1000.json' -OutFile 'D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec\\items_shuffle_1000.json'"]
+CWD=/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab
+EXIT_CODE=0
+DOWNLOAD_RESULT name=items_shuffle_1000.json repository=YWZBrandon/webshop-data revision=ce990fff5aee388db2706f07820c578ab68e0453 url=https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_shuffle_1000.json bytes=4467013 sha256=30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269
+===== download_items_ins_v2_1000.json =====
+ARGV=["/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe", "-NoProfile", "-Command", "Invoke-WebRequest -UseBasicParsing -TimeoutSec 300 -Uri 'https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_ins_v2_1000.json' -OutFile 'D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec\\items_ins_v2_1000.json'"]
+CWD=/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab
+EXIT_CODE=0
+DOWNLOAD_RESULT name=items_ins_v2_1000.json repository=YWZBrandon/webshop-data revision=ce990fff5aee388db2706f07820c578ab68e0453 url=https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_ins_v2_1000.json bytes=147099 sha256=f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f
+===== download_items_human_ins.json =====
+ARGV=["/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe", "-NoProfile", "-Command", "Invoke-WebRequest -UseBasicParsing -TimeoutSec 300 -Uri 'https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_human_ins.json' -OutFile 'D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec\\items_human_ins.json'"]
+CWD=/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab
+EXIT_CODE=0
+DOWNLOAD_RESULT name=items_human_ins.json repository=YWZBrandon/webshop-data revision=ce990fff5aee388db2706f07820c578ab68e0453 url=https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_human_ins.json bytes=5137548 sha256=cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3
+===== validate_and_promote =====
+ARGV=["/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe", "run", "-n", "webshop38", "python", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py", "--staging-dir", "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec", "--destination-dir", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data", "--mirror-repository", "YWZBrandon/webshop-data", "--mirror-revision", "ce990fff5aee388db2706f07820c578ab68e0453", "--allow-checksum-mirror-fallback", "--promote-staged-data", "--output", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1\\evidence\\webshop_small_mirror_assets.json"]
+CWD=/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab
+EXIT_CODE=0
+{
+  "base_url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/",
+  "description": "checksum-verified mirror copies of the WebShop small assets",
+  "destination_dir": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data",
+  "files": {
+    "items_human_ins.json": {
+      "bytes": 5137548,
+      "filename": "items_human_ins.json",
+      "google_drive_id": "14Kb5SPBk_jfdLZ_CDBNitW98QLDlKR5O",
+      "json_type": "dict",
+      "path": "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec\\items_human_ins.json",
+      "sha256": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3",
+      "source": {
+        "base_url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/",
+        "filename": "items_human_ins.json",
+        "repository": "YWZBrandon/webshop-data",
+        "revision": "ce990fff5aee388db2706f07820c578ab68e0453",
+        "url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_human_ins.json"
+      },
+      "top_level_count": 10136
+    },
+    "items_ins_v2_1000.json": {
+      "bytes": 147099,
+      "filename": "items_ins_v2_1000.json",
+      "google_drive_id": "1IduG0xl544V_A_jv3tHXC0kyFi7PnyBu",
+      "json_type": "dict",
+      "path": "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec\\items_ins_v2_1000.json",
+      "sha256": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f",
+      "source": {
+        "base_url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/",
+        "filename": "items_ins_v2_1000.json",
+        "repository": "YWZBrandon/webshop-data",
+        "revision": "ce990fff5aee388db2706f07820c578ab68e0453",
+        "url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_ins_v2_1000.json"
+      },
+      "top_level_count": 1000
+    },
+    "items_shuffle_1000.json": {
+      "bytes": 4467013,
+      "filename": "items_shuffle_1000.json",
+      "google_drive_id": "1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib",
+      "json_type": "list",
+      "path": "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec\\items_shuffle_1000.json",
+      "sha256": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269",
+      "source": {
+        "base_url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/",
+        "filename": "items_shuffle_1000.json",
+        "repository": "YWZBrandon/webshop-data",
+        "revision": "ce990fff5aee388db2706f07820c578ab68e0453",
+        "url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_shuffle_1000.json"
+      },
+      "top_level_count": 1000
+    }
+  },
+  "overall_pass": true,
+  "promoted": true,
+  "promoted_paths": [
+    "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_shuffle_1000.json",
+    "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_ins_v2_1000.json",
+    "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_human_ins.json"
+  ],
+  "repository": "YWZBrandon/webshop-data",
+  "revision": "ce990fff5aee388db2706f07820c578ab68e0453",
+  "schema": "webshop-small-mirror-assets/v1",
+  "staging_dir": "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec"
+}
+
+===== validate_promoted_data =====
+ARGV=["/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe", "run", "-n", "webshop38", "python", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py", "--checkout", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop", "--expected-commit", "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd", "--no-index"]
+CWD=/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab
+EXIT_CODE=0
+{
+  "checkout": {
+    "actual_commit": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+    "checkout": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop",
+    "expected_commit": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+    "git_clean": true
+  },
+  "data": {
+    "attribute_top_level_count": 1000,
+    "data_dir": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data",
+    "description": "checksum-verified mirror copies of the WebShop small assets",
+    "files": {
+      "items_human_ins.json": {
+        "bytes": 5137548,
+        "filename": "items_human_ins.json",
+        "google_drive_id": "14Kb5SPBk_jfdLZ_CDBNitW98QLDlKR5O",
+        "json_type": "dict",
+        "path": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_human_ins.json",
+        "sha256": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3",
+        "top_level_count": 10136
+      },
+      "items_ins_v2_1000.json": {
+        "bytes": 147099,
+        "filename": "items_ins_v2_1000.json",
+        "google_drive_id": "1IduG0xl544V_A_jv3tHXC0kyFi7PnyBu",
+        "json_type": "dict",
+        "path": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_ins_v2_1000.json",
+        "sha256": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f",
+        "top_level_count": 1000
+      },
+      "items_shuffle_1000.json": {
+        "bytes": 4467013,
+        "filename": "items_shuffle_1000.json",
+        "google_drive_id": "1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib",
+        "json_type": "list",
+        "path": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_shuffle_1000.json",
+        "sha256": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269",
+        "top_level_count": 1000
+      }
+    },
+    "human_instruction_top_level_count": 10136,
+    "product_count": 1000,
+    "unique_product_asins": 1000
+  },
+  "derived_search_keyword": "vhomes lights reclaimed",
+  "overall_pass": true,
+  "require_index": false,
+  "schema": "webshop-small-assets/v2"
+}
+
+===== build_resources_1k =====
+ARGV=["/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe", "run", "-n", "webshop38", "python", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py", "--checkout", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop", "--expected-commit", "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd", "--build-resources"]
+CWD=/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab
+EXIT_CODE=0
+{
+  "document_count": 1000,
+  "documents_path": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\search_engine\\resources_1k\\documents.jsonl",
+  "documents_sha256": "2014b89a9cd72b3790632e488cc6b8a5bc6c7484af5073e95df5308bac59c275",
+  "overall_pass": true,
+  "resources_dir": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\search_engine\\resources_1k",
+  "source_product_sha256": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269"
+}
+
+===== build_indexes_1k =====
+ARGV=["/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe", "run", "-n", "webshop38", "python", "-m", "pyserini.index.lucene", "--collection", "JsonCollection", "--input", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\search_engine\\resources_1k", "--index", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\search_engine\\indexes_1k", "--generator", "DefaultLuceneDocumentGenerator", "--threads", "1", "--storePositions", "--storeDocvectors", "--storeRaw"]
+CWD=/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab
+EXIT_CODE=0
+WARNING: sun.reflect.Reflection.getCallerClass is not supported. This will impact performance.
+2026-08-02 12:33:03,319 INFO  [main] index.IndexCollection (IndexCollection.java:645) - Setting log level to INFO
+2026-08-02 12:33:03,322 INFO  [main] index.IndexCollection (IndexCollection.java:648) - Starting indexer...
+2026-08-02 12:33:03,322 INFO  [main] index.IndexCollection (IndexCollection.java:649) - ============ Loading Parameters ============
+2026-08-02 12:33:03,322 INFO  [main] index.IndexCollection (IndexCollection.java:650) - DocumentCollection path: D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\local_sources\third_party\webshop\search_engine\resources_1k
+2026-08-02 12:33:03,322 INFO  [main] index.IndexCollection (IndexCollection.java:651) - CollectionClass: JsonCollection
+2026-08-02 12:33:03,322 INFO  [main] index.IndexCollection (IndexCollection.java:652) - Generator: DefaultLuceneDocumentGenerator
+2026-08-02 12:33:03,322 INFO  [main] index.IndexCollection (IndexCollection.java:653) - Threads: 1
+2026-08-02 12:33:03,322 INFO  [main] index.IndexCollection (IndexCollection.java:654) - Language: en
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:655) - Stemmer: porter
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:656) - Keep stopwords? false
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:657) - Stopwords: null
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:658) - Store positions? true
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:659) - Store docvectors? true
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:660) - Store document "contents" field? false
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:661) - Store document "raw" field? true
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:662) - Additional fields to index: []
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:663) - Optimize (merge segments)? false
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:664) - Whitelist: null
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:665) - Pretokenized?: false
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:685) - Directly building Lucene indexes...
+2026-08-02 12:33:03,324 INFO  [main] index.IndexCollection (IndexCollection.java:686) - Index path: D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\local_sources\third_party\webshop\search_engine\indexes_1k
+2026-08-02 12:33:03,330 INFO  [main] index.IndexCollection (IndexCollection.java:741) - ============ Indexing Collection ============
+2026-08-02 12:33:03,463 INFO  [main] index.IndexCollection (IndexCollection.java:845) - Thread pool with 1 threads initialized.
+2026-08-02 12:33:03,463 INFO  [main] index.IndexCollection (IndexCollection.java:847) - Initializing collection in D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\local_sources\third_party\webshop\search_engine\resources_1k
+2026-08-02 12:33:03,465 INFO  [main] index.IndexCollection (IndexCollection.java:856) - 1 file found
+2026-08-02 12:33:03,465 INFO  [main] index.IndexCollection (IndexCollection.java:857) - Starting to index...
+2026-08-02 12:33:04,353 DEBUG [pool-2-thread-1] index.IndexCollection$LocalIndexerThread (IndexCollection.java:250) - resources_1k\documents.jsonl: 1000 docs added.
+2026-08-02 12:33:04,590 INFO  [main] index.IndexCollection (IndexCollection.java:941) - Indexing Complete! 1,000 documents indexed
+2026-08-02 12:33:04,590 INFO  [main] index.IndexCollection (IndexCollection.java:942) - ============ Final Counter Values ============
+2026-08-02 12:33:04,590 INFO  [main] index.IndexCollection (IndexCollection.java:943) - indexed:            1,000
+2026-08-02 12:33:04,592 INFO  [main] index.IndexCollection (IndexCollection.java:944) - unindexable:            0
+2026-08-02 12:33:04,592 INFO  [main] index.IndexCollection (IndexCollection.java:945) - empty:                  0
+2026-08-02 12:33:04,592 INFO  [main] index.IndexCollection (IndexCollection.java:946) - skipped:                0
+2026-08-02 12:33:04,592 INFO  [main] index.IndexCollection (IndexCollection.java:947) - errors:                 0
+2026-08-02 12:33:04,605 INFO  [main] index.IndexCollection (IndexCollection.java:950) - Total 1,000 documents indexed in 00:00:01
+
+===== direct_lucene_query =====
+ARGV=["/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe", "run", "-n", "webshop38", "python", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py", "--checkout", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop", "--expected-commit", "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd", "--query-index", "--output", "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1\\evidence\\webshop_small_index_query.json"]
+CWD=/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab
+EXIT_CODE=1
+STAGING_REMOVED=True
+BUY_NOW_EXECUTED=False
+COMMIT_EXECUTED=False
+PUSH_EXECUTED=False

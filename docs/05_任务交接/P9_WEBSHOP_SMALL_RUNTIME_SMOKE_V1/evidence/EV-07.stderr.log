@@ -1,0 +1,36 @@
+=== STEP 1 ===
+=== STEP 2 ===
+=== STEP 3 ===
+Warning: Gym version v0.24.0 has a number of critical issues with `gym.make` such that the `reset` and `step` functions are called before returning the environment. It is recommend to downgrading to v0.23.1 or upgrading to v0.25.1
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\spacy\__init__.py", line 14, in <module>
+    from . import pipeline  # noqa: F401
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\spacy\pipeline\__init__.py", line 1, in <module>
+    from .attributeruler import AttributeRuler
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\spacy\pipeline\attributeruler.py", line 6, in <module>
+    from .pipe import Pipe
+  File "spacy\pipeline\pipe.pyx", line 8, in init spacy.pipeline.pipe
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\spacy\training\__init__.py", line 11, in <module>
+    from .callbacks import create_copy_from_base_model  # noqa: F401
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\spacy\training\callbacks.py", line 3, in <module>
+    from ..language import Language
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\spacy\language.py", line 25, in <module>
+    from .training.initialize import init_vocab, init_tok2vec
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\spacy\training\initialize.py", line 14, in <module>
+    from .pretrain import get_tok2vec_ref
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\spacy\training\pretrain.py", line 16, in <module>
+    from ..schemas import ConfigSchemaPretrain
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\site-packages\spacy\schemas.py", line 216, in <module>
+    class TokenPattern(BaseModel):
+  File "pydantic\main.py", line 299, in pydantic.main.ModelMetaclass.__new__
+  File "pydantic\fields.py", line 411, in pydantic.fields.ModelField.infer
+  File "pydantic\fields.py", line 342, in pydantic.fields.ModelField.__init__
+  File "pydantic\fields.py", line 451, in pydantic.fields.ModelField.prepare
+  File "pydantic\fields.py", line 545, in pydantic.fields.ModelField._type_analysis
+  File "pydantic\fields.py", line 550, in pydantic.fields.ModelField._type_analysis
+  File "D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\lib\typing.py", line 774, in __subclasscheck__
+    return issubclass(cls, self.__origin__)
+TypeError: issubclass() arg 1 must be a class
+
+ERROR conda.cli.main_run:execute(124): `conda run python -c import gym,rank_bm25,pyserini,spacy,torch; nlp=spacy.load("en_core_web_sm"); print(gym.__version__, pyserini.__file__, spacy.__version__, torch.__version__, nlp.meta["version"])` failed. (See above for error)

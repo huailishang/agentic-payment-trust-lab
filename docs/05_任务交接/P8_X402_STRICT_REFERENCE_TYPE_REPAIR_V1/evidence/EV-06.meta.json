@@ -1,0 +1,21 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-06",
+  "command_argv": [
+    "env",
+    "PYTHONPATH=src",
+    "python3",
+    "docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-07_case_matrix.py"
+  ],
+  "command_display": "env PYTHONPATH=src python3 'docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/EV-07_case_matrix.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-01T07:37:07.376851+00:00",
+  "finished_at_utc": "2026-08-01T07:37:07.839019+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-06.stdout.log",
+  "stderr_path": "EV-06.stderr.log",
+  "stdout_bytes": 25468,
+  "stderr_bytes": 0,
+  "stdout_sha256": "fdba8bfc5bda97e921727e627c248f8bf87ee6875d88a5fd029a9a8eda7ff649",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

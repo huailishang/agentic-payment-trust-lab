@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-06",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/RV-EV-06_scope_check.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/evidence/RV-EV-06_scope_check.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-01T07:23:08.026272+00:00",
+  "finished_at_utc": "2026-08-01T07:23:08.779733+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-06.stdout.log",
+  "stderr_path": "RV-EV-06.stderr.log",
+  "stdout_bytes": 1531,
+  "stderr_bytes": 0,
+  "stdout_sha256": "fd0dc06cb13e012911461976a5f7a2b6244ac81db2781a3b2211a58e0843bf9c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "webshop-checkout-snapshot-anomalies/v1",
+  "source_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+  "limitations": [
+    "no_real_buy_now",
+    "no_real_payment",
+    "offline_deterministic_snapshot_mutations_only"
+  ],
+  "cases": [
+    {"case_id": "unchanged", "mutation": "unchanged", "expected_decision": "ALLOW"},
+    {"case_id": "price_up", "mutation": "price_up", "expected_decision": "CONFIRMATION_REQUIRED"},
+    {"case_id": "price_down", "mutation": "price_down", "expected_decision": "CONFIRMATION_REQUIRED"},
+    {"case_id": "option_changed", "mutation": "option_changed", "expected_decision": "CONFIRMATION_REQUIRED"},
+    {"case_id": "quantity_changed", "mutation": "quantity_changed", "expected_decision": "CONFIRMATION_REQUIRED"},
+    {"case_id": "content_changed", "mutation": "content_changed", "expected_decision": "CONFIRMATION_REQUIRED"},
+    {"case_id": "fulfilment_changed", "mutation": "fulfilment_changed", "expected_decision": "CONFIRMATION_REQUIRED"},
+    {"case_id": "product_changed", "mutation": "product_changed", "expected_decision": "INDETERMINATE"},
+    {"case_id": "merchant_changed", "mutation": "merchant_changed", "expected_decision": "INDETERMINATE"},
+    {"case_id": "payee_changed", "mutation": "payee_changed", "expected_decision": "INDETERMINATE"},
+    {"case_id": "currency_changed", "mutation": "currency_changed", "expected_decision": "INDETERMINATE"},
+    {"case_id": "category_out_of_scope", "mutation": "category_out_of_scope", "expected_decision": "DENY"}
+  ]
+}

@@ -1,0 +1,20 @@
+head=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+sha256 src/agentic_payment_experiment/trusted_execution/original_transaction.py 482b7aa23e07f7724b909ab289928e61f9227f2544611b886e028047d4e9e5d9
+sha256 src/agentic_payment_experiment/payment_status_conflict.py 75c87e9382f29b045caf987a4d6e92281395748189df505294a210bb1fbbbf4d
+sha256 src/agentic_payment_experiment/__init__.py 0366b2c47b29938c15642dec507f53a78b5f43d1a05b4fcdc4a2a8e246b4ab28
+sha256 tests/trusted_execution/test_original_transaction.py b470f022f325331e6853add18141b7c46a0fe19dae86ecdf36274d6b4543dfc3
+sha256 tests/test_payment_status_conflict.py d810c8ba20d3ce9953a560c04ff15e8677f177f4c7c799c3258c0835391f010c
+tracked_task_diff_check_exit=0
+task_whitespace_findings=0
+task_status_begin
+ M CURRENT.md
+ M src/agentic_payment_experiment/__init__.py
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P6_ASYNC_QUERY_STATUS_CONFLICT_FACT_V1/CONTRACT.md"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P6_ASYNC_QUERY_STATUS_CONFLICT_FACT_V1/REPORT.md"
+?? src/agentic_payment_experiment/payment_status_conflict.py
+?? src/agentic_payment_experiment/trusted_execution/original_transaction.py
+?? tests/test_payment_status_conflict.py
+?? tests/trusted_execution/test_original_transaction.py
+task_status_end
+scope_failures=0
+task_scope_result=PASS

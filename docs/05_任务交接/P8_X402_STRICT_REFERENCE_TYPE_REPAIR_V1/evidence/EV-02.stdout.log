@@ -1,0 +1,12 @@
+malformed_proof_ref_type=list
+adapter_status=INVALID
+reason_codes=['x402_string_invalid:payment_proof.proof_ref', 'x402_string_invalid:facilitator_verification.proof_ref', 'x402_string_invalid:facilitator_settlement.proof_ref', 'x402_string_invalid:facilitator_settlement.payment_ref', 'x402_string_invalid:facilitator_async_observation.payment_ref', 'x402_string_invalid:resource_delivery.proof_ref']
+mandate=None
+order=None
+request=None
+payment=None
+settlement_observation=None
+async_observation=None
+resource_delivery=None
+delivery_attempts=()
+RESULT=PASS

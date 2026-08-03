@@ -13,6 +13,7 @@ from .models import (
     RemediationStatus,
     ValidationIssue,
 )
+from .trusted_execution import FollowUpAction, verify_original_transaction
 
 
 def assess_remediation(
@@ -210,14 +211,27 @@ def _refund_binding_issues(
     payment: PaymentExecutionRecord,
 ) -> list[ValidationIssue]:
     issues: list[ValidationIssue] = []
+    fact = verify_original_transaction(FollowUpAction.REFUND, payment, refund)
+    if fact.status.value != "VALID":
+        issues.extend(
+            ValidationIssue(
+                f"refund_{reason}",
+                "refund record cannot be bound to the original transaction: " + reason,
+            )
+            for reason in fact.reason_codes
+            if reason not in {
+                "original_transaction_payment_ref_mismatch",
+                "original_transaction_order_ref_mismatch",
+            }
+        )
     checks = (
         (
-            refund.payment_id != payment.payment_id,
+            "original_transaction_payment_ref_mismatch" in fact.reason_codes,
             "refund_payment_binding_mismatch",
             "refund record does not reference the original payment",
         ),
         (
-            refund.order_id != order.order_id,
+            "original_transaction_order_ref_mismatch" in fact.reason_codes,
             "refund_order_binding_mismatch",
             "refund record does not reference the original order",
         ),
@@ -249,14 +263,27 @@ def _dispute_binding_issues(
     payment: PaymentExecutionRecord,
 ) -> list[ValidationIssue]:
     issues: list[ValidationIssue] = []
-    if dispute.payment_id != payment.payment_id:
+    fact = verify_original_transaction(FollowUpAction.DISPUTE, payment, dispute)
+    if fact.status.value != "VALID":
+        issues.extend(
+            ValidationIssue(
+                f"dispute_{reason}",
+                "dispute record cannot be bound to the original transaction: " + reason,
+            )
+            for reason in fact.reason_codes
+            if reason not in {
+                "original_transaction_payment_ref_mismatch",
+                "original_transaction_order_ref_mismatch",
+            }
+        )
+    if "original_transaction_payment_ref_mismatch" in fact.reason_codes:
         issues.append(
             ValidationIssue(
                 "dispute_payment_binding_mismatch",
                 "dispute record does not reference the original payment",
             )
         )
-    if dispute.order_id != order.order_id:
+    if "original_transaction_order_ref_mismatch" in fact.reason_codes:
         issues.append(
             ValidationIssue(
                 "dispute_order_binding_mismatch",

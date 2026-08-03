@@ -1,0 +1,301 @@
+{
+  "cases": [
+    {
+      "actual_decision": "ALLOW",
+      "baseline_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "baseline_order_version": "webshop-v1",
+      "callback_count": 1,
+      "callback_observations": 1,
+      "case_id": "unchanged",
+      "checkout_executed": true,
+      "expected_decision": "ALLOW",
+      "final_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "final_order_version": "webshop-v1",
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "unchanged",
+      "order_difference_codes": [],
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "runtime:allow"
+      ]
+    },
+    {
+      "actual_decision": "CONFIRMATION_REQUIRED",
+      "baseline_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "baseline_order_version": "webshop-v1",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "price_up",
+      "checkout_executed": false,
+      "expected_decision": "CONFIRMATION_REQUIRED",
+      "final_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "final_order_version": "webshop-v1-price-up",
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "price_up",
+      "order_difference_codes": [
+        "order_total_changed",
+        "order_item_unit_amount_changed"
+      ],
+      "reason_codes": [
+        "p1:order_total_changed",
+        "p1:order_item_unit_amount_changed"
+      ]
+    },
+    {
+      "actual_decision": "CONFIRMATION_REQUIRED",
+      "baseline_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "baseline_order_version": "webshop-v1",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "price_down",
+      "checkout_executed": false,
+      "expected_decision": "CONFIRMATION_REQUIRED",
+      "final_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "final_order_version": "webshop-v1-price-down",
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "price_down",
+      "order_difference_codes": [
+        "order_total_changed",
+        "order_item_unit_amount_changed"
+      ],
+      "reason_codes": [
+        "p1:order_total_changed",
+        "p1:order_item_unit_amount_changed"
+      ]
+    },
+    {
+      "actual_decision": "CONFIRMATION_REQUIRED",
+      "baseline_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "baseline_order_version": "webshop-v1",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "option_changed",
+      "checkout_executed": false,
+      "expected_decision": "CONFIRMATION_REQUIRED",
+      "final_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "final_order_version": "webshop-v1-option",
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "option_changed",
+      "order_difference_codes": [
+        "order_item_name_changed"
+      ],
+      "reason_codes": [
+        "p1:order_item_name_changed"
+      ]
+    },
+    {
+      "actual_decision": "CONFIRMATION_REQUIRED",
+      "baseline_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "baseline_order_version": "webshop-v1",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "quantity_changed",
+      "checkout_executed": false,
+      "expected_decision": "CONFIRMATION_REQUIRED",
+      "final_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "final_order_version": "webshop-v1-quantity",
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "quantity_changed",
+      "order_difference_codes": [
+        "order_total_changed",
+        "order_item_quantity_changed"
+      ],
+      "reason_codes": [
+        "p1:order_total_changed",
+        "p1:order_item_quantity_changed"
+      ]
+    },
+    {
+      "actual_decision": "CONFIRMATION_REQUIRED",
+      "baseline_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "baseline_order_version": "webshop-v1",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "content_changed",
+      "checkout_executed": false,
+      "expected_decision": "CONFIRMATION_REQUIRED",
+      "final_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "final_order_version": "webshop-v1-content",
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "content_changed",
+      "order_difference_codes": [
+        "order_item_name_changed"
+      ],
+      "reason_codes": [
+        "p1:order_item_name_changed"
+      ]
+    },
+    {
+      "actual_decision": "CONFIRMATION_REQUIRED",
+      "baseline_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "baseline_order_version": "webshop-v1",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "fulfilment_changed",
+      "checkout_executed": false,
+      "expected_decision": "CONFIRMATION_REQUIRED",
+      "final_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "final_order_version": "webshop-v1-fulfilment",
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "fulfilment_changed",
+      "order_difference_codes": [
+        "order_fulfilment_terms_changed"
+      ],
+      "reason_codes": [
+        "p1:order_fulfilment_terms_changed"
+      ]
+    },
+    {
+      "actual_decision": "INDETERMINATE",
+      "baseline_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "baseline_order_version": "webshop-v1",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "product_changed",
+      "checkout_executed": false,
+      "expected_decision": "INDETERMINATE",
+      "final_order_ref": "webshop-order-9eccab2b0154fca4af27f322-other-product",
+      "final_order_version": "webshop-v1-product",
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "product_changed",
+      "order_difference_codes": [],
+      "reason_codes": [
+        "p1:order_id_mismatch"
+      ]
+    },
+    {
+      "actual_decision": "INDETERMINATE",
+      "baseline_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "baseline_order_version": "webshop-v1",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "merchant_changed",
+      "checkout_executed": false,
+      "expected_decision": "INDETERMINATE",
+      "final_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "final_order_version": "webshop-v1-merchant",
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "merchant_changed",
+      "order_difference_codes": [],
+      "reason_codes": [
+        "p1:authorized_order_merchant_mismatch"
+      ]
+    },
+    {
+      "actual_decision": "INDETERMINATE",
+      "baseline_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "baseline_order_version": "webshop-v1",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "payee_changed",
+      "checkout_executed": false,
+      "expected_decision": "INDETERMINATE",
+      "final_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "final_order_version": "webshop-v1-payee",
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "payee_changed",
+      "order_difference_codes": [],
+      "reason_codes": [
+        "p1:order_payee_changed"
+      ]
+    },
+    {
+      "actual_decision": "INDETERMINATE",
+      "baseline_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "baseline_order_version": "webshop-v1",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "currency_changed",
+      "checkout_executed": false,
+      "expected_decision": "INDETERMINATE",
+      "final_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "final_order_version": "webshop-v1-currency",
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "currency_changed",
+      "order_difference_codes": [],
+      "reason_codes": [
+        "p1:currency_mismatch"
+      ]
+    },
+    {
+      "actual_decision": "DENY",
+      "baseline_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "baseline_order_version": "webshop-v1",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "category_out_of_scope",
+      "checkout_executed": false,
+      "expected_decision": "DENY",
+      "final_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "final_order_version": "webshop-v1-category",
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "category_out_of_scope",
+      "order_difference_codes": [],
+      "reason_codes": [
+        "p1:category_out_of_scope"
+      ]
+    }
+  ],
+  "limitations": [
+    "no_real_buy_now",
+    "no_real_payment",
+    "offline_deterministic_snapshot_mutations_only"
+  ],
+  "schema": "webshop-checkout-snapshot-anomalies/v1",
+  "source_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+  "summary": {
+    "failed": 0,
+    "matched": 12,
+    "total": 12
+  }
+}

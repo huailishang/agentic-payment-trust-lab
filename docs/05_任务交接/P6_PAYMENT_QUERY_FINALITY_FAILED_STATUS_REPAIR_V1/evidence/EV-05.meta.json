@@ -1,0 +1,13 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-05",
+  "command_display": "git diff --check",
+  "working_directory": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+  "exit_code": 0,
+  "stdout_path": "EV-05.stdout.log",
+  "stderr_path": "EV-05.stderr.log",
+  "stdout_bytes": 250,
+  "stderr_bytes": 1,
+  "stdout_sha256": "061b5d2fdee098dc213c1ebb62a2a9f251a7d6be0f96661ca0d34a7b9e4b1c91",
+  "stderr_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+}

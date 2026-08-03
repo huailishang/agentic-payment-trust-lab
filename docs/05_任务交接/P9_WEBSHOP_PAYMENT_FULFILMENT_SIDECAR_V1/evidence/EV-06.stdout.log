@@ -1,0 +1,131 @@
+{
+  "async_callback_executed": false,
+  "baseline_head": "8acaa9e4319240d258f14d8a23b1f15cc71d09b6",
+  "buy_now_executed": false,
+  "commit_executed": false,
+  "current_head": "8acaa9e4319240d258f14d8a23b1f15cc71d09b6",
+  "environment_or_dependency_changed": false,
+  "fulfilment_executed": false,
+  "head_matches_baseline": true,
+  "models_diff_empty": true,
+  "network_or_api_called": false,
+  "payment_executed": false,
+  "production_calls": [
+    "TypeError",
+    "WebShopPaymentFulfilmentOutcome",
+    "_contains_binding_failure",
+    "_deduplicate",
+    "_prerequisite_reasons",
+    "_primitive",
+    "any",
+    "append",
+    "assess_lifecycle",
+    "assess_payment_recovery",
+    "bool",
+    "dataclass",
+    "derive_payment_status_conflict",
+    "extend",
+    "fields",
+    "fromkeys",
+    "frozenset",
+    "getattr",
+    "intersection",
+    "is_dataclass",
+    "isinstance",
+    "isoformat",
+    "items",
+    "list",
+    "lower",
+    "replace",
+    "sorted",
+    "startswith",
+    "str",
+    "to_dict",
+    "tuple",
+    "type",
+    "verify_original_transaction"
+  ],
+  "production_imports": [
+    "__future__",
+    "adapters.webshop",
+    "dataclasses",
+    "datetime",
+    "decimal",
+    "enum",
+    "lifecycle",
+    "models",
+    "payment_recovery",
+    "payment_status_conflict",
+    "trusted_execution",
+    "typing",
+    "webshop_runtime_gate"
+  ],
+  "protected_files_unchanged": [
+    {
+      "path": "src/agentic_payment_experiment/webshop_runtime_gate.py",
+      "sha256": "5aadec69b787825dc7909276d1ea6881f1620d911d4b7f83839bf3400f39e368"
+    },
+    {
+      "path": "src/agentic_payment_experiment/adapters/webshop.py",
+      "sha256": "035e6bb20d44b0a52be3f6adab2830c402e01f53839e917698343761c5481ec4"
+    },
+    {
+      "path": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+      "sha256": "6e9d67c3b787cc2d9202bd22b30dec88bf9f920dfa3741bdeb364108a2a3c8e5"
+    },
+    {
+      "path": "scripts/validation/webshop/export_webshop_commerce_fixture.py",
+      "sha256": "aae4c6109586f20e6e78c35ba48b6c94dfee76e478134842731140f50a9382f0"
+    },
+    {
+      "path": "src/agentic_payment_experiment/payment_recovery.py",
+      "sha256": "c8c2d7a71b4293105ea2365a7486f143b4ad2f8a9ea10d842bf00dae522107de"
+    },
+    {
+      "path": "src/agentic_payment_experiment/payment_status_conflict.py",
+      "sha256": "75c87e9382f29b045caf987a4d6e92281395748189df505294a210bb1fbbbf4d"
+    },
+    {
+      "path": "src/agentic_payment_experiment/lifecycle.py",
+      "sha256": "8fc6df6f56d5aad47cc9c449340307324150f12760f0a124bd32296a659a4c92"
+    },
+    {
+      "path": "src/agentic_payment_experiment/remediation.py",
+      "sha256": "43a76921fe3058edee4b1778b73949a00dc76a44de08a36f8a3d4e8cdb8c15d3"
+    }
+  ],
+  "push_executed": false,
+  "refund_or_dispute_executed": false,
+  "retry_executed": false,
+  "status_query_executed": false,
+  "task_files": [
+    {
+      "bytes": 13607,
+      "path": "src/agentic_payment_experiment/webshop_payment_sidecar.py",
+      "sha256": "a7950308864d71a25b36c43ff11aed8cfeef1f0fe4d373ab305849b770f95c3b"
+    },
+    {
+      "bytes": 2488,
+      "path": "src/agentic_payment_experiment/__init__.py",
+      "sha256": "a62c310ba1dad90a905be35414e6d294a0dcbd382a0e625c72b1f64009a13c02"
+    },
+    {
+      "bytes": 23848,
+      "path": "tests/test_webshop_payment_sidecar.py",
+      "sha256": "02b2a757f3d2656dbe38704d00001ef687c8935d70410c48669e1fb5ae832c74"
+    },
+    {
+      "bytes": 14127,
+      "path": "docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md",
+      "sha256": "2167b676762153f202683a003bd4993f3b2f4b78fe5e9924a02c6f6bda911acd"
+    },
+    {
+      "bytes": 18261,
+      "path": "docs/02_未来规划/验证体系与后续环境统一路线_20260801.md",
+      "sha256": "c86982461648ff0df439895a907412fd73a42701fe9a26ce1d4a45d0bca298a4"
+    }
+  ],
+  "ui_modified": false,
+  "validator_diff_empty": true,
+  "webshop_runtime_executed": false
+}

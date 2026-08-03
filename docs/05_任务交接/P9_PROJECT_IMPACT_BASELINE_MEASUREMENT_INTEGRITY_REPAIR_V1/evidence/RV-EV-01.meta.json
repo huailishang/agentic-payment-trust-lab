@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-01",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_PROJECT_IMPACT_BASELINE_MEASUREMENT_INTEGRITY_REPAIR_V1/evidence/RV-EV-01_measurement_semantics.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_PROJECT_IMPACT_BASELINE_MEASUREMENT_INTEGRITY_REPAIR_V1/evidence/RV-EV-01_measurement_semantics.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-03T14:19:16.174344+00:00",
+  "finished_at_utc": "2026-08-03T14:19:18.177050+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-01.stdout.log",
+  "stderr_path": "RV-EV-01.stderr.log",
+  "stdout_bytes": 1017,
+  "stderr_bytes": 0,
+  "stdout_sha256": "749be91f02ffc140d86d3fb68acc8cd6e128b774742522f1b5f73b8ddb70826a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

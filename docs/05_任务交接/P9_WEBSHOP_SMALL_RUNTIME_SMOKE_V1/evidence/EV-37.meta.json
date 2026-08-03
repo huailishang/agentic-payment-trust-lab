@@ -1,0 +1,33 @@
+{
+  "label": "EV-37",
+  "exit_code": 0,
+  "process_exit_code": 0,
+  "command_display": "python3 /mnt/c/Users/HuailiShang/.codex/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md",
+  "command_argv": [
+    "python3",
+    "/mnt/c/Users/HuailiShang/.codex/skills/evaluator-executor-workflow/scripts/validate_workflow.py",
+    "--repo",
+    ".",
+    "--current",
+    "CURRENT.md"
+  ],
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T05:46:36.611460+00:00",
+  "finished_at_utc": "2026-08-02T05:46:38.892459+00:00",
+  "blocking_found": false,
+  "phase": "post-atomic READY_FOR_REVIEW / Evaluator handoff validation",
+  "report_sha256": "add6e74a3ddbbb737cd90cb63dfa408c9846127f8cca8ed325c3f07aa45edd12",
+  "current_sha256": "53d3a2e941e20b0be5e8f9ca97e8015c76f8fa9033a58f9d2d6301a2e6f26f3d",
+  "report_state_ready": true,
+  "current_state_ready": true,
+  "current_role_evaluator": true,
+  "commit_executed": false,
+  "push_executed": false,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-37.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-37.stderr.log",
+  "stdout_bytes": 61,
+  "stderr_bytes": 0,
+  "stdout_sha256": "00f38b0a656c21015a6335adeff8e2e9a45ecc7ecd722889ebe95eae74d4160f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

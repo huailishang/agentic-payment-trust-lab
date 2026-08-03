@@ -1,0 +1,187 @@
+{
+  "label": "EV-23",
+  "started_at_utc": "2026-08-02T04:31:20.225810+00:00",
+  "finished_at_utc": "2026-08-02T04:33:07.842258+00:00",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "command_display": "bounded direct conda.exe execution sequence for P9-A2 after WSL->PowerShell native-process limitation",
+  "command_argv": [
+    "multiple commands; see records"
+  ],
+  "records": [
+    {
+      "name": "checkout_only",
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py",
+        "--checkout",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop",
+        "--expected-commit",
+        "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+        "--checkout-only"
+      ],
+      "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "exit_code": 0
+    },
+    {
+      "name": "download_items_shuffle_1000.json",
+      "command_argv": [
+        "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "-NoProfile",
+        "-Command",
+        "Invoke-WebRequest -UseBasicParsing -TimeoutSec 300 -Uri 'https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_shuffle_1000.json' -OutFile 'D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec\\items_shuffle_1000.json'"
+      ],
+      "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "exit_code": 0
+    },
+    {
+      "name": "download_items_ins_v2_1000.json",
+      "command_argv": [
+        "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "-NoProfile",
+        "-Command",
+        "Invoke-WebRequest -UseBasicParsing -TimeoutSec 300 -Uri 'https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_ins_v2_1000.json' -OutFile 'D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec\\items_ins_v2_1000.json'"
+      ],
+      "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "exit_code": 0
+    },
+    {
+      "name": "download_items_human_ins.json",
+      "command_argv": [
+        "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "-NoProfile",
+        "-Command",
+        "Invoke-WebRequest -UseBasicParsing -TimeoutSec 300 -Uri 'https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/items_human_ins.json' -OutFile 'D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec\\items_human_ins.json'"
+      ],
+      "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "exit_code": 0
+    },
+    {
+      "name": "validate_and_promote",
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py",
+        "--staging-dir",
+        "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\webshop_small_staging_601697d12c0243dca5802e9a55848cec",
+        "--destination-dir",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data",
+        "--mirror-repository",
+        "YWZBrandon/webshop-data",
+        "--mirror-revision",
+        "ce990fff5aee388db2706f07820c578ab68e0453",
+        "--allow-checksum-mirror-fallback",
+        "--promote-staged-data",
+        "--output",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1\\evidence\\webshop_small_mirror_assets.json"
+      ],
+      "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "exit_code": 0
+    },
+    {
+      "name": "validate_promoted_data",
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py",
+        "--checkout",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop",
+        "--expected-commit",
+        "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+        "--no-index"
+      ],
+      "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "exit_code": 0
+    },
+    {
+      "name": "build_resources_1k",
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py",
+        "--checkout",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop",
+        "--expected-commit",
+        "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+        "--build-resources"
+      ],
+      "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "exit_code": 0
+    },
+    {
+      "name": "build_indexes_1k",
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "-m",
+        "pyserini.index.lucene",
+        "--collection",
+        "JsonCollection",
+        "--input",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\search_engine\\resources_1k",
+        "--index",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\search_engine\\indexes_1k",
+        "--generator",
+        "DefaultLuceneDocumentGenerator",
+        "--threads",
+        "1",
+        "--storePositions",
+        "--storeDocvectors",
+        "--storeRaw"
+      ],
+      "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "exit_code": 0
+    },
+    {
+      "name": "direct_lucene_query",
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py",
+        "--checkout",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop",
+        "--expected-commit",
+        "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+        "--query-index",
+        "--output",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1\\evidence\\webshop_small_index_query.json"
+      ],
+      "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "exit_code": 1
+    }
+  ],
+  "exit_code": 1,
+  "approved_mirror": {
+    "repository": "YWZBrandon/webshop-data",
+    "revision": "ce990fff5aee388db2706f07820c578ab68e0453",
+    "base_url": "https://huggingface.co/datasets/YWZBrandon/webshop-data/resolve/ce990fff5aee388db2706f07820c578ab68e0453/"
+  },
+  "buy_now_executed": false,
+  "commit_executed": false,
+  "push_executed": false,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-23.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-23.stderr.log",
+  "stdout_sha256": "5b263132fc9686f5bfcdeb2e21347ce92e51201645cf48a21d7e6c0123fdf516",
+  "stderr_sha256": "4c906f8d763f5468966abdf1ba08b9ea3ba659dd01c7d80907d35a97ba09b373",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 18419,
+  "stderr_bytes": 3143
+}

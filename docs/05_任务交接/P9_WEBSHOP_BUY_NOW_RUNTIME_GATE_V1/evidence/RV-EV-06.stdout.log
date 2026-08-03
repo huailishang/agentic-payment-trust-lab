@@ -1,0 +1,26 @@
+HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+BRANCH=main
+CORE_HASHES
+5aadec69b787825dc7909276d1ea6881f1620d911d4b7f83839bf3400f39e368  src/agentic_payment_experiment/webshop_runtime_gate.py
+f41704928b0dcd39d7666867bc69485fb8de40529ec7254c0a50cb5b4a19add3  src/agentic_payment_experiment/__init__.py
+a7fbfe1f340f3ac35934edd5fb71bb70b20969d763cc75166e688e29bfcddef8  tests/test_webshop_runtime_gate.py
+P9_B1_HASHES
+035e6bb20d44b0a52be3f6adab2830c402e01f53839e917698343761c5481ec4  src/agentic_payment_experiment/adapters/webshop.py
+6e9d67c3b787cc2d9202bd22b30dec88bf9f920dfa3741bdeb364108a2a3c8e5  samples/external/webshop/pre_buy_now_candidate_v1.json
+aae4c6109586f20e6e78c35ba48b6c94dfee76e478134842731140f50a9382f0  scripts/validation/webshop/export_webshop_commerce_fixture.py
+FORBIDDEN_DIFFS
+STATUS_LINES
+docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md:423:P9-B1 Commerce Adapter                     PASS
+docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md:424:P9-B2 Buy Now 拦截 + Runtime Gate          READY_FOR_REVIEW
+docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md:425:P9-C 支付 / 履约 Sidecar                   未开始
+docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md:427:P9-E 购买轨迹可视化 UI                     已规划，后置执行
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:406:P9-B1 Commerce Adapter
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:409:P9-B2 Buy Now 拦截 + Runtime Authorization Gate
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:416:P9-E 购买轨迹可视化 UI
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:447:P9-B1 Commerce Adapter                     PASS
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:448:P9-B2 Buy Now 拦截 + Runtime Gate          READY_FOR_REVIEW
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:449:P9-C 支付 / 履约 Sidecar                   未开始
+docs/02_未来规划/验证体系与后续环境统一路线_20260801.md:451:P9-E 购买轨迹可视化 UI                     已规划，基础能力完成后执行
+WORKFLOW
+OK: v2 routing and required artifacts are structurally valid
+DIFF_CHECK

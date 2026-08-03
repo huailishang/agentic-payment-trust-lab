@@ -1,0 +1,25 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-08",
+  "command_argv": [
+    "rg",
+    "-n",
+    "-i",
+    "cedar|open policy agent|openfga|authenticated source|来源认证|生产策略|生产安全|合规",
+    "README.md",
+    "docs",
+    "src",
+    "tests"
+  ],
+  "command_display": "rg -n -i \"cedar|open policy agent|openfga|authenticated source|来源认证|生产策略|生产安全|合规\" README.md docs src tests",
+  "working_directory": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+  "started_at_utc": "2026-07-31T06:23:00.155700+00:00",
+  "finished_at_utc": "2026-07-31T06:23:00.204322+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-08.stdout.log",
+  "stderr_path": "RV-EV-08.stderr.log",
+  "stdout_bytes": 118665,
+  "stderr_bytes": 0,
+  "stdout_sha256": "e7774c749039a4bdeefcc88505e9624db041bf100b52303f35345adb369e972c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

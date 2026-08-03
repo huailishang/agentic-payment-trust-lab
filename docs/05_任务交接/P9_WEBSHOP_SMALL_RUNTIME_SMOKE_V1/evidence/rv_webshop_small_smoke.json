@@ -1,0 +1,279 @@
+{
+  "actions_executed": [
+    "search[vhomes lights reclaimed]",
+    "click[b06y3vldfb]"
+  ],
+  "asset_summary": {
+    "checkout": {
+      "actual_commit": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+      "checkout": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop",
+      "expected_commit": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+      "git_clean": true
+    },
+    "data": {
+      "attribute_top_level_count": 1000,
+      "data_dir": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data",
+      "description": "checksum-verified mirror copies of the WebShop small assets",
+      "files": {
+        "items_human_ins.json": {
+          "bytes": 5137548,
+          "filename": "items_human_ins.json",
+          "google_drive_id": "14Kb5SPBk_jfdLZ_CDBNitW98QLDlKR5O",
+          "json_type": "dict",
+          "path": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_human_ins.json",
+          "sha256": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3",
+          "top_level_count": 10136
+        },
+        "items_ins_v2_1000.json": {
+          "bytes": 147099,
+          "filename": "items_ins_v2_1000.json",
+          "google_drive_id": "1IduG0xl544V_A_jv3tHXC0kyFi7PnyBu",
+          "json_type": "dict",
+          "path": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_ins_v2_1000.json",
+          "sha256": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f",
+          "top_level_count": 1000
+        },
+        "items_shuffle_1000.json": {
+          "bytes": 4467013,
+          "filename": "items_shuffle_1000.json",
+          "google_drive_id": "1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib",
+          "json_type": "list",
+          "path": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_shuffle_1000.json",
+          "sha256": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269",
+          "top_level_count": 1000
+        }
+      },
+      "human_instruction_top_level_count": 10136,
+      "product_count": 1000,
+      "unique_product_asins": 1000
+    },
+    "derived_search_keyword": "vhomes lights reclaimed",
+    "index": {
+      "documents_path": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\search_engine\\resources_1k\\documents.jsonl",
+      "documents_sha256": "2014b89a9cd72b3790632e488cc6b8a5bc6c7484af5073e95df5308bac59c275",
+      "forbidden_search_artifacts": [],
+      "index_file_count": 19,
+      "index_inventory": [
+        {
+          "bytes": 158,
+          "relative_path": "_0.fdm",
+          "sha256": "aa9017a72dbcbb4f245aba36ecf6e797a4d8f7dbc803974bbb3e3aa72186d432"
+        },
+        {
+          "bytes": 2327543,
+          "relative_path": "_0.fdt",
+          "sha256": "148391227fac659153c2d03156297b68f3d533a6ee40c1ec4b7b09d8b009d29c"
+        },
+        {
+          "bytes": 280,
+          "relative_path": "_0.fdx",
+          "sha256": "0a788ea5150964cb397cdd13cf4ff16dc52c4b395529b6fb59404c3318386915"
+        },
+        {
+          "bytes": 334,
+          "relative_path": "_0.fnm",
+          "sha256": "585705ba0290bcf4b109eca74ef3fbb827854841d4aea66ac63cbad495aca86a"
+        },
+        {
+          "bytes": 1059,
+          "relative_path": "_0.nvd",
+          "sha256": "176a830fde4538069bddfef31ffbaaf368eea92e8ed80466f01e6c3de0cff83a"
+        },
+        {
+          "bytes": 103,
+          "relative_path": "_0.nvm",
+          "sha256": "94fbfd4f66ab5ce74fae5b3a15157222cc5f3fb34cf5744556848da3d64b5bac"
+        },
+        {
+          "bytes": 553,
+          "relative_path": "_0.si",
+          "sha256": "fd40a8edc54e4c57915872e10c750fd649bfeffccbe7d527400f8db50f6bba5e"
+        },
+        {
+          "bytes": 448077,
+          "relative_path": "_0.tvd",
+          "sha256": "88e4797e06f2da5329078b61f21a36df2903766099391e2a1dfb9a7da80c9700"
+        },
+        {
+          "bytes": 162,
+          "relative_path": "_0.tvm",
+          "sha256": "c5c9777c561ec39f5b836f740b5c980e7c1f297dffb8fee3d521168a9c1d9dcb"
+        },
+        {
+          "bytes": 267,
+          "relative_path": "_0.tvx",
+          "sha256": "3af3e8cab70f65ba52395827a39eed2b699b3996fa13e324a1f95824d0b31faf"
+        },
+        {
+          "bytes": 8857,
+          "relative_path": "_0_Lucene80_0.dvd",
+          "sha256": "7fda527b70dcc9295dedc779d8d1e27e0b2b3d22bc932f79cdacb5dc8dc809ff"
+        },
+        {
+          "bytes": 250,
+          "relative_path": "_0_Lucene80_0.dvm",
+          "sha256": "421bad4182a96824b55ff7bcd1293517e1b6bc840e486a3924e9c3c42073d254"
+        },
+        {
+          "bytes": 93714,
+          "relative_path": "_0_Lucene84_0.doc",
+          "sha256": "7ffd85cfea8b4ede69c49d65b0a4374ad73c2b90a0be96e035473ed80d26f05a"
+        },
+        {
+          "bytes": 130474,
+          "relative_path": "_0_Lucene84_0.pos",
+          "sha256": "762ee7bba3bd78b4e18603e03010c56fda8a7d530b96f1772031dba62fb8b600"
+        },
+        {
+          "bytes": 130106,
+          "relative_path": "_0_Lucene84_0.tim",
+          "sha256": "9183026f2cb2643b3e2edc5bbae19fb07da9ee2f49d31368f78d8cc87029f4a2"
+        },
+        {
+          "bytes": 3285,
+          "relative_path": "_0_Lucene84_0.tip",
+          "sha256": "a26815786676c8aa1695b3fd07ad2f9518561c68b84c53d113ada4416e9b3f63"
+        },
+        {
+          "bytes": 275,
+          "relative_path": "_0_Lucene84_0.tmd",
+          "sha256": "599d2afd712320ef214a3cd2a46a94cc97713e3fb694dbf9668324747d282322"
+        },
+        {
+          "bytes": 154,
+          "relative_path": "segments_1",
+          "sha256": "eca2e42e38f0c747f9ced740a31fe36d9c547f5cb6057a486e9da8d1ad6a0697"
+        },
+        {
+          "bytes": 0,
+          "relative_path": "write.lock",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "indexes_dir": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\search_engine\\indexes_1k",
+      "resources_dir": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\search_engine\\resources_1k"
+    },
+    "overall_pass": true,
+    "require_index": true,
+    "schema": "webshop-small-assets/v2"
+  },
+  "buy_now_available": true,
+  "buy_now_executed": false,
+  "checkout": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop",
+  "chosen_product": "B06Y3VLDFB",
+  "environment": {
+    "human_goals": true,
+    "id": "WebAgentTextEnv-v0",
+    "num_products": 1000,
+    "observation_mode": "text"
+  },
+  "events": [
+    {
+      "available_actions": {
+        "clickables": [
+          "search"
+        ],
+        "has_search_bar": true
+      },
+      "event": "reset_1",
+      "observation": {
+        "length": 213,
+        "preview": "WebShop [SEP] Instruction: [SEP] hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars [SEP] Search",
+        "sha256": "76716eee870c9d424de60728ee3b51535388de2cd2b77ead528052307f6dbdc3"
+      },
+      "session": "hndpizntka"
+    },
+    {
+      "action": "search[vhomes lights reclaimed]",
+      "clickables": [
+        "back to search",
+        "next >",
+        "b06y3vldfb",
+        "b09hxdpkjf",
+        "b0854jtzmt",
+        "b0928lgtvf",
+        "b07khwy7yt",
+        "b00bl2ye2q",
+        "b003hbr86s",
+        "b08xwt6rnd",
+        "b08d74skt2",
+        "b09gk4xtjg"
+      ],
+      "direct_lucene_result_ids": [
+        "B06Y3VLDFB",
+        "B09HXDPKJF",
+        "B0854JTZMT",
+        "B0928LGTVF",
+        "B07KHWY7YT",
+        "B00BL2YE2Q",
+        "B003HBR86S",
+        "B08XWT6RND",
+        "B08D74SKT2",
+        "B09GK4XTJG"
+      ],
+      "done": false,
+      "event": "search",
+      "info": null,
+      "keyword": "vhomes lights reclaimed",
+      "observation": {
+        "length": 1939,
+        "preview": "Instruction: [SEP] hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars [SEP] Back to Search [SEP] Page 1 (Total results: 50)",
+        "sha256": "d0b89b18026fbf60b7d1295ee486c0dab75250301545af3f60eba291385cf22a"
+      },
+      "reward": 0.0
+    },
+    {
+      "action": "click[b06y3vldfb]",
+      "chosen_product": "B06Y3VLDFB",
+      "done": false,
+      "event": "product_click",
+      "info": null,
+      "observation": {
+        "length": 405,
+        "preview": "Instruction: [SEP] hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars [SEP] Back to Search [SEP] < Prev [SEP] Vhomes Lights",
+        "sha256": "37196f0612987564f6734268084d696403f45d60f3650475801ac9ae6a2f051b"
+      },
+      "reward": 0.0
+    },
+    {
+      "available_actions": {
+        "clickables": [
+          "back to search",
+          "< prev",
+          "description",
+          "features",
+          "reviews",
+          "buy now"
+        ],
+        "has_search_bar": false
+      },
+      "buy_now_available": true,
+      "buy_now_executed": false,
+      "event": "pre_buy_now",
+      "purchase_count": 0,
+      "selected_options": {}
+    },
+    {
+      "asin": null,
+      "event": "reset_2",
+      "observation": {
+        "length": 148,
+        "preview": "WebShop [SEP] Instruction: [SEP] i need cruelty free deodorant that has a woody scent and is 1.6 oz, and price lower than 50.00 dollars [SEP] Search",
+        "sha256": "909d1e8b2284a86c105b651e5f27a6e2e9ff1b2fd4faaa88fb9dac4f0be6500a"
+      },
+      "options": {},
+      "purchase_count": 0,
+      "session": "bbtfjinnda"
+    }
+  ],
+  "expected_commit": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+  "keyword": "vhomes lights reclaimed",
+  "overall_pass": true,
+  "schema": "webshop-small-smoke/v1",
+  "versions": {
+    "gym": "0.24.0",
+    "pyserini": "0.17.0",
+    "python": "3.8.13 | packaged by conda-forge | (default, Mar 25 2022, 05:59:00) [MSC v.1929 64 bit (AMD64)]",
+    "spacy": "3.3.0"
+  }
+}

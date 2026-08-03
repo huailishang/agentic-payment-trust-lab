@@ -1,0 +1,99 @@
+{
+  "allowed_scope_git_status": [
+    " M src/agentic_payment_experiment/__init__.py",
+    "?? \"docs/02_\\346\\234\\252\\346\\235\\245\\350\\247\\204\\345\\210\\222/\\351\\252\\214\\350\\257\\201\\344\\275\\223\\347\\263\\273\\344\\270\\216\\345\\220\\216\\347\\273\\255\\347\\216\\257\\345\\242\\203\\347\\273\\237\\344\\270\\200\\350\\267\\257\\347\\272\\277_20260801.md\"",
+    "?? \"docs/reference/WebShop\\345\\244\\226\\351\\203\\250\\345\\225\\206\\345\\237\\216\\346\\216\\245\\345\\205\\245\\345\\210\\206\\346\\236\\220\\344\\270\\216\\345\\210\\206\\346\\211\\271\\346\\211\\247\\350\\241\\214\\350\\267\\257\\347\\272\\277_20260801.md\"",
+    "?? src/agentic_payment_experiment/webshop_runtime_gate.py",
+    "?? tests/test_webshop_runtime_gate.py"
+  ],
+  "baseline_head": "8acaa9e4319240d258f14d8a23b1f15cc71d09b6",
+  "buy_now_executed": false,
+  "commit_executed": false,
+  "environment_or_dependency_changed": false,
+  "inherited_rule_status_preserved": [
+    " M src/agentic_payment_experiment/payment_execution.py",
+    " M src/agentic_payment_experiment/trusted_execution/context_policy.py"
+  ],
+  "main_head": "8acaa9e4319240d258f14d8a23b1f15cc71d09b6",
+  "main_head_matches_baseline": true,
+  "models_diff_empty": true,
+  "network_or_api_called": false,
+  "p9_b1_files_unchanged": [
+    {
+      "path": "src/agentic_payment_experiment/adapters/webshop.py",
+      "sha256": "035e6bb20d44b0a52be3f6adab2830c402e01f53839e917698343761c5481ec4"
+    },
+    {
+      "path": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+      "sha256": "6e9d67c3b787cc2d9202bd22b30dec88bf9f920dfa3741bdeb364108a2a3c8e5"
+    },
+    {
+      "path": "scripts/validation/webshop/export_webshop_commerce_fixture.py",
+      "sha256": "aae4c6109586f20e6e78c35ba48b6c94dfee76e478134842731140f50a9382f0"
+    }
+  ],
+  "payment_or_fulfilment_executed": false,
+  "production_calls": [
+    "WebShopBuyNowGateOutcome",
+    "_blocked",
+    "_missing_explicit_inputs",
+    "_prepayment_reason_codes",
+    "append",
+    "callable",
+    "checkout_callback",
+    "dataclass",
+    "isinstance",
+    "lower",
+    "observe_payment_execution_gate",
+    "replace",
+    "set",
+    "sorted",
+    "strip",
+    "tuple",
+    "type",
+    "validate_request"
+  ],
+  "production_imports": [
+    "__future__",
+    "adapters.webshop",
+    "collections.abc",
+    "dataclasses",
+    "models",
+    "payment_execution",
+    "trusted_execution",
+    "typing",
+    "validator"
+  ],
+  "push_executed": false,
+  "simserver_done_called": false,
+  "task_files": [
+    {
+      "bytes": 8307,
+      "path": "src/agentic_payment_experiment/webshop_runtime_gate.py",
+      "sha256": "5aadec69b787825dc7909276d1ea6881f1620d911d4b7f83839bf3400f39e368"
+    },
+    {
+      "bytes": 2291,
+      "path": "src/agentic_payment_experiment/__init__.py",
+      "sha256": "f41704928b0dcd39d7666867bc69485fb8de40529ec7254c0a50cb5b4a19add3"
+    },
+    {
+      "bytes": 20085,
+      "path": "tests/test_webshop_runtime_gate.py",
+      "sha256": "a7fbfe1f340f3ac35934edd5fb71bb70b20969d763cc75166e688e29bfcddef8"
+    },
+    {
+      "bytes": 13170,
+      "path": "docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md",
+      "sha256": "15c80abd6010b7aae6d82ccf153f2129b49a126a2140da1e8b784dbc18cb4523"
+    },
+    {
+      "bytes": 17450,
+      "path": "docs/02_未来规划/验证体系与后续环境统一路线_20260801.md",
+      "sha256": "36d6738a7c9ca2a68951ed136a3d80326935ad09ad4de6595e7b50ea7f1dc5c5"
+    }
+  ],
+  "ui_modified": false,
+  "validator_diff_empty": true,
+  "webshop_runtime_executed": false
+}

@@ -1,0 +1,75 @@
+HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+BASELINE=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+HEAD_BASELINE_UNCHANGED=True
+MISSING_TASK_FILES=[]
+CHECKOUT_ORIGIN=https://github.com/princeton-nlp/WebShop.git
+CHECKOUT_HEAD=64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd
+CHECKOUT_DETACHED=True
+CHECKOUT_CLEAN=True
+CHECKOUT_IGNORED=True
+TRACKED_LOCAL_SOURCES=[]
+TASK_RELATED_STATUS_PATHS=['CURRENT.md', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/CONTRACT.md', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/REPORT.md', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/REVIEW.md', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-01.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-01.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-01.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-01_acquisition.py', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-01_blocked_state.py', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-02.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-02.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-02.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-02_network_attempts.md', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-03.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-03.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-03.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-04.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-04.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-04.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-04_toolchain_inventory.py', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-05.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-05.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-05.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-06.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-06.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-06.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-07.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-07.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-07.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-07_scope_check.py', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-08.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-08.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-08.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-01.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-01.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-01.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-02.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-02.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-02.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-03.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-03.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-03.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-04.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-04.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-04.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-05.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-05.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-05.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-06.meta.json', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-06.stderr.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-06.stdout.log', 'docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/webshop_upstream_manifest.json', 'docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md', 'scripts/validation/webshop/check_webshop_upstream.py', 'tests/test_webshop_upstream_contract.py']
+UNEXPECTED_TASK_PATHS=[]
+ESCAPED_LOCAL_SOURCES_PATHS=[]
+P9_PRODUCT_PATHS=[]
+MANIFEST_OVERALL_PASS=True
+MANIFEST_ORIGIN=https://github.com/princeton-nlp/WebShop.git
+MANIFEST_COMMIT=64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd
+UPSTREAM_HASH README.md expected=79b7a90a1413a52deb53142b5bbd81ecf40f61743bd4601c2835e91375898ec0 manifest=79b7a90a1413a52deb53142b5bbd81ecf40f61743bd4601c2835e91375898ec0 matches=True
+UPSTREAM_HASH LICENSE.md expected=8872dbf8660b00890b5e07ce1ea1f7a44fa7ae4e1857da56caba172b51dab3cb manifest=8872dbf8660b00890b5e07ce1ea1f7a44fa7ae4e1857da56caba172b51dab3cb matches=True
+UPSTREAM_HASH setup.sh expected=0df1dbe7673b94e161b2d9064037af35f7fee3eb1d8131c63b21dd3385323912 manifest=0df1dbe7673b94e161b2d9064037af35f7fee3eb1d8131c63b21dd3385323912 matches=True
+UPSTREAM_HASH requirements.txt expected=b4e83b7e9c670c724215fcb79e43f52f591de354a8f70870ba4553c88de26d2d manifest=b4e83b7e9c670c724215fcb79e43f52f591de354a8f70870ba4553c88de26d2d matches=True
+UPSTREAM_HASH web_agent_site/envs/__init__.py expected=7cdf100d019fd715d605ff0cd0f0d3d4285d7f7b2dbe4e4634e9a1266ab5e854 manifest=7cdf100d019fd715d605ff0cd0f0d3d4285d7f7b2dbe4e4634e9a1266ab5e854 matches=True
+UPSTREAM_HASH web_agent_site/envs/web_agent_text_env.py expected=f4efee238c2a69ad76ff5372716a16051c67ea0351c7006491834822ea9afda3 manifest=f4efee238c2a69ad76ff5372716a16051c67ea0351c7006491834822ea9afda3 matches=True
+UPSTREAM_HASH web_agent_site/engine/engine.py expected=9b86ffc82951124f5c4a7eb8103de14100dbee11ba8869951ed6fb8feaeef804 manifest=9b86ffc82951124f5c4a7eb8103de14100dbee11ba8869951ed6fb8feaeef804 matches=True
+TASK_WHITESPACE_FINDINGS=0
+FORBIDDEN_UPSTREAM_RUNTIME_IMPORTS=[]
+TASK_FILE_SHA256=
+  f332f699363cafe75d0639415e81566e36ee90baa12cc6993ea2f99aec38d6e1  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/REPORT.md
+  6a75e8054e6a750c1e0d555d4940066c5d00878344a048d40b2f5e71fa89f884  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/REVIEW.md
+  d886c3da83455aedbcb5781ae5a09abe73dfe1af150a3a198d3f2ca5097059e4  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-01.meta.json
+  1b5db57c73e2b07cba1acc227ad622919991abcda6f9f7611082ef59aa234b05  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-01_acquisition.py
+  9dd358fef6ff97515e2afb35482a15e6efffd6080959304e3cddae2cdfcc9e51  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-01_blocked_state.py
+  04f5859dbaa42866a15410be293ed08a4117e712cec555ba164a20563d7c594c  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-02.meta.json
+  5caf6f180fbecf66416061414cb0ca7b59747a9a1d145ca22826eaf31a30bd15  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-02_network_attempts.md
+  61676e40d37d9b5dbd81df37832cd3637ae41f15a43a5678809f9bffbf62a968  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-03.meta.json
+  7b88e2a54075581d3d040fffe8f5154ec3f3926e82680693517f6ce184abd604  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-04.meta.json
+  76e31f6f75667c2bb167f4bbe7716c00930a62c1ddd02407e8218ff02bcd9b47  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-04_toolchain_inventory.py
+  7b2d39d6bc2336d34cc846410943777e4e7b0ac77c56a38c04c2e0d7da00aab2  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-05.meta.json
+  5c1e781388f5d55ae652b5b9aa883f23da9877f9575f40a695bf4d0940e54afd  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-06.meta.json
+  c52cbd5568e28d6927e9315b2f08a314ca8da0be7111980ba1a61b3e88ccdc60  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-07.meta.json
+  8ff8437813b43e42e83b6e2b916b17a8f2e1472718b27083c6d9ce7b85e9a831  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-07_scope_check.py
+  50db339606e76dc3da8fc88c8f2114efdaaf277150967e6379f29677626281a8  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-08.meta.json
+  de469cbb557cbeca96d26e4b0abfe7835be1f303ba4c387ac30a1e4052f66c91  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-01.meta.json
+  81e6dc600d12c671c1a9d7a861ae73d0d1550c533ae474976bfe247b587a4426  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-02.meta.json
+  af065248b3faef7256762999f17bf2d11bcc564d0e956a62a92cbc6dba86c730  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-03.meta.json
+  791a65f0f5dd813c898ea5ba58859f774b89d1560e1b98de495027f49919009d  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-04.meta.json
+  339fff6563fb7de4ed78dce7a67d3e4d550ffa0677d9511c5c529792ddf1b805  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-05.meta.json
+  5970723aec24426e37cceee3474fc2794e6905ed1c20b1cc1e9ed2f59255d497  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/RV-EV-06.meta.json
+  fb3318af30c650fcf8898d9a8466954024b9bb7515cce5e27bc482f9fa632e98  docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/webshop_upstream_manifest.json
+  0b66867ab8d83fc3cd126c229cf82b6bf964f52acbc48bb9c62d8d8d788375d5  scripts/validation/webshop/check_webshop_upstream.py
+  67b18b47c161a4cea08f6cfc7a64bd2d56cf112b02b01a10bc5bfcbe2fd96e1f  tests/test_webshop_upstream_contract.py
+GLOBAL_GIT_DIFF_CHECK_EXIT=2
+GLOBAL_FINDINGS_CLASSIFICATION=inherited/out-of-scope unless listed in TASK_RELATED_STATUS_PATHS
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:1: trailing whitespace.
+  +working_directory=D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:2: trailing whitespace.
+  +command=$env:PYTHONUTF8='1'; python -m unittest tests.trusted_execution.test_identity_assurance -v
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:3: trailing whitespace.
+  +test_assurance_levels_are_stable_serializable_values (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_assurance_levels_are_stable_serializable_values) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:4: trailing whitespace.
+  +test_complete_offline_binding_is_valid_and_bound_only (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_complete_offline_binding_is_valid_and_bound_only) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:5: trailing whitespace.
+  +test_credential_reference_alone_never_upgrades_to_verified (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_credential_reference_alone_never_upgrades_to_verified) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:6: trailing whitespace.
+  +test_inactive_revoked_and_unsupported_statuses_are_invalid (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_inactive_revoked_and_unsupported_statuses_are_invalid) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:7: trailing whitespace.
+  +test_missing_identity_and_executor_evidence_fails_closed (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_missing_identity_and_executor_evidence_fails_closed) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:8: trailing whitespace.
+  +test_same_layer_conflicts_are_aggregated_in_stable_order (tests.trusted_execution.test_identity_assurance.IdentityAssuranceTests.test_same_layer_conflicts_are_aggregated_in_stable_order) ... ok
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:9: trailing whitespace.
+  +System.Management.Automation.RemoteException
+  docs/05_任务交接/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log:10: trailing whitespace.
+  +----------------------------------------------------------------------
+AI_BRIDGE_EXISTS=False
+P9_SCOPE_RESULT=PASS

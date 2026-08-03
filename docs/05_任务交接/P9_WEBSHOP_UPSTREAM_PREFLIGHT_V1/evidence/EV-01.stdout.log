@@ -1,0 +1,56 @@
+{
+  "checkout_clean": true,
+  "checkout_exists": true,
+  "checkout_path": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop",
+  "dependency_install_performed": false,
+  "detached_head": true,
+  "escaped_local_sources_status": [],
+  "external_dataset_or_model_download_performed": false,
+  "git_directory_exists": true,
+  "head": {
+    "argv": [
+      "git",
+      "-C",
+      "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd"
+  },
+  "head_is_pinned": true,
+  "ignore_evidence": {
+    "argv": [
+      "git",
+      "check-ignore",
+      "-v",
+      "local_sources/third_party/webshop"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": ".gitignore:12:local_sources/\tlocal_sources/third_party/webshop"
+  },
+  "ignored_by_main_repo": true,
+  "origin": {
+    "argv": [
+      "git",
+      "-C",
+      "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/local_sources/third_party/webshop",
+      "remote",
+      "get-url",
+      "origin"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "https://github.com/princeton-nlp/WebShop.git"
+  },
+  "origin_is_official": true,
+  "payment_or_testnet_action": false,
+  "result": "PASS",
+  "schema": "webshop-upstream-acquisition/v1",
+  "service_started": false,
+  "setup_script_executed": false,
+  "tracked_local_sources": [],
+  "webshop_imported": false
+}

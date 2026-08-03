@@ -64,6 +64,16 @@ class RemediationTest(unittest.TestCase):
         self.assertEqual("480.00", evidence["refund_amount_ref"].observed)
         self.assertEqual("SUCCEEDED", evidence["refund_status_ref"].observed)
 
+    def test_missing_original_transaction_references_never_resolve_refund_or_dispute(self) -> None:
+        for refund in (
+            replace(self.scenario.refund, payment_id=None),
+            replace(self.scenario.refund, order_id=None),
+        ):
+            with self.subTest(refund=refund):
+                result = self.assess(refund=refund)
+                self.assertEqual(RemediationStatus.REQUIRED, result.remediation.status)
+                self.assertNotEqual(RemediationStatus.RESOLVED, result.remediation.status)
+
     def test_successful_partial_refund_does_not_resolve_remediation(self) -> None:
         partial = replace(self.scenario.refund, amount=Decimal("200.00"))
         result = self.assess(refund=partial)

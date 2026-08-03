@@ -1,0 +1,370 @@
+=== agent_after_conda_list ===
+# packages in environment at D:\SoftWare\Anaconda\workspace\.conda\envs\agent:
+#
+# Name                    Version                   Build  Channel
+a2a-sdk                   0.3.26                   pypi_0    pypi
+absl-py                   2.4.0                    pypi_0    pypi
+accelerate                1.13.0                   pypi_0    pypi
+aiofiles                  23.2.1                   pypi_0    pypi
+aiohappyeyeballs          2.6.1                    pypi_0    pypi
+aiohttp                   3.13.5                   pypi_0    pypi
+aiosignal                 1.4.0                    pypi_0    pypi
+annotated-doc             0.0.4                    pypi_0    pypi
+annotated-types           0.7.0                    pypi_0    pypi
+anthropic                 0.97.0                   pypi_0    pypi
+anyio                     4.14.1                   pypi_0    pypi
+argon2-cffi               25.1.0                   pypi_0    pypi
+argon2-cffi-bindings      25.1.0                   pypi_0    pypi
+arrow                     1.4.0                    pypi_0    pypi
+asttokens                 3.0.1                    pypi_0    pypi
+async-lru                 2.3.0                    pypi_0    pypi
+authlib                   1.7.0                    pypi_0    pypi
+babel                     2.18.0                   pypi_0    pypi
+bitsandbytes              0.49.2                   pypi_0    pypi
+bleach                    6.3.0                    pypi_0    pypi
+blis                      1.3.3                    pypi_0    pypi
+brotli                    1.2.0                    pypi_0    pypi
+bzip2                     1.0.8                h0ad9c76_9    conda-forge
+ca-certificates           2026.2.25            h4c7d964_0    conda-forge
+catalogue                 2.0.10                   pypi_0    pypi
+certifi                   2026.6.17                pypi_0    pypi
+cffi                      2.0.0                    pypi_0    pypi
+charset-normalizer        3.4.7                    pypi_0    pypi
+claude-code-from-scratch  1.0.0                    pypi_0    pypi
+click                     8.3.2                    pypi_0    pypi
+cloudpathlib              0.23.0                   pypi_0    pypi
+colorama                  0.4.6                    pypi_0    pypi
+coloredlogs               15.0.1                   pypi_0    pypi
+comm                      0.2.3                    pypi_0    pypi
+confection                1.3.3                    pypi_0    pypi
+croniter                  6.2.2                    pypi_0    pypi
+cryptography              46.0.7                   pypi_0    pypi
+cyclopts                  4.10.2                   pypi_0    pypi
+cymem                     2.0.13                   pypi_0    pypi
+datasets                  4.8.4                    pypi_0    pypi
+debugpy                   1.8.20                   pypi_0    pypi
+decorator                 5.2.1                    pypi_0    pypi
+defusedxml                0.7.1                    pypi_0    pypi
+dill                      0.4.1                    pypi_0    pypi
+distro                    1.9.0                    pypi_0    pypi
+dnspython                 2.8.0                    pypi_0    pypi
+docstring-parser          0.18.0                   pypi_0    pypi
+docutils                  0.22.4                   pypi_0    pypi
+email-validator           2.3.0                    pypi_0    pypi
+en-core-web-sm            3.8.0                    pypi_0    pypi
+evaluate                  0.4.5                    pypi_0    pypi
+exceptiongroup            1.3.1                    pypi_0    pypi
+executing                 2.2.1                    pypi_0    pypi
+fastapi                   0.136.0                  pypi_0    pypi
+fastjsonschema            2.21.2                   pypi_0    pypi
+fastmcp                   2.12.5                   pypi_0    pypi
+ffmpy                     1.0.0                    pypi_0    pypi
+filelock                  3.28.0                   pypi_0    pypi
+flatbuffers               25.12.19                 pypi_0    pypi
+fqdn                      1.5.1                    pypi_0    pypi
+frozenlist                1.8.0                    pypi_0    pypi
+fsspec                    2026.2.0                 pypi_0    pypi
+gitdb                     4.0.12                   pypi_0    pypi
+gitpython                 3.1.46                   pypi_0    pypi
+google-api-core           2.30.3                   pypi_0    pypi
+google-auth               2.49.2                   pypi_0    pypi
+google-search-results     2.4.2                    pypi_0    pypi
+googleapis-common-protos  1.74.0                   pypi_0    pypi
+gradio                    4.44.1                   pypi_0    pypi
+gradio-client             1.3.0                    pypi_0    pypi
+groovy                    0.1.2                    pypi_0    pypi
+grpcio                    1.80.0                   pypi_0    pypi
+h11                       0.16.0                   pypi_0    pypi
+h2                        4.3.0                    pypi_0    pypi
+hello-agents              0.2.2                    pypi_0    pypi
+helloagents-deep-researcher 0.0.1                    pypi_0    pypi
+hf-gradio                 0.4.0                    pypi_0    pypi
+hf-xet                    1.4.3                    pypi_0    pypi
+hpack                     4.1.0                    pypi_0    pypi
+httpcore                  1.0.9                    pypi_0    pypi
+httpx                     0.28.1                   pypi_0    pypi
+httpx-sse                 0.4.3                    pypi_0    pypi
+huggingface-hub           0.36.2                   pypi_0    pypi
+humanfriendly             10.0                     pypi_0    pypi
+hyperframe                6.1.0                    pypi_0    pypi
+idna                      3.11                     pypi_0    pypi
+importlib-resources       6.5.2                    pypi_0    pypi
+iniconfig                 2.3.0                    pypi_0    pypi
+ipykernel                 7.2.0                    pypi_0    pypi
+ipython                   9.12.0                   pypi_0    pypi
+ipython-pygments-lexers   1.1.1                    pypi_0    pypi
+ipywidgets                8.1.8                    pypi_0    pypi
+isodate                   0.7.2                    pypi_0    pypi
+isoduration               20.11.0                  pypi_0    pypi
+jedi                      0.19.2                   pypi_0    pypi
+jinja2                    3.1.6                    pypi_0    pypi
+jiter                     0.16.0                   pypi_0    pypi
+joblib                    1.5.3                    pypi_0    pypi
+joserfc                   1.6.4                    pypi_0    pypi
+json5                     0.14.0                   pypi_0    pypi
+jsonpointer               3.1.1                    pypi_0    pypi
+jsonschema                4.24.1                   pypi_0    pypi
+jsonschema-path           0.4.5                    pypi_0    pypi
+jupyter                   1.1.1                    pypi_0    pypi
+jupyter-client            8.8.0                    pypi_0    pypi
+jupyter-console           6.6.3                    pypi_0    pypi
+jupyter-core              5.9.1                    pypi_0    pypi
+jupyter-events            0.12.0                   pypi_0    pypi
+jupyter-lsp               2.3.1                    pypi_0    pypi
+jupyter-server            2.17.0                   pypi_0    pypi
+jupyter-server-terminals  0.5.4                    pypi_0    pypi
+jupyterlab                4.5.6                    pypi_0    pypi
+jupyterlab-pygments       0.3.0                    pypi_0    pypi
+jupyterlab-server         2.28.0                   pypi_0    pypi
+jupyterlab-widgets        3.0.16                   pypi_0    pypi
+lark                      1.3.1                    pypi_0    pypi
+lazy-object-proxy         1.12.0                   pypi_0    pypi
+libexpat                  2.7.5                hac47afa_0    conda-forge
+libffi                    3.5.2                h3d046cb_0    conda-forge
+liblzma                   5.8.2                hfd05255_0    conda-forge
+libsqlite                 3.52.0               hf5d6505_0    conda-forge
+libzlib                   1.3.2                hfd05255_2    conda-forge
+magika                    0.6.3                    pypi_0    pypi
+markdown                  3.10.2                   pypi_0    pypi
+markdown-it-py            4.0.0                    pypi_0    pypi
+markdownify               1.2.2                    pypi_0    pypi
+markitdown                0.1.5                    pypi_0    pypi
+markupsafe                2.1.5                    pypi_0    pypi
+matplotlib-inline         0.2.1                    pypi_0    pypi
+mcp                       1.16.0                   pypi_0    pypi
+mdurl                     0.1.2                    pypi_0    pypi
+mistune                   3.2.0                    pypi_0    pypi
+modelscope                1.38.1                   pypi_0    pypi
+modelscope-hub            0.1.7                    pypi_0    pypi
+more-itertools            11.0.2                   pypi_0    pypi
+mpmath                    1.3.0                    pypi_0    pypi
+multidict                 6.7.1                    pypi_0    pypi
+multiprocess              0.70.19                  pypi_0    pypi
+murmurhash                1.0.15                   pypi_0    pypi
+nbclient                  0.10.4                   pypi_0    pypi
+nbconvert                 7.17.1                   pypi_0    pypi
+nbformat                  5.10.4                   pypi_0    pypi
+neo4j                     6.1.0                    pypi_0    pypi
+nest-asyncio              1.6.0                    pypi_0    pypi
+networkx                  3.6.1                    pypi_0    pypi
+notebook                  7.5.5                    pypi_0    pypi
+notebook-shim             0.2.4                    pypi_0    pypi
+numpy                     2.2.6                    pypi_0    pypi
+onnxruntime               1.20.1                   pypi_0    pypi
+openai                    1.109.1                  pypi_0    pypi
+openapi-core              0.23.1                   pypi_0    pypi
+openapi-pydantic          0.5.1                    pypi_0    pypi
+openapi-schema-validator  0.8.1                    pypi_0    pypi
+openapi-spec-validator    0.8.4                    pypi_0    pypi
+openssl                   3.6.2                hf411b9b_0    conda-forge
+packaging                 26.0               pyhcf101f3_0    conda-forge
+pandocfilters             1.5.1                    pypi_0    pypi
+parso                     0.8.6                    pypi_0    pypi
+pathable                  0.5.0                    pypi_0    pypi
+pdfminer-six              20251230                 pypi_0    pypi
+pdfplumber                0.11.9                   pypi_0    pypi
+peft                      0.19.1                   pypi_0    pypi
+pillow                    10.4.0                   pypi_0    pypi
+pip                       26.0.1             pyh8b19718_0    conda-forge
+platformdirs              4.9.6                    pypi_0    pypi
+pluggy                    1.6.0                    pypi_0    pypi
+portalocker               3.2.0                    pypi_0    pypi
+preshed                   3.0.13                   pypi_0    pypi
+prometheus-client         0.24.1                   pypi_0    pypi
+prompt-toolkit            3.0.52                   pypi_0    pypi
+propcache                 0.4.1                    pypi_0    pypi
+proto-plus                1.27.2                   pypi_0    pypi
+protobuf                  7.34.1                   pypi_0    pypi
+pure-eval                 0.2.3                    pypi_0    pypi
+pyarrow                   23.0.1                   pypi_0    pypi
+pyasn1                    0.6.3                    pypi_0    pypi
+pyasn1-modules            0.4.2                    pypi_0    pypi
+pycparser                 3.0                      pypi_0    pypi
+pydantic                  2.13.4                   pypi_0    pypi
+pydantic-core             2.46.4                   pypi_0    pypi
+pydantic-settings         2.13.1                   pypi_0    pypi
+pydub                     0.25.1                   pypi_0    pypi
+pygments                  2.20.0                   pypi_0    pypi
+pymupdf                   1.27.2.3                 pypi_0    pypi
+pymupdf-layout            1.27.2.3                 pypi_0    pypi
+pymupdf4llm               1.27.2.3                 pypi_0    pypi
+pypdf                     6.10.1                   pypi_0    pypi
+pypdfium2                 5.7.0                    pypi_0    pypi
+pyperclip                 1.11.0                   pypi_0    pypi
+pyreadline3               3.5.4                    pypi_0    pypi
+pytest                    9.0.3                    pypi_0    pypi
+python                    3.12.13         h0159041_0_cpython    conda-forge
+python-dotenv             1.2.2                    pypi_0    pypi
+python-json-logger        4.1.0                    pypi_0    pypi
+python-multipart          0.0.26                   pypi_0    pypi
+pywin32                   311                      pypi_0    pypi
+pywinpty                  3.0.3                    pypi_0    pypi
+pyzmq                     27.1.0                   pypi_0    pypi
+qdrant-client             1.17.1                   pypi_0    pypi
+referencing               0.37.0                   pypi_0    pypi
+requests                  2.33.1                   pypi_0    pypi
+rfc3339-validator         0.1.4                    pypi_0    pypi
+rfc3986-validator         0.1.1                    pypi_0    pypi
+rfc3987-syntax            1.1.0                    pypi_0    pypi
+rich                      15.0.0                   pypi_0    pypi
+rich-rst                  1.3.2                    pypi_0    pypi
+ruff                      0.15.11                  pypi_0    pypi
+safehttpx                 0.1.7                    pypi_0    pypi
+safetensors               0.7.0                    pypi_0    pypi
+scikit-learn              1.8.0                    pypi_0    pypi
+seaborn                   0.13.2                   pypi_0    pypi
+semantic-version          2.10.0                   pypi_0    pypi
+send2trash                2.1.0                    pypi_0    pypi
+sentence-transformers     5.4.1                    pypi_0    pypi
+sentry-sdk                2.58.0                   pypi_0    pypi
+serpapi                   1.0.2                    pypi_0    pypi
+setuptools                81.0.0                   pypi_0    pypi
+shellingham               1.5.4                    pypi_0    pypi
+smmap                     5.0.3                    pypi_0    pypi
+sniffio                   1.3.1                    pypi_0    pypi
+spacy                     3.8.14                   pypi_0    pypi
+spacy-legacy              3.0.12                   pypi_0    pypi
+spacy-loggers             1.0.5                    pypi_0    pypi
+spacy-pkuseg              1.0.1                    pypi_0    pypi
+srsly                     2.5.3                    pypi_0    pypi
+sse-starlette             3.3.4                    pypi_0    pypi
+stack-data                0.6.3                    pypi_0    pypi
+starlette                 1.0.0                    pypi_0    pypi
+sympy                     1.14.0                   pypi_0    pypi
+tabulate                  0.10.0                   pypi_0    pypi
+tavily-python             0.7.23                   pypi_0    pypi
+tensorboard               2.20.0                   pypi_0    pypi
+tensorboard-data-server   0.7.2                    pypi_0    pypi
+terminado                 0.18.1                   pypi_0    pypi
+thinc                     8.3.13                   pypi_0    pypi
+threadpoolctl             3.6.0                    pypi_0    pypi
+tinycss2                  1.4.0                    pypi_0    pypi
+tk                        8.6.13               h6ed50ae_3    conda-forge
+tokenizers                0.22.2                   pypi_0    pypi
+tomlkit                   0.12.0                   pypi_0    pypi
+torch                     2.11.0                   pypi_0    pypi
+tornado                   6.5.5                    pypi_0    pypi
+tqdm                      4.67.3                   pypi_0    pypi
+traitlets                 5.14.3                   pypi_0    pypi
+transformers              4.57.6                   pypi_0    pypi
+trl                       1.2.0                    pypi_0    pypi
+typer                     0.24.1                   pypi_0    pypi
+typing-extensions         4.15.0                   pypi_0    pypi
+typing-inspection         0.4.2                    pypi_0    pypi
+tzdata                    2025c                hc9c84f9_1    conda-forge
+ucrt                      10.0.26100.0         h57928b3_0    conda-forge
+uri-template              1.3.0                    pypi_0    pypi
+uvicorn                   0.44.0                   pypi_0    pypi
+vc                        14.3                h41ae7f8_34    conda-forge
+vc14_runtime              14.44.35208         h818238b_34    conda-forge
+vcomp14                   14.44.35208         h818238b_34    conda-forge
+wandb                     0.26.0                   pypi_0    pypi
+wasabi                    1.1.3                    pypi_0    pypi
+wcwidth                   0.6.0                    pypi_0    pypi
+weasel                    1.0.0                    pypi_0    pypi
+webcolors                 25.10.0                  pypi_0    pypi
+webencodings              0.5.1                    pypi_0    pypi
+websockets                12.0                     pypi_0    pypi
+wheel                     0.46.3             pyhd8ed1ab_0    conda-forge
+widgetsnbextension        4.0.15                   pypi_0    pypi
+yarl                      1.23.0                   pypi_0    pypi
+zh-core-web-sm            3.8.0                    pypi_0    pypi
+AGENT_BEFORE_SHA256=ef55000793eb8db05187d1678a1eeef5c43d52ca333b1ed891e196996286f796
+AGENT_AFTER_SHA256=ef55000793eb8db05187d1678a1eeef5c43d52ca333b1ed891e196996286f796
+AGENT_UNCHANGED=True
+=== nested_head ===
+64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd
+=== nested_status ===
+=== main_task_status ===
+ M CURRENT.md
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/"
+?? scripts/validation/webshop/bootstrap_webshop_small.ps1
+?? scripts/validation/webshop/smoke_webshop_small.py
+?? scripts/validation/webshop/verify_webshop_small_assets.py
+?? tests/test_webshop_small_runtime_contract.py
+=== current_diff ===
+diff --git a/CURRENT.md b/CURRENT.md
+index 5f97a5c..8cb737e 100644
+--- a/CURRENT.md
++++ b/CURRENT.md
+@@ -1,42 +1,33 @@
+ # Evaluator → Executor Current State
+ 
+-<!-- evaluator-executor-workflow:v1 -->
++<!-- evaluator-executor-workflow:v2 -->
+ 
+ ```yaml
+-workflow: evaluator-executor-workflow/v1
+-task_id: P4-TRUST-SOURCE-CONTEXT-POLICY-V1
+-round: 1
++workflow: evaluator-executor-workflow/v2
++task_id: P9-WEBSHOP-SMALL-RUNTIME-SMOKE-V1
+ state: CONTRACT_FROZEN
+ current_role: Executor
+-baseline_commit: 063dd539589d8e50258b9d2c6225ec45763a776c
+-contract_path: docs/05_任务交接/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/TASK_CONTRACT.md
+-executor_report_path: NONE
+-evaluator_review_path: NONE
+-round_dispatch_path: NONE
+-prior_executor_report_path: NONE
+-prior_evaluator_review_path: NONE
+-next_artifact_path: docs/05_任务交接/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/EXECUTOR_REPORT.md
++baseline_commit: 8acaa9e4319240d258f14d8a23b1f15cc71d09b6
++contract_path: docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/CONTRACT.md
++executor_report_path: docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/REPORT.md
++evaluator_review_path: docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/REVIEW.md
++next_artifact_path: docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/REPORT.md
++authorization_commit: false
++authorization_push: false
++authorization_history_rewrite: false
++authorization_api_call: false
++authorization_network_call: true
++authorization_create_environment: true
++authorization_dependency_install: true
++authorization_data_download: true
+ ```
+ 
+ ## Current action
+ 
+ ```text
+-Read:
+-- docs/05_任务交接/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/TASK_CONTRACT.md
+-- docs/03_架构设计/Agent_Trust_Control_Plane_最小领域模型_v1.md
+-- docs/02_未来规划/整体修正执行计划_20260729.md
+-
+-Do:
+-- 仅按冻结契约实现 P4 Trust Source / Context / Policy Input v1。
+-- 为每个 AC-* 保存完整、可复现的 EV-* 原始证据。
+-- 创建 next_artifact_path 指定的执行者报告，状态只能是 READY_FOR_REVIEW、PARTIAL 或 BLOCKED。
+-
+-Do not:
+-- 不修改 CURRENT.md、冻结契约或 P3 历史交接产物。
+-- 不接入外部策略/身份服务，不实现 P5 Replay，不执行真实支付。
+-- 不签发 PASS、REJECTED、HUMAN_REQUIRED 或 REWORK。
++Executor executes the frozen P9-A2 contract: create or safely reuse the isolated Windows Conda environment `webshop38`, install only the bounded small-text-runtime dependencies, download only the three approved official small-data files, build only `resources_1k / indexes_1k`, and prove `WebAgentTextEnv-v0` can reset -> search -> product click -> reach pre-Buy-Now -> reset. Do not execute click[buy now], do not modify `agent`, do not edit pinned WebShop source, and do not start P9-B product integration.
+ ```
+ 
+ ## Handoff rule
+ 
+-创建 `next_artifact_path` 指定的执行者报告后停止。由评估者验证 task_id、基线、实现提交和证据路径后接管评审。
++The Executor must produce `REPORT.md` plus complete EV triplets and keep routing Executor-owned until the atomic package is complete. Review is not submitted unless the real smoke passes, `agent` before/after fingerprints match, all ACs map to evidence, and workflow validation has no `BLOCKING` finding. Commit and push remain unauthorized.
+=== diff_check_bootstrap_webshop_small.ps1 ===
+=== diff_check_verify_webshop_small_assets.py ===
+=== diff_check_smoke_webshop_small.py ===
+=== diff_check_test_webshop_small_runtime_contract.py ===
+=== TASK_FILE_SHA256 ===
+4262ed26acbd7462a6ef395e9e683d375943c69c9943de3cf5d72dbcc8f79464  scripts/validation/webshop/bootstrap_webshop_small.ps1
+feb511db214d7f978e3b5392c2e1833bf256a52f83a4d4dc3bdafedcd9c53a97  scripts/validation/webshop/verify_webshop_small_assets.py
+8628023cbee0c131ff496f0810090d6cc1fb8509cda0333b9474a19aa47d953d  scripts/validation/webshop/smoke_webshop_small.py
+18ee77eaae98bbbe637047f3093b22530a5cd99ac1f669226cc95df215d8bc6a  tests/test_webshop_small_runtime_contract.py
+RUNTIME_ARTIFACT_PRESENT[resources_1k]=False
+RUNTIME_ARTIFACT_PRESENT[indexes_1k]=False
+RUNTIME_ARTIFACT_PRESENT[resources]=False
+RUNTIME_ARTIFACT_PRESENT[indexes]=False
+RUNTIME_ARTIFACT_PRESENT[resources_100]=False
+RUNTIME_ARTIFACT_PRESENT[indexes_100]=False
+RUNTIME_ARTIFACT_PRESENT[resources_100k]=False
+RUNTIME_ARTIFACT_PRESENT[indexes_100k]=False
+DATA_DIR_FILES=[]
+WORKFLOW_VALIDATOR_FOUND=False
+WORKFLOW_VALIDATOR_EXECUTED=False

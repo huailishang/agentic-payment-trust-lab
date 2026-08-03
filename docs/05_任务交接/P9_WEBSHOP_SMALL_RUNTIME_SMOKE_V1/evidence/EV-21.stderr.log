@@ -1,0 +1,5 @@
+D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\scripts\validation\webshop\bootstrap_webshop_small.ps1 : 
+���ܶ� Null ֵ����ʽ���÷�����
+    + CategoryInfo          : InvalidOperation: (:) [bootstrap_webshop_small.ps1]��RuntimeException
+    + FullyQualifiedErrorId : InvokeMethodOnNull,bootstrap_webshop_small.ps1
+ 

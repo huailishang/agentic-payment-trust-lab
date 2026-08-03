@@ -1,0 +1,5 @@
+replay_builder_signature=(scenario: 'Scenario', result: 'Any') -> 'dict[str, Any]'
+p4_status=MISSING_EVIDENCE
+p4_missing=final_order.order_id,mandate.mandate_id,request.agent_id,request.amount,request.currency,request.payee,request.request_id
+builder_consumes_payment_gate=False
+builder_consumes_context_fact=False

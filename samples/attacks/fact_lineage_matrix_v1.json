@@ -1,0 +1,189 @@
+{
+  "schema": "fact-lineage-matrix/v1",
+  "limitations": {
+    "no_llm": true,
+    "no_network": true,
+    "no_webshop": true,
+    "no_buy_now": true,
+    "no_payment": true,
+    "offline_deterministic_only": true
+  },
+  "cases": [
+    {
+      "case_id": "root_user_confirmed",
+      "scenario": "root_user_confirmed",
+      "target_fact_ref": "root-user",
+      "expected_status": "VALID",
+      "expected_effective_source_types": ["USER_CONFIRMED"],
+      "expected_contains_untrusted_ancestry": false,
+      "expected_reason_codes": ["fact_lineage_valid"],
+      "expected_resolved_refs": ["root-user"],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "root_web_untrusted",
+      "scenario": "root_web_untrusted",
+      "target_fact_ref": "root-web",
+      "expected_status": "VALID",
+      "expected_effective_source_types": ["WEB_UNTRUSTED"],
+      "expected_contains_untrusted_ancestry": true,
+      "expected_reason_codes": ["fact_lineage_valid"],
+      "expected_resolved_refs": ["root-web"],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "web_to_llm_summary",
+      "scenario": "web_to_llm_summary",
+      "target_fact_ref": "llm-summary",
+      "expected_status": "VALID",
+      "expected_effective_source_types": ["LLM_GENERATED", "WEB_UNTRUSTED"],
+      "expected_contains_untrusted_ancestry": true,
+      "expected_reason_codes": ["fact_lineage_valid"],
+      "expected_resolved_refs": ["llm-summary", "web-price"],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "multi_source_user_and_web",
+      "scenario": "multi_source_user_and_web",
+      "target_fact_ref": "derived-multi",
+      "expected_status": "VALID",
+      "expected_effective_source_types": ["AGENT_INFERRED", "USER_CONFIRMED", "WEB_UNTRUSTED"],
+      "expected_contains_untrusted_ancestry": true,
+      "expected_reason_codes": ["fact_lineage_valid"],
+      "expected_resolved_refs": ["derived-multi", "user-budget", "web-price"],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "claimed_user_confirmation_with_web_ancestor",
+      "scenario": "claimed_user_confirmation_with_web_ancestor",
+      "target_fact_ref": "claimed-user",
+      "expected_status": "VALID",
+      "expected_effective_source_types": ["USER_CONFIRMED", "WEB_UNTRUSTED"],
+      "expected_contains_untrusted_ancestry": true,
+      "expected_reason_codes": ["fact_lineage_valid"],
+      "expected_resolved_refs": ["claimed-user", "web-origin"],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "claimed_upgrade_with_evidence_and_web_ancestor",
+      "scenario": "claimed_upgrade_with_evidence_and_web_ancestor",
+      "target_fact_ref": "claimed-upgrade",
+      "expected_status": "VALID",
+      "expected_effective_source_types": ["USER_CONFIRMED", "WEB_UNTRUSTED"],
+      "expected_contains_untrusted_ancestry": true,
+      "expected_reason_codes": ["fact_lineage_valid"],
+      "expected_resolved_refs": ["claimed-upgrade", "web-origin"],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "missing_upstream",
+      "scenario": "missing_upstream",
+      "target_fact_ref": "derived-missing",
+      "expected_status": "MISSING_EVIDENCE",
+      "expected_effective_source_types": [],
+      "expected_contains_untrusted_ancestry": null,
+      "expected_reason_codes": ["upstream_fact_missing:missing-root"],
+      "expected_resolved_refs": [],
+      "expected_unresolved_refs": ["missing-root"]
+    },
+    {
+      "case_id": "self_reference",
+      "scenario": "self_reference",
+      "target_fact_ref": "self",
+      "expected_status": "INVALID",
+      "expected_effective_source_types": [],
+      "expected_contains_untrusted_ancestry": null,
+      "expected_reason_codes": ["upstream_self_reference:self"],
+      "expected_resolved_refs": [],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "multi_node_cycle",
+      "scenario": "multi_node_cycle",
+      "target_fact_ref": "cycle-a",
+      "expected_status": "INVALID",
+      "expected_effective_source_types": [],
+      "expected_contains_untrusted_ancestry": null,
+      "expected_reason_codes": ["fact_lineage_cycle_detected"],
+      "expected_resolved_refs": [],
+      "expected_unresolved_refs": ["cycle-a", "cycle-b"]
+    },
+    {
+      "case_id": "duplicate_fact_ref",
+      "scenario": "duplicate_fact_ref",
+      "target_fact_ref": "dup",
+      "expected_status": "INVALID",
+      "expected_effective_source_types": [],
+      "expected_contains_untrusted_ancestry": null,
+      "expected_reason_codes": ["duplicate_fact_ref:dup"],
+      "expected_resolved_refs": [],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "duplicate_upstream_ref",
+      "scenario": "duplicate_upstream_ref",
+      "target_fact_ref": "derived",
+      "expected_status": "INVALID",
+      "expected_effective_source_types": [],
+      "expected_contains_untrusted_ancestry": null,
+      "expected_reason_codes": ["duplicate_upstream_fact_ref:derived:root"],
+      "expected_resolved_refs": [],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "invalid_direct_source_type",
+      "scenario": "invalid_direct_source_type",
+      "target_fact_ref": "bad-source",
+      "expected_status": "INVALID",
+      "expected_effective_source_types": [],
+      "expected_contains_untrusted_ancestry": null,
+      "expected_reason_codes": ["direct_source_type_invalid:bad-source"],
+      "expected_resolved_refs": [],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "mutable_lookalike_node",
+      "scenario": "mutable_lookalike_node",
+      "target_fact_ref": null,
+      "expected_status": "INVALID",
+      "expected_effective_source_types": [],
+      "expected_contains_untrusted_ancestry": null,
+      "expected_reason_codes": ["fact_lineage_node_invalid_type"],
+      "expected_resolved_refs": [],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "serialized_dict_node",
+      "scenario": "serialized_dict_node",
+      "target_fact_ref": null,
+      "expected_status": "INVALID",
+      "expected_effective_source_types": [],
+      "expected_contains_untrusted_ancestry": null,
+      "expected_reason_codes": ["fact_lineage_node_invalid_type"],
+      "expected_resolved_refs": [],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "overlay_untrusted_amount_override",
+      "scenario": "overlay_untrusted_amount_override",
+      "target_fact_ref": "overlay:MATRIX-AMOUNT:request.amount",
+      "expected_status": "VALID",
+      "expected_effective_source_types": ["WEB_UNTRUSTED"],
+      "expected_contains_untrusted_ancestry": true,
+      "expected_reason_codes": ["fact_lineage_valid"],
+      "expected_resolved_refs": ["overlay:MATRIX-AMOUNT:request.amount"],
+      "expected_unresolved_refs": []
+    },
+    {
+      "case_id": "overlay_untrusted_payee_override",
+      "scenario": "overlay_untrusted_payee_override",
+      "target_fact_ref": "overlay:MATRIX-PAYEE:request.payee",
+      "expected_status": "VALID",
+      "expected_effective_source_types": ["LLM_GENERATED"],
+      "expected_contains_untrusted_ancestry": true,
+      "expected_reason_codes": ["fact_lineage_valid"],
+      "expected_resolved_refs": ["overlay:MATRIX-PAYEE:request.payee"],
+      "expected_unresolved_refs": []
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+head=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+sha256 src/agentic_payment_experiment/adapters/x402.py=d863aa463cb0dce6b3c1bd262d68179b8bb4ec907e3d7e4f5247cd919a4d2812
+sha256 src/agentic_payment_experiment/x402_conformance.py=5240369a4620b5339538f62a294564fe2d4cda06c11b5a4aefb00fdb16cc9b2e
+sha256 src/agentic_payment_experiment/adapters/__init__.py=d6ea7127d18c791b51e15e603966ca03e8ed90f3ec7af21ae19ce1f9074e6754
+sha256 tests/test_x402_adapter.py=521e604a05809f69b2aa8ff8e2aeefa0f4dc1b6cfdec9470c5c5bc5cf85e257f
+sha256 tests/test_x402_conformance.py=78f952ec07d6b3a8a90296a001bbaeaef8de96c3ebec34744d115fc72d001526
+sha256 samples/protocols/x402/x402_offline_cases_v1.json=5e34d70667faf7c2d91e0bf7b70086a7bb106bb552a85989f6f6f12915292153
+sha256 docs/04_验证体系/x402离线一致性验证方案_v1.md=5edd674080d1526aca16bd8370d2bee83123dbcaec68c04cebdc2e271653a9d6
+task_scoped_git_diff_check=PASS
+task_scoped_status_begin
+ M src/agentic_payment_experiment/adapters/__init__.py
+?? "docs/04_\351\252\214\350\257\201\344\275\223\347\263\273/x402\347\246\273\347\272\277\344\270\200\350\207\264\346\200\247\351\252\214\350\257\201\346\226\271\346\241\210_v1.md"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/"
+?? samples/protocols/x402/x402_offline_cases_v1.json
+?? src/agentic_payment_experiment/adapters/x402.py
+?? src/agentic_payment_experiment/x402_conformance.py
+?? tests/test_x402_adapter.py
+?? tests/test_x402_conformance.py
+task_scoped_status_end
+task_scope_result=PASS

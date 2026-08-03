@@ -1,0 +1,93 @@
+{
+  "after": {
+    "cases": [
+      {
+        "callback_count": 0,
+        "calls": [],
+        "case": "p4_stale_wrong_action",
+        "checkout_executed": false,
+        "context_policy_reason_codes": [
+          "context_policy_valid"
+        ],
+        "context_policy_status": "VALID",
+        "decision": "INDETERMINATE",
+        "outcome_reason_codes": [
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "p4:current_action_mismatch"
+        ],
+        "reason_equality": true,
+        "runtime_reason_codes": [
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "p4:current_action_mismatch"
+        ]
+      },
+      {
+        "callback_count": 0,
+        "calls": [],
+        "case": "p4_value_digest_mismatch",
+        "checkout_executed": false,
+        "context_policy_reason_codes": [
+          "context_policy_valid"
+        ],
+        "context_policy_status": "VALID",
+        "decision": "INDETERMINATE",
+        "outcome_reason_codes": [
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "p4:source_coverage_value_mismatch"
+        ],
+        "reason_equality": true,
+        "runtime_reason_codes": [
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "p4:source_coverage_value_mismatch"
+        ]
+      }
+    ],
+    "finding": "P4 runtime contract mismatches remain safely blocked and now expose causal reasons"
+  },
+  "before": {
+    "cases": [
+      {
+        "callback_count": 0,
+        "case": "p4_stale_wrong_action",
+        "causal_diagnostic_codes": [],
+        "causal_reason_exposed": false,
+        "context_policy_reason_codes": [
+          "context_policy_valid"
+        ],
+        "context_policy_status": "VALID",
+        "decision": "INDETERMINATE",
+        "outcome_reason_codes": [
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid"
+        ]
+      },
+      {
+        "callback_count": 0,
+        "case": "p4_value_digest_mismatch",
+        "causal_diagnostic_codes": [],
+        "causal_reason_exposed": false,
+        "context_policy_reason_codes": [
+          "context_policy_valid"
+        ],
+        "context_policy_status": "VALID",
+        "decision": "INDETERMINATE",
+        "outcome_reason_codes": [
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid"
+        ]
+      }
+    ],
+    "finding": "P4 runtime contract mismatch blocks safely but exposes no causal reason"
+  },
+  "schema": "webshop-runtime-gate-reason-counterexamples/v1"
+}

@@ -1,0 +1,6 @@
+D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\scripts\validation\webshop\bootstrap_webshop_small.ps1 : 
+�޷�����git����ʶ��Ϊ cmdlet���������ű��ļ�������г�������ơ��������Ƶ�ƴд���������·������ȷ��·����ȷ��Ȼ������һ��
+��
+    + CategoryInfo          : ObjectNotFound: (git:String) [bootstrap_webshop_small.ps1], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException,bootstrap_webshop_small.ps1
+ 

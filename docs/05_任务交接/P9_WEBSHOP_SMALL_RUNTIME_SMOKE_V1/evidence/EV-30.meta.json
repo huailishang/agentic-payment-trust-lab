@@ -1,0 +1,60 @@
+{
+  "label": "EV-30",
+  "exit_code": 0,
+  "command_display": "direct Lucene query followed by real bounded WebAgentTextEnv-v0 smoke",
+  "command_argv": [
+    "multiple commands; see records"
+  ],
+  "records": [
+    {
+      "sequence": 1,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py",
+        "--checkout",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop",
+        "--expected-commit",
+        "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+        "--query-index",
+        "--output",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1\\evidence\\webshop_small_index_query.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 2,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\smoke_webshop_small.py",
+        "--checkout",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop",
+        "--expected-commit",
+        "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+        "--output",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1\\evidence\\webshop_small_smoke.json"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T05:33:46.660927+00:00",
+  "finished_at_utc": "2026-08-02T05:34:02.511762+00:00",
+  "buy_now_executed": false,
+  "commit_executed": false,
+  "push_executed": false,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-30.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-30.stderr.log",
+  "stdout_bytes": 16647,
+  "stderr_bytes": 1758,
+  "stdout_sha256": "e0de8f8f843d3f53b1815afa76a8cac313c6b36ead2b2ffa3e325b4c014ca92e",
+  "stderr_sha256": "7dc23ea098ad97786f4bcf578d9d68d02038339ab7dcfcb94e2620bf0c801eb4"
+}

@@ -1,0 +1,193 @@
+protected_src_hashes_equal=PASS
+protected_src_file_count=45
+head=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+branch=main
+parent_accepted_report_unchanged=PASS
+parent_accepted_result_unchanged=PASS
+corrected_measurement_result=PASS
+corrected_gesr=0/12
+duplicate_or_forbidden_side_effect=1/12
+product_observed_authoritative_trace=0/12
+repeatability_three_identical=PASS
+t10_duplicate_callback_gap=PASS
+trace_provenance_separation=PASS
+changed_file_hashes:
+file_hash path=CURRENT.md before=NOT_RECORDED after=2f5f379b63971e27db3622770749009088e082b34a14f70ddd38fb2abc0b670d
+file_hash path=samples/evaluation/project_impact_baseline_v1.json before=809aee0f720e050dab80d0c9a2f41ebb514ad94419e78f67f8476bfab78d1d9e after=4ed2e1f35325cb840de834f5e8c964ff187c291133c958a2ee22111735b615f5
+file_hash path=scripts/validation/run_project_impact_baseline.py before=a1bd1f565e7a26c09a07280d66f38040c28227fede3ec77463cb7b4b73ca9089 after=05c8bd7baa29a37b08eb6bc8867c96f6505d7b54d109e5221da8977eab1cdaf3
+file_hash path=tests/test_project_impact_baseline.py before=947d6b224c18bd2b75c8f4c3945bdf18b93b6fa61df26026910d3a8a5ea13749 after=ee8c336408d1ff69a6ae016daa4e4a1163885a5f65d58e91215d9dffced8d8b8
+file_hash path=docs/04_验证体系/项目级能力评测基线_v1.md before=7860b89577634992856e2a5777cb403783bd4b4bda4d636c5457ac9481ac969a after=98c61359c604c4df8f0c3235a68fec0e2779e68bd86b9a05640316b4184d5f75
+implementation_diff_path=docs/05_任务交接/P9_PROJECT_IMPACT_BASELINE_MEASUREMENT_INTEGRITY_REPAIR_V1/evidence/EV-07_implementation_allowed_scope.diff
+implementation_diff_bytes=136820
+implementation_diff_sha256=5454acc257ab951aa131c6ca2b6e3f51e24e94f46c194c07725191b01f362a1e
+v2_1_executor_route_preserved=PASS
+all_authorizations_false=PASS
+--- FINAL_GIT_STATUS ---
+ M CURRENT.md
+ M "docs/01_\351\241\271\347\233\256\347\216\260\347\212\266/\351\241\271\347\233\256\344\270\255\346\216\247.md"
+ M "docs/02_\346\234\252\346\235\245\350\247\204\345\210\222/\346\225\264\344\275\223\344\277\256\346\255\243\346\211\247\350\241\214\350\256\241\345\210\222_20260729.md"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-01_VP-01_identity_focused.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-02_EV-09_VP-07_scope.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-04_EV-06_VP-02_gate_regression.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-05_VP-03_integration.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-05_identity_assurance_artifact.json"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-07_VP-04_full_regression.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-08_VP-05_formal_entrypoint.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EV-09_VP-06_claim_audit.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/EVIDENCE_MANIFEST.json"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P3_AGENT_EXECUTOR_IDENTITY_V1/evidence/R2-EV-01_workflow_preflight.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/VP-01.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/VP-02.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/VP-03.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/VP-04.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/VP-05.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/VP-06.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/VP-07.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/VP-08.log"
+ M "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/VP-09.log"
+ M docs/README.md
+ M samples/regression/internal_baseline_v1.json
+ M src/agentic_payment_experiment/__init__.py
+ M src/agentic_payment_experiment/adapters/__init__.py
+ M src/agentic_payment_experiment/attack_overlay.py
+ M src/agentic_payment_experiment/html_report.py
+ M src/agentic_payment_experiment/lab_overview.py
+ M src/agentic_payment_experiment/payment_execution.py
+ M src/agentic_payment_experiment/payment_recovery.py
+ M src/agentic_payment_experiment/remediation.py
+ M src/agentic_payment_experiment/runner.py
+ M src/agentic_payment_experiment/trusted_execution/__init__.py
+ M src/agentic_payment_experiment/trusted_execution/context_policy.py
+ M tests/test_attack_overlay.py
+ M tests/test_lab_overview.py
+ M tests/test_payment_recovery.py
+ M tests/test_remediation.py
+ M tests/test_runner.py
+ M tests/trusted_execution/test_context_policy.py
+ M tests/trusted_execution/test_payment_binding.py
+?? "docs/01_\351\241\271\347\233\256\347\216\260\347\212\266/PROJECT_BOTTLENECK_MAP.md"
+?? "docs/02_\346\234\252\346\235\245\350\247\204\345\210\222/WebShop\350\264\255\344\271\260\350\275\250\350\277\271\345\217\257\350\247\206\345\214\226UI\350\247\204\345\210\222_20260802.md"
+?? "docs/02_\346\234\252\346\235\245\350\247\204\345\210\222/\350\257\204\344\274\260\350\200\205\346\211\247\350\241\214\350\200\205\345\267\245\344\275\234\346\265\201_v2.1_\351\241\271\347\233\256\350\220\275\345\234\260\346\226\271\346\241\210_20260803.md"
+?? "docs/02_\346\234\252\346\235\245\350\247\204\345\210\222/\351\252\214\350\257\201\344\275\223\347\263\273\344\270\216\345\220\216\347\273\255\347\216\257\345\242\203\347\273\237\344\270\200\350\267\257\347\272\277_20260801.md"
+?? "docs/04_\351\252\214\350\257\201\344\275\223\347\263\273/x402\347\246\273\347\272\277\344\270\200\350\207\264\346\200\247\351\252\214\350\257\201\346\226\271\346\241\210_v1.md"
+?? "docs/04_\351\252\214\350\257\201\344\275\223\347\263\273/\351\241\271\347\233\256\347\272\247\350\203\275\345\212\233\350\257\204\346\265\213\345\237\272\347\272\277_v1.md"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_PAYMENT_VALUE_COVERAGE_REPAIR_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_REPAIR_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/EVALUATOR_REVIEW.md"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-01.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-01.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-01.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-02.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-02.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-02.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-03.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-03.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-03.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-04.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-04.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-04.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-05.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-05.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-05.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-06.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-06.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-06.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-07.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-07.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-07.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-08.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-08.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-08.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-09.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-09.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-09.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-10.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-10.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-10.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-11.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-11.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-11.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-12.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-12.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-12.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-13.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-13.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-13.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-14.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-14.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-14.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-15.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-15.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-15.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-15_counterexample_value_ref.py"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-16.meta.json"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-16.stderr.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-16.stdout.log"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P4_TRUST_SOURCE_CONTEXT_POLICY_V1/evidence/RV-EV-16_counterexample_empty_context_gate.py"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P5_EVIDENCE_REPLAY_OBSERVED_GATE_RECORD_REPAIR_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P5_EVIDENCE_REPLAY_RUNTIME_GATE_REPAIR_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P5_EVIDENCE_REPLAY_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P6_ASYNC_QUERY_STATUS_CONFLICT_FACT_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P6_ORIGINAL_TRANSACTION_BINDING_CONSUMER_REPAIR_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P6_ORIGINAL_TRANSACTION_BINDING_CONTRACT_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P6_PAYMENT_QUERY_FINALITY_FACT_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P6_PAYMENT_QUERY_FINALITY_FAILED_STATUS_REPAIR_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P7_CAPABILITY_FIRST_NAVIGATION_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P8_X402_OFFLINE_CONFORMANCE_HARNESS_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P8_X402_STRICT_REFERENCE_TYPE_REPAIR_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P8_X402_TESTNET_AUTHORIZATION_GATE_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_GOVERNED_PAYMENT_ACTION_CONTRACT_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_GOVERNED_PAYMENT_ACTION_OBJECT_TYPE_BOUNDARY_REPAIR_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_GOVERNED_PAYMENT_FACT_LINEAGE_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_PROJECT_IMPACT_BASELINE_MEASUREMENT_INTEGRITY_REPAIR_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_PROJECT_IMPACT_BASELINE_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_WEBSHOP_BUY_NOW_RUNTIME_GATE_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_WEBSHOP_CHECKOUT_SNAPSHOT_CONTINUITY_GATE_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_WEBSHOP_COMMERCE_ADAPTER_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_BINDING_DUPLICATE_REPAIR_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_WEBSHOP_RUNTIME_GATE_REASON_EVIDENCE_REPAIR_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/"
+?? "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/"
+?? "docs/reference/ArbiterOS\346\262\273\347\220\206\346\234\272\345\210\266\344\270\216\351\241\271\347\233\256\345\220\270\346\224\266\346\226\271\346\241\210_20260802.md"
+?? "docs/reference/WebShop\345\244\226\351\203\250\345\225\206\345\237\216\346\216\245\345\205\245\345\210\206\346\236\220\344\270\216\345\210\206\346\211\271\346\211\247\350\241\214\350\267\257\347\272\277_20260801.md"
+?? "docs/reference/\346\231\272\350\203\275\344\275\223\346\224\257\344\273\230\344\272\247\344\270\232\345\212\250\346\200\201\346\240\270\351\252\214\344\270\216\345\244\226\351\203\250\346\265\213\350\257\225\350\267\257\347\272\277_20260801.md"
+?? samples/attacks/fact_lineage_matrix_v1.json
+?? samples/evaluation/
+?? samples/external/webshop/
+?? samples/protocols/
+?? scripts/validation/run_fact_lineage_matrix.py
+?? scripts/validation/run_project_impact_baseline.py
+?? scripts/validation/webshop/
+?? src/agentic_payment_experiment/adapters/webshop.py
+?? src/agentic_payment_experiment/adapters/x402.py
+?? src/agentic_payment_experiment/payment_finality.py
+?? src/agentic_payment_experiment/payment_status_conflict.py
+?? src/agentic_payment_experiment/trusted_execution/fact_lineage.py
+?? src/agentic_payment_experiment/trusted_execution/governed_action.py
+?? src/agentic_payment_experiment/trusted_execution/original_transaction.py
+?? src/agentic_payment_experiment/trusted_execution/replay.py
+?? src/agentic_payment_experiment/webshop_payment_sidecar.py
+?? src/agentic_payment_experiment/webshop_runtime_gate.py
+?? src/agentic_payment_experiment/x402_conformance.py
+?? tests/test_payment_finality.py
+?? tests/test_payment_status_conflict.py
+?? tests/test_project_impact_baseline.py
+?? tests/test_webshop_adapter.py
+?? tests/test_webshop_payment_sidecar.py
+?? tests/test_webshop_runtime_gate.py
+?? tests/test_webshop_small_runtime_contract.py
+?? tests/test_webshop_upstream_contract.py
+?? tests/test_x402_adapter.py
+?? tests/test_x402_conformance.py
+?? tests/trusted_execution/test_fact_lineage.py
+?? tests/trusted_execution/test_governed_action.py
+?? tests/trusted_execution/test_original_transaction.py
+?? tests/trusted_execution/test_replay.py
+--- FINAL_IMPLEMENTATION_SCOPE_STATUS ---
+ M CURRENT.md
+?? "docs/04_\351\252\214\350\257\201\344\275\223\347\263\273/\351\241\271\347\233\256\347\272\247\350\203\275\345\212\233\350\257\204\346\265\213\345\237\272\347\272\277_v1.md"
+?? samples/evaluation/project_impact_baseline_v1.json
+?? scripts/validation/run_project_impact_baseline.py
+?? tests/test_project_impact_baseline.py
+network=false api=false dependency_install=false environment=false webshop_runtime=false buy_now=false payment_side_effect=false commit=false push=false history_rewrite=false

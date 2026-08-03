@@ -1,0 +1,35 @@
+{
+  "label": "EV-09",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T02:36:48.518460+00:00",
+  "finished_at_utc": "2026-08-02T02:36:49.821779+00:00",
+  "records": [
+    {
+      "step": 1,
+      "file_id": "1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib",
+      "filename": "items_shuffle_1000.json",
+      "command": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "-m",
+        "gdown",
+        "https://drive.google.com/uc?id=1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib",
+        "-O",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop\\data\\items_shuffle_1000.json"
+      ],
+      "exit_code": 1
+    }
+  ],
+  "exit_code": 1,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-09.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-09.stderr.log",
+  "stdout_sha256": "328976493c1ef51f33065ec8318c2ab1bf2228ed7673809a170fb3c24762fc0c",
+  "stderr_sha256": "7dfece9be41da24c56a7f702aef96b641c71cee4be1bf5b67e7160ee4f88a9a4",
+  "command_display": "multiple commands and diagnostics; see original records[] and immutable stdout/stderr evidence",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 39,
+  "stderr_bytes": 645
+}

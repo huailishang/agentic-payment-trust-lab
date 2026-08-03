@@ -1,0 +1,140 @@
+{
+  "label": "EV-15",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T03:00:44.679040+00:00",
+  "finished_at_utc": "2026-08-02T03:00:50.192780+00:00",
+  "exit_code": 0,
+  "agent_before_sha256": "ef55000793eb8db05187d1678a1eeef5c43d52ca333b1ed891e196996286f796",
+  "agent_after_sha256": "ef55000793eb8db05187d1678a1eeef5c43d52ca333b1ed891e196996286f796",
+  "agent_unchanged": true,
+  "steps": [
+    {
+      "name": "agent_after_conda_list",
+      "command": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "list",
+        "-n",
+        "agent"
+      ],
+      "process_exit_code": 0,
+      "semantic_exit_code": 0
+    },
+    {
+      "name": "nested_head",
+      "command": [
+        "git",
+        "-C",
+        "local_sources/third_party/webshop",
+        "rev-parse",
+        "HEAD"
+      ],
+      "process_exit_code": 0,
+      "semantic_exit_code": 0
+    },
+    {
+      "name": "nested_status",
+      "command": [
+        "git",
+        "-C",
+        "local_sources/third_party/webshop",
+        "status",
+        "--short"
+      ],
+      "process_exit_code": 0,
+      "semantic_exit_code": 0
+    },
+    {
+      "name": "main_task_status",
+      "command": [
+        "git",
+        "status",
+        "--short",
+        "--",
+        "scripts/validation/webshop/bootstrap_webshop_small.ps1",
+        "scripts/validation/webshop/verify_webshop_small_assets.py",
+        "scripts/validation/webshop/smoke_webshop_small.py",
+        "tests/test_webshop_small_runtime_contract.py",
+        "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1",
+        "CURRENT.md"
+      ],
+      "process_exit_code": 0,
+      "semantic_exit_code": 0
+    },
+    {
+      "name": "current_diff",
+      "command": [
+        "git",
+        "diff",
+        "--",
+        "CURRENT.md"
+      ],
+      "process_exit_code": 0,
+      "semantic_exit_code": 0
+    },
+    {
+      "name": "diff_check_bootstrap_webshop_small.ps1",
+      "command": [
+        "git",
+        "diff",
+        "--no-index",
+        "--check",
+        "--",
+        "/dev/null",
+        "scripts/validation/webshop/bootstrap_webshop_small.ps1"
+      ],
+      "process_exit_code": 1,
+      "semantic_exit_code": 0
+    },
+    {
+      "name": "diff_check_verify_webshop_small_assets.py",
+      "command": [
+        "git",
+        "diff",
+        "--no-index",
+        "--check",
+        "--",
+        "/dev/null",
+        "scripts/validation/webshop/verify_webshop_small_assets.py"
+      ],
+      "process_exit_code": 1,
+      "semantic_exit_code": 0
+    },
+    {
+      "name": "diff_check_smoke_webshop_small.py",
+      "command": [
+        "git",
+        "diff",
+        "--no-index",
+        "--check",
+        "--",
+        "/dev/null",
+        "scripts/validation/webshop/smoke_webshop_small.py"
+      ],
+      "process_exit_code": 1,
+      "semantic_exit_code": 0
+    },
+    {
+      "name": "diff_check_test_webshop_small_runtime_contract.py",
+      "command": [
+        "git",
+        "diff",
+        "--no-index",
+        "--check",
+        "--",
+        "/dev/null",
+        "tests/test_webshop_small_runtime_contract.py"
+      ],
+      "process_exit_code": 1,
+      "semantic_exit_code": 0
+    }
+  ],
+  "workflow_validator_found": false,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-15.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-15.stderr.log",
+  "stdout_sha256": "ca8136d0a476d72b2a1e687b7f87d9906576a8ad57aff96f673198c97b358ddc",
+  "stderr_sha256": "1f64a42d530a0a3cbde356726e3179baa3a90c006d4c8ab5c3e26b76ba374a98",
+  "command_display": "multiple commands; see original steps[].command records in this metadata",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 23310,
+  "stderr_bytes": 316
+}

@@ -1,0 +1,20 @@
+{
+  "label": "EV-18",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T03:33:33.201232+00:00",
+  "finished_at_utc": "2026-08-02T03:33:33.539027+00:00",
+  "exit_code": 0,
+  "report_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/REPORT.md",
+  "report_sha256": "ece6cfc4084295a32bdc172795f1b80d84c58c9149edc18a4b2b67f156be2611",
+  "state": "BLOCKED_PENDING_EVALUATOR_CHECKSUM_MIRROR_APPROVAL",
+  "mirror_data_promoted": false,
+  "runtime_smoke_executed": false,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-18.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-18.stderr.log",
+  "stdout_sha256": "44816bcd60c35868e3c6269ea634ab9ade335fcc26d09784f4662512f8478a0d",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "command_display": "original inline Python evidence-finalization command; exact argv was not retained in the original metadata",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 1469,
+  "stderr_bytes": 0
+}

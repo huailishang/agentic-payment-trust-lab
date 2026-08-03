@@ -1,0 +1,28 @@
+{
+  "authorizations_used": {
+    "api_call": false,
+    "buy_now_execution": false,
+    "commit": false,
+    "create_environment": false,
+    "dependency_install": false,
+    "history_rewrite": false,
+    "network_call": false,
+    "payment_or_order_side_effect": false,
+    "push": false,
+    "webshop_runtime_execution": false
+  },
+  "checks": {
+    "current_source_sha_matches": true,
+    "current_test_sha_matches": true,
+    "parent_source_sha_reconstructed": true,
+    "parent_test_sha_reconstructed": true
+  },
+  "current": {
+    "src/agentic_payment_experiment/webshop_payment_sidecar.py": "32c2428e3ff56fd4576a3265636b566cc63c5e1296cf3b1a63a0725eee8435e2",
+    "tests/test_webshop_payment_sidecar.py": "06910d4c833cba21e973f87315e945fbdc6ed0b15736d6a49a45132b85c859e5"
+  },
+  "reconstructed_parent": {
+    "src/agentic_payment_experiment/webshop_payment_sidecar.py": "a7950308864d71a25b36c43ff11aed8cfeef1f0fe4d373ab305849b770f95c3b",
+    "tests/test_webshop_payment_sidecar.py": "02b2a757f3d2656dbe38704d00001ef687c8935d70410c48669e1fb5ae832c74"
+  }
+}

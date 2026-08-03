@@ -1,0 +1,122 @@
+{
+  "agent_environment_path": "/mnt/d/SoftWare/Anaconda/workspace/.conda/envs/agent",
+  "agent_probe": {
+    "argv": [
+      "/mnt/d/SoftWare/Anaconda/workspace/.conda/envs/agent/python.exe",
+      "-c",
+      "import importlib.util,json,sys;names=['gym', 'flask', 'torch', 'spacy', 'pyserini'];print(sys.version);print(json.dumps({n:importlib.util.find_spec(n) is not None for n in names},sort_keys=True))"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "3.12.13 | packaged by conda-forge | (main, Mar  5 2026, 16:36:12) [MSC v.1944 64 bit (AMD64)]\n{\"flask\": false, \"gym\": false, \"pyserini\": false, \"spacy\": true, \"torch\": true}"
+  },
+  "agent_python_exists": true,
+  "conda_env_list": {
+    "argv": [
+      "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+      "env",
+      "list"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "# conda environments:\n#\nbase                     D:\\SoftWare\\Anaconda\\install\nGastric_Cancer           D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\Gastric_Cancer\nRL                       D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\RL\nagent                    D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\agent\nmineru-local             D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\mineru-local\nnlp_sgg                  D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\nlp_sgg\npytorch_direct           D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\pytorch_direct\nsgg_ml_direct            D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\sgg_ml_direct"
+  },
+  "conda_executable_exists": true,
+  "dependency_install_performed": false,
+  "disk": {
+    "free_bytes": 79225942016,
+    "total_bytes": 296022437888,
+    "used_bytes": 216796495872
+  },
+  "environment_python_versions": [
+    {
+      "exit_code": 0,
+      "path": "/mnt/d/SoftWare/Anaconda/install/python.exe",
+      "version": "Python 3.12.3"
+    },
+    {
+      "exit_code": 0,
+      "path": "/mnt/d/SoftWare/Anaconda/workspace/.conda/envs/Gastric_Cancer/python.exe",
+      "version": "Python 3.12.11"
+    },
+    {
+      "exit_code": 0,
+      "path": "/mnt/d/SoftWare/Anaconda/workspace/.conda/envs/RL/python.exe",
+      "version": "Python 3.12.12"
+    },
+    {
+      "exit_code": 0,
+      "path": "/mnt/d/SoftWare/Anaconda/workspace/.conda/envs/agent/python.exe",
+      "version": "Python 3.12.13"
+    },
+    {
+      "exit_code": 0,
+      "path": "/mnt/d/SoftWare/Anaconda/workspace/.conda/envs/mineru-local/python.exe",
+      "version": "Python 3.12.13"
+    },
+    {
+      "exit_code": 0,
+      "path": "/mnt/d/SoftWare/Anaconda/workspace/.conda/envs/nlp_sgg/python.exe",
+      "version": "Python 3.12.11"
+    },
+    {
+      "exit_code": 0,
+      "path": "/mnt/d/SoftWare/Anaconda/workspace/.conda/envs/pytorch_direct/python.exe",
+      "version": "Python 3.9.21"
+    },
+    {
+      "exit_code": 0,
+      "path": "/mnt/d/SoftWare/Anaconda/workspace/.conda/envs/sgg_ml_direct/python.exe",
+      "version": "Python 3.9.23"
+    }
+  ],
+  "java": {
+    "argv": [
+      "java",
+      "-version"
+    ],
+    "exit_code": 0,
+    "stderr": "openjdk version \"17.0.19\" 2026-04-21\nOpenJDK Runtime Environment (build 17.0.19+10-1-24.04.2-Ubuntu)\nOpenJDK 64-Bit Server VM (build 17.0.19+10-1-24.04.2-Ubuntu, mixed mode, sharing)",
+    "stdout": ""
+  },
+  "p9_a1_environment_created_or_modified": false,
+  "planned_p9_a2_environment": "webshop38",
+  "python_3_8_13_available": false,
+  "result": "PASS",
+  "schema": "p9-webshop-toolchain-inventory/v1",
+  "windows_conda_root": "/mnt/d/SoftWare/Anaconda/install",
+  "wsl_python3": {
+    "argv": [
+      "python3",
+      "--version"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Python 3.12.3"
+  },
+  "wsl_tools": {
+    "docker": null,
+    "java": "/usr/bin/java",
+    "mamba": null,
+    "micromamba": null,
+    "podman": null,
+    "pyenv": null,
+    "python": null,
+    "python3": "/usr/bin/python3",
+    "uv": "/home/huailishang/.local/bin/uv"
+  }
+}
+EXTRA_CHECKOUT_FILES_BEGIN
+EXTRA_CHECKOUT_FILES_END
+# conda environments:
+#
+base                     D:\SoftWare\Anaconda\install
+Gastric_Cancer           D:\SoftWare\Anaconda\workspace\.conda\envs\Gastric_Cancer
+RL                       D:\SoftWare\Anaconda\workspace\.conda\envs\RL
+agent                    D:\SoftWare\Anaconda\workspace\.conda\envs\agent
+mineru-local             D:\SoftWare\Anaconda\workspace\.conda\envs\mineru-local
+nlp_sgg                  D:\SoftWare\Anaconda\workspace\.conda\envs\nlp_sgg
+pytorch_direct           D:\SoftWare\Anaconda\workspace\.conda\envs\pytorch_direct
+sgg_ml_direct            D:\SoftWare\Anaconda\workspace\.conda\envs\sgg_ml_direct
+
+WEBSHOP38_EXISTS=false

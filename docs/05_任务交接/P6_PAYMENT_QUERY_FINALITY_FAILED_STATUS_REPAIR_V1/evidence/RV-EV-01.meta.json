@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-01",
+  "command_argv": [
+    "python",
+    "docs/05_任务交接/P6_PAYMENT_QUERY_FINALITY_FACT_V1/evidence/RV-EV-01_trusted_failed_query.py"
+  ],
+  "command_display": "python docs/05_任务交接/P6_PAYMENT_QUERY_FINALITY_FACT_V1/evidence/RV-EV-01_trusted_failed_query.py",
+  "working_directory": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+  "started_at_utc": "2026-07-31T14:03:24.218862+00:00",
+  "finished_at_utc": "2026-07-31T14:03:24.362991+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-01.stdout.log",
+  "stderr_path": "RV-EV-01.stderr.log",
+  "stdout_bytes": 126,
+  "stderr_bytes": 0,
+  "stdout_sha256": "453b673f21ae007eff54356378f0c1a70b9bd686bc5609246f81e7096401840e",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

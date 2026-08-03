@@ -1,0 +1,27 @@
+{
+  "label": "EV-22",
+  "started_at_utc": "2026-08-02T04:29:25.878325+00:00",
+  "finished_at_utc": "2026-08-02T04:29:26.371087+00:00",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "command_display": "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -ExecutionPolicy Bypass -File D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\bootstrap_webshop_small.ps1 -RepositoryRoot D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab -AllowChecksumMirrorFallback",
+  "command_argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\bootstrap_webshop_small.ps1",
+    "-RepositoryRoot",
+    "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+    "-AllowChecksumMirrorFallback"
+  ],
+  "exit_code": 1,
+  "purpose": "revision-pinned mirror download, validation/promotion, 1k index build, direct query and real smoke after Python-owned checkout validation",
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-22.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-22.stderr.log",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "5f63043edd10e8c3a331024324eb4da8425301ce24e9606ccb0c476a81243c55",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 0,
+  "stderr_bytes": 459
+}

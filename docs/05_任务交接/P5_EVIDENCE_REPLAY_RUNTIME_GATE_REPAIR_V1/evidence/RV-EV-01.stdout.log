@@ -1,0 +1,70 @@
+def _run_replay_gate(scenario: Scenario, result: Any, order: Any) -> tuple[Any, list[str]]:
+    """Exercise the existing P1-P4 gate with a local callback solely for its outcome record."""
+
+    sources = {
+        "mandate.mandate_id": SourceType.USER_CONFIRMED,
+        "final_order.order_id": SourceType.USER_CONFIRMED,
+        "request.request_id": SourceType.PROTOCOL_VERIFIED,
+        "request.agent_id": SourceType.USER_CONFIRMED,
+        "request.amount": SourceType.USER_CONFIRMED,
+        "request.currency": SourceType.USER_CONFIRMED,
+        "request.payee": SourceType.USER_CONFIRMED,
+    }
+    context_fact = evaluate_context_policy(
+        {
+            "mandate": {"mandate_id": scenario.mandate.mandate_id},
+            "final_order": {"order_id": order.order_id},
+            "request": {
+                "request_id": scenario.request.request_id,
+                "agent_id": scenario.request.agent_id,
+                "amount": scenario.request.amount,
+                "currency": scenario.request.currency,
+                "payee": scenario.request.payee,
+            },
+        },
+        trusted_sources=sources,
+        required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
+        policy_version=POLICY_VERSION,
+        current_action=PAYMENT_CONTEXT_ACTION,
+    ).fact
+    callback_calls: list[str] = []
+    outcome = execute_with_payment_binding_gate(
+        result.decision,
+        scenario.mandate,
+        order,
+        scenario.request,
+        scenario.payment_execution,
+        lambda: callback_calls.append("p5_offline_callback") or "p5-offline-payment-result",
+        agent_identity=AgentIdentity(
+            agent_id=scenario.request.agent_id or scenario.mandate.expected_agent_id or "",
+            provider="p5-offline-provider",
+            executor_instance_id="p5-offline-executor",
+            status="active",
+        ),
+        current_provider_ref="p5-offline-provider",
+        current_executor_instance_ref="p5-offline-executor",
+        context_policy_fact=context_fact,
+    )
+    return outcome, callback_calls
+
+
+def _runtime_gate_record(result: Any, outcome: Any) -> RuntimeGateRecord:
+    reasons = tuple(
+        sorted(
+            {
+                *(f"p1:{issue.code}" for issue in result.issues),
+                *(f"p2:{reason}" for reason in outcome.binding_fact.reason_codes),
+                *(f"p3:{reason}" for reason in outcome.identity_fact.reason_codes),
+                *(f"p4:{reason}" for reason in outcome.context_policy_fact.reason_codes),
+            }
+        )
+    ) or ("p1:validation_passed",)
+    return RuntimeGateRecord(
+        preliminary_decision=result.decision,
+        final_decision=outcome.decision,
+        binding_status=outcome.binding_fact.status.value,
+        identity_status=outcome.identity_fact.status.value,
+        context_policy_status=outcome.context_policy_fact.status.value,
+        callback_executed=outcome.executed,
+        reason_codes=reasons,
+    )

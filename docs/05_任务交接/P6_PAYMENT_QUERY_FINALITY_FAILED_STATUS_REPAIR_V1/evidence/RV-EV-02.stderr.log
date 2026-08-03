@@ -1,0 +1,15 @@
+test_conflicting_observation_is_blocked_and_non_terminal (tests.test_payment_finality.PaymentQueryFinalityTest.test_conflicting_observation_is_blocked_and_non_terminal) ... ok
+test_invalid_binding_is_blocked_and_non_terminal (tests.test_payment_finality.PaymentQueryFinalityTest.test_invalid_binding_is_blocked_and_non_terminal) ... ok
+test_s12_query_confirmed_is_payment_terminal_only (tests.test_payment_finality.PaymentQueryFinalityTest.test_s12_query_confirmed_is_payment_terminal_only) ... ok
+test_serialization_is_deterministic (tests.test_payment_finality.PaymentQueryFinalityTest.test_serialization_is_deterministic) ... ok
+test_trusted_failed_query_is_payment_terminal_only (tests.test_payment_finality.PaymentQueryFinalityTest.test_trusted_failed_query_is_payment_terminal_only) ... ok
+test_unknown_and_pending_queries_are_non_final (tests.test_payment_finality.PaymentQueryFinalityTest.test_unknown_and_pending_queries_are_non_final) ... ok
+test_unknown_input_fails_closed (tests.test_payment_finality.PaymentQueryFinalityTest.test_unknown_input_fails_closed) ... ok
+test_loads_thirteen_fixed_scenarios (tests.test_runner.ScenarioRunnerTest.test_loads_thirteen_fixed_scenarios) ... ok
+test_runner_generates_interactive_ap2_workbench (tests.test_runner.ScenarioRunnerTest.test_runner_generates_interactive_ap2_workbench) ... ok
+test_s12_result_card_catches_forbidden_second_payment_attempt (tests.test_runner.ScenarioRunnerTest.test_s12_result_card_catches_forbidden_second_payment_attempt) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.266s
+
+OK

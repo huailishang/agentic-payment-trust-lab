@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-06",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "\nset -euo pipefail\nprintf \"HEAD=\"; git rev-parse HEAD\nprintf \"BRANCH=\"; git branch --show-current\nprintf \"CORE_HASHES\\n\"\nsha256sum src/agentic_payment_experiment/webshop_runtime_gate.py src/agentic_payment_experiment/__init__.py tests/test_webshop_runtime_gate.py\nprintf \"P9_B1_HASHES\\n\"\nsha256sum src/agentic_payment_experiment/adapters/webshop.py samples/external/webshop/pre_buy_now_candidate_v1.json scripts/validation/webshop/export_webshop_commerce_fixture.py\nprintf \"FORBIDDEN_DIFFS\\n\"\ngit diff --exit-code -- src/agentic_payment_experiment/models.py src/agentic_payment_experiment/validator.py\nprintf \"STATUS_LINES\\n\"\ngrep -n \"P9-B1 Commerce Adapter\\|P9-B2 Buy Now\\|P9-C 支付\\|P9-E 购买轨迹\" docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md docs/02_未来规划/验证体系与后续环境统一路线_20260801.md\nprintf \"WORKFLOW\\n\"\npython3 /mnt/c/Users/HuailiShang/.codex/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md\nprintf \"DIFF_CHECK\\n\"\ngit diff --check -- src/agentic_payment_experiment/webshop_runtime_gate.py src/agentic_payment_experiment/__init__.py tests/test_webshop_runtime_gate.py docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md docs/02_未来规划/验证体系与后续环境统一路线_20260801.md\n"
+  ],
+  "command_display": "bash -lc '\nset -euo pipefail\nprintf \"HEAD=\"; git rev-parse HEAD\nprintf \"BRANCH=\"; git branch --show-current\nprintf \"CORE_HASHES\\n\"\nsha256sum src/agentic_payment_experiment/webshop_runtime_gate.py src/agentic_payment_experiment/__init__.py tests/test_webshop_runtime_gate.py\nprintf \"P9_B1_HASHES\\n\"\nsha256sum src/agentic_payment_experiment/adapters/webshop.py samples/external/webshop/pre_buy_now_candidate_v1.json scripts/validation/webshop/export_webshop_commerce_fixture.py\nprintf \"FORBIDDEN_DIFFS\\n\"\ngit diff --exit-code -- src/agentic_payment_experiment/models.py src/agentic_payment_experiment/validator.py\nprintf \"STATUS_LINES\\n\"\ngrep -n \"P9-B1 Commerce Adapter\\|P9-B2 Buy Now\\|P9-C 支付\\|P9-E 购买轨迹\" docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md docs/02_未来规划/验证体系与后续环境统一路线_20260801.md\nprintf \"WORKFLOW\\n\"\npython3 /mnt/c/Users/HuailiShang/.codex/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md\nprintf \"DIFF_CHECK\\n\"\ngit diff --check -- src/agentic_payment_experiment/webshop_runtime_gate.py src/agentic_payment_experiment/__init__.py tests/test_webshop_runtime_gate.py docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md docs/02_未来规划/验证体系与后续环境统一路线_20260801.md\n'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T13:13:12.275825+00:00",
+  "finished_at_utc": "2026-08-02T13:13:18.637387+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-06.stdout.log",
+  "stderr_path": "RV-EV-06.stderr.log",
+  "stdout_bytes": 2367,
+  "stderr_bytes": 0,
+  "stdout_sha256": "b57ee934382d2a187c048d12fd88108146b52cb1b270aa1c212d1af052fd542a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

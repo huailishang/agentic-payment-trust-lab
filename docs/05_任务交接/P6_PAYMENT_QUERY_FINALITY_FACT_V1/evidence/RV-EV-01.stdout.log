@@ -1,0 +1,4 @@
+recovery_status: RETRY_CANDIDATE
+effective_status: FAILED
+evidence_stage: INITIAL_ONLY
+effective_status_terminal: False

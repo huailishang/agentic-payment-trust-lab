@@ -1,0 +1,250 @@
+{
+  "all_non_allow_have_causal_reason": true,
+  "case_count": 15,
+  "cases": [
+    {
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "upstream_prepayment_non_allow",
+      "context_policy_status": "VALID",
+      "decision": "DENY",
+      "expected_causal_reason": "p1:upstream_prepayment_non_allow",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p1:upstream_prepayment_non_allow",
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_status": "MISSING_EVIDENCE",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p2_binding_missing",
+      "context_policy_status": "VALID",
+      "decision": "INDETERMINATE",
+      "expected_causal_reason": "p2:binding_missing",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:binding_missing",
+        "p2:payment_execution_request_ref_missing",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_status": "INVALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p2_binding_invalid",
+      "context_policy_status": "VALID",
+      "decision": "DENY",
+      "expected_causal_reason": "p2:binding_invalid",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:binding_invalid",
+        "p2:payment_execution_request_ref_mismatch",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p3_identity_missing",
+      "context_policy_status": "VALID",
+      "decision": "INDETERMINATE",
+      "expected_causal_reason": "p3:identity_missing",
+      "identity_status": "MISSING_EVIDENCE",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_expected_executor_ref_missing",
+        "p3:identity_missing",
+        "p3:identity_object_agent_ref_missing",
+        "p3:identity_provider_ref_missing",
+        "p3:identity_status_missing",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p3_identity_invalid",
+      "context_policy_status": "VALID",
+      "decision": "DENY",
+      "expected_causal_reason": "p3:identity_invalid",
+      "identity_status": "INVALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_instance_ref_mismatch",
+        "p3:identity_invalid",
+        "p4:context_policy_valid"
+      ]
+    },
+    {
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p4_context_missing",
+      "context_policy_status": "MISSING_EVIDENCE",
+      "decision": "INDETERMINATE",
+      "expected_causal_reason": "p4:context_missing",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_missing",
+        "p4:synthetic_context_missing"
+      ]
+    },
+    {
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p4_context_invalid",
+      "context_policy_status": "INVALID",
+      "decision": "DENY",
+      "expected_causal_reason": "p4:context_invalid",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_invalid",
+        "p4:synthetic_context_invalid"
+      ]
+    },
+    {
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p4_policy_version_mismatch",
+      "context_policy_status": "VALID",
+      "decision": "INDETERMINATE",
+      "expected_causal_reason": "p4:policy_version_mismatch",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:policy_version_mismatch"
+      ]
+    },
+    {
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p4_current_action_mismatch",
+      "context_policy_status": "VALID",
+      "decision": "INDETERMINATE",
+      "expected_causal_reason": "p4:current_action_mismatch",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:current_action_mismatch"
+      ]
+    },
+    {
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p4_required_source_paths_mismatch",
+      "context_policy_status": "VALID",
+      "decision": "INDETERMINATE",
+      "expected_causal_reason": "p4:required_source_paths_mismatch",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:required_source_paths_mismatch"
+      ]
+    },
+    {
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p4_covered_source_paths_mismatch",
+      "context_policy_status": "VALID",
+      "decision": "INDETERMINATE",
+      "expected_causal_reason": "p4:covered_source_paths_mismatch",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:covered_source_paths_mismatch"
+      ]
+    },
+    {
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p4_missing_source_paths",
+      "context_policy_status": "VALID",
+      "decision": "INDETERMINATE",
+      "expected_causal_reason": "p4:missing_source_paths",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:missing_source_paths"
+      ]
+    },
+    {
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p4_source_coverage_value_mismatch",
+      "context_policy_status": "VALID",
+      "decision": "INDETERMINATE",
+      "expected_causal_reason": "p4:source_coverage_value_mismatch",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "p4:source_coverage_value_mismatch"
+      ]
+    },
+    {
+      "binding_status": "VALID",
+      "callback_count": 1,
+      "callback_executed": true,
+      "case": "runtime_gate_allow",
+      "context_policy_status": "VALID",
+      "decision": "ALLOW",
+      "expected_causal_reason": "runtime:allow",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "runtime:allow"
+      ]
+    },
+    {
+      "binding_status": "VALID",
+      "callback_count": 0,
+      "callback_executed": false,
+      "case": "p3_assurance_insufficient",
+      "context_policy_status": "VALID",
+      "decision": "INDETERMINATE",
+      "expected_causal_reason": "p3:assurance_insufficient",
+      "identity_status": "VALID",
+      "reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:assurance_insufficient",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid"
+      ]
+    }
+  ],
+  "schema": "shared-runtime-gate-reason-matrix/v1"
+}

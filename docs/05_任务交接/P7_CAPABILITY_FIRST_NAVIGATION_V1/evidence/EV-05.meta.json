@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-05",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P7_CAPABILITY_FIRST_NAVIGATION_V1/evidence/EV-05_scope_check.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P7_CAPABILITY_FIRST_NAVIGATION_V1/evidence/EV-05_scope_check.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-01T06:25:26.084298+00:00",
+  "finished_at_utc": "2026-08-01T06:25:27.293471+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-05.stdout.log",
+  "stderr_path": "EV-05.stderr.log",
+  "stdout_bytes": 2323,
+  "stderr_bytes": 0,
+  "stdout_sha256": "d6f3ae4102e40a29cca9a25f1b285888a44c868fbf3764253d7cc5e8214a8280",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

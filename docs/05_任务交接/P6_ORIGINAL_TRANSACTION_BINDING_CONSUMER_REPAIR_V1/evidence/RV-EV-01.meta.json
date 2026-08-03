@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-01",
+  "command_argv": [
+    "python",
+    "-c",
+    "import runpy,sys;sys.path.insert(0,'src');sys.path.insert(0,'.');runpy.run_path(r'docs\\05_任务交接\\P6_ORIGINAL_TRANSACTION_BINDING_CONSUMER_REPAIR_V1\\evidence\\RV-EV-01_fail_closed_consumers.py',run_name='__main__')"
+  ],
+  "command_display": "python -c \"import runpy,sys;sys.path.insert(0,'src');sys.path.insert(0,'.');runpy.run_path(r'docs\\05_任务交接\\P6_ORIGINAL_TRANSACTION_BINDING_CONSUMER_REPAIR_V1\\evidence\\RV-EV-01_fail_closed_consumers.py',run_name='__main__')\"",
+  "working_directory": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+  "started_at_utc": "2026-07-31T13:33:57.867551+00:00",
+  "finished_at_utc": "2026-07-31T13:33:58.041947+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-01.stdout.log",
+  "stderr_path": "RV-EV-01.stderr.log",
+  "stdout_bytes": 721,
+  "stderr_bytes": 0,
+  "stdout_sha256": "4234039be0e16b3c81cbbb72862aa7833da1b3d2ee1fc5d7e8401b15157ab405",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

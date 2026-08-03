@@ -1,0 +1,239 @@
+{
+  "all_fail_closed_cases_passed": true,
+  "case_count": 23,
+  "cases": [
+    {
+      "case": "missing_instruction",
+      "expected_missing_field": "instruction_text",
+      "missing_fields": [
+        "instruction_text"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "missing_asin",
+      "expected_missing_field": "product.asin",
+      "missing_fields": [
+        "product.asin"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "missing_title",
+      "expected_missing_field": "product.title",
+      "missing_fields": [
+        "product.title"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "missing_price",
+      "expected_missing_field": "product.unit_price",
+      "missing_fields": [
+        "product.unit_price"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "missing_currency",
+      "expected_missing_field": "experiment_context.currency",
+      "missing_fields": [
+        "experiment_context.currency"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "missing_context_bridge",
+      "expected_missing_field": "experiment_context.merchant",
+      "missing_fields": [
+        "experiment_context.merchant"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "malformed_price",
+      "expected_missing_field": "product.unit_price",
+      "missing_fields": [
+        "product.unit_price"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "negative_price",
+      "expected_missing_field": "product.unit_price",
+      "missing_fields": [
+        "product.unit_price"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "zero_quantity",
+      "expected_missing_field": "product.quantity",
+      "missing_fields": [
+        "product.quantity"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "negative_quantity",
+      "expected_missing_field": "product.quantity",
+      "missing_fields": [
+        "product.quantity"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "noninteger_quantity",
+      "expected_missing_field": "product.quantity",
+      "missing_fields": [
+        "product.quantity"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "total_inconsistent",
+      "expected_missing_field": "product.order_total",
+      "missing_fields": [
+        "product.order_total"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "missing_selected_options",
+      "expected_missing_field": "product.selected_options",
+      "missing_fields": [
+        "product.selected_options"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "wrong_source_commit",
+      "expected_missing_field": "source.webshop_commit",
+      "missing_fields": [
+        "source.webshop_commit"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "missing_provenance",
+      "expected_missing_field": "source.provenance",
+      "missing_fields": [
+        "source.provenance",
+        "source.provenance.kind",
+        "source.provenance.immutable"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "mutable_provenance",
+      "expected_missing_field": "source.provenance.immutable",
+      "missing_fields": [
+        "source.provenance.immutable"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "wrong_smoke_hash",
+      "expected_missing_field": "source.smoke_result_sha256",
+      "missing_fields": [
+        "source.smoke_result_sha256"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "wrong_asset_hash",
+      "expected_missing_field": "source.asset_hashes.items_shuffle_1000.json",
+      "missing_fields": [
+        "source.asset_hashes.items_shuffle_1000.json"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "buy_now_unavailable",
+      "expected_missing_field": "buy_now_available",
+      "missing_fields": [
+        "buy_now_available"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "buy_now_executed",
+      "expected_missing_field": "buy_now_executed",
+      "missing_fields": [
+        "buy_now_executed"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "buy_now_action_present",
+      "expected_missing_field": "actions_executed.buy_now_forbidden",
+      "missing_fields": [
+        "actions_executed.buy_now_forbidden"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "order_request_binding_mismatch",
+      "expected_missing_field": "order_request_binding",
+      "missing_fields": [
+        "order_request_binding"
+      ],
+      "order_present": false,
+      "payment_request_present": false,
+      "ready": false
+    },
+    {
+      "case": "unknown_top_level_fields",
+      "missing_fields": [],
+      "order_present": true,
+      "payment_request_present": true,
+      "ready": true,
+      "unmapped_fields": [
+        "top_level.allow_purchase",
+        "top_level.webshop_reward"
+      ]
+    }
+  ]
+}

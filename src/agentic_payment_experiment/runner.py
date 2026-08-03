@@ -15,10 +15,14 @@ from .learning_variants import build_s09_learning_variants
 from .lifecycle import assess_lifecycle
 from .models import AgentIdentity, Decision
 from .payment_execution import (
+    PAYMENT_CONTEXT_ACTION,
+    PAYMENT_REQUIRED_SOURCE_PATHS,
     execute_with_payment_binding_gate,
     identity_assurance_evidence,
+    observe_payment_execution_gate,
 )
 from .payment_recovery import assess_payment_recovery
+from .payment_finality import derive_payment_query_finality
 from .remediation import assess_remediation
 from .presentation_zh import (
     DECISION_PRESENTATION_ZH,
@@ -31,8 +35,13 @@ from .trusted_execution import (
     POLICY_VERSION,
     CandidateFactUpdate,
     FactDomain,
+    ReplayEvent,
+    ReplayEventType,
+    ReplaySourceType,
+    RuntimeGateRecord,
     SourceType,
     evaluate_context_policy,
+    replay_events,
 )
 from .validator import validate_request
 
@@ -52,6 +61,7 @@ def run_scenarios(
 
     scenarios = load_scenarios(scenario_path)
     records: list[dict[str, Any]] = []
+    replay_cases: list[dict[str, Any]] = []
     for scenario in scenarios:
         mandate, request, protocol_trace = _runtime_input(scenario)
         result = validate_request(
@@ -85,6 +95,7 @@ def run_scenarios(
                 )
 
         payment_recovery_result = None
+        payment_finality_fact = None
         if (
             scenario.payment_recovery_initial is not None
             and scenario.payment_status_observation is not None
@@ -96,6 +107,11 @@ def run_scenarios(
                 mandate=mandate,
                 request=request,
                 order=scenario.final_order,
+            )
+            payment_finality_fact = derive_payment_query_finality(
+                scenario.payment_recovery_initial,
+                scenario.payment_status_observation,
+                payment_recovery_result,
             )
 
         runtime_input = {
@@ -138,7 +154,12 @@ def run_scenarios(
             lifecycle_result=lifecycle_result,
             payment_recovery_result=payment_recovery_result,
         )
+        if payment_finality_fact is not None:
+            record["payment_finality"] = payment_finality_fact.to_dict()
         attach_scenario_presentation(record)
+        observed_gate = None
+        if scenario.sample_id in {"S09", "S10"}:
+            observed_gate = _observe_scenario_gate(scenario, result)
         if (
             scenario.sample_id == "S09"
             and scenario.authorized_order is not None
@@ -153,12 +174,23 @@ def run_scenarios(
                 record["protocol"],
             )
         records.append(record)
+        if observed_gate is not None:
+            replay_cases.append(_build_replay_case(scenario, observed_gate))
 
     missing_mappings = missing_builtin_reason_mappings(records)
     if missing_mappings:
         raise ValueError(f"missing Chinese reason mappings: {', '.join(sorted(missing_mappings))}")
 
     card = build_result_card(records)
+    card["replay"] = {
+        "contract": "P5 Evidence / Replay v1",
+        "limitations": [
+            "offline deterministic receipt chain only",
+            "no cryptographic integrity, persistence, network, or real payment claim",
+            "a non-allow decision records payment_not_attempted as a local runtime outcome",
+        ],
+        "cases": replay_cases,
+    }
     card["context_policy"] = _build_context_policy_result()
     card["identity_assurance"] = _build_identity_assurance_result(scenarios)
     card["presentation_catalog"] = {"decisions": DECISION_PRESENTATION_ZH}
@@ -173,6 +205,119 @@ def run_scenarios(
     write_result_card(card, json_path)
     write_html_report(card, html_path)
     return card
+
+
+def _build_replay_case(scenario: Scenario, observed_gate: RuntimeGateRecord) -> dict[str, Any]:
+    """Create a receipt only from structured scenario facts and an observed gate record."""
+
+    order = scenario.final_order or scenario.authorized_order
+    if order is None:
+        raise ValueError(f"P5 replay requires order evidence for {scenario.sample_id}")
+    agent_ref = scenario.request.agent_id or scenario.mandate.expected_agent_id
+    if not agent_ref:
+        raise ValueError(f"P5 replay requires agent reference for {scenario.sample_id}")
+    payment = scenario.payment_execution
+    payment_ref = payment.payment_id if payment is not None else f"not-attempted:{scenario.request.request_id}"
+    common = {
+        "occurred_at": scenario.request.occurred_at,
+        "subject_ref": scenario.mandate.user_id,
+        "agent_ref": agent_ref,
+        "authority_ref": scenario.mandate.mandate_id,
+        "transaction_object_ref": scenario.request.request_id,
+        "payment_ref": payment_ref,
+        "decision": observed_gate.final_decision,
+    }
+    event_specs = (
+        ("authority", ReplayEventType.AUTHORITY_RECORDED, ReplaySourceType.USER_CONFIRMED, f"mandate:{scenario.mandate.mandate_id}", ("authority_recorded",)),
+        ("order", ReplayEventType.ORDER_RECORDED, ReplaySourceType.USER_CONFIRMED, f"order:{order.order_id}:{order.order_version}", ("order_recorded",)),
+        ("request", ReplayEventType.REQUEST_RECORDED, ReplaySourceType.PROTOCOL_VERIFIED, f"request:{scenario.request.request_id}", ("request_recorded",)),
+        ("decision", ReplayEventType.RUNTIME_DECISION_RECORDED, ReplaySourceType.SYSTEM_RUNTIME, "observed-payment-gate", observed_gate.reason_codes),
+        (
+            "payment-outcome",
+            ReplayEventType.PAYMENT_OUTCOME_RECORDED,
+            ReplaySourceType.PAYMENT_PROVIDER_OBSERVED if payment is not None else ReplaySourceType.SYSTEM_RUNTIME,
+            f"payment:{payment.payment_id}" if payment is not None else f"payment-not-attempted:{scenario.request.request_id}",
+            (f"payment_status:{payment.status.value}",) if payment is not None else ("payment_not_attempted",),
+        ),
+    )
+    events: list[ReplayEvent] = []
+    for suffix, event_type, source_type, source_ref, reason_codes in event_specs:
+        events.append(
+            ReplayEvent(
+                event_id=f"{scenario.sample_id}:{suffix}",
+                event_type=event_type,
+                source_type=source_type,
+                source_ref=source_ref,
+                reason_codes=reason_codes,
+                previous_event_ref=events[-1].event_id if events else None,
+                runtime_gate=observed_gate if event_type is ReplayEventType.RUNTIME_DECISION_RECORDED else None,
+                **common,
+            )
+        )
+    replay = replay_events(events)
+    return {
+        "case_id": f"P5-{scenario.sample_id}",
+        "source_scenario": scenario.sample_id,
+        "replay": replay.to_dict(),
+        "preliminary_decision": observed_gate.preliminary_decision.value,
+        "final_gate_decision": observed_gate.final_decision.value,
+        "callback_executed": observed_gate.callback_executed,
+        "callback_count": observed_gate.callback_count,
+        "callback_result_ref": observed_gate.callback_result_ref,
+        "gate": observed_gate.to_dict(),
+        "events": [event.to_dict() for event in events],
+    }
+
+
+def _observe_scenario_gate(scenario: Scenario, result: Any) -> RuntimeGateRecord:
+    """Run the one offline scenario gate and immediately retain its observation."""
+
+    order = scenario.final_order or scenario.authorized_order
+    if order is None:
+        raise ValueError(f"P5 observed gate requires order evidence for {scenario.sample_id}")
+    sources = {
+        "mandate.mandate_id": SourceType.USER_CONFIRMED,
+        "final_order.order_id": SourceType.USER_CONFIRMED,
+        "request.request_id": SourceType.PROTOCOL_VERIFIED,
+        "request.agent_id": SourceType.USER_CONFIRMED,
+        "request.amount": SourceType.USER_CONFIRMED,
+        "request.currency": SourceType.USER_CONFIRMED,
+        "request.payee": SourceType.USER_CONFIRMED,
+    }
+    context_fact = evaluate_context_policy(
+        {
+            "mandate": {"mandate_id": scenario.mandate.mandate_id},
+            "final_order": {"order_id": order.order_id},
+            "request": {
+                "request_id": scenario.request.request_id,
+                "agent_id": scenario.request.agent_id,
+                "amount": scenario.request.amount,
+                "currency": scenario.request.currency,
+                "payee": scenario.request.payee,
+            },
+        },
+        trusted_sources=sources,
+        required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
+        policy_version=POLICY_VERSION,
+        current_action=PAYMENT_CONTEXT_ACTION,
+    ).fact
+    return observe_payment_execution_gate(
+        result.decision,
+        scenario.mandate,
+        order,
+        scenario.request,
+        scenario.payment_execution,
+        lambda: "scenario-offline-payment-result",
+        agent_identity=AgentIdentity(
+            agent_id=scenario.request.agent_id or scenario.mandate.expected_agent_id or "",
+            provider="scenario-offline-provider",
+            executor_instance_id="scenario-offline-executor",
+            status="active",
+        ),
+        current_provider_ref="scenario-offline-provider",
+        current_executor_instance_ref="scenario-offline-executor",
+        context_policy_fact=context_fact,
+    )
 
 
 def _build_identity_assurance_result(
@@ -237,9 +382,29 @@ def _build_identity_assurance_result(
 
     results: list[dict[str, Any]] = []
     valid_context_fact = evaluate_context_policy(
-        {},
+        {
+            "mandate": {"mandate_id": source.mandate.mandate_id},
+            "final_order": {"order_id": source.final_order.order_id},
+            "request": {
+                "request_id": source.request.request_id,
+                "agent_id": source.request.agent_id,
+                "amount": source.request.amount,
+                "currency": source.request.currency,
+                "payee": source.request.payee,
+            },
+        },
+        trusted_sources={
+            "mandate.mandate_id": SourceType.USER_CONFIRMED,
+            "final_order.order_id": SourceType.USER_CONFIRMED,
+            "request.request_id": SourceType.PROTOCOL_VERIFIED,
+            "request.agent_id": SourceType.USER_CONFIRMED,
+            "request.amount": SourceType.USER_CONFIRMED,
+            "request.currency": SourceType.USER_CONFIRMED,
+            "request.payee": SourceType.USER_CONFIRMED,
+        },
+        required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
         policy_version=POLICY_VERSION,
-        current_action="execute_payment",
+        current_action=PAYMENT_CONTEXT_ACTION,
     ).fact
     for case_id, description, identity, current_provider, current_executor in cases:
         callback_calls: list[str] = []
@@ -289,11 +454,24 @@ def _build_context_policy_result() -> dict[str, Any]:
     """Build independent deterministic P4 cases for the formal result card."""
 
     trusted = {
-        "request": {"amount": "480.00", "payee": "payee-1"},
+        "mandate": {"mandate_id": "mandate-p4"},
+        "final_order": {"order_id": "order-p4"},
+        "request": {
+            "request_id": "request-p4",
+            "agent_id": "agent-p4",
+            "amount": "480.00",
+            "payee": "payee-1",
+            "currency": "CNY",
+        },
         "payment_status_observation": {"status": "PENDING"},
     }
     sources = {
+        "mandate.mandate_id": SourceType.USER_CONFIRMED,
+        "final_order.order_id": SourceType.USER_CONFIRMED,
+        "request.request_id": SourceType.PROTOCOL_VERIFIED,
+        "request.agent_id": SourceType.USER_CONFIRMED,
         "request.amount": SourceType.USER_CONFIRMED,
+        "request.currency": SourceType.USER_CONFIRMED,
         "request.payee": SourceType.USER_CONFIRMED,
         "payment_status_observation.status": SourceType.PAYMENT_PROVIDER_OBSERVED,
     }
@@ -354,8 +532,9 @@ def _build_context_policy_result() -> dict[str, Any]:
             trusted,
             updates,
             trusted_sources=sources,
+            required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
             policy_version=POLICY_VERSION,
-            current_action="execute_payment",
+            current_action=PAYMENT_CONTEXT_ACTION,
             **extra,
         )
         output.append(
@@ -367,6 +546,12 @@ def _build_context_policy_result() -> dict[str, Any]:
                 "applied_paths": list(result.fact.applied_paths),
                 "blocked_paths": list(result.fact.blocked_paths),
                 "reason_codes": list(result.fact.reason_codes),
+                "required_source_paths": list(result.fact.required_source_paths),
+                "covered_source_paths": list(result.fact.covered_source_paths),
+                "missing_source_paths": list(result.fact.missing_source_paths),
+                "source_coverage": [
+                    asdict(item) for item in result.fact.source_coverage
+                ],
                 "trusted_state_changed": result.fact.trusted_state_changed,
                 "unauthorized_state_change_detected": (
                     result.fact.unauthorized_state_change_detected

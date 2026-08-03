@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-01",
+  "command_argv": [
+    "python",
+    "-c",
+    "import runpy,sys; sys.path.insert(0,'.'); runpy.run_path(r'docs\\05_任务交接\\P5_EVIDENCE_REPLAY_OBSERVED_GATE_RECORD_REPAIR_V1\\evidence\\RV-EV-01_missing_amount_source.py',run_name='__main__')"
+  ],
+  "command_display": "python -c \"import runpy,sys; sys.path.insert(0,'.'); runpy.run_path(r'docs\\05_任务交接\\P5_EVIDENCE_REPLAY_OBSERVED_GATE_RECORD_REPAIR_V1\\evidence\\RV-EV-01_missing_amount_source.py',run_name='__main__')\"",
+  "working_directory": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+  "started_at_utc": "2026-07-31T12:19:24.850163+00:00",
+  "finished_at_utc": "2026-07-31T12:19:25.027835+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-01.stdout.log",
+  "stderr_path": "RV-EV-01.stderr.log",
+  "stdout_bytes": 76,
+  "stderr_bytes": 0,
+  "stdout_sha256": "dfab61783549a2c2baeae96facf64b4834d49d1278ec71736f7d7e6488822cc8",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

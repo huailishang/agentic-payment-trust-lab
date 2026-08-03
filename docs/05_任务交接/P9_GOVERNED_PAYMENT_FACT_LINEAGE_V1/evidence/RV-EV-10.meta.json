@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-10",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_GOVERNED_PAYMENT_FACT_LINEAGE_V1/evidence/EV-10_scope_audit.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_GOVERNED_PAYMENT_FACT_LINEAGE_V1/evidence/EV-10_scope_audit.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-03T07:58:35.848480+00:00",
+  "finished_at_utc": "2026-08-03T07:58:36.235878+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-10.stdout.log",
+  "stderr_path": "RV-EV-10.stderr.log",
+  "stdout_bytes": 2558,
+  "stderr_bytes": 0,
+  "stdout_sha256": "2e579450bed1ac03a893800483f12a718881692c353a76e7945a2bb1e00d8a7c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

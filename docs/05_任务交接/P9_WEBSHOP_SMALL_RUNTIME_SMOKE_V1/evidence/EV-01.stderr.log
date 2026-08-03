@@ -1,0 +1,3 @@
+=== STEP 1: /mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe run -n agent python --version ===
+=== STEP 2: /mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe list -n agent ===
+=== STEP 3: /mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe env list ===

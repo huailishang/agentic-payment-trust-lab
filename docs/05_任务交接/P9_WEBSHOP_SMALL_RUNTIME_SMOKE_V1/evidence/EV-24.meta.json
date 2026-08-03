@@ -1,0 +1,54 @@
+{
+  "label": "EV-24",
+  "started_at_utc": "2026-08-02T04:39:17.856867+00:00",
+  "finished_at_utc": "2026-08-02T04:39:58.693241+00:00",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "command_display": "install faiss-cpu 1.7.4, import it, run direct Lucene query, then run real bounded WebShop text smoke",
+  "command_argv": [
+    "multiple commands; see records"
+  ],
+  "records": [
+    {
+      "sequence": 1,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "install",
+        "-n",
+        "webshop38",
+        "--override-channels",
+        "-c",
+        "https://conda.anaconda.org/pytorch",
+        "-c",
+        "https://conda.anaconda.org/conda-forge",
+        "--strict-channel-priority",
+        "faiss-cpu=1.7.4",
+        "-y"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 2,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "-c",
+        "import faiss, pyserini; print(\"faiss\", faiss.__version__); print(\"pyserini\", getattr(pyserini,\"__version__\",\"0.17.0\"))"
+      ],
+      "exit_code": 1
+    }
+  ],
+  "exit_code": 1,
+  "buy_now_executed": false,
+  "commit_executed": false,
+  "push_executed": false,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-24.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-24.stderr.log",
+  "stdout_sha256": "73a4a5ed85810974c3716a225f38f3498cfedaea41b28eb464df18e8033f047b",
+  "stderr_sha256": "d5a1f8397fadce5318038cdc4d5721ecfa42ef3f7efbfbdaa4daffc1bd360dec",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 1730,
+  "stderr_bytes": 877
+}

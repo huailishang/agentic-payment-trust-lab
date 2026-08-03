@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-01",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "set -e; git -C local_sources/third_party/webshop remote get-url origin; git -C local_sources/third_party/webshop rev-parse HEAD; if git -C local_sources/third_party/webshop symbolic-ref -q HEAD; then echo DETACHED=false; exit 1; else echo DETACHED=true; fi; test -z \"\"; echo CHECKOUT_CLEAN=true; git check-ignore -v local_sources/third_party/webshop; test -z \"\"; echo TRACKED_LOCAL_SOURCES=none; python3 scripts/validation/webshop/check_webshop_upstream.py local_sources/third_party/webshop"
+  ],
+  "command_display": "bash -lc 'set -e; git -C local_sources/third_party/webshop remote get-url origin; git -C local_sources/third_party/webshop rev-parse HEAD; if git -C local_sources/third_party/webshop symbolic-ref -q HEAD; then echo DETACHED=false; exit 1; else echo DETACHED=true; fi; test -z \"\"; echo CHECKOUT_CLEAN=true; git check-ignore -v local_sources/third_party/webshop; test -z \"\"; echo TRACKED_LOCAL_SOURCES=none; python3 scripts/validation/webshop/check_webshop_upstream.py local_sources/third_party/webshop'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-01T13:25:07.165641+00:00",
+  "finished_at_utc": "2026-08-01T13:25:07.727875+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-01.stdout.log",
+  "stderr_path": "RV-EV-01.stderr.log",
+  "stdout_bytes": 8480,
+  "stderr_bytes": 0,
+  "stdout_sha256": "e0cd421c538fb5858e3a9013183814b8500675c3f05019d392fadc1b5a54c2fb",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

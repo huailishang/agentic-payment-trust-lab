@@ -1,0 +1,11 @@
+=== STEP 1 items_shuffle_1000.json ===
+Error:
+
+	HTTPSConnectionPool(host='drive.google.com', port=443): Max retries
+	exceeded with url: /uc?id=1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib (Caused by
+	SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed
+	(EOF) (_ssl.c:1131)')))
+
+To report issues, please visit https://github.com/wkentaro/gdown/issues.
+
+ERROR conda.cli.main_run:execute(124): `conda run python -m gdown https://drive.google.com/uc?id=1EgHdxQ_YxqIQlvvq5iKlCrkEKR6-j0Ib -O D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\local_sources\third_party\webshop\data\items_shuffle_1000.json` failed. (See above for error)

@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-04",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_WEBSHOP_COMMERCE_ADAPTER_V1/evidence/EV-04_negative_matrix.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_WEBSHOP_COMMERCE_ADAPTER_V1/evidence/EV-04_negative_matrix.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T08:55:21.819870+00:00",
+  "finished_at_utc": "2026-08-02T08:55:22.809986+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-04.stdout.log",
+  "stderr_path": "EV-04.stderr.log",
+  "stdout_bytes": 6232,
+  "stderr_bytes": 0,
+  "stdout_sha256": "48ae33a92cfeb6cf146ee0c87d5d8e4eca83d6a7f15bc6f9f37a518261e9728e",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

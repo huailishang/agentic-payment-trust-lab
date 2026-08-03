@@ -1,0 +1,39 @@
+OK: v2 routing and required artifacts are structurally valid
+HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+CURRENT_ROUTE
+# Evaluator → Executor Current State
+
+<!-- evaluator-executor-workflow:v2 -->
+
+```yaml
+workflow: evaluator-executor-workflow/v2
+task_id: P9-WEBSHOP-PAYMENT-FULFILMENT-SIDECAR-V1
+state: CONTRACT_FROZEN
+current_role: Executor
+baseline_commit: 8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+contract_path: docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/CONTRACT.md
+executor_report_path: docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/REPORT.md
+evaluator_review_path: docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/REVIEW.md
+next_artifact_path: docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/REPORT.md
+authorization_commit: false
+authorization_push: false
+authorization_history_rewrite: false
+authorization_api_call: false
+authorization_network_call: false
+authorization_create_environment: false
+authorization_dependency_install: false
+authorization_data_download: false
+authorization_webshop_runtime_execution: false
+authorization_buy_now_execution: false
+authorization_payment_or_order_side_effect: false
+```
+
+## Current action
+
+```text
+Executor executes P9-C1 only: create one deterministic offline WebShop payment and fulfilment sidecar after the PASSed P9-B2 gate. Consume explicit PaymentExecutionRecord, FulfillmentRecord, optional trusted query/async observations and known attempts. Reuse existing payment recovery, original-transaction binding, payment status conflict and lifecycle functions. Expose effective payment status, duplicate-payment/retry protection, fulfilment/task/remediation result and machine-readable evidence for later M5/P9-E consumption. Do not infer success from WebShop reward, Buy Now visibility or callback text.
+```
+
+## Handoff rule
+
+Do not run WebShop, Buy Now, payment, retry, status query, async callback, fulfilment, refund, dispute or UI. Do not modify models.py, existing payment_recovery.py, payment_status_conflict.py, lifecycle.py, remediation.py, P9-B1/P9-B2 code or shared P1—P6 rules. Keep routing Executor-owned until the sidecar implementation, scenario matrices, side-effect audit, targeted tests, full regression, 13/13 formal entrypoint, complete EV triplets and REPORT.md are present. Run `/mnt/c/Users/HuailiShang/.codex/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md`; route to READY_FOR_REVIEW / Evaluator only when there is no BLOCKING finding. Commit and push remain unauthorized.

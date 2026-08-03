@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/evidence/RV-EV-05_counterexamples.py", line 88, in <module>
+    main()
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/evidence/RV-EV-05_counterexamples.py", line 84, in main
+    raise AssertionError("\n".join(failures))
+AssertionError: AC-02 violation: a Gate request and a different Adapter TransactionRequest were cross-composed without fail-closed binding verification
+AC-06 violation: a known successful parallel attempt was not exposed as duplicate-payment blocked when no query observation was supplied

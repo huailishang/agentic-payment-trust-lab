@@ -1,0 +1,30 @@
+{
+  "actual": {
+    "dict_gate_callback_count": null,
+    "dict_gate_callback_observations": null,
+    "dict_gate_decision": null,
+    "dict_gate_exception": {
+      "message": "'dict' object has no attribute 'action_type'",
+      "type": "AttributeError"
+    },
+    "dict_verifier_exception": {
+      "message": "'dict' object has no attribute 'action_type'",
+      "type": "AttributeError"
+    },
+    "dict_verifier_reasons": null,
+    "dict_verifier_status": null,
+    "mutable_gate_callback_count": 1,
+    "mutable_gate_callback_observations": 1,
+    "mutable_gate_decision": "ALLOW",
+    "mutable_gate_fact_status": "VALID",
+    "mutable_verifier_reasons": [
+      "governed_action_binding_valid"
+    ],
+    "mutable_verifier_status": "VALID",
+    "mutable_was_mutated_after_verification": true
+  },
+  "expected_boundary": {
+    "dict": "INVALID and zero callback without exception",
+    "mutable_lookalike": "INVALID and zero callback"
+  }
+}

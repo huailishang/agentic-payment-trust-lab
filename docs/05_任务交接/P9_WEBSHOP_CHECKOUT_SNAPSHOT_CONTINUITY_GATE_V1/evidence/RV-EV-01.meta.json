@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-01",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "PYTHONPATH=src:. python3 'docs/05_任务交接/P9_WEBSHOP_CHECKOUT_SNAPSHOT_CONTINUITY_GATE_V1/evidence/RV-EV-01_independent_matrix.py'"
+  ],
+  "command_display": "bash -lc 'PYTHONPATH=src:. python3 '\"'\"'docs/05_任务交接/P9_WEBSHOP_CHECKOUT_SNAPSHOT_CONTINUITY_GATE_V1/evidence/RV-EV-01_independent_matrix.py'\"'\"''",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-03T01:49:27.516710+00:00",
+  "finished_at_utc": "2026-08-03T01:49:27.985762+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-01.stdout.log",
+  "stderr_path": "RV-EV-01.stderr.log",
+  "stdout_bytes": 2394,
+  "stderr_bytes": 0,
+  "stdout_sha256": "f4c70b4377f28d9e4ce282eabf80104137036974df111ce266eb8cee74e5db17",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

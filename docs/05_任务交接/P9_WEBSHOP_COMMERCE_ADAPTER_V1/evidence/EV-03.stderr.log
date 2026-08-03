@@ -1,0 +1,8 @@
+test_fixture_is_minimal_traceable_and_preserves_unrelated_facts (tests.test_webshop_adapter.WebShopAdapterTest.test_fixture_is_minimal_traceable_and_preserves_unrelated_facts) ... ok
+test_semantic_separation_limitations_are_explicit (tests.test_webshop_adapter.WebShopAdapterTest.test_semantic_separation_limitations_are_explicit) ... ok
+test_unknown_top_level_fields_are_reported_not_trusted (tests.test_webshop_adapter.WebShopAdapterTest.test_unknown_top_level_fields_are_reported_not_trusted) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.029s
+
+OK

@@ -1,0 +1,12 @@
+test_closed_models_contain_required_source_and_fact_domains (tests.trusted_execution.test_context_policy.ContextPolicyTests.test_closed_models_contain_required_source_and_fact_domains) ... ok
+test_low_trust_sources_cannot_overwrite_critical_facts (tests.trusted_execution.test_context_policy.ContextPolicyTests.test_low_trust_sources_cannot_overwrite_critical_facts) ... ok
+test_merchant_cannot_overwrite_a_confirmed_order_fact (tests.trusted_execution.test_context_policy.ContextPolicyTests.test_merchant_cannot_overwrite_a_confirmed_order_fact) ... ok
+test_merge_is_copy_based_and_detects_actual_unauthorized_mutation (tests.trusted_execution.test_context_policy.ContextPolicyTests.test_merge_is_copy_based_and_detects_actual_unauthorized_mutation) ... ok
+test_missing_metadata_and_unknown_combinations_fail_closed (tests.trusted_execution.test_context_policy.ContextPolicyTests.test_missing_metadata_and_unknown_combinations_fail_closed) ... ok
+test_policy_and_current_action_are_required (tests.trusted_execution.test_context_policy.ContextPolicyTests.test_policy_and_current_action_are_required) ... ok
+test_provider_status_update_is_allowed_but_authority_is_not (tests.trusted_execution.test_context_policy.ContextPolicyTests.test_provider_status_update_is_allowed_but_authority_is_not) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+OK

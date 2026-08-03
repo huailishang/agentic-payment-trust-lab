@@ -1,0 +1,36 @@
+{
+  "cross_composed_gate_and_adapter": {
+    "adapter_request_amount": "878.80",
+    "adapter_request_id": "cross-composed-request",
+    "effective_payment_status": "UNKNOWN",
+    "gate_request_amount": "877.80",
+    "gate_request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+    "ready": true,
+    "reason_codes": [
+      "payment:initial_status:unknown",
+      "lifecycle:payment_status:unknown",
+      "lifecycle:fulfillment_status:pending",
+      "lifecycle:task_status:unknown",
+      "lifecycle:remediation:required",
+      "lifecycle:payment_status_unknown",
+      "retry:not_allowed"
+    ],
+    "task_status": "UNKNOWN"
+  },
+  "known_success_attempt_without_query": {
+    "duplicate_payment_blocked": false,
+    "initial_payment_status": "UNKNOWN",
+    "known_attempt_status": "SUCCEEDED",
+    "query_recovery_present": false,
+    "reason_codes": [
+      "payment:initial_status:unknown",
+      "lifecycle:payment_status:unknown",
+      "lifecycle:fulfillment_status:pending",
+      "lifecycle:task_status:unknown",
+      "lifecycle:remediation:required",
+      "lifecycle:payment_status_unknown",
+      "retry:not_allowed"
+    ],
+    "retry_allowed": false
+  }
+}

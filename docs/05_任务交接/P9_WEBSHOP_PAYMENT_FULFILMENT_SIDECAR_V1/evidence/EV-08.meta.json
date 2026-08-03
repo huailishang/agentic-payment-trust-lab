@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-08",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "sha256sum docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/REPORT.md CURRENT.md && python3 /mnt/c/Users/HuailiShang/.codex/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md"
+  ],
+  "command_display": "bash -lc 'sha256sum docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/REPORT.md CURRENT.md && python3 /mnt/c/Users/HuailiShang/.codex/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T14:08:57.833472+00:00",
+  "finished_at_utc": "2026-08-02T14:09:00.881414+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-08.stdout.log",
+  "stderr_path": "EV-08.stderr.log",
+  "stdout_bytes": 276,
+  "stderr_bytes": 0,
+  "stdout_sha256": "76d00e0a83aaa63854ca70780c9d1081e332b19d6b3dd7f437746b2a17bdb4ce",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

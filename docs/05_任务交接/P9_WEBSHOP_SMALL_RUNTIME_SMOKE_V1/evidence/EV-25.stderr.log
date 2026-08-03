@@ -1,0 +1,1 @@
+Tool transport timeout; original Conda stdout/stderr was not recoverable because subprocess capture had not returned.

@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-01",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "\n    echo HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6\n    echo BRANCH=main\n    echo --- INITIAL_GIT_STATUS ---\n    git status --short\n    echo --- INITIAL_ALLOWED_SCOPE_DIFF ---\n    git diff -- CURRENT.md samples/evaluation/project_impact_baseline_v1.json scripts/validation/run_project_impact_baseline.py tests/test_project_impact_baseline.py \"docs/04_验证体系/项目级能力评测基线_v1.md\"\n    echo --- INITIAL_SRC_HASHES ---\n    find src -type f -name \"*.py\" -print0 | sort -z | xargs -0 sha256sum\n  "
+  ],
+  "command_display": "bash -lc '\n    echo HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6\n    echo BRANCH=main\n    echo --- INITIAL_GIT_STATUS ---\n    git status --short\n    echo --- INITIAL_ALLOWED_SCOPE_DIFF ---\n    git diff -- CURRENT.md samples/evaluation/project_impact_baseline_v1.json scripts/validation/run_project_impact_baseline.py tests/test_project_impact_baseline.py \"docs/04_验证体系/项目级能力评测基线_v1.md\"\n    echo --- INITIAL_SRC_HASHES ---\n    find src -type f -name \"*.py\" -print0 | sort -z | xargs -0 sha256sum\n  '",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-03T13:34:39.587782+00:00",
+  "finished_at_utc": "2026-08-03T13:34:42.885751+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-01.stdout.log",
+  "stderr_path": "EV-01.stderr.log",
+  "stdout_bytes": 26414,
+  "stderr_bytes": 0,
+  "stdout_sha256": "cf55b29c527e6e2e938807fc3a76bfef622929e6c7edcbe42949da8c5866f27b",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

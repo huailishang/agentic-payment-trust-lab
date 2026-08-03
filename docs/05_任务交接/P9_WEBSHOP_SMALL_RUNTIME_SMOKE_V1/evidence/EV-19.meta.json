@@ -1,0 +1,144 @@
+{
+  "label": "EV-19",
+  "started_at_utc": "2026-08-02T04:23:19.234329+00:00",
+  "finished_at_utc": "2026-08-02T04:23:37.036203+00:00",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "command_display": "fresh workspace, agent and webshop38 inventory capture",
+  "command_argv": [
+    "multiple commands; see records"
+  ],
+  "records": [
+    {
+      "sequence": 1,
+      "command_argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 2,
+      "command_argv": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 3,
+      "command_argv": [
+        "git",
+        "-C",
+        "local_sources/third_party/webshop",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 4,
+      "command_argv": [
+        "git",
+        "-C",
+        "local_sources/third_party/webshop",
+        "status",
+        "--short"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 5,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "env",
+        "list",
+        "--json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 6,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "list",
+        "-n",
+        "agent",
+        "--json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 7,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "agent",
+        "python",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 8,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "list",
+        "-n",
+        "webshop38",
+        "--json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 9,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 10,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "java",
+        "-version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "sequence": 11,
+      "command_argv": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "-m",
+        "pip",
+        "freeze"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "exit_code": 0,
+  "agent_normalized_conda_list_sha256": "4539e11540ef6bdae7d4ce8adc6e9cc9c1b45891a36a5218ece046db3ad1622c",
+  "webshop38_normalized_conda_list_sha256": "271eca5ba3c99c74ddf8805e55f83a25342d49cd85b0c69cedfd8442c46d70a3",
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-19.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-19.stderr.log",
+  "stdout_sha256": "3bb30051e8854ef9937d4e96b7adc04edc80c5862acb98aa6467c6ecd836c39f",
+  "stderr_sha256": "731b5d9fcc295f942fa1a98c4a8145c3be43dd2f825edeb6877b1e13dba3076c",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 129425,
+  "stderr_bytes": 504
+}

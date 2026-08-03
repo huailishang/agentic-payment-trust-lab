@@ -1,0 +1,17 @@
+{
+  "label": "EV-16",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T03:02:30.489048+00:00",
+  "finished_at_utc": "2026-08-02T03:02:30.857902+00:00",
+  "exit_code": 0,
+  "report_sha256": "3bee65f749e94aa0b3c87fd1638c4ce06a6d68fec4de01601f67a9ac301ecfc2",
+  "report_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/REPORT.md",
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-16.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-16.stderr.log",
+  "stdout_sha256": "3b9eec0d2a81c2b33b1f8f357105417d3e914f133acf8cf832463db0a203576d",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "command_display": "original inline Python evidence-finalization command; exact argv was not retained in the original metadata",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 1207,
+  "stderr_bytes": 0
+}

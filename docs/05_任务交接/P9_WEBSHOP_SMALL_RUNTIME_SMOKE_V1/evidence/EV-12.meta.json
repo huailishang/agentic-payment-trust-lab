@@ -1,0 +1,17 @@
+{
+  "label": "EV-12",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T02:53:17.124935+00:00",
+  "finished_at_utc": "2026-08-02T02:53:26.044021+00:00",
+  "command": "env PYTHONPATH=src python3 -m unittest discover -s tests -v",
+  "exit_code": 0,
+  "test_count": 296,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-12.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-12.stderr.log",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "992d245ed832d4e95d5b8baf30d037bd765a84314a6d99e375365cc6b219b9a0",
+  "command_display": "env PYTHONPATH=src python3 -m unittest discover -s tests -v",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 0,
+  "stderr_bytes": 48387
+}

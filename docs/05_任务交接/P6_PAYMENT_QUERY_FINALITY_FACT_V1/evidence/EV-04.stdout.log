@@ -1,0 +1,4 @@
+git diff --check
+
+exit_code=0
+Scope review: P6 implementation changes are limited to payment_finality.py, package exports, runner structured field, and finality/runner tests. Inherited uncommitted P4/P5/original-P6 worktree changes are preserved and not attributed to this task.

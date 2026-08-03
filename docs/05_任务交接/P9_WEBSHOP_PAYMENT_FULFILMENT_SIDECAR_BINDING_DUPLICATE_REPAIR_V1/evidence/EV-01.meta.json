@@ -1,0 +1,21 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-01",
+  "command_argv": [
+    "env",
+    "PYTHONPATH=src:.",
+    "python3",
+    "docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_BINDING_DUPLICATE_REPAIR_V1/evidence/EV-01_before_repair.py"
+  ],
+  "command_display": "env PYTHONPATH=src:. python3 'docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_BINDING_DUPLICATE_REPAIR_V1/evidence/EV-01_before_repair.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-03T01:14:45.804444+00:00",
+  "finished_at_utc": "2026-08-03T01:14:46.449168+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-01.stdout.log",
+  "stderr_path": "EV-01.stderr.log",
+  "stdout_bytes": 1054,
+  "stderr_bytes": 0,
+  "stdout_sha256": "6d28d1ffb7025e7b2605c7204aaac84b7bbbbad90fa766c6d1d7312b2aa9a6d7",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

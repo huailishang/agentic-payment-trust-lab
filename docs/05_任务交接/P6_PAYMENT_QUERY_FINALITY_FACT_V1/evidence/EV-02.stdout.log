@@ -1,0 +1,6 @@
+PYTHONUTF8=1 python -m unittest discover -s tests -v
+
+----------------------------------------------------------------------
+Ran 249 tests in 5.190s
+
+OK

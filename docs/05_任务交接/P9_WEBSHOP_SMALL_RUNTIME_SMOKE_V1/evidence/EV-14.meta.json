@@ -1,0 +1,100 @@
+{
+  "label": "EV-14",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T02:54:30.936292+00:00",
+  "finished_at_utc": "2026-08-02T03:01:18.659199+00:00",
+  "environment_name": "webshop38",
+  "environment_path": "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38",
+  "steps": [
+    {
+      "step": 1,
+      "command": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "install",
+        "-n",
+        "webshop38",
+        "--override-channels",
+        "-c",
+        "https://conda.anaconda.org/pytorch",
+        "-c",
+        "https://conda.anaconda.org/conda-forge",
+        "--strict-channel-priority",
+        "pyyaml==6.0",
+        "-y"
+      ],
+      "exit_code": 0
+    },
+    {
+      "step": 2,
+      "command": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "step": 3,
+      "command": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "java",
+        "-version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "step": 4,
+      "command": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "-c",
+        "import gym,pyserini,spacy,torch,yaml,numpy,pandas,flask,selenium; nlp=spacy.load('en_core_web_sm'); print({'gym':gym.__version__,'pyserini_file':pyserini.__file__,'spacy':spacy.__version__,'spacy_model':nlp.meta['version'],'torch':torch.__version__,'pyyaml':yaml.__version__,'numpy':numpy.__version__,'pandas':pandas.__version__,'flask':flask.__version__,'selenium':selenium.__version__})"
+      ],
+      "exit_code": 0
+    },
+    {
+      "step": 5,
+      "command": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "list",
+        "-n",
+        "webshop38",
+        "--explicit"
+      ],
+      "exit_code": 0
+    },
+    {
+      "step": 6,
+      "command": [
+        "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+        "run",
+        "-n",
+        "webshop38",
+        "python",
+        "-m",
+        "pip",
+        "freeze",
+        "--all"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "exit_code": 0,
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-14.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-14.stderr.log",
+  "stdout_sha256": "e7ed638c7e0b6fc9a3976aa409f7236d614b546ea58f3cf42e119d5218577abc",
+  "stderr_sha256": "a12fa641e8ef72bee5b0021e6ed39b559d86d179d1f3e7aaad496db0203ede6b",
+  "command_display": "multiple commands; see original steps[].command records in this metadata",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "stdout_bytes": 21084,
+  "stderr_bytes": 1539
+}

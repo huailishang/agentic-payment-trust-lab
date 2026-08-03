@@ -1,0 +1,51 @@
+=== STEP 1 ===
+Channels:
+ - conda-forge
+Platform: win-64
+Collecting package metadata (repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38
+
+  added / updated specs:
+    - cloudpickle=2.2.1
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    cloudpickle-2.2.1          |     pyhd8ed1ab_0          27 KB  conda-forge
+    ------------------------------------------------------------
+                                           Total:          27 KB
+
+The following NEW packages will be INSTALLED:
+
+  cloudpickle        conda-forge/noarch::cloudpickle-2.2.1-pyhd8ed1ab_0 
+
+
+
+Downloading and Extracting Packages: ...working... done
+Preparing transaction: ...working... done
+Verifying transaction: ...working... done
+Executing transaction: ...working... done
+=== STEP 2 ===
+Processing d:\software\anaconda\workspace\.conda\envs\webshop38\webshop_bootstrap_cache\gym_notices-0.0.8-py3-none-any.whl
+Processing d:\software\anaconda\workspace\.conda\envs\webshop38\webshop_bootstrap_cache\gym-0.24.0.tar.gz
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Processing d:\software\anaconda\workspace\.conda\envs\webshop38\webshop_bootstrap_cache\rank_bm25-0.2.2-py3-none-any.whl
+Processing d:\software\anaconda\workspace\.conda\envs\webshop38\webshop_bootstrap_cache\pyserini-0.17.0-py3-none-any.whl
+Processing d:\software\anaconda\workspace\.conda\envs\webshop38\webshop_bootstrap_cache\en_core_web_sm-3.3.0-py3-none-any.whl
+Building wheels for collected packages: gym
+  Building wheel for gym (pyproject.toml): started
+  Building wheel for gym (pyproject.toml): finished with status 'done'
+  Created wheel for gym: filename=gym-0.24.0-py3-none-any.whl size=790680 sha256=12a1dfcc3120ed912bb88429a2b728ca3461d34ce447b68dd9b371c486639b0d
+  Stored in directory: c:\users\huailishang\appdata\local\pip\cache\wheels\06\18\42\1432447d72ad377d63584f207944961595cb5a8d225f386e01
+Successfully built gym
+Installing collected packages: rank-bm25, gym-notices, en-core-web-sm, pyserini, gym
+Successfully installed en-core-web-sm-3.3.0 gym-0.24.0 gym-notices-0.0.8 pyserini-0.17.0 rank-bm25-0.2.2
+
+=== STEP 3 ===

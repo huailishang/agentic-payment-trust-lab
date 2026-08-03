@@ -1,0 +1,13 @@
+test_actual_pinned_checkout_passes (tests.test_webshop_upstream_contract.WebShopUpstreamContractTest.test_actual_pinned_checkout_passes) ... ok
+test_changed_end_button_fails (tests.test_webshop_upstream_contract.WebShopUpstreamContractTest.test_changed_end_button_fails) ... ok
+test_missing_buy_now_to_done_route_fails (tests.test_webshop_upstream_contract.WebShopUpstreamContractTest.test_missing_buy_now_to_done_route_fails) ... ok
+test_missing_required_upstream_file_fails (tests.test_webshop_upstream_contract.WebShopUpstreamContractTest.test_missing_required_upstream_file_fails) ... ok
+test_missing_text_environment_registration_fails (tests.test_webshop_upstream_contract.WebShopUpstreamContractTest.test_missing_text_environment_registration_fails) ... ok
+test_missing_web_agent_text_env_fails_with_source_path (tests.test_webshop_upstream_contract.WebShopUpstreamContractTest.test_missing_web_agent_text_env_fails_with_source_path) ... ok
+test_valid_minimal_source_fixture_passes (tests.test_webshop_upstream_contract.WebShopUpstreamContractTest.test_valid_minimal_source_fixture_passes) ... ok
+test_wrong_origin_or_commit_fails_closed (tests.test_webshop_upstream_contract.WebShopUpstreamContractTest.test_wrong_origin_or_commit_fails_closed) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.766s
+
+OK

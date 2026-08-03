@@ -1,0 +1,184 @@
+{
+  "gate_invalid_objects": {
+    "exploding_proxy": {
+      "callback_count": 0,
+      "callback_observations": 0,
+      "decision": "DENY",
+      "fact": {
+        "action_id": null,
+        "checked_action_type": null,
+        "checked_order_ref": null,
+        "checked_payment_ref": null,
+        "checked_request_ref": null,
+        "reason_codes": [
+          "governed_action_invalid_type"
+        ],
+        "status": "INVALID"
+      },
+      "runtime_gate_record": null
+    },
+    "list": {
+      "callback_count": 0,
+      "callback_observations": 0,
+      "decision": "DENY",
+      "fact": {
+        "action_id": null,
+        "checked_action_type": null,
+        "checked_order_ref": null,
+        "checked_payment_ref": null,
+        "checked_request_ref": null,
+        "reason_codes": [
+          "governed_action_invalid_type"
+        ],
+        "status": "INVALID"
+      },
+      "runtime_gate_record": null
+    },
+    "mutable_lookalike": {
+      "callback_count": 0,
+      "callback_observations": 0,
+      "decision": "DENY",
+      "fact": {
+        "action_id": null,
+        "checked_action_type": null,
+        "checked_order_ref": null,
+        "checked_payment_ref": null,
+        "checked_request_ref": null,
+        "reason_codes": [
+          "governed_action_invalid_type"
+        ],
+        "status": "INVALID"
+      },
+      "runtime_gate_record": null
+    },
+    "serialized_dict": {
+      "callback_count": 0,
+      "callback_observations": 0,
+      "decision": "DENY",
+      "fact": {
+        "action_id": null,
+        "checked_action_type": null,
+        "checked_order_ref": null,
+        "checked_payment_ref": null,
+        "checked_request_ref": null,
+        "reason_codes": [
+          "governed_action_invalid_type"
+        ],
+        "status": "INVALID"
+      },
+      "runtime_gate_record": null
+    },
+    "string": {
+      "callback_count": 0,
+      "callback_observations": 0,
+      "decision": "DENY",
+      "fact": {
+        "action_id": null,
+        "checked_action_type": null,
+        "checked_order_ref": null,
+        "checked_payment_ref": null,
+        "checked_request_ref": null,
+        "reason_codes": [
+          "governed_action_invalid_type"
+        ],
+        "status": "INVALID"
+      },
+      "runtime_gate_record": null
+    },
+    "subclass": {
+      "callback_count": 0,
+      "callback_observations": 0,
+      "decision": "DENY",
+      "fact": {
+        "action_id": null,
+        "checked_action_type": null,
+        "checked_order_ref": null,
+        "checked_payment_ref": null,
+        "checked_request_ref": null,
+        "reason_codes": [
+          "governed_action_invalid_type"
+        ],
+        "status": "INVALID"
+      },
+      "runtime_gate_record": null
+    }
+  },
+  "none_or_omitted": {
+    "gate_backward_compatible_decision": "ALLOW",
+    "gate_callback_count": 1,
+    "pure_verifier": "MISSING_EVIDENCE"
+  },
+  "valid_exact_type": {
+    "callback_count": 1,
+    "gate_decision": "ALLOW",
+    "verification": "VALID"
+  },
+  "verifier_invalid_objects": {
+    "exploding_proxy": {
+      "action_id": null,
+      "checked_action_type": null,
+      "checked_order_ref": null,
+      "checked_payment_ref": null,
+      "checked_request_ref": null,
+      "reason_codes": [
+        "governed_action_invalid_type"
+      ],
+      "status": "INVALID"
+    },
+    "list": {
+      "action_id": null,
+      "checked_action_type": null,
+      "checked_order_ref": null,
+      "checked_payment_ref": null,
+      "checked_request_ref": null,
+      "reason_codes": [
+        "governed_action_invalid_type"
+      ],
+      "status": "INVALID"
+    },
+    "mutable_lookalike": {
+      "action_id": null,
+      "checked_action_type": null,
+      "checked_order_ref": null,
+      "checked_payment_ref": null,
+      "checked_request_ref": null,
+      "reason_codes": [
+        "governed_action_invalid_type"
+      ],
+      "status": "INVALID"
+    },
+    "serialized_dict": {
+      "action_id": null,
+      "checked_action_type": null,
+      "checked_order_ref": null,
+      "checked_payment_ref": null,
+      "checked_request_ref": null,
+      "reason_codes": [
+        "governed_action_invalid_type"
+      ],
+      "status": "INVALID"
+    },
+    "string": {
+      "action_id": null,
+      "checked_action_type": null,
+      "checked_order_ref": null,
+      "checked_payment_ref": null,
+      "checked_request_ref": null,
+      "reason_codes": [
+        "governed_action_invalid_type"
+      ],
+      "status": "INVALID"
+    },
+    "subclass": {
+      "action_id": null,
+      "checked_action_type": null,
+      "checked_order_ref": null,
+      "checked_payment_ref": null,
+      "checked_request_ref": null,
+      "reason_codes": [
+        "governed_action_invalid_type"
+      ],
+      "status": "INVALID"
+    }
+  }
+}

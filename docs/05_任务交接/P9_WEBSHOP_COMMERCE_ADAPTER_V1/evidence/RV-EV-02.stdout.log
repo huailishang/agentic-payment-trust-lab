@@ -1,0 +1,18 @@
+{
+  "bindings_match": true,
+  "instruction": "hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars",
+  "limitations": [
+    "instruction_product_match_not_assessed",
+    "instruction_is_not_authorization_mandate",
+    "merchant_and_payee_from_experiment_context",
+    "no_runtime_authorization_decision",
+    "no_purchase_or_payment_executed",
+    "offline_mapping_only",
+    "webshop_reward_not_mapped"
+  ],
+  "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+  "ready": true,
+  "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+  "selected_product": "Vhomes Lights Reclaimed Wood Console Table The Genessis Collection Sofa-Tables",
+  "total": "877.80"
+}

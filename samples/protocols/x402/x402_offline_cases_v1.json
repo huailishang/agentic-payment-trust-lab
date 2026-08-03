@@ -1,0 +1,520 @@
+{
+  "fixture_version": "x402-offline-fixture-v1",
+  "synthetic": true,
+  "description": "Synthetic offline observations for bounded x402 conformance testing; no keys, wallets, identities, credentials, funds, chain calls, or live facilitator calls.",
+  "field_provenance": {
+    "protocol_flow_fields": "bounded project representation derived from the documented request -> 402 requirement -> proof -> facilitator verify/settle -> resource delivery flow",
+    "project_context": "project-local neutral authorization bridge, explicitly not an x402 wire claim",
+    "expected": "project-local evaluator oracle, never used as actual result"
+  },
+  "cases": [
+    {
+      "case_id": "X402-C01-BINDING-MATCH",
+      "fixture_version": "x402-offline-fixture-v1",
+      "expected": {
+        "outcome": "ALLOW",
+        "reason_codes": [
+          "x402_conformance_allow"
+        ]
+      },
+      "http_request": {
+        "method": "GET",
+        "resource_ref": "/weather/tokyo",
+        "request_ref": "request-synthetic-001",
+        "occurred_at": "2026-08-01T00:01:00Z"
+      },
+      "payment_requirement": {
+        "requirement_id": "requirement-synthetic-001",
+        "requirement_digest": "088d72e108fa28fc04fef86f56f3ec41324b4b651dfa1a5e2bee4d56cc31039b",
+        "resource_ref": "/weather/tokyo",
+        "scheme": "exact",
+        "network": "base-sepolia",
+        "asset": "USDC",
+        "amount": "0.01",
+        "payee": "synthetic-payee-001",
+        "issued_at": "2026-08-01T00:01:01Z"
+      },
+      "payment_proof": {
+        "proof_ref": "proof-synthetic-001",
+        "requirement_ref": "requirement-synthetic-001",
+        "requirement_digest": "088d72e108fa28fc04fef86f56f3ec41324b4b651dfa1a5e2bee4d56cc31039b",
+        "request_ref": "request-synthetic-001",
+        "resource_ref": "/weather/tokyo",
+        "scheme": "exact",
+        "network": "base-sepolia",
+        "asset": "USDC",
+        "amount": "0.01",
+        "payee": "synthetic-payee-001",
+        "original_transaction_ref": "requirement-synthetic-001",
+        "signed_at": "2026-08-01T00:01:02Z",
+        "proof_material": "synthetic-proof-reference-only-001"
+      },
+      "facilitator_verification": {
+        "status": "VERIFIED",
+        "proof_ref": "proof-synthetic-001",
+        "requirement_ref": "requirement-synthetic-001",
+        "observed_at": "2026-08-01T00:01:03Z"
+      },
+      "facilitator_settlement": {
+        "status": "SUCCEEDED",
+        "proof_ref": "proof-synthetic-001",
+        "payment_ref": "proof-synthetic-001",
+        "original_transaction_ref": "requirement-synthetic-001",
+        "provider_ref": "facilitator-observation-synthetic-001",
+        "observed_at": "2026-08-01T00:01:04Z"
+      },
+      "facilitator_async_observation": {
+        "status": "SUCCEEDED",
+        "payment_ref": "proof-synthetic-001",
+        "original_transaction_ref": "requirement-synthetic-001",
+        "provider_ref": "facilitator-observation-synthetic-001",
+        "observed_at": "2026-08-01T00:01:05Z"
+      },
+      "resource_delivery": {
+        "status": "SUCCEEDED",
+        "request_ref": "request-synthetic-001",
+        "resource_ref": "/weather/tokyo",
+        "proof_ref": "proof-synthetic-001",
+        "delivery_ref": "delivery-synthetic-001",
+        "observed_at": "2026-08-01T00:01:06Z"
+      },
+      "project_context": {
+        "field_provenance": "project-local bridge; not claimed as x402 wire fields",
+        "user_ref": "user-synthetic-001",
+        "agent_ref": "agent-synthetic-001",
+        "authority_ref": "authority-synthetic-001",
+        "authority_version": "v1",
+        "merchant_ref": "synthetic-weather-api",
+        "category": "digital_api_resource",
+        "authorization_expires_at": "2026-08-01T01:00:00Z"
+      }
+    },
+    {
+      "case_id": "X402-C02-PAYEE-CHANGED",
+      "fixture_version": "x402-offline-fixture-v1",
+      "expected": {
+        "outcome": "BLOCK",
+        "reason_codes": [
+          "payment_request_payee_mismatch"
+        ]
+      },
+      "http_request": {
+        "method": "GET",
+        "resource_ref": "/weather/tokyo",
+        "request_ref": "request-synthetic-002",
+        "occurred_at": "2026-08-01T00:02:00Z"
+      },
+      "payment_requirement": {
+        "requirement_id": "requirement-synthetic-002",
+        "requirement_digest": "7b99fa698c90f6d4bc596532b6acca49fe4ccd145cac3a832343b988dc4835dd",
+        "resource_ref": "/weather/tokyo",
+        "scheme": "exact",
+        "network": "base-sepolia",
+        "asset": "USDC",
+        "amount": "0.01",
+        "payee": "synthetic-payee-002",
+        "issued_at": "2026-08-01T00:02:01Z"
+      },
+      "payment_proof": {
+        "proof_ref": "proof-synthetic-002",
+        "requirement_ref": "requirement-synthetic-002",
+        "requirement_digest": "7b99fa698c90f6d4bc596532b6acca49fe4ccd145cac3a832343b988dc4835dd",
+        "request_ref": "request-synthetic-002",
+        "resource_ref": "/weather/tokyo",
+        "scheme": "exact",
+        "network": "base-sepolia",
+        "asset": "USDC",
+        "amount": "0.01",
+        "payee": "synthetic-payee-attacker",
+        "original_transaction_ref": "requirement-synthetic-002",
+        "signed_at": "2026-08-01T00:02:02Z",
+        "proof_material": "synthetic-proof-reference-only-002"
+      },
+      "facilitator_verification": {
+        "status": "VERIFIED",
+        "proof_ref": "proof-synthetic-002",
+        "requirement_ref": "requirement-synthetic-002",
+        "observed_at": "2026-08-01T00:02:03Z"
+      },
+      "facilitator_settlement": {
+        "status": "SUCCEEDED",
+        "proof_ref": "proof-synthetic-002",
+        "payment_ref": "proof-synthetic-002",
+        "original_transaction_ref": "requirement-synthetic-002",
+        "provider_ref": "facilitator-observation-synthetic-002",
+        "observed_at": "2026-08-01T00:02:04Z"
+      },
+      "facilitator_async_observation": {
+        "status": "SUCCEEDED",
+        "payment_ref": "proof-synthetic-002",
+        "original_transaction_ref": "requirement-synthetic-002",
+        "provider_ref": "facilitator-observation-synthetic-002",
+        "observed_at": "2026-08-01T00:02:05Z"
+      },
+      "resource_delivery": {
+        "status": "SUCCEEDED",
+        "request_ref": "request-synthetic-002",
+        "resource_ref": "/weather/tokyo",
+        "proof_ref": "proof-synthetic-002",
+        "delivery_ref": "delivery-synthetic-002",
+        "observed_at": "2026-08-01T00:02:06Z"
+      },
+      "project_context": {
+        "field_provenance": "project-local bridge; not claimed as x402 wire fields",
+        "user_ref": "user-synthetic-002",
+        "agent_ref": "agent-synthetic-002",
+        "authority_ref": "authority-synthetic-002",
+        "authority_version": "v1",
+        "merchant_ref": "synthetic-weather-api",
+        "category": "digital_api_resource",
+        "authorization_expires_at": "2026-08-01T01:00:00Z"
+      }
+    },
+    {
+      "case_id": "X402-C03-VALUE-RAIL-CHANGED",
+      "fixture_version": "x402-offline-fixture-v1",
+      "expected": {
+        "outcome": "BLOCK",
+        "reason_codes": [
+          "payment_request_amount_mismatch",
+          "payment_request_currency_mismatch",
+          "x402_network_mismatch"
+        ]
+      },
+      "http_request": {
+        "method": "GET",
+        "resource_ref": "/weather/tokyo",
+        "request_ref": "request-synthetic-003",
+        "occurred_at": "2026-08-01T00:03:00Z"
+      },
+      "payment_requirement": {
+        "requirement_id": "requirement-synthetic-003",
+        "requirement_digest": "065c366dc43c126a23223715387fab8381153b65dd32ec517ca46ff3b9695de3",
+        "resource_ref": "/weather/tokyo",
+        "scheme": "exact",
+        "network": "base-sepolia",
+        "asset": "USDC",
+        "amount": "0.01",
+        "payee": "synthetic-payee-003",
+        "issued_at": "2026-08-01T00:03:01Z"
+      },
+      "payment_proof": {
+        "proof_ref": "proof-synthetic-003",
+        "requirement_ref": "requirement-synthetic-003",
+        "requirement_digest": "065c366dc43c126a23223715387fab8381153b65dd32ec517ca46ff3b9695de3",
+        "request_ref": "request-synthetic-003",
+        "resource_ref": "/weather/tokyo",
+        "scheme": "exact",
+        "network": "solana-devnet",
+        "asset": "EURC",
+        "amount": "0.02",
+        "payee": "synthetic-payee-003",
+        "original_transaction_ref": "requirement-synthetic-003",
+        "signed_at": "2026-08-01T00:03:02Z",
+        "proof_material": "synthetic-proof-reference-only-003"
+      },
+      "facilitator_verification": {
+        "status": "VERIFIED",
+        "proof_ref": "proof-synthetic-003",
+        "requirement_ref": "requirement-synthetic-003",
+        "observed_at": "2026-08-01T00:03:03Z"
+      },
+      "facilitator_settlement": {
+        "status": "SUCCEEDED",
+        "proof_ref": "proof-synthetic-003",
+        "payment_ref": "proof-synthetic-003",
+        "original_transaction_ref": "requirement-synthetic-003",
+        "provider_ref": "facilitator-observation-synthetic-003",
+        "observed_at": "2026-08-01T00:03:04Z"
+      },
+      "facilitator_async_observation": {
+        "status": "SUCCEEDED",
+        "payment_ref": "proof-synthetic-003",
+        "original_transaction_ref": "requirement-synthetic-003",
+        "provider_ref": "facilitator-observation-synthetic-003",
+        "observed_at": "2026-08-01T00:03:05Z"
+      },
+      "resource_delivery": {
+        "status": "SUCCEEDED",
+        "request_ref": "request-synthetic-003",
+        "resource_ref": "/weather/tokyo",
+        "proof_ref": "proof-synthetic-003",
+        "delivery_ref": "delivery-synthetic-003",
+        "observed_at": "2026-08-01T00:03:06Z"
+      },
+      "project_context": {
+        "field_provenance": "project-local bridge; not claimed as x402 wire fields",
+        "user_ref": "user-synthetic-003",
+        "agent_ref": "agent-synthetic-003",
+        "authority_ref": "authority-synthetic-003",
+        "authority_version": "v1",
+        "merchant_ref": "synthetic-weather-api",
+        "category": "digital_api_resource",
+        "authorization_expires_at": "2026-08-01T01:00:00Z"
+      }
+    },
+    {
+      "case_id": "X402-C04-CROSS-RESOURCE-REUSE",
+      "fixture_version": "x402-offline-fixture-v1",
+      "expected": {
+        "outcome": "BLOCK",
+        "reason_codes": [
+          "x402_cross_resource_reuse"
+        ]
+      },
+      "http_request": {
+        "method": "GET",
+        "resource_ref": "/weather/tokyo",
+        "request_ref": "request-synthetic-004",
+        "occurred_at": "2026-08-01T00:04:00Z"
+      },
+      "payment_requirement": {
+        "requirement_id": "requirement-synthetic-004",
+        "requirement_digest": "a8737894cb2a8f7eec36415eb90c2a0667e67a3905da7a871e3b9a0696c21cb1",
+        "resource_ref": "/weather/tokyo",
+        "scheme": "exact",
+        "network": "base-sepolia",
+        "asset": "USDC",
+        "amount": "0.01",
+        "payee": "synthetic-payee-004",
+        "issued_at": "2026-08-01T00:04:01Z"
+      },
+      "payment_proof": {
+        "proof_ref": "proof-synthetic-004",
+        "requirement_ref": "requirement-synthetic-004",
+        "requirement_digest": "a8737894cb2a8f7eec36415eb90c2a0667e67a3905da7a871e3b9a0696c21cb1",
+        "request_ref": "request-synthetic-004",
+        "resource_ref": "/weather/osaka",
+        "scheme": "exact",
+        "network": "base-sepolia",
+        "asset": "USDC",
+        "amount": "0.01",
+        "payee": "synthetic-payee-004",
+        "original_transaction_ref": "requirement-synthetic-004",
+        "signed_at": "2026-08-01T00:04:02Z",
+        "proof_material": "synthetic-proof-reference-only-004"
+      },
+      "facilitator_verification": {
+        "status": "VERIFIED",
+        "proof_ref": "proof-synthetic-004",
+        "requirement_ref": "requirement-synthetic-004",
+        "observed_at": "2026-08-01T00:04:03Z"
+      },
+      "facilitator_settlement": {
+        "status": "SUCCEEDED",
+        "proof_ref": "proof-synthetic-004",
+        "payment_ref": "proof-synthetic-004",
+        "original_transaction_ref": "requirement-synthetic-004",
+        "provider_ref": "facilitator-observation-synthetic-004",
+        "observed_at": "2026-08-01T00:04:04Z"
+      },
+      "facilitator_async_observation": {
+        "status": "SUCCEEDED",
+        "payment_ref": "proof-synthetic-004",
+        "original_transaction_ref": "requirement-synthetic-004",
+        "provider_ref": "facilitator-observation-synthetic-004",
+        "observed_at": "2026-08-01T00:04:05Z"
+      },
+      "resource_delivery": {
+        "status": "SUCCEEDED",
+        "request_ref": "request-synthetic-004",
+        "resource_ref": "/weather/osaka",
+        "proof_ref": "proof-synthetic-004",
+        "delivery_ref": "delivery-synthetic-004",
+        "observed_at": "2026-08-01T00:04:06Z"
+      },
+      "project_context": {
+        "field_provenance": "project-local bridge; not claimed as x402 wire fields",
+        "user_ref": "user-synthetic-004",
+        "agent_ref": "agent-synthetic-004",
+        "authority_ref": "authority-synthetic-004",
+        "authority_version": "v1",
+        "merchant_ref": "synthetic-weather-api",
+        "category": "digital_api_resource",
+        "authorization_expires_at": "2026-08-01T01:00:00Z"
+      }
+    },
+    {
+      "case_id": "X402-C05-DUPLICATE-CONCURRENT-REUSE",
+      "fixture_version": "x402-offline-fixture-v1",
+      "expected": {
+        "outcome": "BLOCK",
+        "reason_codes": [
+          "x402_duplicate_proof_reuse_blocked"
+        ]
+      },
+      "http_request": {
+        "method": "GET",
+        "resource_ref": "/weather/tokyo",
+        "request_ref": "request-synthetic-005",
+        "occurred_at": "2026-08-01T00:05:00Z"
+      },
+      "payment_requirement": {
+        "requirement_id": "requirement-synthetic-005",
+        "requirement_digest": "7261652d7526dec45aa87f4e48d3151fe4036cf9eb52ab3350846e31fbe09a51",
+        "resource_ref": "/weather/tokyo",
+        "scheme": "exact",
+        "network": "base-sepolia",
+        "asset": "USDC",
+        "amount": "0.01",
+        "payee": "synthetic-payee-005",
+        "issued_at": "2026-08-01T00:05:01Z"
+      },
+      "payment_proof": {
+        "proof_ref": "proof-synthetic-005",
+        "requirement_ref": "requirement-synthetic-005",
+        "requirement_digest": "7261652d7526dec45aa87f4e48d3151fe4036cf9eb52ab3350846e31fbe09a51",
+        "request_ref": "request-synthetic-005",
+        "resource_ref": "/weather/tokyo",
+        "scheme": "exact",
+        "network": "base-sepolia",
+        "asset": "USDC",
+        "amount": "0.01",
+        "payee": "synthetic-payee-005",
+        "original_transaction_ref": "requirement-synthetic-005",
+        "signed_at": "2026-08-01T00:05:02Z",
+        "proof_material": "synthetic-proof-reference-only-005"
+      },
+      "facilitator_verification": {
+        "status": "VERIFIED",
+        "proof_ref": "proof-synthetic-005",
+        "requirement_ref": "requirement-synthetic-005",
+        "observed_at": "2026-08-01T00:05:03Z"
+      },
+      "facilitator_settlement": {
+        "status": "SUCCEEDED",
+        "proof_ref": "proof-synthetic-005",
+        "payment_ref": "proof-synthetic-005",
+        "original_transaction_ref": "requirement-synthetic-005",
+        "provider_ref": "facilitator-observation-synthetic-005",
+        "observed_at": "2026-08-01T00:05:04Z"
+      },
+      "facilitator_async_observation": {
+        "status": "SUCCEEDED",
+        "payment_ref": "proof-synthetic-005",
+        "original_transaction_ref": "requirement-synthetic-005",
+        "provider_ref": "facilitator-observation-synthetic-005",
+        "observed_at": "2026-08-01T00:05:05Z"
+      },
+      "resource_delivery": {
+        "status": "SUCCEEDED",
+        "request_ref": "request-synthetic-005",
+        "resource_ref": "/weather/tokyo",
+        "proof_ref": "proof-synthetic-005",
+        "delivery_ref": "delivery-synthetic-005",
+        "observed_at": "2026-08-01T00:05:06Z"
+      },
+      "project_context": {
+        "field_provenance": "project-local bridge; not claimed as x402 wire fields",
+        "user_ref": "user-synthetic-005",
+        "agent_ref": "agent-synthetic-005",
+        "authority_ref": "authority-synthetic-005",
+        "authority_version": "v1",
+        "merchant_ref": "synthetic-weather-api",
+        "category": "digital_api_resource",
+        "authorization_expires_at": "2026-08-01T01:00:00Z"
+      },
+      "delivery_attempts": [
+        {
+          "execution_id": "delivery-attempt-synthetic-005-a",
+          "request_ref": "request-synthetic-005",
+          "resource_ref": "/weather/tokyo",
+          "proof_ref": "proof-synthetic-005",
+          "status": "SUCCEEDED",
+          "observed_at": "2026-08-01T00:05:06Z"
+        },
+        {
+          "execution_id": "delivery-attempt-synthetic-005-b",
+          "request_ref": "request-synthetic-005",
+          "resource_ref": "/weather/tokyo",
+          "proof_ref": "proof-synthetic-005",
+          "status": "FAILED",
+          "observed_at": "2026-08-01T00:05:06Z"
+        }
+      ]
+    },
+    {
+      "case_id": "X402-C06-SETTLEMENT-DELIVERY-CONFLICT",
+      "fixture_version": "x402-offline-fixture-v1",
+      "expected": {
+        "outcome": "CONFLICT",
+        "reason_codes": [
+          "payment_status_opposite_terminal_claims",
+          "x402_settlement_succeeded_delivery_failed"
+        ]
+      },
+      "http_request": {
+        "method": "GET",
+        "resource_ref": "/weather/tokyo",
+        "request_ref": "request-synthetic-006",
+        "occurred_at": "2026-08-01T00:06:00Z"
+      },
+      "payment_requirement": {
+        "requirement_id": "requirement-synthetic-006",
+        "requirement_digest": "763d474f6a20834cec92acc82c779ec1887bdbfe413cf3684cf4edd0bae1b88f",
+        "resource_ref": "/weather/tokyo",
+        "scheme": "exact",
+        "network": "base-sepolia",
+        "asset": "USDC",
+        "amount": "0.01",
+        "payee": "synthetic-payee-006",
+        "issued_at": "2026-08-01T00:06:01Z"
+      },
+      "payment_proof": {
+        "proof_ref": "proof-synthetic-006",
+        "requirement_ref": "requirement-synthetic-006",
+        "requirement_digest": "763d474f6a20834cec92acc82c779ec1887bdbfe413cf3684cf4edd0bae1b88f",
+        "request_ref": "request-synthetic-006",
+        "resource_ref": "/weather/tokyo",
+        "scheme": "exact",
+        "network": "base-sepolia",
+        "asset": "USDC",
+        "amount": "0.01",
+        "payee": "synthetic-payee-006",
+        "original_transaction_ref": "requirement-synthetic-006",
+        "signed_at": "2026-08-01T00:06:02Z",
+        "proof_material": "synthetic-proof-reference-only-006"
+      },
+      "facilitator_verification": {
+        "status": "VERIFIED",
+        "proof_ref": "proof-synthetic-006",
+        "requirement_ref": "requirement-synthetic-006",
+        "observed_at": "2026-08-01T00:06:03Z"
+      },
+      "facilitator_settlement": {
+        "status": "SUCCEEDED",
+        "proof_ref": "proof-synthetic-006",
+        "payment_ref": "proof-synthetic-006",
+        "original_transaction_ref": "requirement-synthetic-006",
+        "provider_ref": "facilitator-observation-synthetic-006",
+        "observed_at": "2026-08-01T00:06:04Z"
+      },
+      "facilitator_async_observation": {
+        "status": "FAILED",
+        "payment_ref": "proof-synthetic-006",
+        "original_transaction_ref": "requirement-synthetic-006",
+        "provider_ref": "facilitator-observation-synthetic-006",
+        "observed_at": "2026-08-01T00:06:05Z"
+      },
+      "resource_delivery": {
+        "status": "FAILED",
+        "request_ref": "request-synthetic-006",
+        "resource_ref": "/weather/tokyo",
+        "proof_ref": "proof-synthetic-006",
+        "delivery_ref": "delivery-synthetic-006",
+        "observed_at": "2026-08-01T00:06:06Z",
+        "failure_code": "synthetic_resource_delivery_failed"
+      },
+      "project_context": {
+        "field_provenance": "project-local bridge; not claimed as x402 wire fields",
+        "user_ref": "user-synthetic-006",
+        "agent_ref": "agent-synthetic-006",
+        "authority_ref": "authority-synthetic-006",
+        "authority_version": "v1",
+        "merchant_ref": "synthetic-weather-api",
+        "category": "digital_api_resource",
+        "authorization_expires_at": "2026-08-01T01:00:00Z"
+      }
+    }
+  ]
+}

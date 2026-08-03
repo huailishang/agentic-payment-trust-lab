@@ -1,0 +1,27 @@
+{
+  "label": "EV-28",
+  "exit_code": 0,
+  "command_display": "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe install -n webshop38 --freeze-installed https://conda.anaconda.org/conda-forge/win-64/numpy-1.23.5-py38h90ce339_0.conda -y",
+  "command_argv": [
+    "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+    "install",
+    "-n",
+    "webshop38",
+    "--freeze-installed",
+    "https://conda.anaconda.org/conda-forge/win-64/numpy-1.23.5-py38h90ce339_0.conda",
+    "-y"
+  ],
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T05:21:35.675753+00:00",
+  "finished_at_utc": "2026-08-02T05:22:18.181223+00:00",
+  "package_url": "https://conda.anaconda.org/conda-forge/win-64/numpy-1.23.5-py38h90ce339_0.conda",
+  "package_sha256_expected": "7c07890eacb60e24c3404dff87680578e4fa5a845543892cfc2d0f6244b22a3d",
+  "deviation": "numpy 1.22.4 -> 1.23.5 for official Faiss 1.7.4 Windows C-API compatibility",
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-28.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-28.stderr.log",
+  "stdout_bytes": 240,
+  "stderr_bytes": 0,
+  "stdout_sha256": "1e54e8a80b953acb7a2e4b4e5c3ea52203da3181b84316c33cac1e1ad374583a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

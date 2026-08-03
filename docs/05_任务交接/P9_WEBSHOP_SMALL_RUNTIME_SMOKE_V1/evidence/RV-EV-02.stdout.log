@@ -1,0 +1,18 @@
+MAIN_HEAD=8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+WEBSHOP_HEAD=64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd
+WEBSHOP_STATUS_BEGIN
+WEBSHOP_STATUS_END
+Python 3.8.13
+
+ASSET items_shuffle_1000.json (4467013, '30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269', 'list', 1000) MATCH True
+ASSET items_ins_v2_1000.json (147099, 'f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f', 'dict', 1000) MATCH True
+ASSET items_human_ins.json (5137548, 'cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3', 'dict', 10136) MATCH True
+SEARCH_DIR indexes_1k
+SEARCH_DIR resources_1k
+INDEX_FILE_COUNT 19
+RESOURCE_LINES 1000
+TRACKED_SHA scripts/validation/webshop/bootstrap_webshop_small.ps1 164d16b44d30714c790fa0097a00466e3e76f8ad628ac98836adfc950d779169
+TRACKED_SHA scripts/validation/webshop/verify_webshop_small_assets.py c8e8d49de928c87710317cc88f77d253f1411cd6389e019f855813a82feff571
+TRACKED_SHA scripts/validation/webshop/smoke_webshop_small.py 8628023cbee0c131ff496f0810090d6cc1fb8509cda0333b9474a19aa47d953d
+TRACKED_SHA tests/test_webshop_small_runtime_contract.py e3617c9a0f8e30b1c7f92848c4c8d6b05a5a07f7826bbe1adeabd37a072f6f13
+STATIC_FAIL_CLOSED_PASS=True

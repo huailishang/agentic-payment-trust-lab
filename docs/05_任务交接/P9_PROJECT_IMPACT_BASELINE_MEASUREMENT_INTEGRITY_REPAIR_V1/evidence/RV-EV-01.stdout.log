@@ -1,0 +1,48 @@
+{
+  "fixture_sha256": "4ed2e1f35325cb840de834f5e8c964ff187c291133c958a2ee22111735b615f5",
+  "metrics": {
+    "callback_match": {
+      "count": 11,
+      "denominator": 12,
+      "rate": "0.916667"
+    },
+    "duplicate_or_forbidden_side_effect": {
+      "count": 1,
+      "denominator": 12,
+      "rate": "0.083333"
+    },
+    "gesr": {
+      "count": 0,
+      "denominator": 12,
+      "rate": "0.000000"
+    },
+    "product_trace": {
+      "count": 0,
+      "denominator": 12,
+      "rate": "0.000000"
+    }
+  },
+  "t10": {
+    "actual_callback_count": 1,
+    "expected_callback_count": 0,
+    "forbidden_side_effects": [
+      "duplicate_payment_callback_executed"
+    ],
+    "matched": false
+  },
+  "tamper_resistance": {
+    "expected_callback_changed_to": 1,
+    "side_effect_gap_preserved": true,
+    "t10_still_matched": false
+  },
+  "trace_provenance": {
+    "product_trace_valid_tasks": [],
+    "synthesized_replay_valid_tasks": [
+      "T01",
+      "T09",
+      "T10",
+      "T11",
+      "T12"
+    ]
+  }
+}

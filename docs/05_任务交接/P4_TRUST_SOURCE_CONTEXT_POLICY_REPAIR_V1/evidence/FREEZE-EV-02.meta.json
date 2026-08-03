@@ -1,0 +1,21 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "FREEZE-EV-02",
+  "command_argv": [
+    "git",
+    "status",
+    "--short",
+    "--untracked-files=all"
+  ],
+  "command_display": "git status --short --untracked-files=all",
+  "working_directory": "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+  "started_at_utc": "2026-07-31T06:55:20.878187+00:00",
+  "finished_at_utc": "2026-07-31T06:55:20.929157+00:00",
+  "exit_code": 0,
+  "stdout_path": "FREEZE-EV-02.stdout.log",
+  "stderr_path": "FREEZE-EV-02.stderr.log",
+  "stdout_bytes": 6814,
+  "stderr_bytes": 0,
+  "stdout_sha256": "31d1d54350f24b1db650dc74fdbcc5579d814e1e926aaeb4fc9d98bc40b76593",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

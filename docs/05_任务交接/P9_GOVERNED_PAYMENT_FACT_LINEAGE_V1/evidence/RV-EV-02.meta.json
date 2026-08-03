@@ -1,0 +1,21 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-02",
+  "command_argv": [
+    "env",
+    "PYTHONPATH=src",
+    "python3",
+    "scripts/validation/run_fact_lineage_matrix.py"
+  ],
+  "command_display": "env PYTHONPATH=src python3 scripts/validation/run_fact_lineage_matrix.py",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-03T07:58:19.980207+00:00",
+  "finished_at_utc": "2026-08-03T07:58:20.495631+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-02.stdout.log",
+  "stderr_path": "RV-EV-02.stderr.log",
+  "stdout_bytes": 27655,
+  "stderr_bytes": 0,
+  "stdout_sha256": "bce813e161ebbda8ab16b9bae019e43cdf0dbcb4afa50183b8ec93b5884c535b",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,84 @@
+{
+  "label": "EV-29",
+  "exit_code": 0,
+  "command_display": "download exact official PyPI wheels by pinned package/version, verify SHA-256, install locally with --no-index --no-deps, then import-probe Pyserini LuceneSearcher",
+  "command_argv": [
+    "multiple commands; wheel URLs and install/probe argv are recorded in stdout and manifest"
+  ],
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T05:29:55.619548+00:00",
+  "finished_at_utc": "2026-08-02T05:33:22.599347+00:00",
+  "wheel_manifest": [
+    {
+      "name": "onnxruntime",
+      "version": "1.12.1",
+      "filename": "onnxruntime-1.12.1-cp38-cp38-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/36/84/276c11a89f3625415f4c16b87dcc46dbb6fea8fd6a28276a05d1f6f3fb6f/onnxruntime-1.12.1-cp38-cp38-win_amd64.whl",
+      "bytes": 5816374,
+      "sha256": "f0104e0e8327c8468d646941540af9397b737155dffe078da4bf36da95d1c21e"
+    },
+    {
+      "name": "coloredlogs",
+      "version": "15.0.1",
+      "filename": "coloredlogs-15.0.1-py2.py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/a7/06/3d6badcf13db419e25b07041d9c7b4a2c331d3f4e7134445ec5df57714cd/coloredlogs-15.0.1-py2.py3-none-any.whl",
+      "bytes": 46018,
+      "sha256": "612ee75c546f53e92e70049c9dbfcc18c935a2b9a53b66085ce9ef6a6e5c0934"
+    },
+    {
+      "name": "humanfriendly",
+      "version": "10.0",
+      "filename": "humanfriendly-10.0-py2.py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/f0/0f/310fb31e39e2d734ccaa2c0fb981ee41f7bd5056ce9bc29b2248bd569169/humanfriendly-10.0-py2.py3-none-any.whl",
+      "bytes": 86794,
+      "sha256": "1697e1a8a8f550fd43c2865cd84542fc175a61dcb779b6fee18cf6b6ccba1477"
+    },
+    {
+      "name": "pyreadline3",
+      "version": "3.4.1",
+      "filename": "pyreadline3-3.4.1-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/56/fc/a3c13ded7b3057680c8ae95a9b6cc83e63657c38e0005c400a5d018a33a7/pyreadline3-3.4.1-py3-none-any.whl",
+      "bytes": 95203,
+      "sha256": "b0efb6516fd4fb07b45949053826a62fa4cb353db5be2bbb4a7aa1fdd1e345fb"
+    },
+    {
+      "name": "flatbuffers",
+      "version": "2.0.7",
+      "filename": "flatbuffers-2.0.7-py2.py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/d7/0d/b5bfb553a6ac66d6ec2b6d7f1e814a908fba7188356ac94bb36ae3d905c3/flatbuffers-2.0.7-py2.py3-none-any.whl",
+      "bytes": 26562,
+      "sha256": "71e135d533be527192819aaab757c5e3d109cb10fbb01e687f6bdb7a61ad39d1"
+    },
+    {
+      "name": "protobuf",
+      "version": "3.20.3",
+      "filename": "protobuf-3.20.3-cp38-cp38-win_amd64.whl",
+      "url": "https://files.pythonhosted.org/packages/32/f8/52f598bceb16fe365f4ef8e957ac8890aeb56abf97d365ff5abd8c1250cf/protobuf-3.20.3-cp38-cp38-win_amd64.whl",
+      "bytes": 904419,
+      "sha256": "447d43819997825d4e71bf5769d869b968ce96848b6479397e29fc24c4a5dfe9"
+    },
+    {
+      "name": "sympy",
+      "version": "1.10.1",
+      "filename": "sympy-1.10.1-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/d0/04/66be21ceb305c66a4b326b0ae44cc4f027a43bc08cac204b48fb45bb3653/sympy-1.10.1-py3-none-any.whl",
+      "bytes": 6397631,
+      "sha256": "df75d738930f6fe9ebe7034e59d56698f29e85f443f743e51e47df0caccc2130"
+    },
+    {
+      "name": "mpmath",
+      "version": "1.2.1",
+      "filename": "mpmath-1.2.1-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/d4/cf/3965bddbb4f1a61c49aacae0e78fd1fe36b5dc36c797b31f30cf07dcbbb7/mpmath-1.2.1-py3-none-any.whl",
+      "bytes": 532568,
+      "sha256": "604bc21bd22d2322a177c73bdb573994ef76e62edd595d17e00aff24b0667e5c"
+    }
+  ],
+  "stdout_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-29.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-29.stderr.log",
+  "stdout_bytes": 5782,
+  "stderr_bytes": 0,
+  "stdout_sha256": "c037b8eb4a552224d45e7a9d9f2f1287d84e655473f04287d9c3e114c1e74fda",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

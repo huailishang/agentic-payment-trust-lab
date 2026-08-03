@@ -1,0 +1,4 @@
+=== STEP 1: python3 -m py_compile scripts/validation/webshop/verify_webshop_small_assets.py scripts/validation/webshop/smoke_webshop_small.py tests/test_webshop_small_runtime_contract.py ===
+=== STEP 2: /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -Command [scriptblock]::Create([IO.File]::ReadAllText('D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\scripts\validation\webshop\bootstrap_webshop_small.ps1')) | Out-Null; Write-Output 'POWERSHELL_PARSE_OK' ===
+POWERSHELL_PARSE_OK
+=== STEP 3: python3 -m unittest tests.test_webshop_small_runtime_contract -v ===

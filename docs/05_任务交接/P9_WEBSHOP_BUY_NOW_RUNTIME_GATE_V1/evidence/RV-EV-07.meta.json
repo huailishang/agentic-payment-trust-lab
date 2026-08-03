@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-07",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_WEBSHOP_BUY_NOW_RUNTIME_GATE_V1/evidence/RV-EV-07_p4_reason_gap.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_WEBSHOP_BUY_NOW_RUNTIME_GATE_V1/evidence/RV-EV-07_p4_reason_gap.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T13:14:44.949985+00:00",
+  "finished_at_utc": "2026-08-02T13:14:45.152160+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-07.stdout.log",
+  "stderr_path": "RV-EV-07.stderr.log",
+  "stdout_bytes": 1059,
+  "stderr_bytes": 0,
+  "stdout_sha256": "6c38673947bb135089a464c0ffca622f3ebdd1d6ff689fb87ec642131c5123e7",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

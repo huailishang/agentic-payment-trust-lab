@@ -1,0 +1,4 @@
+git diff --check
+
+exit_code=0
+Attributable repair scope: src/agentic_payment_experiment/payment_finality.py and tests/test_payment_finality.py only. Inherited P4/P5/original-P6/parent-finality changes are preserved and not attributed to this repair.

@@ -1,0 +1,19 @@
+===== COMMAND 1 =====
+ARGV=["python3", "-m", "py_compile", "scripts/validation/webshop/verify_webshop_small_assets.py", "scripts/validation/webshop/smoke_webshop_small.py", "tests/test_webshop_small_runtime_contract.py"]
+PROCESS_EXIT=0
+SEMANTIC_EXIT=0
+===== COMMAND 2 =====
+ARGV=["/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe", "-NoProfile", "-Command", "[scriptblock]::Create([IO.File]::ReadAllText('D:/SoftWare/VScode/install/Project/agentic-payment-trust-lab/scripts/validation/webshop/bootstrap_webshop_small.ps1')) | Out-Null; Write-Output 'POWERSHELL_PARSE_OK'"]
+PROCESS_EXIT=0
+SEMANTIC_EXIT=0
+POWERSHELL_PARSE_OK
+===== COMMAND 3 =====
+ARGV=["python3", "-m", "unittest", "tests.test_webshop_small_runtime_contract", "-v"]
+PROCESS_EXIT=0
+SEMANTIC_EXIT=0
+===== COMMAND 4 =====
+ARGV=["/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe", "run", "-n", "webshop38", "python", "-c", "import faiss,gym,numpy,onnxruntime,spacy,torch,transformers,yaml; from pyserini.search.lucene import LuceneSearcher; nlp=spacy.load('en_core_web_sm'); print({'faiss':faiss.__version__,'gym':gym.__version__,'numpy':numpy.__version__,'onnxruntime':onnxruntime.__version__,'spacy':spacy.__version__,'spacy_model':nlp.meta['version'],'torch':torch.__version__,'transformers':transformers.__version__,'pyyaml':yaml.__version__,'searcher':LuceneSearcher.__name__})"]
+PROCESS_EXIT=0
+SEMANTIC_EXIT=0
+{'faiss': '1.7.4', 'gym': '0.24.0', 'numpy': '1.23.5', 'onnxruntime': '1.12.1', 'spacy': '3.3.0', 'spacy_model': '3.3.0', 'torch': '1.11.0', 'transformers': '4.19.2', 'pyyaml': '6.0', 'searcher': 'LuceneSearcher'}
+

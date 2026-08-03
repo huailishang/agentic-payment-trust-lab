@@ -1,0 +1,14 @@
+PURE_LOOKALIKE
+status= VALID
+reasons= ('governed_action_binding_valid',)
+PURE_DICT
+exception= AttributeError
+message= 'dict' object has no attribute 'action_type'
+GATE_LOOKALIKE
+decision= ALLOW
+callback_count= 1
+calls= 1
+reasons= ('p2:payment_execution_binding_match', 'p3:identity_executor_binding_match', 'p4:context_policy_valid', 'runtime:allow')
+GATE_DICT
+exception= AttributeError
+message= 'dict' object has no attribute 'action_type'

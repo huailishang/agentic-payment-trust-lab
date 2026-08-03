@@ -1,0 +1,18 @@
+test_all_actions_bind_original_transaction (tests.trusted_execution.test_original_transaction.OriginalTransactionTests.test_all_actions_bind_original_transaction) ... ok
+test_mismatches_missing_provider_and_unknown_action_fail_closed (tests.trusted_execution.test_original_transaction.OriginalTransactionTests.test_mismatches_missing_provider_and_unknown_action_fail_closed) ... ok
+test_equal_time_disagreement_is_conflict (tests.test_payment_status_conflict.PaymentStatusConflictFactTest.test_equal_time_disagreement_is_conflict) ... ok
+test_invalid_binding_and_reference_fail_closed (tests.test_payment_status_conflict.PaymentStatusConflictFactTest.test_invalid_binding_and_reference_fail_closed) ... ok
+test_invalid_enum_is_blocked_instead_of_coerced (tests.test_payment_status_conflict.PaymentStatusConflictFactTest.test_invalid_enum_is_blocked_instead_of_coerced) ... ok
+test_matching_terminal_observations_are_consistent_and_terminal (tests.test_payment_status_conflict.PaymentStatusConflictFactTest.test_matching_terminal_observations_are_consistent_and_terminal) ... ok
+test_observation_before_execution_is_blocked (tests.test_payment_status_conflict.PaymentStatusConflictFactTest.test_observation_before_execution_is_blocked) ... ok
+test_opposite_terminal_claims_conflict_in_both_channel_orders (tests.test_payment_status_conflict.PaymentStatusConflictFactTest.test_opposite_terminal_claims_conflict_in_both_channel_orders) ... ok
+test_pending_to_succeeded_is_monotonic_terminal_confirmation (tests.test_payment_status_conflict.PaymentStatusConflictFactTest.test_pending_to_succeeded_is_monotonic_terminal_confirmation) ... ok
+test_serialization_is_deterministic_primitive_only_and_narrow (tests.test_payment_status_conflict.PaymentStatusConflictFactTest.test_serialization_is_deterministic_primitive_only_and_narrow) ... ok
+test_terminal_to_unresolved_regression_is_conflict (tests.test_payment_status_conflict.PaymentStatusConflictFactTest.test_terminal_to_unresolved_regression_is_conflict) ... ok
+test_unknown_to_failed_is_monotonic_terminal_confirmation (tests.test_payment_status_conflict.PaymentStatusConflictFactTest.test_unknown_to_failed_is_monotonic_terminal_confirmation) ... ok
+test_unresolved_observations_remain_non_terminal (tests.test_payment_status_conflict.PaymentStatusConflictFactTest.test_unresolved_observations_remain_non_terminal) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.002s
+
+OK

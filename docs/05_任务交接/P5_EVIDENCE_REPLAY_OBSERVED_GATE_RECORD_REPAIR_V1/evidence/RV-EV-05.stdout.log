@@ -1,0 +1,28 @@
+S01 PASS protocol=NEUTRAL expected=ALLOW actual=ALLOW
+S02 PASS protocol=NEUTRAL expected=DENY actual=DENY
+S03 PASS protocol=NEUTRAL expected=DENY actual=DENY
+S04 PASS protocol=NEUTRAL expected=DENY actual=DENY
+S05 PASS protocol=NEUTRAL expected=DENY actual=DENY
+S06 PASS protocol=NEUTRAL expected=DENY actual=DENY
+S07 PASS protocol=NEUTRAL expected=DENY actual=DENY
+S08 PASS protocol=AP2 expected=CONFIRMATION_REQUIRED actual=CONFIRMATION_REQUIRED
+S09 PASS protocol=NEUTRAL expected=CONFIRMATION_REQUIRED actual=CONFIRMATION_REQUIRED
+S10 PASS protocol=NEUTRAL expected=ALLOW actual=ALLOW payment=SUCCEEDED fulfillment=FAILED remediation=REQUIRED task=FAILED
+S11 PASS protocol=NEUTRAL expected=ALLOW actual=ALLOW payment=SUCCEEDED fulfillment=FAILED refund=SUCCEEDED remediation=RESOLVED task=FAILED
+S12 PASS protocol=NEUTRAL expected=ALLOW actual=ALLOW initial_payment=UNKNOWN observed_payment=SUCCEEDED recovery=RECOVERED retry_allowed=false
+S13 PASS protocol=NEUTRAL expected=DENY actual=DENY
+
+Summary: total=13 passed=13 failed=0
+
+实验模块总览：部分覆盖
+  内部回归: PASS passed=13 failed=0 gaps=0
+  PayBench 外部挑战: PARTIAL passed=8 failed=0 gaps=2
+  AP2 官方最小流程: PASS passed=2 failed=0 gaps=0
+  Attack Overlay: PASS passed=6 failed=0 gaps=0
+Artifacts:
+  D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\artifacts\scenario_result_card.json
+  D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\artifacts\scenario_report.html
+
+内部回归基线：PASS（D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\samples\regression\internal_baseline_v1.json）
+
+验证通过。HTML报告：D:\SoftWare\VScode\install\Project\agentic-payment-trust-lab\artifacts\scenario_report.html

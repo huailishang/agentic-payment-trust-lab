@@ -1,0 +1,13 @@
+﻿{
+    "stdout_path":  "EV-06.stdout.log",
+    "command_display":  "git status --short --untracked-files=all; git diff --check",
+    "stdout_sha256":  "330bf90361369d94062085b6cc37f9a07f971efcfaec7d1427731c63f48b3a42",
+    "label":  "EV-06",
+    "working_directory":  "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+    "stderr_path":  "EV-06.stderr.log",
+    "stderr_bytes":  1095,
+    "schema":  "evaluator-executor-evidence/v1",
+    "exit_code":  0,
+    "stdout_bytes":  20610,
+    "stderr_sha256":  "52f62cb883a801c46aff3f49641fe3ceea5937b54f50cd039308acf9fa35d4b8"
+}

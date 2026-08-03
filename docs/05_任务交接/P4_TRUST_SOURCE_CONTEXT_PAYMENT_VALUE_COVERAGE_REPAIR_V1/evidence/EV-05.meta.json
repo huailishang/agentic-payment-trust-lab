@@ -1,0 +1,13 @@
+﻿{
+    "stdout_path":  "EV-05.stdout.log",
+    "command_display":  "python run_experiment.py",
+    "stdout_sha256":  "69db2e6d5954dfe6b3b94f7f27fb914dfd2d945815f62877e6ec3a7dabb6316e",
+    "label":  "EV-05",
+    "working_directory":  "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab",
+    "stderr_path":  "EV-05.stderr.log",
+    "stderr_bytes":  0,
+    "schema":  "evaluator-executor-evidence/v1",
+    "exit_code":  0,
+    "stdout_bytes":  1768,
+    "stderr_sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

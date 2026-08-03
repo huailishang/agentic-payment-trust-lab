@@ -1,0 +1,30 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-03",
+  "command_argv": [
+    "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe",
+    "run",
+    "-n",
+    "webshop38",
+    "python",
+    "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py",
+    "--checkout",
+    "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop",
+    "--expected-commit",
+    "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+    "--query-index",
+    "--output",
+    "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1\\evidence\\rv_webshop_small_index_query.json"
+  ],
+  "command_display": "/mnt/d/SoftWare/Anaconda/install/Scripts/conda.exe run -n webshop38 python 'D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\scripts\\validation\\webshop\\verify_webshop_small_assets.py' --checkout 'D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\local_sources\\third_party\\webshop' --expected-commit 64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd --query-index --output 'D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1\\evidence\\rv_webshop_small_index_query.json'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-02T08:20:54.318961+00:00",
+  "finished_at_utc": "2026-08-02T08:21:03.775335+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-03.stdout.log",
+  "stderr_path": "RV-EV-03.stderr.log",
+  "stdout_bytes": 5013,
+  "stderr_bytes": 0,
+  "stdout_sha256": "3fbca4bb83091ca8772e7667cf273b621692fcbd34bdca3b30a5ca02f23dd55b",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

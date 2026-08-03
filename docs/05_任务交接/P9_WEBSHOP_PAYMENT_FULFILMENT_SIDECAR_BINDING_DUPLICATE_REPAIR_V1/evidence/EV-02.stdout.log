@@ -1,0 +1,30 @@
+{
+  "F-01": {
+    "duplicate_payment_blocked": false,
+    "effective_payment_is_null": true,
+    "lifecycle_is_null": true,
+    "ready": false,
+    "reason_codes": [
+      "prerequisite:adapter_gate_request_mismatch"
+    ],
+    "retry_allowed": false
+  },
+  "F-02": {
+    "duplicate_payment_blocked": true,
+    "query_recovery_is_null": true,
+    "ready": true,
+    "reason_codes": [
+      "payment:initial_status:unknown",
+      "duplicate:known_successful_attempt",
+      "duplicate:payment_blocked",
+      "lifecycle:payment_status:unknown",
+      "lifecycle:fulfillment_status:pending",
+      "lifecycle:task_status:unknown",
+      "lifecycle:remediation:required",
+      "lifecycle:payment_status_unknown",
+      "retry:not_allowed"
+    ],
+    "retry_allowed": false
+  },
+  "phase": "after_repair"
+}

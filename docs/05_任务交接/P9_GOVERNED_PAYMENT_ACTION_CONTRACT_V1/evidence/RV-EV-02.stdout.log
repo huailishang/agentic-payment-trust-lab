@@ -1,0 +1,490 @@
+{
+  "cases": [
+    {
+      "actual_gate_decision": "ALLOW",
+      "actual_verification_status": "VALID",
+      "callback_count": 1,
+      "callback_observations": 1,
+      "case_id": "valid_execute_payment",
+      "expected_gate_decision": "ALLOW",
+      "expected_verification_status": "VALID",
+      "gate_reason_codes": [
+        "p2:payment_execution_binding_match",
+        "p3:identity_executor_binding_match",
+        "p4:context_policy_valid",
+        "runtime:allow"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "valid",
+      "reason_codes": [
+        "governed_action_binding_valid"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "INDETERMINATE",
+      "actual_verification_status": "MISSING_EVIDENCE",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "missing_action_id",
+      "expected_gate_decision": "INDETERMINATE",
+      "expected_verification_status": "MISSING_EVIDENCE",
+      "gate_reason_codes": [
+        "action:action_id_missing"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "missing_action_id",
+      "reason_codes": [
+        "action_id_missing"
+      ],
+      "references": {
+        "action_ref": "",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "unsupported_action_type_or_invalid_type",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:action_type_invalid"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "invalid_action_type",
+      "reason_codes": [
+        "action_type_invalid"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "subject_mismatch",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:subject_ref_mismatch"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "subject_mismatch",
+      "reason_codes": [
+        "subject_ref_mismatch"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "authority_mismatch",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:authority_ref_mismatch"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "authority_mismatch",
+      "reason_codes": [
+        "authority_ref_mismatch"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "authority_version_mismatch",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:authority_version_mismatch"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "authority_version_mismatch",
+      "reason_codes": [
+        "authority_version_mismatch"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "order_ref_mismatch",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:order_ref_mismatch"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "order_ref_mismatch",
+      "reason_codes": [
+        "order_ref_mismatch"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "other-order",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "order_version_mismatch",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:order_version_mismatch"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "order_version_mismatch",
+      "reason_codes": [
+        "order_version_mismatch"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "request_ref_mismatch",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:request_ref_mismatch"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "request_ref_mismatch",
+      "reason_codes": [
+        "request_ref_mismatch"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "other-request"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "payment_ref_mismatch",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:payment_ref_mismatch"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "payment_ref_mismatch",
+      "reason_codes": [
+        "payment_ref_mismatch"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "other-payment",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "agent_mismatch",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:agent_ref_request_mismatch",
+        "action:agent_ref_mandate_mismatch",
+        "action:agent_ref_identity_mismatch"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "agent_mismatch",
+      "reason_codes": [
+        "agent_ref_request_mismatch",
+        "agent_ref_mandate_mismatch",
+        "agent_ref_identity_mismatch"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "executor_mismatch",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:executor_ref_current_mismatch",
+        "action:executor_ref_identity_mismatch"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "executor_mismatch",
+      "reason_codes": [
+        "executor_ref_current_mismatch",
+        "executor_ref_identity_mismatch"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "context_action_mismatch",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:context_action_mismatch"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "context_action_mismatch",
+      "reason_codes": [
+        "context_action_mismatch"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "action_before_request",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:action_before_request"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "action_before_request",
+      "reason_codes": [
+        "action_before_request"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "action_after_execution",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:action_after_execution"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "action_after_execution",
+      "reason_codes": [
+        "action_after_execution"
+      ],
+      "references": {
+        "action_ref": "webshop-action-1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    },
+    {
+      "actual_gate_decision": "DENY",
+      "actual_verification_status": "INVALID",
+      "callback_count": 0,
+      "callback_observations": 0,
+      "case_id": "identifier_collision",
+      "expected_gate_decision": "DENY",
+      "expected_verification_status": "INVALID",
+      "gate_reason_codes": [
+        "action:action_id_order_ref_collision"
+      ],
+      "limitations": {
+        "no_real_buy_now": true,
+        "no_real_payment": true
+      },
+      "matched": true,
+      "mutation": "identifier_collision",
+      "reason_codes": [
+        "action_id_order_ref_collision"
+      ],
+      "references": {
+        "action_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payment_ref": "webshop-payment-candidate-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      }
+    }
+  ],
+  "limitations": [
+    "no_real_buy_now",
+    "no_real_payment",
+    "offline_deterministic_action_verification_only"
+  ],
+  "primitive_serialization_example": {
+    "action": {
+      "action_id": "webshop-action-1",
+      "action_type": "execute_payment",
+      "agent_ref": "webshop-agent-1",
+      "authority_ref": "experiment-context-mandate-ref-v1",
+      "authority_version": "experiment-authority-v1",
+      "executor_ref": "offline-webshop-executor",
+      "occurred_at": "2026-08-02T05:00:00.500000+00:00",
+      "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "order_version": "webshop-v1",
+      "payment_ref": "webshop-payment-candidate-1",
+      "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "reversibility": "COMPENSATABLE_NOT_REVERSIBLE",
+      "side_effect_class": "PAYMENT_EXECUTION",
+      "source_refs": [
+        "source:webshop-checkout-snapshot",
+        "source:user-confirmation"
+      ],
+      "subject_ref": "webshop-user-1"
+    },
+    "verification": {
+      "action_id": "webshop-action-1",
+      "checked_action_type": "execute_payment",
+      "checked_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+      "checked_payment_ref": "webshop-payment-candidate-1",
+      "checked_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "reason_codes": [
+        "governed_action_binding_valid"
+      ],
+      "status": "VALID"
+    }
+  },
+  "schema": "governed-payment-action-matrix/v1",
+  "source_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+  "summary": {
+    "failed": 0,
+    "matched": 16,
+    "total": 16
+  }
+}

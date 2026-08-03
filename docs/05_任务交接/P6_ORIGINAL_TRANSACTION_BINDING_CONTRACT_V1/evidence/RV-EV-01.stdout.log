@@ -1,0 +1,4 @@
+query_recovery=RECOVERED
+query_next_action=continue_with_original_payment
+refund_remediation=RESOLVED
+refund_next_action=economic_remediation_completed_by_full_refund

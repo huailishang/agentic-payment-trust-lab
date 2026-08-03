@@ -1,0 +1,121 @@
+{
+  "canonical_ready": true,
+  "inputs_immutable": true,
+  "mismatch_matrix": {
+    "amount": {
+      "duplicate_payment_blocked": false,
+      "effective_payment_is_null": true,
+      "lifecycle_is_null": true,
+      "ready": false,
+      "reason_codes": [
+        "prerequisite:adapter_gate_request_mismatch"
+      ],
+      "retry_allowed": false
+    },
+    "category": {
+      "duplicate_payment_blocked": false,
+      "effective_payment_is_null": true,
+      "lifecycle_is_null": true,
+      "ready": false,
+      "reason_codes": [
+        "prerequisite:adapter_gate_request_mismatch"
+      ],
+      "retry_allowed": false
+    },
+    "currency": {
+      "duplicate_payment_blocked": false,
+      "effective_payment_is_null": true,
+      "lifecycle_is_null": true,
+      "ready": false,
+      "reason_codes": [
+        "prerequisite:adapter_gate_request_mismatch"
+      ],
+      "retry_allowed": false
+    },
+    "request_id": {
+      "duplicate_payment_blocked": false,
+      "effective_payment_is_null": true,
+      "lifecycle_is_null": true,
+      "ready": false,
+      "reason_codes": [
+        "prerequisite:adapter_gate_request_mismatch"
+      ],
+      "retry_allowed": false
+    }
+  },
+  "no_query_related_attempts": {
+    "FAILED": {
+      "duplicate_payment_blocked": false,
+      "query_recovery_is_null": true,
+      "reason_codes": [
+        "payment:initial_status:unknown",
+        "lifecycle:payment_status:unknown",
+        "lifecycle:fulfillment_status:pending",
+        "lifecycle:task_status:unknown",
+        "lifecycle:remediation:required",
+        "lifecycle:payment_status_unknown",
+        "retry:not_allowed"
+      ],
+      "retry_allowed": false
+    },
+    "PENDING": {
+      "duplicate_payment_blocked": true,
+      "query_recovery_is_null": true,
+      "reason_codes": [
+        "payment:initial_status:unknown",
+        "duplicate:known_unresolved_attempt",
+        "duplicate:payment_blocked",
+        "lifecycle:payment_status:unknown",
+        "lifecycle:fulfillment_status:pending",
+        "lifecycle:task_status:unknown",
+        "lifecycle:remediation:required",
+        "lifecycle:payment_status_unknown",
+        "retry:not_allowed"
+      ],
+      "retry_allowed": false
+    },
+    "SUCCEEDED": {
+      "duplicate_payment_blocked": true,
+      "query_recovery_is_null": true,
+      "reason_codes": [
+        "payment:initial_status:unknown",
+        "duplicate:known_successful_attempt",
+        "duplicate:payment_blocked",
+        "lifecycle:payment_status:unknown",
+        "lifecycle:fulfillment_status:pending",
+        "lifecycle:task_status:unknown",
+        "lifecycle:remediation:required",
+        "lifecycle:payment_status_unknown",
+        "retry:not_allowed"
+      ],
+      "retry_allowed": false
+    },
+    "UNKNOWN": {
+      "duplicate_payment_blocked": true,
+      "query_recovery_is_null": true,
+      "reason_codes": [
+        "payment:initial_status:unknown",
+        "duplicate:known_unresolved_attempt",
+        "duplicate:payment_blocked",
+        "lifecycle:payment_status:unknown",
+        "lifecycle:fulfillment_status:pending",
+        "lifecycle:task_status:unknown",
+        "lifecycle:remediation:required",
+        "lifecycle:payment_status_unknown",
+        "retry:not_allowed"
+      ],
+      "retry_allowed": false
+    }
+  },
+  "query_known_success": {
+    "duplicate_payment_blocked": true,
+    "recovery_status": "BLOCKED",
+    "retry_allowed": false
+  },
+  "query_retry_candidate": {
+    "recovery_status": "RETRY_CANDIDATE",
+    "retry_allowed": true
+  },
+  "same_execution_blocked": false,
+  "unrelated_success_blocked": false
+}

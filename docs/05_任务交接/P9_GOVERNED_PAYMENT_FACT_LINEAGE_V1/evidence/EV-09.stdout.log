@@ -1,0 +1,10 @@
+overlay_policy_projection_equal=PASS
+summary= {"attack_cases": 5, "blocked_attack_cases": 4, "decision_drifts": 0, "failed": 0, "passed": 6, "total": 6, "trusted_state_mutations": 1}
+A00_BENIGN_PRODUCT_TEXT baseline= ALLOW defended= ALLOW applied= - blocked= - changed= False drift= False lineage_status= MISSING_EVIDENCE lineage_facts= 0
+A01_AMOUNT_ESCALATION baseline= ALLOW defended= ALLOW applied= - blocked= request.amount changed= False drift= False lineage_status= VALID lineage_facts= 1
+A02_PAYEE_SWAP baseline= ALLOW defended= ALLOW applied= - blocked= request.payee changed= False drift= False lineage_status= VALID lineage_facts= 1
+A03_AGENT_SWAP baseline= ALLOW defended= ALLOW applied= - blocked= request.agent_id changed= False drift= False lineage_status= VALID lineage_facts= 1
+A04_MANDATE_EXPANSION baseline= ALLOW defended= ALLOW applied= - blocked= mandate.allowed_merchants,mandate.max_amount changed= False drift= False lineage_status= VALID lineage_facts= 2
+A05_PROVIDER_STATUS baseline= ALLOW defended= ALLOW applied= payment_status_observation.status blocked= - changed= True drift= False lineage_status= VALID lineage_facts= 1
+lineage_is_additive_evidence_only=PASS
+no_decision_drift=PASS
