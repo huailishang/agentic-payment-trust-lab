@@ -61,6 +61,19 @@ class ScenarioRunnerTest(unittest.TestCase):
                 {"RECOVERED": 1},
                 card["payment_recovery_summary"]["recovery_status_distribution"],
             )
+            replay_cases = {item["source_scenario"]: item for item in card["replay"]["cases"]}
+            self.assertEqual("P5 Evidence / Replay v1", card["replay"]["contract"])
+            self.assertEqual("VALID", replay_cases["S10"]["replay"]["status"])
+            self.assertEqual("ALLOW", replay_cases["S10"]["replay"]["decision"])
+            self.assertEqual("ALLOW", replay_cases["S10"]["final_gate_decision"])
+            self.assertTrue(replay_cases["S10"]["callback_executed"])
+            self.assertEqual(1, replay_cases["S10"]["callback_count"])
+            self.assertEqual("VALID", replay_cases["S09"]["replay"]["status"])
+            self.assertEqual("CONFIRMATION_REQUIRED", replay_cases["S09"]["replay"]["decision"])
+            self.assertEqual("CONFIRMATION_REQUIRED", replay_cases["S09"]["preliminary_decision"])
+            self.assertEqual("CONFIRMATION_REQUIRED", replay_cases["S09"]["final_gate_decision"])
+            self.assertFalse(replay_cases["S09"]["callback_executed"])
+            self.assertEqual(5, len(replay_cases["S09"]["events"]))
 
             ap2_scenario = next(item for item in card["scenarios"] if item["sample_id"] == "S08")
             self.assertEqual("AP2", ap2_scenario["protocol"]["name"])
@@ -176,6 +189,17 @@ class ScenarioRunnerTest(unittest.TestCase):
                 "continue_with_original_payment",
                 recovery_scenario["payment_recovery"]["next_action"],
             )
+            finality = recovery_scenario["payment_finality"]
+            self.assertEqual("QUERY_CONFIRMED", finality["evidence_stage"])
+            self.assertEqual("UNKNOWN", finality["initial_status"])
+            self.assertEqual("SUCCEEDED", finality["queried_status"])
+            self.assertEqual("SUCCEEDED", finality["effective_status"])
+            self.assertTrue(finality["effective_status_terminal"])
+            self.assertFalse(finality["business_success_confirmed"])
+            self.assertFalse(finality["fulfillment_confirmed"])
+            self.assertFalse(finality["user_task_success_confirmed"])
+            self.assertFalse(finality["reconciliation_confirmed"])
+            self.assertFalse(finality["settlement_confirmed"])
             self.assertTrue(recovery_scenario["checks"]["payment_recovery_retry_allowed"])
             self.assertTrue(recovery_scenario["checks"]["payment_recovery_evidence_codes"])
             recovery_evidence = {
@@ -255,6 +279,14 @@ class ScenarioRunnerTest(unittest.TestCase):
             self.assertEqual(
                 "INVALID",
                 p4_cases["P4-INVALID-STATE-POLLUTION"]["status"],
+            )
+            self.assertEqual(
+                7,
+                len(
+                    p4_cases["P4-ALLOWED-PROVIDER-STATUS"][
+                        "source_coverage"
+                    ]
+                ),
             )
 
             json_path = artifacts_dir / "scenario_result_card.json"

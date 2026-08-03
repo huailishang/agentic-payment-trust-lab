@@ -2,6 +2,16 @@
 
 from .lifecycle import assess_lifecycle
 from .payment_recovery import assess_payment_recovery
+from .payment_finality import (
+    PaymentQueryEvidenceStage,
+    PaymentQueryFinalityFact,
+    derive_payment_query_finality,
+)
+from .payment_status_conflict import (
+    PaymentStatusConflictFact,
+    PaymentStatusConflictResolution,
+    derive_payment_status_conflict,
+)
 from .payment_execution import (
     PaymentExecutionGateOutcome,
     execute_with_payment_binding_gate,
@@ -33,10 +43,38 @@ from .models import (
     ValidationIssue,
     ValidationResult,
 )
+from .trusted_execution import (
+    resolve_fact_lineage,
+    ResolvedFactLineage,
+    FactLineageResult,
+    FactLineageNode,
+    ActionReversibility,
+    GovernedActionBindingFact,
+    GovernedActionType,
+    GovernedPaymentAction,
+    SideEffectClass,
+    verify_governed_payment_action,
+)
 from .remediation import assess_remediation
 from .validator import validate_request
+from .webshop_runtime_gate import (
+    WebShopBuyNowGateOutcome,
+    gate_webshop_buy_now,
+)
+from .webshop_payment_sidecar import (
+    WebShopPaymentFulfilmentOutcome,
+    assess_webshop_payment_fulfilment,
+)
 
 __all__ = [
+    "ResolvedFactLineage",
+    "FactLineageResult",
+    "FactLineageNode",
+    "SideEffectClass",
+    "GovernedPaymentAction",
+    "GovernedActionType",
+    "GovernedActionBindingFact",
+    "ActionReversibility",
     "AgentIdentity",
     "Decision",
     "DisputeRecord",
@@ -53,6 +91,10 @@ __all__ = [
     "PaymentExecutionGateOutcome",
     "PaymentRecoveryResult",
     "PaymentRecoveryStatus",
+    "PaymentQueryEvidenceStage",
+    "PaymentQueryFinalityFact",
+    "PaymentStatusConflictFact",
+    "PaymentStatusConflictResolution",
     "PaymentStatus",
     "PaymentStatusObservation",
     "RefundRecord",
@@ -63,9 +105,17 @@ __all__ = [
     "TransactionRequest",
     "ValidationIssue",
     "ValidationResult",
+    "WebShopBuyNowGateOutcome",
+    "WebShopPaymentFulfilmentOutcome",
     "assess_lifecycle",
     "assess_payment_recovery",
+    "assess_webshop_payment_fulfilment",
+    "derive_payment_query_finality",
+    "derive_payment_status_conflict",
     "execute_with_payment_binding_gate",
+    "gate_webshop_buy_now",
     "assess_remediation",
     "validate_request",
+    "verify_governed_payment_action",
+    "resolve_fact_lineage",
 ]

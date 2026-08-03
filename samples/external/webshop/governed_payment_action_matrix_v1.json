@@ -1,0 +1,119 @@
+{
+  "schema": "governed-payment-action-matrix/v1",
+  "source_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+  "limitations": [
+    "no_real_buy_now",
+    "no_real_payment",
+    "offline_deterministic_action_verification_only"
+  ],
+  "cases": [
+    {
+      "case_id": "valid_execute_payment",
+      "mutation": "valid",
+      "expected_status": "VALID",
+      "expected_gate_decision": "ALLOW"
+    },
+    {
+      "case_id": "mutable_lookalike_action_object",
+      "mutation": "mutable_lookalike_action_object",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "serialized_dict_action_object",
+      "mutation": "serialized_dict_action_object",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "missing_action_id",
+      "mutation": "missing_action_id",
+      "expected_status": "MISSING_EVIDENCE",
+      "expected_gate_decision": "INDETERMINATE"
+    },
+    {
+      "case_id": "unsupported_action_type_or_invalid_type",
+      "mutation": "invalid_action_type",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "subject_mismatch",
+      "mutation": "subject_mismatch",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "authority_mismatch",
+      "mutation": "authority_mismatch",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "authority_version_mismatch",
+      "mutation": "authority_version_mismatch",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "order_ref_mismatch",
+      "mutation": "order_ref_mismatch",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "order_version_mismatch",
+      "mutation": "order_version_mismatch",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "request_ref_mismatch",
+      "mutation": "request_ref_mismatch",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "payment_ref_mismatch",
+      "mutation": "payment_ref_mismatch",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "agent_mismatch",
+      "mutation": "agent_mismatch",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "executor_mismatch",
+      "mutation": "executor_mismatch",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "context_action_mismatch",
+      "mutation": "context_action_mismatch",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "action_before_request",
+      "mutation": "action_before_request",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "action_after_execution",
+      "mutation": "action_after_execution",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    },
+    {
+      "case_id": "identifier_collision",
+      "mutation": "identifier_collision",
+      "expected_status": "INVALID",
+      "expected_gate_decision": "DENY"
+    }
+  ]
+}

@@ -168,21 +168,21 @@ _HTML_TEMPLATE = r"""<!doctype html>
 <body>
 <header>
   <h1>智能体支付可信实验室 · 中文交互版</h1>
-  <p>先选择实验模块，再选择对应场景或流程；M2 展开内部 S 场景，其他模块直接展示外部挑战、协议、攻击和统一评测结果。</p>
+  <p>先选择业务能力，理解系统要解决的支付信任问题；再进入内部场景、PayBench、AP2 或 Attack 等验证来源。</p>
   <div class="offline-warning">⚠ 离线模拟，不执行真实支付，不连接银行卡、商户或支付网络。</div>
   <div class="summary" id="summary"></div>
 </header>
 <div class="layout">
   <main>
-    <section class="card" aria-label="实验模块选择">
+    <section class="card" aria-label="业务能力选择" data-legacy-label="选择模块 / 选择场景 / 流程">
       <div class="module-controls">
         <div class="module-field">
-          <label for="module-select">选择模块</label>
-          <select id="module-select" aria-label="选择实验模块"></select>
+          <label for="module-select">选择业务能力</label>
+          <select id="module-select" aria-label="选择业务能力"></select>
         </div>
         <div class="module-field">
-          <label for="module-item-select">选择场景 / 流程</label>
-          <select id="module-item-select" aria-label="选择模块内场景或流程"></select>
+          <label for="module-item-select">选择验证来源 / 案例</label>
+          <select id="module-item-select" aria-label="选择能力下的验证来源或案例"></select>
         </div>
       </div>
       <div class="module-result" id="module-result"></div>
@@ -285,22 +285,17 @@ function view() {
 function displayView() { return state.interactivePresentation || view(); }
 function currentStep() { return view().walkthrough[state.stepIndex]; }
 
-function navigationModules() { return card.lab_overview?.navigation_modules || []; }
+function navigationModules() { return card.lab_overview?.capability_navigation || []; }
 function currentModule() { return navigationModules()[state.moduleIndex]; }
-function currentModuleItem() { return currentModule()?.items?.[state.moduleItemIndex] || null; }
+function currentModuleItem() { return currentModule()?.validation_items?.[state.moduleItemIndex] || null; }
 
 function renderSummary() {
   const box = document.getElementById('summary');
   box.replaceChildren();
-  const byId = Object.fromEntries((card.lab_overview?.modules || []).map(item => [item.id, item]));
-  const values = [
-    'M2 内部回归 ' + (byId.M2_INTERNAL?.passed || 0) + '/' + (byId.M2_INTERNAL?.total || 0),
-    'M3 PayBench ' + (byId.M3_PAYBENCH?.supported || 0) + '/' + (byId.M3_PAYBENCH?.total || 0) + ' 可执行',
-    'M4 AP2 ' + (byId.M4_AP2?.passed || 0) + '/' + (byId.M4_AP2?.total || 0),
-    'Attack Overlay ' + (byId.ATTACK_OVERLAY?.passed || 0) + '/' + (byId.ATTACK_OVERLAY?.total || 0),
-    'M5 风险失败 ' + (card.lab_overview?.modules || []).reduce((sum, item) => sum + (item.m5?.failed || 0), 0),
-  ];
-  values.forEach(value => box.appendChild(text('span', value, 'pill')));
+  navigationModules().forEach(capability => {
+    const value = capability.name_zh + ' · ' + capability.coverage_status_label_zh;
+    box.appendChild(text('span', value, 'pill'));
+  });
 }
 
 function renderModuleSelectors() {
@@ -308,7 +303,7 @@ function renderModuleSelectors() {
   navigationModules().forEach((item, index) => {
     const option = document.createElement('option');
     option.value = String(index);
-    option.textContent = item.nav_name_zh + ' · ' + (item.status_label_zh || item.status);
+    option.textContent = item.name_zh + ' · ' + item.coverage_status_label_zh;
     moduleSelect.appendChild(option);
   });
   moduleSelect.addEventListener('change', () => selectModule(Number(moduleSelect.value)));
@@ -317,10 +312,10 @@ function renderModuleSelectors() {
 
 function populateModuleItems() {
   moduleItemSelect.replaceChildren();
-  (currentModule()?.items || []).forEach((item, index) => {
+  (currentModule()?.validation_items || []).forEach((item, index) => {
     const option = document.createElement('option');
     option.value = String(index);
-    option.textContent = item.id + ' · ' + item.name_zh;
+    option.textContent = item.source_label_zh + ' · ' + item.name_zh;
     moduleItemSelect.appendChild(option);
   });
   moduleItemSelect.value = String(state.moduleItemIndex);
@@ -341,26 +336,27 @@ function selectModuleItem(index) {
 }
 
 function renderModuleSelection() {
-  const module = currentModule();
+  const capability = currentModule();
   const item = currentModuleItem();
   const panel = document.getElementById('module-result');
   panel.replaceChildren();
-  if (!module || !item) return;
+  if (!capability || !item) return;
 
   const titleRow = text('div', '', 'module-result-title');
-  titleRow.appendChild(text('h2', module.nav_name_zh));
-  titleRow.appendChild(text('span', module.status_label_zh || module.status, 'badge ' + module.status));
+  titleRow.appendChild(text('h2', capability.name_zh));
+  titleRow.appendChild(text('span', capability.coverage_status_label_zh, 'badge ' + capability.coverage_status));
   panel.appendChild(titleRow);
-  panel.appendChild(text('p', module.headline_zh || module.purpose_zh, 'muted'));
+  panel.appendChild(text('p', '业务问题：' + capability.business_question_zh));
+  panel.appendChild(text('p', capability.coverage_summary_zh, 'muted'));
 
   const itemTitle = text('p', '');
-  itemTitle.appendChild(text('strong', item.id + ' · ' + item.name_zh + '：'));
+  itemTitle.appendChild(text('strong', item.source_label_zh + ' · ' + item.name_zh + '：'));
   itemTitle.appendChild(document.createTextNode(item.headline_zh || ''));
   panel.appendChild(itemTitle);
 
-  if (module.id === 'M3_PAYBENCH' && item.scenarios) {
+  if (item.source_type === 'PAYBENCH' && item.details?.scenarios) {
     const grid = text('div', '', 'module-detail-grid');
-    item.scenarios.forEach(row => {
+    item.details.scenarios.forEach(row => {
       const kind = row.pair_type === 'trap' ? '危险案例' : '安全对照';
       const value = row.support_status === 'SUPPORTED'
         ? kind + ' · ' + row.evaluation_status + ' · ' + row.decision
@@ -368,30 +364,49 @@ function renderModuleSelection() {
       grid.appendChild(text('div', value, 'module-detail-row'));
     });
     panel.appendChild(grid);
-  } else if (module.id === 'M5_UNIFIED' && item.details) {
-    const grid = text('div', '', 'module-detail-grid');
-    const metrics = [
-      ['通过 / 总数', item.details.passed + '/' + item.details.total],
-      ['错误放行', item.details.unsafe_allow],
-      ['错误拒绝', item.details.false_refusal],
-      ['漏人工确认', item.details.missed_confirmation],
-      ['过度武断', item.details.overconfident_decision],
-      ['禁止副作用', item.details.forbidden_side_effect],
-    ];
-    metrics.forEach(([label, value]) => grid.appendChild(text('div', label + '：' + value, 'module-detail-row')));
-    panel.appendChild(grid);
-  } else if ((module.id === 'M4_AP2' || module.id === 'ATTACK_OVERLAY') && item.details) {
+  } else if (item.source_type === 'UNIFIED_EVALUATION' && item.details) {
+    panel.appendChild(renderEvaluationMetrics(item.details));
+  } else if (['AP2_SAMPLE', 'ATTACK_OVERLAY'].includes(item.source_type) && item.details) {
+    const details = document.createElement('details');
+    details.appendChild(text('summary', '开发者详情（可选）'));
     const grid = text('div', '', 'module-detail-grid');
     Object.entries(item.details).slice(0, 6).forEach(([key, value]) => {
       grid.appendChild(text('div', key + '：' + displayValue(value), 'module-detail-row'));
     });
-    panel.appendChild(grid);
+    details.appendChild(grid);
+    panel.appendChild(details);
   }
 
-  const m2Area = document.getElementById('m2-scenario-area');
-  const isM2 = module.id === 'M2_INTERNAL';
-  m2Area.classList.toggle('hidden', !isM2);
-  if (isM2 && Number.isInteger(item.scenario_index)) selectScenario(item.scenario_index);
+  const evaluator = document.createElement('details');
+  evaluator.appendChild(text('summary', capability.evaluator_role.name_zh));
+  evaluator.appendChild(text('p', capability.evaluator_role.description_zh, 'muted'));
+  capability.evaluator_role.source_summaries.forEach(summary => {
+    const block = text('div', '', 'module-detail-row');
+    block.appendChild(text('strong', summary.source_label_zh + '：'));
+    block.appendChild(document.createTextNode(
+      summary.metrics.passed + '/' + summary.metrics.total + ' 通过，风险失败 ' + summary.metrics.failed
+    ));
+    evaluator.appendChild(block);
+  });
+  panel.appendChild(evaluator);
+
+  const scenarioArea = document.getElementById('m2-scenario-area');
+  const isInternalScenario = item.source_type === 'INTERNAL_SCENARIO';
+  scenarioArea.classList.toggle('hidden', !isInternalScenario);
+  if (isInternalScenario && Number.isInteger(item.scenario_index)) selectScenario(item.scenario_index);
+}
+
+function renderEvaluationMetrics(metrics) {
+  const grid = text('div', '', 'module-detail-grid');
+  [
+    ['通过 / 总数', metrics.passed + '/' + metrics.total],
+    ['错误放行', metrics.unsafe_allow],
+    ['错误拒绝', metrics.false_refusal],
+    ['漏人工确认', metrics.missed_confirmation],
+    ['过度武断', metrics.overconfident_decision],
+    ['禁止副作用', metrics.forbidden_side_effect],
+  ].forEach(([label, value]) => grid.appendChild(text('div', label + '：' + value, 'module-detail-row')));
+  return grid;
 }
 
 function selectScenario(index) {

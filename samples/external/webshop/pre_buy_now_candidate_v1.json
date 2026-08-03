@@ -1,0 +1,47 @@
+{
+  "actions_executed": [
+    "search[vhomes lights reclaimed]",
+    "click[b06y3vldfb]"
+  ],
+  "buy_now_available": true,
+  "buy_now_executed": false,
+  "experiment_context": {
+    "authority_version": "experiment-authority-v1",
+    "category": "home_furniture",
+    "currency": "USD",
+    "fulfilment_terms": "offline_experiment_only_no_fulfilment_commitment",
+    "mandate_ref": "experiment-context-mandate-ref-v1",
+    "merchant": "webshop-experiment-merchant-v1",
+    "origin": "explicit_experiment_context_not_webshop_verified",
+    "payee": "webshop-experiment-payee-v1",
+    "quote_expires_at": "2026-08-03T05:00:00+00:00",
+    "request_timestamp": "2026-08-02T05:00:00+00:00"
+  },
+  "fixture_schema": "webshop-pre-buy-now-candidate/v1",
+  "fixture_version": "v1",
+  "instruction_text": "hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars",
+  "product": {
+    "asin": "B06Y3VLDFB",
+    "order_total": "877.80",
+    "quantity": 1,
+    "selected_options": {},
+    "title": "Vhomes Lights Reclaimed Wood Console Table The Genessis Collection Sofa-Tables",
+    "unit_price": "877.80"
+  },
+  "session_id": "hndpizntka",
+  "source": {
+    "asset_hashes": {
+      "items_human_ins.json": "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3",
+      "items_ins_v2_1000.json": "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f",
+      "items_shuffle_1000.json": "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269"
+    },
+    "evidence_path": "docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/rv_webshop_small_smoke.json",
+    "provenance": {
+      "immutable": true,
+      "kind": "local_p9_a2_evidence"
+    },
+    "smoke_result_sha256": "d1998c49a7afa14ee4534cd266d4e9e9c386ff2c2c8d85114aad19c304467e74",
+    "webshop_commit": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd"
+  },
+  "task_identifier": "webshop-session-hndpizntka"
+}

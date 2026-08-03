@@ -13,9 +13,13 @@ from .trusted_execution import (
     POLICY_VERSION,
     CandidateFactUpdate,
     FactDomain,
+    FactLineageNode,
     SourceType,
+    VerificationStatus,
+    canonical_hash,
     evaluate_context_policy,
     infer_fact_domain,
+    resolve_fact_lineage,
 )
 from .validator import validate_request
 
@@ -67,6 +71,30 @@ class AttackOverlaySuite:
 
 
 @dataclass(frozen=True)
+class AttackOverrideLineageFact:
+    fact_ref: str
+    fact_path: str
+    value_digest: str
+    direct_source_type: SourceType
+    effective_source_types: tuple[SourceType, ...]
+    contains_untrusted_ancestry: bool
+    source_ref: str
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "fact_ref": self.fact_ref,
+            "fact_path": self.fact_path,
+            "value_digest": self.value_digest,
+            "direct_source_type": self.direct_source_type.value,
+            "effective_source_types": [
+                source.value for source in self.effective_source_types
+            ],
+            "contains_untrusted_ancestry": self.contains_untrusted_ancestry,
+            "source_ref": self.source_ref,
+        }
+
+
+@dataclass(frozen=True)
 class AttackBoundaryResult:
     attack_attempted: bool
     applied_paths: tuple[str, ...]
@@ -75,6 +103,9 @@ class AttackBoundaryResult:
     reason_codes: tuple[str, ...]
     policy_version: str | None
     unauthorized_state_change_detected: bool
+    lineage_status: VerificationStatus
+    lineage_reason_codes: tuple[str, ...]
+    lineage_facts: tuple[AttackOverrideLineageFact, ...]
 
 
 @dataclass(frozen=True)
@@ -94,6 +125,9 @@ class AttackOverlayResult:
     policy_version: str | None
     decision_drift: bool
     evaluation: EvaluationResult
+    lineage_status: VerificationStatus
+    lineage_reason_codes: tuple[str, ...]
+    lineage_facts: tuple[AttackOverrideLineageFact, ...]
 
 
 @dataclass(frozen=True)
@@ -165,6 +199,7 @@ def enforce_untrusted_overlay(
         policy_version=POLICY_VERSION,
         current_action="evaluate_payment_context",
     )
+    lineage_status, lineage_reasons, lineage_facts = _resolve_overlay_lineage(overlay)
     return AttackBoundaryResult(
         attack_attempted=bool(overlay.proposed_overrides),
         applied_paths=result.fact.applied_paths,
@@ -175,6 +210,9 @@ def enforce_untrusted_overlay(
         unauthorized_state_change_detected=(
             result.fact.unauthorized_state_change_detected
         ),
+        lineage_status=lineage_status,
+        lineage_reason_codes=lineage_reasons,
+        lineage_facts=lineage_facts,
     )
 
 
@@ -214,6 +252,9 @@ def evaluate_attack_overlay(scenario: Scenario, overlay: AttackOverlay) -> Attac
         policy_version=boundary.policy_version,
         decision_drift=defended.decision is not baseline.decision,
         evaluation=evaluation,
+        lineage_status=boundary.lineage_status,
+        lineage_reason_codes=boundary.lineage_reason_codes,
+        lineage_facts=boundary.lineage_facts,
     )
 
 
@@ -287,6 +328,11 @@ def write_attack_overlay_report(
                 "trusted_state_changed": result.trusted_state_changed,
                 "decision_drift": result.decision_drift,
                 "evaluation": asdict(result.evaluation),
+                "lineage": {
+                    "status": result.lineage_status.value,
+                    "reason_codes": list(result.lineage_reason_codes),
+                    "facts": [fact.to_dict() for fact in result.lineage_facts],
+                },
             }
             for result in batch.results
         ],
@@ -296,6 +342,66 @@ def write_attack_overlay_report(
         json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+
+
+def _resolve_overlay_lineage(
+    overlay: AttackOverlay,
+) -> tuple[
+    VerificationStatus,
+    tuple[str, ...],
+    tuple[AttackOverrideLineageFact, ...],
+]:
+    nodes: list[FactLineageNode] = []
+    digest_failures: list[str] = []
+    for path, value in sorted(overlay.proposed_overrides.items()):
+        digest = _overlay_value_digest(value)
+        if digest is None:
+            digest_failures.append(f"overlay_lineage_value_digest_missing:{path}")
+            continue
+        nodes.append(
+            FactLineageNode(
+                fact_ref=f"overlay:{overlay.attack_id}:{path}",
+                fact_path=path,
+                value_digest=digest,
+                direct_source_type=overlay.source_type,
+                upstream_fact_refs=(),
+                transformation_ref=f"proposed_override:{overlay.attack_id}",
+            )
+        )
+    if digest_failures:
+        return VerificationStatus.MISSING_EVIDENCE, tuple(digest_failures), ()
+
+    lineage = resolve_fact_lineage(tuple(nodes))
+    facts = tuple(
+        AttackOverrideLineageFact(
+            fact_ref=fact.fact_ref,
+            fact_path=fact.fact_path,
+            value_digest=fact.value_digest,
+            direct_source_type=fact.direct_source_type,
+            effective_source_types=fact.effective_source_types,
+            contains_untrusted_ancestry=fact.contains_untrusted_ancestry,
+            source_ref=overlay.source_ref,
+        )
+        for fact in lineage.resolved_facts
+    )
+    return lineage.status, lineage.reason_codes, facts
+
+
+def _overlay_value_digest(value: object) -> str | None:
+    try:
+        return canonical_hash(value)
+    except (TypeError, ValueError):
+        try:
+            json_text = json.dumps(
+                value,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+                allow_nan=False,
+            )
+        except (TypeError, ValueError):
+            return None
+        return canonical_hash({"overlay_json_value": json_text})
 
 
 def _validate_overlay_paths(overlay: AttackOverlay) -> None:

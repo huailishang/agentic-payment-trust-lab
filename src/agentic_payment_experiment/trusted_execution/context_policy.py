@@ -13,6 +13,7 @@ from enum import Enum
 from typing import Any, Mapping
 
 from .execution_facts import VerificationStatus
+from .hashing import canonical_hash
 
 
 class SourceType(str, Enum):
@@ -48,6 +49,13 @@ class CandidateFactUpdate:
 
 
 @dataclass(frozen=True)
+class SourceCoverage:
+    target_path: str
+    source_type: SourceType
+    value_digest: str
+
+
+@dataclass(frozen=True)
 class ContextPolicyFact:
     status: VerificationStatus
     reason_codes: tuple[str, ...]
@@ -56,6 +64,10 @@ class ContextPolicyFact:
     applied_paths: tuple[str, ...]
     blocked_paths: tuple[str, ...]
     source_refs: tuple[str, ...]
+    required_source_paths: tuple[str, ...]
+    covered_source_paths: tuple[str, ...]
+    missing_source_paths: tuple[str, ...]
+    source_coverage: tuple[SourceCoverage, ...]
     trusted_state_changed: bool
     unauthorized_state_change_detected: bool
 
@@ -92,6 +104,16 @@ _PROTECTED_EXISTING_SOURCES = frozenset(
     }
 )
 
+_COVERAGE_SOURCE_TYPES = frozenset(
+    {
+        SourceType.USER_CONFIRMED,
+        SourceType.SYSTEM_POLICY,
+        SourceType.MERCHANT_PROVIDED,
+        SourceType.PROTOCOL_VERIFIED,
+        SourceType.PAYMENT_PROVIDER_OBSERVED,
+    }
+)
+
 
 def infer_fact_domain(target_path: str) -> FactDomain | None:
     """Map a concrete trusted-state path to its closed fact domain."""
@@ -120,6 +142,7 @@ def evaluate_context_policy(
     updates: tuple[CandidateFactUpdate, ...] = (),
     *,
     trusted_sources: Mapping[str, SourceType] | None = None,
+    required_source_paths: tuple[str, ...] = (),
     policy_version: str | None = POLICY_VERSION,
     current_action: str | None,
     observed_state_after: Mapping[str, Any] | None = None,
@@ -133,6 +156,10 @@ def evaluate_context_policy(
     blocked: list[str] = []
     reasons: list[str] = []
     refs: list[str] = []
+    required_paths = tuple(sorted(set(required_source_paths)))
+    covered_paths: list[str] = []
+    missing_paths: list[str] = []
+    coverage: list[SourceCoverage] = []
     missing = not policy_version or not current_action
     if not policy_version:
         reasons.append("context_policy_version_missing")
@@ -159,8 +186,13 @@ def evaluate_context_policy(
             allowed = False
         else:
             refs.append(update.source_ref)
-        if update.value is None and not update.value_ref:
-            reasons.append(f"candidate_value_missing:{path}")
+        if update.value is None:
+            reason = (
+                f"value_ref_unresolved:{path}"
+                if update.value_ref
+                else f"candidate_value_missing:{path}"
+            )
+            reasons.append(reason)
             missing = True
             allowed = False
         if inferred is None or domain is not inferred:
@@ -186,6 +218,31 @@ def evaluate_context_policy(
         else:
             blocked.append(path)
 
+    for path in required_paths:
+        source = _enum_value(SourceType, merged_sources.get(path))
+        domain = infer_fact_domain(path)
+        if not _path_exists(merged, path):
+            reasons.append(f"required_fact_missing:{path}")
+            missing_paths.append(path)
+            missing = True
+        elif (
+            source not in _COVERAGE_SOURCE_TYPES
+            or domain is None
+            or (source, domain) not in _ALLOWED_WRITES
+        ):
+            reasons.append(f"required_source_missing_or_invalid:{path}")
+            missing_paths.append(path)
+            missing = True
+        else:
+            covered_paths.append(path)
+            coverage.append(
+                SourceCoverage(
+                    target_path=path,
+                    source_type=source,
+                    value_digest=canonical_hash(_get_path(merged, path)),
+                )
+            )
+
     unauthorized = False
     if observed_state_after is not None and deepcopy(dict(observed_state_after)) != merged:
         unauthorized = True
@@ -210,6 +267,10 @@ def evaluate_context_policy(
         applied_paths=tuple(sorted(applied)),
         blocked_paths=tuple(sorted(set(blocked))),
         source_refs=tuple(sorted(set(refs))),
+        required_source_paths=required_paths,
+        covered_source_paths=tuple(sorted(covered_paths)),
+        missing_source_paths=tuple(sorted(missing_paths)),
+        source_coverage=tuple(sorted(coverage, key=lambda item: item.target_path)),
         trusted_state_changed=before != merged,
         unauthorized_state_change_detected=unauthorized,
     )
@@ -225,6 +286,10 @@ def missing_context_policy_fact() -> ContextPolicyFact:
         applied_paths=(),
         blocked_paths=(),
         source_refs=(),
+        required_source_paths=(),
+        covered_source_paths=(),
+        missing_source_paths=(),
+        source_coverage=(),
         trusted_state_changed=False,
         unauthorized_state_change_detected=False,
     )
@@ -251,3 +316,19 @@ def _set_path(target: dict[str, Any], path: str, value: Any) -> None:
             raise ValueError(f"target path crosses a non-object: {path}")
         cursor = child
     cursor[parts[-1]] = value
+
+
+def _path_exists(state: Mapping[str, Any], path: str) -> bool:
+    cursor: Any = state
+    for part in path.split("."):
+        if not isinstance(cursor, Mapping) or part not in cursor:
+            return False
+        cursor = cursor[part]
+    return True
+
+
+def _get_path(state: Mapping[str, Any], path: str) -> Any:
+    cursor: Any = state
+    for part in path.split("."):
+        cursor = cursor[part]
+    return cursor

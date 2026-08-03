@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import unittest
 import sys
+from copy import deepcopy
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
@@ -156,6 +157,78 @@ class ContextPolicyTests(unittest.TestCase):
         self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.fact.status)
         self.assertIn("context_policy_version_missing", result.fact.reason_codes)
         self.assertIn("context_current_action_missing", result.fact.reason_codes)
+
+    def test_unresolved_value_ref_is_blocked_without_writing_none(self) -> None:
+        before = deepcopy(self.state)
+        update = CandidateFactUpdate(
+            SourceType.PAYMENT_PROVIDER_OBSERVED,
+            FactDomain.PAYMENT_STATUS,
+            "payment_status_observation.status",
+            value_ref="provider://status/1",
+            source_ref="offline-provider",
+        )
+        result = self.evaluate(update)
+        self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.fact.status)
+        self.assertEqual((), result.fact.applied_paths)
+        self.assertEqual(
+            ("payment_status_observation.status",), result.fact.blocked_paths
+        )
+        self.assertIn(
+            "value_ref_unresolved:payment_status_observation.status",
+            result.fact.reason_codes,
+        )
+        self.assertNotIn("payment_status_observation", result.trusted_state)
+        self.assertEqual(before, self.state)
+
+    def test_required_source_coverage_is_missing_partial_or_complete(self) -> None:
+        required = (
+            "mandate.max_amount",
+            "request.agent_id",
+            "request.amount",
+        )
+        cases = (
+            ("empty", {}, VerificationStatus.MISSING_EVIDENCE, required),
+            (
+                "partial",
+                {"mandate.max_amount": SourceType.USER_CONFIRMED},
+                VerificationStatus.MISSING_EVIDENCE,
+                ("request.agent_id", "request.amount"),
+            ),
+            (
+                "complete",
+                self.sources,
+                VerificationStatus.VALID,
+                (),
+            ),
+        )
+        for name, sources, expected_status, missing in cases:
+            with self.subTest(name=name):
+                result = evaluate_context_policy(
+                    self.state,
+                    trusted_sources=sources,
+                    required_source_paths=required,
+                    current_action="execute_payment",
+                )
+                self.assertEqual(expected_status, result.fact.status)
+                self.assertEqual(tuple(sorted(missing)), result.fact.missing_source_paths)
+                self.assertEqual(
+                    tuple(path for path in required if path not in missing),
+                    result.fact.covered_source_paths,
+                )
+
+    def test_unknown_or_untrusted_source_does_not_count_as_coverage(self) -> None:
+        for source in ("UNKNOWN", SourceType.WEB_UNTRUSTED):
+            with self.subTest(source=source):
+                result = evaluate_context_policy(
+                    self.state,
+                    trusted_sources={"request.amount": source},
+                    required_source_paths=("request.amount",),
+                    current_action="execute_payment",
+                )
+                self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.fact.status)
+                self.assertEqual(
+                    ("request.amount",), result.fact.missing_source_paths
+                )
 
 
 if __name__ == "__main__":
