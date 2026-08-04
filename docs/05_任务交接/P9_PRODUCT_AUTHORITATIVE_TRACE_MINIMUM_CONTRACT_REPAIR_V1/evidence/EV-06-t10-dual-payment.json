@@ -1,0 +1,28 @@
+{
+  "consistency_rule": "refs are consistent within (entity_type, entity_role), not across all Payment entities",
+  "entities": [
+    {
+      "entity_ref": "PaymentExecutionRecord:project-baseline-payment-1",
+      "entity_role": "CURRENT_PAYMENT_CANDIDATE",
+      "entity_type": "PaymentExecutionRecord",
+      "relations": [
+        "equals GovernedPaymentAction.payment_ref",
+        "equals execution_candidate.payment_id",
+        "bound to current request through current action/execution facts"
+      ]
+    },
+    {
+      "entity_ref": "PaymentExecutionRecord:project-baseline-payment-existing-success",
+      "entity_role": "HISTORICAL_SUCCEEDED_PAYMENT",
+      "entity_type": "PaymentExecutionRecord",
+      "relations": [
+        "member of KnownPaymentAttemptPreflightFact.related_attempt_refs",
+        "same request relation established by preflight fact"
+      ],
+      "status": "SUCCEEDED"
+    }
+  ],
+  "request_ref": "TransactionRequest:project-baseline-request-1",
+  "schema": "t10-dual-payment-relationship/v1",
+  "validator_boundary": "compare refs with existing fact outputs only; do not rerun payment binding"
+}

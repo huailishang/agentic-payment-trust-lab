@@ -1,0 +1,16 @@
+{
+  "command": [
+    "bash",
+    "-lc",
+    "set -e; python3 -m unittest tests.trusted_execution.test_known_payment_attempt -v; python3 -m unittest discover -s tests -v"
+  ],
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "duration_seconds": 10.39984,
+  "ended_at_utc": "2026-08-04T01:13:02.118308+00:00",
+  "exit_code": 0,
+  "label": "EV-18",
+  "schema": "executor-evidence/v1",
+  "started_at_utc": "2026-08-04T01:12:51.718468+00:00",
+  "stderr_sha256": "8299b94083bb623b204acb9d3f8c3bf23711c6747e07b75d0acc34ffe071574d",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

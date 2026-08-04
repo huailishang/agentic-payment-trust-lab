@@ -1,0 +1,22 @@
+CHECKS={"lifecycle_unchanged": true, "no_forbidden_calls": true, "no_forbidden_imports": true, "p2_verifier_single_call": true, "recovery_unchanged": true, "runner_frozen": true, "scope_clean": true, "sidecar_unchanged": true, "status_conflict_unchanged": true, "target_frozen": true}
+OUT_OF_SCOPE=[]
+FORBIDDEN_IMPORTS=[]
+FORBIDDEN_CALLS=[]
+EXECUTION_DIFF_BYTES=96355
+EXECUTION_DIFF_SHA256=15d81e418459c3be0bcc6e383bd14393e0afab5e3cdec94e21f0068b515319c1
+HEAD=71a3acbbd9622b68a8064381b9034e07c1f4d700
+STATUS_START
+## main...origin/main
+ M CURRENT.md
+ M docs/04_验证体系/项目级能力评测基线_v1.md
+ M scripts/validation/run_project_impact_baseline.py
+ M src/agentic_payment_experiment/__init__.py
+ M src/agentic_payment_experiment/trusted_execution/__init__.py
+ M src/agentic_payment_experiment/webshop_runtime_gate.py
+ M tests/test_project_impact_baseline.py
+ M tests/test_webshop_runtime_gate.py
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/evidence/
+?? samples/evaluation/project_impact_t10_preflight_target_v1.json
+?? src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
+?? tests/trusted_execution/test_known_payment_attempt.py
+STATUS_END

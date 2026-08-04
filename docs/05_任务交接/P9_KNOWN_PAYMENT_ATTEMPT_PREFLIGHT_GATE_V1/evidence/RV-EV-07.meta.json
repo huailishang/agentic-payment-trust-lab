@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-07",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "PYTHONPATH=src python3 - <<\"PY\"\nimport importlib.util\nfrom dataclasses import replace\nfrom pathlib import Path\nfrom agentic_payment_experiment import Decision, PaymentStatus\nspec=importlib.util.spec_from_file_location(\"rv_gate_tests\", Path(\"tests/test_webshop_runtime_gate.py\"))\nmod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)\ncase=mod.WebShopRuntimeGateTest(methodName=\"test_empty_known_attempt_input_preserves_prior_gate_result\"); case.setUp()\nunrelated_malformed=replace(case.execution,payment_id=\"\",request_id=\"request-unrelated\",transaction_object_ref=\"request-unrelated\",status=PaymentStatus.SUCCEEDED)\noutcome,calls=case.invoke(governed_action=case.governed_action,known_payment_attempts=(unrelated_malformed,))\nprint({\"decision\":outcome.decision.value,\"callback_count\":outcome.callback_count,\"calls\":calls,\"preflight_status\":outcome.known_payment_attempt_preflight_fact.status.value,\"reason_codes\":outcome.reason_codes})\nassert outcome.decision is Decision.ALLOW, \"AC-02/AC-04 violation: unrelated malformed attempt denied a legitimate current request\"\nassert calls == [\"checkout\"]\nPY"
+  ],
+  "command_display": "bash -lc 'PYTHONPATH=src python3 - <<\"PY\"\nimport importlib.util\nfrom dataclasses import replace\nfrom pathlib import Path\nfrom agentic_payment_experiment import Decision, PaymentStatus\nspec=importlib.util.spec_from_file_location(\"rv_gate_tests\", Path(\"tests/test_webshop_runtime_gate.py\"))\nmod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)\ncase=mod.WebShopRuntimeGateTest(methodName=\"test_empty_known_attempt_input_preserves_prior_gate_result\"); case.setUp()\nunrelated_malformed=replace(case.execution,payment_id=\"\",request_id=\"request-unrelated\",transaction_object_ref=\"request-unrelated\",status=PaymentStatus.SUCCEEDED)\noutcome,calls=case.invoke(governed_action=case.governed_action,known_payment_attempts=(unrelated_malformed,))\nprint({\"decision\":outcome.decision.value,\"callback_count\":outcome.callback_count,\"calls\":calls,\"preflight_status\":outcome.known_payment_attempt_preflight_fact.status.value,\"reason_codes\":outcome.reason_codes})\nassert outcome.decision is Decision.ALLOW, \"AC-02/AC-04 violation: unrelated malformed attempt denied a legitimate current request\"\nassert calls == [\"checkout\"]\nPY'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T02:04:41.211339+00:00",
+  "finished_at_utc": "2026-08-04T02:04:41.733257+00:00",
+  "exit_code": 1,
+  "stdout_path": "RV-EV-07.stdout.log",
+  "stderr_path": "RV-EV-07.stderr.log",
+  "stdout_bytes": 305,
+  "stderr_bytes": 177,
+  "stdout_sha256": "ecc6ec7adda06acb481ddea2450ea34ff7027a994de0a6c9c0369cf685be1b0e",
+  "stderr_sha256": "2d033321470873d55ad8d35d315a2eb8f602579914eb6495b1efadbf5bc6d671"
+}

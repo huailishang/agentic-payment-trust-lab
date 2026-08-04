@@ -1,0 +1,16 @@
+{
+  "command": [
+    "bash",
+    "-lc",
+    "python3 - <<'PY'\nimport hashlib,json,re\nfrom pathlib import Path\ne=Path(\"docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/evidence\")\nd=json.loads((e/\"before.json\").read_text(encoding=\"utf-8\"))\nprojection=[x for x in d[\"task_results\"] if x[\"task_id\"]!=\"T10\"]\nfreeze={\n \"target_sha256\":hashlib.sha256(Path(\"samples/evaluation/project_impact_t10_preflight_target_v1.json\").read_bytes()).hexdigest(),\n \"runner_sha256\":hashlib.sha256(Path(\"scripts/validation/run_project_impact_baseline.py\").read_bytes()).hexdigest(),\n \"before_non_t10_projection_sha256\":hashlib.sha256(json.dumps(projection,ensure_ascii=False,sort_keys=True,separators=(\",\",\":\")).encode()).hexdigest(),\n \"before_t10\":next(x[\"actual\"] for x in d[\"task_results\"] if x[\"task_id\"]==\"T10\"),\n \"before_metrics\":d[\"metrics\"],\n \"supersedes\":\"phase_a_freeze_superseded_v0.json\",\n \"restart_reason\":\"target lifecycle expectations were incompatible with a pre-callback DENY and forbidden Sidecar changes\",\n}\n(e/\"phase_a_freeze.json\").write_text(json.dumps(freeze,ensure_ascii=False,indent=2,sort_keys=True)+\"\\n\",encoding=\"utf-8\")\nstart={m.group(2):m.group(1) for m in re.finditer(r\"^([0-9a-f]{64})  (src/.*\\.py)$\",(e/\"EV-01.stdout.log\").read_text(encoding=\"utf-8\"),re.M)}\ncur={p.as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(Path(\"src\").rglob(\"*.py\"))}\nprint(\"TARGET_SHA256=\"+freeze[\"target_sha256\"])\nprint(\"RUNNER_SHA256=\"+freeze[\"runner_sha256\"])\nprint(\"BEFORE_NON_T10_PROJECTION_SHA256=\"+freeze[\"before_non_t10_projection_sha256\"])\nprint(\"SRC_UNCHANGED_SINCE_EV01=\"+str(start==cur))\nprint(\"PHASE_A_RESTART_REASON=\"+freeze[\"restart_reason\"])\nPY"
+  ],
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "duration_seconds": 0.147352,
+  "ended_at_utc": "2026-08-04T00:59:01.546696+00:00",
+  "exit_code": 0,
+  "label": "EV-07",
+  "schema": "executor-evidence/v1",
+  "started_at_utc": "2026-08-04T00:59:01.399344+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "fdf26b2623d08ea06d3733be9ec645706edf0b20225e074a1756ca985ae4a455"
+}

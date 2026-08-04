@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-08",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "set -e; python3 /mnt/d/SoftWare/VScode/install/Project/localagent-common/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md; git diff --check; sha256sum docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_UNRELATED_MALFORMED_REPAIR_V1/REPORT.md; git -c core.quotePath=false status --short --branch"
+  ],
+  "command_display": "bash -lc 'set -e; python3 /mnt/d/SoftWare/VScode/install/Project/localagent-common/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md; git diff --check; sha256sum docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_UNRELATED_MALFORMED_REPAIR_V1/REPORT.md; git -c core.quotePath=false status --short --branch'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T02:20:53.468746+00:00",
+  "finished_at_utc": "2026-08-04T02:20:55.797090+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-08.stdout.log",
+  "stderr_path": "EV-08.stderr.log",
+  "stdout_bytes": 1140,
+  "stderr_bytes": 0,
+  "stdout_sha256": "95753d9bcbd689a3ba26dea7a0cd6858ce60dc429ce6ab91095bd80247d51626",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

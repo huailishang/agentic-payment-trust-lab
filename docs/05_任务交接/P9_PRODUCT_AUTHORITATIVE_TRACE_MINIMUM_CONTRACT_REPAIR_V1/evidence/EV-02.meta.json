@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-02",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "set -e; rg -n \"class ReplayEvent|ReplayEventType|authoritative_trace|authoritative_trace_events|class RuntimeGateRecord|class WebShopBuyNowGateOutcome|class GovernedActionBindingFact|class ValidationResult|KnownPaymentAttemptPreflightFact|related_attempt_refs|order_differences|PREPAYMENT_DECISION|binding_status|MISSING_EVIDENCE\" src scripts samples tests | head -500"
+  ],
+  "command_display": "bash -lc 'set -e; rg -n \"class ReplayEvent|ReplayEventType|authoritative_trace|authoritative_trace_events|class RuntimeGateRecord|class WebShopBuyNowGateOutcome|class GovernedActionBindingFact|class ValidationResult|KnownPaymentAttemptPreflightFact|related_attempt_refs|order_differences|PREPAYMENT_DECISION|binding_status|MISSING_EVIDENCE\" src scripts samples tests | head -500'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T14:02:01.171014+00:00",
+  "finished_at_utc": "2026-08-04T14:02:01.196301+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-02.stdout.log",
+  "stderr_path": "EV-02.stderr.log",
+  "stdout_bytes": 0,
+  "stderr_bytes": 36,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "a0733d966bb7d2b1d293736d0cbef5e1d8ea733b9110da3c293910d714e056c6"
+}

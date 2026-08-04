@@ -1,0 +1,5 @@
+CHECKS={"no_forbidden_calls": true, "no_forbidden_imports": true, "p2_verifier_single_call": true, "runner_frozen": true, "scope_clean": true, "target_frozen": true}
+OUT_OF_SCOPE=[]
+EXECUTION_DIFF_BYTES=96355
+EXECUTION_DIFF_SHA256=15d81e418459c3be0bcc6e383bd14393e0afab5e3cdec94e21f0068b515319c1
+FINAL_TEST_SHA256=cc2901bcece761687b2c2d4d3e30fc7f2d5b0ccf355e8e7bded79254cb0a9d6c

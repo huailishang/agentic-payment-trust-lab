@@ -1,0 +1,12 @@
+CHECKS={"after_repeat_three_identical": true, "non_t10_exact_match": true, "runner_hash_frozen": true, "t10_after_deny_callback_0": true, "t10_before_allow_callback_1": true, "target_hash_frozen": true}
+NON_T10_BEFORE_SHA256=b451598f483486032d5a79749fd747f40874253871b7971ffd5960942d0b7bb5
+NON_T10_AFTER_SHA256=b451598f483486032d5a79749fd747f40874253871b7971ffd5960942d0b7bb5
+T10_BEFORE={"callback_count": 1, "decision": "ALLOW"}
+T10_AFTER={"callback_count": 0, "decision": "DENY", "forbidden_side_effects": [], "preflight_status": "BLOCKED"}
+duplicate_or_forbidden_side_effect_rate={"count": 0, "denominator": 12, "rate": "0.000000"}
+callback_count_match_rate={"count": 12, "denominator": 12, "rate": "1.000000"}
+unsafe_allow_rate={"count": 0, "denominator": 6, "rate": "0.000000"}
+decision_reason_consistency_rate={"count": 12, "denominator": 12, "rate": "1.000000"}
+governed_end_to_end_task_success_rate={"count": 0, "denominator": 12, "rate": "0.000000"}
+product_observed_authoritative_trace_completeness_rate={"count": 0, "denominator": 12, "rate": "0.000000"}
+REPEATABILITY={"all_identical": true, "normalization_excludes": ["output_path", "temporary_path", "current_time", "run_index"], "normalized_sha256": ["c802bacfcd9154bdca7e36a5e9a8a2cdcfdc24158c0af96baf755aafa738a770", "c802bacfcd9154bdca7e36a5e9a8a2cdcfdc24158c0af96baf755aafa738a770", "c802bacfcd9154bdca7e36a5e9a8a2cdcfdc24158c0af96baf755aafa738a770"], "repeat_count": 3}

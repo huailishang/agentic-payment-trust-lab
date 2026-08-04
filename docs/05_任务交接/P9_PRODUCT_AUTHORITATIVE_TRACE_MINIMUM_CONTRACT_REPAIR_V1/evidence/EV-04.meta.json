@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-04",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "set -e; sed -n \"1,280p\" src/agentic_payment_experiment/trusted_execution/replay.py; sed -n \"1,280p\" src/agentic_payment_experiment/webshop_runtime_gate.py; sed -n \"70,150p\" src/agentic_payment_experiment/trusted_execution/governed_action.py; sed -n \"250,330p\" src/agentic_payment_experiment/models.py; sed -n \"480,620p\" scripts/validation/run_project_impact_baseline.py"
+  ],
+  "command_display": "bash -lc 'set -e; sed -n \"1,280p\" src/agentic_payment_experiment/trusted_execution/replay.py; sed -n \"1,280p\" src/agentic_payment_experiment/webshop_runtime_gate.py; sed -n \"70,150p\" src/agentic_payment_experiment/trusted_execution/governed_action.py; sed -n \"250,330p\" src/agentic_payment_experiment/models.py; sed -n \"480,620p\" scripts/validation/run_project_impact_baseline.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T14:03:04.057725+00:00",
+  "finished_at_utc": "2026-08-04T14:03:04.121845+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-04.stdout.log",
+  "stderr_path": "EV-04.stderr.log",
+  "stdout_bytes": 31046,
+  "stderr_bytes": 0,
+  "stdout_sha256": "7daa20868d95b6fa485e2d6648e4c9c0365eddbd29744b2c2ce00fa2f3c6295a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

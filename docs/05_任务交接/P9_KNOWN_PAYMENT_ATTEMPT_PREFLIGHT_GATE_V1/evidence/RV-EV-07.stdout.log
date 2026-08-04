@@ -1,0 +1,1 @@
+{'decision': 'INDETERMINATE', 'callback_count': 0, 'calls': [], 'preflight_status': 'INDETERMINATE', 'reason_codes': ('p1:upstream_prepayment_non_allow', 'p2:payment_execution_binding_match', 'p3:identity_executor_binding_match', 'p4:context_policy_valid', 'preflight:known_payment_attempt_ref_missing')}

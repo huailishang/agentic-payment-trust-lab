@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-02",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "set -o pipefail; PYTHONPATH=src python3 -m unittest -v tests.trusted_execution.test_known_payment_attempt tests.test_webshop_runtime_gate tests.test_project_impact_baseline tests.trusted_execution.test_payment_binding tests.test_webshop_payment_sidecar tests.test_payment_recovery tests.test_payment_status_conflict"
+  ],
+  "command_display": "bash -lc 'set -o pipefail; PYTHONPATH=src python3 -m unittest -v tests.trusted_execution.test_known_payment_attempt tests.test_webshop_runtime_gate tests.test_project_impact_baseline tests.trusted_execution.test_payment_binding tests.test_webshop_payment_sidecar tests.test_payment_recovery tests.test_payment_status_conflict'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T02:25:27.749995+00:00",
+  "finished_at_utc": "2026-08-04T02:25:29.451630+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-02.stdout.log",
+  "stderr_path": "RV-EV-02.stderr.log",
+  "stdout_bytes": 0,
+  "stderr_bytes": 26204,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "63ac77b9c0e77c7edc0d53a6596b777b2d7145039ce1e86205d00ce3fd865d94"
+}

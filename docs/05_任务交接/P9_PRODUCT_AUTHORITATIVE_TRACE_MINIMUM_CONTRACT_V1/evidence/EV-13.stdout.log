@@ -1,0 +1,61 @@
+{
+  "all_pass": false,
+  "formal_outputs": [
+    {
+      "bytes": 13670,
+      "lines": 347,
+      "path": "docs/03_架构设计/产品权威轨迹最小合同_v1.md",
+      "sha256": "b60ab2df87f1b004db0fe5dc64999bc4b90ba766246658f21ce7458f80715962"
+    },
+    {
+      "bytes": 9292,
+      "lines": 125,
+      "path": "docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md",
+      "sha256": "bb1a42b252243d2486af1bf62ab7d304d2630277af877968be82a74db6cf901c"
+    },
+    {
+      "bytes": 7345,
+      "lines": 234,
+      "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/NEXT_SLICE.md",
+      "sha256": "098cbfccbf8fae5efd8611e94f3de93fe262615f6810dd5b10f314bf6b323dbe"
+    },
+    {
+      "bytes": 16754,
+      "lines": 474,
+      "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/REPORT.md",
+      "sha256": "91f433a8ee4858e7ae3c01b6f74b0d67f03822d77c3315f7a2234783dd090071"
+    }
+  ],
+  "git_status": [
+    " M CURRENT.md",
+    " M docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md",
+    " M docs/04_验证体系/项目级能力评测基线_v1.md",
+    " M scripts/validation/run_project_impact_baseline.py",
+    " M src/agentic_payment_experiment/__init__.py",
+    " M src/agentic_payment_experiment/trusted_execution/__init__.py",
+    " M src/agentic_payment_experiment/webshop_runtime_gate.py",
+    " M tests/test_project_impact_baseline.py",
+    " M tests/test_webshop_runtime_gate.py",
+    "?? docs/03_架构设计/产品权威轨迹最小合同_v1.md",
+    "?? docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md",
+    "?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_CAPABILITY_REVALIDATION_V1/",
+    "?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/REPORT.md",
+    "?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/REVIEW.md",
+    "?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/evidence/",
+    "?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_UNRELATED_MALFORMED_REPAIR_V1/",
+    "?? docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/",
+    "?? samples/evaluation/project_impact_t10_preflight_target_v1.json",
+    "?? src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py",
+    "?? tests/trusted_execution/test_known_payment_attempt.py"
+  ],
+  "head": "71a3acbbd9622b68a8064381b9034e07c1f4d700",
+  "report_executor_status_present": true,
+  "router_preserved": {
+    "current_role": "Executor",
+    "state": "EXECUTING"
+  },
+  "schema": "product-authoritative-trace-final-submission/v1",
+  "validator_exit_code": 2,
+  "validator_stderr": "",
+  "validator_stdout": "FIX_IN_PLACE: EV-01: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-01.meta.json\nFIX_IN_PLACE: EV-01: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-01.stdout.log\nFIX_IN_PLACE: EV-01: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-01.stderr.log\nFIX_IN_PLACE: EV-02: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-02.meta.json\nFIX_IN_PLACE: EV-02: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-02.stdout.log\nFIX_IN_PLACE: EV-02: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-02.stderr.log\nFIX_IN_PLACE: EV-03: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-03.meta.json\nFIX_IN_PLACE: EV-03: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-03.stdout.log\nFIX_IN_PLACE: EV-03: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-03.stderr.log\nFIX_IN_PLACE: EV-04: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-04.meta.json\nFIX_IN_PLACE: EV-04: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-04.stdout.log\nFIX_IN_PLACE: EV-04: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-04.stderr.log\nFIX_IN_PLACE: EV-05: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-05.meta.json\nFIX_IN_PLACE: EV-05: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-05.stdout.log\nFIX_IN_PLACE: EV-05: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-05.stderr.log\nFIX_IN_PLACE: EV-06: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-06.meta.json\nFIX_IN_PLACE: EV-06: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-06.stdout.log\nFIX_IN_PLACE: EV-06: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-06.stderr.log\nFIX_IN_PLACE: EV-07: missing Meta reference\nFIX_IN_PLACE: EV-07: missing Stdout reference\nFIX_IN_PLACE: EV-07: missing Stderr reference\nFIX_IN_PLACE: EV-10: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-10.meta.json\nFIX_IN_PLACE: EV-10: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-10.stdout.log\nFIX_IN_PLACE: EV-10: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-10.stderr.log\nFIX_IN_PLACE: EV-11: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-11.meta.json\nFIX_IN_PLACE: EV-11: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-11.stdout.log\nFIX_IN_PLACE: EV-11: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-11.stderr.log\nFIX_IN_PLACE: EV-12: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-12.meta.json\nFIX_IN_PLACE: EV-12: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-12.stdout.log\nFIX_IN_PLACE: EV-12: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-12.stderr.log\nFIX_IN_PLACE: EV-13: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-13.meta.json\nFIX_IN_PLACE: EV-13: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-13.stdout.log\nFIX_IN_PLACE: EV-13: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-13.stderr.log"
+}

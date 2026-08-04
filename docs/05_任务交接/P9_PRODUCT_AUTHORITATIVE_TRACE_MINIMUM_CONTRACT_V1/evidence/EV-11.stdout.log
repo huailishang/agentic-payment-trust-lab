@@ -1,0 +1,1435 @@
+=== FINAL GIT STATUS ===
+ M CURRENT.md
+ M docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md
+ M docs/04_验证体系/项目级能力评测基线_v1.md
+ M scripts/validation/run_project_impact_baseline.py
+ M src/agentic_payment_experiment/__init__.py
+ M src/agentic_payment_experiment/trusted_execution/__init__.py
+ M src/agentic_payment_experiment/webshop_runtime_gate.py
+ M tests/test_project_impact_baseline.py
+ M tests/test_webshop_runtime_gate.py
+?? docs/03_架构设计/产品权威轨迹最小合同_v1.md
+?? docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_CAPABILITY_REVALIDATION_V1/
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/REPORT.md
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/REVIEW.md
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/evidence/
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_UNRELATED_MALFORMED_REPAIR_V1/
+?? docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/
+?? samples/evaluation/project_impact_t10_preflight_target_v1.json
+?? src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
+?? tests/trusted_execution/test_known_payment_attempt.py
+=== FORMAL OUTPUT MANIFEST ===
+[
+  {
+    "bytes": 13670,
+    "lines": 347,
+    "path": "docs/03_架构设计/产品权威轨迹最小合同_v1.md",
+    "sha256": "b60ab2df87f1b004db0fe5dc64999bc4b90ba766246658f21ce7458f80715962"
+  },
+  {
+    "bytes": 9292,
+    "lines": 125,
+    "path": "docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md",
+    "sha256": "bb1a42b252243d2486af1bf62ab7d304d2630277af877968be82a74db6cf901c"
+  },
+  {
+    "bytes": 7345,
+    "lines": 234,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/NEXT_SLICE.md",
+    "sha256": "098cbfccbf8fae5efd8611e94f3de93fe262615f6810dd5b10f314bf6b323dbe"
+  },
+  {
+    "bytes": 16233,
+    "lines": 465,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/REPORT.md",
+    "sha256": "ca56654a0da8c6833f93c0b1add56ca534593ac8144dbed89c509ffa63fc286d"
+  }
+]
+=== EVIDENCE INVENTORY ===
+[
+  {
+    "bytes": 4627,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-01.meta.json",
+    "sha256": "7f8fbf95e65e8841b34a631d5245047ba0a701ae7cb8c24009d0e0162918fa6a"
+  },
+  {
+    "bytes": 0,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-01.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "bytes": 2035,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-01.stdout.log",
+    "sha256": "d6b34ef79cb58b3684eef92e37043ec83c6af4d5d96f19534b86323c566092b9"
+  },
+  {
+    "bytes": 11380,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-02.meta.json",
+    "sha256": "f2b95680df7e3d31d190b0761e6c6a9a9d40ec71ec14025f57479fa8ebf9c6cc"
+  },
+  {
+    "bytes": 577,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-02.stderr.log",
+    "sha256": "a2da483f625b5ac83eef48b91f92c06b713f68b47f481f0a89bce82c26854166"
+  },
+  {
+    "bytes": 0,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-02.stdout.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "bytes": 11036,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-03.meta.json",
+    "sha256": "839317edf1ce446224e9c7a6189e2553032d551a7140b1232cf9de43db057c41"
+  },
+  {
+    "bytes": 101,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-03.stderr.log",
+    "sha256": "7badb4e02b93c40a0c1737dfaec621137308e41907aaf34ee7acbbd50ad7275f"
+  },
+  {
+    "bytes": 0,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-03.stdout.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "bytes": 11074,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-04.meta.json",
+    "sha256": "df29a93412ee80d3b3e19281ccfb4e3bc9d1286d9431861fd4025a14b766e446"
+  },
+  {
+    "bytes": 0,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-04.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "bytes": 31979,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-04.stdout.log",
+    "sha256": "fcccba62d268f5a8f7f241be957d0f098246406a5dd9644dd2930327ceab4a1c"
+  },
+  {
+    "bytes": 13071,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-05-coverage.json",
+    "sha256": "f04c0ed7b302d4d317c9b8f6fbbc91b62647b13334d2818d0a327008bb794415"
+  },
+  {
+    "bytes": 3035,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-05-next-slice-target.json",
+    "sha256": "18ed932b9251b6fea0d1df46492ad65ed5824a2578376835ae0674d781e03b23"
+  },
+  {
+    "bytes": 28105,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-05.meta.json",
+    "sha256": "15daf7bcffc0f754a8e7fe63b115a3ab0f0af1997c0943cc75243b09f5ce2f0e"
+  },
+  {
+    "bytes": 0,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-05.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "bytes": 3373,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-05.stdout.log",
+    "sha256": "73925aadef117a7c5bedeb67c22e6e4eaf5f493c2cdd68dcd26b4d12a5087650"
+  },
+  {
+    "bytes": 5942,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-06-check.py",
+    "sha256": "d9eed0431ce06b7c5157abf4c069aef537384a6bec63f51ae17fdbf118ddf74c"
+  },
+  {
+    "bytes": 856,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-06.meta.json",
+    "sha256": "fce173330de3e5efcfe73c5858fb60b7f0059781aeecd0a2311d5a7aab49d9c9"
+  },
+  {
+    "bytes": 0,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-06.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "bytes": 1410,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-06.stdout.log",
+    "sha256": "7507700f77862276d1b6668e77e056f10a88d889bfcc74398628d1a5b30cf6f1"
+  },
+  {
+    "bytes": 3144,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-07-scope-audit.py",
+    "sha256": "9b829c58f74cf97c3f1febbe005327207544fd922a2fbd3f6ddbd7d0ae317706"
+  },
+  {
+    "bytes": 868,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-07.meta.json",
+    "sha256": "daa2eb7933ff0934ad7c8c33423b73b563be1af97e8b7b8b2909df63626b2f24"
+  },
+  {
+    "bytes": 0,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-07.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "bytes": 4419,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-07.stdout.log",
+    "sha256": "ec4878ec79368ac3fa400f40b4bad352eb128c941548877ed141e7fdd07e7c0a"
+  },
+  {
+    "bytes": 3731,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-08-scope-audit.py",
+    "sha256": "c657a9c8779967de5078a9427f730e00b77bfa836f6d3d542f29e53f577cdaa6"
+  },
+  {
+    "bytes": 868,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-08.meta.json",
+    "sha256": "fcf44cf544386069ef461e34e5379da1461127b4c262d5c457d23d0dcde17bf2"
+  },
+  {
+    "bytes": 0,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-08.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "bytes": 5237,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-08.stdout.log",
+    "sha256": "87c82b929411c1d32595ec52884ea0659aa454afe601a447eb79a3fcd451ef18"
+  },
+  {
+    "bytes": 3731,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-09-scope-audit.py",
+    "sha256": "275466cbf762c1ec739b0cb87f20cbb92f2d5d25157f3815f61e5b479fdc66f3"
+  },
+  {
+    "bytes": 868,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-09.meta.json",
+    "sha256": "74ba04c9551228267fd1ca9acbe882bae7532eef09ef90db14081428363e21fe"
+  },
+  {
+    "bytes": 0,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-09.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "bytes": 5237,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-09.stdout.log",
+    "sha256": "ef466d2d7acd3575b76a7a7da74bc019cf95163f9cbbea6a87fd16afb6876d2d"
+  },
+  {
+    "bytes": 3708,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-10-scope-audit.py",
+    "sha256": "8aa59ddf516c03db5c44eb3eb95a88116f8ca4625cc43d64f3b97188d1baad4a"
+  },
+  {
+    "bytes": 868,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-10.meta.json",
+    "sha256": "b817a9831bd9a4239f772fcf6173ba903386dd68003d5275609bafa264a69c8c"
+  },
+  {
+    "bytes": 0,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-10.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "bytes": 4441,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-10.stdout.log",
+    "sha256": "079d274b8e80bad300b3ab89e3c8fea4101b806cb74b5655308a7a4959b98135"
+  },
+  {
+    "bytes": 1918,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-11-diff.py",
+    "sha256": "f4a68a707898f476f6b03b7d8c1f33047500364bd895004bc5594724189bd687"
+  },
+  {
+    "bytes": 74730,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/audit_inventory.json",
+    "sha256": "3e37b3be988865542aa3bcee35667954c0237f09aaf09193d74dc63ef7dd0357"
+  },
+  {
+    "bytes": 16401,
+    "path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/immutable_manifest.json",
+    "sha256": "d8c0f27fa587d44c15aa1cd5e1fc67a1216d997c8384f4ee4ccbf1c61990ad4e"
+  }
+]
+=== COMPLETE FORMAL OUTPUT DIFFS ===
+--- a/docs/03_架构设计/产品权威轨迹最小合同_v1.md
++++ b/docs/03_架构设计/产品权威轨迹最小合同_v1.md
+@@ -0,0 +1,347 @@
++# 产品权威轨迹最小合同 v1
++
++## 1. 核心结论
++
++当前项目不是没有事实，而是事实分散在不同产品对象里：
++
++- IntentMandate
++- Order
++- TransactionRequest
++- GovernedPaymentAction 和 GovernedActionBindingFact
++- RuntimeGateRecord
++- PaymentExecutionRecord
++- ContextPolicyFact 和 Fact Lineage
++- Lifecycle、Recovery、Conflict
++
++项目 runner 目前只能事后读取这些对象，再自行拼装 ReplayEvent。这只能证明评测器会回放，不能证明产品真实产生了可审计轨迹。
++
++v1 合同冻结为：
++
++~~~text
++产品运行路径中的真实对象
++→ 产品组件在返回 outcome 前组装结构化事件
++→ outcome 直接携带 ProductAuthoritativeTrace
++→ runner 只读取和验证，不补事件
++~~~
++
++当前基线保持：
++
++~~~text
++product-observed authoritative trace = 0/12 VALID
++GESR = 0/12
++~~~
++
++本设计任务只冻结合同，不实现代码，也不改变项目指标。
++
++## 2. 产品轨迹与评测器 Replay 的边界
++
++### 2.1 产品观测权威轨迹
++
++Product-observed authoritative trace 必须同时满足：
++
++1. 事件在产品函数实际运行过程中产生；
++2. 事件由产品公开 outcome 或 record 直接携带；
++3. 每个事件引用当前调用中的真实产品对象；
++4. source 固定为 PRODUCT_OBSERVED；
++5. runner 只能校验，不能补齐；
++6. 缺失、错序或引用不一致时不得标记为 VALID。
++
++形式化定义：
++
++~~~text
++product-observed authoritative trace
++= product call path generated
+++ returned by product outcome
+++ structured source-object references
+++ closed event taxonomy
+++ ordered immutable events
+++ deterministic completeness classification
++~~~
++
++### 2.2 评测器合成 Replay
++
++Evaluator-synthesized replay 是 runner 或 test 根据 fixture、outcome 和 reason codes 事后构造 ReplayEvent，再调用 replay_events 进行诊断。
++
++它可以用于：
++
++- 检查 Replay API；
++- 调试引用和顺序；
++- 对比产品轨迹是否可回放；
++- 生成评估诊断。
++
++它不能用于：
++
++- 满足产品轨迹完整率；
++- 把 NOT_AVAILABLE 改成 VALID；
++- 证明产品实际记录过事件；
++- 替代产品 outcome 中缺失的事实。
++
++### 2.3 禁止伪装情形
++
++以下情况一律不计为产品轨迹：
++
++1. runner 在产品返回后补写事件，再标记 PRODUCT_OBSERVED；
++2. 把自由文本 reason 转成事件，但没有真实 source_object_ref；
++3. 产品没有返回 trace，runner 仅凭 fixture expected 值拼装完整链；
++4. 只有 RuntimeGateRecord，却把它包装成 Authority—Order—Request—Payment 全链；
++5. 缺少必需事件或引用不闭合，仍把 completeness 标为 VALID；
++6. evaluator 创建的 ReplayEvent 被重新命名为产品事件；
++7. 将 evaluator-synthesized replay 的 VALID 直接写入产品轨迹指标。
++
++## 3. 最小产品轨迹 Envelope
++
++产品 outcome 使用一个明确字段：
++
++~~~python
++authoritative_trace: ProductAuthoritativeTrace | None
++~~~
++
++不接受以下替代方式：
++
++- outcome 外部的全局变量；
++- runner 临时组装的 tuple；
++- 自由文本日志；
++- 只有 authoritative_trace_events、没有来源和完整性状态；
++- 依靠测试 fixture 才能解释引用的事件。
++
++### 3.1 Envelope 字段
++
++| 字段 | 类型 | 约束 |
++|---|---|---|
++| trace_id | string | 非空、稳定，由 profile 与根对象引用确定 |
++| schema_version | string | 固定为 product-authoritative-trace/v1 |
++| profile | string | 关闭的轨迹 profile，决定必需事件集合 |
++| source | string | 必须等于 PRODUCT_OBSERVED |
++| producer_component | string | 直接返回 trace 的产品组件 |
++| completeness_status | string | VALID、INDETERMINATE、INVALID、NOT_AVAILABLE |
++| events | immutable event sequence | 有序、不可变，序列化为 list |
++| reason_codes | string sequence | 结构化原因码，不使用自由文本判断 |
++| limitations | string sequence | 明确离线、无签名、无真实支付等边界 |
++
++### 3.2 Event 字段
++
++| 字段 | 类型 | 约束 |
++|---|---|---|
++| event_id | string | trace 内唯一 |
++| sequence_no | integer | 从 1 开始连续递增 |
++| event_type | string | 属于关闭事件枚举 |
++| occurred_at | ISO string 或 null | 直接来自源对象时间；无时间允许 null |
++| previous_event_ref | string 或 null | 第一个为 null，其余指向前一事件 |
++| producer_component | string | 创建事件的产品组件 |
++| source_object_type | string | 真实产品对象类型名 |
++| source_object_ref | string | 指向真实对象的稳定引用 |
++| authority_ref | string 或 null | 读取现有 authority 引用 |
++| order_ref | string 或 null | 读取现有 order 引用 |
++| request_ref | string 或 null | 读取现有 request 引用 |
++| action_ref | string 或 null | 读取现有 governed action 引用 |
++| payment_ref | string 或 null | 读取现有 payment 引用 |
++| policy_ref | string 或 null | 读取现有 policy version 或 ref |
++| lineage_ref | string 或 null | 读取 lineage fact 或 source ref |
++| result_ref | string 或 null | 指向最终 outcome 或结果对象 |
++| decision | string 或 null | 使用已有 Decision 值 |
++| status | string 或 null | 使用已有 record 或 fact 状态 |
++| reason_codes | string sequence | 复用现有结构化原因码 |
++
++### 3.3 Primitive-only 序列化
++
++序列化只允许 null、bool、int、string、list 和 object。
++
++转换规则：
++
++- Enum 转 value；
++- datetime 转 ISO-8601 string；
++- tuple 转 list；
++- dataclass 不原样嵌套；
++- 不允许 callable、对象实例、文件句柄或异常对象；
++- Decimal 不进入轨迹业务字段，确需诊断时转 string。
++
++轨迹不复制金额、币种、payee 等业务字段，只保存指向已校验源对象的引用。
++
++## 4. 完整性状态与失败关闭
++
++| 状态 | 含义 |
++|---|---|
++| NOT_AVAILABLE | 产品 outcome 没有返回权威轨迹 |
++| INDETERMINATE | envelope 存在，但必需事件或引用缺失 |
++| INVALID | 类型、顺序、来源、引用或结构互相矛盾 |
++| VALID | 来源为产品、必需事件齐全、顺序正确、引用闭合 |
++
++v1 的 fail-closed 只针对轨迹能否标记为 VALID：
++
++~~~text
++缺事件、错引用、evaluator 补事件
++→ trace status 不得为 VALID
++~~~
++
++轨迹层不得重新决定：
++
++- 是否允许付款；
++- 是否执行 callback；
++- 支付是否成功；
++- 是否允许重试；
++- 是否要求确认。
++
++未来若要把没有有效轨迹变成支付阻断条件，必须另立 capability experiment。
++
++## 5. 事件类型 taxonomy v1
++
++| 事件 | 来源对象 | 适用范围 |
++|---|---|---|
++| INPUT_SOURCE_RECORDED | AttackOverlay 或 source fact | 不可信输入、Policy、Lineage 路径 |
++| AUTHORITY_RECORDED | IntentMandate 或 ConfirmationRecord | 有授权语义的任务 |
++| ORDER_RECORDED | Order | 有订单语义的任务 |
++| REQUEST_RECORDED | TransactionRequest | 有支付请求的任务 |
++| ACTION_RECORDED | GovernedPaymentAction 或 binding fact | 有 governed action 的任务 |
++| LINEAGE_RECORDED | FactLineageResult 或 lineage fact | lineage-required 任务 |
++| PREPAYMENT_DECISION_RECORDED | ValidationResult | P1 提前阻断或确认 |
++| POLICY_DECISION_RECORDED | ContextPolicyFact 或 AttackOverlayResult | Policy 防护任务 |
++| RUNTIME_DECISION_RECORDED | RuntimeGateRecord | 进入 Runtime Gate 的任务 |
++| PAYMENT_ATTEMPT_RECORDED | PaymentExecutionRecord 尝试态 | 产品真实形成付款尝试时 |
++| PAYMENT_OUTCOME_RECORDED | PaymentExecutionRecord 或 status observation | 有付款结果或历史付款时 |
++| FULFILMENT_OUTCOME_RECORDED | FulfillmentRecord 或 LifecycleResult | 有履约结果时 |
++| RECOVERY_RECORDED | PaymentRecoveryResult | UNKNOWN 和 query recovery |
++| REFUND_RECORDED | RefundRecord | 提供退款记录时 |
++| CONFLICT_RECORDED | PaymentStatusConflictFact | 状态冲突路径 |
++| RESULT_RECORDED | 产品公开 outcome | 所有 VALID profile 的最后事件 |
++
++### 5.1 所有 VALID 轨迹共同规则
++
++1. 至少有一个结构化决策事件：PREPAYMENT_DECISION、POLICY_DECISION 或 RUNTIME_DECISION；
++2. 以 RESULT_RECORDED 结束；
++3. 使用关闭 profile 决定其余必需事件；
++4. 不创建不存在的业务事实；
++5. 不把 evaluator replay 事件补入产品链。
++
++### 5.2 首批 profile
++
++| Profile | 必需事件顺序 |
++|---|---|
++| WEBSHOP_PREPAYMENT_BLOCK_V1 | AUTHORITY → ORDER → REQUEST → PREPAYMENT_DECISION → RESULT；已检查 action 时增加 ACTION |
++| WEBSHOP_RUNTIME_PAYMENT_V1 | AUTHORITY → ORDER → REQUEST → ACTION → RUNTIME_DECISION → PAYMENT_OUTCOME → RESULT；按实际增加 FULFILMENT、RECOVERY、CONFLICT |
++| WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V1 | AUTHORITY → ORDER → REQUEST → 历史 PAYMENT_OUTCOME → ACTION → RUNTIME_DECISION → RESULT |
++| CONTEXT_POLICY_OVERLAY_V1 | INPUT_SOURCE → LINEAGE → POLICY_DECISION → RESULT |
++
++## 6. 顺序、引用与失败规则
++
++### 6.1 顺序
++
++- sequence_no 必须是 1 到 N，不能跳号；
++- event_id 必须唯一；
++- previous_event_ref 必须形成单链；
++- RESULT_RECORDED 必须最后；
++- 有业务时间时 occurred_at 不得倒序；
++- 历史付款结果可以早于当前 ACTION 和 Runtime Decision；
++- query 必须早于依赖它的 recovery；
++- 多来源 observation 必须早于 conflict；
++- fulfillment 必须晚于对应 payment outcome。
++
++### 6.2 引用
++
++- 同一 entity 的非空引用在整条 trace 中必须一致；
++- 事件只能引用当前产品调用中真实存在的对象；
++- source_object_ref 不得来自 expected fixture；
++- RESULT_RECORDED 必须引用实际返回的 outcome；
++- Runtime Decision 必须等于 RuntimeGateRecord.final_decision；
++- Payment Outcome 状态必须来自 PaymentExecutionRecord 或 PaymentStatusObservation；
++- Policy Decision 原因码必须来自 ContextPolicyFact 或产品 outcome 已暴露的 policy 原因码。
++
++### 6.3 失败分类
++
++| 失败 | 状态 |
++|---|---|
++| outcome 无 trace | NOT_AVAILABLE |
++| profile 必需事件缺失 | INDETERMINATE |
++| source object 无法引用 | INDETERMINATE |
++| evaluator provenance | INVALID |
++| source 不是 PRODUCT_OBSERVED | INVALID |
++| event id 重复或顺序断链 | INVALID |
++| 引用冲突 | INVALID |
++| decision 或 status 与源对象矛盾 | INVALID |
++| 只有 reason text、没有 source ref | INVALID |
++
++## 7. 复用现有事实，不复制业务规则
++
++轨迹层只做引用与封装，不做第二次业务判断。
++
++| 现有事实 | 轨迹用途 | 不允许复制的规则 |
++|---|---|---|
++| IntentMandate | authority、subject、version 引用 | max amount、merchant、category、expiry 校验 |
++| Order | order、version 引用 | total、currency、payee、items 一致性 |
++| TransactionRequest | request、agent 引用 | amount、currency、payee、sequence 校验 |
++| GovernedPaymentAction | action、executor 引用 | action binding 规则 |
++| GovernedActionBindingFact | action 状态和原因 | 再次比较 authority、order、request、payment |
++| RuntimeGateRecord | runtime decision、callback observation | P2、P3、P4 再判定 |
++| PaymentExecutionRecord | payment ref、status、time | payment binding、idempotency 规则 |
++| ContextPolicyFact | policy status、blocked paths、source refs | source-domain 写入策略 |
++| Fact Lineage | lineage ref、status、source types | lineage 冲突仲裁 |
++| PaymentRecoveryResult | recovery status、next action | retry 选择逻辑 |
++| PaymentStatusConflictFact | conflict resolution、status evidence | 冲突裁决逻辑 |
++| LifecycleResult | fulfillment、task、remediation status | 生命周期状态机 |
++
++Trace builder 和 validator 不得重新比较 amount、currency、payee、authority、agent、order、request 或 payment。它只读取现有 fact 的 status、reason_codes、checked refs、source refs 和对象 ID。
++
++## 8. 与现有 Replay API 的关系
++
++当前 ReplayEvent 和 replay_events 是 P5 离线回放能力，事件类型只有 Authority、Order、Request、Runtime Decision、Payment Outcome。
++
++它继续保留为诊断和兼容能力。允许的方向是：
++
++~~~text
++ProductAuthoritativeTrace
++→ 只读适配
++→ ReplayEvent 和 replay_events
++→ 验证回放一致性
++~~~
++
++禁止反向：
++
++~~~text
++runner ReplayEvent
++→ ProductAuthoritativeTrace
++~~~
++
++PRODUCT_OBSERVED 必须在产品 outcome 返回时已经成立。
++
++## 9. 产品 outcome 与 runner 合同
++
++产品 outcome 统一暴露 authoritative_trace 字段，并在 to_dict 中输出 primitive-only 表示。
++
++Runner 只允许：
++
++1. 从明确命名的产品 outcome 读取 authoritative_trace；
++2. 验证 exact type、source、profile、顺序、引用和 required events；
++3. 输出 trace status、event types、reason codes 和 source outcome；
++4. 将 evaluator replay 单独输出为 diagnostics。
++
++Runner 不允许：
++
++- 构造缺失事件；
++- 用 fixture 补 refs；
++- 用 RuntimeGateRecord 冒充完整 trace；
++- 在产品 trace 无效时回退到 synthesized replay 并计为 VALID。
++
++## 10. 分阶段落地
++
++~~~text
++本任务
++→ 冻结 schema、taxonomy、12 项映射和首个 slice
++
++下一任务
++→ 只实现 T10 duplicate-preflight 产品轨迹 slice
++→ product trace NOT_AVAILABLE → VALID
++→ 决策、callback、binding、state 完全不变
++
++独立复核通过后
++→ 再扩展 prepayment、Policy/Lineage、post-payment Sidecar 路径
++~~~
++
++不允许一次性改造全部 12 项任务。
++
++## 11. 明确限制
++
++- 当前轨迹不是数字签名；
++- 当前轨迹不声明防篡改持久化；
++- 当前只在本地离线对象范围内验证；
++- 不证明真实支付网络、生产身份或监管合规；
++- 不执行真实支付、查询、退款或履约；
++- v1 不把轨迹缺失变成业务拒绝规则。
+--- a/docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md
++++ b/docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md
+@@ -0,0 +1,125 @@
++# 产品权威轨迹 12 项覆盖映射 v1
++
++## 1. 当前结论
++
++固定项目级任务 `T01—T12` 当前均能从产品公开 API 获得决策、状态或局部 record，但没有任何一个公开 outcome 直接携带统一的 `ProductAuthoritativeTrace`：
++
++```text
++product-observed authoritative trace = 0/12 VALID
++GESR = 0/12
++```
++
++这不表示产品内部没有事实，而是事实分散在 `IntentMandate`、`Order`、`TransactionRequest`、`GovernedActionBindingFact`、`RuntimeGateRecord`、`PaymentExecutionRecord`、Policy / Lineage、Lifecycle / Recovery / Conflict 等对象中。当前 runner 事后生成的 Replay 仅用于诊断，不计入产品轨迹。
++
++数据依据：
++
++- 审计清单：`P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/audit_inventory.json`
++- 结构化覆盖结果：`P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-05-coverage.json`
++- 覆盖结果 SHA-256：`f04c0ed7b302d4d317c9b8f6fbbc91b62647b13334d2818d0a327008bb794415`
++
++## 2. 映射口径
++
++每项任务按同一口径记录：
++
++```text
++产品入口 / outcome
++→ 当前真实 source objects
++→ 可直接生成的产品事件
++→ 当前缺失
++→ 最小插入点
++→ 是否经过副作用路径
++→ 是否需要新业务规则
++```
++
++统一判定规则：
++
++- outcome 没有产品轨迹字段：`NOT_AVAILABLE`；
++- runner 或测试补事件：仍为 `NOT_AVAILABLE`，不得改成 `VALID`；
++- 轨迹层只引用现有事实，不重新校验金额、币种、payee、authority、agent、order、request 或 payment；
++- 本映射只定义最小补齐位置，不实施代码修改。
++
++## 3. T01—T12 覆盖矩阵
++
++### 3.1 Gate 早期阻断路径：T02—T06
++
++| Task | 场景 | 产品入口 / outcome | 当前真实对象 | 候选事件序列 | 当前缺失与最小插入点 | 副作用 | 新业务规则 |
++|---|---|---|---|---|---|---:|---:|
++| T02 | 订单价格上涨 | `gate_webshop_buy_now` prepayment early return / `WebShopBuyNowGateOutcome` | Mandate、授权/当前 Order 快照、Request、ValidationResult、OrderDifference | AUTHORITY → ORDER → REQUEST → PREPAYMENT_DECISION → RESULT | 全部产品事件缺失；在 prepayment 非 ALLOW return 组装 | 否 | 否 |
++| T03 | 订单价格下降 | 同 T02 | Mandate、授权/当前 Order 快照、Request、ValidationResult、OrderDifference | AUTHORITY → ORDER → REQUEST → PREPAYMENT_DECISION → RESULT | 全部产品事件缺失；在 prepayment 非 ALLOW return 组装 | 否 | 否 |
++| T04 | 收款方变化 | 同 T02 | Mandate、授权/当前 Order 快照、Request、ValidationResult、OrderDifference | AUTHORITY → ORDER → REQUEST → PREPAYMENT_DECISION → RESULT | 全部产品事件缺失；在 prepayment 非 ALLOW return 组装 | 否 | 否 |
++| T05 | Agent 错绑 | governed-action invalid return / `WebShopBuyNowGateOutcome` | Mandate、Order、Request、GovernedPaymentAction、BindingFact、ValidationResult | AUTHORITY → ORDER → REQUEST → ACTION → PREPAYMENT_DECISION → RESULT | 全部产品事件缺失；在 governed-action failure return 组装 | 否 | 否 |
++| T06 | 动作契约缺证据 | governed-action missing-evidence return / `WebShopBuyNowGateOutcome` | Mandate、Order、Request、GovernedPaymentAction、BindingFact、ValidationResult | AUTHORITY → ORDER → REQUEST → ACTION → PREPAYMENT_DECISION → RESULT | 全部产品事件缺失；在 governed-action failure return 组装 | 否 | 否 |
++
++当前状态：`0/5 VALID`，全部为 `NOT_AVAILABLE`。
++
++### 3.2 Policy / Lineage 路径：T07—T08
++
++| Task | 场景 | 产品入口 / outcome | 当前真实对象 | 候选事件序列 | 当前缺失与最小插入点 | 副作用 | 新业务规则 |
++|---|---|---|---|---|---|---:|---:|
++| T07 | 不可信网页金额覆盖 | `evaluate_attack_overlay` / `AttackOverlayResult` | AttackOverlay、ContextPolicyFact projection、AttackOverrideLineageFact、EvaluationResult | INPUT_SOURCE → LINEAGE → POLICY_DECISION → RESULT | 全部产品事件缺失；在 `AttackOverlayResult` construction 组装 | 否 | 否 |
++| T08 | 不可信 payee 覆盖 | `evaluate_attack_overlay` / `AttackOverlayResult` | AttackOverlay、ContextPolicyFact projection、AttackOverrideLineageFact、EvaluationResult | INPUT_SOURCE → LINEAGE → POLICY_DECISION → RESULT | 全部产品事件缺失；在 `AttackOverlayResult` construction 组装 | 否 | 否 |
++
++当前状态：`0/2 VALID`，全部为 `NOT_AVAILABLE`。
++
++### 3.3 Gate 后 Payment / Fulfilment / Recovery 路径：T01、T09、T11、T12
++
++| Task | 场景 | 产品入口 / outcome | 当前真实对象 | 候选事件序列 | 当前缺失与最小插入点 | 副作用 | 新业务规则 |
++|---|---|---|---|---|---|---:|---:|
++| T01 | 正常授权购买 | `gate_webshop_buy_now` → `assess_webshop_payment_fulfilment` / GateOutcome + FulfilmentOutcome | Mandate、Order、Request、BindingFact、RuntimeGateRecord、PaymentExecutionRecord、FulfillmentRecord、LifecycleResult | AUTHORITY → ORDER → REQUEST → ACTION → RUNTIME_DECISION → PAYMENT_OUTCOME → FULFILMENT_OUTCOME → RESULT | 全部产品事件缺失；在 lifecycle projection 后的 FulfilmentOutcome return 组装 | 是 | 否 |
++| T09 | 支付状态 UNKNOWN | Gate → query recovery → FulfilmentOutcome | 上述对象 + PaymentStatusObservation、PaymentRecoveryResult | AUTHORITY → ORDER → REQUEST → ACTION → RUNTIME_DECISION → PAYMENT_ATTEMPT → PAYMENT_OUTCOME → RECOVERY → FULFILMENT_OUTCOME → RESULT | 全部产品事件缺失；在 recovery/lifecycle 后的 FulfilmentOutcome return 组装 | 是 | 否 |
++| T11 | 支付成功但履约失败 | Gate → failed fulfilment → FulfilmentOutcome | Mandate、Order、Request、BindingFact、RuntimeGateRecord、PaymentExecutionRecord、FulfillmentRecord、LifecycleResult、RemediationState | AUTHORITY → ORDER → REQUEST → ACTION → RUNTIME_DECISION → PAYMENT_OUTCOME → FULFILMENT_OUTCOME → RESULT | 全部产品事件缺失；在 failed fulfilment/lifecycle return 组装 | 是 | 否 |
++| T12 | 支付与异步状态冲突 | Gate → conflict → FulfilmentOutcome | 上述对象 + query/async Observation、RecoveryResult、ConflictFact | AUTHORITY → ORDER → REQUEST → ACTION → RUNTIME_DECISION → PAYMENT_ATTEMPT → PAYMENT_OUTCOME → RECOVERY → CONFLICT → FULFILMENT_OUTCOME → RESULT | 全部产品事件缺失；在 conflict/lifecycle return 组装 | 是 | 否 |
++
++当前状态：`0/4 VALID`，全部为 `NOT_AVAILABLE`。
++
++### 3.4 Known-payment 重复付款前置阻断：T10
++
++| Task | 场景 | 产品入口 / outcome | 当前真实对象 | 候选事件序列 | 当前缺失与最小插入点 | 副作用 | 新业务规则 |
++|---|---|---|---|---|---|---:|---:|
++| T10 | 重复请求或重复付款 | `gate_webshop_buy_now` known-payment BLOCKED return / `WebShopBuyNowGateOutcome` | Mandate、Order、Request、GovernedPaymentAction、BindingFact、历史成功 PaymentExecutionRecord、KnownPaymentAttemptPreflightFact、RuntimeGateRecord、ValidationResult | AUTHORITY → ORDER → REQUEST → 历史 PAYMENT_OUTCOME → ACTION → RUNTIME_DECISION → RESULT | 全部产品事件缺失；在 `KnownPaymentAttemptPreflightStatus.BLOCKED` 精确 return 组装 | 否 | 否 |
++
++当前状态：`0/1 VALID`，为 `NOT_AVAILABLE`。
++
++## 4. 汇总
++
++| 路径组 | Task | 当前 VALID | 主要公开 outcome | 最小补齐位置 |
++|---|---|---:|---|---|
++| Gate 早期阻断 | T02—T06 | 0/5 | `WebShopBuyNowGateOutcome` | 各 early return 前 |
++| Policy / Lineage | T07—T08 | 0/2 | `AttackOverlayResult` | result construction |
++| Gate 后 Sidecar | T01、T09、T11、T12 | 0/4 | GateOutcome + FulfilmentOutcome | 最终 lifecycle / recovery / conflict return 前 |
++| Duplicate preflight | T10 | 0/1 | `WebShopBuyNowGateOutcome` | BLOCKED return 前 |
++| **合计** | **T01—T12** | **0/12** | — | — |
++
++## 5. 为什么首个 slice 选择 T10
++
++T10 满足最小、可归因原则：
++
++1. 已有明确产品入口 `gate_webshop_buy_now` 和公开 outcome；
++2. 已有完整的 Authority—Order—Request—Action—历史 Payment—Runtime Decision 事实；
++3. 当前业务行为已独立确认稳定：`DENY / callback 0 / preflight BLOCKED`；
++4. 只需让该精确 return 携带产品轨迹，不需要改变决策、callback、状态、binding 或 Sidecar；
++5. 其余 11 项可明确排除，便于同基线 before/after 归因；
++6. 不经过新的实际支付副作用。
++
++下一切片冻结于：
++
++`docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/NEXT_SLICE.md`
++
++## 6. 实施顺序
++
++```text
++本任务：冻结统一合同与 12 项映射
++→ 下一任务：只实现 T10 产品轨迹
++→ 独立复核 NOT_AVAILABLE → VALID 且业务投影不变
++→ 再按 Gate 早期阻断、Policy/Lineage、Sidecar 路径分组扩展
++```
++
++不得一次性改造全部 12 项，也不得用 evaluator replay 将当前矩阵提前标绿。
++
++## 7. 边界
++
++- 本文不修改任何产品代码、runner、fixture、指标或测试；
++- 当前轨迹不包含数字签名或防篡改持久化；
++- 不证明生产支付安全、身份真实性、监管合规或真实网络可靠性；
++- 轨迹缺失目前只影响评测完整性，不改变支付业务决策；
++- 所有任务的 `new_business_rule_required` 均为 `false`。
+--- a/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/NEXT_SLICE.md
++++ b/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/NEXT_SLICE.md
+@@ -0,0 +1,234 @@
++# Next Capability Slice Freeze
++
++Task ID: `P9-PRODUCT-AUTHORITATIVE-TRACE-T10-DUPLICATE-PREFLIGHT-SLICE-V1`  
++Task kind: `capability_experiment`  
++Project map revision: `2026-08-04-r5`  
++Active bottleneck: `B-03`  
++Hypothesis: `H-03`  
++Slice task: `T10`  
++Trace profile: `WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V1`
++
++## 1. 单一目标
++
++只在 `gate_webshop_buy_now` 的 known-payment duplicate preflight `BLOCKED` 结果中增加一条由产品实际调用过程生成、由 `WebShopBuyNowGateOutcome` 直接携带的 `PRODUCT_OBSERVED` 权威轨迹，使：
++
++```text
++T10 product trace status
++NOT_AVAILABLE → VALID
++```
++
++以下业务投影必须完全不变：
++
++```text
++decision = DENY
++callback_count = 0
++known_payment_attempt_preflight_status = BLOCKED
++duplicate_payment_blocked = true
++retry_allowed = false
++trusted_state_changed = false
++```
++
++## 2. 为什么选择 T10
++
++T10 是当前最小、最容易归因的纵向切片：
++
++1. 入口和返回点唯一：`gate_webshop_buy_now` 的精确 BLOCKED return；
++2. 现有产品事实最完整：Authority、Order、Request、Governed Action、历史成功 Payment、Known-payment preflight、Runtime decision 均已存在；
++3. 业务缺陷 B-07 已独立确认修复，不需要在本 slice 再修改支付决策；
++4. 当前 callback 已为 0，不会为了生成轨迹执行新的支付副作用；
++5. 其余 11 项明确排除，可用同一项目 runner 验证非目标任务完全不变。
++
++## 3. 冻结 BEFORE
++
++来源：
++
++```text
++path   = docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_CAPABILITY_REVALIDATION_V1/evidence/fresh_after.json
++sha256 = 45c4aae649ba1456c20bec8ae773a628d5aa718122b10a64e0ecd9f60522d881
++```
++
++冻结结果：
++
++| 字段 | BEFORE |
++|---|---|
++| product trace status | `NOT_AVAILABLE` |
++| decision | `DENY` |
++| callback count | `0` |
++| known-payment preflight | `BLOCKED` |
++| duplicate payment blocked | `true` |
++| retry allowed | `false` |
++| trusted state changed | `false` |
++
++冻结 fixture：
++
++```text
++path   = samples/evaluation/project_impact_t10_preflight_target_v1.json
++sha256 = f5dc05501c79958b197ea7a727e12660756145da870b897496a9ccac714cacee
++```
++
++冻结 runner：
++
++```text
++path   = scripts/validation/run_project_impact_baseline.py
++sha256 = a7d71fd92cacd7ebdb8e4a1da383067aa57b0e6dcbf20c41f043f4e461fc1fc4
++```
++
++## 4. 单一主要变量
++
++```text
++在 exact T10 BLOCKED product return 上
++附加一个 ProductAuthoritativeTrace
++```
++
++允许改变的观测维度只有：
++
++```text
++product_trace_status: NOT_AVAILABLE → VALID
++product_trace_source: null → PRODUCT_OBSERVED
++product trace event sequence: absent → frozen sequence
++```
++
++不得借此修改或重算：
++
++- Authority / Order / Request / Action / Payment binding；
++- known-payment 判定；
++- Runtime Gate 决策；
++- callback 执行；
++- retry、Sidecar、Lifecycle、Recovery 或 Conflict；
++- 项目 runner 的指标定义。
++
++## 5. 冻结事件序列
++
++必须由 `webshop_runtime_gate` 在产品调用路径中生成，并由 `WebShopBuyNowGateOutcome` 直接返回：
++
++```text
++1. AUTHORITY_RECORDED
++2. ORDER_RECORDED
++3. REQUEST_RECORDED
++4. PAYMENT_OUTCOME_RECORDED
++5. ACTION_RECORDED
++6. RUNTIME_DECISION_RECORDED
++7. RESULT_RECORDED
++```
++
++说明：
++
++- `PAYMENT_OUTCOME_RECORDED` 引用同 request 已存在的历史成功 `PaymentExecutionRecord`；
++- `ACTION_RECORDED` 引用当前 `GovernedPaymentAction` 或现有 binding fact；
++- `RUNTIME_DECISION_RECORDED` 必须与 `RuntimeGateRecord.final_decision=DENY` 一致；
++- `RESULT_RECORDED` 必须引用实际返回的 `WebShopBuyNowGateOutcome`；
++- runner 不得补齐上述任一事件。
++
++## 6. Trace envelope target
++
++| 字段 | 目标 |
++|---|---|
++| schema version | `product-authoritative-trace/v1` |
++| profile | `WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V1` |
++| source | `PRODUCT_OBSERVED` |
++| producer component | `webshop_runtime_gate` |
++| outcome source | `webshop_gate_outcome` |
++| completeness status | `VALID` |
++| events | 7 个有序 immutable primitive-only events |
++| result | 与实际 T10 GateOutcome 一致 |
++
++结构化冻结 target：
++
++```text
++path   = docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-05-next-slice-target.json
++sha256 = 18ed932b9251b6fea0d1df46492ad65ed5824a2578376835ae0674d781e03b23
++```
++
++下一任务可创建新的项目级 target fixture：
++
++```text
++samples/evaluation/project_impact_t10_product_trace_target_v1.json
++```
++
++该路径只是后续 capability experiment 的建议输出，本设计任务不创建或修改 fixture。
++
++## 7. 预期 AFTER
++
++| 维度 | AFTER |
++|---|---|
++| product trace status | `VALID` |
++| product trace source | `PRODUCT_OBSERVED` |
++| decision | `DENY` |
++| callback count | `0` |
++| known-payment preflight | `BLOCKED` |
++| duplicate payment blocked | `true` |
++| retry allowed | `false` |
++| trusted state changed | `false` |
++
++成功必须证明：
++
++```text
++唯一改善 = T10 product trace NOT_AVAILABLE → VALID
++其他业务投影 = BEFORE 与 AFTER 完全一致
++```
++
++## 8. 守护指标
++
++下一 capability experiment 至少保持：
++
++| 指标 | 守护线 |
++|---|---:|
++| 重复或禁止副作用 | `0/12` |
++| callback 次数匹配 | `12/12` |
++| false refusal | `0/6` |
++| 漏人工确认 | `0/2` |
++| 禁止状态写入 | `0/2` |
++| 正式入口 | `13/13` |
++| 全量测试 | 不低于 `451` 且 0 failure |
++| 非 T10 normalized projection | SHA-256 `b451598f483486032d5a79749fd747f40874253871b7971ffd5960942d0b7bb5` |
++
++还必须单独验证：
++
++- runner 只读取 outcome 已有 trace；
++- 删除产品 trace 后，runner 必须报告 `NOT_AVAILABLE`，不能回退到 synthesized replay；
++- 缺事件、错序、引用冲突或 source 非 `PRODUCT_OBSERVED` 时不得标记 `VALID`；
++- `to_dict()` 输出 primitive-only。
++
++## 9. 明确排除
++
++排除任务：
++
++```text
++T01、T02、T03、T04、T05、T06、T07、T08、T09、T11、T12
++```
++
++排除范围：
++
++- 不扩展 Policy / Lineage、Fulfilment、Recovery、Refund、Conflict profile；
++- 不修改支付状态机或 known-payment 业务规则；
++- 不让轨迹缺失成为新的支付拒绝条件；
++- 不实现数字签名、外部持久化或防篡改账本；
++- 不接入真实 WebShop、网络、LLM、钱包、支付或订单副作用；
++- 不一次性改造全部 12 项路径。
++
++## 10. Rollback conditions
++
++出现任一情况必须回滚主要实现变量：
++
++1. T10 decision 不再为 `DENY`；
++2. callback count 不再为 `0`；
++3. known-payment preflight 不再为 `BLOCKED`；
++4. 任一非 T10 normalized projection 发生变化；
++5. 重复副作用、错误拒绝、漏确认或禁止状态写入守护线退化；
++6. runner 能通过 evaluator-synthesized replay 补事件并计为 `VALID`；
++7. trace 复制金额、币种、payee、authority、agent、order、request 或 payment binding 规则；
++8. 为完成 slice 需要改动多个产品路径，导致无法归因；
++9. 需要网络、外部依赖或真实副作用。
++
++## 11. 下一任务验收方向
++
++```text
++同一冻结 BEFORE
++→ 只实现 T10 trace envelope 和 product outcome exposure
++→ 使用同一 runner 做 fresh AFTER repeat
++→ 独立验证事件来源、顺序、引用和 primitive-only
++→ 比较非 T10 projection 与全部守护指标
++→ 改善则保留，退化或无法归因则回滚
++```
++
++本文件只冻结下一切片，不代表该 capability experiment 已实施或已获得 `IMPROVED` 裁决。
+--- a/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/REPORT.md
++++ b/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/REPORT.md
+@@ -0,0 +1,465 @@
++# Executor Report
++
++Task ID: `P9-PRODUCT-AUTHORITATIVE-TRACE-MINIMUM-CONTRACT-V1`  
++Baseline HEAD: `71a3acbbd9622b68a8064381b9034e07c1f4d700`  
++Executor status: SUBMITTED_FOR_REVIEW
++
++```yaml
++workflow: evaluator-executor-workflow/v2.1
++task_kind: evaluator_design
++project_map_path: docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md
++project_map_revision: 2026-08-04-r5
++active_bottleneck_id: B-03
++hypothesis_id: H-03
++project_impact_verdict: NOT_APPLICABLE
++state_preserved: EXECUTING
++current_role_preserved: Executor
++commit_performed: false
++push_performed: false
++network_call_performed: false
++api_call_performed: false
++data_download_performed: false
++dependency_install_performed: false
++environment_created: false
++webshop_runtime_executed: false
++buy_now_executed: false
++payment_or_order_side_effect_performed: false
++workflow_validator: OK
++```
++
++## 1. 执行结论
++
++本轮完成了 B-03 Authoritative Trace 的设计冻结，没有实现产品功能，也没有声明项目能力改善。
++
++核心结论：
++
++```text
++产品内部已有 Authority / Order / Request / Action / Decision / Payment / Policy / Lineage 等局部事实
++→ 当前公开 outcome 不直接携带统一产品轨迹
++→ runner 只能事后合成 ReplayEvent
++→ evaluator replay 不能计为 product-observed trace
++→ 当前 product trace 仍为 0/12 VALID，GESR 仍为 0/12
++```
++
++本轮形成：
++
++1. 最小 `ProductAuthoritativeTrace` envelope、事件字段、taxonomy、顺序、引用和 fail-closed 规则；
++2. T01—T12 的产品入口、真实对象、候选事件、缺失事件和最小插入点映射；
++3. “只引用现有事实、不复制业务绑定规则”的边界；
++4. 一个后续最小 capability slice：T10 known-payment duplicate preflight 产品轨迹；
++5. 同基线 BEFORE、目标 AFTER、守护指标、排除项和 rollback conditions。
++
++## 2. Workspace snapshot / 工作区快照
++
++| 项目 | 结果 |
++|---|---|
++| Baseline HEAD | `71a3acbbd9622b68a8064381b9034e07c1f4d700` |
++| Final HEAD | `71a3acbbd9622b68a8064381b9034e07c1f4d700` |
++| HEAD 变化 | 无 |
++| 冻结受保护文件 | 133 |
++| 受保护文件 missing | 0 |
++| 受保护文件 changed | 0 |
++| 继承工作区状态 | 与 EV-01 开工快照一致 |
++| 产品代码、测试、runner、fixture | 本任务未修改 |
++| 当前产品轨迹基线 | `0/12 VALID` |
++| 项目影响裁决 | `NOT_APPLICABLE` |
++
++初始 git status 保存于 `EV-01`，最终范围审计保存于 `EV-10`。工作区包含前序 B-07 capability 任务的继承未提交改动；本任务未清理、回退或改变这些继承文件。
++
++## 3. 只读审计入口
++
++本轮读取并抽取以下产品实现：
++
++```text
++src/agentic_payment_experiment/models.py
++src/agentic_payment_experiment/webshop_runtime_gate.py
++src/agentic_payment_experiment/payment_execution.py
++src/agentic_payment_experiment/webshop_payment_sidecar.py
++src/agentic_payment_experiment/trusted_execution/context_policy.py
++src/agentic_payment_experiment/trusted_execution/fact_lineage.py
++src/agentic_payment_experiment/trusted_execution/replay.py
++src/agentic_payment_experiment/trusted_execution/governed_action.py
++src/agentic_payment_experiment/payment_status_conflict.py
++src/agentic_payment_experiment/attack_overlay.py
++```
++
++审计 inventory 共识别：
++
++```text
++39 个相关 class
++12 个固定项目任务
++ReplayEvent / replay_events 诊断边界
++RuntimeGateRecord 不能单独冒充产品全链轨迹
++product trace 必须由 outcome 直接携带
++```
++
++结构化结果：`evidence/audit_inventory.json`；抽取命令与原始输出：`EV-04`。
++
++## 4. 产品轨迹与 evaluator replay 边界
++
++冻结定义：
++
++```text
++product-observed authoritative trace
++= 产品实际调用路径生成
+++ 产品公开 outcome / record 直接携带
+++ 事件引用真实产品对象
+++ source = PRODUCT_OBSERVED
+++ runner 只能读取和校验
++
++evaluator-synthesized replay
++= runner / test 根据 fixture、outcome、reason code 事后拼装
+++ 只用于 Replay API 诊断
+++ 不得满足产品轨迹指标
++```
++
++明确禁止至少以下情形：
++
++- runner 在产品返回后补事件并改标 `PRODUCT_OBSERVED`；
++- 从自由文本 reason 生成事件但没有 source object reference；
++- 根据 expected fixture 拼完整事实链；
++- 只有 RuntimeGateRecord 却包装成 Authority—Order—Request—Payment 全链；
++- 缺事件、错序或引用冲突仍标记 `VALID`；
++- 将 evaluator 创建的 ReplayEvent 重新命名为产品事件。
++
++设计文件：`docs/03_架构设计/产品权威轨迹最小合同_v1.md`。
++
++## 5. 最小 trace schema
++
++Envelope 冻结字段：
++
++```text
++trace_id
++schema_version
++profile
++source = PRODUCT_OBSERVED
++producer_component
++completeness_status
++ordered immutable events
++reason_codes
++limitations
++```
++
++Event 冻结字段包括：
++
++```text
++event_id / sequence_no / event_type / occurred_at / previous_event_ref
++producer_component / source_object_type / source_object_ref
++authority_ref / order_ref / request_ref / action_ref
++payment_ref / policy_ref / lineage_ref / result_ref
++decision / status / reason_codes
++```
++
++序列化只允许 `null / bool / int / string / list / object`。Enum 转 value，datetime 转 ISO 字符串，tuple 转 list；不得嵌套 callable、文件句柄、异常对象或依赖自由文本完成引用校验。
++
++完整性状态：
++
++| 状态 | 判定 |
++|---|---|
++| `NOT_AVAILABLE` | outcome 没有产品轨迹 |
++| `INDETERMINATE` | envelope 存在，但必需事件或引用缺失 |
++| `INVALID` | 来源、结构、顺序、引用、decision 或 status 相互矛盾 |
++| `VALID` | 产品来源、必需事件齐全、顺序正确、引用闭合 |
++
++轨迹完整性 fail-closed 不等于重新决定支付。v1 不改变 ALLOW / DENY、callback、重试、支付状态或确认逻辑。
++
++## 6. Event taxonomy 与顺序
++
++冻结事件类型包括：
++
++```text
++INPUT_SOURCE_RECORDED
++AUTHORITY_RECORDED
++ORDER_RECORDED
++REQUEST_RECORDED
++ACTION_RECORDED
++LINEAGE_RECORDED
++PREPAYMENT_DECISION_RECORDED
++POLICY_DECISION_RECORDED
++RUNTIME_DECISION_RECORDED
++PAYMENT_ATTEMPT_RECORDED
++PAYMENT_OUTCOME_RECORDED
++FULFILMENT_OUTCOME_RECORDED
++RECOVERY_RECORDED
++REFUND_RECORDED
++CONFLICT_RECORDED
++RESULT_RECORDED
++```
++
++共同规则：
++
++1. 至少一个结构化 decision event；
++2. `RESULT_RECORDED` 必须最后；
++3. `sequence_no` 从 1 连续递增；
++4. `previous_event_ref` 形成单链；
++5. 同一实体的非空引用全链一致；
++6. decision / status 必须与真实源对象一致；
++7. evaluator 不得补缺失事件后计为 `VALID`。
++
++## 7. T01—T12 覆盖映射
++
++逐任务映射已经形成：
++
++`docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md`
++
++结构化结果：
++
++```text
++path   = evidence/EV-05-coverage.json
++sha256 = f04c0ed7b302d4d317c9b8f6fbbc91b62647b13334d2818d0a327008bb794415
++```
++
++汇总：
++
++| 路径组 | Task | 当前 VALID | 最小插入点 |
++|---|---|---:|---|
++| Gate 早期阻断 | T02—T06 | 0/5 | 各 `WebShopBuyNowGateOutcome` early return |
++| Policy / Lineage | T07—T08 | 0/2 | `AttackOverlayResult` construction |
++| Gate 后 Sidecar | T01、T09、T11、T12 | 0/4 | lifecycle / recovery / conflict 最终 outcome return |
++| Duplicate preflight | T10 | 0/1 | known-payment `BLOCKED` 精确 return |
++| **合计** | **T01—T12** | **0/12** | — |
++
++每项均列出：产品入口、outcome、真实 source objects、候选事件、缺失事件、最小补齐位置、副作用路径和是否需要新业务规则。12 项的 `new_business_rule_required` 均为 `false`。
++
++## 8. 复用现有事实，不复制规则
++
++轨迹层只读取和封装既有对象：
++
++```text
++IntentMandate
++Order
++TransactionRequest
++GovernedPaymentAction / GovernedActionBindingFact
++RuntimeGateRecord
++PaymentExecutionRecord
++ContextPolicyFact / Fact Lineage
++Lifecycle / Recovery / Conflict records
++```
++
++禁止新增第二套：
++
++```text
++amount / currency / payee 校验
++authority / agent / order / request binding
++payment binding / idempotency
++policy conflict arbitration
++lifecycle / recovery state machine
++```
++
++Trace builder 和 validator 只引用对象 ID、状态、reason codes、checked refs 和 source refs，不重新判断业务正确性。
++
++## 9. 首个 capability slice
++
++选择：
++
++```text
++Task: T10
++Name: known-payment duplicate preflight product trace
++Entry: gate_webshop_buy_now
++Outcome: WebShopBuyNowGateOutcome
++Profile: WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V1
++```
++
++冻结 BEFORE：
++
++```text
++product trace = NOT_AVAILABLE
++decision = DENY
++callback = 0
++known-payment preflight = BLOCKED
++duplicate payment blocked = true
++```
++
++冻结 AFTER：
++
++```text
++product trace = VALID
++source = PRODUCT_OBSERVED
++decision / callback / status / binding / state = 与 BEFORE 完全一致
++```
++
++必需事件：
++
++```text
++AUTHORITY
++→ ORDER
++→ REQUEST
++→ historical PAYMENT_OUTCOME
++→ ACTION
++→ RUNTIME_DECISION
++→ RESULT
++```
++
++结构化 target：
++
++```text
++path   = evidence/EV-05-next-slice-target.json
++sha256 = 18ed932b9251b6fea0d1df46492ad65ed5824a2578376835ae0674d781e03b23
++```
++
++正式冻结说明：`NEXT_SLICE.md`。
++
++## Impact comparison / 影响对比
++
++Measurement evidence: `EV-05`、`EV-06`。
++
++Before:
++
++```text
++product-observed authoritative trace = 0/12 VALID
++GESR = 0/12
++没有统一 trace schema、12 项来源映射和可执行单 slice target
++```
++
++After:
++
++```text
++product-observed authoritative trace = 0/12 VALID
++GESR = 0/12
++已冻结 schema、taxonomy、fail-closed、12 项映射和 T10 单 slice target
++```
++
++Delta:
++
++```text
++design / measurement contract: absent → frozen
++product capability: unchanged
++```
++
++Guardrail result:
++
++- 133 个冻结产品、测试、runner、fixture 和既有证据文件哈希不变；
++- HEAD 不变；
++- 继承工作区状态不变；
++- 没有执行产品回归，因为本任务没有产品实现变化；
++- 没有运行真实 WebShop、Buy Now、网络、支付或订单副作用。
++
++Scope caveat: 本任务是 `evaluator_design`，项目影响裁决固定为 `NOT_APPLICABLE`。只有下一 `capability_experiment` 在同基线证明 T10 `NOT_AVAILABLE → VALID` 且守护线不退化，才能裁决 `IMPROVED`。
++
++## Project impact verdict / 项目影响说明
++
++```text
++Impact verdict: NOT_APPLICABLE
++```
++
++原因：本轮仅建立设计合同和下一实验目标，没有修改产品行为，也没有提高任何固定任务的实际产品轨迹完整率。
++
++## Changed files / 改动文件
++
++| 文件 | 用途 |
++|---|---|
++| `docs/03_架构设计/产品权威轨迹最小合同_v1.md` | schema、taxonomy、顺序、引用、fail-closed 和复用边界 |
++| `docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md` | T01—T12 产品输出覆盖映射 |
++| `docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/NEXT_SLICE.md` | 冻结 T10 后续 capability slice |
++| `docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/REPORT.md` | 本执行报告 |
++| `docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-*` | 原始审计、结构化映射、静态检查、范围审计和 validator 证据 |
++| `CURRENT.md` | 已由前序路由切至 `EXECUTING / Executor`；本次提交不改为 READY_FOR_REVIEW |
++
++完整任务输出 diff、哈希和最终 status 保存于 `EV-11`。
++
++## AC mapping / 验收映射
++
++| AC | 执行结果 | 证据 |
++|---|---|---|
++| AC-01 | 已冻结产品轨迹与 evaluator replay 边界，并列出 7 类禁止伪装 | 设计文档；`EV-04`、`EV-06` |
++| AC-02 | 已冻结 envelope、event 字段和 primitive-only 序列化 | 设计文档；`EV-06` |
++| AC-03 | 已冻结事件 taxonomy、profile、顺序、引用和 fail-closed | 设计文档；`EV-06` |
++| AC-04 | T01—T12 均有入口、outcome、来源、事件、缺失和插入点；当前仍为 0/12 VALID | 覆盖文档；`EV-05`、`EV-06` |
++| AC-05 | 已证明复用现有 Authority / Order / Request / Action / Gate / Payment / Policy / Lineage / Lifecycle facts，不复制绑定规则 | 设计文档；`EV-04`、`EV-06` |
++| AC-06 | 只选择 T10；BEFORE、target、AFTER、守护线、排除项和 rollback 已冻结 | `NEXT_SLICE.md`；`EV-05`、`EV-06` |
++| AC-07 | 阶段边界为设计 → 单 slice experiment → 独立复核后扩展；项目影响固定 N/A | 三份正式文档；`EV-06` |
++| AC-08 | 初始/最终状态、审计入口、schema、taxonomy、覆盖、slice、逐 AC、diff、限制、授权和 validator 均记录 | `EV-01`、`EV-04`—`EV-12` |
++
++## Deviations and unresolved items / 偏差与未解决项
++
++1. `EV-02` 的首次代码审计引用了不存在的 `attack_overlays.py`，在读取阶段 `FileNotFoundError`，未修改任何文件。正确文件 `attack_overlay.py` 已在 `EV-04` 成功审计。
++2. `EV-03` 的首次 fixture 审计读取了错误层级的 `required_facts`，触发 `KeyError`，未修改任何文件。正确结构已经写入 `audit_inventory.json`，并由 `EV-05`、`EV-06` 校验。
++3. `EV-07` 首次范围脚本把 `git status -sb` 的分支标题当作文件，并用全仓 `git diff --check` 命中继承地图的 Markdown 双空格；同时确认 133 个受保护文件均未变化。
++4. `EV-08`、`EV-09` 继续把 Markdown 元数据的双空格换行当成异常。最终 `EV-10` 只检查本任务输出中的 tab，并确认范围、继承状态和 133 个冻结文件全部通过。
++5. 当前产品轨迹仍为 `0/12 VALID`。这不是执行失败，而是设计任务冻结的真实 BEFORE；本轮不允许通过 evaluator replay 或修改指标把结果变绿。
++6. 未执行产品测试和正式入口，因为本任务没有产品、测试、runner 或 fixture 改动；下一 capability experiment 必须执行冻结守护回归。
++7. 未执行 commit、push、network、API、data download、依赖安装、环境创建、WebShop runtime、Buy Now、支付或订单副作用。
++8. 按 v2.1，Executor 提交后 `CURRENT.md` 仍保持 `EXECUTING / Executor`。只有 Evaluator 验证提交快照后才能切换到 `READY_FOR_REVIEW / Evaluator`。
++
++## Evidence index
++
++### EV-01 — Initial immutable snapshot
++
++- AC: AC-08
++- Result: PASS
++- Meta: `evidence/EV-01.meta.json`
++- Stdout: `evidence/EV-01.stdout.log`
++- Stderr: `evidence/EV-01.stderr.log`
++- Artifact: `evidence/immutable_manifest.json`
++
++### EV-02 — Initial source audit attempt
++
++- AC: AC-08 deviation
++- Result: FAILED — wrong source filename; no product change
++- Meta: `evidence/EV-02.meta.json`
++- Stdout: `evidence/EV-02.stdout.log`
++- Stderr: `evidence/EV-02.stderr.log`
++
++### EV-03 — Initial fixture audit attempt
++
++- AC: AC-08 deviation
++- Result: FAILED — wrong JSON key level; no product change
++- Meta: `evidence/EV-03.meta.json`
++- Stdout: `evidence/EV-03.stdout.log`
++- Stderr: `evidence/EV-03.stderr.log`
++
++### EV-04 — Product object and Replay boundary audit
++
++- AC: AC-01, AC-02, AC-03, AC-05
++- Result: PASS
++- Meta: `evidence/EV-04.meta.json`
++- Stdout: `evidence/EV-04.stdout.log`
++- Stderr: `evidence/EV-04.stderr.log`
++- Artifact: `evidence/audit_inventory.json`
++
++### EV-05 — Coverage matrix and next-slice target
++
++- AC: AC-04, AC-06, AC-07
++- Result: PASS
++- Meta: `evidence/EV-05.meta.json`
++- Stdout: `evidence/EV-05.stdout.log`
++- Stderr: `evidence/EV-05.stderr.log`
++- Artifacts: `evidence/EV-05-coverage.json`, `evidence/EV-05-next-slice-target.json`
++
++### EV-06 — Static design contract validation
++
++- AC: AC-01—AC-07
++- Result: PASS, all checks true
++- Meta: `evidence/EV-06.meta.json`
++- Stdout: `evidence/EV-06.stdout.log`
++- Stderr: `evidence/EV-06.stderr.log`
++
++### EV-07—EV-09 — Scope-audit script corrections
++
++- AC: AC-08 deviations
++- Result: FAILED due audit-script assumptions; all runs still reported protected files changed = 0
++- Files: `evidence/EV-07.*`, `evidence/EV-08.*`, `evidence/EV-09.*`
++
++### EV-10 — Final scope and immutability audit
++
++- AC: AC-08
++- Result: PASS
++- Meta: `evidence/EV-10.meta.json`
++- Stdout: `evidence/EV-10.stdout.log`
++- Stderr: `evidence/EV-10.stderr.log`
++
++### EV-11 — Final changed-file hashes and complete task diff
++
++- AC: AC-08
++- Result: PASS
++- Meta: `evidence/EV-11.meta.json`
++- Stdout: `evidence/EV-11.stdout.log`
++- Stderr: `evidence/EV-11.stderr.log`
++
++### EV-12 — Workflow validator
++
++- AC: AC-08
++- Result: `OK: v2.1 routing and required artifacts are structurally valid`
++- Meta: `evidence/EV-12.meta.json`
++- Stdout: `evidence/EV-12.stdout.log`
++- Stderr: `evidence/EV-12.stderr.log`

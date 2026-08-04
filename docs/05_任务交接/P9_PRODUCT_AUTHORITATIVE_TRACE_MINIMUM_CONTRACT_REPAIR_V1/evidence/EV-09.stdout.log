@@ -1,0 +1,87 @@
+RUNNER_LEGACY
+    *named_outputs: tuple[str, object],
+) -> tuple[str, list[str], tuple[str, ...], str | None]:
+    """Read only an explicit product-returned authoritative trace.
+
+    RuntimeGateRecord and evaluator-created ReplayEvent values are not treated as
+    product authoritative trace. A future product API must expose an exact tuple
+    named authoritative_trace_events before it can count here.
+    """
+
+    for source_name, output in named_outputs:
+        events = getattr(output, "authoritative_trace_events", None)
+        if events is None:
+            continue
+        if type(events) is not tuple or any(type(event) is not ReplayEvent for event in events):
+            return (
+                "INVALID",
+                [],
+                ("product_authoritative_trace_invalid",),
+                source_name,
+            )
+        replay = replay_events(events)
+        return (
+            replay.status.value,
+            [event.event_type.value for event in events],
+            replay.reason_codes,
+            source_name,
+        )
+    return (
+        "NOT_AVAILABLE",
+        [],
+        ("product_authoritative_trace_not_available",),
+        None,
+    )
+
+
+T10_IDS
+    confirmation = create_confirmation_record(
+        confirmation_id="project-baseline-confirmation-1",
+        authority_id=mandate.mandate_id,
+        authority_version=mandate.authority_version,
+        order=authorized.order,
+        confirmed_at=bound_request.occurred_at - timedelta(minutes=1),
+        expires_at=bound_request.occurred_at + timedelta(minutes=30),
+    )
+    execution = PaymentExecutionRecord(
+        payment_id="project-baseline-payment-1",
+        request_id=bound_request.request_id,
+        order_id=current.order.order_id,
+        status=PaymentStatus.PENDING,
+        amount=bound_request.amount,
+        currency=bound_request.currency,
+        occurred_at=bound_request.occurred_at + timedelta(seconds=1),
+        provider_ref="offline-webshop-payment-provider",
+        idempotency_key="project-baseline-idempotency-1",
+        authority_ref=mandate.mandate_id,
+    elif task_id == "T06":
+        action = replace(action, action_id="")
+
+    existing_success: PaymentExecutionRecord | None = None
+    known_payment_attempts: tuple[PaymentExecutionRecord, ...] = ()
+    if task_id == "T10":
+        existing_success = replace(
+            _sidecar_payment(context, PaymentStatus.UNKNOWN),
+            payment_id="project-baseline-payment-existing-success",
+            status=PaymentStatus.SUCCEEDED,
+            provider_ref="offline-existing-payment-provider",
+        )
+        known_payment_attempts = (existing_success,)
+
+    gate, callbacks = _invoke_gate(
+        context,
+        action=action,
+GATE_DECISION_BRANCHES
+TARGET_DECISIONS
+T01 normal_governed_purchase ALLOW 1 VALID
+T02 order_price_up CONFIRMATION_REQUIRED 0 NOT_EVALUATED
+T03 order_price_down CONFIRMATION_REQUIRED 0 NOT_EVALUATED
+T04 payee_changed INDETERMINATE 0 NOT_EVALUATED
+T05 governed_action_agent_mismatch DENY 0 INVALID
+T06 governed_action_missing_id INDETERMINATE 0 MISSING_EVIDENCE
+T07 untrusted_web_amount_override ALLOW 0 NOT_APPLICABLE
+T08 untrusted_payee_override ALLOW 0 NOT_APPLICABLE
+T09 unknown_payment_query_original ALLOW 1 VALID
+T10 duplicate_payment_attempt DENY 0 VALID
+T11 payment_succeeded_fulfilment_failed ALLOW 1 VALID
+T12 payment_status_terminal_conflict ALLOW 1 VALID

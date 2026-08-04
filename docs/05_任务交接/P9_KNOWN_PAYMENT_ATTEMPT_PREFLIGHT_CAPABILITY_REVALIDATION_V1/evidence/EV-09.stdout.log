@@ -1,0 +1,26 @@
+CHECKS={"all_frozen_files_present": true, "all_frozen_hashes_unchanged": true, "before_unchanged": true, "git_status_shape_unchanged": true, "head_unchanged": true, "known_attempt_implementation_unchanged": true, "no_new_files_on_frozen_surface": true, "no_removed_files_on_frozen_surface": true, "runner_unchanged": true, "runtime_gate_implementation_unchanged": true, "target_unchanged": true}
+FROZEN_FILE_COUNT=287
+MISMATCHES={}
+NEW_FROZEN_FILES=[]
+MISSING_FROZEN_FILES=[]
+MANIFEST_SHA256=df37b55f704e2bcea061aac4554b82be55e170029de0b0ffdbbb7ad06637fcce
+HEAD=71a3acbbd9622b68a8064381b9034e07c1f4d700
+STATUS_START
+## main...origin/main
+ M CURRENT.md
+ M docs/04_验证体系/项目级能力评测基线_v1.md
+ M scripts/validation/run_project_impact_baseline.py
+ M src/agentic_payment_experiment/__init__.py
+ M src/agentic_payment_experiment/trusted_execution/__init__.py
+ M src/agentic_payment_experiment/webshop_runtime_gate.py
+ M tests/test_project_impact_baseline.py
+ M tests/test_webshop_runtime_gate.py
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_CAPABILITY_REVALIDATION_V1/
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/REPORT.md
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/REVIEW.md
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/evidence/
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_UNRELATED_MALFORMED_REPAIR_V1/
+?? samples/evaluation/project_impact_t10_preflight_target_v1.json
+?? src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
+?? tests/trusted_execution/test_known_payment_attempt.py
+STATUS_END

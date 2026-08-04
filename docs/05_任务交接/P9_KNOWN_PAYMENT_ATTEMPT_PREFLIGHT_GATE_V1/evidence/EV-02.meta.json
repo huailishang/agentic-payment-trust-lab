@@ -1,0 +1,16 @@
+{
+  "command": [
+    "bash",
+    "-lc",
+    "set -e; python3 -m py_compile scripts/validation/run_project_impact_baseline.py; PYTHONPATH=src python3 scripts/validation/run_project_impact_baseline.py --spec samples/evaluation/project_impact_t10_preflight_target_v1.json --repeat 1 --output docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/evidence/before.json"
+  ],
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "duration_seconds": 0.488845,
+  "ended_at_utc": "2026-08-04T00:52:53.745391+00:00",
+  "exit_code": 0,
+  "label": "EV-02",
+  "schema": "executor-evidence/v1",
+  "started_at_utc": "2026-08-04T00:52:53.256546+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "181fc3f0a1e021fc32e95e5140a2051ac80daba7faf94449bec2f0476f43c9ee"
+}

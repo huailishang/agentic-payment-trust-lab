@@ -1,0 +1,420 @@
+diff --git a/src/agentic_payment_experiment/__init__.py b/src/agentic_payment_experiment/__init__.py
+index cab7ede..7075481 100644
+--- a/src/agentic_payment_experiment/__init__.py
++++ b/src/agentic_payment_experiment/__init__.py
+@@ -52,7 +52,10 @@ from .trusted_execution import (
+     GovernedActionBindingFact,
+     GovernedActionType,
+     GovernedPaymentAction,
++    KnownPaymentAttemptPreflightFact,
++    KnownPaymentAttemptPreflightStatus,
+     SideEffectClass,
++    derive_known_payment_attempt_preflight,
+     verify_governed_payment_action,
+ )
+ from .remediation import assess_remediation
+@@ -83,6 +86,8 @@ __all__ = [
+     "FulfillmentRecord",
+     "FulfillmentStatus",
+     "IntentMandate",
++    "KnownPaymentAttemptPreflightFact",
++    "KnownPaymentAttemptPreflightStatus",
+     "LifecycleResult",
+     "Order",
+     "OrderDifference",
+@@ -110,6 +115,7 @@ __all__ = [
+     "assess_lifecycle",
+     "assess_payment_recovery",
+     "assess_webshop_payment_fulfilment",
++    "derive_known_payment_attempt_preflight",
+     "derive_payment_query_finality",
+     "derive_payment_status_conflict",
+     "execute_with_payment_binding_gate",
+diff --git a/src/agentic_payment_experiment/trusted_execution/__init__.py b/src/agentic_payment_experiment/trusted_execution/__init__.py
+index 7a99a4c..010d867 100644
+--- a/src/agentic_payment_experiment/trusted_execution/__init__.py
++++ b/src/agentic_payment_experiment/trusted_execution/__init__.py
+@@ -56,6 +56,12 @@ from .governed_action import (
+     verify_governed_payment_action,
+ )
+ from .hashing import canonical_hash, canonical_json, canonicalize, verify_hash
++from .known_payment_attempt import (
++    KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_LIMITATIONS,
++    KnownPaymentAttemptPreflightFact,
++    KnownPaymentAttemptPreflightStatus,
++    derive_known_payment_attempt_preflight,
++)
+ from .payment_binding import (
+     PaymentExecutionBindingFact,
+     verify_payment_execution_binding,
+@@ -82,6 +88,9 @@ __all__ = [
+     "ActionReversibility",
+     "BindingResult",
+     "BindingStatus",
++    "KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_LIMITATIONS",
++    "KnownPaymentAttemptPreflightFact",
++    "KnownPaymentAttemptPreflightStatus",
+     "ConfirmationBindingFact",
+     "ConfirmationRecord",
+     "ConfirmationStatus",
+@@ -114,6 +123,7 @@ __all__ = [
+     "confirmation_order_payload",
+     "create_confirmation_record",
+     "execute_with_confirmation_gate",
++    "derive_known_payment_attempt_preflight",
+     "evaluate_context_policy",
+     "check_idempotency",
+     "validate_status_observation",
+diff --git a/src/agentic_payment_experiment/webshop_runtime_gate.py b/src/agentic_payment_experiment/webshop_runtime_gate.py
+index 70b0cd0..5876b04 100644
+--- a/src/agentic_payment_experiment/webshop_runtime_gate.py
++++ b/src/agentic_payment_experiment/webshop_runtime_gate.py
+@@ -21,8 +21,11 @@ from .trusted_execution import (
+     ContextPolicyFact,
+     GovernedActionBindingFact,
+     GovernedPaymentAction,
++    KnownPaymentAttemptPreflightFact,
++    KnownPaymentAttemptPreflightStatus,
+     RuntimeGateRecord,
+     VerificationStatus,
++    derive_known_payment_attempt_preflight,
+     verify_governed_payment_action,
+ )
+ from .validator import validate_request
+@@ -52,6 +55,7 @@ class WebShopBuyNowGateOutcome:
+     runtime_gate_record: RuntimeGateRecord | None
+     reason_codes: tuple[str, ...]
+     governed_action_fact: GovernedActionBindingFact | None = None
++    known_payment_attempt_preflight_fact: KnownPaymentAttemptPreflightFact | None = None
+     limitations: tuple[str, ...] = WEBSHOP_GATE_LIMITATIONS
+ 
+ 
+@@ -71,6 +75,7 @@ def gate_webshop_buy_now(
+     seen_request_ids: Collection[str] = (),
+     authorized_adaptation: WebShopCommerceAdaptation | None = None,
+     governed_action: GovernedPaymentAction | None = None,
++    known_payment_attempts: tuple[PaymentExecutionRecord, ...] = (),
+ ) -> WebShopBuyNowGateOutcome:
+     """Allow an injected checkout seam only after existing P1-P4 checks pass.
+ 
+@@ -181,19 +186,97 @@ def gate_webshop_buy_now(
+             callback_failure.append(type(exc).__name__)
+             return _CALLBACK_FAILURE_SENTINEL
+ 
+-    runtime_record = observe_payment_execution_gate(
+-        prepayment_result.decision,
+-        mandate,
+-        adaptation.order,
+-        bound_request,
+-        execution_candidate,
+-        guarded_checkout_callback,
+-        agent_identity=agent_identity,
+-        current_provider_ref=current_provider_ref,
+-        current_executor_instance_ref=current_executor_instance_ref,
+-        current_credential_ref=current_credential_ref,
+-        context_policy_fact=context_policy_fact,
+-    )
++    def observe_runtime(decision: Decision) -> RuntimeGateRecord:
++        return observe_payment_execution_gate(
++            decision,
++            mandate,
++            adaptation.order,
++            bound_request,
++            execution_candidate,
++            guarded_checkout_callback,
++            agent_identity=agent_identity,
++            current_provider_ref=current_provider_ref,
++            current_executor_instance_ref=current_executor_instance_ref,
++            current_credential_ref=current_credential_ref,
++            context_policy_fact=context_policy_fact,
++        )
++
++    known_attempt_fact: KnownPaymentAttemptPreflightFact | None = None
++    if type(known_payment_attempts) is not tuple or known_payment_attempts:
++        known_attempt_fact = derive_known_payment_attempt_preflight(
++            mandate,
++            adaptation.order,
++            bound_request,
++            known_payment_attempts,
++        )
++        preflight_reasons = tuple(
++            f"preflight:{code}" for code in known_attempt_fact.reason_codes
++        )
++        if (
++            known_attempt_fact.status
++            is KnownPaymentAttemptPreflightStatus.INDETERMINATE
++        ):
++            runtime_record = observe_runtime(Decision.INDETERMINATE)
++            runtime_record = replace(
++                runtime_record,
++                reason_codes=tuple(
++                    sorted(set((*runtime_record.reason_codes, *preflight_reasons)))
++                ),
++            )
++            return WebShopBuyNowGateOutcome(
++                decision=Decision.INDETERMINATE,
++                checkout_executed=False,
++                callback_count=runtime_record.callback_count,
++                callback_result_ref=None,
++                bound_request=bound_request,
++                prepayment_result=prepayment_result,
++                runtime_gate_record=runtime_record,
++                reason_codes=runtime_record.reason_codes,
++                governed_action_fact=governed_action_fact,
++                known_payment_attempt_preflight_fact=known_attempt_fact,
++            )
++        if known_attempt_fact.status is KnownPaymentAttemptPreflightStatus.BLOCKED:
++            trusted_seen_request_ids = (
++                *tuple(seen_request_ids),
++                *known_attempt_fact.blocking_request_refs,
++            )
++            duplicate_result = validate_request(
++                mandate,
++                bound_request,
++                seen_request_ids=trusted_seen_request_ids,
++                authorized_order=authorized_snapshot.order,
++                final_order=adaptation.order,
++                confirmation_record=confirmation_record,
++            )
++            runtime_record = observe_runtime(duplicate_result.decision)
++            runtime_record = replace(
++                runtime_record,
++                reason_codes=tuple(
++                    sorted(
++                        set(
++                            (
++                                *runtime_record.reason_codes,
++                                *_prepayment_reason_codes(duplicate_result),
++                                *preflight_reasons,
++                            )
++                        )
++                    )
++                ),
++            )
++            return WebShopBuyNowGateOutcome(
++                decision=duplicate_result.decision,
++                checkout_executed=False,
++                callback_count=runtime_record.callback_count,
++                callback_result_ref=None,
++                bound_request=bound_request,
++                prepayment_result=duplicate_result,
++                runtime_gate_record=runtime_record,
++                reason_codes=runtime_record.reason_codes,
++                governed_action_fact=governed_action_fact,
++                known_payment_attempt_preflight_fact=known_attempt_fact,
++            )
++
++    runtime_record = observe_runtime(prepayment_result.decision)
+ 
+     if callback_failure:
+         failure_code = f"checkout_callback_exception:{callback_failure[0]}"
+@@ -213,6 +296,7 @@ def gate_webshop_buy_now(
+             runtime_gate_record=runtime_record,
+             reason_codes=runtime_record.reason_codes,
+             governed_action_fact=governed_action_fact,
++            known_payment_attempt_preflight_fact=known_attempt_fact,
+         )
+ 
+     return WebShopBuyNowGateOutcome(
+@@ -229,6 +313,7 @@ def gate_webshop_buy_now(
+         runtime_gate_record=runtime_record,
+         reason_codes=runtime_record.reason_codes,
+         governed_action_fact=governed_action_fact,
++        known_payment_attempt_preflight_fact=known_attempt_fact,
+     )
+ 
+ 
+diff --git a/src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py b/src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
+new file mode 100755
+index 0000000..fe4935e
+--- /dev/null
++++ b/src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
+@@ -0,0 +1,188 @@
++"""Typed preflight facts for already-known payment attempts.
++
++The fact is intentionally narrow: it classifies only an exact tuple of exact
++PaymentExecutionRecord values. A succeeded attempt can block a second
++payment only when the existing P2 verifier proves that it belongs to the same
++mandate, order, request, agent, payee, amount, and currency chain.
++"""
++
++from __future__ import annotations
++
++from dataclasses import dataclass
++from enum import Enum
++
++from ..models import (
++    IntentMandate,
++    Order,
++    PaymentExecutionRecord,
++    PaymentStatus,
++    TransactionRequest,
++)
++from .execution_facts import VerificationStatus
++from .payment_binding import verify_payment_execution_binding
++
++
++class KnownPaymentAttemptPreflightStatus(str, Enum):
++    """Closed result used by the runtime gate before any payment callback."""
++
++    CLEAR = "CLEAR"
++    BLOCKED = "BLOCKED"
++    INDETERMINATE = "INDETERMINATE"
++
++
++KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_LIMITATIONS = (
++    "offline_fact_only",
++    "exact_payment_execution_records_only",
++    "succeeded_attempts_only",
++    "pending_or_unknown_attempt_policy_not_defined",
++    "no_external_payment_status_query",
++)
++
++
++@dataclass(frozen=True)
++class KnownPaymentAttemptPreflightFact:
++    """Immutable, primitive-serializable classification of known attempts."""
++
++    status: KnownPaymentAttemptPreflightStatus
++    reason_codes: tuple[str, ...]
++    current_request_ref: str | None
++    related_attempt_refs: tuple[str, ...]
++    blocking_request_refs: tuple[str, ...]
++    limitations: tuple[str, ...] = KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_LIMITATIONS
++
++    def to_dict(self) -> dict[str, object]:
++        return {
++            "status": self.status.value,
++            "reason_codes": list(self.reason_codes),
++            "current_request_ref": self.current_request_ref,
++            "related_attempt_refs": list(self.related_attempt_refs),
++            "blocking_request_refs": list(self.blocking_request_refs),
++            "limitations": list(self.limitations),
++        }
++
++
++def derive_known_payment_attempt_preflight(
++    mandate: IntentMandate | None,
++    order: Order | None,
++    request: TransactionRequest | None,
++    known_attempts: tuple[PaymentExecutionRecord, ...],
++) -> KnownPaymentAttemptPreflightFact:
++    """Classify a frozen known-attempt inventory without performing side effects.
++
++    Invalid outer types fail closed before any attribute is read. The existing
++    P2 verifier remains the single source of truth for payment binding rules.
++    """
++
++    if type(known_attempts) is not tuple:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            ("known_payment_attempts_invalid_container",),
++        )
++    if any(type(attempt) is not PaymentExecutionRecord for attempt in known_attempts):
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            ("known_payment_attempt_invalid_type",),
++        )
++    if type(mandate) is not IntentMandate:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            ("known_payment_attempt_mandate_invalid_type",),
++        )
++    if type(order) is not Order:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            ("known_payment_attempt_order_invalid_type",),
++        )
++    if type(request) is not TransactionRequest:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            ("known_payment_attempt_request_invalid_type",),
++        )
++
++    current_request_ref = request.request_id
++    if not known_attempts:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.CLEAR,
++            ("known_payment_attempt_preflight_clear",),
++            current_request_ref=current_request_ref,
++        )
++
++    invalid_record_reasons: list[str] = []
++    for attempt in known_attempts:
++        if type(attempt.status) is not PaymentStatus:
++            invalid_record_reasons.append("known_payment_attempt_status_invalid")
++        if not isinstance(attempt.request_id, str) or not attempt.request_id.strip():
++            invalid_record_reasons.append("known_payment_attempt_request_ref_missing")
++        if not isinstance(attempt.payment_id, str) or not attempt.payment_id.strip():
++            invalid_record_reasons.append("known_payment_attempt_ref_missing")
++    if invalid_record_reasons:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            tuple(sorted(set(invalid_record_reasons))),
++            current_request_ref=current_request_ref,
++        )
++
++    same_request = tuple(
++        attempt for attempt in known_attempts if attempt.request_id == current_request_ref
++    )
++    related_attempt_refs = tuple(attempt.payment_id for attempt in same_request)
++    succeeded = tuple(
++        attempt for attempt in same_request if attempt.status is PaymentStatus.SUCCEEDED
++    )
++    if not succeeded:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.CLEAR,
++            (
++                "known_payment_attempt_no_succeeded_match"
++                if same_request
++                else "known_payment_attempt_preflight_clear"
++            ,),
++            current_request_ref=current_request_ref,
++            related_attempt_refs=related_attempt_refs,
++        )
++
++    binding_failures: list[str] = []
++    for attempt in succeeded:
++        binding = verify_payment_execution_binding(
++            mandate,
++            order,
++            request,
++            attempt,
++        )
++        if binding.status is not VerificationStatus.VALID:
++            binding_failures.extend(
++                f"known_payment_attempt_binding:{code}"
++                for code in binding.reason_codes
++            )
++    if binding_failures:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            tuple(sorted(set(binding_failures))),
++            current_request_ref=current_request_ref,
++            related_attempt_refs=related_attempt_refs,
++        )
++
++    return _fact(
++        KnownPaymentAttemptPreflightStatus.BLOCKED,
++        ("known_payment_attempt_duplicate_succeeded",),
++        current_request_ref=current_request_ref,
++        related_attempt_refs=related_attempt_refs,
++        blocking_request_refs=(current_request_ref,),
++    )
++
++
++def _fact(
++    status: KnownPaymentAttemptPreflightStatus,
++    reason_codes: tuple[str, ...],
++    *,
++    current_request_ref: str | None = None,
++    related_attempt_refs: tuple[str, ...] = (),
++    blocking_request_refs: tuple[str, ...] = (),
++) -> KnownPaymentAttemptPreflightFact:
++    return KnownPaymentAttemptPreflightFact(
++        status=status,
++        reason_codes=reason_codes,
++        current_request_ref=current_request_ref,
++        related_attempt_refs=related_attempt_refs,
++        blocking_request_refs=blocking_request_refs,
++    )

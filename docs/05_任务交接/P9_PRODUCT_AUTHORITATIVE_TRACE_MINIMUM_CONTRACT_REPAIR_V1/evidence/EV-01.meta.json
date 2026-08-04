@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-01",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "set -e; echo HEAD=71a3acbbd9622b68a8064381b9034e07c1f4d700; echo CURRENT; grep -nE \"task_id:|task_kind:|state:|current_role:|project_map_revision:|active_bottleneck_id:|hypothesis_id:|authorization_\" CURRENT.md; echo STATUS; git -c core.quotePath=false status --short"
+  ],
+  "command_display": "bash -lc 'set -e; echo HEAD=71a3acbbd9622b68a8064381b9034e07c1f4d700; echo CURRENT; grep -nE \"task_id:|task_kind:|state:|current_role:|project_map_revision:|active_bottleneck_id:|hypothesis_id:|authorization_\" CURRENT.md; echo STATUS; git -c core.quotePath=false status --short'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T14:01:22.719851+00:00",
+  "finished_at_utc": "2026-08-04T14:01:41.549551+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-01.stdout.log",
+  "stderr_path": "EV-01.stderr.log",
+  "stdout_bytes": 2042,
+  "stderr_bytes": 0,
+  "stdout_sha256": "7c38b01b9491d1d8acc27f1776c3bf62c2caa220832e3f5862202dd01930c067",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

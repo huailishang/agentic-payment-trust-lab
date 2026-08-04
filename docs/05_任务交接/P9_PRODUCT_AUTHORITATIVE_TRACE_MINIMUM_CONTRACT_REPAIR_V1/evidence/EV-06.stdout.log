@@ -1,0 +1,4 @@
+CHECKS={"all_final_decision_sources": true, "all_not_available": true, "all_ref_strategy": true, "all_roles": true, "t04_no_order_difference": true, "t05_binding_event": true, "t06_binding_event": true, "t10_two_payment_roles": true, "task_count": 12, "task_ids": ["T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08", "T09", "T10", "T11", "T12"], "unique_task_ids": true}
+EV-06-coverage-repaired.json 2f7ee5dc446efbe4c0b55f1cc0e705c3aa939606309154cb7e38babf1f70821d
+EV-06-stable-ref-examples.json 967fc200badb81aab2439a402cbaded8d677726cbd658adf95ea49b80ccba699
+EV-06-t10-dual-payment.json 0b91d0bb779484720da1af9a4e254baca4e6650d9b3e2b553e94f15060ecffda

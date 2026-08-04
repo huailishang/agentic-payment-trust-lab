@@ -1,0 +1,16 @@
+{
+  "command": [
+    "bash",
+    "-lc",
+    "\nprintf \"%s\\n\" \"TASK=P9-KNOWN-PAYMENT-ATTEMPT-PREFLIGHT-GATE-V1\";\nprintf \"%s\\n\" \"CONTRACT_BASELINE=8acaa9e4319240d258f14d8a23b1f15cc71d09b6\";\nprintf \"ACTUAL_START_HEAD=\"; git rev-parse HEAD;\nprintf \"%s\\n\" \"--- GIT STATUS ---\"; git status --short --branch;\nprintf \"%s\\n\" \"--- SRC SHA256 ---\";\nfind src -type f -name \"*.py\" -print0 | sort -z | xargs -0 sha256sum\n"
+  ],
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "duration_seconds": 0.951004,
+  "ended_at_utc": "2026-08-04T00:49:33.802730+00:00",
+  "exit_code": 0,
+  "label": "EV-01",
+  "schema": "executor-evidence/v1",
+  "started_at_utc": "2026-08-04T00:49:32.851726+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "206120f28c60f6e862aa833acc179d2f983858c2ae528432a24849a81ae3adc8"
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-09",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "set -e; echo RUNNER_LEGACY; sed -n \"492,526p\" scripts/validation/run_project_impact_baseline.py; echo T10_IDS; sed -n \"282,300p\" scripts/validation/run_project_impact_baseline.py; sed -n \"836,852p\" scripts/validation/run_project_impact_baseline.py; echo GATE_DECISION_BRANCHES; sed -n \"403,458p\" src/agentic_payment_experiment/webshop_runtime_gate.py; echo TARGET_DECISIONS; python3 -c \"import json,pathlib; d=json.loads(pathlib.Path(\\\"samples/evaluation/project_impact_t10_preflight_target_v1.json\\\").read_text()); [print(x[\\\"task_id\\\"],x[\\\"scenario\\\"],x[\\\"expected_decision\\\"],x[\\\"expected_callback_count\\\"],x[\\\"expected_binding_status\\\"]) for x in d[\\\"tasks\\\"]]\""
+  ],
+  "command_display": "bash -lc 'set -e; echo RUNNER_LEGACY; sed -n \"492,526p\" scripts/validation/run_project_impact_baseline.py; echo T10_IDS; sed -n \"282,300p\" scripts/validation/run_project_impact_baseline.py; sed -n \"836,852p\" scripts/validation/run_project_impact_baseline.py; echo GATE_DECISION_BRANCHES; sed -n \"403,458p\" src/agentic_payment_experiment/webshop_runtime_gate.py; echo TARGET_DECISIONS; python3 -c \"import json,pathlib; d=json.loads(pathlib.Path(\\\"samples/evaluation/project_impact_t10_preflight_target_v1.json\\\").read_text()); [print(x[\\\"task_id\\\"],x[\\\"scenario\\\"],x[\\\"expected_decision\\\"],x[\\\"expected_callback_count\\\"],x[\\\"expected_binding_status\\\"]) for x in d[\\\"tasks\\\"]]\"'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T14:11:52.689851+00:00",
+  "finished_at_utc": "2026-08-04T14:11:52.818996+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-09.stdout.log",
+  "stderr_path": "EV-09.stderr.log",
+  "stdout_bytes": 3397,
+  "stderr_bytes": 0,
+  "stdout_sha256": "74926acf86920b11e472a9960a651a4b08e2382d32ebd95a1b9277e91d18536a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

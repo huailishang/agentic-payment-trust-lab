@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-11",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "set -e; echo ===STATUS===; git -c core.quotePath=false status --short; echo ===HEAD===; git rev-parse HEAD; echo ===OUTPUT_HASHES===; sha256sum CURRENT.md \"docs/03_架构设计/产品权威轨迹最小合同_v1.md\" \"docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/NEXT_SLICE.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/MEASUREMENT_ADAPTER.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/REPORT.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/EV-06-coverage-repaired.json\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/EV-06-stable-ref-examples.json\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/EV-06-t10-dual-payment.json\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/EV-08-stable-ref-proof.json\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/EV-10-final-scope-audit.json\"; echo ===CURRENT_DIFF===; git -c core.quotePath=false diff -- CURRENT.md; echo ===FULL_OUTPUT_PATCH_AS_ADDITIONS===; for f in \"docs/03_架构设计/产品权威轨迹最小合同_v1.md\" \"docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/NEXT_SLICE.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/MEASUREMENT_ADAPTER.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/REPORT.md\"; do git -c core.quotePath=false diff --no-index -- /dev/null \"\" || test 0 -eq 1; done; echo ===DIFF_CHECK===; git diff --check -- CURRENT.md; echo DIFF_CHECK_PASS"
+  ],
+  "command_display": "bash -lc 'set -e; echo ===STATUS===; git -c core.quotePath=false status --short; echo ===HEAD===; git rev-parse HEAD; echo ===OUTPUT_HASHES===; sha256sum CURRENT.md \"docs/03_架构设计/产品权威轨迹最小合同_v1.md\" \"docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/NEXT_SLICE.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/MEASUREMENT_ADAPTER.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/REPORT.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/EV-06-coverage-repaired.json\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/EV-06-stable-ref-examples.json\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/EV-06-t10-dual-payment.json\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/EV-08-stable-ref-proof.json\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/EV-10-final-scope-audit.json\"; echo ===CURRENT_DIFF===; git -c core.quotePath=false diff -- CURRENT.md; echo ===FULL_OUTPUT_PATCH_AS_ADDITIONS===; for f in \"docs/03_架构设计/产品权威轨迹最小合同_v1.md\" \"docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/NEXT_SLICE.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/MEASUREMENT_ADAPTER.md\" \"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/REPORT.md\"; do git -c core.quotePath=false diff --no-index -- /dev/null \"\" || test 0 -eq 1; done; echo ===DIFF_CHECK===; git diff --check -- CURRENT.md; echo DIFF_CHECK_PASS'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T14:17:11.128255+00:00",
+  "finished_at_utc": "2026-08-04T14:17:13.419378+00:00",
+  "exit_code": 1,
+  "stdout_path": "EV-11.stdout.log",
+  "stderr_path": "EV-11.stderr.log",
+  "stdout_bytes": 9259,
+  "stderr_bytes": 27,
+  "stdout_sha256": "3d82751fee2de26d04c023152f2aedea7067b9f8146edd71633a92cab1da43d0",
+  "stderr_sha256": "c248700e05a357325a26c1be959c1ce94a935db907b33a65ec5ebe90bc8d9914"
+}

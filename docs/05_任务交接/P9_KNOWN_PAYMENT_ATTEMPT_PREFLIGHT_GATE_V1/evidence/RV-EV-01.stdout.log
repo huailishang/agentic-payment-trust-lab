@@ -1,0 +1,1 @@
+{'status': 'INDETERMINATE', 'reason_codes': ['known_payment_attempt_ref_missing'], 'current_request_ref': 'r1', 'related_attempt_refs': [], 'blocking_request_refs': [], 'limitations': ['offline_fact_only', 'exact_payment_execution_records_only', 'succeeded_attempts_only', 'pending_or_unknown_attempt_policy_not_defined', 'no_external_payment_status_query']}

@@ -1,0 +1,21 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-14",
+  "command_argv": [
+    "python3",
+    "validate_workflow.py",
+    "--repo",
+    ".",
+    "--current",
+    "CURRENT.md"
+  ],
+  "command_display": "python3 validate_workflow.py --repo . --current CURRENT.md",
+  "exit_code": 0,
+  "working_directory": ".",
+  "stdout_path": "docs/05_\u4efb\u52a1\u4ea4\u63a5/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-14.stdout.log",
+  "stderr_path": "docs/05_\u4efb\u52a1\u4ea4\u63a5/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-14.stderr.log",
+  "stdout_bytes": 44,
+  "stderr_bytes": 0,
+  "stdout_sha256": "e268170171bae026d4f975c568422263e0780d0fa8bbdf8031c75f4d26b015ac",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

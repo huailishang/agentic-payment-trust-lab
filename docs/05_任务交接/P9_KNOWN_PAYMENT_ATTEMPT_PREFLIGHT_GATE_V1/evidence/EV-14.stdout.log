@@ -1,0 +1,3 @@
+{"callback_match_after_full": true, "duplicate_rate_after_zero": true, "non_t10_exact_match": true, "repeat_three_identical": true, "runner_hash_frozen": true, "t10_after_deny_callback_0": true, "t10_before_allow_callback_1": true, "target_hash_frozen": true}
+FINAL_AFTER_SHA256=45c4aae649ba1456c20bec8ae773a628d5aa718122b10a64e0ecd9f60522d881
+DELTA_SHA256=93eda924c93e8914ba14569104a4c793157fc8d0c39e42006aa23cd98440b6d1

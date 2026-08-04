@@ -21,8 +21,11 @@ from .trusted_execution import (
     ContextPolicyFact,
     GovernedActionBindingFact,
     GovernedPaymentAction,
+    KnownPaymentAttemptPreflightFact,
+    KnownPaymentAttemptPreflightStatus,
     RuntimeGateRecord,
     VerificationStatus,
+    derive_known_payment_attempt_preflight,
     verify_governed_payment_action,
 )
 from .validator import validate_request
@@ -52,6 +55,7 @@ class WebShopBuyNowGateOutcome:
     runtime_gate_record: RuntimeGateRecord | None
     reason_codes: tuple[str, ...]
     governed_action_fact: GovernedActionBindingFact | None = None
+    known_payment_attempt_preflight_fact: KnownPaymentAttemptPreflightFact | None = None
     limitations: tuple[str, ...] = WEBSHOP_GATE_LIMITATIONS
 
 
@@ -71,6 +75,7 @@ def gate_webshop_buy_now(
     seen_request_ids: Collection[str] = (),
     authorized_adaptation: WebShopCommerceAdaptation | None = None,
     governed_action: GovernedPaymentAction | None = None,
+    known_payment_attempts: tuple[PaymentExecutionRecord, ...] = (),
 ) -> WebShopBuyNowGateOutcome:
     """Allow an injected checkout seam only after existing P1-P4 checks pass.
 
@@ -181,19 +186,97 @@ def gate_webshop_buy_now(
             callback_failure.append(type(exc).__name__)
             return _CALLBACK_FAILURE_SENTINEL
 
-    runtime_record = observe_payment_execution_gate(
-        prepayment_result.decision,
-        mandate,
-        adaptation.order,
-        bound_request,
-        execution_candidate,
-        guarded_checkout_callback,
-        agent_identity=agent_identity,
-        current_provider_ref=current_provider_ref,
-        current_executor_instance_ref=current_executor_instance_ref,
-        current_credential_ref=current_credential_ref,
-        context_policy_fact=context_policy_fact,
-    )
+    def observe_runtime(decision: Decision) -> RuntimeGateRecord:
+        return observe_payment_execution_gate(
+            decision,
+            mandate,
+            adaptation.order,
+            bound_request,
+            execution_candidate,
+            guarded_checkout_callback,
+            agent_identity=agent_identity,
+            current_provider_ref=current_provider_ref,
+            current_executor_instance_ref=current_executor_instance_ref,
+            current_credential_ref=current_credential_ref,
+            context_policy_fact=context_policy_fact,
+        )
+
+    known_attempt_fact: KnownPaymentAttemptPreflightFact | None = None
+    if type(known_payment_attempts) is not tuple or known_payment_attempts:
+        known_attempt_fact = derive_known_payment_attempt_preflight(
+            mandate,
+            adaptation.order,
+            bound_request,
+            known_payment_attempts,
+        )
+        preflight_reasons = tuple(
+            f"preflight:{code}" for code in known_attempt_fact.reason_codes
+        )
+        if (
+            known_attempt_fact.status
+            is KnownPaymentAttemptPreflightStatus.INDETERMINATE
+        ):
+            runtime_record = observe_runtime(Decision.INDETERMINATE)
+            runtime_record = replace(
+                runtime_record,
+                reason_codes=tuple(
+                    sorted(set((*runtime_record.reason_codes, *preflight_reasons)))
+                ),
+            )
+            return WebShopBuyNowGateOutcome(
+                decision=Decision.INDETERMINATE,
+                checkout_executed=False,
+                callback_count=runtime_record.callback_count,
+                callback_result_ref=None,
+                bound_request=bound_request,
+                prepayment_result=prepayment_result,
+                runtime_gate_record=runtime_record,
+                reason_codes=runtime_record.reason_codes,
+                governed_action_fact=governed_action_fact,
+                known_payment_attempt_preflight_fact=known_attempt_fact,
+            )
+        if known_attempt_fact.status is KnownPaymentAttemptPreflightStatus.BLOCKED:
+            trusted_seen_request_ids = (
+                *tuple(seen_request_ids),
+                *known_attempt_fact.blocking_request_refs,
+            )
+            duplicate_result = validate_request(
+                mandate,
+                bound_request,
+                seen_request_ids=trusted_seen_request_ids,
+                authorized_order=authorized_snapshot.order,
+                final_order=adaptation.order,
+                confirmation_record=confirmation_record,
+            )
+            runtime_record = observe_runtime(duplicate_result.decision)
+            runtime_record = replace(
+                runtime_record,
+                reason_codes=tuple(
+                    sorted(
+                        set(
+                            (
+                                *runtime_record.reason_codes,
+                                *_prepayment_reason_codes(duplicate_result),
+                                *preflight_reasons,
+                            )
+                        )
+                    )
+                ),
+            )
+            return WebShopBuyNowGateOutcome(
+                decision=duplicate_result.decision,
+                checkout_executed=False,
+                callback_count=runtime_record.callback_count,
+                callback_result_ref=None,
+                bound_request=bound_request,
+                prepayment_result=duplicate_result,
+                runtime_gate_record=runtime_record,
+                reason_codes=runtime_record.reason_codes,
+                governed_action_fact=governed_action_fact,
+                known_payment_attempt_preflight_fact=known_attempt_fact,
+            )
+
+    runtime_record = observe_runtime(prepayment_result.decision)
 
     if callback_failure:
         failure_code = f"checkout_callback_exception:{callback_failure[0]}"
@@ -213,6 +296,7 @@ def gate_webshop_buy_now(
             runtime_gate_record=runtime_record,
             reason_codes=runtime_record.reason_codes,
             governed_action_fact=governed_action_fact,
+            known_payment_attempt_preflight_fact=known_attempt_fact,
         )
 
     return WebShopBuyNowGateOutcome(
@@ -229,6 +313,7 @@ def gate_webshop_buy_now(
         runtime_gate_record=runtime_record,
         reason_codes=runtime_record.reason_codes,
         governed_action_fact=governed_action_fact,
+        known_payment_attempt_preflight_fact=known_attempt_fact,
     )
 
 

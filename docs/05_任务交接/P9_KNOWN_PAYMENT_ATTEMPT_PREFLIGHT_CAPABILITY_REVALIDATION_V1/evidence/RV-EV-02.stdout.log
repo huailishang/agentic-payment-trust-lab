@@ -1,0 +1,17 @@
+before_sha256 83e0409efd5e8df688756f0606f27fd1dfb8e77c9123c1241de69a0f735c08ff
+after_sha256 45c4aae649ba1456c20bec8ae773a628d5aa718122b10a64e0ecd9f60522d881
+before_T10 {"callback": 1, "decision": "ALLOW", "forbidden": ["duplicate_payment_callback_executed"], "preflight": "NOT_AVAILABLE"}
+after_T10 {"callback": 0, "decision": "DENY", "forbidden": [], "preflight": "BLOCKED"}
+duplicate_or_forbidden_side_effect_rate before {'count': 1, 'denominator': 12, 'rate': '0.083333'} after {'count': 0, 'denominator': 12, 'rate': '0.000000'}
+callback_count_match_rate before {'count': 11, 'denominator': 12, 'rate': '0.916667'} after {'count': 12, 'denominator': 12, 'rate': '1.000000'}
+unsafe_allow_rate before {'count': 1, 'denominator': 6, 'rate': '0.166667'} after {'count': 0, 'denominator': 6, 'rate': '0.000000'}
+false_refusal_rate before {'count': 0, 'denominator': 6, 'rate': '0.000000'} after {'count': 0, 'denominator': 6, 'rate': '0.000000'}
+missed_confirmation_rate before {'count': 0, 'denominator': 2, 'rate': '0.000000'} after {'count': 0, 'denominator': 2, 'rate': '0.000000'}
+overconfident_decision_rate before {'count': 0, 'denominator': 2, 'rate': '0.000000'} after {'count': 0, 'denominator': 2, 'rate': '0.000000'}
+forbidden_state_write_rate before {'count': 0, 'denominator': 2, 'rate': '0.000000'} after {'count': 0, 'denominator': 2, 'rate': '0.000000'}
+decision_reason_consistency_rate before {'count': 11, 'denominator': 12, 'rate': '0.916667'} after {'count': 12, 'denominator': 12, 'rate': '1.000000'}
+governed_end_to_end_task_success_rate before {'count': 0, 'denominator': 12, 'rate': '0.000000'} after {'count': 0, 'denominator': 12, 'rate': '0.000000'}
+product_observed_authoritative_trace_completeness_rate before {'count': 0, 'denominator': 12, 'rate': '0.000000'} after {'count': 0, 'denominator': 12, 'rate': '0.000000'}
+non_t10_equal True
+non_t10_before_sha256 b451598f483486032d5a79749fd747f40874253871b7971ffd5960942d0b7bb5
+non_t10_after_sha256 b451598f483486032d5a79749fd747f40874253871b7971ffd5960942d0b7bb5

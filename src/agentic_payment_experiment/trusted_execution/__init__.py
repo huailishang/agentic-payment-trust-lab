@@ -56,6 +56,12 @@ from .governed_action import (
     verify_governed_payment_action,
 )
 from .hashing import canonical_hash, canonical_json, canonicalize, verify_hash
+from .known_payment_attempt import (
+    KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_LIMITATIONS,
+    KnownPaymentAttemptPreflightFact,
+    KnownPaymentAttemptPreflightStatus,
+    derive_known_payment_attempt_preflight,
+)
 from .payment_binding import (
     PaymentExecutionBindingFact,
     verify_payment_execution_binding,
@@ -82,6 +88,9 @@ __all__ = [
     "ActionReversibility",
     "BindingResult",
     "BindingStatus",
+    "KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_LIMITATIONS",
+    "KnownPaymentAttemptPreflightFact",
+    "KnownPaymentAttemptPreflightStatus",
     "ConfirmationBindingFact",
     "ConfirmationRecord",
     "ConfirmationStatus",
@@ -114,6 +123,7 @@ __all__ = [
     "confirmation_order_payload",
     "create_confirmation_record",
     "execute_with_confirmation_gate",
+    "derive_known_payment_attempt_preflight",
     "evaluate_context_policy",
     "check_idempotency",
     "validate_status_observation",

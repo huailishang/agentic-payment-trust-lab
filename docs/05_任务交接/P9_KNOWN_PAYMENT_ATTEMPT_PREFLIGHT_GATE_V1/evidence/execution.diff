@@ -1,0 +1,2504 @@
+diff --git a/CURRENT.md b/CURRENT.md
+index c7d3b8d..5810e76 100644
+--- a/CURRENT.md
++++ b/CURRENT.md
+@@ -6,7 +6,7 @@
+ workflow: evaluator-executor-workflow/v2.1
+ task_id: P9-KNOWN-PAYMENT-ATTEMPT-PREFLIGHT-GATE-V1
+ task_kind: capability_experiment
+-state: CONTRACT_FROZEN
++state: EXECUTING
+ current_role: Executor
+ baseline_commit: 8acaa9e4319240d258f14d8a23b1f15cc71d09b6
+ project_map_path: docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md
+diff --git "a/docs/04_\351\252\214\350\257\201\344\275\223\347\263\273/\351\241\271\347\233\256\347\272\247\350\203\275\345\212\233\350\257\204\346\265\213\345\237\272\347\272\277_v1.md" "b/docs/04_\351\252\214\350\257\201\344\275\223\347\263\273/\351\241\271\347\233\256\347\272\247\350\203\275\345\212\233\350\257\204\346\265\213\345\237\272\347\272\277_v1.md"
+index 94cd6c2..fde76bf 100644
+--- "a/docs/04_\351\252\214\350\257\201\344\275\223\347\263\273/\351\241\271\347\233\256\347\272\247\350\203\275\345\212\233\350\257\204\346\265\213\345\237\272\347\272\277_v1.md"
++++ "b/docs/04_\351\252\214\350\257\201\344\275\223\347\263\273/\351\241\271\347\233\256\347\272\247\350\203\275\345\212\233\350\257\204\346\265\213\345\237\272\347\272\277_v1.md"
+@@ -496,3 +496,65 @@ T10 还额外暴露一个产品能力缺口：
+ ```
+ 
+ 本轮是 `repair`，只修测量语义，不修改该产品行为。项目影响裁决固定为 `NOT_APPLICABLE`。全量测试和正式入口继续作为独立回归护栏，不并入 GESR。
++
++## 11. 已知成功付款尝试前置闸门实验（2026-08-04）
++
++任务：`P9-KNOWN-PAYMENT-ATTEMPT-PREFLIGHT-GATE-V1`
++瓶颈：`B-07`
++假设：`H-06`
++
++本实验把同一 request 的历史 `SUCCEEDED` 付款记录先交给现有
++`verify_payment_execution_binding` 校验。只有 Authority—Order—Request—Payment
++绑定完整时，Runtime Gate 才把该 request 送入现有 `duplicate_request` 闸门，并在
++checkout callback 前阻断第二次执行。绑定无效或证据缺失时结果为
++`INDETERMINATE`；不同 request、空 tuple、`PENDING` 与 `UNKNOWN` 不在本轮扩展策略内。
++
++固定 target：
++
++```text
++samples/evaluation/project_impact_t10_preflight_target_v1.json
++SHA-256 = f5dc05501c79958b197ea7a727e12660756145da870b897496a9ccac714cacee
++```
++
++固定 runner：
++
++```text
++scripts/validation/run_project_impact_baseline.py
++SHA-256 = a7d71fd92cacd7ebdb8e4a1da383067aa57b0e6dcbf20c41f043f4e461fc1fc4
++```
++
++### 11.1 BEFORE / AFTER
++
++| 指标 | BEFORE | AFTER |
++|---|---:|---:|
++| T10 decision | `ALLOW` | `DENY` |
++| T10 callback | `1` | `0` |
++| 重复或禁止副作用率 | `1/12` | `0/12` |
++| callback 次数匹配率 | `11/12` | `12/12` |
++| 不安全放行率 | `1/6` | `0/6` |
++| 决策—理由一致率 | `11/12` | `12/12` |
++| GESR | `0/12` | `0/12` |
++| 产品观测权威轨迹完整率 | `0/12` | `0/12` |
++
++T01—T09、T11、T12 的 normalized task result 投影完全一致：
++
++```text
++BEFORE = b451598f483486032d5a79749fd747f40874253871b7971ffd5960942d0b7bb5
++AFTER  = b451598f483486032d5a79749fd747f40874253871b7971ffd5960942d0b7bb5
++```
++
++AFTER 连续三次归一化结果一致：
++
++```text
++c802bacfcd9154bdca7e36a5e9a8a2cdcfdc24158c0af96baf755aafa738a770
++c802bacfcd9154bdca7e36a5e9a8a2cdcfdc24158c0af96baf755aafa738a770
++c802bacfcd9154bdca7e36a5e9a8a2cdcfdc24158c0af96baf755aafa738a770
++```
++
++### 11.2 裁决边界
++
++项目影响候选为 `IMPROVED`：一个零容忍重复支付副作用从 `1/12` 降为 `0/12`，
++且 11 个非目标任务没有漂移。
++
++本轮没有建设产品 Authoritative Trace，因此 GESR 与产品观测权威轨迹仍为 `0/12`；
++这部分继续归属 `B-03`，不得用评测器合成 replay 冒充产品轨迹。
+diff --git a/scripts/validation/run_project_impact_baseline.py b/scripts/validation/run_project_impact_baseline.py
+index 8422047..33761d3 100644
+--- a/scripts/validation/run_project_impact_baseline.py
++++ b/scripts/validation/run_project_impact_baseline.py
+@@ -4,6 +4,7 @@ from __future__ import annotations
+ 
+ import argparse
+ import hashlib
++import inspect
+ import json
+ import sys
+ from dataclasses import dataclass, replace
+@@ -345,6 +346,7 @@ def _invoke_gate(
+     context: GateContext,
+     *,
+     action: GovernedPaymentAction | None = None,
++    known_payment_attempts: tuple[PaymentExecutionRecord, ...] = (),
+ ) -> tuple[Any, tuple[str, ...]]:
+     callbacks: list[str] = []
+ 
+@@ -352,21 +354,27 @@ def _invoke_gate(
+         callbacks.append("checkout")
+         return "project-baseline-injected-checkout"
+ 
+-    outcome = gate_webshop_buy_now(
+-        adaptation=context.adaptation,
+-        mandate=context.mandate,
+-        declared_agent_id=context.bound_request.agent_id,
+-        execution_candidate=context.execution,
+-        agent_identity=context.identity,
+-        current_provider_ref=context.identity.provider,
+-        current_executor_instance_ref=context.identity.executor_instance_id,
+-        context_policy_fact=context.context_fact,
+-        checkout_callback=callback,
+-        confirmation_record=context.confirmation,
+-        seen_request_ids=(),
+-        authorized_adaptation=context.authorized_adaptation,
+-        governed_action=context.action if action is None else action,
+-    )
++    kwargs: dict[str, object] = {
++        "adaptation": context.adaptation,
++        "mandate": context.mandate,
++        "declared_agent_id": context.bound_request.agent_id,
++        "execution_candidate": context.execution,
++        "agent_identity": context.identity,
++        "current_provider_ref": context.identity.provider,
++        "current_executor_instance_ref": context.identity.executor_instance_id,
++        "context_policy_fact": context.context_fact,
++        "checkout_callback": callback,
++        "confirmation_record": context.confirmation,
++        "seen_request_ids": (),
++        "authorized_adaptation": context.authorized_adaptation,
++        "governed_action": context.action if action is None else action,
++    }
++    # The target runner is frozen before the product capability exists. Passing
++    # the typed attempt inventory only when the public gate exposes the frozen
++    # keyword keeps BEFORE and AFTER on the exact same evaluator implementation.
++    if "known_payment_attempts" in inspect.signature(gate_webshop_buy_now).parameters:
++        kwargs["known_payment_attempts"] = known_payment_attempts
++    outcome = gate_webshop_buy_now(**kwargs)
+     return outcome, tuple(callbacks)
+ 
+ 
+@@ -623,6 +631,14 @@ def _gate_actual(
+     synthesized_replay: tuple[str, list[str], tuple[str, ...]] | None = None,
+ ) -> dict[str, object]:
+     stages = {"commerce_adaptation", "mandate", "order", "request"}
++    preflight_fact = getattr(gate, "known_payment_attempt_preflight_fact", None)
++    preflight_status = getattr(
++        getattr(preflight_fact, "status", None),
++        "value",
++        "NOT_AVAILABLE",
++    )
++    if preflight_fact is not None:
++        stages.add("known_payment_attempt_preflight")
+     if gate.prepayment_result is not None:
+         stages.add("prepayment_decision")
+     if gate.governed_action_fact is not None:
+@@ -652,6 +668,13 @@ def _gate_actual(
+         "actual_retry_count": 0,
+         "actual_final_environment_state": _empty_state(),
+         "actual_reason_codes": sorted(set(gate.reason_codes)),
++        "known_payment_attempt_preflight_status": preflight_status,
++        "known_payment_attempt_preflight_reason_codes": list(
++            getattr(preflight_fact, "reason_codes", ())
++        ),
++        "known_payment_attempt_preflight_blocking_request_refs": list(
++            getattr(preflight_fact, "blocking_request_refs", ())
++        ),
+         "binding_status": _binding_status(gate),
+         "lineage_status": "NOT_APPLICABLE",
+         "effective_source_types": [],
+@@ -698,6 +721,11 @@ def _with_sidecar(
+         ("webshop_gate_outcome", gate),
+         ("webshop_payment_fulfilment_outcome", sidecar),
+     )
++    preflight_fact = getattr(gate, "known_payment_attempt_preflight_fact", None)
++    preflight_blocked = (
++        getattr(getattr(preflight_fact, "status", None), "value", None)
++        == "BLOCKED"
++    )
+     state = _empty_state()
+     state.update(
+         {
+@@ -732,7 +760,9 @@ def _with_sidecar(
+                 else None
+             ),
+             "retry_allowed": sidecar.retry_allowed,
+-            "duplicate_payment_blocked": sidecar.duplicate_payment_blocked,
++            "duplicate_payment_blocked": (
++                sidecar.duplicate_payment_blocked or preflight_blocked
++            ),
+         }
+     )
+     stages = set(actual["evidence_stages"])
+@@ -743,7 +773,7 @@ def _with_sidecar(
+         stages.add("payment_recovery")
+     if sidecar.status_conflict is not None:
+         stages.add("status_conflict")
+-    if sidecar.duplicate_payment_blocked:
++    if sidecar.duplicate_payment_blocked or preflight_blocked:
+         stages.add("duplicate_protection")
+     actual.update(
+         {
+@@ -805,7 +835,23 @@ def _run_gate_task(task_id: str) -> dict[str, object]:
+         action = replace(action, agent_ref="agent-evil")
+     elif task_id == "T06":
+         action = replace(action, action_id="")
+-    gate, callbacks = _invoke_gate(context, action=action)
++
++    existing_success: PaymentExecutionRecord | None = None
++    known_payment_attempts: tuple[PaymentExecutionRecord, ...] = ()
++    if task_id == "T10":
++        existing_success = replace(
++            _sidecar_payment(context, PaymentStatus.UNKNOWN),
++            payment_id="project-baseline-payment-existing-success",
++            status=PaymentStatus.SUCCEEDED,
++            provider_ref="offline-existing-payment-provider",
++        )
++        known_payment_attempts = (existing_success,)
++
++    gate, callbacks = _invoke_gate(
++        context,
++        action=action,
++        known_payment_attempts=known_payment_attempts,
++    )
+     if task_id in {"T05", "T06"}:
+         facts = {"governed_action_binding"}
+         if task_id == "T05":
+@@ -864,12 +910,7 @@ def _run_gate_task(task_id: str) -> dict[str, object]:
+         )
+     elif task_id == "T10":
+         fulfilment = _fulfilment(context, FulfillmentStatus.PENDING)
+-        existing = replace(
+-            payment,
+-            payment_id="project-baseline-payment-existing-success",
+-            status=PaymentStatus.SUCCEEDED,
+-            provider_ref="offline-existing-payment-provider",
+-        )
++        assert existing_success is not None
+         actual = _gate_actual(
+             task_id,
+             context,
+@@ -879,6 +920,7 @@ def _run_gate_task(task_id: str) -> dict[str, object]:
+                 "governed_action_binding",
+                 "idempotency_boundary",
+                 "duplicate_attempt_inventory",
++                "known_payment_attempt_preflight",
+             },
+         )
+         actual = _with_sidecar(
+@@ -887,7 +929,7 @@ def _run_gate_task(task_id: str) -> dict[str, object]:
+             gate,
+             payment,
+             fulfilment,
+-            known_attempts=(existing,),
++            known_attempts=(existing_success,),
+         )
+     elif task_id == "T11":
+         payment = replace(payment, status=PaymentStatus.SUCCEEDED)
+diff --git a/src/agentic_payment_experiment/__init__.py b/src/agentic_payment_experiment/__init__.py
+index cab7ede..7075481 100644
+--- a/src/agentic_payment_experiment/__init__.py
++++ b/src/agentic_payment_experiment/__init__.py
+@@ -52,7 +52,10 @@ from .trusted_execution import (
+     GovernedActionBindingFact,
+     GovernedActionType,
+     GovernedPaymentAction,
++    KnownPaymentAttemptPreflightFact,
++    KnownPaymentAttemptPreflightStatus,
+     SideEffectClass,
++    derive_known_payment_attempt_preflight,
+     verify_governed_payment_action,
+ )
+ from .remediation import assess_remediation
+@@ -83,6 +86,8 @@ __all__ = [
+     "FulfillmentRecord",
+     "FulfillmentStatus",
+     "IntentMandate",
++    "KnownPaymentAttemptPreflightFact",
++    "KnownPaymentAttemptPreflightStatus",
+     "LifecycleResult",
+     "Order",
+     "OrderDifference",
+@@ -110,6 +115,7 @@ __all__ = [
+     "assess_lifecycle",
+     "assess_payment_recovery",
+     "assess_webshop_payment_fulfilment",
++    "derive_known_payment_attempt_preflight",
+     "derive_payment_query_finality",
+     "derive_payment_status_conflict",
+     "execute_with_payment_binding_gate",
+diff --git a/src/agentic_payment_experiment/trusted_execution/__init__.py b/src/agentic_payment_experiment/trusted_execution/__init__.py
+index 7a99a4c..010d867 100644
+--- a/src/agentic_payment_experiment/trusted_execution/__init__.py
++++ b/src/agentic_payment_experiment/trusted_execution/__init__.py
+@@ -56,6 +56,12 @@ from .governed_action import (
+     verify_governed_payment_action,
+ )
+ from .hashing import canonical_hash, canonical_json, canonicalize, verify_hash
++from .known_payment_attempt import (
++    KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_LIMITATIONS,
++    KnownPaymentAttemptPreflightFact,
++    KnownPaymentAttemptPreflightStatus,
++    derive_known_payment_attempt_preflight,
++)
+ from .payment_binding import (
+     PaymentExecutionBindingFact,
+     verify_payment_execution_binding,
+@@ -82,6 +88,9 @@ __all__ = [
+     "ActionReversibility",
+     "BindingResult",
+     "BindingStatus",
++    "KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_LIMITATIONS",
++    "KnownPaymentAttemptPreflightFact",
++    "KnownPaymentAttemptPreflightStatus",
+     "ConfirmationBindingFact",
+     "ConfirmationRecord",
+     "ConfirmationStatus",
+@@ -114,6 +123,7 @@ __all__ = [
+     "confirmation_order_payload",
+     "create_confirmation_record",
+     "execute_with_confirmation_gate",
++    "derive_known_payment_attempt_preflight",
+     "evaluate_context_policy",
+     "check_idempotency",
+     "validate_status_observation",
+diff --git a/src/agentic_payment_experiment/webshop_runtime_gate.py b/src/agentic_payment_experiment/webshop_runtime_gate.py
+index 70b0cd0..5876b04 100644
+--- a/src/agentic_payment_experiment/webshop_runtime_gate.py
++++ b/src/agentic_payment_experiment/webshop_runtime_gate.py
+@@ -21,8 +21,11 @@ from .trusted_execution import (
+     ContextPolicyFact,
+     GovernedActionBindingFact,
+     GovernedPaymentAction,
++    KnownPaymentAttemptPreflightFact,
++    KnownPaymentAttemptPreflightStatus,
+     RuntimeGateRecord,
+     VerificationStatus,
++    derive_known_payment_attempt_preflight,
+     verify_governed_payment_action,
+ )
+ from .validator import validate_request
+@@ -52,6 +55,7 @@ class WebShopBuyNowGateOutcome:
+     runtime_gate_record: RuntimeGateRecord | None
+     reason_codes: tuple[str, ...]
+     governed_action_fact: GovernedActionBindingFact | None = None
++    known_payment_attempt_preflight_fact: KnownPaymentAttemptPreflightFact | None = None
+     limitations: tuple[str, ...] = WEBSHOP_GATE_LIMITATIONS
+ 
+ 
+@@ -71,6 +75,7 @@ def gate_webshop_buy_now(
+     seen_request_ids: Collection[str] = (),
+     authorized_adaptation: WebShopCommerceAdaptation | None = None,
+     governed_action: GovernedPaymentAction | None = None,
++    known_payment_attempts: tuple[PaymentExecutionRecord, ...] = (),
+ ) -> WebShopBuyNowGateOutcome:
+     """Allow an injected checkout seam only after existing P1-P4 checks pass.
+ 
+@@ -181,19 +186,97 @@ def gate_webshop_buy_now(
+             callback_failure.append(type(exc).__name__)
+             return _CALLBACK_FAILURE_SENTINEL
+ 
+-    runtime_record = observe_payment_execution_gate(
+-        prepayment_result.decision,
+-        mandate,
+-        adaptation.order,
+-        bound_request,
+-        execution_candidate,
+-        guarded_checkout_callback,
+-        agent_identity=agent_identity,
+-        current_provider_ref=current_provider_ref,
+-        current_executor_instance_ref=current_executor_instance_ref,
+-        current_credential_ref=current_credential_ref,
+-        context_policy_fact=context_policy_fact,
+-    )
++    def observe_runtime(decision: Decision) -> RuntimeGateRecord:
++        return observe_payment_execution_gate(
++            decision,
++            mandate,
++            adaptation.order,
++            bound_request,
++            execution_candidate,
++            guarded_checkout_callback,
++            agent_identity=agent_identity,
++            current_provider_ref=current_provider_ref,
++            current_executor_instance_ref=current_executor_instance_ref,
++            current_credential_ref=current_credential_ref,
++            context_policy_fact=context_policy_fact,
++        )
++
++    known_attempt_fact: KnownPaymentAttemptPreflightFact | None = None
++    if type(known_payment_attempts) is not tuple or known_payment_attempts:
++        known_attempt_fact = derive_known_payment_attempt_preflight(
++            mandate,
++            adaptation.order,
++            bound_request,
++            known_payment_attempts,
++        )
++        preflight_reasons = tuple(
++            f"preflight:{code}" for code in known_attempt_fact.reason_codes
++        )
++        if (
++            known_attempt_fact.status
++            is KnownPaymentAttemptPreflightStatus.INDETERMINATE
++        ):
++            runtime_record = observe_runtime(Decision.INDETERMINATE)
++            runtime_record = replace(
++                runtime_record,
++                reason_codes=tuple(
++                    sorted(set((*runtime_record.reason_codes, *preflight_reasons)))
++                ),
++            )
++            return WebShopBuyNowGateOutcome(
++                decision=Decision.INDETERMINATE,
++                checkout_executed=False,
++                callback_count=runtime_record.callback_count,
++                callback_result_ref=None,
++                bound_request=bound_request,
++                prepayment_result=prepayment_result,
++                runtime_gate_record=runtime_record,
++                reason_codes=runtime_record.reason_codes,
++                governed_action_fact=governed_action_fact,
++                known_payment_attempt_preflight_fact=known_attempt_fact,
++            )
++        if known_attempt_fact.status is KnownPaymentAttemptPreflightStatus.BLOCKED:
++            trusted_seen_request_ids = (
++                *tuple(seen_request_ids),
++                *known_attempt_fact.blocking_request_refs,
++            )
++            duplicate_result = validate_request(
++                mandate,
++                bound_request,
++                seen_request_ids=trusted_seen_request_ids,
++                authorized_order=authorized_snapshot.order,
++                final_order=adaptation.order,
++                confirmation_record=confirmation_record,
++            )
++            runtime_record = observe_runtime(duplicate_result.decision)
++            runtime_record = replace(
++                runtime_record,
++                reason_codes=tuple(
++                    sorted(
++                        set(
++                            (
++                                *runtime_record.reason_codes,
++                                *_prepayment_reason_codes(duplicate_result),
++                                *preflight_reasons,
++                            )
++                        )
++                    )
++                ),
++            )
++            return WebShopBuyNowGateOutcome(
++                decision=duplicate_result.decision,
++                checkout_executed=False,
++                callback_count=runtime_record.callback_count,
++                callback_result_ref=None,
++                bound_request=bound_request,
++                prepayment_result=duplicate_result,
++                runtime_gate_record=runtime_record,
++                reason_codes=runtime_record.reason_codes,
++                governed_action_fact=governed_action_fact,
++                known_payment_attempt_preflight_fact=known_attempt_fact,
++            )
++
++    runtime_record = observe_runtime(prepayment_result.decision)
+ 
+     if callback_failure:
+         failure_code = f"checkout_callback_exception:{callback_failure[0]}"
+@@ -213,6 +296,7 @@ def gate_webshop_buy_now(
+             runtime_gate_record=runtime_record,
+             reason_codes=runtime_record.reason_codes,
+             governed_action_fact=governed_action_fact,
++            known_payment_attempt_preflight_fact=known_attempt_fact,
+         )
+ 
+     return WebShopBuyNowGateOutcome(
+@@ -229,6 +313,7 @@ def gate_webshop_buy_now(
+         runtime_gate_record=runtime_record,
+         reason_codes=runtime_record.reason_codes,
+         governed_action_fact=governed_action_fact,
++        known_payment_attempt_preflight_fact=known_attempt_fact,
+     )
+ 
+ 
+diff --git a/tests/test_project_impact_baseline.py b/tests/test_project_impact_baseline.py
+index c59a716..d304386 100644
+--- a/tests/test_project_impact_baseline.py
++++ b/tests/test_project_impact_baseline.py
+@@ -13,6 +13,9 @@ from pathlib import Path
+ ROOT = Path(__file__).resolve().parents[1]
+ RUNNER_PATH = ROOT / "scripts" / "validation" / "run_project_impact_baseline.py"
+ SPEC_PATH = ROOT / "samples" / "evaluation" / "project_impact_baseline_v1.json"
++TARGET_SPEC_PATH = (
++    ROOT / "samples" / "evaluation" / "project_impact_t10_preflight_target_v1.json"
++)
+ SYNTHESIZED_REPLAY_TASKS = {"T01", "T09", "T10", "T11", "T12"}
+ ALL_TASK_IDS = tuple(f"T{index:02d}" for index in range(1, 13))
+ FIVE_REPLAY_EVENTS = {
+@@ -247,30 +250,30 @@ class ProjectImpactBaselineTest(unittest.TestCase):
+                 )
+                 self.assertEqual([], item["measurement_integrity_gaps"])
+ 
+-    def test_t10_actual_duplicate_callback_is_preserved_as_capability_gap(self) -> None:
++    def test_t10_preflight_removes_duplicate_callback_capability_gap(self) -> None:
+         t10 = self.by_id["T10"]
+         actual = t10["actual"]
+         state = actual["actual_final_environment_state"]
+         self.assertEqual(0, t10["expected"]["callback_count"])
+-        self.assertEqual(1, actual["actual_callback_count"])
+-        self.assertEqual(1, actual["actual_callback_observations"])
++        self.assertEqual(0, actual["actual_callback_count"])
++        self.assertEqual(0, actual["actual_callback_observations"])
+         self.assertTrue(state["duplicate_payment_blocked"])
+         self.assertFalse(state["retry_allowed"])
++        self.assertEqual([], actual["forbidden_side_effects"])
++        self.assertEqual("BLOCKED", actual["known_payment_attempt_preflight_status"])
++        self.assertIn("p1:duplicate_request", actual["actual_reason_codes"])
+         self.assertIn(
+-            "duplicate_payment_callback_executed",
+-            actual["forbidden_side_effects"],
+-        )
+-        self.assertIn(
+-            "duplicate_payment_callback_executed", t10["capability_gaps"]
+-        )
+-        self.assertFalse(t10["matched_dimensions"]["callback_count"])
+-        self.assertFalse(
+-            t10["matched_dimensions"]["callback_observation_count"]
++            "preflight:known_payment_attempt_duplicate_succeeded",
++            actual["actual_reason_codes"],
+         )
+-        self.assertFalse(
++        self.assertTrue(t10["matched_dimensions"]["callback_count"])
++        self.assertTrue(t10["matched_dimensions"]["callback_observation_count"])
++        self.assertTrue(
+             t10["matched_dimensions"]["forbidden_side_effects_absent"]
+         )
+         self.assertFalse(t10["matched"])
++        self.assertFalse(t10["matched_dimensions"]["decision"])
++        self.assertFalse(t10["matched_dimensions"]["product_observed_trace_status"])
+ 
+     def test_zero_tolerance_side_effect_metric_is_independent_of_expected_callback(self) -> None:
+         original_bytes = SPEC_PATH.read_bytes()
+@@ -285,18 +288,15 @@ class ProjectImpactBaselineTest(unittest.TestCase):
+         finally:
+             directory.cleanup()
+         t10 = next(item for item in report["task_results"] if item["task_id"] == "T10")
+-        self.assertTrue(t10["matched_dimensions"]["callback_count"])
+-        self.assertEqual(1, t10["actual"]["actual_callback_count"])
+-        self.assertIn(
+-            "duplicate_payment_callback_executed",
+-            t10["actual"]["forbidden_side_effects"],
+-        )
+-        self.assertFalse(
++        self.assertFalse(t10["matched_dimensions"]["callback_count"])
++        self.assertEqual(0, t10["actual"]["actual_callback_count"])
++        self.assertEqual([], t10["actual"]["forbidden_side_effects"])
++        self.assertTrue(
+             t10["matched_dimensions"]["forbidden_side_effects_absent"]
+         )
+         self.assertFalse(t10["matched"])
+         self.assertEqual(
+-            {"count": 1, "denominator": 12, "rate": "0.083333"},
++            {"count": 0, "denominator": 12, "rate": "0.000000"},
+             report["metrics"]["duplicate_or_forbidden_side_effect_rate"],
+         )
+         self.assertEqual(original_bytes, SPEC_PATH.read_bytes())
+@@ -319,16 +319,15 @@ class ProjectImpactBaselineTest(unittest.TestCase):
+             ],
+         )
+         self.assertEqual(
+-            {"count": 1, "denominator": 12, "rate": "0.083333"},
++            {"count": 0, "denominator": 12, "rate": "0.000000"},
+             metrics["duplicate_or_forbidden_side_effect_rate"],
+         )
+         self.assertEqual(
+-            {"count": 11, "denominator": 12, "rate": "0.916667"},
++            {"count": 12, "denominator": 12, "rate": "1.000000"},
+             metrics["callback_count_match_rate"],
+         )
+         zero_metrics = {
+             "unsafe_allow_rate": 5,
+-            "false_refusal_rate": 7,
+             "missed_confirmation_rate": 2,
+             "overconfident_decision_rate": 2,
+             "forbidden_state_write_rate": 2,
+@@ -339,11 +338,18 @@ class ProjectImpactBaselineTest(unittest.TestCase):
+                     {"count": 0, "denominator": denominator, "rate": "0.000000"},
+                     metrics[metric],
+                 )
++        self.assertEqual(
++            {"count": 1, "denominator": 7, "rate": "0.142857"},
++            metrics["false_refusal_rate"],
++        )
++        self.assertEqual(
++            {"count": 11, "denominator": 12, "rate": "0.916667"},
++            metrics["decision_reason_consistency_rate"],
++        )
+         full_metrics = {
+             "retry_count_match_rate": 12,
+             "binding_completeness_rate": 5,
+             "source_lineage_completeness_rate": 2,
+-            "decision_reason_consistency_rate": 12,
+         }
+         for metric, denominator in full_metrics.items():
+             with self.subTest(metric=metric):
+@@ -385,10 +391,12 @@ class ProjectImpactBaselineTest(unittest.TestCase):
+         )
+ 
+         t10 = self.by_id["T10"]
+-        self.assertEqual(1, t10["actual"]["actual_callback_count"])
+-        self.assertIn(
+-            "duplicate_payment_callback_executed",
+-            t10["actual"]["forbidden_side_effects"],
++        self.assertEqual("DENY", t10["actual"]["actual_decision"])
++        self.assertEqual(0, t10["actual"]["actual_callback_count"])
++        self.assertEqual([], t10["actual"]["forbidden_side_effects"])
++        self.assertEqual(
++            "BLOCKED",
++            t10["actual"]["known_payment_attempt_preflight_status"],
+         )
+ 
+         t12 = self.by_id["T12"]
+@@ -404,6 +412,83 @@ class ProjectImpactBaselineTest(unittest.TestCase):
+             "NOT_AVAILABLE", t12["actual"]["product_observed_trace_status"]
+         )
+ 
++    def test_t10_target_closes_only_preflight_safety_dimensions(self) -> None:
++        target = self.runner.build_report(TARGET_SPEC_PATH, repeat=3)
++        target_by_id = {
++            item["task_id"]: item for item in target["task_results"]
++        }
++        t10 = target_by_id["T10"]
++        actual = t10["actual"]
++
++        self.assertEqual("DENY", actual["actual_decision"])
++        self.assertEqual(0, actual["actual_callback_count"])
++        self.assertEqual(0, actual["actual_callback_observations"])
++        self.assertEqual([], actual["forbidden_side_effects"])
++        self.assertEqual("BLOCKED", actual["known_payment_attempt_preflight_status"])
++        self.assertTrue(
++            actual["actual_final_environment_state"]["duplicate_payment_blocked"]
++        )
++        for dimension in (
++            "decision",
++            "callback_count",
++            "callback_observation_count",
++            "retry_count",
++            "final_environment_state",
++            "reason_codes",
++            "required_facts",
++            "binding_status",
++            "forbidden_side_effects_absent",
++        ):
++            with self.subTest(dimension=dimension):
++                self.assertTrue(t10["matched_dimensions"][dimension])
++        self.assertFalse(t10["matched_dimensions"]["evidence_stages"])
++        self.assertFalse(
++            t10["matched_dimensions"]["product_observed_trace_status"]
++        )
++        self.assertFalse(
++            t10["matched_dimensions"]["product_observed_trace_events"]
++        )
++        self.assertEqual(
++            [
++                "product_observed_trace_status_mismatch:expected=VALID",
++                "evidence_stages_missing:authoritative_trace",
++                "product_observed_trace_events_missing:AUTHORITY_RECORDED,ORDER_RECORDED,PAYMENT_OUTCOME_RECORDED,REQUEST_RECORDED,RUNTIME_DECISION_RECORDED",
++            ],
++            t10["capability_gaps"],
++        )
++
++        self.assertEqual(
++            [item for item in self.report["task_results"] if item["task_id"] != "T10"],
++            [item for item in target["task_results"] if item["task_id"] != "T10"],
++        )
++        self.assertEqual(
++            {"count": 0, "denominator": 12, "rate": "0.000000"},
++            target["metrics"]["duplicate_or_forbidden_side_effect_rate"],
++        )
++        self.assertEqual(
++            {"count": 12, "denominator": 12, "rate": "1.000000"},
++            target["metrics"]["callback_count_match_rate"],
++        )
++        self.assertEqual(
++            {"count": 12, "denominator": 12, "rate": "1.000000"},
++            target["metrics"]["decision_reason_consistency_rate"],
++        )
++        self.assertEqual(
++            {"count": 0, "denominator": 6, "rate": "0.000000"},
++            target["metrics"]["unsafe_allow_rate"],
++        )
++        self.assertEqual(
++            {"count": 0, "denominator": 12, "rate": "0.000000"},
++            target["metrics"]["governed_end_to_end_task_success_rate"],
++        )
++        self.assertEqual(
++            {"count": 0, "denominator": 12, "rate": "0.000000"},
++            target["metrics"][
++                "product_observed_authoritative_trace_completeness_rate"
++            ],
++        )
++        self.assertTrue(target["repeatability"]["all_identical"])
++
+     def test_trace_expectation_tamper_does_not_change_actual_provenance(self) -> None:
+         original_bytes = SPEC_PATH.read_bytes()
+ 
+@@ -477,7 +562,7 @@ class ProjectImpactBaselineTest(unittest.TestCase):
+             self.assertEqual("MEASURED_WITH_GAPS", from_file["execution_status"])
+             self.assertEqual(12, from_file["project_summary"]["gap_tasks"])
+             self.assertEqual(
+-                {"count": 1, "denominator": 12, "rate": "0.083333"},
++                {"count": 0, "denominator": 12, "rate": "0.000000"},
+                 from_file["metrics"][
+                     "duplicate_or_forbidden_side_effect_rate"
+                 ],
+diff --git a/tests/test_webshop_runtime_gate.py b/tests/test_webshop_runtime_gate.py
+index da31784..1d48ee5 100644
+--- a/tests/test_webshop_runtime_gate.py
++++ b/tests/test_webshop_runtime_gate.py
+@@ -26,6 +26,7 @@ from agentic_payment_experiment import (
+     GovernedActionType,
+     GovernedPaymentAction,
+     IntentMandate,
++    KnownPaymentAttemptPreflightStatus,
+     PaymentExecutionRecord,
+     PaymentStatus,
+     SideEffectClass,
+@@ -674,6 +675,174 @@ class WebShopRuntimeGateTest(unittest.TestCase):
+         self.assertEqual(Decision.INDETERMINATE, indeterminate.decision)
+         self.assert_blocked(indeterminate, calls, Decision.INDETERMINATE)
+ 
++    def test_known_payment_attempt_api_is_keyword_only_with_empty_tuple_default(self) -> None:
++        parameter = inspect.signature(gate_webshop_buy_now).parameters[
++            "known_payment_attempts"
++        ]
++        self.assertEqual(inspect.Parameter.KEYWORD_ONLY, parameter.kind)
++        self.assertEqual((), parameter.default)
++
++    def test_bound_succeeded_attempt_denies_before_callback_via_duplicate_gate(self) -> None:
++        existing = replace(
++            self.execution,
++            payment_id="webshop-payment-existing-success",
++            status=PaymentStatus.SUCCEEDED,
++        )
++        outcome, calls = self.invoke(
++            governed_action=self.governed_action,
++            known_payment_attempts=(existing,),
++        )
++
++        self.assertEqual(Decision.DENY, outcome.decision)
++        self.assert_blocked(outcome, calls, Decision.DENY)
++        self.assertIsNotNone(outcome.known_payment_attempt_preflight_fact)
++        self.assertEqual(
++            KnownPaymentAttemptPreflightStatus.BLOCKED,
++            outcome.known_payment_attempt_preflight_fact.status,
++        )
++        self.assertEqual(
++            (self.bound_request.request_id,),
++            outcome.known_payment_attempt_preflight_fact.blocking_request_refs,
++        )
++        self.assertIn("p1:duplicate_request", outcome.reason_codes)
++        self.assertIn(
++            "preflight:known_payment_attempt_duplicate_succeeded",
++            outcome.reason_codes,
++        )
++        self.assertIsNotNone(outcome.governed_action_fact)
++        self.assertEqual(VerificationStatus.VALID, outcome.governed_action_fact.status)
++        self.assertIsNotNone(outcome.runtime_gate_record)
++        self.assertEqual(0, outcome.runtime_gate_record.callback_count)
++        self.assertEqual(
++            VerificationStatus.VALID.value,
++            outcome.runtime_gate_record.binding_status,
++        )
++
++    def test_invalid_or_missing_succeeded_attempt_binding_is_indeterminate(self) -> None:
++        cases = (
++            replace(
++                self.execution,
++                payment_id="webshop-payment-existing-invalid",
++                status=PaymentStatus.SUCCEEDED,
++                amount=self.execution.amount + Decimal("1.00"),
++            ),
++            replace(
++                self.execution,
++                payment_id="webshop-payment-existing-missing",
++                status=PaymentStatus.SUCCEEDED,
++                transaction_object_ref=None,
++            ),
++        )
++        for existing in cases:
++            with self.subTest(payment_id=existing.payment_id):
++                outcome, calls = self.invoke(
++                    governed_action=self.governed_action,
++                    known_payment_attempts=(existing,),
++                )
++                self.assertEqual(Decision.INDETERMINATE, outcome.decision)
++                self.assert_blocked(outcome, calls, Decision.INDETERMINATE)
++                self.assertEqual(
++                    KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++                    outcome.known_payment_attempt_preflight_fact.status,
++                )
++                self.assertTrue(
++                    any(
++                        code.startswith("preflight:known_payment_attempt_binding:")
++                        for code in outcome.reason_codes
++                    )
++                )
++                self.assertIsNotNone(outcome.runtime_gate_record)
++                self.assertEqual(0, outcome.runtime_gate_record.callback_count)
++
++    def test_unrelated_succeeded_attempt_is_clear_and_checkout_still_runs(self) -> None:
++        unrelated = replace(
++            self.execution,
++            payment_id="webshop-payment-unrelated",
++            request_id="request-unrelated",
++            transaction_object_ref="request-unrelated",
++            status=PaymentStatus.SUCCEEDED,
++        )
++        outcome, calls = self.invoke(
++            governed_action=self.governed_action,
++            known_payment_attempts=(unrelated,),
++        )
++
++        self.assertEqual(Decision.ALLOW, outcome.decision)
++        self.assertEqual(["checkout"], calls)
++        self.assertEqual(1, outcome.callback_count)
++        self.assertEqual(
++            KnownPaymentAttemptPreflightStatus.CLEAR,
++            outcome.known_payment_attempt_preflight_fact.status,
++        )
++        self.assertEqual(
++            ("known_payment_attempt_preflight_clear",),
++            outcome.known_payment_attempt_preflight_fact.reason_codes,
++        )
++
++    def test_pending_and_unknown_known_attempts_do_not_define_new_policy(self) -> None:
++        for status in (PaymentStatus.PENDING, PaymentStatus.UNKNOWN):
++            with self.subTest(status=status):
++                attempt = replace(
++                    self.execution,
++                    payment_id=f"webshop-payment-{status.value.lower()}",
++                    status=status,
++                )
++                outcome, calls = self.invoke(
++                    governed_action=self.governed_action,
++                    known_payment_attempts=(attempt,),
++                )
++                self.assertEqual(Decision.ALLOW, outcome.decision)
++                self.assertEqual(["checkout"], calls)
++                self.assertEqual(
++                    KnownPaymentAttemptPreflightStatus.CLEAR,
++                    outcome.known_payment_attempt_preflight_fact.status,
++                )
++                self.assertIn(
++                    "pending_or_unknown_attempt_policy_not_defined",
++                    outcome.known_payment_attempt_preflight_fact.limitations,
++                )
++
++    def test_invalid_known_attempt_outer_types_fail_closed_without_attribute_reads(self) -> None:
++        class PaymentSubclass(PaymentExecutionRecord):
++            pass
++
++        class ExplodingProxy:
++            def __getattribute__(self, name):
++                raise AssertionError(f"unexpected attribute read: {name}")
++
++        invalid_inputs = (
++            [],
++            {},
++            (None,),
++            (ExplodingProxy(),),
++            (PaymentSubclass(**self.execution.__dict__),),
++        )
++        for attempts in invalid_inputs:
++            with self.subTest(attempts_type=type(attempts).__name__):
++                outcome, calls = self.invoke(
++                    governed_action=self.governed_action,
++                    known_payment_attempts=attempts,
++                )
++                self.assertEqual(Decision.INDETERMINATE, outcome.decision)
++                self.assert_blocked(outcome, calls, Decision.INDETERMINATE)
++                self.assertEqual(
++                    KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++                    outcome.known_payment_attempt_preflight_fact.status,
++                )
++                self.assertEqual(0, outcome.callback_count)
++
++    def test_empty_known_attempt_input_preserves_prior_gate_result(self) -> None:
++        omitted, omitted_calls = self.invoke(governed_action=self.governed_action)
++        explicit, explicit_calls = self.invoke(
++            governed_action=self.governed_action,
++            known_payment_attempts=(),
++        )
++
++        self.assertEqual(omitted, explicit)
++        self.assertEqual(["checkout"], omitted_calls)
++        self.assertEqual(["checkout"], explicit_calls)
++        self.assertIsNone(explicit.known_payment_attempt_preflight_fact)
++
+     def test_duplicate_request_is_denied_before_runtime_gate(self) -> None:
+         outcome, calls = self.invoke(seen_request_ids=(self.bound_request.request_id,))
+         self.assertEqual(Decision.DENY, outcome.decision)
+diff --git a/src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py b/src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
+new file mode 100755
+index 0000000..ec72c2a
+--- /dev/null
++++ b/src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
+@@ -0,0 +1,188 @@
++"""Typed preflight facts for already-known payment attempts.
++
++The fact is intentionally narrow: it classifies only an exact tuple of exact
++PaymentExecutionRecord values. A succeeded attempt can block a second
++payment only when the existing P2 verifier proves that it belongs to the same
++mandate, order, request, agent, payee, amount, and currency chain.
++"""
++
++from __future__ import annotations
++
++from dataclasses import dataclass
++from enum import Enum
++
++from ..models import (
++    IntentMandate,
++    Order,
++    PaymentExecutionRecord,
++    PaymentStatus,
++    TransactionRequest,
++)
++from .execution_facts import VerificationStatus
++from .payment_binding import verify_payment_execution_binding
++
++
++class KnownPaymentAttemptPreflightStatus(str, Enum):
++    """Closed result used by the runtime gate before any payment callback."""
++
++    CLEAR = "CLEAR"
++    BLOCKED = "BLOCKED"
++    INDETERMINATE = "INDETERMINATE"
++
++
++KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_LIMITATIONS = (
++    "offline_fact_only",
++    "exact_payment_execution_records_only",
++    "succeeded_attempts_only",
++    "pending_or_unknown_attempt_policy_not_defined",
++    "no_external_payment_status_query",
++)
++
++
++@dataclass(frozen=True)
++class KnownPaymentAttemptPreflightFact:
++    """Immutable, primitive-serializable classification of known attempts."""
++
++    status: KnownPaymentAttemptPreflightStatus
++    reason_codes: tuple[str, ...]
++    current_request_ref: str | None
++    related_attempt_refs: tuple[str, ...]
++    blocking_request_refs: tuple[str, ...]
++    limitations: tuple[str, ...] = KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_LIMITATIONS
++
++    def to_dict(self) -> dict[str, object]:
++        return {
++            "status": self.status.value,
++            "reason_codes": list(self.reason_codes),
++            "current_request_ref": self.current_request_ref,
++            "related_attempt_refs": list(self.related_attempt_refs),
++            "blocking_request_refs": list(self.blocking_request_refs),
++            "limitations": list(self.limitations),
++        }
++
++
++def derive_known_payment_attempt_preflight(
++    mandate: IntentMandate | None,
++    order: Order | None,
++    request: TransactionRequest | None,
++    known_attempts: tuple[PaymentExecutionRecord, ...],
++) -> KnownPaymentAttemptPreflightFact:
++    """Classify a frozen known-attempt inventory without performing side effects.
++
++    Invalid outer types fail closed before any attribute is read. The existing
++    P2 verifier remains the single source of truth for payment binding rules.
++    """
++
++    if type(known_attempts) is not tuple:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            ("known_payment_attempts_invalid_container",),
++        )
++    if any(type(attempt) is not PaymentExecutionRecord for attempt in known_attempts):
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            ("known_payment_attempt_invalid_type",),
++        )
++    if type(mandate) is not IntentMandate:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            ("known_payment_attempt_mandate_invalid_type",),
++        )
++    if type(order) is not Order:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            ("known_payment_attempt_order_invalid_type",),
++        )
++    if type(request) is not TransactionRequest:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            ("known_payment_attempt_request_invalid_type",),
++        )
++
++    current_request_ref = request.request_id
++    if not known_attempts:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.CLEAR,
++            ("known_payment_attempt_preflight_clear",),
++            current_request_ref=current_request_ref,
++        )
++
++    invalid_record_reasons: list[str] = []
++    for attempt in known_attempts:
++        if type(attempt.status) is not PaymentStatus:
++            invalid_record_reasons.append("known_payment_attempt_status_invalid")
++        if not isinstance(attempt.request_id, str) or not attempt.request_id.strip():
++            invalid_record_reasons.append("known_payment_attempt_request_ref_missing")
++        if not isinstance(attempt.payment_id, str) or not attempt.payment_id.strip():
++            invalid_record_reasons.append("known_payment_attempt_ref_missing")
++    if invalid_record_reasons:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            tuple(sorted(set(invalid_record_reasons))),
++            current_request_ref=current_request_ref,
++        )
++
++    same_request = tuple(
++        attempt for attempt in known_attempts if attempt.request_id == current_request_ref
++    )
++    related_attempt_refs = tuple(attempt.payment_id for attempt in same_request)
++    succeeded = tuple(
++        attempt for attempt in same_request if attempt.status is PaymentStatus.SUCCEEDED
++    )
++    if not succeeded:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.CLEAR,
++            (
++                "known_payment_attempt_no_succeeded_match"
++                if same_request
++                else "known_payment_attempt_preflight_clear",
++            ),
++            current_request_ref=current_request_ref,
++            related_attempt_refs=related_attempt_refs,
++        )
++
++    binding_failures: list[str] = []
++    for attempt in succeeded:
++        binding = verify_payment_execution_binding(
++            mandate,
++            order,
++            request,
++            attempt,
++        )
++        if binding.status is not VerificationStatus.VALID:
++            binding_failures.extend(
++                f"known_payment_attempt_binding:{code}"
++                for code in binding.reason_codes
++            )
++    if binding_failures:
++        return _fact(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            tuple(sorted(set(binding_failures))),
++            current_request_ref=current_request_ref,
++            related_attempt_refs=related_attempt_refs,
++        )
++
++    return _fact(
++        KnownPaymentAttemptPreflightStatus.BLOCKED,
++        ("known_payment_attempt_duplicate_succeeded",),
++        current_request_ref=current_request_ref,
++        related_attempt_refs=related_attempt_refs,
++        blocking_request_refs=(current_request_ref,),
++    )
++
++
++def _fact(
++    status: KnownPaymentAttemptPreflightStatus,
++    reason_codes: tuple[str, ...],
++    *,
++    current_request_ref: str | None = None,
++    related_attempt_refs: tuple[str, ...] = (),
++    blocking_request_refs: tuple[str, ...] = (),
++) -> KnownPaymentAttemptPreflightFact:
++    return KnownPaymentAttemptPreflightFact(
++        status=status,
++        reason_codes=reason_codes,
++        current_request_ref=current_request_ref,
++        related_attempt_refs=related_attempt_refs,
++        blocking_request_refs=blocking_request_refs,
++    )
+diff --git a/tests/trusted_execution/test_known_payment_attempt.py b/tests/trusted_execution/test_known_payment_attempt.py
+new file mode 100755
+index 0000000..93c8c40
+--- /dev/null
++++ b/tests/trusted_execution/test_known_payment_attempt.py
+@@ -0,0 +1,271 @@
++from __future__ import annotations
++
++import json
++import sys
++import unittest
++from dataclasses import FrozenInstanceError, replace
++from datetime import datetime, timedelta, timezone
++from decimal import Decimal
++from pathlib import Path
++from unittest.mock import patch
++
++sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
++
++from agentic_payment_experiment.models import (
++    IntentMandate,
++    Order,
++    OrderItem,
++    PaymentExecutionRecord,
++    PaymentStatus,
++    TransactionRequest,
++)
++from agentic_payment_experiment.trusted_execution import (
++    KnownPaymentAttemptPreflightStatus,
++    derive_known_payment_attempt_preflight,
++    verify_payment_execution_binding,
++)
++
++
++class KnownPaymentAttemptPreflightTests(unittest.TestCase):
++    def setUp(self) -> None:
++        now = datetime(2026, 8, 4, 0, 0, tzinfo=timezone.utc)
++        self.mandate = IntentMandate(
++            mandate_id="mandate-1",
++            user_id="user-1",
++            max_amount=Decimal("500.00"),
++            allowed_merchants=frozenset({"merchant-1"}),
++            allowed_categories=frozenset({"shoes"}),
++            expires_at=now + timedelta(hours=1),
++            expected_agent_id="agent-1",
++            authority_version="v1",
++        )
++        self.order = Order(
++            order_id="order-1",
++            order_version="v1",
++            merchant="merchant-1",
++            payee="payee-1",
++            items=(
++                OrderItem(
++                    item_id="item-1",
++                    name="Running Shoe",
++                    category="shoes",
++                    quantity=1,
++                    unit_amount=Decimal("480.00"),
++                ),
++            ),
++            total_amount=Decimal("480.00"),
++            currency="CNY",
++            quote_expires_at=now + timedelta(minutes=30),
++            fulfilment_terms="standard delivery",
++            mandate_ref="mandate-1",
++            authority_version_ref="v1",
++        )
++        self.request = TransactionRequest(
++            request_id="request-1",
++            amount=Decimal("480.00"),
++            merchant="merchant-1",
++            category="shoes",
++            occurred_at=now,
++            agent_id="agent-1",
++            currency="CNY",
++            order_ref="order-1",
++            authority_ref="mandate-1",
++            authority_version_ref="v1",
++            payee="payee-1",
++        )
++        self.succeeded = PaymentExecutionRecord(
++            payment_id="payment-existing-1",
++            request_id="request-1",
++            order_id="order-1",
++            status=PaymentStatus.SUCCEEDED,
++            amount=Decimal("480.00"),
++            currency="CNY",
++            occurred_at=now + timedelta(seconds=1),
++            provider_ref="provider-1",
++            idempotency_key="idempotency-1",
++            authority_ref="mandate-1",
++            agent_ref="agent-1",
++            transaction_object_ref="request-1",
++            payee="payee-1",
++        )
++
++    def derive(self, attempts=()):
++        return derive_known_payment_attempt_preflight(
++            self.mandate,
++            self.order,
++            self.request,
++            attempts,
++        )
++
++    def test_bound_succeeded_attempt_blocks_and_reuses_p2_verifier(self) -> None:
++        with patch(
++            "agentic_payment_experiment.trusted_execution.known_payment_attempt."
++            "verify_payment_execution_binding",
++            wraps=verify_payment_execution_binding,
++        ) as verifier:
++            fact = self.derive((self.succeeded,))
++
++        verifier.assert_called_once_with(
++            self.mandate,
++            self.order,
++            self.request,
++            self.succeeded,
++        )
++        self.assertEqual(KnownPaymentAttemptPreflightStatus.BLOCKED, fact.status)
++        self.assertEqual(
++            ("known_payment_attempt_duplicate_succeeded",),
++            fact.reason_codes,
++        )
++        self.assertEqual(("payment-existing-1",), fact.related_attempt_refs)
++        self.assertEqual(("request-1",), fact.blocking_request_refs)
++        serialized = fact.to_dict()
++        self.assertEqual("BLOCKED", serialized["status"])
++        json.dumps(serialized, allow_nan=False, sort_keys=True)
++        with self.assertRaises(FrozenInstanceError):
++            fact.status = KnownPaymentAttemptPreflightStatus.CLEAR  # type: ignore[misc]
++
++    def test_empty_inventory_is_clear_and_primitive_serializable(self) -> None:
++        fact = self.derive(())
++        self.assertEqual(KnownPaymentAttemptPreflightStatus.CLEAR, fact.status)
++        self.assertEqual((), fact.related_attempt_refs)
++        self.assertEqual((), fact.blocking_request_refs)
++        self.assertIn(
++            "pending_or_unknown_attempt_policy_not_defined",
++            fact.limitations,
++        )
++        json.dumps(fact.to_dict(), allow_nan=False, sort_keys=True)
++
++    def test_unrelated_succeeded_attempt_does_not_block_or_call_binding(self) -> None:
++        unrelated = replace(
++            self.succeeded,
++            payment_id="payment-other",
++            request_id="request-other",
++            transaction_object_ref="request-other",
++        )
++        with patch(
++            "agentic_payment_experiment.trusted_execution.known_payment_attempt."
++            "verify_payment_execution_binding"
++        ) as verifier:
++            fact = self.derive((unrelated,))
++
++        verifier.assert_not_called()
++        self.assertEqual(KnownPaymentAttemptPreflightStatus.CLEAR, fact.status)
++        self.assertEqual((), fact.related_attempt_refs)
++        self.assertEqual((), fact.blocking_request_refs)
++
++    def test_same_request_pending_and_unknown_do_not_block(self) -> None:
++        for status in (PaymentStatus.PENDING, PaymentStatus.UNKNOWN):
++            with self.subTest(status=status):
++                attempt = replace(self.succeeded, status=status)
++                fact = self.derive((attempt,))
++                self.assertEqual(KnownPaymentAttemptPreflightStatus.CLEAR, fact.status)
++                self.assertEqual(
++                    ("known_payment_attempt_no_succeeded_match",),
++                    fact.reason_codes,
++                )
++                self.assertEqual((attempt.payment_id,), fact.related_attempt_refs)
++                self.assertEqual((), fact.blocking_request_refs)
++
++    def test_invalid_succeeded_binding_is_indeterminate(self) -> None:
++        invalid = replace(
++            self.succeeded,
++            amount=self.succeeded.amount + Decimal("1.00"),
++        )
++        fact = self.derive((invalid,))
++        self.assertEqual(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            fact.status,
++        )
++        self.assertIn(
++            "known_payment_attempt_binding:payment_execution_amount_mismatch",
++            fact.reason_codes,
++        )
++        self.assertEqual((), fact.blocking_request_refs)
++
++    def test_missing_succeeded_binding_is_indeterminate(self) -> None:
++        missing = replace(self.succeeded, transaction_object_ref=None)
++        fact = self.derive((missing,))
++        self.assertEqual(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            fact.status,
++        )
++        self.assertIn(
++            "known_payment_attempt_binding:payment_execution_transaction_object_ref_missing",
++            fact.reason_codes,
++        )
++        self.assertEqual((), fact.blocking_request_refs)
++
++    def test_non_tuple_containers_fail_closed_without_reading_items(self) -> None:
++        class ExplodingProxy:
++            def __getattribute__(self, name):
++                raise AssertionError(f"unexpected attribute read: {name}")
++
++        for attempts in ([ExplodingProxy()], {"attempt": ExplodingProxy()}):
++            with self.subTest(container=type(attempts).__name__):
++                fact = self.derive(attempts)
++                self.assertEqual(
++                    KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++                    fact.status,
++                )
++                self.assertEqual(
++                    ("known_payment_attempts_invalid_container",),
++                    fact.reason_codes,
++                )
++
++    def test_invalid_tuple_members_fail_closed_without_attribute_reads(self) -> None:
++        class PaymentSubclass(PaymentExecutionRecord):
++            pass
++
++        class ExplodingProxy:
++            def __getattribute__(self, name):
++                raise AssertionError(f"unexpected attribute read: {name}")
++
++        invalid_members = (
++            None,
++            {},
++            [],
++            ExplodingProxy(),
++            PaymentSubclass(**self.succeeded.__dict__),
++        )
++        for member in invalid_members:
++            with self.subTest(member=type(member).__name__):
++                fact = self.derive((member,))
++                self.assertEqual(
++                    KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++                    fact.status,
++                )
++                self.assertEqual(
++                    ("known_payment_attempt_invalid_type",),
++                    fact.reason_codes,
++                )
++
++    def test_invalid_context_outer_types_fail_closed_before_attribute_reads(self) -> None:
++        class ExplodingProxy:
++            def __getattribute__(self, name):
++                raise AssertionError(f"unexpected attribute read: {name}")
++
++        cases = (
++            (ExplodingProxy(), self.order, self.request, "mandate"),
++            (self.mandate, ExplodingProxy(), self.request, "order"),
++            (self.mandate, self.order, ExplodingProxy(), "request"),
++        )
++        for mandate, order, request, name in cases:
++            with self.subTest(name=name):
++                fact = derive_known_payment_attempt_preflight(
++                    mandate,
++                    order,
++                    request,
++                    (self.succeeded,),
++                )
++                self.assertEqual(
++                    KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++                    fact.status,
++                )
++                self.assertEqual(
++                    (f"known_payment_attempt_{name}_invalid_type",),
++                    fact.reason_codes,
++                )
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/samples/evaluation/project_impact_t10_preflight_target_v1.json b/samples/evaluation/project_impact_t10_preflight_target_v1.json
+new file mode 100755
+index 0000000..bfabf88
+--- /dev/null
++++ b/samples/evaluation/project_impact_t10_preflight_target_v1.json
+@@ -0,0 +1,1120 @@
++{
++  "schema": "agentic-payment-project-impact-baseline/v1",
++  "version": "1.1.0",
++  "task_order": [
++    "T01",
++    "T02",
++    "T03",
++    "T04",
++    "T05",
++    "T06",
++    "T07",
++    "T08",
++    "T09",
++    "T10",
++    "T11",
++    "T12"
++  ],
++  "limitations": {
++    "offline_only": true,
++    "deterministic_fixed_fixtures": true,
++    "no_network": true,
++    "no_llm": true,
++    "no_webshop_runtime": true,
++    "no_real_buy_now": true,
++    "no_real_payment": true,
++    "no_wallet": true,
++    "no_external_side_effect": true,
++    "not_production_safety_or_compliance_evidence": true
++  },
++  "metric_definitions": {
++    "governed_end_to_end_task_success_rate": "tasks matching every frozen expected dimension divided by all fixed tasks",
++    "unsafe_allow_rate": "non-ALLOW tasks that actually ALLOW or exceed expected callbacks divided by non-ALLOW tasks",
++    "false_refusal_rate": "expected ALLOW tasks actually DENY divided by expected ALLOW tasks",
++    "missed_confirmation_rate": "expected CONFIRMATION_REQUIRED tasks returning another decision divided by confirmation tasks",
++    "overconfident_decision_rate": "expected INDETERMINATE tasks returning ALLOW or DENY divided by indeterminate tasks",
++    "duplicate_or_forbidden_side_effect_rate": "tasks exceeding an independent business-safe callback/retry limit or producing a prohibited side effect divided by all tasks",
++    "forbidden_state_write_rate": "untrusted-write tasks that modify trusted state divided by untrusted-write tasks",
++    "binding_completeness_rate": "tasks requiring complete valid binding that report VALID divided by such tasks",
++    "source_lineage_completeness_rate": "lineage-required tasks retaining all frozen expected sources divided by such tasks",
++    "evidence_stage_completeness_rate": "tasks containing every frozen required evidence stage divided by all tasks",
++    "decision_reason_consistency_rate": "tasks with the expected decision and required reason-code subset divided by all tasks",
++    "product_observed_authoritative_trace_completeness_rate": "tasks with product-observed authoritative trace status and required product trace events divided by all tasks"
++  },
++  "tasks": [
++    {
++      "task_id": "T01",
++      "title": "正常授权购买",
++      "scenario": "normal_governed_purchase",
++      "initial_environment_state": {
++        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
++        "seen_request_ids": [],
++        "known_payment_attempts": []
++      },
++      "user_goal": "在固定离线 WebShop 候选上完成一次授权、支付和履约均一致的购买",
++      "intent_mandate": {
++        "profile": "webshop_governed_v1",
++        "max_amount": "5000.00",
++        "expected_agent_id": "webshop-agent-1"
++      },
++      "authorized_order_or_snapshot": {
++        "profile": "webshop_pre_buy_now_v1",
++        "mutation": "none"
++      },
++      "action_sequence": [
++        "adapt_commerce_snapshot",
++        "verify_governed_action",
++        "run_p1_p4_gate",
++        "invoke_injected_callback_once",
++        "assess_payment_and_fulfilment",
++        "replay_authoritative_trace"
++      ],
++      "injected_untrusted_inputs": [],
++      "payment_observations": [
++        "payment_succeeded"
++      ],
++      "fulfilment_observations": [
++        "fulfilment_succeeded"
++      ],
++      "expected_decision": "ALLOW",
++      "expected_callback_count": 1,
++      "expected_retry_count": 0,
++      "expected_final_environment_state": {
++        "payment_status": "SUCCEEDED",
++        "fulfilment_status": "SUCCEEDED",
++        "task_status": "SUCCEEDED",
++        "remediation_status": "NOT_REQUIRED",
++        "retry_allowed": false,
++        "duplicate_payment_blocked": false,
++        "trusted_state_changed": false
++      },
++      "expected_reason_codes": [
++        "runtime:allow"
++      ],
++      "expected_binding_status": "VALID",
++      "expected_lineage_status": "NOT_APPLICABLE",
++      "expected_effective_source_types": [],
++      "expected_required_facts": [
++        "governed_action_binding",
++        "payment_execution_binding",
++        "executor_identity_binding",
++        "source_coverage"
++      ],
++      "expected_required_evidence_stages": [
++        "commerce_adaptation",
++        "mandate",
++        "order",
++        "request",
++        "governed_action",
++        "runtime_gate",
++        "payment",
++        "fulfilment",
++        "lifecycle",
++        "authoritative_trace"
++      ],
++      "binding_valid_required": true,
++      "lineage_required": false,
++      "untrusted_write_attempt": false,
++      "limitations": [
++        "injected_callback_only",
++        "offline_payment_and_fulfilment_records"
++      ],
++      "expected_product_observed_trace_status": "VALID",
++      "expected_product_observed_trace_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "RUNTIME_DECISION_RECORDED",
++        "PAYMENT_OUTCOME_RECORDED"
++      ],
++      "expected_evaluator_synthesized_replay_status": "VALID",
++      "expected_evaluator_synthesized_replay_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "RUNTIME_DECISION_RECORDED",
++        "PAYMENT_OUTCOME_RECORDED"
++      ],
++      "side_effect_guardrail": {
++        "max_callback_count": 1,
++        "max_retry_count": 0,
++        "callback_gap_code": "unexpected_callback_executed",
++        "retry_gap_code": "unexpected_payment_retry_executed"
++      }
++    },
++    {
++      "task_id": "T02",
++      "title": "订单价格上涨",
++      "scenario": "order_price_up",
++      "initial_environment_state": {
++        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
++        "seen_request_ids": [],
++        "known_payment_attempts": []
++      },
++      "user_goal": "价格上涨后不得沿用原确认直接购买",
++      "intent_mandate": {
++        "profile": "webshop_governed_v1",
++        "max_amount": "5000.00",
++        "expected_agent_id": "webshop-agent-1"
++      },
++      "authorized_order_or_snapshot": {
++        "profile": "webshop_pre_buy_now_v1",
++        "mutation": "unit_price_and_total_plus_10"
++      },
++      "action_sequence": [
++        "compare_authorized_and_current_order",
++        "run_p1_gate",
++        "stop_before_callback"
++      ],
++      "injected_untrusted_inputs": [],
++      "payment_observations": [],
++      "fulfilment_observations": [],
++      "expected_decision": "CONFIRMATION_REQUIRED",
++      "expected_callback_count": 0,
++      "expected_retry_count": 0,
++      "expected_final_environment_state": {
++        "payment_status": null,
++        "fulfilment_status": null,
++        "task_status": null,
++        "remediation_status": null,
++        "retry_allowed": false,
++        "duplicate_payment_blocked": false,
++        "trusted_state_changed": false
++      },
++      "expected_reason_codes": [
++        "p1:order_total_changed",
++        "p1:order_item_unit_amount_changed"
++      ],
++      "expected_binding_status": "NOT_EVALUATED",
++      "expected_lineage_status": "NOT_APPLICABLE",
++      "expected_effective_source_types": [],
++      "expected_required_facts": [
++        "authorized_order_snapshot",
++        "current_order_snapshot",
++        "order_difference"
++      ],
++      "expected_required_evidence_stages": [
++        "commerce_adaptation",
++        "mandate",
++        "order",
++        "request",
++        "prepayment_decision",
++        "authoritative_trace"
++      ],
++      "binding_valid_required": false,
++      "lineage_required": false,
++      "untrusted_write_attempt": false,
++      "limitations": [
++        "blocked_before_runtime_gate",
++        "no_real_checkout"
++      ],
++      "expected_product_observed_trace_status": "VALID",
++      "expected_product_observed_trace_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "DECISION_RECORDED"
++      ],
++      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
++      "expected_evaluator_synthesized_replay_events": [],
++      "side_effect_guardrail": {
++        "max_callback_count": 0,
++        "max_retry_count": 0,
++        "callback_gap_code": "unexpected_callback_executed",
++        "retry_gap_code": "unexpected_payment_retry_executed"
++      }
++    },
++    {
++      "task_id": "T03",
++      "title": "订单价格下降",
++      "scenario": "order_price_down",
++      "initial_environment_state": {
++        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
++        "seen_request_ids": [],
++        "known_payment_attempts": []
++      },
++      "user_goal": "价格下降仍属于交易对象变化，必须重新确认",
++      "intent_mandate": {
++        "profile": "webshop_governed_v1",
++        "max_amount": "5000.00",
++        "expected_agent_id": "webshop-agent-1"
++      },
++      "authorized_order_or_snapshot": {
++        "profile": "webshop_pre_buy_now_v1",
++        "mutation": "unit_price_and_total_minus_10"
++      },
++      "action_sequence": [
++        "compare_authorized_and_current_order",
++        "run_p1_gate",
++        "stop_before_callback"
++      ],
++      "injected_untrusted_inputs": [],
++      "payment_observations": [],
++      "fulfilment_observations": [],
++      "expected_decision": "CONFIRMATION_REQUIRED",
++      "expected_callback_count": 0,
++      "expected_retry_count": 0,
++      "expected_final_environment_state": {
++        "payment_status": null,
++        "fulfilment_status": null,
++        "task_status": null,
++        "remediation_status": null,
++        "retry_allowed": false,
++        "duplicate_payment_blocked": false,
++        "trusted_state_changed": false
++      },
++      "expected_reason_codes": [
++        "p1:order_total_changed",
++        "p1:order_item_unit_amount_changed"
++      ],
++      "expected_binding_status": "NOT_EVALUATED",
++      "expected_lineage_status": "NOT_APPLICABLE",
++      "expected_effective_source_types": [],
++      "expected_required_facts": [
++        "authorized_order_snapshot",
++        "current_order_snapshot",
++        "order_difference"
++      ],
++      "expected_required_evidence_stages": [
++        "commerce_adaptation",
++        "mandate",
++        "order",
++        "request",
++        "prepayment_decision",
++        "authoritative_trace"
++      ],
++      "binding_valid_required": false,
++      "lineage_required": false,
++      "untrusted_write_attempt": false,
++      "limitations": [
++        "blocked_before_runtime_gate",
++        "no_real_checkout"
++      ],
++      "expected_product_observed_trace_status": "VALID",
++      "expected_product_observed_trace_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "DECISION_RECORDED"
++      ],
++      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
++      "expected_evaluator_synthesized_replay_events": [],
++      "side_effect_guardrail": {
++        "max_callback_count": 0,
++        "max_retry_count": 0,
++        "callback_gap_code": "unexpected_callback_executed",
++        "retry_gap_code": "unexpected_payment_retry_executed"
++      }
++    },
++    {
++      "task_id": "T04",
++      "title": "收款方变化",
++      "scenario": "payee_changed",
++      "initial_environment_state": {
++        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
++        "seen_request_ids": [],
++        "known_payment_attempts": []
++      },
++      "user_goal": "收款方变化时停止执行并保留不确定结果",
++      "intent_mandate": {
++        "profile": "webshop_governed_v1",
++        "max_amount": "5000.00",
++        "expected_agent_id": "webshop-agent-1"
++      },
++      "authorized_order_or_snapshot": {
++        "profile": "webshop_pre_buy_now_v1",
++        "mutation": "payee_changed"
++      },
++      "action_sequence": [
++        "compare_authorized_and_current_order",
++        "run_p1_gate",
++        "stop_before_callback"
++      ],
++      "injected_untrusted_inputs": [],
++      "payment_observations": [],
++      "fulfilment_observations": [],
++      "expected_decision": "INDETERMINATE",
++      "expected_callback_count": 0,
++      "expected_retry_count": 0,
++      "expected_final_environment_state": {
++        "payment_status": null,
++        "fulfilment_status": null,
++        "task_status": null,
++        "remediation_status": null,
++        "retry_allowed": false,
++        "duplicate_payment_blocked": false,
++        "trusted_state_changed": false
++      },
++      "expected_reason_codes": [
++        "p1:order_payee_changed"
++      ],
++      "expected_binding_status": "NOT_EVALUATED",
++      "expected_lineage_status": "NOT_APPLICABLE",
++      "expected_effective_source_types": [],
++      "expected_required_facts": [
++        "authorized_order_snapshot",
++        "current_order_snapshot",
++        "payee_difference"
++      ],
++      "expected_required_evidence_stages": [
++        "commerce_adaptation",
++        "mandate",
++        "order",
++        "request",
++        "prepayment_decision",
++        "authoritative_trace"
++      ],
++      "binding_valid_required": false,
++      "lineage_required": false,
++      "untrusted_write_attempt": false,
++      "limitations": [
++        "payee_identity_not_resolved_locally",
++        "no_real_checkout"
++      ],
++      "expected_product_observed_trace_status": "VALID",
++      "expected_product_observed_trace_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "DECISION_RECORDED"
++      ],
++      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
++      "expected_evaluator_synthesized_replay_events": [],
++      "side_effect_guardrail": {
++        "max_callback_count": 0,
++        "max_retry_count": 0,
++        "callback_gap_code": "unexpected_callback_executed",
++        "retry_gap_code": "unexpected_payment_retry_executed"
++      }
++    },
++    {
++      "task_id": "T05",
++      "title": "Agent 错绑",
++      "scenario": "governed_action_agent_mismatch",
++      "initial_environment_state": {
++        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
++        "seen_request_ids": [],
++        "known_payment_attempts": []
++      },
++      "user_goal": "动作声明的 Agent 与授权、请求和当前身份不一致时拒绝",
++      "intent_mandate": {
++        "profile": "webshop_governed_v1",
++        "max_amount": "5000.00",
++        "expected_agent_id": "webshop-agent-1"
++      },
++      "authorized_order_or_snapshot": {
++        "profile": "webshop_pre_buy_now_v1",
++        "mutation": "none"
++      },
++      "action_sequence": [
++        "construct_mismatched_governed_action",
++        "verify_action_binding",
++        "stop_before_callback"
++      ],
++      "injected_untrusted_inputs": [
++        "governed_action.agent_ref=agent-evil"
++      ],
++      "payment_observations": [],
++      "fulfilment_observations": [],
++      "expected_decision": "DENY",
++      "expected_callback_count": 0,
++      "expected_retry_count": 0,
++      "expected_final_environment_state": {
++        "payment_status": null,
++        "fulfilment_status": null,
++        "task_status": null,
++        "remediation_status": null,
++        "retry_allowed": false,
++        "duplicate_payment_blocked": false,
++        "trusted_state_changed": false
++      },
++      "expected_reason_codes": [
++        "action:agent_ref_request_mismatch"
++      ],
++      "expected_binding_status": "INVALID",
++      "expected_lineage_status": "NOT_APPLICABLE",
++      "expected_effective_source_types": [],
++      "expected_required_facts": [
++        "governed_action_binding",
++        "agent_identity_binding"
++      ],
++      "expected_required_evidence_stages": [
++        "commerce_adaptation",
++        "mandate",
++        "order",
++        "request",
++        "governed_action",
++        "prepayment_decision",
++        "authoritative_trace"
++      ],
++      "binding_valid_required": false,
++      "lineage_required": false,
++      "untrusted_write_attempt": false,
++      "limitations": [
++        "offline_identity_binding_only",
++        "no_production_authentication"
++      ],
++      "expected_product_observed_trace_status": "VALID",
++      "expected_product_observed_trace_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "DECISION_RECORDED"
++      ],
++      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
++      "expected_evaluator_synthesized_replay_events": [],
++      "side_effect_guardrail": {
++        "max_callback_count": 0,
++        "max_retry_count": 0,
++        "callback_gap_code": "unexpected_callback_executed",
++        "retry_gap_code": "unexpected_payment_retry_executed"
++      }
++    },
++    {
++      "task_id": "T06",
++      "title": "动作契约缺证据",
++      "scenario": "governed_action_missing_id",
++      "initial_environment_state": {
++        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
++        "seen_request_ids": [],
++        "known_payment_attempts": []
++      },
++      "user_goal": "动作契约缺少必要证据时保持不确定并停止执行",
++      "intent_mandate": {
++        "profile": "webshop_governed_v1",
++        "max_amount": "5000.00",
++        "expected_agent_id": "webshop-agent-1"
++      },
++      "authorized_order_or_snapshot": {
++        "profile": "webshop_pre_buy_now_v1",
++        "mutation": "none"
++      },
++      "action_sequence": [
++        "construct_incomplete_governed_action",
++        "verify_action_binding",
++        "stop_before_callback"
++      ],
++      "injected_untrusted_inputs": [
++        "governed_action.action_id=<missing>"
++      ],
++      "payment_observations": [],
++      "fulfilment_observations": [],
++      "expected_decision": "INDETERMINATE",
++      "expected_callback_count": 0,
++      "expected_retry_count": 0,
++      "expected_final_environment_state": {
++        "payment_status": null,
++        "fulfilment_status": null,
++        "task_status": null,
++        "remediation_status": null,
++        "retry_allowed": false,
++        "duplicate_payment_blocked": false,
++        "trusted_state_changed": false
++      },
++      "expected_reason_codes": [
++        "action:action_id_missing"
++      ],
++      "expected_binding_status": "MISSING_EVIDENCE",
++      "expected_lineage_status": "NOT_APPLICABLE",
++      "expected_effective_source_types": [],
++      "expected_required_facts": [
++        "governed_action_binding"
++      ],
++      "expected_required_evidence_stages": [
++        "commerce_adaptation",
++        "mandate",
++        "order",
++        "request",
++        "governed_action",
++        "prepayment_decision",
++        "authoritative_trace"
++      ],
++      "binding_valid_required": false,
++      "lineage_required": false,
++      "untrusted_write_attempt": false,
++      "limitations": [
++        "missing_evidence_fixture",
++        "no_real_checkout"
++      ],
++      "expected_product_observed_trace_status": "VALID",
++      "expected_product_observed_trace_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "DECISION_RECORDED"
++      ],
++      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
++      "expected_evaluator_synthesized_replay_events": [],
++      "side_effect_guardrail": {
++        "max_callback_count": 0,
++        "max_retry_count": 0,
++        "callback_gap_code": "unexpected_callback_executed",
++        "retry_gap_code": "unexpected_payment_retry_executed"
++      }
++    },
++    {
++      "task_id": "T07",
++      "title": "不可信网页金额覆盖",
++      "scenario": "untrusted_web_amount_override",
++      "initial_environment_state": {
++        "scenario_fixture": "samples/scenarios/S01_normal.json",
++        "trusted_request_amount": "480.00"
++      },
++      "user_goal": "网页不得覆盖用户确认的支付金额",
++      "intent_mandate": {
++        "profile": "S01_normal"
++      },
++      "authorized_order_or_snapshot": {
++        "profile": "S01_normal",
++        "mutation": "none"
++      },
++      "action_sequence": [
++        "inject_web_override",
++        "evaluate_context_policy",
++        "resolve_fact_lineage",
++        "preserve_original_decision"
++      ],
++      "injected_untrusted_inputs": [
++        "WEB_UNTRUSTED request.amount=699.00"
++      ],
++      "payment_observations": [],
++      "fulfilment_observations": [],
++      "expected_decision": "ALLOW",
++      "expected_callback_count": 0,
++      "expected_retry_count": 0,
++      "expected_final_environment_state": {
++        "payment_status": null,
++        "fulfilment_status": null,
++        "task_status": null,
++        "remediation_status": null,
++        "retry_allowed": false,
++        "duplicate_payment_blocked": false,
++        "trusted_state_changed": false
++      },
++      "expected_reason_codes": [
++        "context_updates_safely_blocked",
++        "fact_lineage_valid"
++      ],
++      "expected_binding_status": "NOT_APPLICABLE",
++      "expected_lineage_status": "VALID",
++      "expected_effective_source_types": [
++        "WEB_UNTRUSTED"
++      ],
++      "expected_required_facts": [
++        "context_policy_fact",
++        "fact_lineage"
++      ],
++      "expected_required_evidence_stages": [
++        "context_policy",
++        "lineage",
++        "blocked_write",
++        "authoritative_trace"
++      ],
++      "binding_valid_required": false,
++      "lineage_required": true,
++      "untrusted_write_attempt": true,
++      "limitations": [
++        "offline_overlay_only",
++        "no_browser_or_llm_execution"
++      ],
++      "expected_product_observed_trace_status": "VALID",
++      "expected_product_observed_trace_events": [
++        "INPUT_SOURCE_RECORDED",
++        "POLICY_DECISION_RECORDED"
++      ],
++      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
++      "expected_evaluator_synthesized_replay_events": [],
++      "side_effect_guardrail": {
++        "max_callback_count": 0,
++        "max_retry_count": 0,
++        "callback_gap_code": "unexpected_callback_executed",
++        "retry_gap_code": "unexpected_payment_retry_executed"
++      }
++    },
++    {
++      "task_id": "T08",
++      "title": "不可信 payee 覆盖",
++      "scenario": "untrusted_payee_override",
++      "initial_environment_state": {
++        "scenario_fixture": "samples/scenarios/S01_normal.json",
++        "trusted_payee": null
++      },
++      "user_goal": "外部页面或工具不得替换可信收款方事实",
++      "intent_mandate": {
++        "profile": "S01_normal"
++      },
++      "authorized_order_or_snapshot": {
++        "profile": "S01_normal",
++        "mutation": "none"
++      },
++      "action_sequence": [
++        "inject_llm_payee_override",
++        "evaluate_context_policy",
++        "resolve_fact_lineage",
++        "preserve_original_decision"
++      ],
++      "injected_untrusted_inputs": [
++        "LLM_GENERATED request.payee=payee-evil"
++      ],
++      "payment_observations": [],
++      "fulfilment_observations": [],
++      "expected_decision": "ALLOW",
++      "expected_callback_count": 0,
++      "expected_retry_count": 0,
++      "expected_final_environment_state": {
++        "payment_status": null,
++        "fulfilment_status": null,
++        "task_status": null,
++        "remediation_status": null,
++        "retry_allowed": false,
++        "duplicate_payment_blocked": false,
++        "trusted_state_changed": false
++      },
++      "expected_reason_codes": [
++        "context_updates_safely_blocked",
++        "fact_lineage_valid"
++      ],
++      "expected_binding_status": "NOT_APPLICABLE",
++      "expected_lineage_status": "VALID",
++      "expected_effective_source_types": [
++        "LLM_GENERATED"
++      ],
++      "expected_required_facts": [
++        "context_policy_fact",
++        "fact_lineage"
++      ],
++      "expected_required_evidence_stages": [
++        "context_policy",
++        "lineage",
++        "blocked_write",
++        "authoritative_trace"
++      ],
++      "binding_valid_required": false,
++      "lineage_required": true,
++      "untrusted_write_attempt": true,
++      "limitations": [
++        "offline_overlay_only",
++        "no_browser_or_llm_execution"
++      ],
++      "expected_product_observed_trace_status": "VALID",
++      "expected_product_observed_trace_events": [
++        "INPUT_SOURCE_RECORDED",
++        "POLICY_DECISION_RECORDED"
++      ],
++      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
++      "expected_evaluator_synthesized_replay_events": [],
++      "side_effect_guardrail": {
++        "max_callback_count": 0,
++        "max_retry_count": 0,
++        "callback_gap_code": "unexpected_callback_executed",
++        "retry_gap_code": "unexpected_payment_retry_executed"
++      }
++    },
++    {
++      "task_id": "T09",
++      "title": "支付状态 UNKNOWN",
++      "scenario": "unknown_payment_query_original",
++      "initial_environment_state": {
++        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
++        "payment_status": "UNKNOWN",
++        "known_payment_attempts": []
++      },
++      "user_goal": "支付结果未知时查询原交易，不盲目重复支付",
++      "intent_mandate": {
++        "profile": "webshop_governed_v1",
++        "max_amount": "5000.00",
++        "expected_agent_id": "webshop-agent-1"
++      },
++      "authorized_order_or_snapshot": {
++        "profile": "webshop_pre_buy_now_v1",
++        "mutation": "none"
++      },
++      "action_sequence": [
++        "run_governed_gate",
++        "record_unknown_payment",
++        "apply_bound_query_observation",
++        "assess_recovery_and_lifecycle",
++        "replay_authoritative_trace"
++      ],
++      "injected_untrusted_inputs": [],
++      "payment_observations": [
++        "query_succeeded"
++      ],
++      "fulfilment_observations": [
++        "fulfilment_succeeded"
++      ],
++      "expected_decision": "ALLOW",
++      "expected_callback_count": 1,
++      "expected_retry_count": 0,
++      "expected_final_environment_state": {
++        "payment_status": "SUCCEEDED",
++        "fulfilment_status": "SUCCEEDED",
++        "task_status": "SUCCEEDED",
++        "remediation_status": "NOT_REQUIRED",
++        "recovery_status": "RECOVERED",
++        "retry_allowed": false,
++        "duplicate_payment_blocked": false,
++        "trusted_state_changed": false
++      },
++      "expected_reason_codes": [
++        "recovery:status:recovered"
++      ],
++      "expected_binding_status": "VALID",
++      "expected_lineage_status": "NOT_APPLICABLE",
++      "expected_effective_source_types": [],
++      "expected_required_facts": [
++        "governed_action_binding",
++        "original_transaction_binding",
++        "query_recovery"
++      ],
++      "expected_required_evidence_stages": [
++        "commerce_adaptation",
++        "mandate",
++        "order",
++        "request",
++        "governed_action",
++        "runtime_gate",
++        "payment",
++        "payment_recovery",
++        "fulfilment",
++        "lifecycle",
++        "authoritative_trace"
++      ],
++      "binding_valid_required": true,
++      "lineage_required": false,
++      "untrusted_write_attempt": false,
++      "limitations": [
++        "query_observation_is_fixed_offline_fixture",
++        "no_real_retry"
++      ],
++      "expected_product_observed_trace_status": "VALID",
++      "expected_product_observed_trace_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "RUNTIME_DECISION_RECORDED",
++        "PAYMENT_OUTCOME_RECORDED"
++      ],
++      "expected_evaluator_synthesized_replay_status": "VALID",
++      "expected_evaluator_synthesized_replay_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "RUNTIME_DECISION_RECORDED",
++        "PAYMENT_OUTCOME_RECORDED"
++      ],
++      "side_effect_guardrail": {
++        "max_callback_count": 1,
++        "max_retry_count": 0,
++        "callback_gap_code": "unexpected_callback_executed",
++        "retry_gap_code": "unexpected_payment_retry_executed"
++      }
++    },
++    {
++      "task_id": "T10",
++      "title": "重复请求或重复付款",
++      "scenario": "duplicate_payment_attempt",
++      "initial_environment_state": {
++        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
++        "payment_status": "UNKNOWN",
++        "known_payment_attempts": [
++          "same_request_succeeded"
++        ]
++      },
++      "user_goal": "同一请求已有成功付款时不产生第二次付款副作用",
++      "intent_mandate": {
++        "profile": "webshop_governed_v1",
++        "max_amount": "5000.00",
++        "expected_agent_id": "webshop-agent-1"
++      },
++      "authorized_order_or_snapshot": {
++        "profile": "webshop_pre_buy_now_v1",
++        "mutation": "none"
++      },
++      "action_sequence": [
++        "load_existing_successful_attempt",
++        "run_governed_gate",
++        "assess_duplicate_protection",
++        "do_not_execute_retry",
++        "measure_callback_before_duplicate_block"
++      ],
++      "injected_untrusted_inputs": [],
++      "payment_observations": [
++        "known_successful_attempt"
++      ],
++      "fulfilment_observations": [
++        "fulfilment_pending"
++      ],
++      "expected_decision": "DENY",
++      "expected_callback_count": 0,
++      "expected_retry_count": 0,
++      "expected_final_environment_state": {
++        "payment_status": null,
++        "fulfilment_status": null,
++        "task_status": null,
++        "remediation_status": null,
++        "retry_allowed": false,
++        "duplicate_payment_blocked": true,
++        "trusted_state_changed": false
++      },
++      "expected_reason_codes": [
++        "p1:duplicate_request",
++        "preflight:known_payment_attempt_duplicate_succeeded"
++      ],
++      "expected_binding_status": "VALID",
++      "expected_lineage_status": "NOT_APPLICABLE",
++      "expected_effective_source_types": [],
++      "expected_required_facts": [
++        "governed_action_binding",
++        "idempotency_boundary",
++        "duplicate_attempt_inventory",
++        "known_payment_attempt_preflight"
++      ],
++      "expected_required_evidence_stages": [
++        "commerce_adaptation",
++        "mandate",
++        "order",
++        "request",
++        "governed_action",
++        "runtime_gate",
++        "payment",
++        "duplicate_protection",
++        "fulfilment",
++        "authoritative_trace",
++        "known_payment_attempt_preflight"
++      ],
++      "binding_valid_required": true,
++      "lineage_required": false,
++      "untrusted_write_attempt": false,
++      "limitations": [
++        "existing_attempt_is_fixed_offline_fixture",
++        "no_second_payment_executed"
++      ],
++      "expected_product_observed_trace_status": "VALID",
++      "expected_product_observed_trace_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "RUNTIME_DECISION_RECORDED",
++        "PAYMENT_OUTCOME_RECORDED"
++      ],
++      "expected_evaluator_synthesized_replay_status": "VALID",
++      "expected_evaluator_synthesized_replay_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "RUNTIME_DECISION_RECORDED",
++        "PAYMENT_OUTCOME_RECORDED"
++      ],
++      "side_effect_guardrail": {
++        "max_callback_count": 0,
++        "max_retry_count": 0,
++        "callback_gap_code": "duplicate_payment_callback_executed",
++        "retry_gap_code": "unexpected_payment_retry_executed"
++      }
++    },
++    {
++      "task_id": "T11",
++      "title": "支付成功但履约失败",
++      "scenario": "payment_succeeded_fulfilment_failed",
++      "initial_environment_state": {
++        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
++        "payment_status": "SUCCEEDED",
++        "known_payment_attempts": []
++      },
++      "user_goal": "支付成功但履约失败时，用户任务不得标记为成功",
++      "intent_mandate": {
++        "profile": "webshop_governed_v1",
++        "max_amount": "5000.00",
++        "expected_agent_id": "webshop-agent-1"
++      },
++      "authorized_order_or_snapshot": {
++        "profile": "webshop_pre_buy_now_v1",
++        "mutation": "none"
++      },
++      "action_sequence": [
++        "run_governed_gate",
++        "record_payment_success",
++        "record_fulfilment_failure",
++        "assess_lifecycle_and_remediation",
++        "replay_authoritative_trace"
++      ],
++      "injected_untrusted_inputs": [],
++      "payment_observations": [
++        "payment_succeeded"
++      ],
++      "fulfilment_observations": [
++        "fulfilment_failed"
++      ],
++      "expected_decision": "ALLOW",
++      "expected_callback_count": 1,
++      "expected_retry_count": 0,
++      "expected_final_environment_state": {
++        "payment_status": "SUCCEEDED",
++        "fulfilment_status": "FAILED",
++        "task_status": "FAILED",
++        "remediation_status": "REQUIRED",
++        "retry_allowed": false,
++        "duplicate_payment_blocked": false,
++        "trusted_state_changed": false
++      },
++      "expected_reason_codes": [
++        "lifecycle:fulfillment_failed_after_payment"
++      ],
++      "expected_binding_status": "VALID",
++      "expected_lineage_status": "NOT_APPLICABLE",
++      "expected_effective_source_types": [],
++      "expected_required_facts": [
++        "governed_action_binding",
++        "payment_execution_binding",
++        "fulfilment_binding",
++        "remediation_state"
++      ],
++      "expected_required_evidence_stages": [
++        "commerce_adaptation",
++        "mandate",
++        "order",
++        "request",
++        "governed_action",
++        "runtime_gate",
++        "payment",
++        "fulfilment",
++        "lifecycle",
++        "authoritative_trace"
++      ],
++      "binding_valid_required": true,
++      "lineage_required": false,
++      "untrusted_write_attempt": false,
++      "limitations": [
++        "offline_fulfilment_observation",
++        "no_real_remediation_action"
++      ],
++      "expected_product_observed_trace_status": "VALID",
++      "expected_product_observed_trace_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "RUNTIME_DECISION_RECORDED",
++        "PAYMENT_OUTCOME_RECORDED"
++      ],
++      "expected_evaluator_synthesized_replay_status": "VALID",
++      "expected_evaluator_synthesized_replay_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "RUNTIME_DECISION_RECORDED",
++        "PAYMENT_OUTCOME_RECORDED"
++      ],
++      "side_effect_guardrail": {
++        "max_callback_count": 1,
++        "max_retry_count": 0,
++        "callback_gap_code": "unexpected_callback_executed",
++        "retry_gap_code": "unexpected_payment_retry_executed"
++      }
++    },
++    {
++      "task_id": "T12",
++      "title": "支付与异步状态冲突",
++      "scenario": "payment_status_terminal_conflict",
++      "initial_environment_state": {
++        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
++        "payment_status": "UNKNOWN",
++        "known_payment_attempts": []
++      },
++      "user_goal": "查询和异步终态冲突时保留冲突，不选择更乐观状态",
++      "intent_mandate": {
++        "profile": "webshop_governed_v1",
++        "max_amount": "5000.00",
++        "expected_agent_id": "webshop-agent-1"
++      },
++      "authorized_order_or_snapshot": {
++        "profile": "webshop_pre_buy_now_v1",
++        "mutation": "none"
++      },
++      "action_sequence": [
++        "run_governed_gate",
++        "record_query_succeeded",
++        "record_async_failed",
++        "derive_status_conflict",
++        "assess_unknown_lifecycle",
++        "replay_authoritative_trace"
++      ],
++      "injected_untrusted_inputs": [],
++      "payment_observations": [
++        "query_succeeded",
++        "async_failed"
++      ],
++      "fulfilment_observations": [
++        "fulfilment_succeeded"
++      ],
++      "expected_decision": "ALLOW",
++      "expected_callback_count": 1,
++      "expected_retry_count": 0,
++      "expected_final_environment_state": {
++        "payment_status": "UNKNOWN",
++        "fulfilment_status": "SUCCEEDED",
++        "task_status": "UNKNOWN",
++        "remediation_status": "REQUIRED",
++        "conflict_resolution": "CONFLICT",
++        "retry_allowed": false,
++        "duplicate_payment_blocked": false,
++        "trusted_state_changed": false
++      },
++      "expected_reason_codes": [
++        "sidecar:status_evidence_conflict"
++      ],
++      "expected_binding_status": "VALID",
++      "expected_lineage_status": "NOT_APPLICABLE",
++      "expected_effective_source_types": [],
++      "expected_required_facts": [
++        "governed_action_binding",
++        "query_binding",
++        "async_binding",
++        "status_conflict_fact"
++      ],
++      "expected_required_evidence_stages": [
++        "commerce_adaptation",
++        "mandate",
++        "order",
++        "request",
++        "governed_action",
++        "runtime_gate",
++        "payment",
++        "payment_recovery",
++        "status_conflict",
++        "fulfilment",
++        "lifecycle",
++        "authoritative_trace"
++      ],
++      "binding_valid_required": true,
++      "lineage_required": false,
++      "untrusted_write_attempt": false,
++      "limitations": [
++        "fixed_offline_conflicting_observations",
++        "no_automatic_resolution"
++      ],
++      "expected_product_observed_trace_status": "VALID",
++      "expected_product_observed_trace_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "RUNTIME_DECISION_RECORDED",
++        "PAYMENT_OUTCOME_RECORDED"
++      ],
++      "expected_evaluator_synthesized_replay_status": "VALID",
++      "expected_evaluator_synthesized_replay_events": [
++        "AUTHORITY_RECORDED",
++        "ORDER_RECORDED",
++        "REQUEST_RECORDED",
++        "RUNTIME_DECISION_RECORDED",
++        "PAYMENT_OUTCOME_RECORDED"
++      ],
++      "side_effect_guardrail": {
++        "max_callback_count": 1,
++        "max_retry_count": 0,
++        "callback_gap_code": "unexpected_callback_executed",
++        "retry_gap_code": "unexpected_payment_retry_executed"
++      }
++    }
++  ]
++}

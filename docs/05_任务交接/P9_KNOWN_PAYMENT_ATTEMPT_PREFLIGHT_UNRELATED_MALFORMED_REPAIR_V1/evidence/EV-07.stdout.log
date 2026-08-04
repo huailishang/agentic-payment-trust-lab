@@ -1,0 +1,28 @@
+CHECKS={"fact_same_malformed_indeterminate": true, "fact_same_valid_blocked": true, "fact_unrelated_malformed_clear": true, "gate_unrelated_malformed_allows": true, "no_forbidden_calls": true, "no_forbidden_imports": true, "non_repair_parent_files_unchanged": true, "p2_verifier_single_call": true, "parent_snapshot_reconstructed": true, "runner_hash_unchanged": true, "target_hash_unchanged": true, "unrelated_filter_before_payment_validation": true, "unrelated_filter_before_status_validation": true}
+UNCHANGED_PARENT_FILES={"docs/04_\u9a8c\u8bc1\u4f53\u7cfb/\u9879\u76ee\u7ea7\u80fd\u529b\u8bc4\u6d4b\u57fa\u7ebf_v1.md": true, "samples/evaluation/project_impact_t10_preflight_target_v1.json": true, "scripts/validation/run_project_impact_baseline.py": true, "src/agentic_payment_experiment/__init__.py": true, "src/agentic_payment_experiment/trusted_execution/__init__.py": true, "src/agentic_payment_experiment/webshop_runtime_gate.py": true, "tests/test_project_impact_baseline.py": true}
+POSITIONS={"payment_validation": 4298, "request_read": 3912, "status_validation": 4234, "unrelated_filter": 4157}
+FACT_UNRELATED={"blocking_request_refs": [], "current_request_ref": "request-1", "limitations": ["offline_fact_only", "exact_payment_execution_records_only", "succeeded_attempts_only", "pending_or_unknown_attempt_policy_not_defined", "no_external_payment_status_query"], "reason_codes": ["known_payment_attempt_preflight_clear"], "related_attempt_refs": [], "status": "CLEAR"}
+FACT_SAME_MALFORMED={"blocking_request_refs": [], "current_request_ref": "request-1", "limitations": ["offline_fact_only", "exact_payment_execution_records_only", "succeeded_attempts_only", "pending_or_unknown_attempt_policy_not_defined", "no_external_payment_status_query"], "reason_codes": ["known_payment_attempt_ref_missing"], "related_attempt_refs": [], "status": "INDETERMINATE"}
+FACT_SAME_VALID={"blocking_request_refs": ["request-1"], "current_request_ref": "request-1", "limitations": ["offline_fact_only", "exact_payment_execution_records_only", "succeeded_attempts_only", "pending_or_unknown_attempt_policy_not_defined", "no_external_payment_status_query"], "reason_codes": ["known_payment_attempt_duplicate_succeeded"], "related_attempt_refs": ["payment-existing-1"], "status": "BLOCKED"}
+GATE_UNRELATED={"callback_count": 1, "calls": ["checkout"], "decision": "ALLOW", "preflight": {"blocking_request_refs": [], "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef", "limitations": ["offline_fact_only", "exact_payment_execution_records_only", "succeeded_attempts_only", "pending_or_unknown_attempt_policy_not_defined", "no_external_payment_status_query"], "reason_codes": ["known_payment_attempt_preflight_clear"], "related_attempt_refs": [], "status": "CLEAR"}}
+REPAIR_DIFF_BYTES=14524
+REPAIR_DIFF_SHA256=c4cee5458a9566be936309343257ddb208a69799f5bafd6097b22b75168c546a
+FINAL_FILE_HASHES={"src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py": "1fa1a320ceaf4228d56bd796efdeb6f957a20286e7124b8ccbcbceff80e47278", "tests/test_webshop_runtime_gate.py": "66a0d0d1e08b531d26218f7de6e6552b45ed3b08640db6ef1ba1986f802516fa", "tests/trusted_execution/test_known_payment_attempt.py": "4f9a87230a3a46c01fec7fc1cde16441d81f73a13f82c39889e8aa67ff188fc6"}
+STATUS_START
+## main...origin/main
+ M CURRENT.md
+ M docs/04_验证体系/项目级能力评测基线_v1.md
+ M scripts/validation/run_project_impact_baseline.py
+ M src/agentic_payment_experiment/__init__.py
+ M src/agentic_payment_experiment/trusted_execution/__init__.py
+ M src/agentic_payment_experiment/webshop_runtime_gate.py
+ M tests/test_project_impact_baseline.py
+ M tests/test_webshop_runtime_gate.py
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/REPORT.md
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/REVIEW.md
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/evidence/
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_UNRELATED_MALFORMED_REPAIR_V1/
+?? samples/evaluation/project_impact_t10_preflight_target_v1.json
+?? src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
+?? tests/trusted_execution/test_known_payment_attempt.py
+STATUS_END

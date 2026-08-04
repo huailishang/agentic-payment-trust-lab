@@ -1,0 +1,14 @@
+{
+  "canonical_json": "{\"projection_schema\":\"runtime-gate-record-ref/v1\",\"value\":{\"binding_reason_codes\":[],\"binding_status\":\"VALID\",\"callback_count\":0,\"callback_executed\":false,\"callback_result_ref\":null,\"context_policy_reason_codes\":[],\"context_policy_status\":\"VALID\",\"final_decision\":\"DENY\",\"identity_reason_codes\":[],\"identity_status\":\"VALID\",\"preliminary_decision\":\"DENY\",\"reason_codes\":[\"p1:duplicate_request\",\"preflight:known_payment_attempt_duplicate_succeeded\"]}}",
+  "cycle_closed": true,
+  "result_deterministic": true,
+  "result_projection_excludes": [
+    "authoritative_trace"
+  ],
+  "result_ref_first": "WebShopBuyNowGateOutcome:85abeced60e844859550236662f296cad362498ea402971095c92d3773719d3a",
+  "result_ref_second": "WebShopBuyNowGateOutcome:85abeced60e844859550236662f296cad362498ea402971095c92d3773719d3a",
+  "runtime_deterministic": true,
+  "runtime_ref_first": "RuntimeGateRecord:2f4298185fd5fc47906d9a4c9eaabb9be0f7720756d51da7259a40ffcfe1bce6",
+  "runtime_ref_second": "RuntimeGateRecord:2f4298185fd5fc47906d9a4c9eaabb9be0f7720756d51da7259a40ffcfe1bce6",
+  "schema": "stable-ref-determinism-proof/v1"
+}

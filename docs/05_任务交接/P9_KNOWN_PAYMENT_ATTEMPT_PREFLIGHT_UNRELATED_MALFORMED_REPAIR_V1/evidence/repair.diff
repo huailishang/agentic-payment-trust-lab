@@ -1,0 +1,348 @@
+--- a/src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
++++ b/src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
+@@ -108,24 +108,38 @@
+         )
+ 
+     invalid_record_reasons: list[str] = []
++    same_request_records: list[PaymentExecutionRecord] = []
+     for attempt in known_attempts:
+-        if type(attempt.status) is not PaymentStatus:
++        attempt_request_ref = attempt.request_id
++        if not isinstance(attempt_request_ref, str) or not attempt_request_ref.strip():
++            invalid_record_reasons.append("known_payment_attempt_request_ref_missing")
++            continue
++        if attempt_request_ref != current_request_ref:
++            continue
++
++        status_is_valid = type(attempt.status) is PaymentStatus
++        payment_ref_is_valid = (
++            isinstance(attempt.payment_id, str) and bool(attempt.payment_id.strip())
++        )
++        if not status_is_valid:
+             invalid_record_reasons.append("known_payment_attempt_status_invalid")
+-        if not isinstance(attempt.request_id, str) or not attempt.request_id.strip():
+-            invalid_record_reasons.append("known_payment_attempt_request_ref_missing")
+-        if not isinstance(attempt.payment_id, str) or not attempt.payment_id.strip():
++        if not payment_ref_is_valid:
+             invalid_record_reasons.append("known_payment_attempt_ref_missing")
++        if status_is_valid and payment_ref_is_valid:
++            same_request_records.append(attempt)
++
++    same_request = tuple(
++        sorted(same_request_records, key=lambda attempt: attempt.payment_id)
++    )
++    related_attempt_refs = tuple(attempt.payment_id for attempt in same_request)
+     if invalid_record_reasons:
+         return _fact(
+             KnownPaymentAttemptPreflightStatus.INDETERMINATE,
+             tuple(sorted(set(invalid_record_reasons))),
+             current_request_ref=current_request_ref,
+-        )
+-
+-    same_request = tuple(
+-        attempt for attempt in known_attempts if attempt.request_id == current_request_ref
+-    )
+-    related_attempt_refs = tuple(attempt.payment_id for attempt in same_request)
++            related_attempt_refs=related_attempt_refs,
++        )
++
+     succeeded = tuple(
+         attempt for attempt in same_request if attempt.status is PaymentStatus.SUCCEEDED
+     )
+--- a/tests/trusted_execution/test_known_payment_attempt.py
++++ b/tests/trusted_execution/test_known_payment_attempt.py
+@@ -153,6 +153,151 @@
+         self.assertEqual((), fact.related_attempt_refs)
+         self.assertEqual((), fact.blocking_request_refs)
+ 
++    def test_unrelated_malformed_attempts_are_ignored_before_other_field_validation(self) -> None:
++        cases = (
++            replace(
++                self.succeeded,
++                request_id="request-other-a",
++                payment_id="",
++                status="INVALID_STATUS",  # type: ignore[arg-type]
++                amount=Decimal("999999.00"),
++                currency="INVALID",
++                order_id="",
++                authority_ref=None,
++                agent_ref=None,
++                transaction_object_ref=None,
++                payee=None,
++            ),
++            replace(
++                self.succeeded,
++                request_id="request-other-b",
++                payment_id=None,  # type: ignore[arg-type]
++                status=None,  # type: ignore[arg-type]
++            ),
++        )
++        for unrelated in cases:
++            with self.subTest(request_id=unrelated.request_id):
++                with patch(
++                    "agentic_payment_experiment.trusted_execution.known_payment_attempt."
++                    "verify_payment_execution_binding"
++                ) as verifier:
++                    fact = self.derive((unrelated,))
++
++                verifier.assert_not_called()
++                self.assertEqual(KnownPaymentAttemptPreflightStatus.CLEAR, fact.status)
++                self.assertEqual(
++                    ("known_payment_attempt_preflight_clear",),
++                    fact.reason_codes,
++                )
++                self.assertEqual((), fact.related_attempt_refs)
++                self.assertEqual((), fact.blocking_request_refs)
++
++    def test_unknown_request_ownership_fails_closed_without_calling_binding(self) -> None:
++        for request_id in (None, "", "   ", 123):
++            with self.subTest(request_id=request_id):
++                unknown = replace(
++                    self.succeeded,
++                    request_id=request_id,  # type: ignore[arg-type]
++                )
++                with patch(
++                    "agentic_payment_experiment.trusted_execution.known_payment_attempt."
++                    "verify_payment_execution_binding"
++                ) as verifier:
++                    fact = self.derive((unknown,))
++
++                verifier.assert_not_called()
++                self.assertEqual(
++                    KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++                    fact.status,
++                )
++                self.assertEqual(
++                    ("known_payment_attempt_request_ref_missing",),
++                    fact.reason_codes,
++                )
++                self.assertEqual((), fact.related_attempt_refs)
++                self.assertEqual((), fact.blocking_request_refs)
++
++    def test_mixed_inventories_are_order_independent_and_refs_are_sorted(self) -> None:
++        unrelated_malformed = replace(
++            self.succeeded,
++            request_id="request-other-malformed",
++            payment_id="",
++            status="INVALID_STATUS",  # type: ignore[arg-type]
++        )
++        unrelated_valid = replace(
++            self.succeeded,
++            request_id="request-other-valid",
++            payment_id="payment-other-valid",
++            transaction_object_ref="request-other-valid",
++        )
++        same_request_malformed = replace(self.succeeded, payment_id="")
++        same_request_valid = self.succeeded
++
++        blocked_results = tuple(
++            self.derive(inventory).to_dict()
++            for inventory in (
++                (unrelated_malformed, same_request_valid),
++                (same_request_valid, unrelated_malformed),
++            )
++        )
++        self.assertEqual(blocked_results[0], blocked_results[1])
++        self.assertEqual("BLOCKED", blocked_results[0]["status"])
++        self.assertEqual(
++            ["payment-existing-1"],
++            blocked_results[0]["related_attempt_refs"],
++        )
++
++        indeterminate_results = tuple(
++            self.derive(inventory).to_dict()
++            for inventory in (
++                (unrelated_valid, same_request_malformed),
++                (same_request_malformed, unrelated_valid),
++            )
++        )
++        self.assertEqual(indeterminate_results[0], indeterminate_results[1])
++        self.assertEqual("INDETERMINATE", indeterminate_results[0]["status"])
++        self.assertEqual(
++            ["known_payment_attempt_ref_missing"],
++            indeterminate_results[0]["reason_codes"],
++        )
++
++        second_unrelated_malformed = replace(
++            unrelated_malformed,
++            request_id="request-other-malformed-2",
++            payment_id=None,  # type: ignore[arg-type]
++            status=None,  # type: ignore[arg-type]
++        )
++        clear_results = tuple(
++            self.derive(inventory).to_dict()
++            for inventory in (
++                (unrelated_malformed, second_unrelated_malformed),
++                (second_unrelated_malformed, unrelated_malformed),
++            )
++        )
++        self.assertEqual(clear_results[0], clear_results[1])
++        self.assertEqual("CLEAR", clear_results[0]["status"])
++        self.assertEqual([], clear_results[0]["related_attempt_refs"])
++
++        pending_z = replace(
++            self.succeeded,
++            payment_id="payment-z",
++            status=PaymentStatus.PENDING,
++        )
++        pending_a = replace(
++            self.succeeded,
++            payment_id="payment-a",
++            status=PaymentStatus.UNKNOWN,
++        )
++        sorted_results = tuple(
++            self.derive(inventory).to_dict()
++            for inventory in ((pending_z, pending_a), (pending_a, pending_z))
++        )
++        self.assertEqual(sorted_results[0], sorted_results[1])
++        self.assertEqual(
++            ["payment-a", "payment-z"],
++            sorted_results[0]["related_attempt_refs"],
++        )
++
+     def test_same_request_pending_and_unknown_do_not_block(self) -> None:
+         for status in (PaymentStatus.PENDING, PaymentStatus.UNKNOWN):
+             with self.subTest(status=status):
+--- a/tests/test_webshop_runtime_gate.py
++++ b/tests/test_webshop_runtime_gate.py
+@@ -779,6 +779,140 @@
+             outcome.known_payment_attempt_preflight_fact.reason_codes,
+         )
+ 
++    def test_unrelated_malformed_attempt_is_clear_and_checkout_still_runs(self) -> None:
++        unrelated = replace(
++            self.execution,
++            payment_id="",
++            request_id="request-unrelated-malformed",
++            transaction_object_ref=None,
++            status="INVALID_STATUS",  # type: ignore[arg-type]
++            amount=Decimal("999999.00"),
++            currency="INVALID",
++            order_id="",
++            authority_ref=None,
++            agent_ref=None,
++            payee=None,
++        )
++        outcome, calls = self.invoke(
++            governed_action=self.governed_action,
++            known_payment_attempts=(unrelated,),
++        )
++
++        self.assertEqual(Decision.ALLOW, outcome.decision)
++        self.assertEqual(["checkout"], calls)
++        self.assertEqual(1, outcome.callback_count)
++        self.assertEqual(
++            KnownPaymentAttemptPreflightStatus.CLEAR,
++            outcome.known_payment_attempt_preflight_fact.status,
++        )
++        self.assertEqual(
++            ("known_payment_attempt_preflight_clear",),
++            outcome.known_payment_attempt_preflight_fact.reason_codes,
++        )
++        self.assertEqual(
++            (),
++            outcome.known_payment_attempt_preflight_fact.related_attempt_refs,
++        )
++
++    def test_mixed_known_attempt_inventories_are_order_independent(self) -> None:
++        unrelated_malformed = replace(
++            self.execution,
++            payment_id="",
++            request_id="request-unrelated-malformed",
++            transaction_object_ref=None,
++            status="INVALID_STATUS",  # type: ignore[arg-type]
++        )
++        unrelated_valid = replace(
++            self.execution,
++            payment_id="webshop-payment-unrelated-valid",
++            request_id="request-unrelated-valid",
++            transaction_object_ref="request-unrelated-valid",
++            status=PaymentStatus.SUCCEEDED,
++        )
++        same_request_valid = replace(
++            self.execution,
++            payment_id="webshop-payment-existing-success",
++            status=PaymentStatus.SUCCEEDED,
++        )
++        same_request_malformed = replace(
++            self.execution,
++            payment_id="",
++            status=PaymentStatus.SUCCEEDED,
++        )
++
++        blocked_results = []
++        for inventory in (
++            (unrelated_malformed, same_request_valid),
++            (same_request_valid, unrelated_malformed),
++        ):
++            outcome, calls = self.invoke(
++                governed_action=self.governed_action,
++                known_payment_attempts=inventory,
++            )
++            self.assertEqual(Decision.DENY, outcome.decision)
++            self.assert_blocked(outcome, calls, Decision.DENY)
++            blocked_results.append(outcome.known_payment_attempt_preflight_fact.to_dict())
++        self.assertEqual(blocked_results[0], blocked_results[1])
++
++        indeterminate_results = []
++        for inventory in (
++            (unrelated_valid, same_request_malformed),
++            (same_request_malformed, unrelated_valid),
++        ):
++            outcome, calls = self.invoke(
++                governed_action=self.governed_action,
++                known_payment_attempts=inventory,
++            )
++            self.assertEqual(Decision.INDETERMINATE, outcome.decision)
++            self.assert_blocked(outcome, calls, Decision.INDETERMINATE)
++            indeterminate_results.append(
++                outcome.known_payment_attempt_preflight_fact.to_dict()
++            )
++        self.assertEqual(indeterminate_results[0], indeterminate_results[1])
++
++        second_unrelated_malformed = replace(
++            unrelated_malformed,
++            request_id="request-unrelated-malformed-2",
++            payment_id=None,  # type: ignore[arg-type]
++            status=None,  # type: ignore[arg-type]
++        )
++        clear_results = []
++        for inventory in (
++            (unrelated_malformed, second_unrelated_malformed),
++            (second_unrelated_malformed, unrelated_malformed),
++        ):
++            outcome, calls = self.invoke(
++                governed_action=self.governed_action,
++                known_payment_attempts=inventory,
++            )
++            self.assertEqual(Decision.ALLOW, outcome.decision)
++            self.assertEqual(["checkout"], calls)
++            self.assertEqual(1, outcome.callback_count)
++            clear_results.append(outcome.known_payment_attempt_preflight_fact.to_dict())
++        self.assertEqual(clear_results[0], clear_results[1])
++
++    def test_same_request_malformed_attempt_remains_indeterminate(self) -> None:
++        same_request_malformed = replace(
++            self.execution,
++            payment_id="",
++            status=PaymentStatus.SUCCEEDED,
++        )
++        outcome, calls = self.invoke(
++            governed_action=self.governed_action,
++            known_payment_attempts=(same_request_malformed,),
++        )
++
++        self.assertEqual(Decision.INDETERMINATE, outcome.decision)
++        self.assert_blocked(outcome, calls, Decision.INDETERMINATE)
++        self.assertEqual(
++            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
++            outcome.known_payment_attempt_preflight_fact.status,
++        )
++        self.assertIn(
++            "preflight:known_payment_attempt_ref_missing",
++            outcome.reason_codes,
++        )
++
+     def test_pending_and_unknown_known_attempts_do_not_define_new_policy(self) -> None:
+         for status in (PaymentStatus.PENDING, PaymentStatus.UNKNOWN):
+             with self.subTest(status=status):

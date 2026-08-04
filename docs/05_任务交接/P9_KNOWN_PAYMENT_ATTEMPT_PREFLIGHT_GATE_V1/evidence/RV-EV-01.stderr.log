@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/rv_unrelated_malformed.py", line 12, in <module>
+    assert fact.status.value == "CLEAR", "AC-02/AC-04 violation: unrelated malformed attempt blocked current request"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AC-02/AC-04 violation: unrelated malformed attempt blocked current request

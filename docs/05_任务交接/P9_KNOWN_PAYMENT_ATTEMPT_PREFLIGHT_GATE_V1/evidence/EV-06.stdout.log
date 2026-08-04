@@ -1,0 +1,8 @@
+T10_DECISION=ALLOW
+T10_CALLBACK_COUNT=1
+T10_PREFLIGHT_STATUS=NOT_AVAILABLE
+duplicate_or_forbidden_side_effect_rate={"count": 1, "denominator": 12, "rate": "0.083333"}
+callback_count_match_rate={"count": 11, "denominator": 12, "rate": "0.916667"}
+unsafe_allow_rate={"count": 1, "denominator": 6, "rate": "0.166667"}
+governed_end_to_end_task_success_rate={"count": 0, "denominator": 12, "rate": "0.000000"}
+product_observed_authoritative_trace_completeness_rate={"count": 0, "denominator": 12, "rate": "0.000000"}

@@ -1,0 +1,27 @@
+## main...origin/main
+ M CURRENT.md
+ M docs/04_验证体系/项目级能力评测基线_v1.md
+ M scripts/validation/run_project_impact_baseline.py
+ M src/agentic_payment_experiment/__init__.py
+ M src/agentic_payment_experiment/trusted_execution/__init__.py
+ M src/agentic_payment_experiment/webshop_runtime_gate.py
+ M tests/test_project_impact_baseline.py
+ M tests/test_webshop_runtime_gate.py
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/REPORT.md
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/REVIEW.md
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/evidence/
+?? docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_UNRELATED_MALFORMED_REPAIR_V1/
+?? samples/evaluation/project_impact_t10_preflight_target_v1.json
+?? src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
+?? tests/trusted_execution/test_known_payment_attempt.py
+06fa46c9348403993a946aa820c50b4d331aa1e1f60f92124d33f096e6f3fe84  src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
+cc2901bcece761687b2c2d4d3e30fc7f2d5b0ccf355e8e7bded79254cb0a9d6c  tests/trusted_execution/test_known_payment_attempt.py
+868e7a202e635b4fb2cb5ec25cc3bd2ab98a40ecd65cf487176fcf1f31b39131  tests/test_webshop_runtime_gate.py
+f5dc05501c79958b197ea7a727e12660756145da870b897496a9ccac714cacee  samples/evaluation/project_impact_t10_preflight_target_v1.json
+a7d71fd92cacd7ebdb8e4a1da383067aa57b0e6dcbf20c41f043f4e461fc1fc4  scripts/validation/run_project_impact_baseline.py
+FACT_STATUS=INDETERMINATE
+FACT_REASONS=('known_payment_attempt_ref_missing',)
+GATE_DECISION=INDETERMINATE
+GATE_CALLBACK_COUNT=0
+GATE_CALLS=[]
+GATE_PREFLIGHT=INDETERMINATE

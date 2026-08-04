@@ -1,0 +1,635 @@
+{
+  "checks": {
+    "mixed_blocked_order_independent": true,
+    "mixed_indeterminate_order_independent": true,
+    "same_request_bound_succeeded": true,
+    "same_request_malformed": true,
+    "unknown_request_ownership": true,
+    "unrelated_malformed": true
+  },
+  "fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+  "local_callback_only": true,
+  "results": [
+    {
+      "fact": {
+        "blocking_request_refs": [],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_preflight_clear"
+        ],
+        "related_attempt_refs": [],
+        "status": "CLEAR"
+      },
+      "gate": {
+        "callback_calls": [
+          "checkout"
+        ],
+        "callback_count": 1,
+        "checkout_executed": true,
+        "decision": "ALLOW",
+        "preflight": {
+          "blocking_request_refs": [],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_preflight_clear"
+          ],
+          "related_attempt_refs": [],
+          "status": "CLEAR"
+        },
+        "reason_codes": [
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "runtime:allow"
+        ]
+      },
+      "input_attempts": [
+        {
+          "agent_ref": null,
+          "amount": "999999.00",
+          "authority_ref": null,
+          "currency": "INVALID",
+          "idempotency_key": null,
+          "occurred_at": "2026-08-02T05:00:01+00:00",
+          "order_id": "",
+          "payee": null,
+          "payment_id": "",
+          "provider_ref": null,
+          "receipt_ref": null,
+          "request_id": "challenge-request-unrelated-malformed",
+          "status": "INVALID_STATUS",
+          "transaction_object_ref": null
+        }
+      ],
+      "name": "unrelated_malformed"
+    },
+    {
+      "fact": {
+        "blocking_request_refs": [],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_request_ref_missing"
+        ],
+        "related_attempt_refs": [],
+        "status": "INDETERMINATE"
+      },
+      "gate": {
+        "callback_calls": [],
+        "callback_count": 0,
+        "checkout_executed": false,
+        "decision": "INDETERMINATE",
+        "preflight": {
+          "blocking_request_refs": [],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_request_ref_missing"
+          ],
+          "related_attempt_refs": [],
+          "status": "INDETERMINATE"
+        },
+        "reason_codes": [
+          "p1:upstream_prepayment_non_allow",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "preflight:known_payment_attempt_request_ref_missing"
+        ]
+      },
+      "input_attempts": [
+        {
+          "agent_ref": "challenge-agent-1",
+          "amount": "877.80",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "currency": "USD",
+          "idempotency_key": null,
+          "occurred_at": "2026-08-02T05:00:01+00:00",
+          "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+          "payee": "webshop-experiment-payee-v1",
+          "payment_id": "challenge-payment-unknown-owner",
+          "provider_ref": null,
+          "receipt_ref": null,
+          "request_id": null,
+          "status": "SUCCEEDED",
+          "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+        }
+      ],
+      "name": "unknown_request_ownership"
+    },
+    {
+      "fact": {
+        "blocking_request_refs": [],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_ref_missing"
+        ],
+        "related_attempt_refs": [],
+        "status": "INDETERMINATE"
+      },
+      "gate": {
+        "callback_calls": [],
+        "callback_count": 0,
+        "checkout_executed": false,
+        "decision": "INDETERMINATE",
+        "preflight": {
+          "blocking_request_refs": [],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_ref_missing"
+          ],
+          "related_attempt_refs": [],
+          "status": "INDETERMINATE"
+        },
+        "reason_codes": [
+          "p1:upstream_prepayment_non_allow",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "preflight:known_payment_attempt_ref_missing"
+        ]
+      },
+      "input_attempts": [
+        {
+          "agent_ref": "challenge-agent-1",
+          "amount": "877.80",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "currency": "USD",
+          "idempotency_key": null,
+          "occurred_at": "2026-08-02T05:00:01+00:00",
+          "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+          "payee": "webshop-experiment-payee-v1",
+          "payment_id": "",
+          "provider_ref": null,
+          "receipt_ref": null,
+          "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "status": "SUCCEEDED",
+          "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+        }
+      ],
+      "name": "same_request_malformed"
+    },
+    {
+      "fact": {
+        "blocking_request_refs": [
+          "webshop-request-6c6a78eddffdb552c2af66ef"
+        ],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_duplicate_succeeded"
+        ],
+        "related_attempt_refs": [
+          "challenge-payment-existing-success"
+        ],
+        "status": "BLOCKED"
+      },
+      "gate": {
+        "callback_calls": [],
+        "callback_count": 0,
+        "checkout_executed": false,
+        "decision": "DENY",
+        "preflight": {
+          "blocking_request_refs": [
+            "webshop-request-6c6a78eddffdb552c2af66ef"
+          ],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_duplicate_succeeded"
+          ],
+          "related_attempt_refs": [
+            "challenge-payment-existing-success"
+          ],
+          "status": "BLOCKED"
+        },
+        "reason_codes": [
+          "p1:duplicate_request",
+          "p1:upstream_prepayment_non_allow",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "preflight:known_payment_attempt_duplicate_succeeded"
+        ]
+      },
+      "input_attempts": [
+        {
+          "agent_ref": "challenge-agent-1",
+          "amount": "877.80",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "currency": "USD",
+          "idempotency_key": null,
+          "occurred_at": "2026-08-02T05:00:01+00:00",
+          "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+          "payee": "webshop-experiment-payee-v1",
+          "payment_id": "challenge-payment-existing-success",
+          "provider_ref": null,
+          "receipt_ref": null,
+          "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "status": "SUCCEEDED",
+          "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+        }
+      ],
+      "name": "same_request_bound_succeeded"
+    },
+    {
+      "fact": {
+        "blocking_request_refs": [
+          "webshop-request-6c6a78eddffdb552c2af66ef"
+        ],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_duplicate_succeeded"
+        ],
+        "related_attempt_refs": [
+          "challenge-payment-existing-success"
+        ],
+        "status": "BLOCKED"
+      },
+      "gate": {
+        "callback_calls": [],
+        "callback_count": 0,
+        "checkout_executed": false,
+        "decision": "DENY",
+        "preflight": {
+          "blocking_request_refs": [
+            "webshop-request-6c6a78eddffdb552c2af66ef"
+          ],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_duplicate_succeeded"
+          ],
+          "related_attempt_refs": [
+            "challenge-payment-existing-success"
+          ],
+          "status": "BLOCKED"
+        },
+        "reason_codes": [
+          "p1:duplicate_request",
+          "p1:upstream_prepayment_non_allow",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "preflight:known_payment_attempt_duplicate_succeeded"
+        ]
+      },
+      "input_attempts": [
+        {
+          "agent_ref": null,
+          "amount": "999999.00",
+          "authority_ref": null,
+          "currency": "INVALID",
+          "idempotency_key": null,
+          "occurred_at": "2026-08-02T05:00:01+00:00",
+          "order_id": "",
+          "payee": null,
+          "payment_id": "",
+          "provider_ref": null,
+          "receipt_ref": null,
+          "request_id": "challenge-request-unrelated-malformed",
+          "status": "INVALID_STATUS",
+          "transaction_object_ref": null
+        },
+        {
+          "agent_ref": "challenge-agent-1",
+          "amount": "877.80",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "currency": "USD",
+          "idempotency_key": null,
+          "occurred_at": "2026-08-02T05:00:01+00:00",
+          "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+          "payee": "webshop-experiment-payee-v1",
+          "payment_id": "challenge-payment-existing-success",
+          "provider_ref": null,
+          "receipt_ref": null,
+          "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "status": "SUCCEEDED",
+          "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+        }
+      ],
+      "name": "mixed_blocked_forward"
+    },
+    {
+      "fact": {
+        "blocking_request_refs": [
+          "webshop-request-6c6a78eddffdb552c2af66ef"
+        ],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_duplicate_succeeded"
+        ],
+        "related_attempt_refs": [
+          "challenge-payment-existing-success"
+        ],
+        "status": "BLOCKED"
+      },
+      "gate": {
+        "callback_calls": [],
+        "callback_count": 0,
+        "checkout_executed": false,
+        "decision": "DENY",
+        "preflight": {
+          "blocking_request_refs": [
+            "webshop-request-6c6a78eddffdb552c2af66ef"
+          ],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_duplicate_succeeded"
+          ],
+          "related_attempt_refs": [
+            "challenge-payment-existing-success"
+          ],
+          "status": "BLOCKED"
+        },
+        "reason_codes": [
+          "p1:duplicate_request",
+          "p1:upstream_prepayment_non_allow",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "preflight:known_payment_attempt_duplicate_succeeded"
+        ]
+      },
+      "input_attempts": [
+        {
+          "agent_ref": "challenge-agent-1",
+          "amount": "877.80",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "currency": "USD",
+          "idempotency_key": null,
+          "occurred_at": "2026-08-02T05:00:01+00:00",
+          "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+          "payee": "webshop-experiment-payee-v1",
+          "payment_id": "challenge-payment-existing-success",
+          "provider_ref": null,
+          "receipt_ref": null,
+          "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "status": "SUCCEEDED",
+          "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "agent_ref": null,
+          "amount": "999999.00",
+          "authority_ref": null,
+          "currency": "INVALID",
+          "idempotency_key": null,
+          "occurred_at": "2026-08-02T05:00:01+00:00",
+          "order_id": "",
+          "payee": null,
+          "payment_id": "",
+          "provider_ref": null,
+          "receipt_ref": null,
+          "request_id": "challenge-request-unrelated-malformed",
+          "status": "INVALID_STATUS",
+          "transaction_object_ref": null
+        }
+      ],
+      "name": "mixed_blocked_reverse"
+    },
+    {
+      "fact": {
+        "blocking_request_refs": [],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_ref_missing"
+        ],
+        "related_attempt_refs": [],
+        "status": "INDETERMINATE"
+      },
+      "gate": {
+        "callback_calls": [],
+        "callback_count": 0,
+        "checkout_executed": false,
+        "decision": "INDETERMINATE",
+        "preflight": {
+          "blocking_request_refs": [],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_ref_missing"
+          ],
+          "related_attempt_refs": [],
+          "status": "INDETERMINATE"
+        },
+        "reason_codes": [
+          "p1:upstream_prepayment_non_allow",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "preflight:known_payment_attempt_ref_missing"
+        ]
+      },
+      "input_attempts": [
+        {
+          "agent_ref": "challenge-agent-1",
+          "amount": "877.80",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "currency": "USD",
+          "idempotency_key": null,
+          "occurred_at": "2026-08-02T05:00:01+00:00",
+          "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+          "payee": "webshop-experiment-payee-v1",
+          "payment_id": "challenge-payment-unrelated-valid",
+          "provider_ref": null,
+          "receipt_ref": null,
+          "request_id": "challenge-request-unrelated-valid",
+          "status": "SUCCEEDED",
+          "transaction_object_ref": "challenge-request-unrelated-valid"
+        },
+        {
+          "agent_ref": "challenge-agent-1",
+          "amount": "877.80",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "currency": "USD",
+          "idempotency_key": null,
+          "occurred_at": "2026-08-02T05:00:01+00:00",
+          "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+          "payee": "webshop-experiment-payee-v1",
+          "payment_id": "",
+          "provider_ref": null,
+          "receipt_ref": null,
+          "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "status": "SUCCEEDED",
+          "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+        }
+      ],
+      "name": "mixed_indeterminate_forward"
+    },
+    {
+      "fact": {
+        "blocking_request_refs": [],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_ref_missing"
+        ],
+        "related_attempt_refs": [],
+        "status": "INDETERMINATE"
+      },
+      "gate": {
+        "callback_calls": [],
+        "callback_count": 0,
+        "checkout_executed": false,
+        "decision": "INDETERMINATE",
+        "preflight": {
+          "blocking_request_refs": [],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_ref_missing"
+          ],
+          "related_attempt_refs": [],
+          "status": "INDETERMINATE"
+        },
+        "reason_codes": [
+          "p1:upstream_prepayment_non_allow",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "preflight:known_payment_attempt_ref_missing"
+        ]
+      },
+      "input_attempts": [
+        {
+          "agent_ref": "challenge-agent-1",
+          "amount": "877.80",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "currency": "USD",
+          "idempotency_key": null,
+          "occurred_at": "2026-08-02T05:00:01+00:00",
+          "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+          "payee": "webshop-experiment-payee-v1",
+          "payment_id": "",
+          "provider_ref": null,
+          "receipt_ref": null,
+          "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "status": "SUCCEEDED",
+          "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        {
+          "agent_ref": "challenge-agent-1",
+          "amount": "877.80",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "currency": "USD",
+          "idempotency_key": null,
+          "occurred_at": "2026-08-02T05:00:01+00:00",
+          "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+          "payee": "webshop-experiment-payee-v1",
+          "payment_id": "challenge-payment-unrelated-valid",
+          "provider_ref": null,
+          "receipt_ref": null,
+          "request_id": "challenge-request-unrelated-valid",
+          "status": "SUCCEEDED",
+          "transaction_object_ref": "challenge-request-unrelated-valid"
+        }
+      ],
+      "name": "mixed_indeterminate_reverse"
+    }
+  ],
+  "schema": "known-payment-attempt-independent-challenges/v1"
+}

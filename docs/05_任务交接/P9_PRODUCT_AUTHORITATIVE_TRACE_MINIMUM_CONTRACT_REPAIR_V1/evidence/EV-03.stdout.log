@@ -1,0 +1,353 @@
+src/agentic_payment_experiment/adapters/ap2.py:356:        order_differences=result.order_differences,
+src/agentic_payment_experiment/attack_overlay.py:372:        return VerificationStatus.MISSING_EVIDENCE, tuple(digest_failures), ()
+src/agentic_payment_experiment/learning_variants.py:165:                "differences": present_differences(actual["order_differences"]),
+src/agentic_payment_experiment/models.py:260:class ValidationResult:
+src/agentic_payment_experiment/models.py:269:    order_differences: tuple[OrderDifference, ...] = ()
+src/agentic_payment_experiment/order_validation.py:90:            "order_binding_status",
+src/agentic_payment_experiment/order_validation.py:91:            "trusted_execution.binding_status",
+src/agentic_payment_experiment/payment_execution.py:111:    if binding_fact.status is VerificationStatus.MISSING_EVIDENCE:
+src/agentic_payment_experiment/payment_execution.py:121:    if identity_fact.status is VerificationStatus.MISSING_EVIDENCE:
+src/agentic_payment_experiment/payment_execution.py:139:    if policy_fact.status is VerificationStatus.MISSING_EVIDENCE:
+src/agentic_payment_experiment/payment_execution.py:214:        binding_status=outcome.binding_fact.status.value,
+src/agentic_payment_experiment/payment_execution.py:362:            "payment_execution_binding_status",
+src/agentic_payment_experiment/payment_execution.py:460:    if fact.status is VerificationStatus.MISSING_EVIDENCE:
+src/agentic_payment_experiment/payment_recovery.py:233:    if idempotency_fact.status is VerificationStatus.MISSING_EVIDENCE:
+src/agentic_payment_experiment/presentation_zh.py:186:    "binding_status": "绑定验证状态",
+src/agentic_payment_experiment/presentation_zh.py:335:    record["differences"] = present_differences(record["actual"].get("order_differences", []))
+src/agentic_payment_experiment/presentation_zh.py:513:        "returns_zh": "返回声明标识引用 VALID / INVALID / MISSING_EVIDENCE。",
+src/agentic_payment_experiment/presentation_zh.py:523:        "returns_zh": "当前返回对象摘要与 VALID / INVALID / MISSING_EVIDENCE 等绑定验证事实。",
+src/agentic_payment_experiment/presentation_zh.py:533:        "returns_zh": "返回 VALID / INVALID / MISSING_EVIDENCE 等绑定事实。",
+src/agentic_payment_experiment/presentation_zh.py:553:        "returns_zh": "返回状态观察 VALID / INVALID / MISSING_EVIDENCE，以及幂等边界和相关尝试事实。",
+src/agentic_payment_experiment/presentation_zh.py:1100:    elif actual.get("order_differences"):
+src/agentic_payment_experiment/presentation_zh.py:1247:            "differences": actual.get("order_differences", []),
+src/agentic_payment_experiment/regression_baseline.py:34:                "order_differences": record["actual"].get("order_differences", []),
+src/agentic_payment_experiment/result_card.py:275:        "order_differences": [asdict(item) for item in result.order_differences],
+src/agentic_payment_experiment/runner.py:39:    ReplayEventType,
+src/agentic_payment_experiment/runner.py:231:        ("authority", ReplayEventType.AUTHORITY_RECORDED, ReplaySourceType.USER_CONFIRMED, f"mandate:{scenario.mandate.mandate_id}", ("authority_recorded",)),
+src/agentic_payment_experiment/runner.py:232:        ("order", ReplayEventType.ORDER_RECORDED, ReplaySourceType.USER_CONFIRMED, f"order:{order.order_id}:{order.order_version}", ("order_recorded",)),
+src/agentic_payment_experiment/runner.py:233:        ("request", ReplayEventType.REQUEST_RECORDED, ReplaySourceType.PROTOCOL_VERIFIED, f"request:{scenario.request.request_id}", ("request_recorded",)),
+src/agentic_payment_experiment/runner.py:234:        ("decision", ReplayEventType.RUNTIME_DECISION_RECORDED, ReplaySourceType.SYSTEM_RUNTIME, "observed-payment-gate", observed_gate.reason_codes),
+src/agentic_payment_experiment/runner.py:237:            ReplayEventType.PAYMENT_OUTCOME_RECORDED,
+src/agentic_payment_experiment/runner.py:253:                runtime_gate=observed_gate if event_type is ReplayEventType.RUNTIME_DECISION_RECORDED else None,
+src/agentic_payment_experiment/trusted_execution/binding.py:23:    MISSING_EVIDENCE = "MISSING_EVIDENCE"
+src/agentic_payment_experiment/trusted_execution/binding.py:46:    of evidence are present but the digests differ. ``MISSING_EVIDENCE`` means
+src/agentic_payment_experiment/trusted_execution/binding.py:58:            status=BindingStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/binding.py:67:            status=BindingStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/binding.py:78:            status=BindingStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/confirmation.py:190:    return ConfirmationBindingFact(BindingStatus.MISSING_EVIDENCE, record.authorized_order_hash if record else None, None, record.authority_version if record else None, reason, None, checked_at)
+src/agentic_payment_experiment/trusted_execution/context_policy.py:254:        status = VerificationStatus.MISSING_EVIDENCE
+src/agentic_payment_experiment/trusted_execution/context_policy.py:282:        status=VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/execution_facts.py:19:    MISSING_EVIDENCE = "MISSING_EVIDENCE"
+src/agentic_payment_experiment/trusted_execution/execution_facts.py:145:            status=VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/execution_facts.py:296:            status=VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/execution_facts.py:329:            status=VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/execution_facts.py:415:            status=VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/fact_lineage.py:112:            VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/fact_lineage.py:122:            VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/fact_lineage.py:185:        return _result(VerificationStatus.MISSING_EVIDENCE, _stable_unique(missing))
+src/agentic_payment_experiment/trusted_execution/fact_lineage.py:206:            VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/governed_action.py:89:class GovernedActionBindingFact:
+src/agentic_payment_experiment/trusted_execution/governed_action.py:131:            VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/governed_action.py:278:            VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:43:class KnownPaymentAttemptPreflightFact:
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:49:    related_attempt_refs: tuple[str, ...]
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:58:            "related_attempt_refs": list(self.related_attempt_refs),
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:69:) -> KnownPaymentAttemptPreflightFact:
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:134:    related_attempt_refs = tuple(attempt.payment_id for attempt in same_request)
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:140:            related_attempt_refs=related_attempt_refs,
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:155:            related_attempt_refs=related_attempt_refs,
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:176:            related_attempt_refs=related_attempt_refs,
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:183:        related_attempt_refs=related_attempt_refs,
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:193:    related_attempt_refs: tuple[str, ...] = (),
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:195:) -> KnownPaymentAttemptPreflightFact:
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:196:    return KnownPaymentAttemptPreflightFact(
+src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py:200:        related_attempt_refs=related_attempt_refs,
+src/agentic_payment_experiment/trusted_execution/original_transaction.py:77:            VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/payment_binding.py:94:            VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/payment_binding.py:142:            VerificationStatus.MISSING_EVIDENCE,
+src/agentic_payment_experiment/trusted_execution/replay.py:17:class ReplayEventType(str, Enum):
+src/agentic_payment_experiment/trusted_execution/replay.py:39:class RuntimeGateRecord:
+src/agentic_payment_experiment/trusted_execution/replay.py:44:    binding_status: str
+src/agentic_payment_experiment/trusted_execution/replay.py:59:            self.binding_status, self.identity_status, self.context_policy_status
+src/agentic_payment_experiment/trusted_execution/replay.py:86:            "binding_status": self.binding_status,
+src/agentic_payment_experiment/trusted_execution/replay.py:101:        ReplayEventType.AUTHORITY_RECORDED,
+src/agentic_payment_experiment/trusted_execution/replay.py:102:        ReplayEventType.ORDER_RECORDED,
+src/agentic_payment_experiment/trusted_execution/replay.py:103:        ReplayEventType.REQUEST_RECORDED,
+src/agentic_payment_experiment/trusted_execution/replay.py:104:        ReplayEventType.RUNTIME_DECISION_RECORDED,
+src/agentic_payment_experiment/trusted_execution/replay.py:105:        ReplayEventType.PAYMENT_OUTCOME_RECORDED,
+src/agentic_payment_experiment/trusted_execution/replay.py:111:class ReplayEvent:
+src/agentic_payment_experiment/trusted_execution/replay.py:115:    event_type: ReplayEventType
+src/agentic_payment_experiment/trusted_execution/replay.py:141:        if not isinstance(self.event_type, ReplayEventType):
+src/agentic_payment_experiment/trusted_execution/replay.py:157:        if self.event_type is ReplayEventType.RUNTIME_DECISION_RECORDED:
+src/agentic_payment_experiment/trusted_execution/replay.py:238:        if event.event_type is ReplayEventType.RUNTIME_DECISION_RECORDED
+src/agentic_payment_experiment/trusted_execution/replay.py:244:        event for event in chain if event.event_type is ReplayEventType.RUNTIME_DECISION_RECORDED
+src/agentic_payment_experiment/trusted_execution/__init__.py:61:    KnownPaymentAttemptPreflightFact,
+src/agentic_payment_experiment/trusted_execution/__init__.py:72:    ReplayEventType,
+src/agentic_payment_experiment/trusted_execution/__init__.py:92:    "KnownPaymentAttemptPreflightFact",
+src/agentic_payment_experiment/trusted_execution/__init__.py:102:    "ReplayEventType",
+src/agentic_payment_experiment/validator.py:139:                    "agent_claim_binding_status",
+src/agentic_payment_experiment/validator.py:207:                order_differences=order_result.differences,
+src/agentic_payment_experiment/validator.py:212:        and confirmation_fact.status is BindingStatus.MISSING_EVIDENCE
+src/agentic_payment_experiment/validator.py:237:            order_differences=(
+src/agentic_payment_experiment/validator.py:249:            order_differences=order_result.differences,
+src/agentic_payment_experiment/validator.py:303:            order_differences=(order_result.differences if order_result is not None else ()),
+src/agentic_payment_experiment/validator.py:322:        order_differences=(order_result.differences if order_result is not None else ()),
+src/agentic_payment_experiment/validator.py:390:            "confirmation_binding_status",
+src/agentic_payment_experiment/webshop_runtime_gate.py:24:    KnownPaymentAttemptPreflightFact,
+src/agentic_payment_experiment/webshop_runtime_gate.py:46:class WebShopBuyNowGateOutcome:
+src/agentic_payment_experiment/webshop_runtime_gate.py:58:    known_payment_attempt_preflight_fact: KnownPaymentAttemptPreflightFact | None = None
+src/agentic_payment_experiment/webshop_runtime_gate.py:164:                    is VerificationStatus.MISSING_EVIDENCE
+src/agentic_payment_experiment/webshop_runtime_gate.py:204:    known_attempt_fact: KnownPaymentAttemptPreflightFact | None = None
+src/agentic_payment_experiment/x402_conformance.py:36:    ReplayEventType,
+src/agentic_payment_experiment/x402_conformance.py:452:    binding_status: VerificationStatus,
+src/agentic_payment_experiment/x402_conformance.py:469:        binding_status=binding_status.value,
+src/agentic_payment_experiment/x402_conformance.py:472:            if binding_status is VerificationStatus.VALID
+src/agentic_payment_experiment/x402_conformance.py:485:        ReplayEventType.AUTHORITY_RECORDED,
+src/agentic_payment_experiment/x402_conformance.py:486:        ReplayEventType.ORDER_RECORDED,
+src/agentic_payment_experiment/x402_conformance.py:487:        ReplayEventType.REQUEST_RECORDED,
+src/agentic_payment_experiment/x402_conformance.py:488:        ReplayEventType.RUNTIME_DECISION_RECORDED,
+src/agentic_payment_experiment/x402_conformance.py:489:        ReplayEventType.PAYMENT_OUTCOME_RECORDED,
+src/agentic_payment_experiment/x402_conformance.py:510:                    if event_type is ReplayEventType.RUNTIME_DECISION_RECORDED
+src/agentic_payment_experiment/__init__.py:55:    KnownPaymentAttemptPreflightFact,
+src/agentic_payment_experiment/__init__.py:89:    "KnownPaymentAttemptPreflightFact",
+scripts/validation/run_project_impact_baseline.py:53:    ReplayEventType,
+scripts/validation/run_project_impact_baseline.py:85:        "expected_binding_status",
+scripts/validation/run_project_impact_baseline.py:467:def _binding_status(gate: Any) -> str:
+scripts/validation/run_project_impact_baseline.py:477:        and runtime.binding_status == "VALID"
+scripts/validation/run_project_impact_baseline.py:483:        runtime.binding_status,
+scripts/validation/run_project_impact_baseline.py:488:    return "MISSING_EVIDENCE"
+scripts/validation/run_project_impact_baseline.py:498:    named authoritative_trace_events before it can count here.
+scripts/validation/run_project_impact_baseline.py:502:        events = getattr(output, "authoritative_trace_events", None)
+scripts/validation/run_project_impact_baseline.py:509:                ("product_authoritative_trace_invalid",),
+scripts/validation/run_project_impact_baseline.py:522:        ("product_authoritative_trace_not_available",),
+scripts/validation/run_project_impact_baseline.py:555:            ReplayEventType.AUTHORITY_RECORDED,
+scripts/validation/run_project_impact_baseline.py:561:            ReplayEventType.ORDER_RECORDED,
+scripts/validation/run_project_impact_baseline.py:567:            ReplayEventType.REQUEST_RECORDED,
+scripts/validation/run_project_impact_baseline.py:573:            ReplayEventType.RUNTIME_DECISION_RECORDED,
+scripts/validation/run_project_impact_baseline.py:579:            ReplayEventType.PAYMENT_OUTCOME_RECORDED,
+scripts/validation/run_project_impact_baseline.py:600:                    if event_type is ReplayEventType.RUNTIME_DECISION_RECORDED
+scripts/validation/run_project_impact_baseline.py:678:        "binding_status": _binding_status(gate),
+scripts/validation/run_project_impact_baseline.py:1060:        "binding_status": "NOT_APPLICABLE",
+scripts/validation/run_project_impact_baseline.py:1066:            "product_authoritative_trace_not_available"
+scripts/validation/run_project_impact_baseline.py:1134:        "binding_status": actual["binding_status"]
+scripts/validation/run_project_impact_baseline.py:1135:        == task["expected_binding_status"],
+scripts/validation/run_project_impact_baseline.py:1165:            and "authoritative_trace" not in actual_stages
+scripts/validation/run_project_impact_baseline.py:1215:            "binding_status": task["expected_binding_status"],
+scripts/validation/run_project_impact_baseline.py:1313:        item["actual"]["binding_status"] == VerificationStatus.VALID.value
+scripts/validation/run_project_impact_baseline.py:1366:        "product_observed_authoritative_trace_completeness_rate": _rate(
+scripts/validation/webshop/run_checkout_snapshot_anomalies.py:286:            [item.code for item in outcome.prepayment_result.order_differences]
+samples/attacks/fact_lineage_matrix_v1.json:82:      "expected_status": "MISSING_EVIDENCE",
+samples/evaluation/project_impact_baseline_v1.json:42:    "product_observed_authoritative_trace_completeness_rate": "tasks with product-observed authoritative trace status and required product trace events divided by all tasks"
+samples/evaluation/project_impact_baseline_v1.json:70:        "replay_authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:94:      "expected_binding_status": "VALID",
+samples/evaluation/project_impact_baseline_v1.json:113:        "authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:188:      "expected_binding_status": "NOT_EVALUATED",
+samples/evaluation/project_impact_baseline_v1.json:202:        "authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:270:      "expected_binding_status": "NOT_EVALUATED",
+samples/evaluation/project_impact_baseline_v1.json:284:        "authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:351:      "expected_binding_status": "NOT_EVALUATED",
+samples/evaluation/project_impact_baseline_v1.json:365:        "authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:434:      "expected_binding_status": "INVALID",
+samples/evaluation/project_impact_baseline_v1.json:448:        "authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:517:      "expected_binding_status": "MISSING_EVIDENCE",
+samples/evaluation/project_impact_baseline_v1.json:530:        "authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:598:      "expected_binding_status": "NOT_APPLICABLE",
+samples/evaluation/project_impact_baseline_v1.json:611:        "authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:677:      "expected_binding_status": "NOT_APPLICABLE",
+samples/evaluation/project_impact_baseline_v1.json:690:        "authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:737:        "replay_authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:762:      "expected_binding_status": "VALID",
+samples/evaluation/project_impact_baseline_v1.json:781:        "authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:863:      "expected_binding_status": "VALID",
+samples/evaluation/project_impact_baseline_v1.json:882:        "authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:938:        "replay_authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:962:      "expected_binding_status": "VALID",
+samples/evaluation/project_impact_baseline_v1.json:981:        "authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:1038:        "replay_authoritative_trace"
+samples/evaluation/project_impact_baseline_v1.json:1064:      "expected_binding_status": "VALID",
+samples/evaluation/project_impact_baseline_v1.json:1085:        "authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:42:    "product_observed_authoritative_trace_completeness_rate": "tasks with product-observed authoritative trace status and required product trace events divided by all tasks"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:70:        "replay_authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:94:      "expected_binding_status": "VALID",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:113:        "authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:188:      "expected_binding_status": "NOT_EVALUATED",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:202:        "authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:270:      "expected_binding_status": "NOT_EVALUATED",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:284:        "authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:351:      "expected_binding_status": "NOT_EVALUATED",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:365:        "authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:434:      "expected_binding_status": "INVALID",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:448:        "authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:517:      "expected_binding_status": "MISSING_EVIDENCE",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:530:        "authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:598:      "expected_binding_status": "NOT_APPLICABLE",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:611:        "authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:677:      "expected_binding_status": "NOT_APPLICABLE",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:690:        "authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:737:        "replay_authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:762:      "expected_binding_status": "VALID",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:781:        "authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:864:      "expected_binding_status": "VALID",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:883:        "authoritative_trace",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:940:        "replay_authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:964:      "expected_binding_status": "VALID",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:983:        "authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:1040:        "replay_authoritative_trace"
+samples/evaluation/project_impact_t10_preflight_target_v1.json:1066:      "expected_binding_status": "VALID",
+samples/evaluation/project_impact_t10_preflight_target_v1.json:1087:        "authoritative_trace"
+samples/external/webshop/governed_payment_action_matrix_v1.json:31:      "expected_status": "MISSING_EVIDENCE",
+samples/regression/internal_baseline_v1.json:21:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:27:        "order_differences": [],
+samples/regression/internal_baseline_v1.json:63:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:66:        "order_differences": [],
+samples/regression/internal_baseline_v1.json:106:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:109:        "order_differences": [],
+samples/regression/internal_baseline_v1.json:149:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:152:        "order_differences": [],
+samples/regression/internal_baseline_v1.json:192:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:195:        "order_differences": [],
+samples/regression/internal_baseline_v1.json:235:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:238:        "order_differences": [],
+samples/regression/internal_baseline_v1.json:278:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:281:        "order_differences": [],
+samples/regression/internal_baseline_v1.json:320:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:324:        "order_differences": [],
+samples/regression/internal_baseline_v1.json:363:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:370:          "confirmation_binding_status",
+samples/regression/internal_baseline_v1.json:380:          "order_binding_status",
+samples/regression/internal_baseline_v1.json:385:        "order_differences": [
+samples/regression/internal_baseline_v1.json:421:          "confirmation_binding_status",
+samples/regression/internal_baseline_v1.json:447:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:454:          "confirmation_binding_status",
+samples/regression/internal_baseline_v1.json:464:          "order_binding_status",
+samples/regression/internal_baseline_v1.json:470:        "order_differences": [],
+samples/regression/internal_baseline_v1.json:507:          "payment_execution_binding_status",
+samples/regression/internal_baseline_v1.json:544:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:551:          "confirmation_binding_status",
+samples/regression/internal_baseline_v1.json:561:          "order_binding_status",
+samples/regression/internal_baseline_v1.json:567:        "order_differences": [],
+samples/regression/internal_baseline_v1.json:604:          "payment_execution_binding_status",
+samples/regression/internal_baseline_v1.json:649:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:656:          "confirmation_binding_status",
+samples/regression/internal_baseline_v1.json:666:          "order_binding_status",
+samples/regression/internal_baseline_v1.json:672:        "order_differences": [],
+samples/regression/internal_baseline_v1.json:719:          "payment_execution_binding_status",
+samples/regression/internal_baseline_v1.json:752:          "agent_claim_binding_status",
+samples/regression/internal_baseline_v1.json:756:        "order_differences": [],
+samples/regression/internal_baseline_v1.json:776:          "agent_claim_binding_status",
+samples/scenarios/S09_order_total_changed.json:95:      "confirmation_binding_status",
+samples/scenarios/S10_fulfillment_failed_after_payment.json:140:      "payment_execution_binding_status",
+samples/scenarios/S11_full_refund_after_fulfillment_failure.json:152:      "payment_execution_binding_status",
+samples/scenarios/S12_unknown_payment_state_recovery.json:148:      "payment_execution_binding_status",
+samples/scenarios/S13_agent_identity_mismatch.json:31:      "agent_claim_binding_status",
+tests/test_acp_adapter.py:61:        self.assertEqual(neutral_result.order_differences, protocol_result.order_differences)
+tests/test_acp_adapter.py:65:            [item.code for item in protocol_result.order_differences],
+tests/test_attack_overlay.py:162:        self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.lineage_status)
+tests/test_lifecycle.py:74:            evidence["payment_execution_binding_status"].observed,
+tests/test_lifecycle.py:118:            evidence["payment_execution_binding_status"].observed,
+tests/test_order_validation.py:104:        return {item.code for item in result.order_differences}
+tests/test_order_validation.py:122:                self.assertEqual((), result.order_differences)
+tests/test_order_validation.py:171:                self.assertEqual((), result.order_differences)
+tests/test_order_validation.py:198:        self.assertEqual((), result.order_differences)
+tests/test_order_validation.py:212:        self.assertEqual((), result.order_differences)
+tests/test_order_validation.py:220:        self.assertEqual((), result.order_differences)
+tests/test_order_validation.py:297:                difference = next(item for item in result.order_differences if item.code == "order_items_changed")
+tests/test_order_validation.py:343:        self.assertEqual((), result.order_differences)
+tests/test_order_validation.py:392:            [item.code for item in result.order_differences],
+tests/test_order_validation.py:408:                self.assertEqual((), result.order_differences)
+tests/test_order_validation.py:417:        self.assertEqual("VALID", evidence["order_binding_status"].observed)
+tests/test_order_validation.py:432:        self.assertEqual("INVALID", evidence["order_binding_status"].observed)
+tests/test_payment_recovery.py:60:            evidence["payment_execution_binding_status"].observed,
+tests/test_presentation.py:123:            [item["code"] for item in s09["actual"]["order_differences"]],
+tests/test_presentation.py:171:                    [item.code for item in direct.order_differences],
+tests/test_presentation.py:172:                    [item["code"] for item in variant["actual"]["order_differences"]],
+tests/test_presentation.py:525:        self.assertEqual("INVALID", evidence["order_binding_status"]["observed"])
+tests/test_presentation.py:552:        self.assertIn("payment_execution_binding_status", evidence_codes)
+tests/test_presentation.py:572:        self.assertEqual("INVALID", evidence["agent_claim_binding_status"]["observed"])
+tests/test_project_impact_baseline.py:104:                    "authoritative_trace",
+tests/test_project_impact_baseline.py:201:                    "authoritative_trace", item["actual"]["evidence_stages"]
+tests/test_project_impact_baseline.py:204:                    "authoritative_trace", item["missing_evidence_stages"]
+tests/test_project_impact_baseline.py:318:                "product_observed_authoritative_trace_completeness_rate"
+tests/test_project_impact_baseline.py:365:        self.assertEqual("VALID", t01["actual"]["binding_status"])
+tests/test_project_impact_baseline.py:439:            "binding_status",
+tests/test_project_impact_baseline.py:454:                "evidence_stages_missing:authoritative_trace",
+tests/test_project_impact_baseline.py:487:                "product_observed_authoritative_trace_completeness_rate"
+tests/test_project_impact_baseline.py:618:        self.assertNotIn('stages.add("authoritative_trace")', source)
+tests/test_project_impact_baseline.py:619:        self.assertNotIn('| {"authoritative_trace"}', source)
+tests/test_runner.py:107:            self.assertEqual("INVALID", confirmation_evidence["confirmation_binding_status"]["observed"])
+tests/test_runner.py:118:                [item["code"] for item in order_scenario["actual"]["order_differences"]],
+tests/test_runner.py:145:                lifecycle_evidence["payment_execution_binding_status"]["observed"],
+tests/test_runner.py:210:                recovery_evidence["payment_execution_binding_status"]["observed"],
+tests/test_runner.py:224:            self.assertEqual("INVALID", identity_evidence["agent_claim_binding_status"]["observed"])
+tests/test_runner.py:246:                "MISSING_EVIDENCE",
+tests/test_runner.py:276:                "MISSING_EVIDENCE",
+tests/test_runner.py:325:            self.assertIn("payment_execution_binding_status", html)
+tests/test_validator.py:134:        self.assertEqual("INVALID", evidence["agent_claim_binding_status"].observed)
+tests/test_validator.py:144:        self.assertEqual("VALID", evidence["agent_claim_binding_status"].observed)
+tests/test_validator.py:236:        self.assertEqual("INVALID", evidence["confirmation_binding_status"].observed)
+tests/test_validator.py:265:        self.assertEqual("VALID", evidence["confirmation_binding_status"].observed)
+tests/test_webshop_payment_sidecar.py:83:            binding_status="VALID",
+tests/test_webshop_runtime_gate.py:262:            VerificationStatus.MISSING_EVIDENCE,
+tests/test_webshop_runtime_gate.py:472:                        for item in outcome.prepayment_result.order_differences
+tests/test_webshop_runtime_gate.py:629:        self.assertEqual(VerificationStatus.VALID.value, outcome.runtime_gate_record.binding_status)
+tests/test_webshop_runtime_gate.py:718:            outcome.runtime_gate_record.binding_status,
+tests/test_webshop_runtime_gate.py:814:            outcome.known_payment_attempt_preflight_fact.related_attempt_refs,
+tests/test_webshop_runtime_gate.py:1030:                self.assertEqual(VerificationStatus.INVALID.value, outcome.runtime_gate_record.binding_status)
+tests/test_webshop_runtime_gate.py:1041:        self.assertEqual(VerificationStatus.MISSING_EVIDENCE.value, outcome.runtime_gate_record.identity_status)
+tests/trusted_execution/test_binding.py:48:                self.assertEqual(BindingStatus.MISSING_EVIDENCE, result.status)
+tests/trusted_execution/test_binding.py:53:        self.assertEqual(BindingStatus.MISSING_EVIDENCE, result.status)
+tests/trusted_execution/test_binding.py:58:        self.assertEqual(BindingStatus.MISSING_EVIDENCE, result.status)
+tests/trusted_execution/test_binding.py:64:        self.assertEqual(BindingStatus.MISSING_EVIDENCE, result.status)
+tests/trusted_execution/test_confirmation.py:82:                self.assertEqual(BindingStatus.MISSING_EVIDENCE, fact.status)
+tests/trusted_execution/test_confirmation.py:91:                self.assertEqual(BindingStatus.MISSING_EVIDENCE, fact.status)
+tests/trusted_execution/test_context_policy.py:129:        self.assertEqual(VerificationStatus.MISSING_EVIDENCE, missing.fact.status)
+tests/trusted_execution/test_context_policy.py:140:        self.assertEqual(VerificationStatus.MISSING_EVIDENCE, unknown.fact.status)
+tests/trusted_execution/test_context_policy.py:157:        self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.fact.status)
+tests/trusted_execution/test_context_policy.py:171:        self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.fact.status)
+tests/trusted_execution/test_context_policy.py:190:            ("empty", {}, VerificationStatus.MISSING_EVIDENCE, required),
+tests/trusted_execution/test_context_policy.py:194:                VerificationStatus.MISSING_EVIDENCE,
+tests/trusted_execution/test_context_policy.py:228:                self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.fact.status)
+tests/trusted_execution/test_execution_facts.py:47:                self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.status)
+tests/trusted_execution/test_execution_facts.py:117:        self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.status)
+tests/trusted_execution/test_execution_facts.py:150:        self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.status)
+tests/trusted_execution/test_fact_lineage.py:145:                self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.status)
+tests/trusted_execution/test_fact_lineage.py:164:            self.assertEqual(VerificationStatus.MISSING_EVIDENCE, result.status)
+tests/trusted_execution/test_fact_lineage.py:171:                VerificationStatus.MISSING_EVIDENCE,
+tests/trusted_execution/test_governed_action.py:277:        self.assertEqual(VerificationStatus.MISSING_EVIDENCE, missing_action.status)
+tests/trusted_execution/test_governed_action.py:288:                self.assertEqual(VerificationStatus.MISSING_EVIDENCE, fact.status)
+tests/trusted_execution/test_governed_action.py:382:                self.assertEqual(VerificationStatus.MISSING_EVIDENCE, fact.status)
+tests/trusted_execution/test_identity_assurance.py:82:        self.assertEqual(VerificationStatus.MISSING_EVIDENCE, fact.status)
+tests/trusted_execution/test_known_payment_attempt.py:119:        self.assertEqual(("payment-existing-1",), fact.related_attempt_refs)
+tests/trusted_execution/test_known_payment_attempt.py:130:        self.assertEqual((), fact.related_attempt_refs)
+tests/trusted_execution/test_known_payment_attempt.py:153:        self.assertEqual((), fact.related_attempt_refs)
+tests/trusted_execution/test_known_payment_attempt.py:192:                self.assertEqual((), fact.related_attempt_refs)
+tests/trusted_execution/test_known_payment_attempt.py:217:                self.assertEqual((), fact.related_attempt_refs)
+tests/trusted_execution/test_known_payment_attempt.py:247:            blocked_results[0]["related_attempt_refs"],
+tests/trusted_execution/test_known_payment_attempt.py:279:        self.assertEqual([], clear_results[0]["related_attempt_refs"])
+tests/trusted_execution/test_known_payment_attempt.py:298:            sorted_results[0]["related_attempt_refs"],
+tests/trusted_execution/test_known_payment_attempt.py:311:                self.assertEqual((attempt.payment_id,), fact.related_attempt_refs)
+tests/trusted_execution/test_payment_binding.py:34:    ReplayEventType,
+tests/trusted_execution/test_payment_binding.py:180:            binding_status=outcome.binding_fact.status.value,
+tests/trusted_execution/test_payment_binding.py:192:            ReplayEventType.AUTHORITY_RECORDED,
+tests/trusted_execution/test_payment_binding.py:193:            ReplayEventType.ORDER_RECORDED,
+tests/trusted_execution/test_payment_binding.py:194:            ReplayEventType.REQUEST_RECORDED,
+tests/trusted_execution/test_payment_binding.py:195:            ReplayEventType.RUNTIME_DECISION_RECORDED,
+tests/trusted_execution/test_payment_binding.py:196:            ReplayEventType.PAYMENT_OUTCOME_RECORDED,
+tests/trusted_execution/test_payment_binding.py:215:                    runtime_gate=gate if event_type is ReplayEventType.RUNTIME_DECISION_RECORDED else None,
+tests/trusted_execution/test_payment_binding.py:279:        self.assertEqual(VerificationStatus.VALID.value, observed.binding_status)
+tests/trusted_execution/test_payment_binding.py:353:                        status=VerificationStatus.MISSING_EVIDENCE,
+tests/trusted_execution/test_payment_binding.py:757:        self.assertEqual(VerificationStatus.MISSING_EVIDENCE, fact.status)
+tests/trusted_execution/test_payment_binding.py:806:            VerificationStatus.MISSING_EVIDENCE,
+tests/trusted_execution/test_replay.py:13:    ReplayEventType,
+tests/trusted_execution/test_replay.py:22:    def _event(self, event_id: str, event_type: ReplayEventType, previous: str | None, *, decision=Decision.ALLOW) -> ReplayEvent:
+tests/trusted_execution/test_replay.py:41:                    binding_status="VALID",
+tests/trusted_execution/test_replay.py:52:                if event_type is ReplayEventType.RUNTIME_DECISION_RECORDED
+tests/trusted_execution/test_replay.py:59:            ReplayEventType.AUTHORITY_RECORDED,
+tests/trusted_execution/test_replay.py:60:            ReplayEventType.ORDER_RECORDED,
+tests/trusted_execution/test_replay.py:61:            ReplayEventType.REQUEST_RECORDED,
+tests/trusted_execution/test_replay.py:62:            ReplayEventType.RUNTIME_DECISION_RECORDED,
+tests/trusted_execution/test_replay.py:63:            ReplayEventType.PAYMENT_OUTCOME_RECORDED,
+tests/trusted_execution/test_replay.py:81:                events[3] = self._event("event-3", ReplayEventType.RUNTIME_DECISION_RECORDED, "event-2", decision=decision)
+tests/trusted_execution/test_replay.py:82:                events[4] = self._event("event-4", ReplayEventType.PAYMENT_OUTCOME_RECORDED, "event-3", decision=decision)
+tests/trusted_execution/test_replay.py:97:        broken[1] = self._event("event-1", ReplayEventType.ORDER_RECORDED, "wrong")
+tests/trusted_execution/test_replay.py:101:        duplicate[1] = self._event("event-0", ReplayEventType.ORDER_RECORDED, "event-0")

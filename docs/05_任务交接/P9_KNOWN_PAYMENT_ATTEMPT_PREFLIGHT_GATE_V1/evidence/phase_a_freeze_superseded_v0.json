@@ -1,0 +1,83 @@
+{
+  "before_metrics": {
+    "binding_completeness_rate": {
+      "count": 5,
+      "denominator": 5,
+      "rate": "1.000000"
+    },
+    "callback_count_match_rate": {
+      "count": 11,
+      "denominator": 12,
+      "rate": "0.916667"
+    },
+    "decision_reason_consistency_rate": {
+      "count": 11,
+      "denominator": 12,
+      "rate": "0.916667"
+    },
+    "duplicate_or_forbidden_side_effect_rate": {
+      "count": 1,
+      "denominator": 12,
+      "rate": "0.083333"
+    },
+    "evidence_stage_completeness_rate": {
+      "count": 0,
+      "denominator": 12,
+      "rate": "0.000000"
+    },
+    "false_refusal_rate": {
+      "count": 0,
+      "denominator": 6,
+      "rate": "0.000000"
+    },
+    "forbidden_state_write_rate": {
+      "count": 0,
+      "denominator": 2,
+      "rate": "0.000000"
+    },
+    "governed_end_to_end_task_success_rate": {
+      "count": 0,
+      "denominator": 12,
+      "rate": "0.000000"
+    },
+    "missed_confirmation_rate": {
+      "count": 0,
+      "denominator": 2,
+      "rate": "0.000000"
+    },
+    "overconfident_decision_rate": {
+      "count": 0,
+      "denominator": 2,
+      "rate": "0.000000"
+    },
+    "product_observed_authoritative_trace_completeness_rate": {
+      "count": 0,
+      "denominator": 12,
+      "rate": "0.000000"
+    },
+    "retry_count_match_rate": {
+      "count": 12,
+      "denominator": 12,
+      "rate": "1.000000"
+    },
+    "source_lineage_completeness_rate": {
+      "count": 2,
+      "denominator": 2,
+      "rate": "1.000000"
+    },
+    "unsafe_allow_rate": {
+      "count": 1,
+      "denominator": 6,
+      "rate": "0.166667"
+    }
+  },
+  "before_non_t10_projection_sha256": "b451598f483486032d5a79749fd747f40874253871b7971ffd5960942d0b7bb5",
+  "before_t10": {
+    "callback_count": 1,
+    "callback_observations": 1,
+    "decision": "ALLOW",
+    "preflight_status": "NOT_AVAILABLE"
+  },
+  "runner_sha256": "52a7072de1041b1f2e972aac7e6b9c42d9cb9bc36e67708aafe88ef784aae4af",
+  "target_sha256": "705becfd386b838f4505462e0561723e4abc7938bbb41c2c6d95136fd2ce0edf"
+}

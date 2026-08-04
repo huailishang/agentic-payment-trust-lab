@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-08",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-08-scope-audit.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/EV-08-scope-audit.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T11:43:09.405739+00:00",
+  "finished_at_utc": "2026-08-04T11:43:10.928144+00:00",
+  "exit_code": 1,
+  "stdout_path": "EV-08.stdout.log",
+  "stderr_path": "EV-08.stderr.log",
+  "stdout_bytes": 5237,
+  "stderr_bytes": 0,
+  "stdout_sha256": "87c82b929411c1d32595ec52884ea0659aa454afe601a447eb79a3fcd451ef18",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

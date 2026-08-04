@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-10",
+  "command_argv": [
+    "python3",
+    "-c",
+    "from pathlib import Path; import hashlib,json,subprocess; base=Path('docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence'); old=json.loads((base/'immutable_manifest.json').read_text(encoding='utf-8'))['files']; roots=['src','tests','scripts','samples']; files=sorted(p for r in roots for p in Path(r).rglob('*') if p.is_file()); new={p.as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in files}; added=sorted(set(new)-set(old)); removed=sorted(set(old)-set(new)); changed=sorted(k for k in set(old)&set(new) if old[k]!=new[k]); head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(); result={'protected_file_count_initial':len(old),'protected_file_count_final':len(new),'added':added,'removed':removed,'changed':changed,'head':head,'head_unchanged':head=='71a3acbbd9622b68a8064381b9034e07c1f4d700','protected_surface_unchanged':not added and not removed and not changed}; out=base/'EV-10-final-scope-audit.json'; out.write_text(json.dumps(result,indent=2,sort_keys=True),encoding='utf-8'); print(json.dumps(result,indent=2,sort_keys=True)); raise SystemExit(0 if result['protected_surface_unchanged'] and result['head_unchanged'] else 1)"
+  ],
+  "command_display": "python3 -c 'from pathlib import Path; import hashlib,json,subprocess; base=Path('\"'\"'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence'\"'\"'); old=json.loads((base/'\"'\"'immutable_manifest.json'\"'\"').read_text(encoding='\"'\"'utf-8'\"'\"'))['\"'\"'files'\"'\"']; roots=['\"'\"'src'\"'\"','\"'\"'tests'\"'\"','\"'\"'scripts'\"'\"','\"'\"'samples'\"'\"']; files=sorted(p for r in roots for p in Path(r).rglob('\"'\"'*'\"'\"') if p.is_file()); new={p.as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in files}; added=sorted(set(new)-set(old)); removed=sorted(set(old)-set(new)); changed=sorted(k for k in set(old)&set(new) if old[k]!=new[k]); head=subprocess.check_output(['\"'\"'git'\"'\"','\"'\"'rev-parse'\"'\"','\"'\"'HEAD'\"'\"'],text=True).strip(); result={'\"'\"'protected_file_count_initial'\"'\"':len(old),'\"'\"'protected_file_count_final'\"'\"':len(new),'\"'\"'added'\"'\"':added,'\"'\"'removed'\"'\"':removed,'\"'\"'changed'\"'\"':changed,'\"'\"'head'\"'\"':head,'\"'\"'head_unchanged'\"'\"':head=='\"'\"'71a3acbbd9622b68a8064381b9034e07c1f4d700'\"'\"','\"'\"'protected_surface_unchanged'\"'\"':not added and not removed and not changed}; out=base/'\"'\"'EV-10-final-scope-audit.json'\"'\"'; out.write_text(json.dumps(result,indent=2,sort_keys=True),encoding='\"'\"'utf-8'\"'\"'); print(json.dumps(result,indent=2,sort_keys=True)); raise SystemExit(0 if result['\"'\"'protected_surface_unchanged'\"'\"'] and result['\"'\"'head_unchanged'\"'\"'] else 1)'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T14:13:38.844921+00:00",
+  "finished_at_utc": "2026-08-04T14:13:41.315404+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-10.stdout.log",
+  "stderr_path": "EV-10.stderr.log",
+  "stdout_bytes": 247,
+  "stderr_bytes": 0,
+  "stdout_sha256": "cbd07714ce55de378a8a22c228cf150763b1cb77a9acc66747cfddde24206a6f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

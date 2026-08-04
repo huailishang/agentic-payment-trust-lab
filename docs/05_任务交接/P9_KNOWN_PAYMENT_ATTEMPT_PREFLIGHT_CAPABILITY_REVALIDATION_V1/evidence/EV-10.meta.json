@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-10",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "set -e; python3 /mnt/d/SoftWare/VScode/install/Project/localagent-common/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md; git diff --check; sha256sum docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_CAPABILITY_REVALIDATION_V1/REPORT.md; grep -nE \"task_id:|task_kind:|state:|current_role:|next_artifact_path:|authorization_\" CURRENT.md; git -c core.quotePath=false status --short --branch"
+  ],
+  "command_display": "bash -lc 'set -e; python3 /mnt/d/SoftWare/VScode/install/Project/localagent-common/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md; git diff --check; sha256sum docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_CAPABILITY_REVALIDATION_V1/REPORT.md; grep -nE \"task_id:|task_kind:|state:|current_role:|next_artifact_path:|authorization_\" CURRENT.md; git -c core.quotePath=false status --short --branch'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T02:49:26.361022+00:00",
+  "finished_at_utc": "2026-08-04T02:49:28.922822+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-10.stdout.log",
+  "stderr_path": "EV-10.stderr.log",
+  "stdout_bytes": 1932,
+  "stderr_bytes": 0,
+  "stdout_sha256": "aff83050679dbcb5a7dc3ae49a4a911270a957253242f5ccd66a1ef99ab119c0",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,26 @@
+{
+  "adapter_is_maintenance": true,
+  "adapter_keeps_zero": true,
+  "adapter_no_product_trace": true,
+  "baseline_0_12": true,
+  "before_hash_tbd": true,
+  "closed_roles_in_design": true,
+  "conditional_prerequisite": true,
+  "conditional_state": true,
+  "coverage_doc_mentions_12": true,
+  "exact_12_tasks": true,
+  "no_capability_contract_created": true,
+  "old_runner_only_stage_a": true,
+  "old_runner_reads_legacy": true,
+  "result_cycle_closed": true,
+  "role_consistency_key": true,
+  "runner_hash_tbd": true,
+  "t02_t04_two_snapshots": true,
+  "t04_real_source_mapping": true,
+  "t05_final_decision_event": true,
+  "t06_final_decision_event": true,
+  "t10_dual_payment_roles": true,
+  "t10_relations": true
+}
+FAILED=
+COVERAGE_SHA256=2f7ee5dc446efbe4c0b55f1cc0e705c3aa939606309154cb7e38babf1f70821d

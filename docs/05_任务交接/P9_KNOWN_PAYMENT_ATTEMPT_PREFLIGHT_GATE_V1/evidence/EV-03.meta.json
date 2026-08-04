@@ -1,0 +1,16 @@
+{
+  "command": [
+    "bash",
+    "-lc",
+    "python3 - <<'PY'\nfrom __future__ import annotations\nimport hashlib, json, re\nfrom pathlib import Path\nroot=Path(\".\")\nevidence=root/\"docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/evidence\"\nbefore=json.loads((evidence/\"before.json\").read_text(encoding=\"utf-8\"))\nt10=next(x for x in before[\"task_results\"] if x[\"task_id\"]==\"T10\")\nprojection=[x for x in before[\"task_results\"] if x[\"task_id\"]!=\"T10\"]\nprojection_digest=hashlib.sha256(json.dumps(projection,ensure_ascii=False,sort_keys=True,separators=(\",\",\":\")).encode()).hexdigest()\ntarget=Path(\"samples/evaluation/project_impact_t10_preflight_target_v1.json\")\nrunner=Path(\"scripts/validation/run_project_impact_baseline.py\")\nfreeze={\n \"target_sha256\": hashlib.sha256(target.read_bytes()).hexdigest(),\n \"runner_sha256\": hashlib.sha256(runner.read_bytes()).hexdigest(),\n \"before_non_t10_projection_sha256\": projection_digest,\n \"before_t10\": {\n   \"decision\": t10[\"actual\"][\"actual_decision\"],\n   \"callback_count\": t10[\"actual\"][\"actual_callback_count\"],\n   \"callback_observations\": t10[\"actual\"][\"actual_callback_observations\"],\n   \"preflight_status\": t10[\"actual\"][\"known_payment_attempt_preflight_status\"],\n },\n \"before_metrics\": before[\"metrics\"],\n}\n(evidence/\"phase_a_freeze.json\").write_text(json.dumps(freeze,ensure_ascii=False,indent=2,sort_keys=True)+\"\\n\",encoding=\"utf-8\")\nstart_text=(evidence/\"EV-01.stdout.log\").read_text(encoding=\"utf-8\")\nstart={m.group(2):m.group(1) for m in re.finditer(r\"^([0-9a-f]{64})  (src/.*\\.py)$\",start_text,re.M)}\ncurrent={str(p).replace(\"\\\\\",\"/\"):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(Path(\"src\").rglob(\"*.py\"))}\nprint(\"TARGET_SHA256=\"+freeze[\"target_sha256\"])\nprint(\"RUNNER_SHA256=\"+freeze[\"runner_sha256\"])\nprint(\"BEFORE_NON_T10_PROJECTION_SHA256=\"+projection_digest)\nprint(\"SRC_UNCHANGED_SINCE_EV01=\"+str(start==current))\nprint(\"BEFORE_T10=\"+json.dumps(freeze[\"before_t10\"],sort_keys=True))\nfor name in (\"duplicate_or_forbidden_side_effect_rate\",\"callback_count_match_rate\",\"unsafe_allow_rate\",\"governed_end_to_end_task_success_rate\",\"product_observed_authoritative_trace_completeness_rate\"):\n print(name+\"=\"+json.dumps(before[\"metrics\"][name],sort_keys=True))\nPY"
+  ],
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "duration_seconds": 0.16349,
+  "ended_at_utc": "2026-08-04T00:53:16.045012+00:00",
+  "exit_code": 0,
+  "label": "EV-03",
+  "schema": "executor-evidence/v1",
+  "started_at_utc": "2026-08-04T00:53:15.881522+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "c26dcf90ad56f1bb4b4a24c70242b1edeaa6ce39e0cc249b8361c28e0b97de82"
+}

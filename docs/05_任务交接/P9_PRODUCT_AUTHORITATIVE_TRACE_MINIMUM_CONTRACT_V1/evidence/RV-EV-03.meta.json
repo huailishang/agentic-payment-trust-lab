@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-03",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "set -e; python3 - <<\"PY\"\nimport hashlib,json,subprocess\nfrom pathlib import Path\nbase=Path(\"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence\")\nmanifest=json.loads((base/\"immutable_manifest.json\").read_text())\nmissing=[]; changed=[]\nfor p,h in manifest[\"files\"].items():\n    path=Path(p)\n    if not path.exists(): missing.append(p); continue\n    actual=hashlib.sha256(path.read_bytes()).hexdigest()\n    if actual!=h: changed.append((p,h,actual))\nprint(\"protected_files\",len(manifest[\"files\"]))\nprint(\"missing\",missing)\nprint(\"changed\",changed)\nprint(\"head\",subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip())\nassert not missing and not changed\nPY\npython3 /mnt/d/SoftWare/VScode/install/Project/localagent-common/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md"
+  ],
+  "command_display": "bash -lc 'set -e; python3 - <<\"PY\"\nimport hashlib,json,subprocess\nfrom pathlib import Path\nbase=Path(\"docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence\")\nmanifest=json.loads((base/\"immutable_manifest.json\").read_text())\nmissing=[]; changed=[]\nfor p,h in manifest[\"files\"].items():\n    path=Path(p)\n    if not path.exists(): missing.append(p); continue\n    actual=hashlib.sha256(path.read_bytes()).hexdigest()\n    if actual!=h: changed.append((p,h,actual))\nprint(\"protected_files\",len(manifest[\"files\"]))\nprint(\"missing\",missing)\nprint(\"changed\",changed)\nprint(\"head\",subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip())\nassert not missing and not changed\nPY\npython3 /mnt/d/SoftWare/VScode/install/Project/localagent-common/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T13:33:17.958272+00:00",
+  "finished_at_utc": "2026-08-04T13:33:21.887160+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-03.stdout.log",
+  "stderr_path": "RV-EV-03.stderr.log",
+  "stdout_bytes": 151,
+  "stderr_bytes": 0,
+  "stdout_sha256": "8cebbfe08924d5d8844e6bdcbdeb9590a1079a89eb8f77e59a900eaf7b686b7b",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

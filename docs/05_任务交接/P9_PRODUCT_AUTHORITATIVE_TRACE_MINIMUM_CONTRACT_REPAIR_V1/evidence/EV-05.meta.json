@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-05",
+  "command_argv": [
+    "python3",
+    "-c",
+    "from pathlib import Path; import hashlib,json; roots=['src','tests','scripts','samples']; files=sorted(p for r in roots for p in Path(r).rglob('*') if p.is_file()); data={'schema':'protected-surface-manifest/v1','files':{p.as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in files}}; out=Path('docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/immutable_manifest.json'); out.write_text(json.dumps(data,indent=2,sort_keys=True),encoding='utf-8'); print('PROTECTED_FILES='+str(len(files))); print('MANIFEST_SHA256='+hashlib.sha256(out.read_bytes()).hexdigest())"
+  ],
+  "command_display": "python3 -c 'from pathlib import Path; import hashlib,json; roots=['\"'\"'src'\"'\"','\"'\"'tests'\"'\"','\"'\"'scripts'\"'\"','\"'\"'samples'\"'\"']; files=sorted(p for r in roots for p in Path(r).rglob('\"'\"'*'\"'\"') if p.is_file()); data={'\"'\"'schema'\"'\"':'\"'\"'protected-surface-manifest/v1'\"'\"','\"'\"'files'\"'\"':{p.as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in files}}; out=Path('\"'\"'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/immutable_manifest.json'\"'\"'); out.write_text(json.dumps(data,indent=2,sort_keys=True),encoding='\"'\"'utf-8'\"'\"'); print('\"'\"'PROTECTED_FILES='\"'\"'+str(len(files))); print('\"'\"'MANIFEST_SHA256='\"'\"'+hashlib.sha256(out.read_bytes()).hexdigest())'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T14:04:14.996636+00:00",
+  "finished_at_utc": "2026-08-04T14:04:17.913541+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-05.stdout.log",
+  "stderr_path": "EV-05.stderr.log",
+  "stdout_bytes": 101,
+  "stderr_bytes": 0,
+  "stdout_sha256": "1682729adadf467b1785d652232f23a5c6d01fb2a21060d0b4209701ac1d575f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

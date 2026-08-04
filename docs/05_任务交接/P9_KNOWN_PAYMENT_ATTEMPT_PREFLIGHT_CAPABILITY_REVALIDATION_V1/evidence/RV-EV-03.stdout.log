@@ -1,0 +1,354 @@
+{
+  "mixed_blocked": {
+    "facts": [
+      {
+        "blocking_request_refs": [
+          "request-1"
+        ],
+        "current_request_ref": "request-1",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_duplicate_succeeded"
+        ],
+        "related_attempt_refs": [
+          "payment-existing-1"
+        ],
+        "status": "BLOCKED"
+      },
+      {
+        "blocking_request_refs": [
+          "request-1"
+        ],
+        "current_request_ref": "request-1",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_duplicate_succeeded"
+        ],
+        "related_attempt_refs": [
+          "payment-existing-1"
+        ],
+        "status": "BLOCKED"
+      }
+    ],
+    "gates": [
+      {
+        "callback": 0,
+        "calls": [],
+        "decision": "DENY",
+        "fact": {
+          "blocking_request_refs": [
+            "webshop-request-6c6a78eddffdb552c2af66ef"
+          ],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_duplicate_succeeded"
+          ],
+          "related_attempt_refs": [
+            "existing-success"
+          ],
+          "status": "BLOCKED"
+        },
+        "preflight": "BLOCKED"
+      },
+      {
+        "callback": 0,
+        "calls": [],
+        "decision": "DENY",
+        "fact": {
+          "blocking_request_refs": [
+            "webshop-request-6c6a78eddffdb552c2af66ef"
+          ],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_duplicate_succeeded"
+          ],
+          "related_attempt_refs": [
+            "existing-success"
+          ],
+          "status": "BLOCKED"
+        },
+        "preflight": "BLOCKED"
+      }
+    ],
+    "order_independent": true
+  },
+  "mixed_indeterminate": {
+    "facts": [
+      {
+        "blocking_request_refs": [],
+        "current_request_ref": "request-1",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_ref_missing"
+        ],
+        "related_attempt_refs": [],
+        "status": "INDETERMINATE"
+      },
+      {
+        "blocking_request_refs": [],
+        "current_request_ref": "request-1",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_ref_missing"
+        ],
+        "related_attempt_refs": [],
+        "status": "INDETERMINATE"
+      }
+    ],
+    "gates": [
+      {
+        "callback": 0,
+        "calls": [],
+        "decision": "INDETERMINATE",
+        "fact": {
+          "blocking_request_refs": [],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_ref_missing"
+          ],
+          "related_attempt_refs": [],
+          "status": "INDETERMINATE"
+        },
+        "preflight": "INDETERMINATE"
+      },
+      {
+        "callback": 0,
+        "calls": [],
+        "decision": "INDETERMINATE",
+        "fact": {
+          "blocking_request_refs": [],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_ref_missing"
+          ],
+          "related_attempt_refs": [],
+          "status": "INDETERMINATE"
+        },
+        "preflight": "INDETERMINATE"
+      }
+    ],
+    "order_independent": true
+  },
+  "same_malformed": {
+    "fact": {
+      "blocking_request_refs": [],
+      "current_request_ref": "request-1",
+      "limitations": [
+        "offline_fact_only",
+        "exact_payment_execution_records_only",
+        "succeeded_attempts_only",
+        "pending_or_unknown_attempt_policy_not_defined",
+        "no_external_payment_status_query"
+      ],
+      "reason_codes": [
+        "known_payment_attempt_ref_missing"
+      ],
+      "related_attempt_refs": [],
+      "status": "INDETERMINATE"
+    },
+    "gate": {
+      "callback": 0,
+      "calls": [],
+      "decision": "INDETERMINATE",
+      "fact": {
+        "blocking_request_refs": [],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_ref_missing"
+        ],
+        "related_attempt_refs": [],
+        "status": "INDETERMINATE"
+      },
+      "preflight": "INDETERMINATE"
+    }
+  },
+  "same_succeeded": {
+    "fact": {
+      "blocking_request_refs": [
+        "request-1"
+      ],
+      "current_request_ref": "request-1",
+      "limitations": [
+        "offline_fact_only",
+        "exact_payment_execution_records_only",
+        "succeeded_attempts_only",
+        "pending_or_unknown_attempt_policy_not_defined",
+        "no_external_payment_status_query"
+      ],
+      "reason_codes": [
+        "known_payment_attempt_duplicate_succeeded"
+      ],
+      "related_attempt_refs": [
+        "payment-existing-1"
+      ],
+      "status": "BLOCKED"
+    },
+    "gate": {
+      "callback": 0,
+      "calls": [],
+      "decision": "DENY",
+      "fact": {
+        "blocking_request_refs": [
+          "webshop-request-6c6a78eddffdb552c2af66ef"
+        ],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_duplicate_succeeded"
+        ],
+        "related_attempt_refs": [
+          "existing-success"
+        ],
+        "status": "BLOCKED"
+      },
+      "preflight": "BLOCKED"
+    }
+  },
+  "unknown_ownership": {
+    "fact": {
+      "blocking_request_refs": [],
+      "current_request_ref": "request-1",
+      "limitations": [
+        "offline_fact_only",
+        "exact_payment_execution_records_only",
+        "succeeded_attempts_only",
+        "pending_or_unknown_attempt_policy_not_defined",
+        "no_external_payment_status_query"
+      ],
+      "reason_codes": [
+        "known_payment_attempt_request_ref_missing"
+      ],
+      "related_attempt_refs": [],
+      "status": "INDETERMINATE"
+    },
+    "gate": {
+      "callback": 0,
+      "calls": [],
+      "decision": "INDETERMINATE",
+      "fact": {
+        "blocking_request_refs": [],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_request_ref_missing"
+        ],
+        "related_attempt_refs": [],
+        "status": "INDETERMINATE"
+      },
+      "preflight": "INDETERMINATE"
+    }
+  },
+  "unrelated_malformed": {
+    "fact": {
+      "blocking_request_refs": [],
+      "current_request_ref": "request-1",
+      "limitations": [
+        "offline_fact_only",
+        "exact_payment_execution_records_only",
+        "succeeded_attempts_only",
+        "pending_or_unknown_attempt_policy_not_defined",
+        "no_external_payment_status_query"
+      ],
+      "reason_codes": [
+        "known_payment_attempt_preflight_clear"
+      ],
+      "related_attempt_refs": [],
+      "status": "CLEAR"
+    },
+    "gate": {
+      "callback": 1,
+      "calls": [
+        "checkout"
+      ],
+      "decision": "ALLOW",
+      "fact": {
+        "blocking_request_refs": [],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_preflight_clear"
+        ],
+        "related_attempt_refs": [],
+        "status": "CLEAR"
+      },
+      "preflight": "CLEAR"
+    }
+  }
+}

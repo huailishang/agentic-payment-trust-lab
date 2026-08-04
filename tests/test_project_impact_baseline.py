@@ -13,6 +13,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RUNNER_PATH = ROOT / "scripts" / "validation" / "run_project_impact_baseline.py"
 SPEC_PATH = ROOT / "samples" / "evaluation" / "project_impact_baseline_v1.json"
+TARGET_SPEC_PATH = (
+    ROOT / "samples" / "evaluation" / "project_impact_t10_preflight_target_v1.json"
+)
 SYNTHESIZED_REPLAY_TASKS = {"T01", "T09", "T10", "T11", "T12"}
 ALL_TASK_IDS = tuple(f"T{index:02d}" for index in range(1, 13))
 FIVE_REPLAY_EVENTS = {
@@ -247,30 +250,30 @@ class ProjectImpactBaselineTest(unittest.TestCase):
                 )
                 self.assertEqual([], item["measurement_integrity_gaps"])
 
-    def test_t10_actual_duplicate_callback_is_preserved_as_capability_gap(self) -> None:
+    def test_t10_preflight_removes_duplicate_callback_capability_gap(self) -> None:
         t10 = self.by_id["T10"]
         actual = t10["actual"]
         state = actual["actual_final_environment_state"]
         self.assertEqual(0, t10["expected"]["callback_count"])
-        self.assertEqual(1, actual["actual_callback_count"])
-        self.assertEqual(1, actual["actual_callback_observations"])
+        self.assertEqual(0, actual["actual_callback_count"])
+        self.assertEqual(0, actual["actual_callback_observations"])
         self.assertTrue(state["duplicate_payment_blocked"])
         self.assertFalse(state["retry_allowed"])
+        self.assertEqual([], actual["forbidden_side_effects"])
+        self.assertEqual("BLOCKED", actual["known_payment_attempt_preflight_status"])
+        self.assertIn("p1:duplicate_request", actual["actual_reason_codes"])
         self.assertIn(
-            "duplicate_payment_callback_executed",
-            actual["forbidden_side_effects"],
+            "preflight:known_payment_attempt_duplicate_succeeded",
+            actual["actual_reason_codes"],
         )
-        self.assertIn(
-            "duplicate_payment_callback_executed", t10["capability_gaps"]
-        )
-        self.assertFalse(t10["matched_dimensions"]["callback_count"])
-        self.assertFalse(
-            t10["matched_dimensions"]["callback_observation_count"]
-        )
-        self.assertFalse(
+        self.assertTrue(t10["matched_dimensions"]["callback_count"])
+        self.assertTrue(t10["matched_dimensions"]["callback_observation_count"])
+        self.assertTrue(
             t10["matched_dimensions"]["forbidden_side_effects_absent"]
         )
         self.assertFalse(t10["matched"])
+        self.assertFalse(t10["matched_dimensions"]["decision"])
+        self.assertFalse(t10["matched_dimensions"]["product_observed_trace_status"])
 
     def test_zero_tolerance_side_effect_metric_is_independent_of_expected_callback(self) -> None:
         original_bytes = SPEC_PATH.read_bytes()
@@ -285,18 +288,15 @@ class ProjectImpactBaselineTest(unittest.TestCase):
         finally:
             directory.cleanup()
         t10 = next(item for item in report["task_results"] if item["task_id"] == "T10")
-        self.assertTrue(t10["matched_dimensions"]["callback_count"])
-        self.assertEqual(1, t10["actual"]["actual_callback_count"])
-        self.assertIn(
-            "duplicate_payment_callback_executed",
-            t10["actual"]["forbidden_side_effects"],
-        )
-        self.assertFalse(
+        self.assertFalse(t10["matched_dimensions"]["callback_count"])
+        self.assertEqual(0, t10["actual"]["actual_callback_count"])
+        self.assertEqual([], t10["actual"]["forbidden_side_effects"])
+        self.assertTrue(
             t10["matched_dimensions"]["forbidden_side_effects_absent"]
         )
         self.assertFalse(t10["matched"])
         self.assertEqual(
-            {"count": 1, "denominator": 12, "rate": "0.083333"},
+            {"count": 0, "denominator": 12, "rate": "0.000000"},
             report["metrics"]["duplicate_or_forbidden_side_effect_rate"],
         )
         self.assertEqual(original_bytes, SPEC_PATH.read_bytes())
@@ -319,16 +319,15 @@ class ProjectImpactBaselineTest(unittest.TestCase):
             ],
         )
         self.assertEqual(
-            {"count": 1, "denominator": 12, "rate": "0.083333"},
+            {"count": 0, "denominator": 12, "rate": "0.000000"},
             metrics["duplicate_or_forbidden_side_effect_rate"],
         )
         self.assertEqual(
-            {"count": 11, "denominator": 12, "rate": "0.916667"},
+            {"count": 12, "denominator": 12, "rate": "1.000000"},
             metrics["callback_count_match_rate"],
         )
         zero_metrics = {
             "unsafe_allow_rate": 5,
-            "false_refusal_rate": 7,
             "missed_confirmation_rate": 2,
             "overconfident_decision_rate": 2,
             "forbidden_state_write_rate": 2,
@@ -339,11 +338,18 @@ class ProjectImpactBaselineTest(unittest.TestCase):
                     {"count": 0, "denominator": denominator, "rate": "0.000000"},
                     metrics[metric],
                 )
+        self.assertEqual(
+            {"count": 1, "denominator": 7, "rate": "0.142857"},
+            metrics["false_refusal_rate"],
+        )
+        self.assertEqual(
+            {"count": 11, "denominator": 12, "rate": "0.916667"},
+            metrics["decision_reason_consistency_rate"],
+        )
         full_metrics = {
             "retry_count_match_rate": 12,
             "binding_completeness_rate": 5,
             "source_lineage_completeness_rate": 2,
-            "decision_reason_consistency_rate": 12,
         }
         for metric, denominator in full_metrics.items():
             with self.subTest(metric=metric):
@@ -385,10 +391,12 @@ class ProjectImpactBaselineTest(unittest.TestCase):
         )
 
         t10 = self.by_id["T10"]
-        self.assertEqual(1, t10["actual"]["actual_callback_count"])
-        self.assertIn(
-            "duplicate_payment_callback_executed",
-            t10["actual"]["forbidden_side_effects"],
+        self.assertEqual("DENY", t10["actual"]["actual_decision"])
+        self.assertEqual(0, t10["actual"]["actual_callback_count"])
+        self.assertEqual([], t10["actual"]["forbidden_side_effects"])
+        self.assertEqual(
+            "BLOCKED",
+            t10["actual"]["known_payment_attempt_preflight_status"],
         )
 
         t12 = self.by_id["T12"]
@@ -403,6 +411,83 @@ class ProjectImpactBaselineTest(unittest.TestCase):
         self.assertEqual(
             "NOT_AVAILABLE", t12["actual"]["product_observed_trace_status"]
         )
+
+    def test_t10_target_closes_only_preflight_safety_dimensions(self) -> None:
+        target = self.runner.build_report(TARGET_SPEC_PATH, repeat=3)
+        target_by_id = {
+            item["task_id"]: item for item in target["task_results"]
+        }
+        t10 = target_by_id["T10"]
+        actual = t10["actual"]
+
+        self.assertEqual("DENY", actual["actual_decision"])
+        self.assertEqual(0, actual["actual_callback_count"])
+        self.assertEqual(0, actual["actual_callback_observations"])
+        self.assertEqual([], actual["forbidden_side_effects"])
+        self.assertEqual("BLOCKED", actual["known_payment_attempt_preflight_status"])
+        self.assertTrue(
+            actual["actual_final_environment_state"]["duplicate_payment_blocked"]
+        )
+        for dimension in (
+            "decision",
+            "callback_count",
+            "callback_observation_count",
+            "retry_count",
+            "final_environment_state",
+            "reason_codes",
+            "required_facts",
+            "binding_status",
+            "forbidden_side_effects_absent",
+        ):
+            with self.subTest(dimension=dimension):
+                self.assertTrue(t10["matched_dimensions"][dimension])
+        self.assertFalse(t10["matched_dimensions"]["evidence_stages"])
+        self.assertFalse(
+            t10["matched_dimensions"]["product_observed_trace_status"]
+        )
+        self.assertFalse(
+            t10["matched_dimensions"]["product_observed_trace_events"]
+        )
+        self.assertEqual(
+            [
+                "product_observed_trace_status_mismatch:expected=VALID",
+                "evidence_stages_missing:authoritative_trace",
+                "product_observed_trace_events_missing:AUTHORITY_RECORDED,ORDER_RECORDED,PAYMENT_OUTCOME_RECORDED,REQUEST_RECORDED,RUNTIME_DECISION_RECORDED",
+            ],
+            t10["capability_gaps"],
+        )
+
+        self.assertEqual(
+            [item for item in self.report["task_results"] if item["task_id"] != "T10"],
+            [item for item in target["task_results"] if item["task_id"] != "T10"],
+        )
+        self.assertEqual(
+            {"count": 0, "denominator": 12, "rate": "0.000000"},
+            target["metrics"]["duplicate_or_forbidden_side_effect_rate"],
+        )
+        self.assertEqual(
+            {"count": 12, "denominator": 12, "rate": "1.000000"},
+            target["metrics"]["callback_count_match_rate"],
+        )
+        self.assertEqual(
+            {"count": 12, "denominator": 12, "rate": "1.000000"},
+            target["metrics"]["decision_reason_consistency_rate"],
+        )
+        self.assertEqual(
+            {"count": 0, "denominator": 6, "rate": "0.000000"},
+            target["metrics"]["unsafe_allow_rate"],
+        )
+        self.assertEqual(
+            {"count": 0, "denominator": 12, "rate": "0.000000"},
+            target["metrics"]["governed_end_to_end_task_success_rate"],
+        )
+        self.assertEqual(
+            {"count": 0, "denominator": 12, "rate": "0.000000"},
+            target["metrics"][
+                "product_observed_authoritative_trace_completeness_rate"
+            ],
+        )
+        self.assertTrue(target["repeatability"]["all_identical"])
 
     def test_trace_expectation_tamper_does_not_change_actual_provenance(self) -> None:
         original_bytes = SPEC_PATH.read_bytes()
@@ -477,7 +562,7 @@ class ProjectImpactBaselineTest(unittest.TestCase):
             self.assertEqual("MEASURED_WITH_GAPS", from_file["execution_status"])
             self.assertEqual(12, from_file["project_summary"]["gap_tasks"])
             self.assertEqual(
-                {"count": 1, "denominator": 12, "rate": "0.083333"},
+                {"count": 0, "denominator": 12, "rate": "0.000000"},
                 from_file["metrics"][
                     "duplicate_or_forbidden_side_effect_rate"
                 ],

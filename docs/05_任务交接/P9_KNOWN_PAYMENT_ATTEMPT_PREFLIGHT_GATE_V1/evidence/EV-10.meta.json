@@ -1,0 +1,24 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.trusted_execution.test_known_payment_attempt",
+    "tests.test_webshop_runtime_gate",
+    "tests.trusted_execution.test_payment_binding",
+    "tests.test_webshop_payment_sidecar",
+    "tests.test_payment_recovery",
+    "tests.test_payment_status_conflict",
+    "tests.test_project_impact_baseline",
+    "-v"
+  ],
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "duration_seconds": 1.496106,
+  "ended_at_utc": "2026-08-04T01:05:22.873745+00:00",
+  "exit_code": 0,
+  "label": "EV-10",
+  "schema": "executor-evidence/v1",
+  "started_at_utc": "2026-08-04T01:05:21.377639+00:00",
+  "stderr_sha256": "0c4d2b87378dedd936e6473e21e3e26a0ada2e0714398bcce96e88f9b119aa6a",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

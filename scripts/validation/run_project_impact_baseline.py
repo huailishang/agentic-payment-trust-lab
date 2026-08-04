@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import inspect
 import json
 import sys
 from dataclasses import dataclass, replace
@@ -345,6 +346,7 @@ def _invoke_gate(
     context: GateContext,
     *,
     action: GovernedPaymentAction | None = None,
+    known_payment_attempts: tuple[PaymentExecutionRecord, ...] = (),
 ) -> tuple[Any, tuple[str, ...]]:
     callbacks: list[str] = []
 
@@ -352,21 +354,27 @@ def _invoke_gate(
         callbacks.append("checkout")
         return "project-baseline-injected-checkout"
 
-    outcome = gate_webshop_buy_now(
-        adaptation=context.adaptation,
-        mandate=context.mandate,
-        declared_agent_id=context.bound_request.agent_id,
-        execution_candidate=context.execution,
-        agent_identity=context.identity,
-        current_provider_ref=context.identity.provider,
-        current_executor_instance_ref=context.identity.executor_instance_id,
-        context_policy_fact=context.context_fact,
-        checkout_callback=callback,
-        confirmation_record=context.confirmation,
-        seen_request_ids=(),
-        authorized_adaptation=context.authorized_adaptation,
-        governed_action=context.action if action is None else action,
-    )
+    kwargs: dict[str, object] = {
+        "adaptation": context.adaptation,
+        "mandate": context.mandate,
+        "declared_agent_id": context.bound_request.agent_id,
+        "execution_candidate": context.execution,
+        "agent_identity": context.identity,
+        "current_provider_ref": context.identity.provider,
+        "current_executor_instance_ref": context.identity.executor_instance_id,
+        "context_policy_fact": context.context_fact,
+        "checkout_callback": callback,
+        "confirmation_record": context.confirmation,
+        "seen_request_ids": (),
+        "authorized_adaptation": context.authorized_adaptation,
+        "governed_action": context.action if action is None else action,
+    }
+    # The target runner is frozen before the product capability exists. Passing
+    # the typed attempt inventory only when the public gate exposes the frozen
+    # keyword keeps BEFORE and AFTER on the exact same evaluator implementation.
+    if "known_payment_attempts" in inspect.signature(gate_webshop_buy_now).parameters:
+        kwargs["known_payment_attempts"] = known_payment_attempts
+    outcome = gate_webshop_buy_now(**kwargs)
     return outcome, tuple(callbacks)
 
 
@@ -623,6 +631,14 @@ def _gate_actual(
     synthesized_replay: tuple[str, list[str], tuple[str, ...]] | None = None,
 ) -> dict[str, object]:
     stages = {"commerce_adaptation", "mandate", "order", "request"}
+    preflight_fact = getattr(gate, "known_payment_attempt_preflight_fact", None)
+    preflight_status = getattr(
+        getattr(preflight_fact, "status", None),
+        "value",
+        "NOT_AVAILABLE",
+    )
+    if preflight_fact is not None:
+        stages.add("known_payment_attempt_preflight")
     if gate.prepayment_result is not None:
         stages.add("prepayment_decision")
     if gate.governed_action_fact is not None:
@@ -652,6 +668,13 @@ def _gate_actual(
         "actual_retry_count": 0,
         "actual_final_environment_state": _empty_state(),
         "actual_reason_codes": sorted(set(gate.reason_codes)),
+        "known_payment_attempt_preflight_status": preflight_status,
+        "known_payment_attempt_preflight_reason_codes": list(
+            getattr(preflight_fact, "reason_codes", ())
+        ),
+        "known_payment_attempt_preflight_blocking_request_refs": list(
+            getattr(preflight_fact, "blocking_request_refs", ())
+        ),
         "binding_status": _binding_status(gate),
         "lineage_status": "NOT_APPLICABLE",
         "effective_source_types": [],
@@ -698,6 +721,11 @@ def _with_sidecar(
         ("webshop_gate_outcome", gate),
         ("webshop_payment_fulfilment_outcome", sidecar),
     )
+    preflight_fact = getattr(gate, "known_payment_attempt_preflight_fact", None)
+    preflight_blocked = (
+        getattr(getattr(preflight_fact, "status", None), "value", None)
+        == "BLOCKED"
+    )
     state = _empty_state()
     state.update(
         {
@@ -732,7 +760,9 @@ def _with_sidecar(
                 else None
             ),
             "retry_allowed": sidecar.retry_allowed,
-            "duplicate_payment_blocked": sidecar.duplicate_payment_blocked,
+            "duplicate_payment_blocked": (
+                sidecar.duplicate_payment_blocked or preflight_blocked
+            ),
         }
     )
     stages = set(actual["evidence_stages"])
@@ -743,7 +773,7 @@ def _with_sidecar(
         stages.add("payment_recovery")
     if sidecar.status_conflict is not None:
         stages.add("status_conflict")
-    if sidecar.duplicate_payment_blocked:
+    if sidecar.duplicate_payment_blocked or preflight_blocked:
         stages.add("duplicate_protection")
     actual.update(
         {
@@ -805,7 +835,23 @@ def _run_gate_task(task_id: str) -> dict[str, object]:
         action = replace(action, agent_ref="agent-evil")
     elif task_id == "T06":
         action = replace(action, action_id="")
-    gate, callbacks = _invoke_gate(context, action=action)
+
+    existing_success: PaymentExecutionRecord | None = None
+    known_payment_attempts: tuple[PaymentExecutionRecord, ...] = ()
+    if task_id == "T10":
+        existing_success = replace(
+            _sidecar_payment(context, PaymentStatus.UNKNOWN),
+            payment_id="project-baseline-payment-existing-success",
+            status=PaymentStatus.SUCCEEDED,
+            provider_ref="offline-existing-payment-provider",
+        )
+        known_payment_attempts = (existing_success,)
+
+    gate, callbacks = _invoke_gate(
+        context,
+        action=action,
+        known_payment_attempts=known_payment_attempts,
+    )
     if task_id in {"T05", "T06"}:
         facts = {"governed_action_binding"}
         if task_id == "T05":
@@ -864,12 +910,7 @@ def _run_gate_task(task_id: str) -> dict[str, object]:
         )
     elif task_id == "T10":
         fulfilment = _fulfilment(context, FulfillmentStatus.PENDING)
-        existing = replace(
-            payment,
-            payment_id="project-baseline-payment-existing-success",
-            status=PaymentStatus.SUCCEEDED,
-            provider_ref="offline-existing-payment-provider",
-        )
+        assert existing_success is not None
         actual = _gate_actual(
             task_id,
             context,
@@ -879,6 +920,7 @@ def _run_gate_task(task_id: str) -> dict[str, object]:
                 "governed_action_binding",
                 "idempotency_boundary",
                 "duplicate_attempt_inventory",
+                "known_payment_attempt_preflight",
             },
         )
         actual = _with_sidecar(
@@ -887,7 +929,7 @@ def _run_gate_task(task_id: str) -> dict[str, object]:
             gate,
             payment,
             fulfilment,
-            known_attempts=(existing,),
+            known_attempts=(existing_success,),
         )
     elif task_id == "T11":
         payment = replace(payment, status=PaymentStatus.SUCCEEDED)

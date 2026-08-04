@@ -1,0 +1,729 @@
+{
+  "active_bottleneck_id": "B-03",
+  "baseline": {
+    "gesr": "0/12",
+    "product_observed_trace_valid": "0/12"
+  },
+  "consistency_key": [
+    "entity_type",
+    "entity_role"
+  ],
+  "hypothesis_id": "H-03",
+  "project_map_revision": "2026-08-04-r5",
+  "schema": "product-authoritative-trace-coverage/v2",
+  "tasks": [
+    {
+      "callback_count": 1,
+      "current_status": "NOT_AVAILABLE",
+      "decision_sources": [
+        {
+          "event": "RUNTIME_DECISION_RECORDED",
+          "source": "RuntimeGateRecord.final_decision",
+          "value": "ALLOW"
+        },
+        {
+          "event": "RESULT_RECORDED",
+          "source": "LifecycleResult.task_status",
+          "value": "SUCCEEDED"
+        }
+      ],
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "GOVERNED_ACTION",
+        "ACTION_BINDING_FACT",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "RUNTIME_GATE_OBSERVATION",
+        "PAYMENT_EXECUTION_OUTCOME",
+        "FULFILMENT_OUTCOME"
+      ],
+      "event_sequence": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[AUTHORIZED_ORDER_SNAPSHOT]",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "ACTION_RECORDED",
+        "ACTION_BINDING_DECISION_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED[CURRENT_PAYMENT_CANDIDATE]",
+        "FULFILMENT_OUTCOME_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "final_decision": "ALLOW",
+      "insertion_points": [
+        "WebShopBuyNowGateOutcome return",
+        "WebShopPaymentFulfilmentOutcome return"
+      ],
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome",
+        "WebShopPaymentFulfilmentOutcome"
+      ],
+      "product_entry": "gate_webshop_buy_now → assess_webshop_payment_fulfilment",
+      "ref_strategy": "native IDs use <type>:<id>[:<version>]; no-ID immutable objects use <type>:sha256(canonical-json(projection-schema/v1)); FINAL_OUTCOME projection excludes authoritative_trace",
+      "scenario": "normal_governed_purchase",
+      "source_objects": [
+        "IntentMandate",
+        "Order(authorized/current)",
+        "TransactionRequest",
+        "GovernedPaymentAction",
+        "GovernedActionBindingFact",
+        "RuntimeGateRecord",
+        "PaymentExecutionRecord",
+        "FulfillmentRecord",
+        "LifecycleResult"
+      ],
+      "task_id": "T01"
+    },
+    {
+      "callback_count": 0,
+      "current_status": "NOT_AVAILABLE",
+      "decision_sources": [
+        {
+          "event": "PREPAYMENT_DECISION_RECORDED",
+          "source": "ValidationResult.decision",
+          "value": "CONFIRMATION_REQUIRED"
+        }
+      ],
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "PREPAYMENT_VALIDATION",
+        "CONFIRMATION_BINDING_FACT"
+      ],
+      "event_sequence": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[AUTHORIZED_ORDER_SNAPSHOT]",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "final_decision": "CONFIRMATION_REQUIRED",
+      "insertion_points": [
+        "WebShopBuyNowGateOutcome prepayment return"
+      ],
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome"
+      ],
+      "product_entry": "gate_webshop_buy_now",
+      "ref_strategy": "native IDs use <type>:<id>[:<version>]; no-ID immutable objects use <type>:sha256(canonical-json(projection-schema/v1)); FINAL_OUTCOME projection excludes authoritative_trace",
+      "scenario": "order_price_up",
+      "source_objects": [
+        "IntentMandate",
+        "Order(authorized)",
+        "Order(current)",
+        "TransactionRequest",
+        "ValidationResult",
+        "ValidationResult.order_differences",
+        "ConfirmationBindingFact"
+      ],
+      "task_id": "T02"
+    },
+    {
+      "callback_count": 0,
+      "current_status": "NOT_AVAILABLE",
+      "decision_sources": [
+        {
+          "event": "PREPAYMENT_DECISION_RECORDED",
+          "source": "ValidationResult.decision",
+          "value": "CONFIRMATION_REQUIRED"
+        }
+      ],
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "PREPAYMENT_VALIDATION",
+        "CONFIRMATION_BINDING_FACT"
+      ],
+      "event_sequence": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[AUTHORIZED_ORDER_SNAPSHOT]",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "final_decision": "CONFIRMATION_REQUIRED",
+      "insertion_points": [
+        "WebShopBuyNowGateOutcome prepayment return"
+      ],
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome"
+      ],
+      "product_entry": "gate_webshop_buy_now",
+      "ref_strategy": "native IDs use <type>:<id>[:<version>]; no-ID immutable objects use <type>:sha256(canonical-json(projection-schema/v1)); FINAL_OUTCOME projection excludes authoritative_trace",
+      "scenario": "order_price_down",
+      "source_objects": [
+        "IntentMandate",
+        "Order(authorized)",
+        "Order(current)",
+        "TransactionRequest",
+        "ValidationResult",
+        "ValidationResult.order_differences",
+        "ConfirmationBindingFact"
+      ],
+      "task_id": "T03"
+    },
+    {
+      "callback_count": 0,
+      "current_status": "NOT_AVAILABLE",
+      "decision_sources": [
+        {
+          "event": "PREPAYMENT_DECISION_RECORDED",
+          "source": "ValidationResult.decision",
+          "value": "INDETERMINATE"
+        }
+      ],
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "PREPAYMENT_VALIDATION",
+        "CONFIRMATION_BINDING_FACT"
+      ],
+      "event_sequence": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[AUTHORIZED_ORDER_SNAPSHOT]",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "final_decision": "INDETERMINATE",
+      "insertion_points": [
+        "WebShopBuyNowGateOutcome prepayment return"
+      ],
+      "mapping_note": "OrderDifference is not a source object for T04; order_differences is empty and the reason is carried by ValidationResult.evidence / binding evidence.",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome"
+      ],
+      "product_entry": "gate_webshop_buy_now",
+      "ref_strategy": "native IDs use <type>:<id>[:<version>]; no-ID immutable objects use <type>:sha256(canonical-json(projection-schema/v1)); FINAL_OUTCOME projection excludes authoritative_trace",
+      "scenario": "payee_changed",
+      "source_objects": [
+        "IntentMandate",
+        "Order(authorized)",
+        "Order(current)",
+        "TransactionRequest",
+        "ValidationResult",
+        "ValidationResult.evidence",
+        "ConfirmationBindingFact / order-binding evidence"
+      ],
+      "task_id": "T04"
+    },
+    {
+      "callback_count": 0,
+      "current_status": "NOT_AVAILABLE",
+      "decision_sources": [
+        {
+          "event": "PREPAYMENT_DECISION_RECORDED",
+          "source": "ValidationResult.decision",
+          "value": "ALLOW"
+        },
+        {
+          "event": "ACTION_BINDING_DECISION_RECORDED",
+          "source": "GovernedActionBindingFact.status",
+          "value": "INVALID → DENY"
+        }
+      ],
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "PREPAYMENT_VALIDATION",
+        "GOVERNED_ACTION",
+        "ACTION_BINDING_FACT"
+      ],
+      "event_sequence": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[AUTHORIZED_ORDER_SNAPSHOT]",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "ACTION_RECORDED",
+        "ACTION_BINDING_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "final_decision": "DENY",
+      "insertion_points": [
+        "WebShopBuyNowGateOutcome governed-action INVALID return"
+      ],
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome"
+      ],
+      "product_entry": "gate_webshop_buy_now",
+      "ref_strategy": "native IDs use <type>:<id>[:<version>]; no-ID immutable objects use <type>:sha256(canonical-json(projection-schema/v1)); FINAL_OUTCOME projection excludes authoritative_trace",
+      "scenario": "governed_action_agent_mismatch",
+      "source_objects": [
+        "IntentMandate",
+        "Order(current)",
+        "TransactionRequest",
+        "ValidationResult",
+        "GovernedPaymentAction",
+        "GovernedActionBindingFact"
+      ],
+      "task_id": "T05"
+    },
+    {
+      "callback_count": 0,
+      "current_status": "NOT_AVAILABLE",
+      "decision_sources": [
+        {
+          "event": "PREPAYMENT_DECISION_RECORDED",
+          "source": "ValidationResult.decision",
+          "value": "ALLOW"
+        },
+        {
+          "event": "ACTION_BINDING_DECISION_RECORDED",
+          "source": "GovernedActionBindingFact.status",
+          "value": "MISSING_EVIDENCE → INDETERMINATE"
+        }
+      ],
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "PREPAYMENT_VALIDATION",
+        "GOVERNED_ACTION",
+        "ACTION_BINDING_FACT"
+      ],
+      "event_sequence": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[AUTHORIZED_ORDER_SNAPSHOT]",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "ACTION_RECORDED",
+        "ACTION_BINDING_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "final_decision": "INDETERMINATE",
+      "insertion_points": [
+        "WebShopBuyNowGateOutcome governed-action MISSING_EVIDENCE return"
+      ],
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome"
+      ],
+      "product_entry": "gate_webshop_buy_now",
+      "ref_strategy": "native IDs use <type>:<id>[:<version>]; no-ID immutable objects use <type>:sha256(canonical-json(projection-schema/v1)); FINAL_OUTCOME projection excludes authoritative_trace",
+      "scenario": "governed_action_missing_id",
+      "source_objects": [
+        "IntentMandate",
+        "Order(current)",
+        "TransactionRequest",
+        "ValidationResult",
+        "GovernedPaymentAction",
+        "GovernedActionBindingFact"
+      ],
+      "task_id": "T06"
+    },
+    {
+      "callback_count": 0,
+      "current_status": "NOT_AVAILABLE",
+      "decision_sources": [
+        {
+          "event": "POLICY_DECISION_RECORDED",
+          "source": "ContextPolicyFact / sidecar decision",
+          "value": "ALLOW with untrusted update blocked"
+        },
+        {
+          "event": "RESULT_RECORDED",
+          "source": "PaymentFulfilmentSidecarOutcome",
+          "value": "no trusted state change"
+        }
+      ],
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "CONTEXT_POLICY_FACT",
+        "FACT_LINEAGE_RESULT",
+        "SIDE_EFFECT_POLICY_OUTCOME"
+      ],
+      "event_sequence": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "POLICY_DECISION_RECORDED",
+        "LINEAGE_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "final_decision": "ALLOW",
+      "insertion_points": [
+        "PaymentFulfilmentSidecarOutcome return"
+      ],
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome",
+        "PaymentFulfilmentSidecarOutcome"
+      ],
+      "product_entry": "gate_webshop_buy_now → observe_payment_fulfilment_sidecar",
+      "ref_strategy": "native IDs use <type>:<id>[:<version>]; no-ID immutable objects use <type>:sha256(canonical-json(projection-schema/v1)); FINAL_OUTCOME projection excludes authoritative_trace",
+      "scenario": "untrusted_web_amount_override",
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "ContextPolicyFact",
+        "FactLineageResult",
+        "PaymentFulfilmentSidecarOutcome"
+      ],
+      "task_id": "T07"
+    },
+    {
+      "callback_count": 0,
+      "current_status": "NOT_AVAILABLE",
+      "decision_sources": [
+        {
+          "event": "POLICY_DECISION_RECORDED",
+          "source": "ContextPolicyFact / sidecar decision",
+          "value": "ALLOW with untrusted update blocked"
+        },
+        {
+          "event": "RESULT_RECORDED",
+          "source": "PaymentFulfilmentSidecarOutcome",
+          "value": "no trusted state change"
+        }
+      ],
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "CONTEXT_POLICY_FACT",
+        "FACT_LINEAGE_RESULT",
+        "SIDE_EFFECT_POLICY_OUTCOME"
+      ],
+      "event_sequence": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "POLICY_DECISION_RECORDED",
+        "LINEAGE_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "final_decision": "ALLOW",
+      "insertion_points": [
+        "PaymentFulfilmentSidecarOutcome return"
+      ],
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome",
+        "PaymentFulfilmentSidecarOutcome"
+      ],
+      "product_entry": "gate_webshop_buy_now → observe_payment_fulfilment_sidecar",
+      "ref_strategy": "native IDs use <type>:<id>[:<version>]; no-ID immutable objects use <type>:sha256(canonical-json(projection-schema/v1)); FINAL_OUTCOME projection excludes authoritative_trace",
+      "scenario": "untrusted_payee_override",
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "ContextPolicyFact",
+        "FactLineageResult",
+        "PaymentFulfilmentSidecarOutcome"
+      ],
+      "task_id": "T08"
+    },
+    {
+      "callback_count": 1,
+      "current_status": "NOT_AVAILABLE",
+      "decision_sources": [
+        {
+          "event": "RUNTIME_DECISION_RECORDED",
+          "source": "RuntimeGateRecord.final_decision",
+          "value": "ALLOW"
+        },
+        {
+          "event": "RECOVERY_OUTCOME_RECORDED",
+          "source": "PaymentRecoveryOutcome",
+          "value": "RECOVERED"
+        }
+      ],
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "GOVERNED_ACTION",
+        "ACTION_BINDING_FACT",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "RUNTIME_GATE_OBSERVATION",
+        "PAYMENT_EXECUTION_OUTCOME",
+        "RECOVERY_OUTCOME"
+      ],
+      "event_sequence": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "ACTION_RECORDED",
+        "ACTION_BINDING_DECISION_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED",
+        "RECOVERY_OUTCOME_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "final_decision": "ALLOW",
+      "insertion_points": [
+        "WebShopBuyNowGateOutcome return",
+        "PaymentRecoveryOutcome return"
+      ],
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome",
+        "PaymentFulfilmentSidecarOutcome",
+        "PaymentRecoveryOutcome"
+      ],
+      "product_entry": "gate_webshop_buy_now → observe_payment_fulfilment_sidecar → assess_payment_recovery",
+      "ref_strategy": "native IDs use <type>:<id>[:<version>]; no-ID immutable objects use <type>:sha256(canonical-json(projection-schema/v1)); FINAL_OUTCOME projection excludes authoritative_trace",
+      "scenario": "unknown_payment_query_original",
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "GovernedActionBindingFact",
+        "RuntimeGateRecord",
+        "PaymentExecutionRecord",
+        "PaymentFulfilmentSidecarOutcome",
+        "PaymentRecoveryOutcome"
+      ],
+      "task_id": "T09"
+    },
+    {
+      "callback_count": 0,
+      "current_status": "NOT_AVAILABLE",
+      "decision_sources": [
+        {
+          "event": "PREPAYMENT_DECISION_RECORDED",
+          "source": "duplicate ValidationResult.decision",
+          "value": "DENY"
+        },
+        {
+          "event": "RUNTIME_DECISION_RECORDED",
+          "source": "RuntimeGateRecord.final_decision",
+          "value": "DENY"
+        }
+      ],
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "GOVERNED_ACTION",
+        "ACTION_BINDING_FACT",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "HISTORICAL_SUCCEEDED_PAYMENT",
+        "KNOWN_PAYMENT_PREFLIGHT_FACT",
+        "RUNTIME_GATE_OBSERVATION"
+      ],
+      "event_sequence": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "ACTION_RECORDED[CURRENT_PAYMENT_CANDIDATE]",
+        "ACTION_BINDING_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED[HISTORICAL_SUCCEEDED_PAYMENT]",
+        "KNOWN_PAYMENT_PREFLIGHT_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "final_decision": "DENY",
+      "insertion_points": [
+        "WebShopBuyNowGateOutcome known-payment BLOCKED return before callback"
+      ],
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome"
+      ],
+      "product_entry": "gate_webshop_buy_now",
+      "profile_relations": [
+        "historical payment ref ∈ KnownPaymentAttemptPreflightFact.related_attempt_refs",
+        "current candidate payment ref = GovernedPaymentAction.payment_ref = execution_candidate.payment_id",
+        "historical and current payment refs may differ",
+        "both payment roles close to the current request through existing facts"
+      ],
+      "ref_strategy": "native IDs use <type>:<id>[:<version>]; no-ID immutable objects use <type>:sha256(canonical-json(projection-schema/v1)); FINAL_OUTCOME projection excludes authoritative_trace",
+      "scenario": "duplicate_payment_attempt",
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "GovernedPaymentAction",
+        "GovernedActionBindingFact",
+        "PaymentExecutionRecord(current candidate)",
+        "PaymentExecutionRecord(historical succeeded)",
+        "KnownPaymentAttemptPreflightFact",
+        "RuntimeGateRecord"
+      ],
+      "task_id": "T10"
+    },
+    {
+      "callback_count": 1,
+      "current_status": "NOT_AVAILABLE",
+      "decision_sources": [
+        {
+          "event": "RUNTIME_DECISION_RECORDED",
+          "source": "RuntimeGateRecord.final_decision",
+          "value": "ALLOW"
+        },
+        {
+          "event": "FULFILMENT_OUTCOME_RECORDED",
+          "source": "PaymentFulfilmentSidecarOutcome",
+          "value": "FAILED / remediation required"
+        }
+      ],
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "GOVERNED_ACTION",
+        "ACTION_BINDING_FACT",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "RUNTIME_GATE_OBSERVATION",
+        "PAYMENT_EXECUTION_OUTCOME",
+        "FULFILMENT_OUTCOME",
+        "RECOVERY_OUTCOME"
+      ],
+      "event_sequence": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "ACTION_RECORDED",
+        "ACTION_BINDING_DECISION_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED",
+        "FULFILMENT_OUTCOME_RECORDED",
+        "RECOVERY_OUTCOME_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "final_decision": "ALLOW",
+      "insertion_points": [
+        "WebShopBuyNowGateOutcome return",
+        "sidecar/recovery returns"
+      ],
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome",
+        "PaymentFulfilmentSidecarOutcome",
+        "PaymentRecoveryOutcome"
+      ],
+      "product_entry": "gate_webshop_buy_now → observe_payment_fulfilment_sidecar → assess_payment_recovery",
+      "ref_strategy": "native IDs use <type>:<id>[:<version>]; no-ID immutable objects use <type>:sha256(canonical-json(projection-schema/v1)); FINAL_OUTCOME projection excludes authoritative_trace",
+      "scenario": "payment_succeeded_fulfilment_failed",
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "GovernedActionBindingFact",
+        "RuntimeGateRecord",
+        "PaymentExecutionRecord",
+        "PaymentFulfilmentSidecarOutcome",
+        "PaymentRecoveryOutcome"
+      ],
+      "task_id": "T11"
+    },
+    {
+      "callback_count": 1,
+      "current_status": "NOT_AVAILABLE",
+      "decision_sources": [
+        {
+          "event": "RUNTIME_DECISION_RECORDED",
+          "source": "RuntimeGateRecord.final_decision",
+          "value": "ALLOW"
+        },
+        {
+          "event": "STATUS_CONFLICT_RECORDED",
+          "source": "PaymentStatusConflictOutcome",
+          "value": "CONFLICT / UNKNOWN"
+        }
+      ],
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "GOVERNED_ACTION",
+        "ACTION_BINDING_FACT",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "RUNTIME_GATE_OBSERVATION",
+        "PAYMENT_EXECUTION_OUTCOME",
+        "STATUS_CONFLICT_OUTCOME"
+      ],
+      "event_sequence": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "ACTION_RECORDED",
+        "ACTION_BINDING_DECISION_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED",
+        "STATUS_CONFLICT_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "final_decision": "ALLOW",
+      "insertion_points": [
+        "WebShopBuyNowGateOutcome return",
+        "PaymentStatusConflictOutcome return"
+      ],
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome",
+        "PaymentStatusConflictOutcome"
+      ],
+      "product_entry": "gate_webshop_buy_now → reconcile_payment_status_conflict",
+      "ref_strategy": "native IDs use <type>:<id>[:<version>]; no-ID immutable objects use <type>:sha256(canonical-json(projection-schema/v1)); FINAL_OUTCOME projection excludes authoritative_trace",
+      "scenario": "payment_status_terminal_conflict",
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "GovernedActionBindingFact",
+        "RuntimeGateRecord",
+        "PaymentExecutionRecord",
+        "PaymentStatusConflictOutcome"
+      ],
+      "task_id": "T12"
+    }
+  ]
+}

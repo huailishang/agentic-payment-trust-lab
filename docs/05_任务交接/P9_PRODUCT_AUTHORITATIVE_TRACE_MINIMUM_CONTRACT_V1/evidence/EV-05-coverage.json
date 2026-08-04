@@ -1,0 +1,421 @@
+{
+  "baseline": "0/12 VALID",
+  "groups": {
+    "duplicate_preflight": [
+      "T10"
+    ],
+    "gate_early_block": [
+      "T02",
+      "T03",
+      "T04",
+      "T05",
+      "T06"
+    ],
+    "policy_lineage": [
+      "T07",
+      "T08"
+    ],
+    "post_gate_sidecar": [
+      "T01",
+      "T09",
+      "T11",
+      "T12"
+    ]
+  },
+  "rows": [
+    {
+      "current_product_trace_source": null,
+      "current_product_trace_status": "NOT_AVAILABLE",
+      "entry": "gate_webshop_buy_now → assess_webshop_payment_fulfilment",
+      "event_candidates": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "ACTION_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED",
+        "FULFILMENT_OUTCOME_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "insertion_point": "WebShopPaymentFulfilmentOutcome return after lifecycle projection",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome",
+        "WebShopPaymentFulfilmentOutcome"
+      ],
+      "scenario": "normal_governed_purchase",
+      "side_effect_path": true,
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "GovernedActionBindingFact",
+        "RuntimeGateRecord",
+        "PaymentExecutionRecord",
+        "FulfillmentRecord",
+        "LifecycleResult"
+      ],
+      "task_id": "T01",
+      "title": "正常授权购买"
+    },
+    {
+      "current_product_trace_source": null,
+      "current_product_trace_status": "NOT_AVAILABLE",
+      "entry": "gate_webshop_buy_now prepayment early return",
+      "event_candidates": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "insertion_point": "WebShopBuyNowGateOutcome prepayment non-ALLOW return",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome"
+      ],
+      "scenario": "order_price_up",
+      "side_effect_path": false,
+      "source_objects": [
+        "IntentMandate",
+        "Order authorized/current snapshots",
+        "TransactionRequest",
+        "ValidationResult",
+        "OrderDifference"
+      ],
+      "task_id": "T02",
+      "title": "订单价格上涨"
+    },
+    {
+      "current_product_trace_source": null,
+      "current_product_trace_status": "NOT_AVAILABLE",
+      "entry": "gate_webshop_buy_now prepayment early return",
+      "event_candidates": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "insertion_point": "WebShopBuyNowGateOutcome prepayment non-ALLOW return",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome"
+      ],
+      "scenario": "order_price_down",
+      "side_effect_path": false,
+      "source_objects": [
+        "IntentMandate",
+        "Order authorized/current snapshots",
+        "TransactionRequest",
+        "ValidationResult",
+        "OrderDifference"
+      ],
+      "task_id": "T03",
+      "title": "订单价格下降"
+    },
+    {
+      "current_product_trace_source": null,
+      "current_product_trace_status": "NOT_AVAILABLE",
+      "entry": "gate_webshop_buy_now prepayment early return",
+      "event_candidates": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "insertion_point": "WebShopBuyNowGateOutcome prepayment non-ALLOW return",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome"
+      ],
+      "scenario": "payee_changed",
+      "side_effect_path": false,
+      "source_objects": [
+        "IntentMandate",
+        "Order authorized/current snapshots",
+        "TransactionRequest",
+        "ValidationResult",
+        "OrderDifference"
+      ],
+      "task_id": "T04",
+      "title": "收款方变化"
+    },
+    {
+      "current_product_trace_source": null,
+      "current_product_trace_status": "NOT_AVAILABLE",
+      "entry": "gate_webshop_buy_now governed-action invalid return",
+      "event_candidates": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "ACTION_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "insertion_point": "WebShopBuyNowGateOutcome governed-action failure return",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome"
+      ],
+      "scenario": "governed_action_agent_mismatch",
+      "side_effect_path": false,
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "GovernedPaymentAction",
+        "GovernedActionBindingFact",
+        "ValidationResult"
+      ],
+      "task_id": "T05",
+      "title": "Agent 错绑"
+    },
+    {
+      "current_product_trace_source": null,
+      "current_product_trace_status": "NOT_AVAILABLE",
+      "entry": "gate_webshop_buy_now governed-action missing-evidence return",
+      "event_candidates": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "ACTION_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "insertion_point": "WebShopBuyNowGateOutcome governed-action failure return",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome"
+      ],
+      "scenario": "governed_action_missing_id",
+      "side_effect_path": false,
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "GovernedPaymentAction",
+        "GovernedActionBindingFact",
+        "ValidationResult"
+      ],
+      "task_id": "T06",
+      "title": "动作契约缺证据"
+    },
+    {
+      "current_product_trace_source": null,
+      "current_product_trace_status": "NOT_AVAILABLE",
+      "entry": "evaluate_attack_overlay",
+      "event_candidates": [
+        "INPUT_SOURCE_RECORDED",
+        "LINEAGE_RECORDED",
+        "POLICY_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "insertion_point": "AttackOverlayResult construction",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "AttackOverlayResult"
+      ],
+      "scenario": "untrusted_web_amount_override",
+      "side_effect_path": false,
+      "source_objects": [
+        "AttackOverlay",
+        "ContextPolicyFact projection",
+        "AttackOverrideLineageFact",
+        "EvaluationResult"
+      ],
+      "task_id": "T07",
+      "title": "不可信网页金额覆盖"
+    },
+    {
+      "current_product_trace_source": null,
+      "current_product_trace_status": "NOT_AVAILABLE",
+      "entry": "evaluate_attack_overlay",
+      "event_candidates": [
+        "INPUT_SOURCE_RECORDED",
+        "LINEAGE_RECORDED",
+        "POLICY_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "insertion_point": "AttackOverlayResult construction",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "AttackOverlayResult"
+      ],
+      "scenario": "untrusted_payee_override",
+      "side_effect_path": false,
+      "source_objects": [
+        "AttackOverlay",
+        "ContextPolicyFact projection",
+        "AttackOverrideLineageFact",
+        "EvaluationResult"
+      ],
+      "task_id": "T08",
+      "title": "不可信 payee 覆盖"
+    },
+    {
+      "current_product_trace_source": null,
+      "current_product_trace_status": "NOT_AVAILABLE",
+      "entry": "gate_webshop_buy_now → assess_webshop_payment_fulfilment query recovery",
+      "event_candidates": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "ACTION_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_ATTEMPT_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED",
+        "RECOVERY_RECORDED",
+        "FULFILMENT_OUTCOME_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "insertion_point": "WebShopPaymentFulfilmentOutcome return after recovery/lifecycle",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome",
+        "WebShopPaymentFulfilmentOutcome"
+      ],
+      "scenario": "unknown_payment_query_original",
+      "side_effect_path": true,
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "GovernedActionBindingFact",
+        "RuntimeGateRecord",
+        "PaymentExecutionRecord",
+        "PaymentStatusObservation",
+        "PaymentRecoveryResult",
+        "FulfillmentRecord",
+        "LifecycleResult"
+      ],
+      "task_id": "T09",
+      "title": "支付状态 UNKNOWN"
+    },
+    {
+      "current_product_trace_source": null,
+      "current_product_trace_status": "NOT_AVAILABLE",
+      "entry": "gate_webshop_buy_now known-payment BLOCKED return",
+      "event_candidates": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED",
+        "ACTION_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "insertion_point": "exact KnownPaymentAttemptPreflightStatus.BLOCKED return in gate_webshop_buy_now",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome"
+      ],
+      "scenario": "duplicate_payment_attempt",
+      "side_effect_path": false,
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "GovernedPaymentAction",
+        "GovernedActionBindingFact",
+        "PaymentExecutionRecord known success",
+        "KnownPaymentAttemptPreflightFact",
+        "RuntimeGateRecord",
+        "ValidationResult"
+      ],
+      "task_id": "T10",
+      "title": "重复请求或重复付款"
+    },
+    {
+      "current_product_trace_source": null,
+      "current_product_trace_status": "NOT_AVAILABLE",
+      "entry": "gate_webshop_buy_now → assess_webshop_payment_fulfilment failed fulfilment",
+      "event_candidates": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "ACTION_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED",
+        "FULFILMENT_OUTCOME_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "insertion_point": "WebShopPaymentFulfilmentOutcome return after failed fulfilment/lifecycle",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome",
+        "WebShopPaymentFulfilmentOutcome"
+      ],
+      "scenario": "payment_succeeded_fulfilment_failed",
+      "side_effect_path": true,
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "GovernedActionBindingFact",
+        "RuntimeGateRecord",
+        "PaymentExecutionRecord",
+        "FulfillmentRecord",
+        "LifecycleResult",
+        "RemediationState"
+      ],
+      "task_id": "T11",
+      "title": "支付成功但履约失败"
+    },
+    {
+      "current_product_trace_source": null,
+      "current_product_trace_status": "NOT_AVAILABLE",
+      "entry": "gate_webshop_buy_now → assess_webshop_payment_fulfilment conflict",
+      "event_candidates": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "ACTION_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_ATTEMPT_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED",
+        "RECOVERY_RECORDED",
+        "CONFLICT_RECORDED",
+        "FULFILMENT_OUTCOME_RECORDED",
+        "RESULT_RECORDED"
+      ],
+      "insertion_point": "WebShopPaymentFulfilmentOutcome return after conflict/lifecycle",
+      "missing_events": "all_product_events",
+      "new_business_rule_required": false,
+      "outcomes": [
+        "WebShopBuyNowGateOutcome",
+        "WebShopPaymentFulfilmentOutcome"
+      ],
+      "scenario": "payment_status_terminal_conflict",
+      "side_effect_path": true,
+      "source_objects": [
+        "IntentMandate",
+        "Order",
+        "TransactionRequest",
+        "GovernedActionBindingFact",
+        "RuntimeGateRecord",
+        "PaymentExecutionRecord",
+        "PaymentStatusObservation query/async",
+        "PaymentRecoveryResult",
+        "PaymentStatusConflictFact",
+        "FulfillmentRecord",
+        "LifecycleResult"
+      ],
+      "task_id": "T12",
+      "title": "支付与异步状态冲突"
+    }
+  ],
+  "schema": "product-authoritative-trace-coverage/v1"
+}

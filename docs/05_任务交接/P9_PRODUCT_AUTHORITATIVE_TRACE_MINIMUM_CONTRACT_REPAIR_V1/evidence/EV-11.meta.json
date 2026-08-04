@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-11",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/EV-11-diff.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/EV-11-diff.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T14:20:00.754458+00:00",
+  "finished_at_utc": "2026-08-04T14:20:03.533066+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-11.stdout.log",
+  "stderr_path": "EV-11.stderr.log",
+  "stdout_bytes": 56427,
+  "stderr_bytes": 0,
+  "stdout_sha256": "19223dd31c94e4cc63e0afc2d67e0ea581d825f416ef5cc5adac566626878e3b",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

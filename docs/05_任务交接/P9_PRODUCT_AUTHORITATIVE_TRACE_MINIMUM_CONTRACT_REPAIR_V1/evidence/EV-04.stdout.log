@@ -1,0 +1,827 @@
+"""Offline, deterministic evidence receipts and replay verification for P5.
+
+The chain is a linked *record* of already observed local facts.  It deliberately
+does not sign, hash, persist, or otherwise claim tamper-proof integrity.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime
+from enum import Enum
+from typing import Iterable
+
+from ..models import Decision
+
+
+class ReplayEventType(str, Enum):
+    AUTHORITY_RECORDED = "AUTHORITY_RECORDED"
+    ORDER_RECORDED = "ORDER_RECORDED"
+    REQUEST_RECORDED = "REQUEST_RECORDED"
+    RUNTIME_DECISION_RECORDED = "RUNTIME_DECISION_RECORDED"
+    PAYMENT_OUTCOME_RECORDED = "PAYMENT_OUTCOME_RECORDED"
+
+
+class ReplaySourceType(str, Enum):
+    USER_CONFIRMED = "USER_CONFIRMED"
+    PROTOCOL_VERIFIED = "PROTOCOL_VERIFIED"
+    SYSTEM_RUNTIME = "SYSTEM_RUNTIME"
+    PAYMENT_PROVIDER_OBSERVED = "PAYMENT_PROVIDER_OBSERVED"
+
+
+class ReplayStatus(str, Enum):
+    VALID = "VALID"
+    INDETERMINATE = "INDETERMINATE"
+    INVALID = "INVALID"
+
+
+@dataclass(frozen=True)
+class RuntimeGateRecord:
+    """Immutable P1-P4 observation captured when the payment gate executes."""
+
+    preliminary_decision: Decision
+    final_decision: Decision
+    binding_status: str
+    binding_reason_codes: tuple[str, ...]
+    identity_status: str
+    identity_reason_codes: tuple[str, ...]
+    context_policy_status: str
+    context_policy_reason_codes: tuple[str, ...]
+    callback_executed: bool
+    callback_count: int
+    callback_result_ref: str | None
+    reason_codes: tuple[str, ...]
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.preliminary_decision, Decision) or not isinstance(self.final_decision, Decision):
+            raise ValueError("runtime gate decisions must be closed Decision values")
+        if any(not isinstance(value, str) or not value for value in (
+            self.binding_status, self.identity_status, self.context_policy_status
+        )):
+            raise ValueError("runtime gate requires P2/P3/P4 statuses")
+        if not isinstance(self.callback_executed, bool):
+            raise ValueError("runtime gate callback_executed must be boolean")
+        if not isinstance(self.callback_count, int) or self.callback_count < 0:
+            raise ValueError("runtime gate callback_count must be a non-negative integer")
+        if self.callback_executed != (self.callback_count > 0):
+            raise ValueError("runtime gate callback state and count must agree")
+        if self.callback_result_ref is not None and (
+            not isinstance(self.callback_result_ref, str) or not self.callback_result_ref
+        ):
+            raise ValueError("runtime gate callback_result_ref must be a non-empty string")
+        for codes in (
+            self.binding_reason_codes,
+            self.identity_reason_codes,
+            self.context_policy_reason_codes,
+        ):
+            if not isinstance(codes, tuple) or any(not isinstance(code, str) or not code for code in codes):
+                raise ValueError("runtime gate fact reasons must be non-empty strings")
+        if not isinstance(self.reason_codes, tuple) or any(not isinstance(code, str) or not code for code in self.reason_codes):
+            raise ValueError("runtime gate reason_codes must be non-empty strings")
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "preliminary_decision": self.preliminary_decision.value,
+            "final_decision": self.final_decision.value,
+            "binding_status": self.binding_status,
+            "binding_reason_codes": list(self.binding_reason_codes),
+            "identity_status": self.identity_status,
+            "identity_reason_codes": list(self.identity_reason_codes),
+            "context_policy_status": self.context_policy_status,
+            "context_policy_reason_codes": list(self.context_policy_reason_codes),
+            "callback_executed": self.callback_executed,
+            "callback_count": self.callback_count,
+            "callback_result_ref": self.callback_result_ref,
+            "reason_codes": list(self.reason_codes),
+        }
+
+
+_REQUIRED_EVENT_TYPES = frozenset(
+    {
+        ReplayEventType.AUTHORITY_RECORDED,
+        ReplayEventType.ORDER_RECORDED,
+        ReplayEventType.REQUEST_RECORDED,
+        ReplayEventType.RUNTIME_DECISION_RECORDED,
+        ReplayEventType.PAYMENT_OUTCOME_RECORDED,
+    }
+)
+
+
+@dataclass(frozen=True)
+class ReplayEvent:
+    """One serializable receipt event; all cross-event references are explicit."""
+
+    event_id: str
+    event_type: ReplayEventType
+    occurred_at: datetime
+    subject_ref: str
+    agent_ref: str
+    authority_ref: str
+    transaction_object_ref: str
+    payment_ref: str
+    source_type: ReplaySourceType
+    source_ref: str
+    decision: Decision
+    reason_codes: tuple[str, ...]
+    previous_event_ref: str | None = None
+    runtime_gate: RuntimeGateRecord | None = None
+
+    def __post_init__(self) -> None:
+        for field_name in (
+            "event_id",
+            "subject_ref",
+            "agent_ref",
+            "authority_ref",
+            "transaction_object_ref",
+            "payment_ref",
+            "source_ref",
+        ):
+            if not isinstance(getattr(self, field_name), str) or not getattr(self, field_name).strip():
+                raise ValueError(f"replay event requires {field_name}")
+        if not isinstance(self.event_type, ReplayEventType):
+            raise ValueError("replay event_type is unknown")
+        if not isinstance(self.source_type, ReplaySourceType):
+            raise ValueError("replay source_type is unknown")
+        if not isinstance(self.decision, Decision):
+            raise ValueError("replay decision is unknown")
+        if not isinstance(self.occurred_at, datetime):
+            raise ValueError("replay event requires occurred_at")
+        if not isinstance(self.reason_codes, tuple) or any(
+            not isinstance(code, str) or not code for code in self.reason_codes
+        ):
+            raise ValueError("replay reason_codes must be a tuple of non-empty strings")
+        if self.previous_event_ref is not None and (
+            not isinstance(self.previous_event_ref, str) or not self.previous_event_ref.strip()
+        ):
+            raise ValueError("previous_event_ref must be a non-empty reference when present")
+        if self.event_type is ReplayEventType.RUNTIME_DECISION_RECORDED:
+            if self.runtime_gate is None:
+                raise ValueError("runtime decision event requires a final runtime gate record")
+            if self.decision is not self.runtime_gate.final_decision:
+                raise ValueError("runtime decision must match final runtime gate decision")
+        elif self.runtime_gate is not None:
+            raise ValueError("only runtime decision events may carry a runtime gate record")
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "event_id": self.event_id,
+            "event_type": self.event_type.value,
+            "occurred_at": self.occurred_at.isoformat(),
+            "subject_ref": self.subject_ref,
+            "agent_ref": self.agent_ref,
+            "authority_ref": self.authority_ref,
+            "transaction_object_ref": self.transaction_object_ref,
+            "payment_ref": self.payment_ref,
+            "source_type": self.source_type.value,
+            "source_ref": self.source_ref,
+            "decision": self.decision.value,
+            "reason_codes": list(self.reason_codes),
+            "previous_event_ref": self.previous_event_ref,
+            "runtime_gate": self.runtime_gate.to_dict() if self.runtime_gate else None,
+        }
+
+
+@dataclass(frozen=True)
+class ReplayResult:
+    status: ReplayStatus
+    decision: Decision | None
+    reason_codes: tuple[str, ...]
+    event_count: int
+    explanation: str
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "status": self.status.value,
+            "decision": self.decision.value if self.decision is not None else None,
+            "reason_codes": list(self.reason_codes),
+            "event_count": self.event_count,
+            "explanation": self.explanation,
+        }
+
+
+def replay_events(events: Iterable[ReplayEvent]) -> ReplayResult:
+    """Verify a P5 receipt chain using only the supplied structured events."""
+
+    chain = tuple(events)
+    if not chain:
+        return _indeterminate("replay_events_missing")
+
+    event_ids = [event.event_id for event in chain]
+    if len(event_ids) != len(set(event_ids)):
+        return _invalid("duplicate_event_id")
+    if chain[0].previous_event_ref is not None:
+        return _invalid("first_event_has_previous_reference")
+    for index, event in enumerate(chain[1:], start=1):
+        if event.previous_event_ref != chain[index - 1].event_id:
+            return _invalid("broken_previous_event_reference")
+
+    reference_fields = (
+        "subject_ref",
+        "agent_ref",
+        "authority_ref",
+        "transaction_object_ref",
+        "payment_ref",
+    )
+    for field_name in reference_fields:
+        values = {getattr(event, field_name) for event in chain}
+        if len(values) != 1:
+            return _invalid("reference_mismatch")
+
+    present_types = {event.event_type for event in chain}
+    if missing := _REQUIRED_EVENT_TYPES - present_types:
+        return _indeterminate(
+            "missing_required_event:" + ",".join(sorted(item.value for item in missing))
+        )
+    decisions = {
+        event.decision
+        for event in chain
+        if event.event_type is ReplayEventType.RUNTIME_DECISION_RECORDED
+    }
+    if len(decisions) != 1:
+        return _indeterminate("missing_or_ambiguous_runtime_decision")
+    decision = decisions.pop()
+    runtime_event = next(
+        event for event in chain if event.event_type is ReplayEventType.RUNTIME_DECISION_RECORDED
+    )
+    if runtime_event.runtime_gate is None:
+        return _indeterminate("runtime_gate_record_missing")
+    if runtime_event.runtime_gate.final_decision is not decision:
+        return _invalid("runtime_gate_decision_mismatch")
+    if not runtime_event.reason_codes:
+        return _indeterminate("runtime_decision_reason_codes_missing")
+    if decision is Decision.INDETERMINATE:
+        return _indeterminate(*runtime_event.reason_codes)
+    return ReplayResult(
+        status=ReplayStatus.VALID,
+        decision=decision,
+        reason_codes=runtime_event.reason_codes,
+        event_count=len(chain),
+        explanation=_decision_explanation(decision),
+    )
+
+
+def _invalid(reason_code: str) -> ReplayResult:
+    return ReplayResult(ReplayStatus.INVALID, None, (reason_code,), 0, "链路校验失败；不得放行。")
+
+
+def _indeterminate(*reason_codes: str) -> ReplayResult:
+    return ReplayResult(
+        ReplayStatus.INDETERMINATE,
+        None,
+        tuple(reason_codes),
+        0,
+        "证据或引用不完整；不能从回放中得出放行结论。",
+    )
+
+
+def _decision_explanation(decision: Decision) -> str:
+    return {
+        Decision.ALLOW: "记录的运行时决定为 ALLOW。",
+        Decision.CONFIRMATION_REQUIRED: "记录的运行时决定要求用户重新确认。",
+"""Offline WebShop Buy Now interception composed from existing P1-P4 gates."""
+
+from __future__ import annotations
+
+from collections.abc import Callable, Collection
+from dataclasses import dataclass, replace
+from typing import Any
+
+from .adapters.webshop import WebShopCommerceAdaptation
+from .models import (
+    AgentIdentity,
+    Decision,
+    IntentMandate,
+    PaymentExecutionRecord,
+    TransactionRequest,
+    ValidationResult,
+)
+from .payment_execution import observe_payment_execution_gate
+from .trusted_execution import (
+    ConfirmationRecord,
+    ContextPolicyFact,
+    GovernedActionBindingFact,
+    GovernedPaymentAction,
+    KnownPaymentAttemptPreflightFact,
+    KnownPaymentAttemptPreflightStatus,
+    RuntimeGateRecord,
+    VerificationStatus,
+    derive_known_payment_attempt_preflight,
+    verify_governed_payment_action,
+)
+from .validator import validate_request
+
+
+WEBSHOP_GATE_LIMITATIONS = (
+    "offline_interception_only",
+    "no_webshop_runtime_execution",
+    "no_real_buy_now_execution",
+    "no_real_payment_or_fulfilment",
+    "instruction_is_not_authorization_mandate",
+    "checkout_callback_is_injected_test_seam",
+)
+_CALLBACK_FAILURE_SENTINEL = "webshop-checkout-callback-failed"
+
+
+@dataclass(frozen=True)
+class WebShopBuyNowGateOutcome:
+    """Immutable result of one offline pre-checkout gate invocation."""
+
+    decision: Decision
+    checkout_executed: bool
+    callback_count: int
+    callback_result_ref: str | None
+    bound_request: TransactionRequest | None
+    prepayment_result: ValidationResult | None
+    runtime_gate_record: RuntimeGateRecord | None
+    reason_codes: tuple[str, ...]
+    governed_action_fact: GovernedActionBindingFact | None = None
+    known_payment_attempt_preflight_fact: KnownPaymentAttemptPreflightFact | None = None
+    limitations: tuple[str, ...] = WEBSHOP_GATE_LIMITATIONS
+
+
+def gate_webshop_buy_now(
+    adaptation: WebShopCommerceAdaptation | None,
+    mandate: IntentMandate | None,
+    declared_agent_id: str | None,
+    execution_candidate: PaymentExecutionRecord | None,
+    agent_identity: AgentIdentity | None,
+    current_provider_ref: str | None,
+    current_executor_instance_ref: str | None,
+    context_policy_fact: ContextPolicyFact | None,
+    checkout_callback: Callable[[], Any] | None,
+    *,
+    current_credential_ref: str | None = None,
+    confirmation_record: ConfirmationRecord | None = None,
+    seen_request_ids: Collection[str] = (),
+    authorized_adaptation: WebShopCommerceAdaptation | None = None,
+    governed_action: GovernedPaymentAction | None = None,
+    known_payment_attempts: tuple[PaymentExecutionRecord, ...] = (),
+) -> WebShopBuyNowGateOutcome:
+    """Allow an injected checkout seam only after existing P1-P4 checks pass.
+
+    Every authority, identity, execution and context fact is supplied explicitly.
+    Natural-language instruction text, product title, page content and WebShop
+    reward are never used to derive authorization.
+    """
+
+    if adaptation is None or not adaptation.ready:
+        return _blocked("commerce_adaptation_not_ready")
+    if adaptation.order is None or adaptation.payment_request is None:
+        return _blocked("commerce_adaptation_objects_missing")
+
+    authorized_snapshot = authorized_adaptation or adaptation
+    if not authorized_snapshot.ready:
+        return _blocked("authorized_commerce_adaptation_not_ready")
+    if (
+        authorized_snapshot.order is None
+        or authorized_snapshot.payment_request is None
+    ):
+        return _blocked("authorized_commerce_adaptation_objects_missing")
+    if not isinstance(declared_agent_id, str) or not declared_agent_id.strip():
+        return _blocked("declared_agent_id_missing")
+
+    missing_inputs = _missing_explicit_inputs(
+        mandate=mandate,
+        execution_candidate=execution_candidate,
+        agent_identity=agent_identity,
+        current_provider_ref=current_provider_ref,
+        current_executor_instance_ref=current_executor_instance_ref,
+        context_policy_fact=context_policy_fact,
+        checkout_callback=checkout_callback,
+    )
+    if missing_inputs:
+        return _blocked(*missing_inputs)
+
+    assert mandate is not None
+    assert execution_candidate is not None
+    assert agent_identity is not None
+    assert context_policy_fact is not None
+    assert checkout_callback is not None
+    assert current_provider_ref is not None
+    assert current_executor_instance_ref is not None
+
+    bound_request = replace(
+        adaptation.payment_request,
+        agent_id=declared_agent_id.strip(),
+    )
+    prepayment_result = validate_request(
+        mandate,
+        bound_request,
+        seen_request_ids=seen_request_ids,
+        authorized_order=authorized_snapshot.order,
+        final_order=adaptation.order,
+        confirmation_record=confirmation_record,
+    )
+    if prepayment_result.decision is not Decision.ALLOW:
+        return WebShopBuyNowGateOutcome(
+            decision=prepayment_result.decision,
+            checkout_executed=False,
+            callback_count=0,
+            callback_result_ref=None,
+            bound_request=bound_request,
+            prepayment_result=prepayment_result,
+            runtime_gate_record=None,
+            reason_codes=_prepayment_reason_codes(prepayment_result),
+        )
+
+    governed_action_fact: GovernedActionBindingFact | None = None
+    if governed_action is not None:
+        governed_action_fact = verify_governed_payment_action(
+            governed_action,
+            mandate=mandate,
+            order=adaptation.order,
+            request=bound_request,
+            execution=execution_candidate,
+            agent_identity=agent_identity,
+            current_executor_instance_ref=current_executor_instance_ref,
+            context_policy_fact=context_policy_fact,
+        )
+        if governed_action_fact.status is not VerificationStatus.VALID:
+            return WebShopBuyNowGateOutcome(
+                decision=(
+                    Decision.INDETERMINATE
+                    if governed_action_fact.status
+                    is VerificationStatus.MISSING_EVIDENCE
+                    else Decision.DENY
+                ),
+                checkout_executed=False,
+                callback_count=0,
+                callback_result_ref=None,
+                bound_request=bound_request,
+                prepayment_result=prepayment_result,
+                runtime_gate_record=None,
+                reason_codes=tuple(
+                    f"action:{code}"
+                    for code in governed_action_fact.reason_codes
+                ),
+                governed_action_fact=governed_action_fact,
+            )
+
+    callback_failure: list[str] = []
+
+    def guarded_checkout_callback() -> Any:
+        try:
+            return checkout_callback()
+        except Exception as exc:  # The injected seam is untrusted application code.
+            callback_failure.append(type(exc).__name__)
+            return _CALLBACK_FAILURE_SENTINEL
+
+    def observe_runtime(decision: Decision) -> RuntimeGateRecord:
+        return observe_payment_execution_gate(
+            decision,
+            mandate,
+            adaptation.order,
+            bound_request,
+            execution_candidate,
+            guarded_checkout_callback,
+            agent_identity=agent_identity,
+            current_provider_ref=current_provider_ref,
+            current_executor_instance_ref=current_executor_instance_ref,
+            current_credential_ref=current_credential_ref,
+            context_policy_fact=context_policy_fact,
+        )
+
+    known_attempt_fact: KnownPaymentAttemptPreflightFact | None = None
+    if type(known_payment_attempts) is not tuple or known_payment_attempts:
+        known_attempt_fact = derive_known_payment_attempt_preflight(
+            mandate,
+            adaptation.order,
+            bound_request,
+            known_payment_attempts,
+        )
+        preflight_reasons = tuple(
+            f"preflight:{code}" for code in known_attempt_fact.reason_codes
+        )
+        if (
+            known_attempt_fact.status
+            is KnownPaymentAttemptPreflightStatus.INDETERMINATE
+        ):
+            runtime_record = observe_runtime(Decision.INDETERMINATE)
+            runtime_record = replace(
+                runtime_record,
+                reason_codes=tuple(
+                    sorted(set((*runtime_record.reason_codes, *preflight_reasons)))
+                ),
+            )
+            return WebShopBuyNowGateOutcome(
+                decision=Decision.INDETERMINATE,
+                checkout_executed=False,
+                callback_count=runtime_record.callback_count,
+                callback_result_ref=None,
+                bound_request=bound_request,
+                prepayment_result=prepayment_result,
+                runtime_gate_record=runtime_record,
+                reason_codes=runtime_record.reason_codes,
+                governed_action_fact=governed_action_fact,
+                known_payment_attempt_preflight_fact=known_attempt_fact,
+            )
+        if known_attempt_fact.status is KnownPaymentAttemptPreflightStatus.BLOCKED:
+            trusted_seen_request_ids = (
+                *tuple(seen_request_ids),
+                *known_attempt_fact.blocking_request_refs,
+            )
+            duplicate_result = validate_request(
+                mandate,
+                bound_request,
+                seen_request_ids=trusted_seen_request_ids,
+                authorized_order=authorized_snapshot.order,
+                final_order=adaptation.order,
+                confirmation_record=confirmation_record,
+            )
+            runtime_record = observe_runtime(duplicate_result.decision)
+            runtime_record = replace(
+                runtime_record,
+                reason_codes=tuple(
+                    sorted(
+                        set(
+                            (
+                                *runtime_record.reason_codes,
+                                *_prepayment_reason_codes(duplicate_result),
+                                *preflight_reasons,
+                            )
+                        )
+                    )
+                ),
+            )
+            return WebShopBuyNowGateOutcome(
+                decision=duplicate_result.decision,
+                checkout_executed=False,
+                callback_count=runtime_record.callback_count,
+                callback_result_ref=None,
+                bound_request=bound_request,
+                prepayment_result=duplicate_result,
+                runtime_gate_record=runtime_record,
+                reason_codes=runtime_record.reason_codes,
+                governed_action_fact=governed_action_fact,
+                known_payment_attempt_preflight_fact=known_attempt_fact,
+            )
+
+    runtime_record = observe_runtime(prepayment_result.decision)
+
+            "executor_ref": self.executor_ref,
+            "authority_ref": self.authority_ref,
+            "authority_version": self.authority_version,
+            "order_ref": self.order_ref,
+            "order_version": self.order_version,
+            "request_ref": self.request_ref,
+            "payment_ref": self.payment_ref,
+            "source_refs": list(self.source_refs),
+            "side_effect_class": _enum_value(self.side_effect_class),
+            "reversibility": _enum_value(self.reversibility),
+            "occurred_at": (
+                self.occurred_at.isoformat()
+                if isinstance(self.occurred_at, datetime)
+                else None
+            ),
+        }
+
+
+@dataclass(frozen=True)
+class GovernedActionBindingFact:
+    """Deterministic evidence classification for one governed action."""
+
+    status: VerificationStatus
+    action_id: str | None
+    reason_codes: tuple[str, ...]
+    checked_action_type: str | None
+    checked_order_ref: str | None
+    checked_request_ref: str | None
+    checked_payment_ref: str | None
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "status": self.status.value,
+            "action_id": self.action_id,
+            "reason_codes": list(self.reason_codes),
+            "checked_action_type": self.checked_action_type,
+            "checked_order_ref": self.checked_order_ref,
+            "checked_request_ref": self.checked_request_ref,
+            "checked_payment_ref": self.checked_payment_ref,
+        }
+
+
+def verify_governed_payment_action(
+    action: GovernedPaymentAction | None,
+    *,
+    mandate: IntentMandate | None,
+    order: Order | None,
+    request: TransactionRequest | None,
+    execution: PaymentExecutionRecord | None,
+    agent_identity: AgentIdentity | None,
+    current_executor_instance_ref: str | None,
+    context_policy_fact: ContextPolicyFact | None,
+) -> GovernedActionBindingFact:
+    """Verify a supplied EXECUTE_PAYMENT action without executing it.
+
+    Missing evidence is separated from contradictory or unsupported evidence.
+    All checks are local, deterministic, copy-free reads of immutable inputs.
+    """
+
+    if action is None:
+        return _fact(
+            VerificationStatus.MISSING_EVIDENCE,
+            None,
+            ("governed_action_missing",),
+            (None, None, None, None),
+        )
+    if type(action) is not GovernedPaymentAction:
+        return _fact(
+            VerificationStatus.INVALID,
+            None,
+            ("governed_action_invalid_type",),
+            (None, None, None, None),
+        )
+
+    checked = _checked_values(action)
+    missing: list[str] = []
+    invalid: list[str] = []
+
+    _require_text(action.action_id, "action_id", missing, invalid)
+    _require_text(action.subject_ref, "subject_ref", missing, invalid)
+    _require_text(action.agent_ref, "agent_ref", missing, invalid)
+    expected: str | None = None
+
+
+@dataclass(frozen=True)
+class ValidationIssue:
+    code: str
+    message: str
+
+
+@dataclass(frozen=True)
+class ValidationResult:
+    decision: Decision
+    issues: tuple[ValidationIssue, ...]
+    evidence: tuple[EvidenceRef, ...]
+    rule_version: str = "mandate-rules-v0.1"
+    limitations: tuple[str, ...] = (
+        "simulation_only",
+        "not_a_production_payment_authorization",
+    )
+    order_differences: tuple[OrderDifference, ...] = ()
+
+    @property
+    def approved(self) -> bool:
+        """Compatibility view for callers that still need a boolean."""
+
+        return self.decision is Decision.ALLOW
+
+
+@dataclass(frozen=True)
+class LifecycleResult:
+    payment_status: PaymentStatus
+    fulfillment_status: FulfillmentStatus
+    remediation: RemediationState
+    task_status: TaskStatus
+    issues: tuple[ValidationIssue, ...]
+    evidence: tuple[EvidenceRef, ...]
+    refund_status: RefundStatus | None = None
+    dispute_status: DisputeStatus | None = None
+    rule_version: str = "lifecycle-rules-v0.1"
+    limitations: tuple[str, ...] = (
+        "simulation_only",
+        "post_payment_statuses_are_fixture_observations",
+        "does_not_execute_real_refund_or_dispute",
+        "does_not_assign_legal_liability",
+    )
+    ):
+        return "VALID"
+    if "INVALID" in {
+        runtime.binding_status,
+        runtime.identity_status,
+        runtime.context_policy_status,
+    }:
+        return "INVALID"
+    return "MISSING_EVIDENCE"
+
+
+def _product_observed_trace(
+    *named_outputs: tuple[str, object],
+) -> tuple[str, list[str], tuple[str, ...], str | None]:
+    """Read only an explicit product-returned authoritative trace.
+
+    RuntimeGateRecord and evaluator-created ReplayEvent values are not treated as
+    product authoritative trace. A future product API must expose an exact tuple
+    named authoritative_trace_events before it can count here.
+    """
+
+    for source_name, output in named_outputs:
+        events = getattr(output, "authoritative_trace_events", None)
+        if events is None:
+            continue
+        if type(events) is not tuple or any(type(event) is not ReplayEvent for event in events):
+            return (
+                "INVALID",
+                [],
+                ("product_authoritative_trace_invalid",),
+                source_name,
+            )
+        replay = replay_events(events)
+        return (
+            replay.status.value,
+            [event.event_type.value for event in events],
+            replay.reason_codes,
+            source_name,
+        )
+    return (
+        "NOT_AVAILABLE",
+        [],
+        ("product_authoritative_trace_not_available",),
+        None,
+    )
+
+
+def _synthesize_replay(
+    context: GateContext,
+    gate: Any,
+    payment: PaymentExecutionRecord,
+    reason_codes: tuple[str, ...],
+) -> tuple[str, list[str], tuple[str, ...]]:
+    """Build evaluator-only Replay fixtures without claiming product provenance."""
+
+    if gate.runtime_gate_record is None:
+        return "NOT_AVAILABLE", [], ("evaluator_synthesized_replay_not_available",)
+    assert context.adaptation.order is not None
+    common = {
+        "subject_ref": context.mandate.user_id,
+        "agent_ref": context.bound_request.agent_id,
+        "authority_ref": context.mandate.mandate_id,
+        "transaction_object_ref": context.bound_request.request_id,
+        "payment_ref": payment.payment_id,
+        "decision": gate.decision,
+    }
+    times = (
+        context.bound_request.occurred_at - timedelta(minutes=3),
+        context.bound_request.occurred_at - timedelta(minutes=2),
+        context.bound_request.occurred_at - timedelta(minutes=1),
+        context.execution.occurred_at,
+        payment.occurred_at + timedelta(seconds=1),
+    )
+    event_specs = (
+        (
+            ReplayEventType.AUTHORITY_RECORDED,
+            ReplaySourceType.USER_CONFIRMED,
+            "source:fixed-user-confirmation",
+            ("authority_recorded",),
+        ),
+        (
+            ReplayEventType.ORDER_RECORDED,
+            ReplaySourceType.PROTOCOL_VERIFIED,
+            "source:fixed-commerce-snapshot",
+            ("order_recorded",),
+        ),
+        (
+            ReplayEventType.REQUEST_RECORDED,
+            ReplaySourceType.PROTOCOL_VERIFIED,
+            "source:fixed-payment-request",
+            ("request_recorded",),
+        ),
+        (
+            ReplayEventType.RUNTIME_DECISION_RECORDED,
+            ReplaySourceType.SYSTEM_RUNTIME,
+            "source:runtime-gate-record",
+            gate.reason_codes or ("runtime_gate_recorded",),
+        ),
+        (
+            ReplayEventType.PAYMENT_OUTCOME_RECORDED,
+            ReplaySourceType.PAYMENT_PROVIDER_OBSERVED,
+            "source:fixed-payment-observation",
+            reason_codes or ("payment_outcome_recorded",),
+        ),
+    )
+    events: list[ReplayEvent] = []
+    for index, (event_type, source_type, source_ref, event_reasons) in enumerate(
+        event_specs
+    ):
+        events.append(
+            ReplayEvent(
+                event_id=f"project-baseline-event-{index + 1}",
+                event_type=event_type,
+                occurred_at=times[index],
+                source_type=source_type,
+                source_ref=source_ref,
+                reason_codes=tuple(event_reasons),
+                previous_event_ref=(events[-1].event_id if events else None),
+                runtime_gate=(
+                    gate.runtime_gate_record
+                    if event_type is ReplayEventType.RUNTIME_DECISION_RECORDED
+                    else None
+                ),
+                **common,
+            )
+        )
+    replay = replay_events(tuple(events))
+    return replay.status.value, [event.event_type.value for event in events], replay.reason_codes
+
+def _empty_state() -> dict[str, object]:
+    return {
+        "payment_status": None,
+        "fulfilment_status": None,
+        "task_status": None,
+        "remediation_status": None,
+        "recovery_status": None,
+        "conflict_resolution": None,
+        "retry_allowed": False,
+        "duplicate_payment_blocked": False,
+        "trusted_state_changed": False,
+        "blocked_paths": [],

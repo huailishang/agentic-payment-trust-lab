@@ -1,0 +1,16 @@
+{
+  "command": [
+    "bash",
+    "-lc",
+    "set -e; git apply docs/05_任务交接/P9_KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_GATE_V1/evidence/EV-04-product-draft.diff; python3 -m py_compile src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py src/agentic_payment_experiment/webshop_runtime_gate.py src/agentic_payment_experiment/trusted_execution/__init__.py src/agentic_payment_experiment/__init__.py; git diff --check; git status --short"
+  ],
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "duration_seconds": 1.920857,
+  "ended_at_utc": "2026-08-04T00:59:15.210761+00:00",
+  "exit_code": 0,
+  "label": "EV-08",
+  "schema": "executor-evidence/v1",
+  "started_at_utc": "2026-08-04T00:59:13.289904+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "a40123fcb78a4fb4a80fb6c828ba3a4189292f4bad14de6905758b1fd7dbac3e"
+}

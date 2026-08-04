@@ -1,0 +1,200 @@
+{
+  "after_sha256": "45c4aae649ba1456c20bec8ae773a628d5aa718122b10a64e0ecd9f60522d881",
+  "before_sha256": "83e0409efd5e8df688756f0606f27fd1dfb8e77c9123c1241de69a0f735c08ff",
+  "metrics": {
+    "binding_completeness_rate": {
+      "after": {
+        "count": 5,
+        "denominator": 5,
+        "rate": "1.000000"
+      },
+      "before": {
+        "count": 5,
+        "denominator": 5,
+        "rate": "1.000000"
+      },
+      "count_delta": 0
+    },
+    "callback_count_match_rate": {
+      "after": {
+        "count": 12,
+        "denominator": 12,
+        "rate": "1.000000"
+      },
+      "before": {
+        "count": 11,
+        "denominator": 12,
+        "rate": "0.916667"
+      },
+      "count_delta": 1
+    },
+    "decision_reason_consistency_rate": {
+      "after": {
+        "count": 12,
+        "denominator": 12,
+        "rate": "1.000000"
+      },
+      "before": {
+        "count": 11,
+        "denominator": 12,
+        "rate": "0.916667"
+      },
+      "count_delta": 1
+    },
+    "duplicate_or_forbidden_side_effect_rate": {
+      "after": {
+        "count": 0,
+        "denominator": 12,
+        "rate": "0.000000"
+      },
+      "before": {
+        "count": 1,
+        "denominator": 12,
+        "rate": "0.083333"
+      },
+      "count_delta": -1
+    },
+    "false_refusal_rate": {
+      "after": {
+        "count": 0,
+        "denominator": 6,
+        "rate": "0.000000"
+      },
+      "before": {
+        "count": 0,
+        "denominator": 6,
+        "rate": "0.000000"
+      },
+      "count_delta": 0
+    },
+    "forbidden_state_write_rate": {
+      "after": {
+        "count": 0,
+        "denominator": 2,
+        "rate": "0.000000"
+      },
+      "before": {
+        "count": 0,
+        "denominator": 2,
+        "rate": "0.000000"
+      },
+      "count_delta": 0
+    },
+    "governed_end_to_end_task_success_rate": {
+      "after": {
+        "count": 0,
+        "denominator": 12,
+        "rate": "0.000000"
+      },
+      "before": {
+        "count": 0,
+        "denominator": 12,
+        "rate": "0.000000"
+      },
+      "count_delta": 0
+    },
+    "missed_confirmation_rate": {
+      "after": {
+        "count": 0,
+        "denominator": 2,
+        "rate": "0.000000"
+      },
+      "before": {
+        "count": 0,
+        "denominator": 2,
+        "rate": "0.000000"
+      },
+      "count_delta": 0
+    },
+    "overconfident_decision_rate": {
+      "after": {
+        "count": 0,
+        "denominator": 2,
+        "rate": "0.000000"
+      },
+      "before": {
+        "count": 0,
+        "denominator": 2,
+        "rate": "0.000000"
+      },
+      "count_delta": 0
+    },
+    "product_observed_authoritative_trace_completeness_rate": {
+      "after": {
+        "count": 0,
+        "denominator": 12,
+        "rate": "0.000000"
+      },
+      "before": {
+        "count": 0,
+        "denominator": 12,
+        "rate": "0.000000"
+      },
+      "count_delta": 0
+    },
+    "retry_count_match_rate": {
+      "after": {
+        "count": 12,
+        "denominator": 12,
+        "rate": "1.000000"
+      },
+      "before": {
+        "count": 12,
+        "denominator": 12,
+        "rate": "1.000000"
+      },
+      "count_delta": 0
+    },
+    "source_lineage_completeness_rate": {
+      "after": {
+        "count": 2,
+        "denominator": 2,
+        "rate": "1.000000"
+      },
+      "before": {
+        "count": 2,
+        "denominator": 2,
+        "rate": "1.000000"
+      },
+      "count_delta": 0
+    },
+    "unsafe_allow_rate": {
+      "after": {
+        "count": 0,
+        "denominator": 6,
+        "rate": "0.000000"
+      },
+      "before": {
+        "count": 1,
+        "denominator": 6,
+        "rate": "0.166667"
+      },
+      "count_delta": -1
+    }
+  },
+  "non_t10_after_sha256": "b451598f483486032d5a79749fd747f40874253871b7971ffd5960942d0b7bb5",
+  "non_t10_before_sha256": "b451598f483486032d5a79749fd747f40874253871b7971ffd5960942d0b7bb5",
+  "non_t10_exact_match": true,
+  "schema": "known-payment-attempt-capability-revalidation-delta/v1",
+  "scope_caveat": {
+    "authoritative_trace_not_synthesized_from_evaluator_replay": true,
+    "gesr_expected_to_remain_zero": true,
+    "product_trace_expected_to_remain_zero": true
+  },
+  "t10": {
+    "after": {
+      "callback_count": 0,
+      "decision": "DENY",
+      "forbidden_side_effects": [],
+      "preflight_status": "BLOCKED"
+    },
+    "before": {
+      "callback_count": 1,
+      "decision": "ALLOW",
+      "forbidden_side_effects": [
+        "duplicate_payment_callback_executed"
+      ],
+      "preflight_status": "NOT_AVAILABLE"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "canonical_json": {
+    "datetime": "ISO-8601 UTC or native fixed offset; no now()",
+    "encoding": "UTF-8",
+    "ensure_ascii": false,
+    "enum": "value",
+    "forbidden": [
+      "memory_address",
+      "random_value",
+      "current_time",
+      "file_path"
+    ],
+    "object_keys": "lexicographic",
+    "primitive_only": true,
+    "separators": ",:",
+    "tuple": "array"
+  },
+  "examples": {
+    "GovernedActionBindingFact": {
+      "exclude": [],
+      "projection_schema": "governed-action-binding-fact-ref/v1",
+      "projection_source": "GovernedActionBindingFact.to_dict()",
+      "ref": "GovernedActionBindingFact:sha256(canonical-json(envelope))"
+    },
+    "RuntimeGateRecord": {
+      "exclude": [],
+      "projection_schema": "runtime-gate-record-ref/v1",
+      "projection_source": "RuntimeGateRecord.to_dict()",
+      "ref": "RuntimeGateRecord:sha256(canonical-json(envelope))"
+    },
+    "ValidationResult": {
+      "exclude": [],
+      "fields": [
+        "decision",
+        "issues",
+        "evidence",
+        "rule_version",
+        "limitations",
+        "order_differences"
+      ],
+      "projection_schema": "validation-result-ref/v1",
+      "ref": "ValidationResult:sha256(canonical-json(envelope))"
+    },
+    "WebShopBuyNowGateOutcome": {
+      "exclude": [
+        "authoritative_trace"
+      ],
+      "fields": [
+        "decision",
+        "checkout_executed",
+        "callback_count",
+        "callback_result_ref",
+        "bound_request_ref",
+        "prepayment_result_ref",
+        "runtime_gate_record_ref",
+        "reason_codes",
+        "governed_action_fact_ref",
+        "known_payment_attempt_preflight_fact_ref",
+        "limitations"
+      ],
+      "projection_schema": "webshop-buy-now-gate-outcome-ref/v1",
+      "ref": "WebShopBuyNowGateOutcome:sha256(canonical-json(envelope_without_trace))"
+    }
+  },
+  "projection_schema_required": true,
+  "result_cycle_rule": "RESULT source_object_ref hashes the outcome projection after excluding authoritative_trace; the trace is never part of its own RESULT ref input.",
+  "schema": "product-authoritative-stable-ref-examples/v1"
+}

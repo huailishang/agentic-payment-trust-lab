@@ -1,0 +1,188 @@
+"""Typed preflight facts for already-known payment attempts.
+
+The fact is intentionally narrow: it classifies only an exact tuple of exact
+PaymentExecutionRecord values. A succeeded attempt can block a second
+payment only when the existing P2 verifier proves that it belongs to the same
+mandate, order, request, agent, payee, amount, and currency chain.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from enum import Enum
+
+from ..models import (
+    IntentMandate,
+    Order,
+    PaymentExecutionRecord,
+    PaymentStatus,
+    TransactionRequest,
+)
+from .execution_facts import VerificationStatus
+from .payment_binding import verify_payment_execution_binding
+
+
+class KnownPaymentAttemptPreflightStatus(str, Enum):
+    """Closed result used by the runtime gate before any payment callback."""
+
+    CLEAR = "CLEAR"
+    BLOCKED = "BLOCKED"
+    INDETERMINATE = "INDETERMINATE"
+
+
+KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_LIMITATIONS = (
+    "offline_fact_only",
+    "exact_payment_execution_records_only",
+    "succeeded_attempts_only",
+    "pending_or_unknown_attempt_policy_not_defined",
+    "no_external_payment_status_query",
+)
+
+
+@dataclass(frozen=True)
+class KnownPaymentAttemptPreflightFact:
+    """Immutable, primitive-serializable classification of known attempts."""
+
+    status: KnownPaymentAttemptPreflightStatus
+    reason_codes: tuple[str, ...]
+    current_request_ref: str | None
+    related_attempt_refs: tuple[str, ...]
+    blocking_request_refs: tuple[str, ...]
+    limitations: tuple[str, ...] = KNOWN_PAYMENT_ATTEMPT_PREFLIGHT_LIMITATIONS
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "status": self.status.value,
+            "reason_codes": list(self.reason_codes),
+            "current_request_ref": self.current_request_ref,
+            "related_attempt_refs": list(self.related_attempt_refs),
+            "blocking_request_refs": list(self.blocking_request_refs),
+            "limitations": list(self.limitations),
+        }
+
+
+def derive_known_payment_attempt_preflight(
+    mandate: IntentMandate | None,
+    order: Order | None,
+    request: TransactionRequest | None,
+    known_attempts: tuple[PaymentExecutionRecord, ...],
+) -> KnownPaymentAttemptPreflightFact:
+    """Classify a frozen known-attempt inventory without performing side effects.
+
+    Invalid outer types fail closed before any attribute is read. The existing
+    P2 verifier remains the single source of truth for payment binding rules.
+    """
+
+    if type(known_attempts) is not tuple:
+        return _fact(
+            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
+            ("known_payment_attempts_invalid_container",),
+        )
+    if any(type(attempt) is not PaymentExecutionRecord for attempt in known_attempts):
+        return _fact(
+            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
+            ("known_payment_attempt_invalid_type",),
+        )
+    if type(mandate) is not IntentMandate:
+        return _fact(
+            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
+            ("known_payment_attempt_mandate_invalid_type",),
+        )
+    if type(order) is not Order:
+        return _fact(
+            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
+            ("known_payment_attempt_order_invalid_type",),
+        )
+    if type(request) is not TransactionRequest:
+        return _fact(
+            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
+            ("known_payment_attempt_request_invalid_type",),
+        )
+
+    current_request_ref = request.request_id
+    if not known_attempts:
+        return _fact(
+            KnownPaymentAttemptPreflightStatus.CLEAR,
+            ("known_payment_attempt_preflight_clear",),
+            current_request_ref=current_request_ref,
+        )
+
+    invalid_record_reasons: list[str] = []
+    for attempt in known_attempts:
+        if type(attempt.status) is not PaymentStatus:
+            invalid_record_reasons.append("known_payment_attempt_status_invalid")
+        if not isinstance(attempt.request_id, str) or not attempt.request_id.strip():
+            invalid_record_reasons.append("known_payment_attempt_request_ref_missing")
+        if not isinstance(attempt.payment_id, str) or not attempt.payment_id.strip():
+            invalid_record_reasons.append("known_payment_attempt_ref_missing")
+    if invalid_record_reasons:
+        return _fact(
+            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
+            tuple(sorted(set(invalid_record_reasons))),
+            current_request_ref=current_request_ref,
+        )
+
+    same_request = tuple(
+        attempt for attempt in known_attempts if attempt.request_id == current_request_ref
+    )
+    related_attempt_refs = tuple(attempt.payment_id for attempt in same_request)
+    succeeded = tuple(
+        attempt for attempt in same_request if attempt.status is PaymentStatus.SUCCEEDED
+    )
+    if not succeeded:
+        return _fact(
+            KnownPaymentAttemptPreflightStatus.CLEAR,
+            (
+                "known_payment_attempt_no_succeeded_match"
+                if same_request
+                else "known_payment_attempt_preflight_clear"
+            ,),
+            current_request_ref=current_request_ref,
+            related_attempt_refs=related_attempt_refs,
+        )
+
+    binding_failures: list[str] = []
+    for attempt in succeeded:
+        binding = verify_payment_execution_binding(
+            mandate,
+            order,
+            request,
+            attempt,
+        )
+        if binding.status is not VerificationStatus.VALID:
+            binding_failures.extend(
+                f"known_payment_attempt_binding:{code}"
+                for code in binding.reason_codes
+            )
+    if binding_failures:
+        return _fact(
+            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
+            tuple(sorted(set(binding_failures))),
+            current_request_ref=current_request_ref,
+            related_attempt_refs=related_attempt_refs,
+        )
+
+    return _fact(
+        KnownPaymentAttemptPreflightStatus.BLOCKED,
+        ("known_payment_attempt_duplicate_succeeded",),
+        current_request_ref=current_request_ref,
+        related_attempt_refs=related_attempt_refs,
+        blocking_request_refs=(current_request_ref,),
+    )
+
+
+def _fact(
+    status: KnownPaymentAttemptPreflightStatus,
+    reason_codes: tuple[str, ...],
+    *,
+    current_request_ref: str | None = None,
+    related_attempt_refs: tuple[str, ...] = (),
+    blocking_request_refs: tuple[str, ...] = (),
+) -> KnownPaymentAttemptPreflightFact:
+    return KnownPaymentAttemptPreflightFact(
+        status=status,
+        reason_codes=reason_codes,
+        current_request_ref=current_request_ref,
+        related_attempt_refs=related_attempt_refs,
+        blocking_request_refs=blocking_request_refs,
+    )

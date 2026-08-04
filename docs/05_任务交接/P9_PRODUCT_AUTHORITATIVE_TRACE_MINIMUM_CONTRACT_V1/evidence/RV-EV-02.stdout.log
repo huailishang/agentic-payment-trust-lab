@@ -1,0 +1,21 @@
+t10_current_candidate_payment_ref project-baseline-payment-1
+t10_action_payment_ref project-baseline-payment-1
+t10_historical_payment_ref project-baseline-payment-existing-success
+t10_preflight_related_refs ('project-baseline-payment-existing-success',)
+t10_callback_count 0
+t10_decision DENY
+t10_two_payment_entities True
+schema_has_payment_role False
+runtime_gate_record_has_stable_ref False
+runtime_gate_record_has_time False
+outcome_has_stable_ref False
+design_requires_nonempty_source_object_ref True
+design_freezes_content_addressed_ref_rule False
+T05 {'prepayment_decision': 'ALLOW', 'final_decision': 'DENY', 'reason_codes': ['action:agent_ref_request_mismatch', 'action:agent_ref_mandate_mismatch', 'action:agent_ref_identity_mismatch'], 'mapped_events': ['AUTHORITY_RECORDED', 'ORDER_RECORDED', 'REQUEST_RECORDED', 'ACTION_RECORDED', 'PREPAYMENT_DECISION_RECORDED', 'RESULT_RECORDED']}
+T06 {'prepayment_decision': 'ALLOW', 'final_decision': 'INDETERMINATE', 'reason_codes': ['action:action_id_missing'], 'mapped_events': ['AUTHORITY_RECORDED', 'ORDER_RECORDED', 'REQUEST_RECORDED', 'ACTION_RECORDED', 'PREPAYMENT_DECISION_RECORDED', 'RESULT_RECORDED']}
+taxonomy_has_action_binding_decision False
+T02 {'authorized_order_id': 'webshop-order-9eccab2b0154fca4af27f322', 'authorized_order_version': 'webshop-v1', 'current_order_id': 'webshop-order-9eccab2b0154fca4af27f322', 'current_order_version': 'project-baseline-price-up-v2', 'differences': [{'code': 'order_total_changed', 'field_path': 'final_order.total_amount', 'before': '877.80', 'after': '887.80'}, {'code': 'order_item_unit_amount_changed', 'field_path': 'final_order.items[item_id=B06Y3VLDFB].unit_amount', 'before': '877.80', 'after': '887.80'}], 'mapped_events': ['AUTHORITY_RECORDED', 'ORDER_RECORDED', 'REQUEST_RECORDED', 'PREPAYMENT_DECISION_RECORDED', 'RESULT_RECORDED']}
+T03 {'authorized_order_id': 'webshop-order-9eccab2b0154fca4af27f322', 'authorized_order_version': 'webshop-v1', 'current_order_id': 'webshop-order-9eccab2b0154fca4af27f322', 'current_order_version': 'project-baseline-price-down-v2', 'differences': [{'code': 'order_total_changed', 'field_path': 'final_order.total_amount', 'before': '877.80', 'after': '867.80'}, {'code': 'order_item_unit_amount_changed', 'field_path': 'final_order.items[item_id=B06Y3VLDFB].unit_amount', 'before': '877.80', 'after': '867.80'}], 'mapped_events': ['AUTHORITY_RECORDED', 'ORDER_RECORDED', 'REQUEST_RECORDED', 'PREPAYMENT_DECISION_RECORDED', 'RESULT_RECORDED']}
+T04 {'authorized_order_id': 'webshop-order-9eccab2b0154fca4af27f322', 'authorized_order_version': 'webshop-v1', 'current_order_id': 'webshop-order-9eccab2b0154fca4af27f322', 'current_order_version': 'project-baseline-payee-v2', 'differences': [], 'mapped_events': ['AUTHORITY_RECORDED', 'ORDER_RECORDED', 'REQUEST_RECORDED', 'PREPAYMENT_DECISION_RECORDED', 'RESULT_RECORDED']}
+schema_has_order_snapshot_role False
+finding REFERENCE_AND_COVERAGE_MODEL_INCOMPLETE

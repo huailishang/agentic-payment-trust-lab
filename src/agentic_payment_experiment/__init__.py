@@ -52,7 +52,10 @@ from .trusted_execution import (
     GovernedActionBindingFact,
     GovernedActionType,
     GovernedPaymentAction,
+    KnownPaymentAttemptPreflightFact,
+    KnownPaymentAttemptPreflightStatus,
     SideEffectClass,
+    derive_known_payment_attempt_preflight,
     verify_governed_payment_action,
 )
 from .remediation import assess_remediation
@@ -83,6 +86,8 @@ __all__ = [
     "FulfillmentRecord",
     "FulfillmentStatus",
     "IntentMandate",
+    "KnownPaymentAttemptPreflightFact",
+    "KnownPaymentAttemptPreflightStatus",
     "LifecycleResult",
     "Order",
     "OrderDifference",
@@ -110,6 +115,7 @@ __all__ = [
     "assess_lifecycle",
     "assess_payment_recovery",
     "assess_webshop_payment_fulfilment",
+    "derive_known_payment_attempt_preflight",
     "derive_payment_query_finality",
     "derive_payment_status_conflict",
     "execute_with_payment_binding_gate",

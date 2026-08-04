@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-01",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/RV-EV-01-check.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/evidence/RV-EV-01-check.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T13:31:31.999432+00:00",
+  "finished_at_utc": "2026-08-04T13:31:32.218655+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-01.stdout.log",
+  "stderr_path": "RV-EV-01.stderr.log",
+  "stdout_bytes": 806,
+  "stderr_bytes": 0,
+  "stdout_sha256": "57cf6a2d1b155a36ba8c718883e68dc8dc63a5becf34f0a98c6902d67f19e3da",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,6 @@
+CHECKS={"callback_match_full": true, "duplicate_rate_zero": true, "non_t10_digest_unchanged": true, "repeat_three_identical": true, "runner_hash_unchanged": true, "t10_deny_callback_zero": true, "target_hash_unchanged": true}
+T10={"callback_count": 0, "decision": "DENY", "preflight_status": "BLOCKED"}
+DUPLICATE_RATE={"count": 0, "denominator": 12, "rate": "0.000000"}
+CALLBACK_MATCH={"count": 12, "denominator": 12, "rate": "1.000000"}
+NON_T10_SHA256=b451598f483486032d5a79749fd747f40874253871b7971ffd5960942d0b7bb5
+REPEATABILITY={"all_identical": true, "normalization_excludes": ["output_path", "temporary_path", "current_time", "run_index"], "normalized_sha256": ["c802bacfcd9154bdca7e36a5e9a8a2cdcfdc24158c0af96baf755aafa738a770", "c802bacfcd9154bdca7e36a5e9a8a2cdcfdc24158c0af96baf755aafa738a770", "c802bacfcd9154bdca7e36a5e9a8a2cdcfdc24158c0af96baf755aafa738a770"], "repeat_count": 3}

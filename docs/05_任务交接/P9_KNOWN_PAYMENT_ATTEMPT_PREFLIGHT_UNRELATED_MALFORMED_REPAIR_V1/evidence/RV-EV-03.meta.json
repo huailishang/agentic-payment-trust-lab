@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-03",
+  "command_argv": [
+    "bash",
+    "-lc",
+    "set -e; PYTHONPATH=src python3 scripts/validation/run_project_impact_baseline.py --spec samples/evaluation/project_impact_t10_preflight_target_v1.json --repeat 3 --output /tmp/rv_repair_after.json; python3 - <<\"PY\"\nimport hashlib,json\nfrom pathlib import Path\nd=json.loads(Path(\"/tmp/rv_repair_after.json\").read_text())\nt10=next(x for x in d[\"task_results\"] if x[\"task_id\"]==\"T10\")\nprint(\"target_sha256\",hashlib.sha256(Path(\"samples/evaluation/project_impact_t10_preflight_target_v1.json\").read_bytes()).hexdigest())\nprint(\"runner_sha256\",hashlib.sha256(Path(\"scripts/validation/run_project_impact_baseline.py\").read_bytes()).hexdigest())\nprint(\"repeatability\",d[\"repeatability\"])\nprint(\"T10\",json.dumps({\"decision\":t10[\"actual\"][\"actual_decision\"],\"callback\":t10[\"actual\"][\"actual_callback_count\"],\"forbidden\":t10[\"actual\"][\"forbidden_side_effects\"],\"preflight\":t10[\"actual\"][\"known_payment_attempt_preflight_status\"]},sort_keys=True))\nfor key in [\"duplicate_or_forbidden_side_effect_rate\",\"callback_count_match_rate\",\"unsafe_allow_rate\",\"false_refusal_rate\",\"missed_confirmation_rate\",\"forbidden_state_write_rate\",\"decision_reason_consistency_rate\",\"governed_end_to_end_task_success_rate\",\"product_observed_authoritative_trace_completeness_rate\"]:\n print(key,d[\"metrics\"][key])\nPY"
+  ],
+  "command_display": "bash -lc 'set -e; PYTHONPATH=src python3 scripts/validation/run_project_impact_baseline.py --spec samples/evaluation/project_impact_t10_preflight_target_v1.json --repeat 3 --output /tmp/rv_repair_after.json; python3 - <<\"PY\"\nimport hashlib,json\nfrom pathlib import Path\nd=json.loads(Path(\"/tmp/rv_repair_after.json\").read_text())\nt10=next(x for x in d[\"task_results\"] if x[\"task_id\"]==\"T10\")\nprint(\"target_sha256\",hashlib.sha256(Path(\"samples/evaluation/project_impact_t10_preflight_target_v1.json\").read_bytes()).hexdigest())\nprint(\"runner_sha256\",hashlib.sha256(Path(\"scripts/validation/run_project_impact_baseline.py\").read_bytes()).hexdigest())\nprint(\"repeatability\",d[\"repeatability\"])\nprint(\"T10\",json.dumps({\"decision\":t10[\"actual\"][\"actual_decision\"],\"callback\":t10[\"actual\"][\"actual_callback_count\"],\"forbidden\":t10[\"actual\"][\"forbidden_side_effects\"],\"preflight\":t10[\"actual\"][\"known_payment_attempt_preflight_status\"]},sort_keys=True))\nfor key in [\"duplicate_or_forbidden_side_effect_rate\",\"callback_count_match_rate\",\"unsafe_allow_rate\",\"false_refusal_rate\",\"missed_confirmation_rate\",\"forbidden_state_write_rate\",\"decision_reason_consistency_rate\",\"governed_end_to_end_task_success_rate\",\"product_observed_authoritative_trace_completeness_rate\"]:\n print(key,d[\"metrics\"][key])\nPY'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T02:25:41.814696+00:00",
+  "finished_at_utc": "2026-08-04T02:25:42.395425+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-03.stdout.log",
+  "stderr_path": "RV-EV-03.stderr.log",
+  "stdout_bytes": 87647,
+  "stderr_bytes": 0,
+  "stdout_sha256": "c12e036b9260014be46b3e9f73d3919cb9faa423a7b129792f02e2843061ba25",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,11 @@
+runner_sha256 a7d71fd92cacd7ebdb8e4a1da383067aa57b0e6dcbf20c41f043f4e461fc1fc4
+frozen_runner_sha256 a7d71fd92cacd7ebdb8e4a1da383067aa57b0e6dcbf20c41f043f4e461fc1fc4
+runner_reads_authoritative_trace False
+runner_reads_authoritative_trace_events True
+runner_requires_replay_event True
+design_requires_envelope True
+legacy_replay_event_types ['AUTHORITY_RECORDED', 'ORDER_RECORDED', 'REQUEST_RECORDED', 'RUNTIME_DECISION_RECORDED', 'PAYMENT_OUTCOME_RECORDED']
+next_slice_required_events ['AUTHORITY_RECORDED', 'ORDER_RECORDED', 'REQUEST_RECORDED', 'PAYMENT_OUTCOME_RECORDED', 'ACTION_RECORDED', 'RUNTIME_DECISION_RECORDED', 'RESULT_RECORDED']
+required_events_missing_from_frozen_runner ['ACTION_RECORDED', 'RESULT_RECORDED']
+same_runner_can_validate_new_contract False
+finding BLOCKING_CONTRACT_CONTRADICTION

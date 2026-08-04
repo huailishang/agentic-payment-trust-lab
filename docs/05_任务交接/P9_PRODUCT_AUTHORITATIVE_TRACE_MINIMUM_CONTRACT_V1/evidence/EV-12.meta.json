@@ -1,0 +1,23 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-12",
+  "command_argv": [
+    "python3",
+    "/mnt/d/SoftWare/VScode/install/Project/localagent-common/skills/evaluator-executor-workflow/scripts/validate_workflow.py",
+    "--repo",
+    ".",
+    "--current",
+    "CURRENT.md"
+  ],
+  "command_display": "python3 /mnt/d/SoftWare/VScode/install/Project/localagent-common/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-04T11:46:56.887654+00:00",
+  "finished_at_utc": "2026-08-04T11:46:57.062851+00:00",
+  "exit_code": 2,
+  "stdout_path": "EV-12.stdout.log",
+  "stderr_path": "EV-12.stderr.log",
+  "stdout_bytes": 190,
+  "stderr_bytes": 0,
+  "stdout_sha256": "2b0fd59f8286e8e243de3985fb3b6e971c495eac68af399ceed49907386eee67",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
