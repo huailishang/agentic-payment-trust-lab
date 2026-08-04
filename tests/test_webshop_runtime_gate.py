@@ -26,6 +26,7 @@ from agentic_payment_experiment import (
     GovernedActionType,
     GovernedPaymentAction,
     IntentMandate,
+    KnownPaymentAttemptPreflightStatus,
     PaymentExecutionRecord,
     PaymentStatus,
     SideEffectClass,
@@ -673,6 +674,308 @@ class WebShopRuntimeGateTest(unittest.TestCase):
         indeterminate, calls = self.invoke(confirmation_record=None)
         self.assertEqual(Decision.INDETERMINATE, indeterminate.decision)
         self.assert_blocked(indeterminate, calls, Decision.INDETERMINATE)
+
+    def test_known_payment_attempt_api_is_keyword_only_with_empty_tuple_default(self) -> None:
+        parameter = inspect.signature(gate_webshop_buy_now).parameters[
+            "known_payment_attempts"
+        ]
+        self.assertEqual(inspect.Parameter.KEYWORD_ONLY, parameter.kind)
+        self.assertEqual((), parameter.default)
+
+    def test_bound_succeeded_attempt_denies_before_callback_via_duplicate_gate(self) -> None:
+        existing = replace(
+            self.execution,
+            payment_id="webshop-payment-existing-success",
+            status=PaymentStatus.SUCCEEDED,
+        )
+        outcome, calls = self.invoke(
+            governed_action=self.governed_action,
+            known_payment_attempts=(existing,),
+        )
+
+        self.assertEqual(Decision.DENY, outcome.decision)
+        self.assert_blocked(outcome, calls, Decision.DENY)
+        self.assertIsNotNone(outcome.known_payment_attempt_preflight_fact)
+        self.assertEqual(
+            KnownPaymentAttemptPreflightStatus.BLOCKED,
+            outcome.known_payment_attempt_preflight_fact.status,
+        )
+        self.assertEqual(
+            (self.bound_request.request_id,),
+            outcome.known_payment_attempt_preflight_fact.blocking_request_refs,
+        )
+        self.assertIn("p1:duplicate_request", outcome.reason_codes)
+        self.assertIn(
+            "preflight:known_payment_attempt_duplicate_succeeded",
+            outcome.reason_codes,
+        )
+        self.assertIsNotNone(outcome.governed_action_fact)
+        self.assertEqual(VerificationStatus.VALID, outcome.governed_action_fact.status)
+        self.assertIsNotNone(outcome.runtime_gate_record)
+        self.assertEqual(0, outcome.runtime_gate_record.callback_count)
+        self.assertEqual(
+            VerificationStatus.VALID.value,
+            outcome.runtime_gate_record.binding_status,
+        )
+
+    def test_invalid_or_missing_succeeded_attempt_binding_is_indeterminate(self) -> None:
+        cases = (
+            replace(
+                self.execution,
+                payment_id="webshop-payment-existing-invalid",
+                status=PaymentStatus.SUCCEEDED,
+                amount=self.execution.amount + Decimal("1.00"),
+            ),
+            replace(
+                self.execution,
+                payment_id="webshop-payment-existing-missing",
+                status=PaymentStatus.SUCCEEDED,
+                transaction_object_ref=None,
+            ),
+        )
+        for existing in cases:
+            with self.subTest(payment_id=existing.payment_id):
+                outcome, calls = self.invoke(
+                    governed_action=self.governed_action,
+                    known_payment_attempts=(existing,),
+                )
+                self.assertEqual(Decision.INDETERMINATE, outcome.decision)
+                self.assert_blocked(outcome, calls, Decision.INDETERMINATE)
+                self.assertEqual(
+                    KnownPaymentAttemptPreflightStatus.INDETERMINATE,
+                    outcome.known_payment_attempt_preflight_fact.status,
+                )
+                self.assertTrue(
+                    any(
+                        code.startswith("preflight:known_payment_attempt_binding:")
+                        for code in outcome.reason_codes
+                    )
+                )
+                self.assertIsNotNone(outcome.runtime_gate_record)
+                self.assertEqual(0, outcome.runtime_gate_record.callback_count)
+
+    def test_unrelated_succeeded_attempt_is_clear_and_checkout_still_runs(self) -> None:
+        unrelated = replace(
+            self.execution,
+            payment_id="webshop-payment-unrelated",
+            request_id="request-unrelated",
+            transaction_object_ref="request-unrelated",
+            status=PaymentStatus.SUCCEEDED,
+        )
+        outcome, calls = self.invoke(
+            governed_action=self.governed_action,
+            known_payment_attempts=(unrelated,),
+        )
+
+        self.assertEqual(Decision.ALLOW, outcome.decision)
+        self.assertEqual(["checkout"], calls)
+        self.assertEqual(1, outcome.callback_count)
+        self.assertEqual(
+            KnownPaymentAttemptPreflightStatus.CLEAR,
+            outcome.known_payment_attempt_preflight_fact.status,
+        )
+        self.assertEqual(
+            ("known_payment_attempt_preflight_clear",),
+            outcome.known_payment_attempt_preflight_fact.reason_codes,
+        )
+
+    def test_unrelated_malformed_attempt_is_clear_and_checkout_still_runs(self) -> None:
+        unrelated = replace(
+            self.execution,
+            payment_id="",
+            request_id="request-unrelated-malformed",
+            transaction_object_ref=None,
+            status="INVALID_STATUS",  # type: ignore[arg-type]
+            amount=Decimal("999999.00"),
+            currency="INVALID",
+            order_id="",
+            authority_ref=None,
+            agent_ref=None,
+            payee=None,
+        )
+        outcome, calls = self.invoke(
+            governed_action=self.governed_action,
+            known_payment_attempts=(unrelated,),
+        )
+
+        self.assertEqual(Decision.ALLOW, outcome.decision)
+        self.assertEqual(["checkout"], calls)
+        self.assertEqual(1, outcome.callback_count)
+        self.assertEqual(
+            KnownPaymentAttemptPreflightStatus.CLEAR,
+            outcome.known_payment_attempt_preflight_fact.status,
+        )
+        self.assertEqual(
+            ("known_payment_attempt_preflight_clear",),
+            outcome.known_payment_attempt_preflight_fact.reason_codes,
+        )
+        self.assertEqual(
+            (),
+            outcome.known_payment_attempt_preflight_fact.related_attempt_refs,
+        )
+
+    def test_mixed_known_attempt_inventories_are_order_independent(self) -> None:
+        unrelated_malformed = replace(
+            self.execution,
+            payment_id="",
+            request_id="request-unrelated-malformed",
+            transaction_object_ref=None,
+            status="INVALID_STATUS",  # type: ignore[arg-type]
+        )
+        unrelated_valid = replace(
+            self.execution,
+            payment_id="webshop-payment-unrelated-valid",
+            request_id="request-unrelated-valid",
+            transaction_object_ref="request-unrelated-valid",
+            status=PaymentStatus.SUCCEEDED,
+        )
+        same_request_valid = replace(
+            self.execution,
+            payment_id="webshop-payment-existing-success",
+            status=PaymentStatus.SUCCEEDED,
+        )
+        same_request_malformed = replace(
+            self.execution,
+            payment_id="",
+            status=PaymentStatus.SUCCEEDED,
+        )
+
+        blocked_results = []
+        for inventory in (
+            (unrelated_malformed, same_request_valid),
+            (same_request_valid, unrelated_malformed),
+        ):
+            outcome, calls = self.invoke(
+                governed_action=self.governed_action,
+                known_payment_attempts=inventory,
+            )
+            self.assertEqual(Decision.DENY, outcome.decision)
+            self.assert_blocked(outcome, calls, Decision.DENY)
+            blocked_results.append(outcome.known_payment_attempt_preflight_fact.to_dict())
+        self.assertEqual(blocked_results[0], blocked_results[1])
+
+        indeterminate_results = []
+        for inventory in (
+            (unrelated_valid, same_request_malformed),
+            (same_request_malformed, unrelated_valid),
+        ):
+            outcome, calls = self.invoke(
+                governed_action=self.governed_action,
+                known_payment_attempts=inventory,
+            )
+            self.assertEqual(Decision.INDETERMINATE, outcome.decision)
+            self.assert_blocked(outcome, calls, Decision.INDETERMINATE)
+            indeterminate_results.append(
+                outcome.known_payment_attempt_preflight_fact.to_dict()
+            )
+        self.assertEqual(indeterminate_results[0], indeterminate_results[1])
+
+        second_unrelated_malformed = replace(
+            unrelated_malformed,
+            request_id="request-unrelated-malformed-2",
+            payment_id=None,  # type: ignore[arg-type]
+            status=None,  # type: ignore[arg-type]
+        )
+        clear_results = []
+        for inventory in (
+            (unrelated_malformed, second_unrelated_malformed),
+            (second_unrelated_malformed, unrelated_malformed),
+        ):
+            outcome, calls = self.invoke(
+                governed_action=self.governed_action,
+                known_payment_attempts=inventory,
+            )
+            self.assertEqual(Decision.ALLOW, outcome.decision)
+            self.assertEqual(["checkout"], calls)
+            self.assertEqual(1, outcome.callback_count)
+            clear_results.append(outcome.known_payment_attempt_preflight_fact.to_dict())
+        self.assertEqual(clear_results[0], clear_results[1])
+
+    def test_same_request_malformed_attempt_remains_indeterminate(self) -> None:
+        same_request_malformed = replace(
+            self.execution,
+            payment_id="",
+            status=PaymentStatus.SUCCEEDED,
+        )
+        outcome, calls = self.invoke(
+            governed_action=self.governed_action,
+            known_payment_attempts=(same_request_malformed,),
+        )
+
+        self.assertEqual(Decision.INDETERMINATE, outcome.decision)
+        self.assert_blocked(outcome, calls, Decision.INDETERMINATE)
+        self.assertEqual(
+            KnownPaymentAttemptPreflightStatus.INDETERMINATE,
+            outcome.known_payment_attempt_preflight_fact.status,
+        )
+        self.assertIn(
+            "preflight:known_payment_attempt_ref_missing",
+            outcome.reason_codes,
+        )
+
+    def test_pending_and_unknown_known_attempts_do_not_define_new_policy(self) -> None:
+        for status in (PaymentStatus.PENDING, PaymentStatus.UNKNOWN):
+            with self.subTest(status=status):
+                attempt = replace(
+                    self.execution,
+                    payment_id=f"webshop-payment-{status.value.lower()}",
+                    status=status,
+                )
+                outcome, calls = self.invoke(
+                    governed_action=self.governed_action,
+                    known_payment_attempts=(attempt,),
+                )
+                self.assertEqual(Decision.ALLOW, outcome.decision)
+                self.assertEqual(["checkout"], calls)
+                self.assertEqual(
+                    KnownPaymentAttemptPreflightStatus.CLEAR,
+                    outcome.known_payment_attempt_preflight_fact.status,
+                )
+                self.assertIn(
+                    "pending_or_unknown_attempt_policy_not_defined",
+                    outcome.known_payment_attempt_preflight_fact.limitations,
+                )
+
+    def test_invalid_known_attempt_outer_types_fail_closed_without_attribute_reads(self) -> None:
+        class PaymentSubclass(PaymentExecutionRecord):
+            pass
+
+        class ExplodingProxy:
+            def __getattribute__(self, name):
+                raise AssertionError(f"unexpected attribute read: {name}")
+
+        invalid_inputs = (
+            [],
+            {},
+            (None,),
+            (ExplodingProxy(),),
+            (PaymentSubclass(**self.execution.__dict__),),
+        )
+        for attempts in invalid_inputs:
+            with self.subTest(attempts_type=type(attempts).__name__):
+                outcome, calls = self.invoke(
+                    governed_action=self.governed_action,
+                    known_payment_attempts=attempts,
+                )
+                self.assertEqual(Decision.INDETERMINATE, outcome.decision)
+                self.assert_blocked(outcome, calls, Decision.INDETERMINATE)
+                self.assertEqual(
+                    KnownPaymentAttemptPreflightStatus.INDETERMINATE,
+                    outcome.known_payment_attempt_preflight_fact.status,
+                )
+                self.assertEqual(0, outcome.callback_count)
+
+    def test_empty_known_attempt_input_preserves_prior_gate_result(self) -> None:
+        omitted, omitted_calls = self.invoke(governed_action=self.governed_action)
+        explicit, explicit_calls = self.invoke(
+            governed_action=self.governed_action,
+            known_payment_attempts=(),
+        )
+
+        self.assertEqual(omitted, explicit)
+        self.assertEqual(["checkout"], omitted_calls)
+        self.assertEqual(["checkout"], explicit_calls)
+        self.assertIsNone(explicit.known_payment_attempt_preflight_fact)
 
     def test_duplicate_request_is_denied_before_runtime_gate(self) -> None:
         outcome, calls = self.invoke(seen_request_ids=(self.bound_request.request_id,))
