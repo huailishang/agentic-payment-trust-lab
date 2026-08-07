@@ -1,0 +1,65 @@
+{
+  "task_id": "P9-PRODUCT-AUTHORITATIVE-TRACE-REFERENCE-MODEL-GROUNDING-REPAIR-V1",
+  "check_count": 1400,
+  "passed_count": 1398,
+  "failed_count": 2,
+  "failed": [
+    {
+      "name": "projection hash identity formula frozen in structured registry",
+      "passed": false,
+      "detail": {
+        "governed-action-binding-fact-trace/v2": {
+          "mode": "PROJECTION_HASH_IDENTITY",
+          "template": null
+        },
+        "governed-payment-action-missing-id-trace/v2": {
+          "mode": "PROJECTION_HASH_IDENTITY",
+          "template": null
+        },
+        "known-payment-attempt-preflight-fact-trace/v2": {
+          "mode": "PROJECTION_HASH_IDENTITY",
+          "template": null
+        },
+        "payment-recovery-result-trace/v2": {
+          "mode": "PROJECTION_HASH_IDENTITY",
+          "template": null
+        },
+        "payment-status-conflict-fact-trace/v2": {
+          "mode": "PROJECTION_HASH_IDENTITY",
+          "template": null
+        },
+        "runtime-gate-record-trace/v2": {
+          "mode": "PROJECTION_HASH_IDENTITY",
+          "template": null
+        },
+        "validation-result-trace/v2": {
+          "mode": "PROJECTION_HASH_IDENTITY",
+          "template": null
+        },
+        "webshop-buy-now-gate-outcome-result-trace/v2": {
+          "mode": "PROJECTION_HASH_IDENTITY",
+          "template": null
+        },
+        "webshop-payment-fulfilment-outcome-result-trace/v2": {
+          "mode": "PROJECTION_HASH_IDENTITY",
+          "template": null
+        }
+      }
+    },
+    {
+      "name": "projection hash identity payload frozen in authoritative design",
+      "passed": false,
+      "detail": "exact source identity formula must be implementable without reading EV builder code"
+    }
+  ],
+  "summary": {
+    "registry_schemas": 16,
+    "tasks": 12,
+    "t10_events": 12,
+    "t10_unique_bindings": 11,
+    "head": "979ffc505bec0b626858d0d186f655867b5491bf",
+    "protected_tracked_changes": [],
+    "protected_untracked_changes": []
+  },
+  "verdict": "BLOCKING_FINDINGS_PRESENT"
+}

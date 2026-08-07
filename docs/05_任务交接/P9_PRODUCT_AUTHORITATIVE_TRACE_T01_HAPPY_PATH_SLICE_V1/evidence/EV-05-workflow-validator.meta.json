@@ -1,0 +1,20 @@
+{
+  "label": "EV-05",
+  "command_argv": [
+    "python3",
+    "/mnt/c/Users/HuailiShang/.codex/skills/evaluator-executor-workflow/scripts/validate_workflow.py",
+    "--repo",
+    "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+    "--current",
+    "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/CURRENT.md"
+  ],
+  "command_display": "python3 /mnt/c/Users/HuailiShang/.codex/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab --current /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/CURRENT.md",
+  "working_directory": ".",
+  "exit_code": 0,
+  "stdout_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-05-workflow-validator.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-05-workflow-validator.stderr.log",
+  "stdout_bytes": 63,
+  "stderr_bytes": 0,
+  "stdout_sha256": "36aa52b16c5e78ef4aa0ec3f226e9c6784e3b0514b25d3f75586d11f80826685",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

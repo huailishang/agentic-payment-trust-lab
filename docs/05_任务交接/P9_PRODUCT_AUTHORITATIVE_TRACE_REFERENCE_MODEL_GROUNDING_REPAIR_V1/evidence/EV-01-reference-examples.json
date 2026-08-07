@@ -1,0 +1,136 @@
+{
+  "binding_formula": "TraceSourceBinding:sha256(canonical-json({source_object_type,source_object_ref,projection_schema,projection}))",
+  "canonical_rules": {
+    "Decimal": "finite only; fixed notation; trim trailing zeros and decimal point; negative zero becomes 0; never float",
+    "Enum": ".value then canonicalize",
+    "bool": "JSON true/false",
+    "datetime": "source datetime.isoformat(); timezone requirement belongs to source object contract",
+    "dict": "string keys; recursive canonicalization; lexicographic JSON key order",
+    "float": "forbidden; fail closed",
+    "int": "base-10 JSON integer; bool is not int",
+    "null": "JSON null",
+    "str": "unchanged Unicode string",
+    "tuple/list": "JSON array preserving order"
+  },
+  "collision_example": {
+    "new": {
+      "first": "Order:ab",
+      "not_equal": true,
+      "second": "Order:a"
+    },
+    "old_unsafe": {
+      "a+bc": "abc",
+      "ab+c": "abc"
+    },
+    "rule": "typed templates never concatenate multiple unescaped fields"
+  },
+  "decimal_examples": {
+    "-0": "0",
+    "0": "0",
+    "0.10": "0.1",
+    "1": "1",
+    "1.00": "1",
+    "1000.000": "1000"
+  },
+  "decimal_examples_sha256": "7f50c2d41d35aad95c173ec002bdd928bff69c644195cad78485bcd1a5674751",
+  "duplicate_binding_verdict": "INVALID for every repeated binding_ref, whether bytes are identical or conflicting",
+  "fixed_binding_examples": {
+    "ACTION_BINDING_FACT": {
+      "binding_ref": "TraceSourceBinding:sha256:e781ad542cde19e1b26ce9f3a10d5f47d16843a783e87b03f81dba65e615a4ab",
+      "projection": {
+        "action_id": "project-baseline-action-1",
+        "checked_action_type": "execute_payment",
+        "checked_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "checked_payment_ref": "project-baseline-payment-1",
+        "checked_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "reason_codes": [
+          "governed_action_binding_valid"
+        ],
+        "status": "VALID"
+      },
+      "projection_schema": "governed-action-binding-fact-trace/v2",
+      "source_object_ref": "GovernedActionBindingFact:projection-sha256:74603b9f9e87329f3c5b54387741a5bd4a3ba1054a37c8db718edb57835aa34a",
+      "source_object_type": "GovernedActionBindingFact"
+    },
+    "AUTHORIZED_ORDER_SNAPSHOT": {
+      "binding_ref": "TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc",
+      "projection": {
+        "authority_version_ref": "experiment-authority-v1",
+        "currency": "USD",
+        "mandate_ref": "experiment-context-mandate-ref-v1",
+        "merchant": "webshop-experiment-merchant-v1",
+        "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+        "order_version": "webshop-v1",
+        "payee": "webshop-experiment-payee-v1",
+        "total_amount": "877.8"
+      },
+      "projection_schema": "order-snapshot-trace/v2",
+      "source_object_ref": "Order:webshop-order-9eccab2b0154fca4af27f322:webshop-v1",
+      "source_object_type": "Order"
+    },
+    "CURRENT_PAYMENT_CANDIDATE": {
+      "binding_ref": "TraceSourceBinding:sha256:a1ac5292694802a04c5799b80f2856f8ee2736a103d24fba00e918f435e483ea",
+      "projection": {
+        "agent_ref": "webshop-agent-1",
+        "amount": "877.8",
+        "authority_ref": "experiment-context-mandate-ref-v1",
+        "currency": "USD",
+        "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+        "payee": "webshop-experiment-payee-v1",
+        "payment_id": "project-baseline-payment-1",
+        "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "status": "PENDING",
+        "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+      },
+      "projection_schema": "payment-execution-record-trace/v2",
+      "source_object_ref": "PaymentExecutionRecord:project-baseline-payment-1",
+      "source_object_type": "PaymentExecutionRecord"
+    },
+    "CURRENT_REQUEST": {
+      "binding_ref": "TraceSourceBinding:sha256:4a49cc543a483038d2c2b3600da1011246a2b9c1230558c7bc553cfee9b5a77c",
+      "projection": {
+        "agent_id": "webshop-agent-1",
+        "amount": "877.8",
+        "authority_ref": "experiment-context-mandate-ref-v1",
+        "authority_version_ref": "experiment-authority-v1",
+        "currency": "USD",
+        "merchant": "webshop-experiment-merchant-v1",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "payee": "webshop-experiment-payee-v1",
+        "request_id": "webshop-request-6c6a78eddffdb552c2af66ef"
+      },
+      "projection_schema": "transaction-request-trace/v2",
+      "source_object_ref": "TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef",
+      "source_object_type": "TransactionRequest"
+    },
+    "FINAL_OUTCOME": {
+      "binding_ref": "TraceSourceBinding:sha256:9a917ff5d59e0f8a39278f6859f72bfb34c67a80461be26e8c75c99de3e66944",
+      "projection": {
+        "callback_count": 0,
+        "callback_result_ref": null,
+        "checkout_executed": false,
+        "decision": "DENY",
+        "limitations": [
+          "offline_interception_only",
+          "no_webshop_runtime_execution",
+          "no_real_buy_now_execution",
+          "no_real_payment_or_fulfilment",
+          "instruction_is_not_authorization_mandate",
+          "checkout_callback_is_injected_test_seam"
+        ],
+        "reason_codes": [
+          "p1:duplicate_request",
+          "p1:upstream_prepayment_non_allow",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "preflight:known_payment_attempt_duplicate_succeeded"
+        ]
+      },
+      "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v2",
+      "source_object_ref": "WebShopBuyNowGateOutcome:projection-sha256:ff91f0ebcc747768c4f4304c986db7ef7e9e9ef18287987606fff73a1110ec92",
+      "source_object_type": "WebShopBuyNowGateOutcome"
+    }
+  },
+  "task_id": "P9-PRODUCT-AUTHORITATIVE-TRACE-REFERENCE-MODEL-GROUNDING-REPAIR-V1"
+}

@@ -1,0 +1,15 @@
+test_duplicate_matching_profiles_fail_closed (tests.test_webshop_prepayment_trace_toolkit.WebShopPrepaymentTraceToolkitTest.test_duplicate_matching_profiles_fail_closed) ... ok
+test_existing_authoritative_trace_is_never_overwritten (tests.test_webshop_prepayment_trace_toolkit.WebShopPrepaymentTraceToolkitTest.test_existing_authoritative_trace_is_never_overwritten) ... ok
+test_invalid_profile_container_or_profile_type_fails_closed (tests.test_webshop_prepayment_trace_toolkit.WebShopPrepaymentTraceToolkitTest.test_invalid_profile_container_or_profile_type_fails_closed) ... ok
+test_missing_or_invalid_authority_and_bound_request_facts_fail_closed (tests.test_webshop_prepayment_trace_toolkit.WebShopPrepaymentTraceToolkitTest.test_missing_or_invalid_authority_and_bound_request_facts_fail_closed) ... ok
+test_mixed_item_price_directions_fail_closed (tests.test_webshop_prepayment_trace_toolkit.WebShopPrepaymentTraceToolkitTest.test_mixed_item_price_directions_fail_closed) ... ok
+test_positive_selector_uses_order_value_direction_for_t02_t03_and_payee_for_t04 (tests.test_webshop_prepayment_trace_toolkit.WebShopPrepaymentTraceToolkitTest.test_positive_selector_uses_order_value_direction_for_t02_t03_and_payee_for_t04) ... ok
+test_price_plus_payee_change_fails_closed (tests.test_webshop_prepayment_trace_toolkit.WebShopPrepaymentTraceToolkitTest.test_price_plus_payee_change_fails_closed) ... ok
+test_same_price_reason_codes_select_opposite_profiles_only_from_order_values (tests.test_webshop_prepayment_trace_toolkit.WebShopPrepaymentTraceToolkitTest.test_same_price_reason_codes_select_opposite_profiles_only_from_order_values) ... ok
+test_t02_t03_t04_build_exact_valid_six_event_six_binding_product_trace (tests.test_webshop_prepayment_trace_toolkit.WebShopPrepaymentTraceToolkitTest.test_t02_t03_t04_build_exact_valid_six_event_six_binding_product_trace) ... ok
+test_zero_match_for_unchanged_price_even_when_price_reason_codes_claim_change (tests.test_webshop_prepayment_trace_toolkit.WebShopPrepaymentTraceToolkitTest.test_zero_match_for_unchanged_price_even_when_price_reason_codes_claim_change) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.005s
+
+OK

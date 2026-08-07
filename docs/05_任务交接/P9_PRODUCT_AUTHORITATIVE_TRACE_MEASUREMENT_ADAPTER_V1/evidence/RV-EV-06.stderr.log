@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MEASUREMENT_ADAPTER_V1/evidence/RV-EV-05-review-check.py", line 197, in <module>
+    main()
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MEASUREMENT_ADAPTER_V1/evidence/RV-EV-05-review-check.py", line 131, in main
+    projection.update({field: actual[field] for field in NON_TRACE_FIELDS})
+                              ~~~~~~^^^^^^^
+KeyError: 'known_payment_attempt_preflight_status'

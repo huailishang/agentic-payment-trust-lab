@@ -1,0 +1,15 @@
+test_amount_override_exposes_structured_untrusted_lineage (tests.test_attack_overlay.AttackOverlayTest.test_amount_override_exposes_structured_untrusted_lineage) ... ok
+test_benign_overlay_has_no_lineage_facts_and_preserves_policy_result (tests.test_attack_overlay.AttackOverlayTest.test_benign_overlay_has_no_lineage_facts_and_preserves_policy_result) ... ok
+test_benign_untrusted_content_does_not_create_false_alarm (tests.test_attack_overlay.AttackOverlayTest.test_benign_untrusted_content_does_not_create_false_alarm) ... ok
+test_first_suite_contains_benign_and_attack_cases (tests.test_attack_overlay.AttackOverlayTest.test_first_suite_contains_benign_and_attack_cases) ... ok
+test_float_override_preserves_policy_and_gets_stable_lineage_digest (tests.test_attack_overlay.AttackOverlayTest.test_float_override_preserves_policy_and_gets_stable_lineage_digest) ... ok
+test_overlay_consumer_calls_shared_lineage_resolver (tests.test_attack_overlay.AttackOverlayTest.test_overlay_consumer_calls_shared_lineage_resolver) ... ok
+test_suite_policy_projection_is_unchanged_and_report_adds_lineage_only (tests.test_attack_overlay.AttackOverlayTest.test_suite_policy_projection_is_unchanged_and_report_adds_lineage_only) ... ok
+test_unknown_override_root_is_rejected (tests.test_attack_overlay.AttackOverlayTest.test_unknown_override_root_is_rejected) ... ok
+test_untrusted_override_cannot_change_payment_amount (tests.test_attack_overlay.AttackOverlayTest.test_untrusted_override_cannot_change_payment_amount) ... ok
+test_untrusted_override_cannot_swap_merchant_or_agent (tests.test_attack_overlay.AttackOverlayTest.test_untrusted_override_cannot_swap_merchant_or_agent) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.067s
+
+OK

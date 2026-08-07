@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-03",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T09_UNKNOWN_PAYMENT_RECOVERY_SLICE_V1/evidence/EV-03-baseline-impact-audit.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T09_UNKNOWN_PAYMENT_RECOVERY_SLICE_V1/evidence/EV-03-baseline-impact-audit.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-06T09:03:42.502905+00:00",
+  "finished_at_utc": "2026-08-06T09:03:43.264637+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-03.stdout.log",
+  "stderr_path": "EV-03.stderr.log",
+  "stdout_bytes": 87181,
+  "stderr_bytes": 0,
+  "stdout_sha256": "6b52d7f0929759f744d25effc8f659837a94fb12ee8cf20840a805942238de8d",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

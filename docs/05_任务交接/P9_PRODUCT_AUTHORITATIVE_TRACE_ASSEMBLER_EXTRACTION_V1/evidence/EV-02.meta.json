@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-02",
+  "command_argv": [
+    "/usr/bin/bash",
+    "-lc",
+    "PYTHONPATH=src:. python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_ASSEMBLER_EXTRACTION_V1/evidence/EV-02-trace-snapshot-audit.py'"
+  ],
+  "command_display": "/usr/bin/bash -lc 'PYTHONPATH=src:. python3 '\"'\"'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_ASSEMBLER_EXTRACTION_V1/evidence/EV-02-trace-snapshot-audit.py'\"'\"''",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-06T08:10:48.905288+00:00",
+  "finished_at_utc": "2026-08-06T08:10:49.472562+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-02.stdout.log",
+  "stderr_path": "EV-02.stderr.log",
+  "stdout_bytes": 517,
+  "stderr_bytes": 0,
+  "stdout_sha256": "d455ffeb6146f19d15be28403af3db17c6bd271b3fc8476dcc67012dbce1ae0f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

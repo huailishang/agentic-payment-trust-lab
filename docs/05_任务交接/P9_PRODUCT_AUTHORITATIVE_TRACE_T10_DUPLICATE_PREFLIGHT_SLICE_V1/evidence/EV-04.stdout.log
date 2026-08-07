@@ -1,0 +1,13 @@
+output=docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T10_DUPLICATE_PREFLIGHT_SLICE_V1/evidence/EV-04-t10-product-trace.json
+output_sha256=e8d1cd594a2e72aaec041f3ccfbb5d856aadc886c252ef3ce41f89d6686d5938
+validation=VALID
+events=12
+unique_bindings=11
+order_roles_share_binding=true
+current_and_historical_payment_distinct=true
+all_relations_resolved=true
+result_projection_excludes_trace=true
+repeat_build_identical=true
+ambiguous_history_fails_closed=true
+callback_count=0
+RESULT=PASS

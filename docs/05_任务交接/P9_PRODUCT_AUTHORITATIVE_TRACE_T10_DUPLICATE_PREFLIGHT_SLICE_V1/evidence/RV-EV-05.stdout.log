@@ -1,0 +1,16 @@
+focused_tests=92/92
+full_tests=486/486
+product_trace=0/12->1/12
+target_GESR=0/12->1/12
+target_matched_tasks=1
+t10_trace=VALID
+t10_events=12
+t10_bindings=11
+non_trace_projection_sha256=6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc
+runner_sha256=cbeafe9a3badcc5a69e7972420a5c90bb815f84bdd0d5bcde3d05f739c072100
+measurement_module_sha256=07c7341b62440ea22a6fb22daa2e5e8b48163bc70ba534ac9cb065ffb001414a
+tracked_product_diff=["src/agentic_payment_experiment/webshop_runtime_gate.py"]
+known_diagnostic_gap=trace_provenance_not_separated
+actual_product_source=webshop_gate_outcome
+actual_replay_source=runner_constructed_from_fixed_facts
+RESULT=PASS

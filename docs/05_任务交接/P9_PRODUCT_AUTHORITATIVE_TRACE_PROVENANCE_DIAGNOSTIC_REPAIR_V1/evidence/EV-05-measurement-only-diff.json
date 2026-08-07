@@ -1,0 +1,162 @@
+{
+  "comparisons": {
+    "baseline": {
+      "after_normalized_sha256": "f1aa119f14e88b7a15bdcc40760391692d6ba5c9a5d795f093d0bda0d8dfb5bc",
+      "after_output_sha256": "992653a63194c391ae30f7c48bf02c34ed50cfe0b87c12914851f8572f95e26a",
+      "before_output_sha256": "0a7054d9d34d94d9d9b34d87010f886c9e523b679ef9fec2391fa1af77a8bfd1",
+      "changes": [
+        {
+          "after": "f1aa119f14e88b7a15bdcc40760391692d6ba5c9a5d795f093d0bda0d8dfb5bc",
+          "before": "612a27f2584dfbe2dcb45e7ab254da31608488cb75c9e1a7a9202c7d14ae0c70",
+          "path": "$.repeatability.normalized_sha256[0]"
+        },
+        {
+          "after": "f1aa119f14e88b7a15bdcc40760391692d6ba5c9a5d795f093d0bda0d8dfb5bc",
+          "before": "612a27f2584dfbe2dcb45e7ab254da31608488cb75c9e1a7a9202c7d14ae0c70",
+          "path": "$.repeatability.normalized_sha256[1]"
+        },
+        {
+          "after": "f1aa119f14e88b7a15bdcc40760391692d6ba5c9a5d795f093d0bda0d8dfb5bc",
+          "before": "612a27f2584dfbe2dcb45e7ab254da31608488cb75c9e1a7a9202c7d14ae0c70",
+          "path": "$.repeatability.normalized_sha256[2]"
+        },
+        {
+          "after": "70bf2142c303c01c6fb3270fb364c46bc220b821c5e554fa2e6af3355dc57dd3",
+          "before": "cbeafe9a3badcc5a69e7972420a5c90bb815f84bdd0d5bcde3d05f739c072100",
+          "path": "$.runner_sha256"
+        },
+        {
+          "after": true,
+          "before": false,
+          "path": "$.task_results[9].measurement_diagnostics.trace_provenance_separated"
+        },
+        {
+          "after": true,
+          "before": false,
+          "path": "$.task_results[9].measurement_diagnostics_matched"
+        },
+        {
+          "after": [],
+          "before": [
+            "trace_provenance_not_separated"
+          ],
+          "path": "$.task_results[9].measurement_integrity_gaps"
+        }
+      ],
+      "gesr_metric": {
+        "count": 0,
+        "denominator": 12,
+        "rate": "0.000000"
+      },
+      "non_trace_projection_sha256": "6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc",
+      "product_trace_metric": {
+        "count": 1,
+        "denominator": 12,
+        "rate": "0.083333"
+      },
+      "t10_capability_gaps": [
+        "decision_mismatch:expected=ALLOW",
+        "final_environment_state_mismatch:expected={'payment_status': 'UNKNOWN', 'fulfilment_status': 'PENDING', 'task_status': 'UNKNOWN', 'remediation_status': 'REQUIRED', 'retry_allowed': False, 'duplicate_payment_blocked': True, 'trusted_state_changed': False}",
+        "reason_codes_mismatch:expected=['duplicate:payment_blocked']",
+        "evidence_stages_missing:lifecycle"
+      ],
+      "t10_matched": false
+    },
+    "target": {
+      "after_normalized_sha256": "5593a59562b42378dd95f78c4a95bc906884b515cad6acac6f20e4c81b4c8421",
+      "after_output_sha256": "4d447be2ed752455dab1c29e0da838c515fecebf379c573b6991ae216522f95b",
+      "before_output_sha256": "ada77bbe2769562ef1298bdf36e796fd8d558cdea1fff1a0c003a04322dfb335",
+      "changes": [
+        {
+          "after": "5593a59562b42378dd95f78c4a95bc906884b515cad6acac6f20e4c81b4c8421",
+          "before": "a77e114bd9c65ad61f045e58e8be618fe337dc1f441c91a61305d2749dc0b9bb",
+          "path": "$.repeatability.normalized_sha256[0]"
+        },
+        {
+          "after": "5593a59562b42378dd95f78c4a95bc906884b515cad6acac6f20e4c81b4c8421",
+          "before": "a77e114bd9c65ad61f045e58e8be618fe337dc1f441c91a61305d2749dc0b9bb",
+          "path": "$.repeatability.normalized_sha256[1]"
+        },
+        {
+          "after": "5593a59562b42378dd95f78c4a95bc906884b515cad6acac6f20e4c81b4c8421",
+          "before": "a77e114bd9c65ad61f045e58e8be618fe337dc1f441c91a61305d2749dc0b9bb",
+          "path": "$.repeatability.normalized_sha256[2]"
+        },
+        {
+          "after": "70bf2142c303c01c6fb3270fb364c46bc220b821c5e554fa2e6af3355dc57dd3",
+          "before": "cbeafe9a3badcc5a69e7972420a5c90bb815f84bdd0d5bcde3d05f739c072100",
+          "path": "$.runner_sha256"
+        },
+        {
+          "after": true,
+          "before": false,
+          "path": "$.task_results[9].measurement_diagnostics.trace_provenance_separated"
+        },
+        {
+          "after": true,
+          "before": false,
+          "path": "$.task_results[9].measurement_diagnostics_matched"
+        },
+        {
+          "after": [],
+          "before": [
+            "trace_provenance_not_separated"
+          ],
+          "path": "$.task_results[9].measurement_integrity_gaps"
+        }
+      ],
+      "gesr_metric": {
+        "count": 1,
+        "denominator": 12,
+        "rate": "0.083333"
+      },
+      "non_trace_projection_sha256": "6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc",
+      "product_trace_metric": {
+        "count": 1,
+        "denominator": 12,
+        "rate": "0.083333"
+      },
+      "t10_capability_gaps": [],
+      "t10_matched": true
+    }
+  },
+  "frozen_hashes": {
+    "samples/evaluation/project_impact_baseline_v1.json": "4ed2e1f35325cb840de834f5e8c964ff187c291133c958a2ee22111735b615f5",
+    "samples/evaluation/project_impact_t10_preflight_target_v1.json": "f5dc05501c79958b197ea7a727e12660756145da870b897496a9ccac714cacee",
+    "src/agentic_payment_experiment/authoritative_trace.py": "07c7341b62440ea22a6fb22daa2e5e8b48163bc70ba534ac9cb065ffb001414a",
+    "src/agentic_payment_experiment/webshop_authoritative_trace.py": "e6864905f4b67ef3024b7f7118b547c27c586127c60d537a3f5bab5a48f1e2c9",
+    "src/agentic_payment_experiment/webshop_runtime_gate.py": "d148c1aaa5a77b4f551bf1f045180c4127e4d45731884fa611af421e24c5b3ec"
+  },
+  "negative_truth_table": {
+    "blank_product_source": false,
+    "blank_replay_provenance": false,
+    "identical_provenance": false,
+    "product_absent_with_source": false,
+    "product_absent_with_stage": false,
+    "product_source_missing": false,
+    "product_stage_missing": false,
+    "replay_absent_with_provenance": false,
+    "replay_provenance_missing": false,
+    "unexpected_replay_provenance": false,
+    "unknown_product_status": false,
+    "unknown_replay_status": false
+  },
+  "non_trace_projection_sha256": "6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc",
+  "positive_truth_table": {
+    "both_distinct": true,
+    "neither_present": true,
+    "product_only": true,
+    "replay_only": true
+  },
+  "registry_hashes": {
+    "formula_registry": "2d8f06ba7c5ca9e35c4957412c0b92da5171c95e135e0bb14b5a61d1bf3309fd",
+    "profiles": "6b53b88d5413ae9dd6d536089a22efe3f32563b950f61604c79f136c03d720c2",
+    "projection_registry": "45aeaa0abb46fbf66573be1ee417bafb41c99802061bc5b3cb63549313c049b4",
+    "runtime_contract": "4062944a6b3dfa5ca8042bc4f6a0ed429a75f00b8875c71c844e7eb0eb304f0e"
+  },
+  "runner": {
+    "new_sha256": "70bf2142c303c01c6fb3270fb364c46bc220b821c5e554fa2e6af3355dc57dd3",
+    "old_sha256": "cbeafe9a3badcc5a69e7972420a5c90bb815f84bdd0d5bcde3d05f739c072100"
+  },
+  "schema": "provenance-diagnostic-repair-evidence/v1"
+}

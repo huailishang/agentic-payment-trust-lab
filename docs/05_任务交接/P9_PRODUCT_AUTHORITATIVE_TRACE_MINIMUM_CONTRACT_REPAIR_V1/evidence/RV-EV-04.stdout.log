@@ -1,0 +1,70 @@
+{
+  "schema": "evaluator-t10-profile-consistency-audit/v1",
+  "task_id": "P9-PRODUCT-AUTHORITATIVE-TRACE-MINIMUM-CONTRACT-REPAIR-V1",
+  "facts": {
+    "t10_entity_roles": [
+      "ACTION_BINDING_FACT",
+      "AUTHORITY",
+      "AUTHORIZED_ORDER_SNAPSHOT",
+      "CURRENT_ORDER_SNAPSHOT",
+      "CURRENT_PAYMENT_CANDIDATE",
+      "CURRENT_REQUEST",
+      "FINAL_OUTCOME",
+      "GOVERNED_ACTION",
+      "HISTORICAL_SUCCEEDED_PAYMENT",
+      "KNOWN_PAYMENT_PREFLIGHT_FACT",
+      "RUNTIME_GATE_OBSERVATION"
+    ],
+    "t10_event_sequence": [
+      "AUTHORITY_RECORDED",
+      "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+      "REQUEST_RECORDED",
+      "ACTION_RECORDED[CURRENT_PAYMENT_CANDIDATE]",
+      "ACTION_BINDING_DECISION_RECORDED",
+      "PAYMENT_OUTCOME_RECORDED[HISTORICAL_SUCCEEDED_PAYMENT]",
+      "KNOWN_PAYMENT_PREFLIGHT_RECORDED",
+      "PREPAYMENT_DECISION_RECORDED",
+      "RUNTIME_DECISION_RECORDED",
+      "RESULT_RECORDED"
+    ],
+    "authorized_role_declared": true,
+    "authorized_event_present": false,
+    "next_slice_ambiguous_action": true,
+    "profile_field_matrix_present": false
+  },
+  "findings": [
+    {
+      "id": "F-07A",
+      "severity": "BLOCKING",
+      "title": "T10 角色清单与事件序列不一致",
+      "details": {
+        "declared_role": "AUTHORIZED_ORDER_SNAPSHOT",
+        "event_present": false,
+        "current_snapshot_event_present": true,
+        "event_sequence": [
+          "AUTHORITY_RECORDED",
+          "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+          "REQUEST_RECORDED",
+          "ACTION_RECORDED[CURRENT_PAYMENT_CANDIDATE]",
+          "ACTION_BINDING_DECISION_RECORDED",
+          "PAYMENT_OUTCOME_RECORDED[HISTORICAL_SUCCEEDED_PAYMENT]",
+          "KNOWN_PAYMENT_PREFLIGHT_RECORDED",
+          "PREPAYMENT_DECISION_RECORDED",
+          "RUNTIME_DECISION_RECORDED",
+          "RESULT_RECORDED"
+        ]
+      }
+    },
+    {
+      "id": "F-07B",
+      "severity": "BLOCKING",
+      "title": "T10 ACTION_RECORDED 的 entity 与 source-object 映射未冻结",
+      "details": {
+        "coverage_action": "ACTION_RECORDED[CURRENT_PAYMENT_CANDIDATE]",
+        "next_slice_action": "ACTION_RECORDED [GOVERNED_ACTION / CURRENT_PAYMENT_CANDIDATE]",
+        "event_contract": "one entity_role + one source_object_type/ref",
+        "missing": "profile-specific exact mapping for entity_type/entity_role/source_object_type/projection/value paths"
+      }
+    }
+  ]
+}

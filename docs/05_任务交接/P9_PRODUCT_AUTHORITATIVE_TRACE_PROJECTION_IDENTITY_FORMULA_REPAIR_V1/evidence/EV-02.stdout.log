@@ -1,0 +1,64 @@
+checks_total=401
+checks_passed=401
+checks_failed=0
+project_input_count=56
+allowed_inputs=
+- docs/03_架构设计/产品权威轨迹最小合同_v1.md
+- docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/MEASUREMENT_ADAPTER.md
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/NEXT_SLICE.md
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PROJECTION_IDENTITY_FORMULA_REPAIR_V1/evidence/EV-01-coverage-projection-identity-formula.json
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PROJECTION_IDENTITY_FORMULA_REPAIR_V1/evidence/EV-01-projection-identity-vectors.json
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REFERENCE_MODEL_GROUNDING_REPAIR_V1/evidence/EV-01-coverage-reference-grounding.json
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REFERENCE_MODEL_GROUNDING_REPAIR_V1/evidence/EV-01-reference-examples.json
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REFERENCE_MODEL_GROUNDING_REPAIR_V1/evidence/EV-01-t10-grounded-instance.json
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REFERENCE_MODEL_GROUNDING_REPAIR_V1/evidence/EV-01-t12-sidecar-examples.json
+- src/agentic_payment_experiment/__init__.py
+- src/agentic_payment_experiment/__main__.py
+- src/agentic_payment_experiment/adapters/__init__.py
+- src/agentic_payment_experiment/adapters/acp.py
+- src/agentic_payment_experiment/adapters/ap2.py
+- src/agentic_payment_experiment/adapters/webshop.py
+- src/agentic_payment_experiment/adapters/x402.py
+- src/agentic_payment_experiment/attack_overlay.py
+- src/agentic_payment_experiment/evaluator.py
+- src/agentic_payment_experiment/exception_matrix.py
+- src/agentic_payment_experiment/html_report.py
+- src/agentic_payment_experiment/interactive_lab.py
+- src/agentic_payment_experiment/interactive_server.py
+- src/agentic_payment_experiment/lab_overview.py
+- src/agentic_payment_experiment/learning_variants.py
+- src/agentic_payment_experiment/lifecycle.py
+- src/agentic_payment_experiment/models.py
+- src/agentic_payment_experiment/order_validation.py
+- src/agentic_payment_experiment/paybench_challenges.py
+- src/agentic_payment_experiment/paybench_current_system.py
+- src/agentic_payment_experiment/payment_execution.py
+- src/agentic_payment_experiment/payment_finality.py
+- src/agentic_payment_experiment/payment_recovery.py
+- src/agentic_payment_experiment/payment_status_conflict.py
+- src/agentic_payment_experiment/presentation_zh.py
+- src/agentic_payment_experiment/regression_baseline.py
+- src/agentic_payment_experiment/remediation.py
+- src/agentic_payment_experiment/result_card.py
+- src/agentic_payment_experiment/runner.py
+- src/agentic_payment_experiment/scenario_loader.py
+- src/agentic_payment_experiment/trusted_execution/__init__.py
+- src/agentic_payment_experiment/trusted_execution/binding.py
+- src/agentic_payment_experiment/trusted_execution/confirmation.py
+- src/agentic_payment_experiment/trusted_execution/context_policy.py
+- src/agentic_payment_experiment/trusted_execution/execution_facts.py
+- src/agentic_payment_experiment/trusted_execution/fact_lineage.py
+- src/agentic_payment_experiment/trusted_execution/governed_action.py
+- src/agentic_payment_experiment/trusted_execution/hashing.py
+- src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py
+- src/agentic_payment_experiment/trusted_execution/original_transaction.py
+- src/agentic_payment_experiment/trusted_execution/payment_binding.py
+- src/agentic_payment_experiment/trusted_execution/replay.py
+- src/agentic_payment_experiment/validator.py
+- src/agentic_payment_experiment/webshop_payment_sidecar.py
+- src/agentic_payment_experiment/webshop_runtime_gate.py
+- src/agentic_payment_experiment/x402_conformance.py
+forbidden_parent_builder_read=false
+forbidden_parent_builder_imported=false
+RESULT=PASS

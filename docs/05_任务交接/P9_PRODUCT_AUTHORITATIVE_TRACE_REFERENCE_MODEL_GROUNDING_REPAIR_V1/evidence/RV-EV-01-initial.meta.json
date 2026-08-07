@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-01",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REFERENCE_MODEL_GROUNDING_REPAIR_V1/evidence/RV-EV-01-independent-grounding-review.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REFERENCE_MODEL_GROUNDING_REPAIR_V1/evidence/RV-EV-01-independent-grounding-review.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-05T07:09:25.930613+00:00",
+  "finished_at_utc": "2026-08-05T07:09:26.290131+00:00",
+  "exit_code": 1,
+  "stdout_path": "RV-EV-01.stdout.log",
+  "stderr_path": "RV-EV-01.stderr.log",
+  "stdout_bytes": 0,
+  "stderr_bytes": 926,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "77bbde34d8f3ee34a97393eed0e978f9c93dbf8d5e4dadf3ad074172d5e4e537"
+}

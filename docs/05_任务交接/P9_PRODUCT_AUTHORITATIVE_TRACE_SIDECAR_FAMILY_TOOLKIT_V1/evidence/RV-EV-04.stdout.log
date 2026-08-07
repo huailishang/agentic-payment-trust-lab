@@ -1,0 +1,24 @@
+{
+  "dedicated_t12_builder": false,
+  "dynamic_dsl": false,
+  "frozen_boundaries_unchanged": true,
+  "gesr": "3/12",
+  "non_trace_unchanged": true,
+  "product_trace": "4/12",
+  "profile_count": 3,
+  "result": "PASS",
+  "single_sidecar_call": true,
+  "trace_hashes": {
+    "T01": "7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906",
+    "T09": "a596f5f35697a878286b85b8e37792aeee34ab7c0800b27739bc91382032310e",
+    "T10": "2b97fd1f81001086d4793bf21fd0dbe3ed950643e6d9e5031e18510fb7c99fb3",
+    "T12": "ebb38113abb2582d52f434b1a1b30247cc68ee8f4b57c0c18f52efa37bb1c230"
+  },
+  "valid_product_tasks": [
+    "T01",
+    "T09",
+    "T10",
+    "T12"
+  ]
+}
+RESULT=PASS

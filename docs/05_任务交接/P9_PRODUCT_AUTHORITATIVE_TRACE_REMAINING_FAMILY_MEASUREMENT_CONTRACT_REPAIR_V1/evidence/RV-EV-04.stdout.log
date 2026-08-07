@@ -1,0 +1,8 @@
+all_12_actual_outputs_equal_parent_evaluator_snapshot=True
+non_trace_projection_sha256=6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc
+valid_product_tasks=T01,T02,T03,T04,T09,T10,T12
+absent_product_tasks=T05,T06,T07,T08,T11
+metrics_unchanged=7/12_product_trace,6/12_gesr
+corrected_gap_names=T05,T06,T07,T08
+T05_T08_business_guardrails=PASS
+RESULT=PASS

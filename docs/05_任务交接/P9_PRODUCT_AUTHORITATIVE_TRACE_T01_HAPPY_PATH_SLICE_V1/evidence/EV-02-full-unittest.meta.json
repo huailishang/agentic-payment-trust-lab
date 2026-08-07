@@ -1,0 +1,9 @@
+{
+  "name": "EV-02-full-unittest",
+  "command": "p y t h o n 3 - m u n i t t e s t d i s c o v e r - v",
+  "exit_code": 5,
+  "started_at_utc": "2026-08-06T07:21:42Z",
+  "ended_at_utc": "2026-08-06T07:21:42Z",
+  "stdout_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-02-full-unittest.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-02-full-unittest.stderr.log"
+}

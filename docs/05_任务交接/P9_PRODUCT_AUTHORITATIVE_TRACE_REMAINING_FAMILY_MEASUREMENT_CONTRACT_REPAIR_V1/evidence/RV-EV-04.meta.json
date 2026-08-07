@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-04",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REMAINING_FAMILY_MEASUREMENT_CONTRACT_REPAIR_V1/evidence/RV-EV-04-independent-invariance-audit.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REMAINING_FAMILY_MEASUREMENT_CONTRACT_REPAIR_V1/evidence/RV-EV-04-independent-invariance-audit.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-07T07:54:23.037144+00:00",
+  "finished_at_utc": "2026-08-07T07:54:23.153141+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-04.stdout.log",
+  "stderr_path": "RV-EV-04.stderr.log",
+  "stdout_bytes": 369,
+  "stderr_bytes": 0,
+  "stdout_sha256": "017befff5e550d54ddac06eb59bf1fa520206bc75460da3632ba2324e97e2ef3",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

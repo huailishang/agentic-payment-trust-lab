@@ -9,6 +9,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNNER_PATH = ROOT / "scripts" / "validation" / "run_project_impact_baseline.py"
@@ -111,6 +112,27 @@ class ProjectImpactBaselineTest(unittest.TestCase):
                 self.assertTrue(task["limitations"])
         self.assertTrue(all(self.spec["limitations"].values()))
 
+    def test_fixture_expected_product_events_are_subset_of_public_registry(self) -> None:
+        from agentic_payment_experiment.authoritative_trace import (
+            runtime_contract_primitive,
+        )
+
+        contract = runtime_contract_primitive()
+        registry_events = {
+            task["task_id"]: {event["event_type"] for event in task["events"]}
+            for task in contract["tasks"]
+        }
+        self.assertEqual(set(ALL_TASK_IDS), set(registry_events))
+        for task in self.spec["tasks"]:
+            task_id = task["task_id"]
+            expected_events = set(task["expected_product_observed_trace_events"])
+            missing = expected_events - registry_events[task_id]
+            with self.subTest(task=task_id):
+                self.assertFalse(
+                    missing,
+                    f"{task_id} has stale expected product events: {sorted(missing)}",
+                )
+
     def test_t10_fixture_requires_zero_callback_and_preserves_business_goal(self) -> None:
         t10 = next(task for task in self.spec["tasks"] if task["task_id"] == "T10")
         self.assertEqual(
@@ -176,39 +198,81 @@ class ProjectImpactBaselineTest(unittest.TestCase):
             repeatability["normalization_excludes"],
         )
 
-    def test_corrected_baseline_records_all_twelve_product_trace_gaps(self) -> None:
+    def test_corrected_baseline_records_expected_product_traces(self) -> None:
         self.assertEqual(
             {
                 "total_tasks": 12,
-                "matched_tasks": 0,
-                "gap_tasks": 12,
-                "gap_task_ids": list(ALL_TASK_IDS),
+                "matched_tasks": 8,
+                "gap_tasks": 4,
+                "gap_task_ids": [
+                    task
+                    for task in ALL_TASK_IDS
+                    if task not in {
+                        "T01", "T02", "T03", "T04", "T07", "T08", "T09", "T12"
+                    }
+                ],
             },
             self.report["project_summary"],
         )
+        expected_sources = {
+            "T01": "webshop_payment_fulfilment_outcome",
+            "T02": "webshop_gate_outcome",
+            "T03": "webshop_gate_outcome",
+            "T04": "webshop_gate_outcome",
+            "T07": "attack_overlay_result",
+            "T08": "attack_overlay_result",
+            "T09": "webshop_payment_fulfilment_outcome",
+            "T10": "webshop_gate_outcome",
+            "T12": "webshop_payment_fulfilment_outcome",
+        }
         for task_id in ALL_TASK_IDS:
             with self.subTest(task=task_id):
                 item = self.by_id[task_id]
-                self.assertFalse(item["matched"])
+                actual = item["actual"]
                 self.assertEqual(
-                    "NOT_AVAILABLE",
-                    item["actual"]["product_observed_trace_status"],
+                    task_id in {
+                        "T01", "T02", "T03", "T04", "T07", "T08", "T09", "T12"
+                    },
+                    item["matched"],
                 )
-                self.assertIsNone(
-                    item["actual"]["product_observed_trace_source"]
-                )
-                self.assertNotIn(
-                    "authoritative_trace", item["actual"]["evidence_stages"]
-                )
-                self.assertIn(
-                    "authoritative_trace", item["missing_evidence_stages"]
-                )
-                self.assertTrue(
-                    any(
-                        gap.startswith("product_observed_trace_status_mismatch")
-                        for gap in item["capability_gaps"]
+                if task_id in expected_sources:
+                    self.assertEqual("VALID", actual["product_observed_trace_status"])
+                    self.assertEqual(
+                        expected_sources[task_id],
+                        actual["product_observed_trace_source"],
                     )
-                )
+                    self.assertIn("authoritative_trace", actual["evidence_stages"])
+                    self.assertNotIn(
+                        "authoritative_trace", item["missing_evidence_stages"]
+                    )
+                    self.assertFalse(
+                        any(
+                            gap.startswith(
+                                "product_observed_trace_status_mismatch"
+                            )
+                            for gap in item["capability_gaps"]
+                        )
+                    )
+                else:
+                    self.assertEqual(
+                        "NOT_AVAILABLE",
+                        actual["product_observed_trace_status"],
+                    )
+                    self.assertIsNone(actual["product_observed_trace_source"])
+                    self.assertNotIn(
+                        "authoritative_trace", actual["evidence_stages"]
+                    )
+                    self.assertIn(
+                        "authoritative_trace", item["missing_evidence_stages"]
+                    )
+                    self.assertTrue(
+                        any(
+                            gap.startswith(
+                                "product_observed_trace_status_mismatch"
+                            )
+                            for gap in item["capability_gaps"]
+                        )
+                    )
 
     def test_synthesized_replay_is_valid_diagnostic_but_never_product_trace(self) -> None:
         for task_id in ALL_TASK_IDS:
@@ -242,13 +306,166 @@ class ProjectImpactBaselineTest(unittest.TestCase):
                         actual["evaluator_synthesized_replay_provenance"]
                     )
                 self.assertEqual(
-                    "NOT_AVAILABLE", actual["product_observed_trace_status"]
+                    "VALID"
+                    if task_id in {
+                        "T01", "T02", "T03", "T04", "T07", "T08", "T09", "T10", "T12"
+                    }
+                    else "NOT_AVAILABLE",
+                    actual["product_observed_trace_status"],
                 )
                 self.assertTrue(item["measurement_diagnostics_matched"])
                 self.assertTrue(
-                    item["measurement_diagnostics"]["trace_provenance_separated"]
+                    item["measurement_diagnostics"][
+                        "trace_provenance_separated"
+                    ]
                 )
                 self.assertEqual([], item["measurement_integrity_gaps"])
+                if task_id in {
+                    "T01", "T02", "T03", "T04", "T07", "T08", "T09", "T10", "T12"
+                }:
+                    self.assertEqual(
+                        (
+                            "attack_overlay_result"
+                            if task_id in {"T07", "T08"}
+                            else (
+                                "webshop_payment_fulfilment_outcome"
+                                if task_id in {"T01", "T09", "T12"}
+                                else "webshop_gate_outcome"
+                            )
+                        ),
+                        actual["product_observed_trace_source"],
+                    )
+                    if task_id in SYNTHESIZED_REPLAY_TASKS:
+                        self.assertEqual(
+                            "runner_constructed_from_fixed_facts",
+                            actual["evaluator_synthesized_replay_provenance"],
+                        )
+                        self.assertNotEqual(
+                            actual["product_observed_trace_source"],
+                            actual["evaluator_synthesized_replay_provenance"],
+                        )
+                    else:
+                        self.assertIsNone(
+                            actual["evaluator_synthesized_replay_provenance"]
+                        )
+
+    def test_trace_provenance_closed_positive_matrix(self) -> None:
+        cases = (
+            (
+                "neither_present",
+                {
+                    "product_status": "NOT_AVAILABLE",
+                    "product_source": None,
+                    "replay_status": "NOT_AVAILABLE",
+                    "replay_provenance": None,
+                    "evidence_stages": set(),
+                },
+            ),
+            (
+                "product_only",
+                {
+                    "product_status": "VALID",
+                    "product_source": "explicit_product_outcome",
+                    "replay_status": "NOT_AVAILABLE",
+                    "replay_provenance": None,
+                    "evidence_stages": {"authoritative_trace"},
+                },
+            ),
+            (
+                "replay_only",
+                {
+                    "product_status": "NOT_AVAILABLE",
+                    "product_source": None,
+                    "replay_status": "VALID",
+                    "replay_provenance": "runner_constructed_from_fixed_facts",
+                    "evidence_stages": {"evaluator_synthesized_replay"},
+                },
+            ),
+            (
+                "both_distinct",
+                {
+                    "product_status": "VALID",
+                    "product_source": "webshop_gate_outcome",
+                    "replay_status": "VALID",
+                    "replay_provenance": "runner_constructed_from_fixed_facts",
+                    "evidence_stages": {
+                        "authoritative_trace",
+                        "evaluator_synthesized_replay",
+                    },
+                },
+            ),
+        )
+        for name, values in cases:
+            with self.subTest(name=name):
+                self.assertTrue(self.runner._trace_provenance_separated(**values))
+
+    def test_trace_provenance_closed_negative_matrix(self) -> None:
+        valid_both = {
+            "product_status": "VALID",
+            "product_source": "webshop_gate_outcome",
+            "replay_status": "VALID",
+            "replay_provenance": "runner_constructed_from_fixed_facts",
+            "evidence_stages": {
+                "authoritative_trace",
+                "evaluator_synthesized_replay",
+            },
+        }
+        cases = (
+            ("product_source_missing", {"product_source": None}),
+            ("product_stage_missing", {"evidence_stages": {"evaluator_synthesized_replay"}}),
+            (
+                "product_absent_with_source",
+                {
+                    "product_status": "NOT_AVAILABLE",
+                    "evidence_stages": {"evaluator_synthesized_replay"},
+                },
+            ),
+            ("replay_provenance_missing", {"replay_provenance": None}),
+            (
+                "replay_absent_with_provenance",
+                {"replay_status": "NOT_AVAILABLE"},
+            ),
+            (
+                "identical_provenance",
+                {"product_source": "runner_constructed_from_fixed_facts"},
+            ),
+            ("unknown_product_status", {"product_status": "UNKNOWN"}),
+            ("unknown_replay_status", {"replay_status": "UNKNOWN"}),
+            ("blank_product_source", {"product_source": "  "}),
+            ("blank_replay_provenance", {"replay_provenance": "  "}),
+            (
+                "unexpected_replay_provenance",
+                {"replay_provenance": "some_other_replay_source"},
+            ),
+            (
+                "product_absent_with_stage",
+                {
+                    "product_status": "NOT_AVAILABLE",
+                    "product_source": None,
+                },
+            ),
+        )
+        for name, overrides in cases:
+            with self.subTest(name=name):
+                values = {**valid_both, **overrides}
+                self.assertFalse(self.runner._trace_provenance_separated(**values))
+
+    def test_compare_records_provenance_gap_for_invalid_combination(self) -> None:
+        task = next(task for task in self.spec["tasks"] if task["task_id"] == "T10")
+        actual = dict(self.by_id["T10"]["actual"])
+        actual["product_observed_trace_source"] = (
+            actual["evaluator_synthesized_replay_provenance"]
+        )
+
+        result = self.runner._compare(task, actual)
+
+        self.assertFalse(
+            result["measurement_diagnostics"]["trace_provenance_separated"]
+        )
+        self.assertEqual(
+            ["trace_provenance_not_separated"],
+            result["measurement_integrity_gaps"],
+        )
 
     def test_t10_preflight_removes_duplicate_callback_capability_gap(self) -> None:
         t10 = self.by_id["T10"]
@@ -273,7 +490,10 @@ class ProjectImpactBaselineTest(unittest.TestCase):
         )
         self.assertFalse(t10["matched"])
         self.assertFalse(t10["matched_dimensions"]["decision"])
-        self.assertFalse(t10["matched_dimensions"]["product_observed_trace_status"])
+        self.assertTrue(t10["matched_dimensions"]["product_observed_trace_status"])
+        self.assertTrue(t10["matched_dimensions"]["product_observed_trace_events"])
+        self.assertEqual("VALID", actual["product_observed_trace_status"])
+        self.assertEqual("webshop_gate_outcome", actual["product_observed_trace_source"])
 
     def test_zero_tolerance_side_effect_metric_is_independent_of_expected_callback(self) -> None:
         original_bytes = SPEC_PATH.read_bytes()
@@ -305,15 +525,15 @@ class ProjectImpactBaselineTest(unittest.TestCase):
     def test_main_metric_and_guardrails_match_hand_calculation(self) -> None:
         metrics = self.report["metrics"]
         self.assertEqual(
-            {"count": 0, "denominator": 12, "rate": "0.000000"},
+            {"count": 8, "denominator": 12, "rate": "0.666667"},
             metrics["governed_end_to_end_task_success_rate"],
         )
         self.assertEqual(
-            {"count": 0, "denominator": 12, "rate": "0.000000"},
+            {"count": 8, "denominator": 12, "rate": "0.666667"},
             metrics["evidence_stage_completeness_rate"],
         )
         self.assertEqual(
-            {"count": 0, "denominator": 12, "rate": "0.000000"},
+            {"count": 9, "denominator": 12, "rate": "0.750000"},
             metrics[
                 "product_observed_authoritative_trace_completeness_rate"
             ],
@@ -368,8 +588,15 @@ class ProjectImpactBaselineTest(unittest.TestCase):
             t01["actual"]["actual_final_environment_state"]["task_status"],
         )
         self.assertEqual(
-            "NOT_AVAILABLE", t01["actual"]["product_observed_trace_status"]
+            "VALID", t01["actual"]["product_observed_trace_status"]
         )
+        self.assertEqual(
+            "webshop_payment_fulfilment_outcome",
+            t01["actual"]["product_observed_trace_source"],
+        )
+        self.assertEqual(11, len(t01["actual"]["product_observed_trace_events"]))
+        self.assertTrue(t01["matched"])
+        self.assertEqual([], t01["capability_gaps"])
         self.assertEqual(
             "VALID", t01["actual"]["evaluator_synthesized_replay_status"]
         )
@@ -409,10 +636,10 @@ class ProjectImpactBaselineTest(unittest.TestCase):
             "VALID", t12["actual"]["evaluator_synthesized_replay_status"]
         )
         self.assertEqual(
-            "NOT_AVAILABLE", t12["actual"]["product_observed_trace_status"]
+            "VALID", t12["actual"]["product_observed_trace_status"]
         )
 
-    def test_t10_target_closes_only_preflight_safety_dimensions(self) -> None:
+    def test_t10_target_closes_trace_and_end_to_end_dimensions(self) -> None:
         target = self.runner.build_report(TARGET_SPEC_PATH, repeat=3)
         target_by_id = {
             item["task_id"]: item for item in target["task_results"]
@@ -428,38 +655,38 @@ class ProjectImpactBaselineTest(unittest.TestCase):
         self.assertTrue(
             actual["actual_final_environment_state"]["duplicate_payment_blocked"]
         )
-        for dimension in (
-            "decision",
-            "callback_count",
-            "callback_observation_count",
-            "retry_count",
-            "final_environment_state",
-            "reason_codes",
-            "required_facts",
-            "binding_status",
-            "forbidden_side_effects_absent",
-        ):
-            with self.subTest(dimension=dimension):
-                self.assertTrue(t10["matched_dimensions"][dimension])
-        self.assertFalse(t10["matched_dimensions"]["evidence_stages"])
-        self.assertFalse(
-            t10["matched_dimensions"]["product_observed_trace_status"]
-        )
-        self.assertFalse(
-            t10["matched_dimensions"]["product_observed_trace_events"]
-        )
+        self.assertTrue(t10["matched"])
+        self.assertTrue(all(t10["matched_dimensions"].values()))
+        self.assertEqual([], t10["capability_gaps"])
+        self.assertEqual("VALID", actual["product_observed_trace_status"])
+        self.assertEqual("webshop_gate_outcome", actual["product_observed_trace_source"])
+        self.assertEqual(12, len(actual["product_observed_trace_events"]))
+        self.assertIn("authoritative_trace", actual["evidence_stages"])
         self.assertEqual(
-            [
-                "product_observed_trace_status_mismatch:expected=VALID",
-                "evidence_stages_missing:authoritative_trace",
-                "product_observed_trace_events_missing:AUTHORITY_RECORDED,ORDER_RECORDED,PAYMENT_OUTCOME_RECORDED,REQUEST_RECORDED,RUNTIME_DECISION_RECORDED",
-            ],
-            t10["capability_gaps"],
+            {
+                "total_tasks": 12,
+                "matched_tasks": 4,
+                "gap_tasks": 8,
+                "gap_task_ids": [
+                    task
+                    for task in ALL_TASK_IDS
+                    if task not in {"T01", "T09", "T10", "T12"}
+                ],
+            },
+            target["project_summary"],
         )
 
         self.assertEqual(
-            [item for item in self.report["task_results"] if item["task_id"] != "T10"],
-            [item for item in target["task_results"] if item["task_id"] != "T10"],
+            {
+                item["task_id"]: item["actual"]
+                for item in self.report["task_results"]
+                if item["task_id"] != "T10"
+            },
+            {
+                item["task_id"]: item["actual"]
+                for item in target["task_results"]
+                if item["task_id"] != "T10"
+            },
         )
         self.assertEqual(
             {"count": 0, "denominator": 12, "rate": "0.000000"},
@@ -478,11 +705,11 @@ class ProjectImpactBaselineTest(unittest.TestCase):
             target["metrics"]["unsafe_allow_rate"],
         )
         self.assertEqual(
-            {"count": 0, "denominator": 12, "rate": "0.000000"},
+            {"count": 4, "denominator": 12, "rate": "0.333333"},
             target["metrics"]["governed_end_to_end_task_success_rate"],
         )
         self.assertEqual(
-            {"count": 0, "denominator": 12, "rate": "0.000000"},
+            {"count": 4, "denominator": 12, "rate": "0.333333"},
             target["metrics"][
                 "product_observed_authoritative_trace_completeness_rate"
             ],
@@ -516,7 +743,11 @@ class ProjectImpactBaselineTest(unittest.TestCase):
             t01["measurement_integrity_gaps"],
         )
         self.assertEqual(
-            "NOT_AVAILABLE", t01["actual"]["product_observed_trace_status"]
+            "VALID", t01["actual"]["product_observed_trace_status"]
+        )
+        self.assertEqual(
+            "webshop_payment_fulfilment_outcome",
+            t01["actual"]["product_observed_trace_source"],
         )
         self.assertEqual(original_bytes, SPEC_PATH.read_bytes())
 
@@ -560,7 +791,7 @@ class ProjectImpactBaselineTest(unittest.TestCase):
             from_stdout = json.loads(completed.stdout)
             self.assertEqual(from_file, from_stdout)
             self.assertEqual("MEASURED_WITH_GAPS", from_file["execution_status"])
-            self.assertEqual(12, from_file["project_summary"]["gap_tasks"])
+            self.assertEqual(4, from_file["project_summary"]["gap_tasks"])
             self.assertEqual(
                 {"count": 0, "denominator": 12, "rate": "0.000000"},
                 from_file["metrics"][
@@ -587,6 +818,48 @@ class ProjectImpactBaselineTest(unittest.TestCase):
             self.report["metrics"]["governed_end_to_end_task_success_rate"],
             self.report["external_guardrails"]["full_unittest"],
         )
+
+    def test_runner_reads_only_explicit_authoritative_trace(self) -> None:
+        from agentic_payment_experiment.authoritative_trace import trace_from_mapping
+
+        data = json.loads(
+            (
+                ROOT
+                / "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REFERENCE_MODEL_GROUNDING_REPAIR_V1/evidence/EV-01-t10-grounded-instance.json"
+            ).read_text(encoding="utf-8")
+        )
+        trace = trace_from_mapping(data)
+        valid = self.runner._product_observed_trace(
+            ("explicit_product_outcome", SimpleNamespace(authoritative_trace=trace))
+        )
+        self.assertEqual("VALID", valid[0])
+        self.assertEqual(12, len(valid[1]))
+        self.assertEqual(("product_authoritative_trace_valid",), valid[2])
+        self.assertEqual("explicit_product_outcome", valid[3])
+
+        legacy = self.runner._product_observed_trace(
+            (
+                "legacy_product_outcome",
+                SimpleNamespace(authoritative_trace_events=trace.events),
+            )
+        )
+        self.assertEqual(
+            (
+                "NOT_AVAILABLE",
+                [],
+                ("product_authoritative_trace_not_available",),
+                None,
+            ),
+            legacy,
+        )
+
+        malformed = self.runner._product_observed_trace(
+            ("malformed_product_outcome", SimpleNamespace(authoritative_trace={}))
+        )
+        self.assertEqual("INVALID", malformed[0])
+        self.assertEqual([], malformed[1])
+        self.assertEqual(("trace_contract_type_invalid",), malformed[2])
+        self.assertEqual("malformed_product_outcome", malformed[3])
 
     def test_runner_static_boundary_has_no_product_patch_or_trace_laundering(self) -> None:
         source = RUNNER_PATH.read_text(encoding="utf-8")
@@ -615,9 +888,12 @@ class ProjectImpactBaselineTest(unittest.TestCase):
         self.assertNotIn("execute_with_payment_binding_gate", source)
         self.assertNotIn("derive_payment_status_conflict", source)
         self.assertNotIn("assess_payment_recovery", source)
-        self.assertNotIn('stages.add("authoritative_trace")', source)
+        self.assertIn('stages.add("authoritative_trace")', source)
         self.assertNotIn('| {"authoritative_trace"}', source)
         self.assertIn("def _product_observed_trace", source)
+        self.assertIn('getattr(output, "authoritative_trace", None)', source)
+        self.assertNotIn('getattr(output, "authoritative_trace_events"', source)
+        self.assertIn("validate_product_authoritative_trace", source)
         self.assertIn("def _synthesize_replay", source)
         self.assertIn("runner_constructed_from_fixed_facts", source)
         self.assertEqual(1, calls.count("write_text"))

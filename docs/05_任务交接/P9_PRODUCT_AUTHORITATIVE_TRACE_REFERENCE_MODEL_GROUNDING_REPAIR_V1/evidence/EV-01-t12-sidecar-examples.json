@@ -1,0 +1,65 @@
+{
+  "conflict_fact": {
+    "binding_ref": "TraceSourceBinding:sha256:445f5c4b28fbb2270a253bb5596627eab69d1f18e7f536fed63c1d0672f9e6b8",
+    "projection": {
+      "async_observed_at": "2026-08-02T05:02:01+00:00",
+      "async_status": "FAILED",
+      "business_success_confirmed": false,
+      "effective_status": "UNKNOWN",
+      "effective_status_terminal": false,
+      "fulfillment_confirmed": false,
+      "initial_status": "UNKNOWN",
+      "legal_finality_confirmed": false,
+      "query_observed_at": "2026-08-02T05:01:01+00:00",
+      "query_status": "SUCCEEDED",
+      "reason_codes": [
+        "payment_status_opposite_terminal_claims"
+      ],
+      "reconciliation_confirmed": false,
+      "resolution": "CONFLICT",
+      "settlement_confirmed": false,
+      "user_task_success_confirmed": false
+    },
+    "projection_schema": "payment-status-conflict-fact-trace/v2",
+    "source_object_ref": "PaymentStatusConflictFact:projection-sha256:c828d25274ce8bf42082930f7ab7b2421a41b0b475df42a8ea6beeddc9ffa715",
+    "source_object_type": "PaymentStatusConflictFact"
+  },
+  "decision_source": "RuntimeGateRecord.final_decision in the separate RUNTIME_DECISION_RECORDED event",
+  "runtime_executed": false,
+  "sidecar_decision_extraction": null,
+  "sidecar_result": {
+    "binding_ref": "TraceSourceBinding:sha256:da9d97d4821156889c6a2258ad0fb14bd4599e232eacd2dbdd9bb7b212f0f6b3",
+    "projection": {
+      "duplicate_payment_blocked": false,
+      "effective_payment_status": "UNKNOWN",
+      "initial_payment_status": "UNKNOWN",
+      "lifecycle_fulfillment_status": "SUCCEEDED",
+      "lifecycle_payment_status": "UNKNOWN",
+      "lifecycle_remediation_status": "REQUIRED",
+      "lifecycle_task_status": "UNKNOWN",
+      "limitations": [
+        "offline_sidecar_only",
+        "no_real_payment_execution",
+        "no_real_status_query_or_async_callback",
+        "no_real_fulfilment",
+        "no_automatic_payment_retry",
+        "no_real_refund_or_dispute",
+        "webshop_reward_not_used_as_payment_or_task_success"
+      ],
+      "query_recovery_status": "RECOVERED",
+      "ready": true,
+      "reason_codes": [
+        "conflict:resolution:conflict",
+        "conflict:payment_status_opposite_terminal_claims",
+        "sidecar:status_evidence_conflict",
+        "retry:not_allowed"
+      ],
+      "retry_allowed": false,
+      "status_conflict_resolution": "CONFLICT"
+    },
+    "projection_schema": "webshop-payment-fulfilment-outcome-result-trace/v2",
+    "source_object_ref": "WebShopPaymentFulfilmentOutcome:projection-sha256:aa14a6decf0b4e8638ba1962782c9d7d821ffb2fc8e31c0d501e554c5af4dfa2",
+    "source_object_type": "WebShopPaymentFulfilmentOutcome"
+  },
+  "task_id": "T12"
+}

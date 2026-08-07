@@ -1,0 +1,625 @@
+{
+  "invariants": {
+    "all_relations_resolved": true,
+    "ambiguous_history_fails_closed": true,
+    "callback_count": 0,
+    "current_and_historical_payment_distinct": true,
+    "events": 12,
+    "order_roles_share_binding": true,
+    "repeat_build_identical": true,
+    "result_projection_excludes_trace": true,
+    "unique_bindings": 11
+  },
+  "outcome": {
+    "callback_count": 0,
+    "checkout_executed": false,
+    "decision": "DENY",
+    "reason_codes": [
+      "p1:duplicate_request",
+      "p1:upstream_prepayment_non_allow",
+      "p2:payment_execution_binding_match",
+      "p3:identity_executor_binding_match",
+      "p4:context_policy_valid",
+      "preflight:known_payment_attempt_duplicate_succeeded"
+    ]
+  },
+  "schema": "t10-product-authoritative-trace-evidence/v1",
+  "trace": {
+    "completeness_status": "COMPLETE",
+    "events": [
+      {
+        "decision": null,
+        "entity_ref": "IntentMandate:experiment-context-mandate-ref-v1",
+        "entity_role": "AUTHORITY",
+        "entity_type": "IntentMandate",
+        "event_type": "AUTHORITY_RECORDED",
+        "reason_codes": [],
+        "relations": [],
+        "sequence_no": 1,
+        "source_binding_ref": "TraceSourceBinding:sha256:6846a2e93cbc9b36f697457c57f2e0baa3baeed29af38ffa62c22f6b17ef5a97",
+        "status": null
+      },
+      {
+        "decision": null,
+        "entity_ref": "Order:webshop-order-9eccab2b0154fca4af27f322",
+        "entity_role": "AUTHORIZED_ORDER_SNAPSHOT",
+        "entity_type": "Order",
+        "event_type": "ORDER_RECORDED",
+        "reason_codes": [],
+        "relations": [
+          {
+            "relation_type": "BOUND_TO",
+            "target_binding_assertions": [
+              {
+                "equal": null,
+                "source_path": "projection.authority_version_ref",
+                "source_value": null,
+                "target_path": "projection.authority_version",
+                "target_value": null
+              }
+            ],
+            "target_entity_ref": "IntentMandate:experiment-context-mandate-ref-v1",
+            "target_entity_role": "AUTHORITY",
+            "target_entity_type": "IntentMandate",
+            "target_resolved": true
+          }
+        ],
+        "sequence_no": 2,
+        "source_binding_ref": "TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc",
+        "status": null
+      },
+      {
+        "decision": null,
+        "entity_ref": "Order:webshop-order-9eccab2b0154fca4af27f322",
+        "entity_role": "CURRENT_ORDER_SNAPSHOT",
+        "entity_type": "Order",
+        "event_type": "ORDER_RECORDED",
+        "reason_codes": [],
+        "relations": [
+          {
+            "relation_type": "BOUND_TO",
+            "target_binding_assertions": [
+              {
+                "equal": null,
+                "source_path": "projection.authority_version_ref",
+                "source_value": null,
+                "target_path": "projection.authority_version",
+                "target_value": null
+              }
+            ],
+            "target_entity_ref": "IntentMandate:experiment-context-mandate-ref-v1",
+            "target_entity_role": "AUTHORITY",
+            "target_entity_type": "IntentMandate",
+            "target_resolved": true
+          }
+        ],
+        "sequence_no": 3,
+        "source_binding_ref": "TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc",
+        "status": null
+      },
+      {
+        "decision": null,
+        "entity_ref": "TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef",
+        "entity_role": "CURRENT_REQUEST",
+        "entity_type": "TransactionRequest",
+        "event_type": "REQUEST_RECORDED",
+        "reason_codes": [],
+        "relations": [
+          {
+            "relation_type": "BOUND_TO",
+            "target_binding_assertions": [],
+            "target_entity_ref": "Order:webshop-order-9eccab2b0154fca4af27f322",
+            "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+            "target_entity_type": "Order",
+            "target_resolved": true
+          },
+          {
+            "relation_type": "BOUND_TO",
+            "target_binding_assertions": [
+              {
+                "equal": null,
+                "source_path": "projection.authority_version_ref",
+                "source_value": null,
+                "target_path": "projection.authority_version",
+                "target_value": null
+              }
+            ],
+            "target_entity_ref": "IntentMandate:experiment-context-mandate-ref-v1",
+            "target_entity_role": "AUTHORITY",
+            "target_entity_type": "IntentMandate",
+            "target_resolved": true
+          }
+        ],
+        "sequence_no": 4,
+        "source_binding_ref": "TraceSourceBinding:sha256:4a49cc543a483038d2c2b3600da1011246a2b9c1230558c7bc553cfee9b5a77c",
+        "status": null
+      },
+      {
+        "decision": null,
+        "entity_ref": "GovernedPaymentAction:webshop-action-1",
+        "entity_role": "GOVERNED_ACTION",
+        "entity_type": "GovernedPaymentAction",
+        "event_type": "ACTION_RECORDED",
+        "reason_codes": [],
+        "relations": [
+          {
+            "relation_type": "BOUND_TO",
+            "target_binding_assertions": [
+              {
+                "equal": null,
+                "source_path": "projection.authority_version",
+                "source_value": null,
+                "target_path": "projection.authority_version",
+                "target_value": null
+              }
+            ],
+            "target_entity_ref": "IntentMandate:experiment-context-mandate-ref-v1",
+            "target_entity_role": "AUTHORITY",
+            "target_entity_type": "IntentMandate",
+            "target_resolved": true
+          },
+          {
+            "relation_type": "BOUND_TO",
+            "target_binding_assertions": [
+              {
+                "equal": null,
+                "source_path": "projection.order_version",
+                "source_value": null,
+                "target_path": "projection.order_version",
+                "target_value": null
+              }
+            ],
+            "target_entity_ref": "Order:webshop-order-9eccab2b0154fca4af27f322",
+            "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+            "target_entity_type": "Order",
+            "target_resolved": true
+          },
+          {
+            "relation_type": "BOUND_TO",
+            "target_binding_assertions": [],
+            "target_entity_ref": "TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef",
+            "target_entity_role": "CURRENT_REQUEST",
+            "target_entity_type": "TransactionRequest",
+            "target_resolved": true
+          },
+          {
+            "relation_type": "BOUND_TO",
+            "target_binding_assertions": [],
+            "target_entity_ref": "PaymentExecutionRecord:webshop-payment-candidate-1",
+            "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+            "target_entity_type": "PaymentExecutionRecord",
+            "target_resolved": true
+          }
+        ],
+        "sequence_no": 5,
+        "source_binding_ref": "TraceSourceBinding:sha256:85760c0e2d686d097a6a85ab3c382d61e22852f1477f3549946a1d4e5779b6cf",
+        "status": null
+      },
+      {
+        "decision": null,
+        "entity_ref": "PaymentExecutionRecord:webshop-payment-candidate-1",
+        "entity_role": "CURRENT_PAYMENT_CANDIDATE",
+        "entity_type": "PaymentExecutionRecord",
+        "event_type": "PAYMENT_CANDIDATE_RECORDED",
+        "reason_codes": [],
+        "relations": [
+          {
+            "relation_type": "BOUND_TO",
+            "target_binding_assertions": [],
+            "target_entity_ref": "TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef",
+            "target_entity_role": "CURRENT_REQUEST",
+            "target_entity_type": "TransactionRequest",
+            "target_resolved": true
+          },
+          {
+            "relation_type": "BOUND_TO",
+            "target_binding_assertions": [],
+            "target_entity_ref": "Order:webshop-order-9eccab2b0154fca4af27f322",
+            "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+            "target_entity_type": "Order",
+            "target_resolved": true
+          }
+        ],
+        "sequence_no": 6,
+        "source_binding_ref": "TraceSourceBinding:sha256:028eedbc1d6b40128b3c50993732f25cec71e5d0d36762067675711e161dc614",
+        "status": "PENDING"
+      },
+      {
+        "decision": null,
+        "entity_ref": "GovernedActionBindingFact:binding:d1541ca6123c3bbee933fac93928fa5d3ded616ce6f1b17724135c9b5b765dbd",
+        "entity_role": "ACTION_BINDING_FACT",
+        "entity_type": "GovernedActionBindingFact",
+        "event_type": "ACTION_BINDING_DECISION_RECORDED",
+        "reason_codes": [
+          "governed_action_binding_valid"
+        ],
+        "relations": [
+          {
+            "relation_type": "VALIDATED_AGAINST",
+            "target_binding_assertions": [],
+            "target_entity_ref": "GovernedPaymentAction:webshop-action-1",
+            "target_entity_role": "GOVERNED_ACTION",
+            "target_entity_type": "GovernedPaymentAction",
+            "target_resolved": true
+          },
+          {
+            "relation_type": "VALIDATED_AGAINST",
+            "target_binding_assertions": [],
+            "target_entity_ref": "PaymentExecutionRecord:webshop-payment-candidate-1",
+            "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+            "target_entity_type": "PaymentExecutionRecord",
+            "target_resolved": true
+          }
+        ],
+        "sequence_no": 7,
+        "source_binding_ref": "TraceSourceBinding:sha256:d1541ca6123c3bbee933fac93928fa5d3ded616ce6f1b17724135c9b5b765dbd",
+        "status": "VALID"
+      },
+      {
+        "decision": null,
+        "entity_ref": "PaymentExecutionRecord:webshop-payment-existing-success",
+        "entity_role": "HISTORICAL_SUCCEEDED_PAYMENT",
+        "entity_type": "PaymentExecutionRecord",
+        "event_type": "PAYMENT_OUTCOME_RECORDED",
+        "reason_codes": [],
+        "relations": [
+          {
+            "relation_type": "BOUND_TO",
+            "target_binding_assertions": [],
+            "target_entity_ref": "TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef",
+            "target_entity_role": "CURRENT_REQUEST",
+            "target_entity_type": "TransactionRequest",
+            "target_resolved": true
+          },
+          {
+            "relation_type": "BOUND_TO",
+            "target_binding_assertions": [],
+            "target_entity_ref": "Order:webshop-order-9eccab2b0154fca4af27f322",
+            "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+            "target_entity_type": "Order",
+            "target_resolved": true
+          }
+        ],
+        "sequence_no": 8,
+        "source_binding_ref": "TraceSourceBinding:sha256:097ac74e76efb501d01eec01c4b9d59597f16e5a2891b28fc94e5df1400c968d",
+        "status": "SUCCEEDED"
+      },
+      {
+        "decision": null,
+        "entity_ref": "KnownPaymentAttemptPreflightFact:binding:4c310b898e1be0844a85bdf0f237a2e224666c4f519b7bc8017510a81669b4b4",
+        "entity_role": "KNOWN_PAYMENT_PREFLIGHT_FACT",
+        "entity_type": "KnownPaymentAttemptPreflightFact",
+        "event_type": "KNOWN_PAYMENT_PREFLIGHT_RECORDED",
+        "reason_codes": [
+          "known_payment_attempt_duplicate_succeeded"
+        ],
+        "relations": [
+          {
+            "relation_type": "VALIDATED_AGAINST",
+            "target_binding_assertions": [],
+            "target_entity_ref": "TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef",
+            "target_entity_role": "CURRENT_REQUEST",
+            "target_entity_type": "TransactionRequest",
+            "target_resolved": true
+          },
+          {
+            "relation_type": "MEMBER_OF",
+            "target_binding_assertions": [],
+            "target_entity_ref": "PaymentExecutionRecord:webshop-payment-existing-success",
+            "target_entity_role": "HISTORICAL_SUCCEEDED_PAYMENT",
+            "target_entity_type": "PaymentExecutionRecord",
+            "target_resolved": true
+          }
+        ],
+        "sequence_no": 9,
+        "source_binding_ref": "TraceSourceBinding:sha256:4c310b898e1be0844a85bdf0f237a2e224666c4f519b7bc8017510a81669b4b4",
+        "status": "BLOCKED"
+      },
+      {
+        "decision": "DENY",
+        "entity_ref": "ValidationResult:binding:68420d52149229c30ae0a128a5bad89cce6daa07d5408e1c878a824f712bfe8f",
+        "entity_role": "PREPAYMENT_VALIDATION",
+        "entity_type": "ValidationResult",
+        "event_type": "PREPAYMENT_DECISION_RECORDED",
+        "reason_codes": [
+          "duplicate_request"
+        ],
+        "relations": [],
+        "sequence_no": 10,
+        "source_binding_ref": "TraceSourceBinding:sha256:68420d52149229c30ae0a128a5bad89cce6daa07d5408e1c878a824f712bfe8f",
+        "status": null
+      },
+      {
+        "decision": "DENY",
+        "entity_ref": "RuntimeGateRecord:binding:28e748efa4e94c1f22749a11f092fbd171a6a538a2688a1e064ff062c88eee65",
+        "entity_role": "RUNTIME_GATE_OBSERVATION",
+        "entity_type": "RuntimeGateRecord",
+        "event_type": "RUNTIME_DECISION_RECORDED",
+        "reason_codes": [
+          "p1:duplicate_request",
+          "p1:upstream_prepayment_non_allow",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "preflight:known_payment_attempt_duplicate_succeeded"
+        ],
+        "relations": [],
+        "sequence_no": 11,
+        "source_binding_ref": "TraceSourceBinding:sha256:28e748efa4e94c1f22749a11f092fbd171a6a538a2688a1e064ff062c88eee65",
+        "status": "VALID"
+      },
+      {
+        "decision": "DENY",
+        "entity_ref": "WebShopBuyNowGateOutcome:binding:9a917ff5d59e0f8a39278f6859f72bfb34c67a80461be26e8c75c99de3e66944",
+        "entity_role": "FINAL_OUTCOME",
+        "entity_type": "WebShopBuyNowGateOutcome",
+        "event_type": "RESULT_RECORDED",
+        "reason_codes": [
+          "p1:duplicate_request",
+          "p1:upstream_prepayment_non_allow",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "preflight:known_payment_attempt_duplicate_succeeded"
+        ],
+        "relations": [],
+        "sequence_no": 12,
+        "source_binding_ref": "TraceSourceBinding:sha256:9a917ff5d59e0f8a39278f6859f72bfb34c67a80461be26e8c75c99de3e66944",
+        "status": null
+      }
+    ],
+    "profile": "WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V2",
+    "schema_version": "product-authoritative-trace/v1",
+    "source": "PRODUCT_OBSERVED",
+    "source_bindings": [
+      {
+        "binding_ref": "TraceSourceBinding:sha256:6846a2e93cbc9b36f697457c57f2e0baa3baeed29af38ffa62c22f6b17ef5a97",
+        "projection": {
+          "authority_version": "experiment-authority-v1",
+          "mandate_id": "experiment-context-mandate-ref-v1"
+        },
+        "projection_schema": "intent-mandate-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:6846a2e93cbc9b36f697457c57f2e0baa3baeed29af38ffa62c22f6b17ef5a97",
+        "source_object_ref": "IntentMandate:experiment-context-mandate-ref-v1:experiment-authority-v1",
+        "source_object_type": "IntentMandate"
+      },
+      {
+        "binding_ref": "TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc",
+        "projection": {
+          "authority_version_ref": "experiment-authority-v1",
+          "currency": "USD",
+          "mandate_ref": "experiment-context-mandate-ref-v1",
+          "merchant": "webshop-experiment-merchant-v1",
+          "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+          "order_version": "webshop-v1",
+          "payee": "webshop-experiment-payee-v1",
+          "total_amount": "877.8"
+        },
+        "projection_schema": "order-snapshot-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc",
+        "source_object_ref": "Order:webshop-order-9eccab2b0154fca4af27f322:webshop-v1",
+        "source_object_type": "Order"
+      },
+      {
+        "binding_ref": "TraceSourceBinding:sha256:4a49cc543a483038d2c2b3600da1011246a2b9c1230558c7bc553cfee9b5a77c",
+        "projection": {
+          "agent_id": "webshop-agent-1",
+          "amount": "877.8",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "authority_version_ref": "experiment-authority-v1",
+          "currency": "USD",
+          "merchant": "webshop-experiment-merchant-v1",
+          "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+          "payee": "webshop-experiment-payee-v1",
+          "request_id": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        "projection_schema": "transaction-request-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:4a49cc543a483038d2c2b3600da1011246a2b9c1230558c7bc553cfee9b5a77c",
+        "source_object_ref": "TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef",
+        "source_object_type": "TransactionRequest"
+      },
+      {
+        "binding_ref": "TraceSourceBinding:sha256:85760c0e2d686d097a6a85ab3c382d61e22852f1477f3549946a1d4e5779b6cf",
+        "projection": {
+          "action_id": "webshop-action-1",
+          "action_type": "execute_payment",
+          "agent_ref": "webshop-agent-1",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "authority_version": "experiment-authority-v1",
+          "executor_ref": "offline-webshop-executor",
+          "occurred_at": "2026-08-02T05:00:00.500000+00:00",
+          "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+          "order_version": "webshop-v1",
+          "payment_ref": "webshop-payment-candidate-1",
+          "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "reversibility": "COMPENSATABLE_NOT_REVERSIBLE",
+          "side_effect_class": "PAYMENT_EXECUTION",
+          "source_refs": [
+            "source:webshop-checkout-snapshot",
+            "source:user-confirmation"
+          ]
+        },
+        "projection_schema": "governed-payment-action-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:85760c0e2d686d097a6a85ab3c382d61e22852f1477f3549946a1d4e5779b6cf",
+        "source_object_ref": "GovernedPaymentAction:webshop-action-1",
+        "source_object_type": "GovernedPaymentAction"
+      },
+      {
+        "binding_ref": "TraceSourceBinding:sha256:028eedbc1d6b40128b3c50993732f25cec71e5d0d36762067675711e161dc614",
+        "projection": {
+          "agent_ref": "webshop-agent-1",
+          "amount": "877.8",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "currency": "USD",
+          "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+          "payee": "webshop-experiment-payee-v1",
+          "payment_id": "webshop-payment-candidate-1",
+          "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "status": "PENDING",
+          "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        "projection_schema": "payment-execution-record-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:028eedbc1d6b40128b3c50993732f25cec71e5d0d36762067675711e161dc614",
+        "source_object_ref": "PaymentExecutionRecord:webshop-payment-candidate-1",
+        "source_object_type": "PaymentExecutionRecord"
+      },
+      {
+        "binding_ref": "TraceSourceBinding:sha256:d1541ca6123c3bbee933fac93928fa5d3ded616ce6f1b17724135c9b5b765dbd",
+        "projection": {
+          "action_id": "webshop-action-1",
+          "checked_action_type": "execute_payment",
+          "checked_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+          "checked_payment_ref": "webshop-payment-candidate-1",
+          "checked_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "reason_codes": [
+            "governed_action_binding_valid"
+          ],
+          "status": "VALID"
+        },
+        "projection_schema": "governed-action-binding-fact-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:d1541ca6123c3bbee933fac93928fa5d3ded616ce6f1b17724135c9b5b765dbd",
+        "source_object_ref": "GovernedActionBindingFact:projection-sha256:cbe30143246973c99a1c1f81dca44251992257a5bbbb950fe2944c0971dcb790",
+        "source_object_type": "GovernedActionBindingFact"
+      },
+      {
+        "binding_ref": "TraceSourceBinding:sha256:097ac74e76efb501d01eec01c4b9d59597f16e5a2891b28fc94e5df1400c968d",
+        "projection": {
+          "agent_ref": "webshop-agent-1",
+          "amount": "877.8",
+          "authority_ref": "experiment-context-mandate-ref-v1",
+          "currency": "USD",
+          "order_id": "webshop-order-9eccab2b0154fca4af27f322",
+          "payee": "webshop-experiment-payee-v1",
+          "payment_id": "webshop-payment-existing-success",
+          "request_id": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "status": "SUCCEEDED",
+          "transaction_object_ref": "webshop-request-6c6a78eddffdb552c2af66ef"
+        },
+        "projection_schema": "payment-execution-record-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:097ac74e76efb501d01eec01c4b9d59597f16e5a2891b28fc94e5df1400c968d",
+        "source_object_ref": "PaymentExecutionRecord:webshop-payment-existing-success",
+        "source_object_type": "PaymentExecutionRecord"
+      },
+      {
+        "binding_ref": "TraceSourceBinding:sha256:4c310b898e1be0844a85bdf0f237a2e224666c4f519b7bc8017510a81669b4b4",
+        "projection": {
+          "blocking_request_refs": [
+            "webshop-request-6c6a78eddffdb552c2af66ef"
+          ],
+          "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+          "limitations": [
+            "offline_fact_only",
+            "exact_payment_execution_records_only",
+            "succeeded_attempts_only",
+            "pending_or_unknown_attempt_policy_not_defined",
+            "no_external_payment_status_query"
+          ],
+          "reason_codes": [
+            "known_payment_attempt_duplicate_succeeded"
+          ],
+          "related_attempt_refs": [
+            "webshop-payment-existing-success"
+          ],
+          "status": "BLOCKED"
+        },
+        "projection_schema": "known-payment-attempt-preflight-fact-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:4c310b898e1be0844a85bdf0f237a2e224666c4f519b7bc8017510a81669b4b4",
+        "source_object_ref": "KnownPaymentAttemptPreflightFact:projection-sha256:d7e6629a747e4e7260e384bcd5481f9073a21beb80c5be02e8fa487b6cb972f3",
+        "source_object_type": "KnownPaymentAttemptPreflightFact"
+      },
+      {
+        "binding_ref": "TraceSourceBinding:sha256:68420d52149229c30ae0a128a5bad89cce6daa07d5408e1c878a824f712bfe8f",
+        "projection": {
+          "decision": "DENY",
+          "evidence_paths": [
+            "mandate.mandate_id",
+            "request.request_id",
+            "request.request_id",
+            "trusted_execution.declared_identity.status",
+            "trusted_execution.declared_identity.reason_codes"
+          ],
+          "issue_codes": [
+            "duplicate_request"
+          ],
+          "order_difference_paths": [],
+          "rule_version": "mandate-rules-v0.1"
+        },
+        "projection_schema": "validation-result-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:68420d52149229c30ae0a128a5bad89cce6daa07d5408e1c878a824f712bfe8f",
+        "source_object_ref": "ValidationResult:projection-sha256:b0b54bf9ca619803c22f54f3280f0aa52db04127cc61297da5ff330c389e9412",
+        "source_object_type": "ValidationResult"
+      },
+      {
+        "binding_ref": "TraceSourceBinding:sha256:28e748efa4e94c1f22749a11f092fbd171a6a538a2688a1e064ff062c88eee65",
+        "projection": {
+          "binding_reason_codes": [
+            "payment_execution_binding_match"
+          ],
+          "binding_status": "VALID",
+          "callback_count": 0,
+          "callback_executed": false,
+          "callback_result_ref": null,
+          "context_policy_reason_codes": [
+            "context_policy_valid"
+          ],
+          "context_policy_status": "VALID",
+          "final_decision": "DENY",
+          "identity_reason_codes": [
+            "identity_executor_binding_match"
+          ],
+          "identity_status": "VALID",
+          "preliminary_decision": "DENY",
+          "reason_codes": [
+            "p1:duplicate_request",
+            "p1:upstream_prepayment_non_allow",
+            "p2:payment_execution_binding_match",
+            "p3:identity_executor_binding_match",
+            "p4:context_policy_valid",
+            "preflight:known_payment_attempt_duplicate_succeeded"
+          ]
+        },
+        "projection_schema": "runtime-gate-record-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:28e748efa4e94c1f22749a11f092fbd171a6a538a2688a1e064ff062c88eee65",
+        "source_object_ref": "RuntimeGateRecord:projection-sha256:6f97df6c3be8ebb35b07fa7516179f0f0b985a87855886c4cf679b1eabd4a6ac",
+        "source_object_type": "RuntimeGateRecord"
+      },
+      {
+        "binding_ref": "TraceSourceBinding:sha256:9a917ff5d59e0f8a39278f6859f72bfb34c67a80461be26e8c75c99de3e66944",
+        "projection": {
+          "callback_count": 0,
+          "callback_result_ref": null,
+          "checkout_executed": false,
+          "decision": "DENY",
+          "limitations": [
+            "offline_interception_only",
+            "no_webshop_runtime_execution",
+            "no_real_buy_now_execution",
+            "no_real_payment_or_fulfilment",
+            "instruction_is_not_authorization_mandate",
+            "checkout_callback_is_injected_test_seam"
+          ],
+          "reason_codes": [
+            "p1:duplicate_request",
+            "p1:upstream_prepayment_non_allow",
+            "p2:payment_execution_binding_match",
+            "p3:identity_executor_binding_match",
+            "p4:context_policy_valid",
+            "preflight:known_payment_attempt_duplicate_succeeded"
+          ]
+        },
+        "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:9a917ff5d59e0f8a39278f6859f72bfb34c67a80461be26e8c75c99de3e66944",
+        "source_object_ref": "WebShopBuyNowGateOutcome:projection-sha256:ff91f0ebcc747768c4f4304c986db7ef7e9e9ef18287987606fff73a1110ec92",
+        "source_object_type": "WebShopBuyNowGateOutcome"
+      }
+    ],
+    "trace_ref": "ProductAuthoritativeTrace:WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V2:webshop-request-6c6a78eddffdb552c2af66ef"
+  },
+  "validation": {
+    "profile": "WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V2",
+    "reason_codes": [
+      "product_authoritative_trace_valid"
+    ],
+    "status": "VALID"
+  }
+}

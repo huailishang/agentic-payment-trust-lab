@@ -1,0 +1,20 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-04",
+  "command_argv": [
+    "/usr/bin/bash",
+    "-lc",
+    "PYTHONPATH=src:. python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T09_UNKNOWN_PAYMENT_RECOVERY_SLICE_V1/evidence/EV-04-boundary-freeze-coverage-audit.py'"
+  ],
+  "command_display": "/usr/bin/bash -lc 'PYTHONPATH=src:. python3 '\"'\"'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T09_UNKNOWN_PAYMENT_RECOVERY_SLICE_V1/evidence/EV-04-boundary-freeze-coverage-audit.py'\"'\"''",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-06T09:03:43.421650+00:00",
+  "finished_at_utc": "2026-08-06T09:03:43.893529+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-04.stdout.log",
+  "stderr_path": "EV-04.stderr.log",
+  "stdout_bytes": 1146,
+  "stderr_bytes": 0,
+  "stdout_sha256": "79fdd3cb1fbf025eaf037faa7a8612945c6eb8e81ce0c521820c1954cb0bcefc",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

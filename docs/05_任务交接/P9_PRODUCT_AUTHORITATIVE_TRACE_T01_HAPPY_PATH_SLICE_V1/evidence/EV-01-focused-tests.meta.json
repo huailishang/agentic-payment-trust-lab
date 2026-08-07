@@ -1,0 +1,24 @@
+{
+  "label": "EV-01",
+  "command_argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.test_webshop_runtime_gate",
+    "tests.test_webshop_payment_sidecar",
+    "tests.test_authoritative_trace",
+    "tests.test_project_impact_baseline",
+    "-v"
+  ],
+  "command_display": "python3 -m unittest tests.test_webshop_runtime_gate tests.test_webshop_payment_sidecar tests.test_authoritative_trace tests.test_project_impact_baseline -v",
+  "working_directory": ".",
+  "exit_code": 0,
+  "started_at_utc": "2026-08-06T07:25:57Z",
+  "ended_at_utc": "2026-08-06T07:25:59Z",
+  "stdout_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-01-focused-tests.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-01-focused-tests.stderr.log",
+  "stdout_bytes": 0,
+  "stderr_bytes": 21823,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "88023481de2aec21beb6c1fda9ac19023b09369adf914ec4fb733bcf993ce917"
+}

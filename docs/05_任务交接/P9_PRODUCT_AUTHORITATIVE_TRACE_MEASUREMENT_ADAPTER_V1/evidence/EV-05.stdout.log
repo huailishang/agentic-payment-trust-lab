@@ -1,0 +1,12 @@
+checks_total=58
+checks_passed=58
+checks_failed=0
+head=b4eff597ebffe79c575522b91642f82b26ad5247
+src_tracked_diff=[]
+src_untracked=['src/agentic_payment_experiment/authoritative_trace.py']
+script_diff=['scripts/validation/run_project_impact_baseline.py']
+test_diff=['tests/test_project_impact_baseline.py']
+test_untracked=['tests/test_authoritative_trace.py']
+producer_hits=[]
+embedded_hashes={"formula_registry": "2d8f06ba7c5ca9e35c4957412c0b92da5171c95e135e0bb14b5a61d1bf3309fd", "profiles": "6b53b88d5413ae9dd6d536089a22efe3f32563b950f61604c79f136c03d720c2", "projection_registry": "45aeaa0abb46fbf66573be1ee417bafb41c99802061bc5b3cb63549313c049b4", "runtime_contract": "4062944a6b3dfa5ca8042bc4f6a0ed429a75f00b8875c71c844e7eb0eb304f0e"}
+RESULT=PASS

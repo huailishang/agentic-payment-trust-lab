@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-04",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PROJECTION_IDENTITY_FORMULA_REPAIR_V1/evidence/EV-04-final-snapshot.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PROJECTION_IDENTITY_FORMULA_REPAIR_V1/evidence/EV-04-final-snapshot.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-05T07:54:23.165654+00:00",
+  "finished_at_utc": "2026-08-05T07:54:30.146876+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-04.stdout.log",
+  "stderr_path": "EV-04.stderr.log",
+  "stdout_bytes": 88065,
+  "stderr_bytes": 0,
+  "stdout_sha256": "8726bb3dc6f4d872d7bc6312db1d58ef1640f7d2e4250e6ca88d3ef8ecbc5b51",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

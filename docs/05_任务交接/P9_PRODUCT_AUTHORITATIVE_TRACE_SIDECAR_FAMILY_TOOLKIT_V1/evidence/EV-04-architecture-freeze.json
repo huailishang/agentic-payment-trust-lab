@@ -1,0 +1,43 @@
+{
+  "adapter_results": {
+    "webshop_happy_path_authoritative_trace.py": {
+      "calls": [
+        "build_sidecar_product_trace"
+      ],
+      "line_count": 43,
+      "sha256": "0762eb9c3c5ac5d1d84cf3cfcad44ed04aeb1feb4ecbd86e0a248a124e7704da"
+    },
+    "webshop_unknown_payment_authoritative_trace.py": {
+      "calls": [
+        "build_sidecar_product_trace"
+      ],
+      "line_count": 40,
+      "sha256": "d2c446639beefba8613a725c63a5e6a127bd8ed918394340fc82dbf7680218c1"
+    }
+  },
+  "frozen_hashes": {
+    "authoritative_trace": "07c7341b62440ea22a6fb22daa2e5e8b48163bc70ba534ac9cb065ffb001414a",
+    "baseline_fixture": "4ed2e1f35325cb840de834f5e8c964ff187c291133c958a2ee22111735b615f5",
+    "formula_registry": "2d8f06ba7c5ca9e35c4957412c0b92da5171c95e135e0bb14b5a61d1bf3309fd",
+    "gate": "5abf1a6f08060e111b6fbd9ba96809c2823ef07adee0e23b6d60a6c50c06bdef",
+    "profiles": "6b53b88d5413ae9dd6d536089a22efe3f32563b950f61604c79f136c03d720c2",
+    "projection_registry": "45aeaa0abb46fbf66573be1ee417bafb41c99802061bc5b3cb63549313c049b4",
+    "runner": "70bf2142c303c01c6fb3270fb364c46bc220b821c5e554fa2e6af3355dc57dd3",
+    "runtime_contract": "4062944a6b3dfa5ca8042bc4f6a0ed429a75f00b8875c71c844e7eb0eb304f0e",
+    "t10_builder": "9653277777d06ce8d2c65862765ec57c17874a9d311d2c5c9c117993a0feeac8",
+    "t10_target_fixture": "f5dc05501c79958b197ea7a727e12660756145da870b897496a9ccac714cacee"
+  },
+  "profile_count": 3,
+  "profile_names": [
+    "WEBSHOP_NORMAL_PURCHASE_V2",
+    "WEBSHOP_UNKNOWN_PAYMENT_RECOVERY_V2",
+    "WEBSHOP_PAYMENT_STATUS_CONFLICT_V2"
+  ],
+  "profiles_line_count": 127,
+  "sidecar_toolkit_call_count": 1,
+  "sidecar_toolkit_import_count": 1,
+  "t12_dedicated_build_functions": [],
+  "t12_dedicated_builder_files": 0,
+  "toolkit_assemble_call_count": 1,
+  "toolkit_line_count": 749
+}

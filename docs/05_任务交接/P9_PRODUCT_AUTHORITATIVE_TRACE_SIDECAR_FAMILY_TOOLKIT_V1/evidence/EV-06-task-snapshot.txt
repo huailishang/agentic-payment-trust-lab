@@ -1,0 +1,4223 @@
+===== FILE CURRENT.md =====
+sha256=b4dbd957c07067e69b12da6b438c1fed7562079becc96afb4e5c9bcacc237217
+bytes=5547
+# Evaluator ↔ Executor Current State
+
+<!-- evaluator-executor-workflow:v2.1 -->
+
+```yaml
+workflow: evaluator-executor-workflow/v2.1
+task_id: P9-PRODUCT-AUTHORITATIVE-TRACE-SIDECAR-FAMILY-TOOLKIT-V1
+task_kind: capability_experiment
+state: EXECUTING
+current_role: Executor
+baseline_commit: b4eff597ebffe79c575522b91642f82b26ad5247
+project_map_path: docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md
+project_map_revision: 2026-08-06-r9
+active_bottleneck_id: B-03
+hypothesis_id: H-03
+contract_path: docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/CONTRACT.md
+executor_report_path: docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/REPORT.md
+evaluator_review_path: docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/REVIEW.md
+next_artifact_path: docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/REPORT.md
+authorization_commit: false
+authorization_push: false
+authorization_history_rewrite: false
+authorization_api_call: false
+authorization_network_call: false
+authorization_data_download: false
+authorization_dependency_install: false
+authorization_create_environment: false
+authorization_webshop_runtime_execution: false
+authorization_buy_now_execution: false
+authorization_payment_or_order_side_effect: false
+```
+
+## Current action
+
+```text
+Read:
+- docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md revision 2026-08-06-r9, B-03 and H-03
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T12_STATUS_CONFLICT_SLICE_V1/DESIGN_REVIEW.md
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/CONTRACT.md
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/evidence/BASELINE-architecture.json
+
+Execute exactly one principal capability change:
+1. Create one neutral Sidecar Trace Toolkit above the accepted Trace Assembler.
+2. Move common Sidecar retained-fact checks and common trace events 1-9 plus event 11 into that toolkit.
+3. Represent T01, T09 and T12 as three fixed declarative profiles.
+4. Select exactly one matching profile; zero or multiple matches must fail closed.
+5. Generate event 10 from one fixed extension kind: FULFILMENT, RECOVERY or STATUS_CONFLICT.
+6. Make webshop_payment_sidecar.py call the toolkit once; remove sequential T01 -> T09 -> T12 builder selection.
+7. Do not create any T12-specific authoritative trace module or build_t12 function.
+8. Remove full event/binding assembly from legacy T01/T09 modules; delete them or retain only <=80-line compatibility adapters.
+9. Preserve T01, T09 and T10 complete trace hashes exactly.
+10. Add only T12 product trace coverage: Product Trace 3/12 -> 4/12 and GESR 2/12 -> 3/12.
+11. Preserve non-trace projection SHA-256 6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc.
+12. Keep product trace producers exactly T01, T09, T10 and T12; do not add T02-T08 or T11.
+13. Do not modify runner, validator, gate, T10 builder, fixtures, registries, profiles or business rules.
+14. Run focused tests, full tests >=504, repeat=3 baseline, AST complexity audit and exact full-trace comparisons.
+15. Save EV triplets and REPORT.md while CURRENT remains EXECUTING / Executor after work begins.
+
+Allowed implementation files:
+- src/agentic_payment_experiment/webshop_sidecar_trace_toolkit.py
+- src/agentic_payment_experiment/webshop_sidecar_trace_profiles.py (optional)
+- src/agentic_payment_experiment/webshop_trace_assembler.py
+- src/agentic_payment_experiment/webshop_payment_sidecar.py
+- src/agentic_payment_experiment/webshop_happy_path_authoritative_trace.py (delete or thin adapter only)
+- src/agentic_payment_experiment/webshop_unknown_payment_authoritative_trace.py (delete or thin adapter only)
+- tests/test_webshop_sidecar_trace_toolkit.py
+- tests/test_webshop_trace_assembler.py
+- tests/test_webshop_payment_sidecar.py
+- tests/test_webshop_unknown_payment_authoritative_trace.py
+- tests/test_project_impact_baseline.py
+- this task REPORT/evidence
+- CURRENT.md only for CONTRACT_FROZEN -> EXECUTING
+
+Do not:
+- create webshop_payment_status_conflict_authoritative_trace.py, webshop_t12_authoritative_trace.py or build_t12_*trace;
+- add T11 or T02-T08 product traces;
+- build a YAML/JSON DSL, dynamic expression engine, eval/exec or user-configurable profile loader;
+- modify run_project_impact_baseline.py, authoritative_trace.py, webshop_runtime_gate.py, T10 builder, fixtures, registries, profiles or project map;
+- change recovery, conflict, lifecycle, payment, authorization, binding, Runtime Gate or side-effect business rules;
+- use evaluator replay, fixtures, docs or evidence to construct product trace;
+- retain query/async observations, GateContext, callback, credential, page, prompt or hidden context in product outcomes;
+- execute WebShop runtime, Buy Now, network, LLM, wallet, payment, order or callback side effects;
+- install dependencies, create environments, commit, push, reset or rewrite history;
+- clean, delete or revert inherited accepted artifacts outside the explicitly allowed legacy builder replacement.
+```
+
+## Routing rule
+
+The Executor owns `CONTRACT_FROZEN` and `EXECUTING`. After work begins it may atomically route to `EXECUTING / Executor`, then must submit implementation, EV evidence, repeat-3 measurement and `REPORT.md` while CURRENT remains `EXECUTING / Executor`. Only the Evaluator may accept the submitted snapshot, route to `READY_FOR_REVIEW`, independently rerun all ACs and issue `PASS / REJECTED` plus `IMPROVED / NO_MEASURABLE_GAIN / REGRESSED / INCONCLUSIVE`.
+
+===== FILE src/agentic_payment_experiment/webshop_trace_assembler.py =====
+sha256=202b55fbcc28a370702cdee4385f03bf48f931ba99e558624a2733a05262a09f
+bytes=12169
+"""Neutral mechanical assembly helpers for WebShop product traces.
+
+The functions in this module only project already-produced immutable facts and
+assemble trace contract objects. They do not decide whether a business scenario
+is valid, rerun payment controls, read external state, or perform side effects.
+"""
+
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import Any
+
+from .authoritative_trace import (
+    EXPECTED_COMPLETENESS_STATUS,
+    EXPECTED_TRACE_SCHEMA_VERSION,
+    EXPECTED_TRACE_SOURCE,
+    ProductAuthoritativeTrace,
+    ProductTraceEvent,
+    TraceBindingAssertion,
+    TraceRelation,
+    TraceSourceBinding,
+    compute_binding_ref,
+    compute_projection_source_ref,
+    render_entity_ref,
+)
+from .models import (
+    FulfillmentRecord,
+    IntentMandate,
+    Order,
+    PaymentExecutionRecord,
+    PaymentRecoveryResult,
+    TransactionRequest,
+)
+from .payment_status_conflict import PaymentStatusConflictFact
+from .trusted_execution import (
+    GovernedActionBindingFact,
+    GovernedPaymentAction,
+    RuntimeGateRecord,
+)
+
+
+def create_source_binding(
+    source_object_type: str,
+    projection_schema: str,
+    projection: Mapping[str, Any],
+) -> TraceSourceBinding:
+    """Create one deterministic source binding from a frozen projection."""
+
+    source_object_ref = compute_projection_source_ref(
+        source_object_type,
+        projection_schema,
+        projection,
+    )
+    payload = {
+        "source_object_type": source_object_type,
+        "source_object_ref": source_object_ref,
+        "projection_schema": projection_schema,
+        "projection": projection,
+    }
+    return TraceSourceBinding(
+        binding_ref=compute_binding_ref(payload),
+        source_object_type=source_object_type,
+        source_object_ref=source_object_ref,
+        projection_schema=projection_schema,
+        projection=projection,
+    )
+
+
+def create_relation(
+    relation_type: str,
+    target_entity_type: str,
+    target_entity_role: str,
+    target_entity_ref: str,
+    *,
+    assertions: tuple[TraceBindingAssertion, ...] = (),
+) -> TraceRelation:
+    """Create a resolved relation to another trace entity."""
+
+    return TraceRelation(
+        relation_type=relation_type,
+        target_entity_type=target_entity_type,
+        target_entity_role=target_entity_role,
+        target_entity_ref=target_entity_ref,
+        target_binding_assertions=assertions,
+        target_resolved=True,
+    )
+
+
+def create_event(
+    sequence_no: int,
+    event_type: str,
+    entity_type: str,
+    entity_role: str,
+    binding: TraceSourceBinding,
+    entity_ref_template: str,
+    *,
+    decision: str | None = None,
+    status: str | None = None,
+    reason_codes: tuple[str, ...] = (),
+    relations: tuple[TraceRelation, ...] = (),
+) -> ProductTraceEvent:
+    """Create one event bound to an existing deterministic source binding."""
+
+    return ProductTraceEvent(
+        sequence_no=sequence_no,
+        event_type=event_type,
+        entity_type=entity_type,
+        entity_role=entity_role,
+        entity_ref=render_entity_ref(binding, entity_ref_template),
+        source_binding_ref=binding.binding_ref,
+        decision=decision,
+        status=status,
+        reason_codes=reason_codes,
+        relations=relations,
+    )
+
+
+def project_mandate(mandate: IntentMandate) -> dict[str, Any]:
+    return {
+        "mandate_id": mandate.mandate_id,
+        "authority_version": mandate.authority_version,
+    }
+
+
+def project_order(order: Order) -> dict[str, Any]:
+    return {
+        "order_id": order.order_id,
+        "order_version": order.order_version,
+        "mandate_ref": order.mandate_ref,
+        "authority_version_ref": order.authority_version_ref,
+        "total_amount": order.total_amount,
+        "currency": order.currency,
+        "merchant": order.merchant,
+        "payee": order.payee,
+    }
+
+
+def project_request(request: TransactionRequest) -> dict[str, Any]:
+    return {
+        "request_id": request.request_id,
+        "order_ref": request.order_ref,
+        "authority_ref": request.authority_ref,
+        "authority_version_ref": request.authority_version_ref,
+        "amount": request.amount,
+        "currency": request.currency,
+        "merchant": request.merchant,
+        "payee": request.payee,
+        "agent_id": request.agent_id,
+    }
+
+
+def project_governed_action(action: GovernedPaymentAction) -> dict[str, Any]:
+    return {
+        "action_id": action.action_id,
+        "action_type": action.action_type,
+        "agent_ref": action.agent_ref,
+        "executor_ref": action.executor_ref,
+        "authority_ref": action.authority_ref,
+        "authority_version": action.authority_version,
+        "order_ref": action.order_ref,
+        "order_version": action.order_version,
+        "request_ref": action.request_ref,
+        "payment_ref": action.payment_ref,
+        "source_refs": action.source_refs,
+        "side_effect_class": action.side_effect_class,
+        "reversibility": action.reversibility,
+        "occurred_at": action.occurred_at,
+    }
+
+
+def project_payment(payment: PaymentExecutionRecord) -> dict[str, Any]:
+    return {
+        "payment_id": payment.payment_id,
+        "request_id": payment.request_id,
+        "order_id": payment.order_id,
+        "status": payment.status,
+        "amount": payment.amount,
+        "currency": payment.currency,
+        "authority_ref": payment.authority_ref,
+        "agent_ref": payment.agent_ref,
+        "transaction_object_ref": payment.transaction_object_ref,
+        "payee": payment.payee,
+    }
+
+
+def project_action_binding_fact(fact: GovernedActionBindingFact) -> dict[str, Any]:
+    return {
+        "status": fact.status,
+        "action_id": fact.action_id,
+        "reason_codes": fact.reason_codes,
+        "checked_action_type": fact.checked_action_type,
+        "checked_order_ref": fact.checked_order_ref,
+        "checked_request_ref": fact.checked_request_ref,
+        "checked_payment_ref": fact.checked_payment_ref,
+    }
+
+
+def project_runtime_gate(record: RuntimeGateRecord) -> dict[str, Any]:
+    return {
+        "preliminary_decision": record.preliminary_decision,
+        "final_decision": record.final_decision,
+        "binding_status": record.binding_status,
+        "binding_reason_codes": record.binding_reason_codes,
+        "identity_status": record.identity_status,
+        "identity_reason_codes": record.identity_reason_codes,
+        "context_policy_status": record.context_policy_status,
+        "context_policy_reason_codes": record.context_policy_reason_codes,
+        "callback_executed": record.callback_executed,
+        "callback_count": record.callback_count,
+        "callback_result_ref": record.callback_result_ref,
+        "reason_codes": record.reason_codes,
+    }
+
+
+def project_fulfillment(record: FulfillmentRecord) -> dict[str, Any]:
+    return {
+        "fulfillment_id": record.fulfillment_id,
+        "order_id": record.order_id,
+        "status": record.status,
+        "failure_code": record.failure_code,
+        "reason_codes": (() if record.failure_code is None else (record.failure_code,)),
+    }
+
+
+def project_payment_recovery(record: PaymentRecoveryResult) -> dict[str, Any]:
+    return {
+        "initial_status": record.initial_status,
+        "observed_status": record.observed_status,
+        "effective_status": record.effective_status,
+        "recovery_status": record.recovery_status,
+        "next_action": record.next_action,
+        "retry_allowed": record.retry_allowed,
+        "issue_codes": tuple(item.code for item in record.issues),
+        "evidence_paths": tuple(item.field_path for item in record.evidence),
+        "rule_version": record.rule_version,
+    }
+
+
+def project_payment_status_conflict(
+    fact: PaymentStatusConflictFact,
+) -> dict[str, Any]:
+    return {
+        "resolution": fact.resolution,
+        "initial_status": fact.initial_status,
+        "query_status": fact.query_status,
+        "query_observed_at": fact.query_observed_at,
+        "async_status": fact.async_status,
+        "async_observed_at": fact.async_observed_at,
+        "effective_status": fact.effective_status,
+        "effective_status_terminal": fact.effective_status_terminal,
+        "reason_codes": fact.reason_codes,
+        "business_success_confirmed": fact.business_success_confirmed,
+        "fulfillment_confirmed": fact.fulfillment_confirmed,
+        "user_task_success_confirmed": fact.user_task_success_confirmed,
+        "reconciliation_confirmed": fact.reconciliation_confirmed,
+        "settlement_confirmed": fact.settlement_confirmed,
+        "legal_finality_confirmed": fact.legal_finality_confirmed,
+    }
+
+
+def project_payment_sidecar_outcome(outcome: Any) -> dict[str, Any]:
+    """Project the frozen public result fields without importing the sidecar module."""
+
+    lifecycle = outcome.lifecycle
+    return {
+        "ready": outcome.ready,
+        "initial_payment_status": (
+            outcome.initial_payment.status if outcome.initial_payment else None
+        ),
+        "effective_payment_status": (
+            outcome.effective_payment.status if outcome.effective_payment else None
+        ),
+        "query_recovery_status": (
+            outcome.query_recovery.recovery_status
+            if outcome.query_recovery is not None
+            else None
+        ),
+        "status_conflict_resolution": (
+            outcome.status_conflict.resolution
+            if outcome.status_conflict is not None
+            else None
+        ),
+        "lifecycle_payment_status": (
+            lifecycle.payment_status if lifecycle is not None else None
+        ),
+        "lifecycle_fulfillment_status": (
+            lifecycle.fulfillment_status if lifecycle is not None else None
+        ),
+        "lifecycle_task_status": (
+            lifecycle.task_status if lifecycle is not None else None
+        ),
+        "lifecycle_remediation_status": (
+            lifecycle.remediation.status if lifecycle is not None else None
+        ),
+        "retry_allowed": outcome.retry_allowed,
+        "duplicate_payment_blocked": outcome.duplicate_payment_blocked,
+        "reason_codes": outcome.reason_codes,
+        "limitations": outcome.limitations,
+    }
+
+
+def assemble_product_trace(
+    *,
+    profile: str,
+    trace_ref: str,
+    events: tuple[ProductTraceEvent, ...],
+    source_bindings: tuple[TraceSourceBinding, ...],
+    expected_unique_binding_count: int,
+) -> ProductAuthoritativeTrace | None:
+    """Assemble a complete product trace or fail closed for invalid mechanics."""
+
+    if type(profile) is not str or not profile:
+        return None
+    if type(trace_ref) is not str or not trace_ref:
+        return None
+    if type(events) is not tuple or not events:
+        return None
+    if type(source_bindings) is not tuple or not source_bindings:
+        return None
+    if type(expected_unique_binding_count) is not int:
+        return None
+    if expected_unique_binding_count <= 0:
+        return None
+    if not all(type(event) is ProductTraceEvent for event in events):
+        return None
+    if not all(type(binding) is TraceSourceBinding for binding in source_bindings):
+        return None
+    unique_binding_refs = {binding.binding_ref for binding in source_bindings}
+    if len(unique_binding_refs) != len(source_bindings):
+        return None
+    if len(unique_binding_refs) != expected_unique_binding_count:
+        return None
+
+    return ProductAuthoritativeTrace(
+        schema_version=EXPECTED_TRACE_SCHEMA_VERSION,
+        source=EXPECTED_TRACE_SOURCE,
+        profile=profile,
+        trace_ref=trace_ref,
+        completeness_status=EXPECTED_COMPLETENESS_STATUS,
+        events=events,
+        source_bindings=source_bindings,
+    )
+
+
+__all__ = [
+    "assemble_product_trace",
+    "create_event",
+    "create_relation",
+    "create_source_binding",
+    "project_action_binding_fact",
+    "project_fulfillment",
+    "project_governed_action",
+    "project_mandate",
+    "project_order",
+    "project_payment",
+    "project_payment_recovery",
+    "project_payment_sidecar_outcome",
+    "project_payment_status_conflict",
+    "project_request",
+    "project_runtime_gate",
+]
+
+===== FILE src/agentic_payment_experiment/webshop_sidecar_trace_profiles.py =====
+sha256=eb03ed375c3cb5c0b2a80ad248b4de00e833c007e8dfb687f742d97cca643941
+bytes=4662
+"""Closed declarative profiles for the WebShop payment sidecar trace family."""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from enum import Enum
+
+from .models import (
+    FulfillmentStatus,
+    PaymentRecoveryStatus,
+    PaymentStatus,
+    RemediationStatus,
+    TaskStatus,
+)
+from .payment_status_conflict import PaymentStatusConflictResolution
+
+
+class SidecarExtensionKind(str, Enum):
+    FULFILMENT = "FULFILMENT"
+    RECOVERY = "RECOVERY"
+    STATUS_CONFLICT = "STATUS_CONFLICT"
+
+
+@dataclass(frozen=True)
+class SidecarTraceProfile:
+    profile_name: str
+    extension_kind: SidecarExtensionKind
+    initial_payment_status: PaymentStatus
+    effective_payment_status: PaymentStatus
+    recovery_initial_status: PaymentStatus | None
+    recovery_observed_status: PaymentStatus | None
+    recovery_effective_status: PaymentStatus | None
+    recovery_status: PaymentRecoveryStatus | None
+    recovery_retry_allowed: bool | None
+    conflict_resolution: PaymentStatusConflictResolution | None
+    conflict_initial_status: PaymentStatus | None
+    conflict_query_status: PaymentStatus | None
+    conflict_async_status: PaymentStatus | None
+    conflict_effective_status: PaymentStatus | None
+    conflict_effective_status_terminal: bool | None
+    required_conflict_reason_codes: tuple[str, ...]
+    lifecycle_payment_status: PaymentStatus
+    lifecycle_fulfilment_status: FulfillmentStatus
+    lifecycle_task_status: TaskStatus
+    remediation_status: RemediationStatus
+
+
+T01_PROFILE = SidecarTraceProfile(
+    profile_name="WEBSHOP_NORMAL_PURCHASE_V2",
+    extension_kind=SidecarExtensionKind.FULFILMENT,
+    initial_payment_status=PaymentStatus.SUCCEEDED,
+    effective_payment_status=PaymentStatus.SUCCEEDED,
+    recovery_initial_status=None,
+    recovery_observed_status=None,
+    recovery_effective_status=None,
+    recovery_status=None,
+    recovery_retry_allowed=None,
+    conflict_resolution=None,
+    conflict_initial_status=None,
+    conflict_query_status=None,
+    conflict_async_status=None,
+    conflict_effective_status=None,
+    conflict_effective_status_terminal=None,
+    required_conflict_reason_codes=(),
+    lifecycle_payment_status=PaymentStatus.SUCCEEDED,
+    lifecycle_fulfilment_status=FulfillmentStatus.SUCCEEDED,
+    lifecycle_task_status=TaskStatus.SUCCEEDED,
+    remediation_status=RemediationStatus.NOT_REQUIRED,
+)
+
+T09_PROFILE = SidecarTraceProfile(
+    profile_name="WEBSHOP_UNKNOWN_PAYMENT_RECOVERY_V2",
+    extension_kind=SidecarExtensionKind.RECOVERY,
+    initial_payment_status=PaymentStatus.UNKNOWN,
+    effective_payment_status=PaymentStatus.SUCCEEDED,
+    recovery_initial_status=PaymentStatus.UNKNOWN,
+    recovery_observed_status=PaymentStatus.SUCCEEDED,
+    recovery_effective_status=PaymentStatus.SUCCEEDED,
+    recovery_status=PaymentRecoveryStatus.RECOVERED,
+    recovery_retry_allowed=False,
+    conflict_resolution=None,
+    conflict_initial_status=None,
+    conflict_query_status=None,
+    conflict_async_status=None,
+    conflict_effective_status=None,
+    conflict_effective_status_terminal=None,
+    required_conflict_reason_codes=(),
+    lifecycle_payment_status=PaymentStatus.SUCCEEDED,
+    lifecycle_fulfilment_status=FulfillmentStatus.SUCCEEDED,
+    lifecycle_task_status=TaskStatus.SUCCEEDED,
+    remediation_status=RemediationStatus.NOT_REQUIRED,
+)
+
+T12_PROFILE = SidecarTraceProfile(
+    profile_name="WEBSHOP_PAYMENT_STATUS_CONFLICT_V2",
+    extension_kind=SidecarExtensionKind.STATUS_CONFLICT,
+    initial_payment_status=PaymentStatus.UNKNOWN,
+    effective_payment_status=PaymentStatus.UNKNOWN,
+    recovery_initial_status=PaymentStatus.UNKNOWN,
+    recovery_observed_status=PaymentStatus.SUCCEEDED,
+    recovery_effective_status=PaymentStatus.SUCCEEDED,
+    recovery_status=PaymentRecoveryStatus.RECOVERED,
+    recovery_retry_allowed=False,
+    conflict_resolution=PaymentStatusConflictResolution.CONFLICT,
+    conflict_initial_status=PaymentStatus.UNKNOWN,
+    conflict_query_status=PaymentStatus.SUCCEEDED,
+    conflict_async_status=PaymentStatus.FAILED,
+    conflict_effective_status=PaymentStatus.UNKNOWN,
+    conflict_effective_status_terminal=False,
+    required_conflict_reason_codes=("payment_status_opposite_terminal_claims",),
+    lifecycle_payment_status=PaymentStatus.UNKNOWN,
+    lifecycle_fulfilment_status=FulfillmentStatus.SUCCEEDED,
+    lifecycle_task_status=TaskStatus.UNKNOWN,
+    remediation_status=RemediationStatus.REQUIRED,
+)
+
+SIDECAR_TRACE_PROFILES = (T01_PROFILE, T09_PROFILE, T12_PROFILE)
+
+
+__all__ = [
+    "SIDECAR_TRACE_PROFILES",
+    "SidecarExtensionKind",
+    "SidecarTraceProfile",
+    "T01_PROFILE",
+    "T09_PROFILE",
+    "T12_PROFILE",
+]
+
+===== FILE src/agentic_payment_experiment/webshop_sidecar_trace_toolkit.py =====
+sha256=1ccf37b62f6eedc0eff41216ec983ddaea74aed7a0e0529be686f6b15aefbbf3
+bytes=26953
+"""Controlled product-trace toolkit for the WebShop payment sidecar family.
+
+The toolkit consumes only immutable facts already retained by the runtime gate
+and already computed by the payment sidecar. It does not rerun authorization,
+payment recovery, conflict resolution, lifecycle logic, or side effects.
+"""
+
+from __future__ import annotations
+
+from collections.abc import Mapping
+from dataclasses import dataclass
+
+from .adapters.webshop import WebShopCommerceAdaptation
+from .authoritative_trace import (
+    ProductAuthoritativeTrace,
+    TraceBindingAssertion,
+    TraceContractError,
+)
+from .models import (
+    Decision,
+    FulfillmentRecord,
+    IntentMandate,
+    LifecycleResult,
+    Order,
+    PaymentExecutionRecord,
+    PaymentRecoveryResult,
+    PaymentStatus,
+    TransactionRequest,
+)
+from .payment_status_conflict import PaymentStatusConflictFact
+from .trusted_execution import (
+    GovernedActionBindingFact,
+    GovernedPaymentAction,
+    RuntimeGateRecord,
+    VerificationStatus,
+)
+from .webshop_payment_sidecar import WebShopPaymentFulfilmentOutcome
+from .webshop_runtime_gate import WebShopBuyNowGateOutcome
+from .webshop_sidecar_trace_profiles import (
+    SIDECAR_TRACE_PROFILES,
+    SidecarExtensionKind,
+    SidecarTraceProfile,
+)
+from .webshop_trace_assembler import (
+    assemble_product_trace,
+    create_event,
+    create_relation,
+    create_source_binding,
+    project_action_binding_fact,
+    project_fulfillment,
+    project_governed_action,
+    project_mandate,
+    project_order,
+    project_payment,
+    project_payment_recovery,
+    project_payment_sidecar_outcome,
+    project_payment_status_conflict,
+    project_request,
+    project_runtime_gate,
+)
+
+
+@dataclass(frozen=True)
+class _SidecarTraceFacts:
+    authorized_order: Order
+    current_order: Order
+    bound_request: TransactionRequest
+    governed_action: GovernedPaymentAction
+    candidate: PaymentExecutionRecord
+    action_fact: GovernedActionBindingFact
+    runtime_record: RuntimeGateRecord
+    initial_payment: PaymentExecutionRecord
+    effective_payment: PaymentExecutionRecord
+    lifecycle: LifecycleResult
+
+
+def _same_projection(left: Mapping[str, object], right: Mapping[str, object]) -> bool:
+    return dict(left) == dict(right)
+
+
+def _same_payment_identity(
+    left: PaymentExecutionRecord,
+    right: PaymentExecutionRecord,
+) -> bool:
+    left_projection = dict(project_payment(left))
+    right_projection = dict(project_payment(right))
+    left_projection.pop("status")
+    right_projection.pop("status")
+    return left_projection == right_projection
+
+
+def _common_facts(
+    *,
+    gate_outcome: WebShopBuyNowGateOutcome,
+    adaptation: WebShopCommerceAdaptation,
+    mandate: IntentMandate,
+    fulfillment: FulfillmentRecord | None,
+    base_outcome: WebShopPaymentFulfilmentOutcome,
+) -> _SidecarTraceFacts | None:
+    if not adaptation.ready:
+        return None
+    if type(adaptation.order) is not Order:
+        return None
+    if type(adaptation.payment_request) is not TransactionRequest:
+        return None
+    if type(gate_outcome.authorized_order_snapshot) is not Order:
+        return None
+    if type(gate_outcome.bound_request) is not TransactionRequest:
+        return None
+    if type(gate_outcome.governed_action) is not GovernedPaymentAction:
+        return None
+    if type(gate_outcome.execution_candidate) is not PaymentExecutionRecord:
+        return None
+    if type(gate_outcome.governed_action_fact) is not GovernedActionBindingFact:
+        return None
+    if type(gate_outcome.runtime_gate_record) is not RuntimeGateRecord:
+        return None
+    if type(base_outcome.initial_payment) is not PaymentExecutionRecord:
+        return None
+    if type(base_outcome.effective_payment) is not PaymentExecutionRecord:
+        return None
+    if type(base_outcome.lifecycle) is not LifecycleResult:
+        return None
+    if fulfillment is not None and type(fulfillment) is not FulfillmentRecord:
+        return None
+
+    authorized_order = gate_outcome.authorized_order_snapshot
+    current_order = adaptation.order
+    bound_request = gate_outcome.bound_request
+    governed_action = gate_outcome.governed_action
+    candidate = gate_outcome.execution_candidate
+    action_fact = gate_outcome.governed_action_fact
+    runtime_record = gate_outcome.runtime_gate_record
+    initial_payment = base_outcome.initial_payment
+    effective_payment = base_outcome.effective_payment
+    lifecycle = base_outcome.lifecycle
+
+    if gate_outcome.decision is not Decision.ALLOW:
+        return None
+    if not gate_outcome.checkout_executed or gate_outcome.callback_count != 1:
+        return None
+    if runtime_record.final_decision is not Decision.ALLOW:
+        return None
+    if not runtime_record.callback_executed or runtime_record.callback_count != 1:
+        return None
+    if action_fact.status is not VerificationStatus.VALID:
+        return None
+    if gate_outcome.known_payment_attempt_preflight_fact is not None:
+        return None
+    if candidate.status is not PaymentStatus.PENDING:
+        return None
+    if not base_outcome.ready:
+        return None
+    if base_outcome.retry_allowed or base_outcome.duplicate_payment_blocked:
+        return None
+
+    if not _same_projection(project_order(authorized_order), project_order(current_order)):
+        return None
+    expected_adapter_request = dict(project_request(adaptation.payment_request))
+    expected_adapter_request["agent_id"] = bound_request.agent_id
+    if not _same_projection(project_request(bound_request), expected_adapter_request):
+        return None
+
+    if mandate.mandate_id != current_order.mandate_ref:
+        return None
+    if mandate.authority_version != current_order.authority_version_ref:
+        return None
+    if bound_request.order_ref != current_order.order_id:
+        return None
+    if bound_request.authority_ref != mandate.mandate_id:
+        return None
+    if bound_request.authority_version_ref != mandate.authority_version:
+        return None
+    if governed_action.authority_ref != mandate.mandate_id:
+        return None
+    if governed_action.authority_version != mandate.authority_version:
+        return None
+    if governed_action.order_ref != current_order.order_id:
+        return None
+    if governed_action.order_version != current_order.order_version:
+        return None
+    if governed_action.request_ref != bound_request.request_id:
+        return None
+    if governed_action.payment_ref != candidate.payment_id:
+        return None
+    if action_fact.action_id != governed_action.action_id:
+        return None
+    if action_fact.checked_order_ref != current_order.order_id:
+        return None
+    if action_fact.checked_request_ref != bound_request.request_id:
+        return None
+    if action_fact.checked_payment_ref != candidate.payment_id:
+        return None
+
+    if not _same_payment_identity(candidate, initial_payment):
+        return None
+    if not _same_payment_identity(initial_payment, effective_payment):
+        return None
+    if not (
+        candidate.payment_id
+        == initial_payment.payment_id
+        == effective_payment.payment_id
+    ):
+        return None
+    if effective_payment.request_id != bound_request.request_id:
+        return None
+    if effective_payment.order_id != current_order.order_id:
+        return None
+    if fulfillment is not None:
+        if fulfillment.order_id != current_order.order_id:
+            return None
+        if fulfillment.status is not lifecycle.fulfillment_status:
+            return None
+        if fulfillment.status.value == "SUCCEEDED" and fulfillment.failure_code is not None:
+            return None
+
+    return _SidecarTraceFacts(
+        authorized_order=authorized_order,
+        current_order=current_order,
+        bound_request=bound_request,
+        governed_action=governed_action,
+        candidate=candidate,
+        action_fact=action_fact,
+        runtime_record=runtime_record,
+        initial_payment=initial_payment,
+        effective_payment=effective_payment,
+        lifecycle=lifecycle,
+    )
+
+
+def _profile_matches(
+    profile: SidecarTraceProfile,
+    *,
+    fulfillment: FulfillmentRecord | None,
+    base_outcome: WebShopPaymentFulfilmentOutcome,
+) -> bool:
+    initial_payment = base_outcome.initial_payment
+    effective_payment = base_outcome.effective_payment
+    lifecycle = base_outcome.lifecycle
+    if not isinstance(initial_payment, PaymentExecutionRecord):
+        return False
+    if not isinstance(effective_payment, PaymentExecutionRecord):
+        return False
+    if not isinstance(lifecycle, LifecycleResult):
+        return False
+    if initial_payment.status is not profile.initial_payment_status:
+        return False
+    if effective_payment.status is not profile.effective_payment_status:
+        return False
+    if lifecycle.payment_status is not profile.lifecycle_payment_status:
+        return False
+    if lifecycle.fulfillment_status is not profile.lifecycle_fulfilment_status:
+        return False
+    if lifecycle.task_status is not profile.lifecycle_task_status:
+        return False
+    if lifecycle.remediation.status is not profile.remediation_status:
+        return False
+    if fulfillment is not None and fulfillment.status is not profile.lifecycle_fulfilment_status:
+        return False
+
+    recovery = base_outcome.query_recovery
+    expects_recovery = profile.recovery_status is not None
+    if expects_recovery != (recovery is not None):
+        return False
+    if recovery is not None:
+        if type(recovery) is not PaymentRecoveryResult:
+            return False
+        if recovery.initial_status is not profile.recovery_initial_status:
+            return False
+        if recovery.observed_status is not profile.recovery_observed_status:
+            return False
+        if recovery.effective_status is not profile.recovery_effective_status:
+            return False
+        if recovery.recovery_status is not profile.recovery_status:
+            return False
+        if recovery.retry_allowed is not profile.recovery_retry_allowed:
+            return False
+
+    conflict = base_outcome.status_conflict
+    expects_conflict = profile.conflict_resolution is not None
+    if expects_conflict != (conflict is not None):
+        return False
+    if conflict is not None:
+        if type(conflict) is not PaymentStatusConflictFact:
+            return False
+        if conflict.resolution is not profile.conflict_resolution:
+            return False
+        if conflict.initial_status is not profile.conflict_initial_status:
+            return False
+        if conflict.query_status is not profile.conflict_query_status:
+            return False
+        if conflict.async_status is not profile.conflict_async_status:
+            return False
+        if conflict.effective_status is not profile.conflict_effective_status:
+            return False
+        if conflict.effective_status_terminal is not profile.conflict_effective_status_terminal:
+            return False
+        if not set(profile.required_conflict_reason_codes).issubset(conflict.reason_codes):
+            return False
+
+    if profile.extension_kind is SidecarExtensionKind.FULFILMENT:
+        if fulfillment is None:
+            return False
+        if initial_payment != effective_payment:
+            return False
+    return True
+
+
+def _select_profile(
+    *,
+    fulfillment: FulfillmentRecord | None,
+    base_outcome: WebShopPaymentFulfilmentOutcome,
+    profiles: tuple[SidecarTraceProfile, ...] = SIDECAR_TRACE_PROFILES,
+) -> SidecarTraceProfile | None:
+    if type(profiles) is not tuple:
+        return None
+    if not all(type(profile) is SidecarTraceProfile for profile in profiles):
+        return None
+    matches = tuple(
+        profile
+        for profile in profiles
+        if _profile_matches(
+            profile,
+            fulfillment=fulfillment,
+            base_outcome=base_outcome,
+        )
+    )
+    return matches[0] if len(matches) == 1 else None
+
+
+def _extension_binding_and_event(
+    *,
+    profile: SidecarTraceProfile,
+    current_order: Order,
+    fulfillment: FulfillmentRecord | None,
+    base_outcome: WebShopPaymentFulfilmentOutcome,
+):
+    order_ref = f"Order:{current_order.order_id}"
+    if profile.extension_kind is SidecarExtensionKind.FULFILMENT:
+        if type(fulfillment) is not FulfillmentRecord:
+            return None
+        binding = create_source_binding(
+            "FulfillmentRecord",
+            "fulfillment-record-trace/v2",
+            project_fulfillment(fulfillment),
+        )
+        event = create_event(
+            10,
+            "FULFILMENT_OUTCOME_RECORDED",
+            "FulfillmentRecord",
+            "FULFILMENT_OUTCOME",
+            binding,
+            "FulfillmentRecord:{projection.fulfillment_id}",
+            status=fulfillment.status.value,
+            reason_codes=(
+                () if fulfillment.failure_code is None else (fulfillment.failure_code,)
+            ),
+            relations=(
+                create_relation(
+                    "BOUND_TO",
+                    "Order",
+                    "CURRENT_ORDER_SNAPSHOT",
+                    order_ref,
+                ),
+            ),
+        )
+        return binding, event
+
+    if profile.extension_kind is SidecarExtensionKind.RECOVERY:
+        recovery = base_outcome.query_recovery
+        if type(recovery) is not PaymentRecoveryResult:
+            return None
+        binding = create_source_binding(
+            "PaymentRecoveryResult",
+            "payment-recovery-result-trace/v2",
+            project_payment_recovery(recovery),
+        )
+        event = create_event(
+            10,
+            "RECOVERY_OUTCOME_RECORDED",
+            "PaymentRecoveryResult",
+            "RECOVERY_OUTCOME",
+            binding,
+            "PaymentRecoveryResult:binding:{binding_digest}",
+            status=recovery.recovery_status.value,
+            reason_codes=tuple(item.code for item in recovery.issues),
+        )
+        return binding, event
+
+    if profile.extension_kind is SidecarExtensionKind.STATUS_CONFLICT:
+        conflict = base_outcome.status_conflict
+        if type(conflict) is not PaymentStatusConflictFact:
+            return None
+        binding = create_source_binding(
+            "PaymentStatusConflictFact",
+            "payment-status-conflict-fact-trace/v2",
+            project_payment_status_conflict(conflict),
+        )
+        event = create_event(
+            10,
+            "STATUS_CONFLICT_RECORDED",
+            "PaymentStatusConflictFact",
+            "STATUS_CONFLICT_FACT",
+            binding,
+            "PaymentStatusConflictFact:binding:{binding_digest}",
+            status=conflict.resolution.value,
+            reason_codes=conflict.reason_codes,
+        )
+        return binding, event
+    return None
+
+
+def build_sidecar_product_trace(
+    *,
+    gate_outcome: WebShopBuyNowGateOutcome,
+    adaptation: WebShopCommerceAdaptation,
+    mandate: IntentMandate,
+    fulfillment: FulfillmentRecord | None,
+    base_outcome: WebShopPaymentFulfilmentOutcome,
+) -> ProductAuthoritativeTrace | None:
+    """Build the exactly-one matching Sidecar family trace or fail closed."""
+
+    if type(gate_outcome) is not WebShopBuyNowGateOutcome:
+        return None
+    if type(adaptation) is not WebShopCommerceAdaptation:
+        return None
+    if type(mandate) is not IntentMandate:
+        return None
+    if type(base_outcome) is not WebShopPaymentFulfilmentOutcome:
+        return None
+
+    facts = _common_facts(
+        gate_outcome=gate_outcome,
+        adaptation=adaptation,
+        mandate=mandate,
+        fulfillment=fulfillment,
+        base_outcome=base_outcome,
+    )
+    if facts is None:
+        return None
+    profile = _select_profile(
+        fulfillment=fulfillment,
+        base_outcome=base_outcome,
+    )
+    if profile is None:
+        return None
+
+    try:
+        mandate_binding = create_source_binding(
+            "IntentMandate",
+            "intent-mandate-trace/v2",
+            project_mandate(mandate),
+        )
+        order_binding = create_source_binding(
+            "Order",
+            "order-snapshot-trace/v2",
+            project_order(facts.current_order),
+        )
+        request_binding = create_source_binding(
+            "TransactionRequest",
+            "transaction-request-trace/v2",
+            project_request(facts.bound_request),
+        )
+        action_binding = create_source_binding(
+            "GovernedPaymentAction",
+            "governed-payment-action-trace/v2",
+            project_governed_action(facts.governed_action),
+        )
+        candidate_binding = create_source_binding(
+            "PaymentExecutionRecord",
+            "payment-execution-record-trace/v2",
+            project_payment(facts.candidate),
+        )
+        action_fact_binding = create_source_binding(
+            "GovernedActionBindingFact",
+            "governed-action-binding-fact-trace/v2",
+            project_action_binding_fact(facts.action_fact),
+        )
+        runtime_binding = create_source_binding(
+            "RuntimeGateRecord",
+            "runtime-gate-record-trace/v2",
+            project_runtime_gate(facts.runtime_record),
+        )
+        payment_binding = create_source_binding(
+            "PaymentExecutionRecord",
+            "payment-execution-record-trace/v2",
+            project_payment(facts.effective_payment),
+        )
+        extension = _extension_binding_and_event(
+            profile=profile,
+            current_order=facts.current_order,
+            fulfillment=fulfillment,
+            base_outcome=base_outcome,
+        )
+        if extension is None:
+            return None
+        extension_binding, extension_event = extension
+        outcome_binding = create_source_binding(
+            "WebShopPaymentFulfilmentOutcome",
+            "webshop-payment-fulfilment-outcome-result-trace/v2",
+            project_payment_sidecar_outcome(base_outcome),
+        )
+
+        if candidate_binding.binding_ref == payment_binding.binding_ref:
+            return None
+        if candidate_binding.source_object_ref != payment_binding.source_object_ref:
+            return None
+
+        authority_ref = f"IntentMandate:{mandate.mandate_id}"
+        order_ref = f"Order:{facts.current_order.order_id}"
+        request_ref = f"TransactionRequest:{facts.bound_request.request_id}"
+        action_ref = f"GovernedPaymentAction:{facts.governed_action.action_id}"
+        candidate_ref = f"PaymentExecutionRecord:{facts.candidate.payment_id}"
+
+        authority_version_assertion = TraceBindingAssertion(
+            source_path="projection.authority_version_ref",
+            target_path="projection.authority_version",
+        )
+        action_authority_assertion = TraceBindingAssertion(
+            source_path="projection.authority_version",
+            target_path="projection.authority_version",
+        )
+        action_order_assertion = TraceBindingAssertion(
+            source_path="projection.order_version",
+            target_path="projection.order_version",
+        )
+
+        events = (
+            create_event(
+                1,
+                "AUTHORITY_RECORDED",
+                "IntentMandate",
+                "AUTHORITY",
+                mandate_binding,
+                "IntentMandate:{projection.mandate_id}",
+            ),
+            create_event(
+                2,
+                "ORDER_RECORDED",
+                "Order",
+                "AUTHORIZED_ORDER_SNAPSHOT",
+                order_binding,
+                "Order:{projection.order_id}",
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "IntentMandate",
+                        "AUTHORITY",
+                        authority_ref,
+                        assertions=(authority_version_assertion,),
+                    ),
+                ),
+            ),
+            create_event(
+                3,
+                "ORDER_RECORDED",
+                "Order",
+                "CURRENT_ORDER_SNAPSHOT",
+                order_binding,
+                "Order:{projection.order_id}",
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "IntentMandate",
+                        "AUTHORITY",
+                        authority_ref,
+                        assertions=(authority_version_assertion,),
+                    ),
+                ),
+            ),
+            create_event(
+                4,
+                "REQUEST_RECORDED",
+                "TransactionRequest",
+                "CURRENT_REQUEST",
+                request_binding,
+                "TransactionRequest:{projection.request_id}",
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "IntentMandate",
+                        "AUTHORITY",
+                        authority_ref,
+                        assertions=(authority_version_assertion,),
+                    ),
+                ),
+            ),
+            create_event(
+                5,
+                "ACTION_RECORDED",
+                "GovernedPaymentAction",
+                "GOVERNED_ACTION",
+                action_binding,
+                "GovernedPaymentAction:{projection.action_id}",
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "IntentMandate",
+                        "AUTHORITY",
+                        authority_ref,
+                        assertions=(action_authority_assertion,),
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                        assertions=(action_order_assertion,),
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "TransactionRequest",
+                        "CURRENT_REQUEST",
+                        request_ref,
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "PaymentExecutionRecord",
+                        "CURRENT_PAYMENT_CANDIDATE",
+                        candidate_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                6,
+                "PAYMENT_CANDIDATE_RECORDED",
+                "PaymentExecutionRecord",
+                "CURRENT_PAYMENT_CANDIDATE",
+                candidate_binding,
+                "PaymentExecutionRecord:{projection.payment_id}",
+                status=facts.candidate.status.value,
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "TransactionRequest",
+                        "CURRENT_REQUEST",
+                        request_ref,
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                7,
+                "ACTION_BINDING_DECISION_RECORDED",
+                "GovernedActionBindingFact",
+                "ACTION_BINDING_FACT",
+                action_fact_binding,
+                "GovernedActionBindingFact:binding:{binding_digest}",
+                status=facts.action_fact.status.value,
+                reason_codes=facts.action_fact.reason_codes,
+                relations=(
+                    create_relation(
+                        "VALIDATED_AGAINST",
+                        "GovernedPaymentAction",
+                        "GOVERNED_ACTION",
+                        action_ref,
+                    ),
+                    create_relation(
+                        "VALIDATED_AGAINST",
+                        "PaymentExecutionRecord",
+                        "CURRENT_PAYMENT_CANDIDATE",
+                        candidate_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                8,
+                "RUNTIME_DECISION_RECORDED",
+                "RuntimeGateRecord",
+                "RUNTIME_GATE_OBSERVATION",
+                runtime_binding,
+                "RuntimeGateRecord:binding:{binding_digest}",
+                decision=facts.runtime_record.final_decision.value,
+                status=facts.runtime_record.binding_status,
+                reason_codes=facts.runtime_record.reason_codes,
+            ),
+            create_event(
+                9,
+                "PAYMENT_OUTCOME_RECORDED",
+                "PaymentExecutionRecord",
+                "PAYMENT_EXECUTION_OUTCOME",
+                payment_binding,
+                "PaymentExecutionRecord:{projection.payment_id}",
+                status=facts.effective_payment.status.value,
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "TransactionRequest",
+                        "CURRENT_REQUEST",
+                        request_ref,
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                    ),
+                ),
+            ),
+            extension_event,
+            create_event(
+                11,
+                "RESULT_RECORDED",
+                "WebShopPaymentFulfilmentOutcome",
+                "FINAL_OUTCOME",
+                outcome_binding,
+                "WebShopPaymentFulfilmentOutcome:binding:{binding_digest}",
+                status=facts.lifecycle.task_status.value,
+                reason_codes=base_outcome.reason_codes,
+            ),
+        )
+        source_bindings = (
+            mandate_binding,
+            order_binding,
+            request_binding,
+            action_binding,
+            candidate_binding,
+            action_fact_binding,
+            runtime_binding,
+            payment_binding,
+            extension_binding,
+            outcome_binding,
+        )
+        return assemble_product_trace(
+            profile=profile.profile_name,
+            trace_ref=(
+                f"ProductAuthoritativeTrace:{profile.profile_name}:"
+                f"{facts.bound_request.request_id}"
+            ),
+            events=events,
+            source_bindings=source_bindings,
+            expected_unique_binding_count=10,
+        )
+    except (AttributeError, KeyError, TypeError, ValueError, TraceContractError):
+        return None
+
+
+__all__ = ["build_sidecar_product_trace"]
+
+===== FILE src/agentic_payment_experiment/webshop_happy_path_authoritative_trace.py =====
+sha256=0762eb9c3c5ac5d1d84cf3cfcad44ed04aeb1feb4ecbd86e0a248a124e7704da
+bytes=1434
+"""Compatibility entry point for the accepted happy-path product trace."""
+
+from __future__ import annotations
+
+from .adapters.webshop import WebShopCommerceAdaptation
+from .authoritative_trace import ProductAuthoritativeTrace
+from .models import FulfillmentRecord, IntentMandate, PaymentExecutionRecord
+from .webshop_payment_sidecar import WebShopPaymentFulfilmentOutcome
+from .webshop_runtime_gate import WebShopBuyNowGateOutcome
+from .webshop_sidecar_trace_toolkit import build_sidecar_product_trace
+
+
+T01_PROFILE = "WEBSHOP_NORMAL_PURCHASE_V2"
+
+
+def build_t01_happy_path_trace(
+    *,
+    gate_outcome: WebShopBuyNowGateOutcome,
+    adaptation: WebShopCommerceAdaptation,
+    mandate: IntentMandate,
+    payment: PaymentExecutionRecord,
+    fulfillment: FulfillmentRecord,
+    base_outcome: WebShopPaymentFulfilmentOutcome,
+) -> ProductAuthoritativeTrace | None:
+    """Delegate to the single Sidecar toolkit and retain the old API."""
+
+    if base_outcome.initial_payment != payment:
+        return None
+    if base_outcome.effective_payment != payment:
+        return None
+    trace = build_sidecar_product_trace(
+        gate_outcome=gate_outcome,
+        adaptation=adaptation,
+        mandate=mandate,
+        fulfillment=fulfillment,
+        base_outcome=base_outcome,
+    )
+    if trace is None or trace.profile != T01_PROFILE:
+        return None
+    return trace
+
+
+__all__ = ["T01_PROFILE", "build_t01_happy_path_trace"]
+
+===== FILE src/agentic_payment_experiment/webshop_unknown_payment_authoritative_trace.py =====
+sha256=d2c446639beefba8613a725c63a5e6a127bd8ed918394340fc82dbf7680218c1
+bytes=1282
+"""Compatibility entry point for the accepted UNKNOWN-payment recovery trace."""
+
+from __future__ import annotations
+
+from .adapters.webshop import WebShopCommerceAdaptation
+from .authoritative_trace import ProductAuthoritativeTrace
+from .models import IntentMandate
+from .webshop_payment_sidecar import WebShopPaymentFulfilmentOutcome
+from .webshop_runtime_gate import WebShopBuyNowGateOutcome
+from .webshop_sidecar_trace_toolkit import build_sidecar_product_trace
+
+
+UNKNOWN_PAYMENT_RECOVERY_PROFILE = "WEBSHOP_UNKNOWN_PAYMENT_RECOVERY_V2"
+
+
+def build_unknown_payment_recovery_trace(
+    *,
+    gate_outcome: WebShopBuyNowGateOutcome,
+    adaptation: WebShopCommerceAdaptation,
+    mandate: IntentMandate,
+    base_outcome: WebShopPaymentFulfilmentOutcome,
+) -> ProductAuthoritativeTrace | None:
+    """Delegate to the single Sidecar toolkit and retain the old API."""
+
+    trace = build_sidecar_product_trace(
+        gate_outcome=gate_outcome,
+        adaptation=adaptation,
+        mandate=mandate,
+        fulfillment=None,
+        base_outcome=base_outcome,
+    )
+    if trace is None or trace.profile != UNKNOWN_PAYMENT_RECOVERY_PROFILE:
+        return None
+    return trace
+
+
+__all__ = [
+    "UNKNOWN_PAYMENT_RECOVERY_PROFILE",
+    "build_unknown_payment_recovery_trace",
+]
+
+===== FILE src/agentic_payment_experiment/webshop_payment_sidecar.py =====
+sha256=e74939a0b1da9eba5e70f34ab8f745ac61e8ae2254c2ab823ee92c5299a210c8
+bytes=16354
+"""Deterministic offline payment and fulfilment sidecar for WebShop evidence."""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, fields, is_dataclass, replace
+from datetime import datetime
+from decimal import Decimal
+from enum import Enum
+from typing import Any
+
+from .adapters.webshop import WebShopCommerceAdaptation
+from .authoritative_trace import ProductAuthoritativeTrace
+from .lifecycle import assess_lifecycle
+from .models import (
+    Decision,
+    FulfillmentRecord,
+    IntentMandate,
+    LifecycleResult,
+    PaymentExecutionRecord,
+    PaymentRecoveryResult,
+    PaymentStatus,
+    PaymentStatusObservation,
+)
+from .payment_recovery import assess_payment_recovery
+from .payment_status_conflict import (
+    PaymentStatusConflictFact,
+    PaymentStatusConflictResolution,
+    derive_payment_status_conflict,
+)
+from .trusted_execution import (
+    ExecutionAttemptFact,
+    FollowUpAction,
+    VerificationStatus,
+    check_idempotency,
+    verify_original_transaction,
+)
+from .webshop_runtime_gate import WebShopBuyNowGateOutcome
+
+
+WEBSHOP_PAYMENT_SIDECAR_LIMITATIONS = (
+    "offline_sidecar_only",
+    "no_real_payment_execution",
+    "no_real_status_query_or_async_callback",
+    "no_real_fulfilment",
+    "no_automatic_payment_retry",
+    "no_real_refund_or_dispute",
+    "webshop_reward_not_used_as_payment_or_task_success",
+)
+_DUPLICATE_BLOCK_ISSUES = frozenset(
+    {
+        "existing_successful_payment_attempt",
+        "unresolved_payment_attempt_exists",
+    }
+)
+_BINDING_FAILURE_PREFIXES = (
+    "payment_request_binding_mismatch",
+    "payment_order_binding_mismatch",
+    "payment_amount_binding_mismatch",
+    "payment_currency_binding_mismatch",
+    "payment_authority_binding_mismatch",
+    "payment_authority_version_binding_mismatch",
+    "payment_agent_binding_mismatch",
+    "payment_transaction_object_binding_mismatch",
+    "payment_payee_binding_mismatch",
+    "fulfillment_order_binding_mismatch",
+    "fulfillment_service_binding_mismatch",
+    "payment_status_observation_",
+)
+
+
+@dataclass(frozen=True)
+class WebShopPaymentFulfilmentOutcome:
+    """Immutable post-gate projection built only from explicit offline facts."""
+
+    ready: bool
+    initial_payment: PaymentExecutionRecord | None
+    effective_payment: PaymentExecutionRecord | None
+    query_recovery: PaymentRecoveryResult | None
+    status_conflict: PaymentStatusConflictFact | None
+    lifecycle: LifecycleResult | None
+    retry_allowed: bool
+    duplicate_payment_blocked: bool
+    reason_codes: tuple[str, ...]
+    authoritative_trace: ProductAuthoritativeTrace | None = None
+    limitations: tuple[str, ...] = WEBSHOP_PAYMENT_SIDECAR_LIMITATIONS
+
+    def to_dict(self) -> dict[str, object]:
+        """Return a stable primitive-only representation for M5 and P9-E."""
+
+        return {
+            "ready": self.ready,
+            "initial_payment": _primitive(self.initial_payment),
+            "effective_payment": _primitive(self.effective_payment),
+            "query_recovery": _primitive(self.query_recovery),
+            "status_conflict": (
+                self.status_conflict.to_dict() if self.status_conflict else None
+            ),
+            "lifecycle": _primitive(self.lifecycle),
+            "retry_allowed": self.retry_allowed,
+            "duplicate_payment_blocked": self.duplicate_payment_blocked,
+            "reason_codes": list(self.reason_codes),
+            "limitations": list(self.limitations),
+        }
+
+
+def assess_webshop_payment_fulfilment(
+    gate_outcome: WebShopBuyNowGateOutcome | None,
+    adaptation: WebShopCommerceAdaptation | None,
+    mandate: IntentMandate | None,
+    payment: PaymentExecutionRecord | None,
+    fulfillment: FulfillmentRecord | None,
+    *,
+    query_observation: PaymentStatusObservation | None = None,
+    async_observation: PaymentStatusObservation | None = None,
+    known_attempts: tuple[PaymentExecutionRecord, ...] = (),
+) -> WebShopPaymentFulfilmentOutcome:
+    """Assess offline post-gate payment, convergence, retry and lifecycle facts.
+
+    The function never invokes a callback, performs a status query, creates a
+    payment attempt, or executes fulfilment. All records are caller-supplied.
+    """
+
+    prerequisite_reasons = _prerequisite_reasons(
+        gate_outcome,
+        adaptation,
+        mandate,
+        payment,
+        fulfillment,
+    )
+    if prerequisite_reasons:
+        return WebShopPaymentFulfilmentOutcome(
+            ready=False,
+            initial_payment=(
+                payment if isinstance(payment, PaymentExecutionRecord) else None
+            ),
+            effective_payment=None,
+            query_recovery=None,
+            status_conflict=None,
+            lifecycle=None,
+            retry_allowed=False,
+            duplicate_payment_blocked=False,
+            reason_codes=prerequisite_reasons,
+        )
+
+    assert gate_outcome is not None
+    assert gate_outcome.bound_request is not None
+    assert adaptation is not None
+    assert adaptation.order is not None
+    assert mandate is not None
+    assert payment is not None
+    assert fulfillment is not None
+
+    reasons: list[str] = [
+        f"payment:initial_status:{payment.status.value.lower()}",
+    ]
+    query_recovery: PaymentRecoveryResult | None = None
+    status_conflict: PaymentStatusConflictFact | None = None
+    effective_status = payment.status
+    retry_allowed = False
+    duplicate_payment_blocked = False
+    evidence_invalid = False
+
+    if query_observation is None:
+        related_attempts = _related_known_attempts(payment, known_attempts)
+        if any(
+            attempt.status is PaymentStatus.SUCCEEDED
+            for attempt in related_attempts
+        ):
+            duplicate_payment_blocked = True
+            reasons.extend(
+                (
+                    "duplicate:known_successful_attempt",
+                    "duplicate:payment_blocked",
+                )
+            )
+        elif any(
+            attempt.status in {PaymentStatus.UNKNOWN, PaymentStatus.PENDING}
+            for attempt in related_attempts
+        ):
+            duplicate_payment_blocked = True
+            reasons.extend(
+                (
+                    "duplicate:known_unresolved_attempt",
+                    "duplicate:payment_blocked",
+                )
+            )
+
+    if query_observation is not None:
+        query_recovery = assess_payment_recovery(
+            payment,
+            query_observation,
+            known_attempts=known_attempts,
+            mandate=mandate,
+            request=gate_outcome.bound_request,
+            order=adaptation.order,
+        )
+        effective_status = query_recovery.effective_status
+        retry_allowed = query_recovery.retry_allowed
+        recovery_issue_codes = tuple(issue.code for issue in query_recovery.issues)
+        reasons.extend(
+            (
+                f"recovery:status:{query_recovery.recovery_status.value.lower()}",
+                f"recovery:next_action:{query_recovery.next_action}",
+                *(f"recovery:{code}" for code in recovery_issue_codes),
+            )
+        )
+        duplicate_payment_blocked = bool(
+            _DUPLICATE_BLOCK_ISSUES.intersection(recovery_issue_codes)
+        )
+        if duplicate_payment_blocked:
+            reasons.append("duplicate:payment_blocked")
+        if _contains_binding_failure(recovery_issue_codes):
+            evidence_invalid = True
+            effective_status = PaymentStatus.UNKNOWN
+            retry_allowed = False
+            reasons.append("sidecar:recovery_binding_invalid")
+
+    if query_observation is not None and async_observation is not None:
+        query_binding = verify_original_transaction(
+            FollowUpAction.STATUS_QUERY,
+            payment,
+            query_observation,
+        )
+        async_binding = verify_original_transaction(
+            FollowUpAction.ASYNC_STATUS_NOTIFICATION,
+            payment,
+            async_observation,
+        )
+        status_conflict = derive_payment_status_conflict(
+            payment,
+            query_observation,
+            async_observation,
+            query_binding,
+            async_binding,
+        )
+        reasons.extend(
+            (
+                f"conflict:resolution:{status_conflict.resolution.value.lower()}",
+                *(f"conflict:{code}" for code in status_conflict.reason_codes),
+            )
+        )
+        effective_status = status_conflict.effective_status
+        if status_conflict.resolution in {
+            PaymentStatusConflictResolution.BLOCKED,
+            PaymentStatusConflictResolution.CONFLICT,
+            PaymentStatusConflictResolution.UNRESOLVED,
+        }:
+            retry_allowed = False
+        if status_conflict.resolution is PaymentStatusConflictResolution.BLOCKED:
+            evidence_invalid = True
+            reasons.append("sidecar:status_evidence_blocked")
+        if status_conflict.resolution is PaymentStatusConflictResolution.CONFLICT:
+            reasons.append("sidecar:status_evidence_conflict")
+        if effective_status is not PaymentStatus.FAILED:
+            retry_allowed = False
+
+    elif async_observation is not None:
+        async_binding = verify_original_transaction(
+            FollowUpAction.ASYNC_STATUS_NOTIFICATION,
+            payment,
+            async_observation,
+        )
+        reasons.extend(f"async:{code}" for code in async_binding.reason_codes)
+        if async_binding.status is not VerificationStatus.VALID:
+            evidence_invalid = True
+            effective_status = PaymentStatus.UNKNOWN
+            reasons.append("sidecar:async_binding_invalid")
+        elif async_observation.observed_at < payment.occurred_at:
+            evidence_invalid = True
+            effective_status = PaymentStatus.UNKNOWN
+            reasons.append("sidecar:async_observation_before_payment")
+        else:
+            effective_status = async_observation.status
+            reasons.append(
+                f"async:effective_status:{async_observation.status.value.lower()}"
+            )
+        retry_allowed = False
+
+    effective_payment = replace(payment, status=effective_status)
+    lifecycle = assess_lifecycle(
+        gate_outcome.bound_request,
+        adaptation.order,
+        effective_payment,
+        fulfillment,
+        mandate=mandate,
+    )
+    lifecycle_issue_codes = tuple(issue.code for issue in lifecycle.issues)
+    reasons.extend(
+        (
+            f"lifecycle:payment_status:{lifecycle.payment_status.value.lower()}",
+            f"lifecycle:fulfillment_status:{lifecycle.fulfillment_status.value.lower()}",
+            f"lifecycle:task_status:{lifecycle.task_status.value.lower()}",
+            f"lifecycle:remediation:{lifecycle.remediation.status.value.lower()}",
+            *(f"lifecycle:{code}" for code in lifecycle_issue_codes),
+        )
+    )
+    if _contains_binding_failure(lifecycle_issue_codes):
+        evidence_invalid = True
+        retry_allowed = False
+        reasons.append("sidecar:lifecycle_binding_invalid")
+
+    if retry_allowed:
+        reasons.append("retry:offline_candidate_only")
+    else:
+        reasons.append("retry:not_allowed")
+
+    base_outcome = WebShopPaymentFulfilmentOutcome(
+        ready=not evidence_invalid,
+        initial_payment=payment,
+        effective_payment=effective_payment,
+        query_recovery=query_recovery,
+        status_conflict=status_conflict,
+        lifecycle=lifecycle,
+        retry_allowed=retry_allowed,
+        duplicate_payment_blocked=duplicate_payment_blocked,
+        reason_codes=_deduplicate(reasons),
+    )
+    from .webshop_sidecar_trace_toolkit import build_sidecar_product_trace
+
+    authoritative_trace = build_sidecar_product_trace(
+        gate_outcome=gate_outcome,
+        adaptation=adaptation,
+        mandate=mandate,
+        fulfillment=fulfillment,
+        base_outcome=base_outcome,
+    )
+    return replace(base_outcome, authoritative_trace=authoritative_trace)
+
+
+def _prerequisite_reasons(
+    gate_outcome: WebShopBuyNowGateOutcome | None,
+    adaptation: WebShopCommerceAdaptation | None,
+    mandate: IntentMandate | None,
+    payment: PaymentExecutionRecord | None,
+    fulfillment: FulfillmentRecord | None,
+) -> tuple[str, ...]:
+    reasons: list[str] = []
+    if gate_outcome is None:
+        reasons.append("prerequisite:gate_outcome_missing")
+    else:
+        if gate_outcome.decision is not Decision.ALLOW:
+            reasons.append("prerequisite:gate_decision_not_allow")
+        if not gate_outcome.checkout_executed:
+            reasons.append("prerequisite:checkout_not_executed")
+        if gate_outcome.callback_count != 1:
+            reasons.append("prerequisite:callback_count_not_one")
+        if gate_outcome.bound_request is None:
+            reasons.append("prerequisite:bound_request_missing")
+        if gate_outcome.runtime_gate_record is None:
+            reasons.append("prerequisite:runtime_gate_record_missing")
+        elif gate_outcome.runtime_gate_record.final_decision is not Decision.ALLOW:
+            reasons.append("prerequisite:runtime_gate_not_allow")
+    if adaptation is None:
+        reasons.append("prerequisite:adaptation_missing")
+    else:
+        if not adaptation.ready:
+            reasons.append("prerequisite:adaptation_not_ready")
+        if adaptation.order is None:
+            reasons.append("prerequisite:order_missing")
+        if adaptation.payment_request is None:
+            reasons.append("prerequisite:transaction_request_missing")
+    if mandate is None:
+        reasons.append("prerequisite:mandate_missing")
+    if payment is None:
+        reasons.append("prerequisite:payment_missing")
+    if fulfillment is None:
+        reasons.append("prerequisite:fulfillment_missing")
+    if (
+        gate_outcome is not None
+        and gate_outcome.bound_request is not None
+        and adaptation is not None
+        and adaptation.payment_request is not None
+        and gate_outcome.bound_request
+        != replace(
+            adaptation.payment_request,
+            agent_id=gate_outcome.bound_request.agent_id,
+        )
+    ):
+        reasons.append("prerequisite:adapter_gate_request_mismatch")
+    return _deduplicate(reasons)
+
+
+def _related_known_attempts(
+    payment: PaymentExecutionRecord,
+    known_attempts: tuple[PaymentExecutionRecord, ...],
+) -> tuple[PaymentExecutionRecord, ...]:
+    attempt_facts = tuple(
+        ExecutionAttemptFact(
+            execution_id=attempt.payment_id,
+            request_id=attempt.request_id,
+            status=attempt.status.value,
+            idempotency_key=attempt.idempotency_key,
+        )
+        for attempt in known_attempts
+    )
+    idempotency_fact = check_idempotency(
+        idempotency_key=payment.idempotency_key,
+        request_id=payment.request_id,
+        current_execution_id=payment.payment_id,
+        known_attempts=attempt_facts,
+    )
+    related_execution_ids = {
+        attempt.execution_id for attempt in idempotency_fact.related_attempts
+    }
+    return tuple(
+        attempt
+        for attempt in known_attempts
+        if attempt.payment_id in related_execution_ids
+    )
+
+
+def _contains_binding_failure(codes: tuple[str, ...]) -> bool:
+    return any(
+        code.startswith(prefix)
+        for code in codes
+        for prefix in _BINDING_FAILURE_PREFIXES
+    )
+
+
+def _deduplicate(values: list[str] | tuple[str, ...]) -> tuple[str, ...]:
+    return tuple(dict.fromkeys(values))
+
+
+def _primitive(value: Any) -> Any:
+    if isinstance(value, Enum):
+        return value.value
+    if value is None or isinstance(value, (str, int, bool)):
+        return value
+    if isinstance(value, Decimal):
+        return str(value)
+    if isinstance(value, datetime):
+        return value.isoformat()
+    if is_dataclass(value):
+        return {
+            field.name: _primitive(getattr(value, field.name))
+            for field in fields(value)
+        }
+    if isinstance(value, dict):
+        return {
+            str(key): _primitive(item)
+            for key, item in sorted(value.items(), key=lambda pair: str(pair[0]))
+        }
+    if isinstance(value, (tuple, list)):
+        return [_primitive(item) for item in value]
+    if isinstance(value, (set, frozenset)):
+        return [_primitive(item) for item in sorted(value, key=str)]
+    raise TypeError(f"unsupported sidecar serialization type: {type(value).__name__}")
+
+===== FILE tests/test_webshop_sidecar_trace_toolkit.py =====
+sha256=13850d919625f6836d339ff0f5432f38a5fac147cf60ca848b1bea4cb10bdef1
+bytes=16796
+from __future__ import annotations
+
+import ast
+from dataclasses import replace
+from datetime import timedelta
+from pathlib import Path
+import sys
+import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from agentic_payment_experiment import (
+    FulfillmentStatus,
+    PaymentRecoveryStatus,
+    PaymentStatus,
+    RemediationStatus,
+    TaskStatus,
+    assess_webshop_payment_fulfilment,
+)
+from agentic_payment_experiment.authoritative_trace import (
+    TraceValidationStatus,
+    validate_product_authoritative_trace,
+)
+from agentic_payment_experiment.models import PaymentStatusObservation
+from agentic_payment_experiment.payment_status_conflict import (
+    PaymentStatusConflictResolution,
+)
+from agentic_payment_experiment.webshop_sidecar_trace_profiles import (
+    SIDECAR_TRACE_PROFILES,
+    SidecarExtensionKind,
+    T01_PROFILE,
+    T09_PROFILE,
+    T12_PROFILE,
+)
+from agentic_payment_experiment.webshop_sidecar_trace_toolkit import (
+    _select_profile,
+    build_sidecar_product_trace,
+)
+from tests import test_webshop_payment_sidecar as sidecar_tests
+from tests.test_webshop_unknown_payment_authoritative_trace import _valid_t09
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "src/agentic_payment_experiment"
+SIDECAR_PATH = SRC / "webshop_payment_sidecar.py"
+TOOLKIT_PATH = SRC / "webshop_sidecar_trace_toolkit.py"
+PROFILES_PATH = SRC / "webshop_sidecar_trace_profiles.py"
+T01_ADAPTER_PATH = SRC / "webshop_happy_path_authoritative_trace.py"
+T09_ADAPTER_PATH = SRC / "webshop_unknown_payment_authoritative_trace.py"
+
+
+def _valid_t01():
+    case = sidecar_tests.WebShopPaymentSidecarTest(methodName="runTest")
+    case.setUp()
+    gate, candidate, payment, fulfillment = case.happy_path_inputs()
+    outcome = assess_webshop_payment_fulfilment(
+        gate_outcome=gate,
+        adaptation=case.adaptation,
+        mandate=case.mandate,
+        payment=payment,
+        fulfillment=fulfillment,
+    )
+    return case, gate, candidate, payment, fulfillment, outcome
+
+
+def _valid_t12():
+    case = sidecar_tests.WebShopPaymentSidecarTest(methodName="runTest")
+    case.setUp()
+    gate, candidate, _, fulfillment = case.happy_path_inputs()
+    payment = replace(
+        candidate,
+        status=PaymentStatus.UNKNOWN,
+        receipt_ref="offline-status-conflict-receipt",
+    )
+    query = PaymentStatusObservation(
+        payment_id=payment.payment_id,
+        order_id=payment.order_id,
+        status=PaymentStatus.SUCCEEDED,
+        observed_at=payment.occurred_at + timedelta(minutes=1),
+        source="query",
+        provider_ref=payment.provider_ref,
+    )
+    async_observation = PaymentStatusObservation(
+        payment_id=payment.payment_id,
+        order_id=payment.order_id,
+        status=PaymentStatus.FAILED,
+        observed_at=payment.occurred_at + timedelta(minutes=2),
+        source="async",
+        provider_ref=payment.provider_ref,
+    )
+    fulfillment = replace(
+        fulfillment,
+        status=FulfillmentStatus.SUCCEEDED,
+        failure_code=None,
+    )
+    outcome = assess_webshop_payment_fulfilment(
+        gate_outcome=gate,
+        adaptation=case.adaptation,
+        mandate=case.mandate,
+        payment=payment,
+        fulfillment=fulfillment,
+        query_observation=query,
+        async_observation=async_observation,
+    )
+    return (
+        case,
+        gate,
+        candidate,
+        payment,
+        query,
+        async_observation,
+        fulfillment,
+        outcome,
+    )
+
+
+class WebShopSidecarTraceToolkitTest(unittest.TestCase):
+    def test_fixed_registry_contains_exactly_three_declarative_profiles(self) -> None:
+        self.assertEqual(3, len(SIDECAR_TRACE_PROFILES))
+        self.assertEqual(
+            (
+                "WEBSHOP_NORMAL_PURCHASE_V2",
+                "WEBSHOP_UNKNOWN_PAYMENT_RECOVERY_V2",
+                "WEBSHOP_PAYMENT_STATUS_CONFLICT_V2",
+            ),
+            tuple(profile.profile_name for profile in SIDECAR_TRACE_PROFILES),
+        )
+        self.assertEqual(
+            (
+                SidecarExtensionKind.FULFILMENT,
+                SidecarExtensionKind.RECOVERY,
+                SidecarExtensionKind.STATUS_CONFLICT,
+            ),
+            tuple(profile.extension_kind for profile in SIDECAR_TRACE_PROFILES),
+        )
+
+    def test_exactly_one_profile_selection_for_t01_t09_and_t12(self) -> None:
+        _, _, _, _, t01_fulfillment, t01_outcome = _valid_t01()
+        _, _, _, _, _, t09_fulfillment, t09_outcome = _valid_t09()
+        *_, t12_fulfillment, t12_outcome = _valid_t12()
+        cases = (
+            ("T01", t01_fulfillment, t01_outcome, T01_PROFILE),
+            ("T09", t09_fulfillment, t09_outcome, T09_PROFILE),
+            ("T12", t12_fulfillment, t12_outcome, T12_PROFILE),
+        )
+        for name, fulfillment, outcome, expected in cases:
+            with self.subTest(name=name):
+                self.assertEqual(
+                    expected,
+                    _select_profile(
+                        fulfillment=fulfillment,
+                        base_outcome=replace(outcome, authoritative_trace=None),
+                    ),
+                )
+
+    def test_zero_and_multiple_profile_matches_fail_closed(self) -> None:
+        case = sidecar_tests.WebShopPaymentSidecarTest(methodName="runTest")
+        case.setUp()
+        ordinary = case.assess()
+        self.assertIsNone(
+            _select_profile(
+                fulfillment=case.fulfillment,
+                base_outcome=replace(ordinary, authoritative_trace=None),
+            )
+        )
+
+        _, _, _, _, fulfillment, outcome = _valid_t01()
+        overlap = replace(T01_PROFILE, profile_name="OVERLAPPING_TEST_PROFILE")
+        self.assertIsNone(
+            _select_profile(
+                fulfillment=fulfillment,
+                base_outcome=replace(outcome, authoritative_trace=None),
+                profiles=(T01_PROFILE, overlap),
+            )
+        )
+
+    def test_three_profiles_share_one_common_event_core(self) -> None:
+        traces = (
+            _valid_t01()[-1].authoritative_trace,
+            _valid_t09()[-1].authoritative_trace,
+            _valid_t12()[-1].authoritative_trace,
+        )
+        self.assertTrue(all(trace is not None for trace in traces))
+        common_sequences = (1, 2, 3, 4, 5, 6, 7, 8, 9, 11)
+        common = []
+        for trace in traces:
+            assert trace is not None
+            common.append(
+                tuple(
+                    (event.sequence_no, event.event_type, event.entity_role)
+                    for event in trace.events
+                    if event.sequence_no in common_sequences
+                )
+            )
+        self.assertEqual(common[0], common[1])
+        self.assertEqual(common[1], common[2])
+        self.assertEqual(
+            (
+                "FULFILMENT_OUTCOME_RECORDED",
+                "RECOVERY_OUTCOME_RECORDED",
+                "STATUS_CONFLICT_RECORDED",
+            ),
+            tuple(trace.events[9].event_type for trace in traces if trace is not None),
+        )
+
+    def test_real_t12_emits_exact_valid_product_trace(self) -> None:
+        _, _, candidate, payment, _, _, _, outcome = _valid_t12()
+        trace = outcome.authoritative_trace
+        assert trace is not None
+        validation = validate_product_authoritative_trace(trace)
+
+        self.assertEqual(TraceValidationStatus.VALID, validation.status)
+        self.assertEqual("WEBSHOP_PAYMENT_STATUS_CONFLICT_V2", validation.profile)
+        self.assertEqual("PRODUCT_OBSERVED", trace.source)
+        self.assertEqual(11, len(trace.events))
+        self.assertEqual(10, len(trace.source_bindings))
+        self.assertEqual(PaymentStatus.UNKNOWN, outcome.initial_payment.status)
+        self.assertEqual(PaymentStatus.UNKNOWN, outcome.effective_payment.status)
+        self.assertEqual(
+            PaymentRecoveryStatus.RECOVERED,
+            outcome.query_recovery.recovery_status,
+        )
+        self.assertEqual(
+            PaymentStatusConflictResolution.CONFLICT,
+            outcome.status_conflict.resolution,
+        )
+        self.assertEqual(TaskStatus.UNKNOWN, outcome.lifecycle.task_status)
+        self.assertEqual(
+            RemediationStatus.REQUIRED,
+            outcome.lifecycle.remediation.status,
+        )
+        self.assertFalse(outcome.retry_allowed)
+        self.assertFalse(outcome.duplicate_payment_blocked)
+
+        by_role = {event.entity_role: event for event in trace.events}
+        self.assertEqual("PENDING", by_role["CURRENT_PAYMENT_CANDIDATE"].status)
+        self.assertEqual("UNKNOWN", by_role["PAYMENT_EXECUTION_OUTCOME"].status)
+        self.assertEqual("CONFLICT", by_role["STATUS_CONFLICT_FACT"].status)
+        self.assertEqual("UNKNOWN", by_role["FINAL_OUTCOME"].status)
+        self.assertEqual(candidate.payment_id, payment.payment_id)
+        self.assertEqual(
+            by_role["AUTHORIZED_ORDER_SNAPSHOT"].source_binding_ref,
+            by_role["CURRENT_ORDER_SNAPSHOT"].source_binding_ref,
+        )
+        self.assertEqual(
+            by_role["CURRENT_PAYMENT_CANDIDATE"].entity_ref,
+            by_role["PAYMENT_EXECUTION_OUTCOME"].entity_ref,
+        )
+        self.assertNotEqual(
+            by_role["CURRENT_PAYMENT_CANDIDATE"].source_binding_ref,
+            by_role["PAYMENT_EXECUTION_OUTCOME"].source_binding_ref,
+        )
+
+        conflict_binding = next(
+            binding
+            for binding in trace.source_bindings
+            if binding.binding_ref
+            == by_role["STATUS_CONFLICT_FACT"].source_binding_ref
+        )
+        self.assertEqual("CONFLICT", conflict_binding.projection["resolution"])
+        self.assertEqual("UNKNOWN", conflict_binding.projection["initial_status"])
+        self.assertEqual("SUCCEEDED", conflict_binding.projection["query_status"])
+        self.assertEqual("FAILED", conflict_binding.projection["async_status"])
+        self.assertEqual("UNKNOWN", conflict_binding.projection["effective_status"])
+        self.assertFalse(conflict_binding.projection["effective_status_terminal"])
+        self.assertIn(
+            "payment_status_opposite_terminal_claims",
+            conflict_binding.projection["reason_codes"],
+        )
+
+    def test_t12_negative_matrix_fails_closed(self) -> None:
+        case, gate, _, _, _, _, fulfillment, outcome = _valid_t12()
+        assert outcome.query_recovery is not None
+        assert outcome.status_conflict is not None
+        assert outcome.effective_payment is not None
+        assert outcome.lifecycle is not None
+        base = replace(outcome, authoritative_trace=None)
+        conflict = outcome.status_conflict
+        cases = (
+            ("missing_recovery", gate, replace(base, query_recovery=None)),
+            (
+                "recovery_unresolved",
+                gate,
+                replace(
+                    base,
+                    query_recovery=replace(
+                        base.query_recovery,
+                        recovery_status=PaymentRecoveryStatus.UNRESOLVED,
+                    ),
+                ),
+            ),
+            ("missing_conflict", gate, replace(base, status_conflict=None)),
+            (
+                "conflict_not_conflict",
+                gate,
+                replace(
+                    base,
+                    status_conflict=replace(
+                        conflict,
+                        resolution=PaymentStatusConflictResolution.CONSISTENT,
+                    ),
+                ),
+            ),
+            (
+                "conflict_query_wrong",
+                gate,
+                replace(
+                    base,
+                    status_conflict=replace(conflict, query_status=PaymentStatus.FAILED),
+                ),
+            ),
+            (
+                "conflict_async_wrong",
+                gate,
+                replace(
+                    base,
+                    status_conflict=replace(conflict, async_status=PaymentStatus.SUCCEEDED),
+                ),
+            ),
+            (
+                "conflict_effective_terminal",
+                gate,
+                replace(
+                    base,
+                    status_conflict=replace(conflict, effective_status_terminal=True),
+                ),
+            ),
+            (
+                "missing_required_reason",
+                gate,
+                replace(base, status_conflict=replace(conflict, reason_codes=())),
+            ),
+            (
+                "effective_payment_not_unknown",
+                gate,
+                replace(
+                    base,
+                    effective_payment=replace(
+                        base.effective_payment,
+                        status=PaymentStatus.SUCCEEDED,
+                    ),
+                ),
+            ),
+            (
+                "payment_id_mismatch",
+                gate,
+                replace(
+                    base,
+                    effective_payment=replace(
+                        base.effective_payment,
+                        payment_id="different-payment-id",
+                    ),
+                ),
+            ),
+            (
+                "lifecycle_not_unknown",
+                gate,
+                replace(
+                    base,
+                    lifecycle=replace(base.lifecycle, task_status=TaskStatus.SUCCEEDED),
+                ),
+            ),
+            (
+                "candidate_not_pending",
+                replace(
+                    gate,
+                    execution_candidate=replace(
+                        gate.execution_candidate,
+                        status=PaymentStatus.UNKNOWN,
+                    ),
+                ),
+                base,
+            ),
+            (
+                "retained_order_missing",
+                replace(gate, authorized_order_snapshot=None),
+                base,
+            ),
+        )
+        for name, selected_gate, selected_outcome in cases:
+            with self.subTest(name=name):
+                self.assertIsNone(
+                    build_sidecar_product_trace(
+                        gate_outcome=selected_gate,
+                        adaptation=case.adaptation,
+                        mandate=case.mandate,
+                        fulfillment=fulfillment,
+                        base_outcome=selected_outcome,
+                    )
+                )
+
+    def test_complexity_and_product_call_path_are_bounded(self) -> None:
+        sidecar_source = SIDECAR_PATH.read_text(encoding="utf-8")
+        self.assertEqual(1, sidecar_source.count("build_sidecar_product_trace("))
+        self.assertEqual(1, sidecar_source.count("webshop_sidecar_trace_toolkit"))
+        self.assertNotIn("webshop_happy_path_authoritative_trace", sidecar_source)
+        self.assertNotIn("webshop_unknown_payment_authoritative_trace", sidecar_source)
+
+        for adapter_path in (T01_ADAPTER_PATH, T09_ADAPTER_PATH):
+            with self.subTest(adapter=adapter_path.name):
+                source = adapter_path.read_text(encoding="utf-8")
+                self.assertLessEqual(len(source.splitlines()), 80)
+                for forbidden_call in (
+                    "create_event(",
+                    "create_relation(",
+                    "create_source_binding(",
+                    "assemble_product_trace(",
+                ):
+                    self.assertNotIn(forbidden_call, source)
+
+        self.assertFalse(
+            (SRC / "webshop_payment_status_conflict_authoritative_trace.py").exists()
+        )
+        self.assertFalse((SRC / "webshop_t12_authoritative_trace.py").exists())
+        for path in SRC.glob("*.py"):
+            source = path.read_text(encoding="utf-8")
+            self.assertNotIn("def build_t12_", source, path.name)
+
+        toolkit_source = TOOLKIT_PATH.read_text(encoding="utf-8")
+        profiles_source = PROFILES_PATH.read_text(encoding="utf-8")
+        combined = toolkit_source + profiles_source
+        for forbidden in (
+            "yaml.safe_load",
+            "json.load(",
+            "json.loads(",
+            "eval(",
+            "exec(",
+            "import_module(",
+            "__import__(",
+            "PaymentStatusObservation",
+            "derive_payment_status_conflict(",
+            "assess_payment_recovery(",
+            "assess_lifecycle(",
+            "gate_webshop_buy_now(",
+            "verify_governed_payment_action(",
+        ):
+            self.assertNotIn(forbidden, combined)
+
+        tree = ast.parse(toolkit_source)
+        imports = {
+            node.module or ""
+            for node in ast.walk(tree)
+            if isinstance(node, ast.ImportFrom)
+        }
+        self.assertNotIn("scripts.validation.run_project_impact_baseline", imports)
+        self.assertNotIn("tests", imports)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+===== FILE tests/test_webshop_trace_assembler.py =====
+sha256=cf1e76dca9235104f50c544ef04c566f3c653b22ee4a98ab892310d0c6cc4e09
+bytes=13798
+from __future__ import annotations
+
+import ast
+from pathlib import Path
+import sys
+import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from agentic_payment_experiment import FulfillmentStatus
+from agentic_payment_experiment.webshop_trace_assembler import (
+    __all__ as ASSEMBLER_PUBLIC_API,
+    assemble_product_trace,
+    create_source_binding,
+    project_action_binding_fact,
+    project_fulfillment,
+    project_governed_action,
+    project_mandate,
+    project_order,
+    project_payment,
+    project_payment_recovery,
+    project_payment_sidecar_outcome,
+    project_payment_status_conflict,
+    project_request,
+    project_runtime_gate,
+)
+from tests.test_webshop_authoritative_trace import _valid_t10
+from tests.test_webshop_sidecar_trace_toolkit import _valid_t12
+from tests.test_webshop_unknown_payment_authoritative_trace import _valid_t09
+from tests import test_webshop_payment_sidecar as sidecar_tests
+
+
+ROOT = Path(__file__).resolve().parents[1]
+ASSEMBLER_PATH = ROOT / "src/agentic_payment_experiment/webshop_trace_assembler.py"
+T01_BUILDER_PATH = (
+    ROOT / "src/agentic_payment_experiment/webshop_happy_path_authoritative_trace.py"
+)
+T09_BUILDER_PATH = (
+    ROOT / "src/agentic_payment_experiment/webshop_unknown_payment_authoritative_trace.py"
+)
+TOOLKIT_PATH = ROOT / "src/agentic_payment_experiment/webshop_sidecar_trace_toolkit.py"
+T10_BUILDER_PATH = ROOT / "src/agentic_payment_experiment/webshop_authoritative_trace.py"
+
+
+class WebShopTraceAssemblerTest(unittest.TestCase):
+    def test_public_surface_is_neutral_and_contains_shared_mechanics(self) -> None:
+        self.assertIn("assemble_product_trace", ASSEMBLER_PUBLIC_API)
+        self.assertIn("create_source_binding", ASSEMBLER_PUBLIC_API)
+        self.assertIn("create_relation", ASSEMBLER_PUBLIC_API)
+        self.assertIn("create_event", ASSEMBLER_PUBLIC_API)
+        self.assertIn("project_order", ASSEMBLER_PUBLIC_API)
+        self.assertIn("project_fulfillment", ASSEMBLER_PUBLIC_API)
+        self.assertIn("project_payment_recovery", ASSEMBLER_PUBLIC_API)
+        self.assertIn("project_payment_sidecar_outcome", ASSEMBLER_PUBLIC_API)
+        self.assertIn("project_payment_status_conflict", ASSEMBLER_PUBLIC_API)
+        self.assertTrue(all(not name.startswith("_") for name in ASSEMBLER_PUBLIC_API))
+        self.assertTrue(
+            all("t01" not in name.lower() and "t10" not in name.lower() for name in ASSEMBLER_PUBLIC_API)
+        )
+
+    def test_shared_projections_recreate_t10_source_bindings(self) -> None:
+        case, historical, outcome, _ = _valid_t10()
+        trace = outcome.authoritative_trace
+        assert trace is not None
+        fact = outcome.governed_action_fact
+        runtime_record = outcome.runtime_gate_record
+        assert fact is not None
+        assert runtime_record is not None
+
+        rebuilt = (
+            create_source_binding(
+                "IntentMandate",
+                "intent-mandate-trace/v2",
+                project_mandate(case.mandate),
+            ),
+            create_source_binding(
+                "Order",
+                "order-snapshot-trace/v2",
+                project_order(case.adaptation.order),
+            ),
+            create_source_binding(
+                "TransactionRequest",
+                "transaction-request-trace/v2",
+                project_request(case.bound_request),
+            ),
+            create_source_binding(
+                "GovernedPaymentAction",
+                "governed-payment-action-trace/v2",
+                project_governed_action(case.governed_action),
+            ),
+            create_source_binding(
+                "PaymentExecutionRecord",
+                "payment-execution-record-trace/v2",
+                project_payment(case.execution),
+            ),
+            create_source_binding(
+                "GovernedActionBindingFact",
+                "governed-action-binding-fact-trace/v2",
+                project_action_binding_fact(fact),
+            ),
+            create_source_binding(
+                "PaymentExecutionRecord",
+                "payment-execution-record-trace/v2",
+                project_payment(historical),
+            ),
+            create_source_binding(
+                "RuntimeGateRecord",
+                "runtime-gate-record-trace/v2",
+                project_runtime_gate(runtime_record),
+            ),
+        )
+        actual_by_ref = {binding.binding_ref: binding for binding in trace.source_bindings}
+        for binding in rebuilt:
+            with self.subTest(source_object_type=binding.source_object_type):
+                self.assertIn(binding.binding_ref, actual_by_ref)
+                self.assertEqual(binding, actual_by_ref[binding.binding_ref])
+
+    def test_recovery_and_sidecar_projections_recreate_t09_bindings(self) -> None:
+        _, _, _, _, _, _, outcome = _valid_t09()
+        trace = outcome.authoritative_trace
+        assert trace is not None
+        assert outcome.query_recovery is not None
+
+        recovery = create_source_binding(
+            "PaymentRecoveryResult",
+            "payment-recovery-result-trace/v2",
+            project_payment_recovery(outcome.query_recovery),
+        )
+        result = create_source_binding(
+            "WebShopPaymentFulfilmentOutcome",
+            "webshop-payment-fulfilment-outcome-result-trace/v2",
+            project_payment_sidecar_outcome(
+                type(outcome)(
+                    ready=outcome.ready,
+                    initial_payment=outcome.initial_payment,
+                    effective_payment=outcome.effective_payment,
+                    query_recovery=outcome.query_recovery,
+                    status_conflict=outcome.status_conflict,
+                    lifecycle=outcome.lifecycle,
+                    retry_allowed=outcome.retry_allowed,
+                    duplicate_payment_blocked=outcome.duplicate_payment_blocked,
+                    reason_codes=outcome.reason_codes,
+                    limitations=outcome.limitations,
+                )
+            ),
+        )
+        actual_by_ref = {binding.binding_ref: binding for binding in trace.source_bindings}
+        self.assertEqual(recovery, actual_by_ref[recovery.binding_ref])
+        self.assertEqual(result, actual_by_ref[result.binding_ref])
+
+    def test_fulfillment_and_conflict_projections_recreate_family_bindings(self) -> None:
+        *_, fulfillment, t12_outcome = _valid_t12()
+        trace = t12_outcome.authoritative_trace
+        assert trace is not None
+        assert t12_outcome.status_conflict is not None
+
+        conflict = create_source_binding(
+            "PaymentStatusConflictFact",
+            "payment-status-conflict-fact-trace/v2",
+            project_payment_status_conflict(t12_outcome.status_conflict),
+        )
+        actual_by_ref = {binding.binding_ref: binding for binding in trace.source_bindings}
+        self.assertEqual(conflict, actual_by_ref[conflict.binding_ref])
+
+        case = sidecar_tests.WebShopPaymentSidecarTest(methodName="runTest")
+        case.setUp()
+        gate, _, payment, t01_fulfillment = case.happy_path_inputs()
+        t01_outcome = case.assess(
+            gate_outcome=gate,
+            payment=payment,
+            fulfillment=t01_fulfillment,
+        )
+        t01_trace = t01_outcome.authoritative_trace
+        assert t01_trace is not None
+        fulfillment_binding = create_source_binding(
+            "FulfillmentRecord",
+            "fulfillment-record-trace/v2",
+            project_fulfillment(t01_fulfillment),
+        )
+        t01_by_ref = {
+            binding.binding_ref: binding for binding in t01_trace.source_bindings
+        }
+        self.assertEqual(
+            fulfillment_binding,
+            t01_by_ref[fulfillment_binding.binding_ref],
+        )
+        self.assertEqual(FulfillmentStatus.SUCCEEDED, fulfillment.status)
+
+    def test_shared_envelope_reassembles_existing_t01_and_t10_traces(self) -> None:
+        _, _, t10_outcome, _ = _valid_t10()
+        t10_trace = t10_outcome.authoritative_trace
+        assert t10_trace is not None
+        rebuilt_t10 = assemble_product_trace(
+            profile=t10_trace.profile,
+            trace_ref=t10_trace.trace_ref,
+            events=t10_trace.events,
+            source_bindings=t10_trace.source_bindings,
+            expected_unique_binding_count=11,
+        )
+        self.assertEqual(t10_trace, rebuilt_t10)
+
+        case = sidecar_tests.WebShopPaymentSidecarTest(methodName="runTest")
+        case.setUp()
+        gate, _, payment, fulfillment = case.happy_path_inputs()
+        t01_outcome = case.assess(
+            gate_outcome=gate,
+            payment=payment,
+            fulfillment=fulfillment,
+        )
+        t01_trace = t01_outcome.authoritative_trace
+        assert t01_trace is not None
+        rebuilt_t01 = assemble_product_trace(
+            profile=t01_trace.profile,
+            trace_ref=t01_trace.trace_ref,
+            events=t01_trace.events,
+            source_bindings=t01_trace.source_bindings,
+            expected_unique_binding_count=10,
+        )
+        self.assertEqual(t01_trace, rebuilt_t01)
+
+    def test_envelope_fails_closed_for_duplicate_or_wrong_binding_count(self) -> None:
+        _, _, outcome, _ = _valid_t10()
+        trace = outcome.authoritative_trace
+        assert trace is not None
+
+        duplicate_bindings = (*trace.source_bindings, trace.source_bindings[0])
+        self.assertIsNone(
+            assemble_product_trace(
+                profile=trace.profile,
+                trace_ref=trace.trace_ref,
+                events=trace.events,
+                source_bindings=duplicate_bindings,
+                expected_unique_binding_count=11,
+            )
+        )
+        self.assertIsNone(
+            assemble_product_trace(
+                profile=trace.profile,
+                trace_ref=trace.trace_ref,
+                events=trace.events,
+                source_bindings=trace.source_bindings,
+                expected_unique_binding_count=10,
+            )
+        )
+        self.assertIsNone(
+            assemble_product_trace(
+                profile="",
+                trace_ref=trace.trace_ref,
+                events=trace.events,
+                source_bindings=trace.source_bindings,
+                expected_unique_binding_count=11,
+            )
+        )
+
+    def test_sidecar_family_delegates_to_one_toolkit_assembly_path(self) -> None:
+        def imports(path: Path) -> set[str]:
+            tree = ast.parse(path.read_text(encoding="utf-8"))
+            return {
+                node.module or ""
+                for node in ast.walk(tree)
+                if isinstance(node, ast.ImportFrom)
+            }
+
+        t01_imports = imports(T01_BUILDER_PATH)
+        t09_imports = imports(T09_BUILDER_PATH)
+        toolkit_imports = imports(TOOLKIT_PATH)
+        t10_imports = imports(T10_BUILDER_PATH)
+        self.assertIn("webshop_sidecar_trace_toolkit", t01_imports)
+        self.assertIn("webshop_sidecar_trace_toolkit", t09_imports)
+        self.assertNotIn("webshop_trace_assembler", t01_imports)
+        self.assertNotIn("webshop_trace_assembler", t09_imports)
+        self.assertIn("webshop_trace_assembler", toolkit_imports)
+        self.assertIn("webshop_trace_assembler", t10_imports)
+
+        t01_source = T01_BUILDER_PATH.read_text(encoding="utf-8")
+        t09_source = T09_BUILDER_PATH.read_text(encoding="utf-8")
+        toolkit_source = TOOLKIT_PATH.read_text(encoding="utf-8")
+        t10_source = T10_BUILDER_PATH.read_text(encoding="utf-8")
+        self.assertNotIn("assemble_product_trace(", t01_source)
+        self.assertNotIn("assemble_product_trace(", t09_source)
+        self.assertEqual(1, toolkit_source.count("assemble_product_trace("))
+        self.assertIn("assemble_product_trace(", t10_source)
+
+    def test_assembler_has_no_business_or_external_state_dependency(self) -> None:
+        source = ASSEMBLER_PATH.read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        imports: set[str] = set()
+        called: set[str] = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                imports.update(alias.name.split(".")[0] for alias in node.names)
+            elif isinstance(node, ast.ImportFrom):
+                imports.add(node.module or "")
+            elif isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Name):
+                    called.add(node.func.id)
+                elif isinstance(node.func, ast.Attribute):
+                    called.add(node.func.attr)
+
+        self.assertTrue(
+            imports.isdisjoint(
+                {"os", "pathlib", "socket", "subprocess", "requests", "urllib", "random", "time"}
+            ),
+            imports,
+        )
+        self.assertTrue(
+            called.isdisjoint(
+                {
+                    "open",
+                    "read_text",
+                    "write_text",
+                    "getenv",
+                    "run",
+                    "Popen",
+                    "urlopen",
+                    "socket",
+                    "validate_request",
+                    "verify_governed_payment_action",
+                    "derive_known_payment_attempt_preflight",
+                    "observe_payment_execution_gate",
+                    "assess_payment_recovery",
+                    "derive_payment_status_conflict",
+                    "assess_lifecycle",
+                    "checkout_callback",
+                    "execute_payment",
+                }
+            ),
+            called,
+        )
+        for forbidden in ("T01", "T10", "GateContext", "CURRENT.md", "evidence/"):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, source)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+===== FILE tests/test_project_impact_baseline.py =====
+sha256=5bd379b0909b378259882dce79b2add7800da6d3046680a21111349e0afb5f2e
+bytes=35986
+from __future__ import annotations
+
+import ast
+import hashlib
+import importlib.util
+import json
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+from types import SimpleNamespace
+
+ROOT = Path(__file__).resolve().parents[1]
+RUNNER_PATH = ROOT / "scripts" / "validation" / "run_project_impact_baseline.py"
+SPEC_PATH = ROOT / "samples" / "evaluation" / "project_impact_baseline_v1.json"
+TARGET_SPEC_PATH = (
+    ROOT / "samples" / "evaluation" / "project_impact_t10_preflight_target_v1.json"
+)
+SYNTHESIZED_REPLAY_TASKS = {"T01", "T09", "T10", "T11", "T12"}
+ALL_TASK_IDS = tuple(f"T{index:02d}" for index in range(1, 13))
+FIVE_REPLAY_EVENTS = {
+    "AUTHORITY_RECORDED",
+    "ORDER_RECORDED",
+    "REQUEST_RECORDED",
+    "RUNTIME_DECISION_RECORDED",
+    "PAYMENT_OUTCOME_RECORDED",
+}
+
+
+def _load_runner():
+    spec = importlib.util.spec_from_file_location(
+        "project_impact_baseline_runner",
+        RUNNER_PATH,
+    )
+    if spec is None or spec.loader is None:
+        raise RuntimeError("cannot load project-impact baseline runner")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def _primitive_only(value: object) -> bool:
+    if value is None or type(value) in {str, int, float, bool}:
+        return True
+    if isinstance(value, list):
+        return all(_primitive_only(item) for item in value)
+    if isinstance(value, dict):
+        return all(
+            isinstance(key, str) and _primitive_only(item)
+            for key, item in value.items()
+        )
+    return False
+
+
+def _temporary_fixture(mutator):
+    data = json.loads(SPEC_PATH.read_text(encoding="utf-8"))
+    mutator(data)
+    directory = tempfile.TemporaryDirectory()
+    path = Path(directory.name) / "modified_fixture.json"
+    path.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return directory, path
+
+
+class ProjectImpactBaselineTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.runner = _load_runner()
+        cls.spec_bytes = SPEC_PATH.read_bytes()
+        cls.spec_sha256 = hashlib.sha256(cls.spec_bytes).hexdigest()
+        cls.spec = cls.runner.load_spec(SPEC_PATH)
+        cls.report = cls.runner.build_report(SPEC_PATH, repeat=3)
+        cls.by_id = {
+            item["task_id"]: item for item in cls.report["task_results"]
+        }
+
+    def test_fixture_v1_1_freezes_t01_t12_and_measurement_integrity_fields(self) -> None:
+        self.assertEqual("1.1.0", self.spec["version"])
+        self.assertEqual(ALL_TASK_IDS, tuple(self.spec["task_order"]))
+        self.assertEqual(
+            ALL_TASK_IDS,
+            tuple(task["task_id"] for task in self.spec["tasks"]),
+        )
+        self.assertEqual(12, len({task["task_id"] for task in self.spec["tasks"]}))
+        self.assertEqual(
+            {"ALLOW", "DENY", "CONFIRMATION_REQUIRED", "INDETERMINATE"},
+            {task["expected_decision"] for task in self.spec["tasks"]},
+        )
+        for task in self.spec["tasks"]:
+            with self.subTest(task=task["task_id"]):
+                self.assertTrue(self.runner.REQUIRED_TASK_FIELDS.issubset(task))
+                self.assertIsInstance(task["side_effect_guardrail"], dict)
+                self.assertGreaterEqual(
+                    task["side_effect_guardrail"]["max_callback_count"], 0
+                )
+                self.assertGreaterEqual(
+                    task["side_effect_guardrail"]["max_retry_count"], 0
+                )
+                self.assertTrue(task["expected_required_evidence_stages"])
+                self.assertIn(
+                    "authoritative_trace",
+                    task["expected_required_evidence_stages"],
+                )
+                self.assertEqual(
+                    "VALID", task["expected_product_observed_trace_status"]
+                )
+                self.assertTrue(task["expected_product_observed_trace_events"])
+                self.assertTrue(task["limitations"])
+        self.assertTrue(all(self.spec["limitations"].values()))
+
+    def test_t10_fixture_requires_zero_callback_and_preserves_business_goal(self) -> None:
+        t10 = next(task for task in self.spec["tasks"] if task["task_id"] == "T10")
+        self.assertEqual(
+            "同一请求已有成功付款时不产生第二次付款副作用",
+            t10["user_goal"],
+        )
+        self.assertEqual(
+            ["same_request_succeeded"],
+            t10["initial_environment_state"]["known_payment_attempts"],
+        )
+        self.assertEqual(0, t10["expected_callback_count"])
+        self.assertEqual(0, t10["expected_retry_count"])
+        self.assertEqual(0, t10["side_effect_guardrail"]["max_callback_count"])
+        self.assertEqual(
+            "duplicate_payment_callback_executed",
+            t10["side_effect_guardrail"]["callback_gap_code"],
+        )
+        self.assertIn("no_second_payment_executed", t10["limitations"])
+        self.assertEqual(
+            "load_existing_successful_attempt", t10["action_sequence"][0]
+        )
+        self.assertIn(
+            "measure_callback_before_duplicate_block", t10["action_sequence"]
+        )
+
+    def test_report_is_machine_readable_and_records_corrected_measurement(self) -> None:
+        self.assertEqual(
+            "agentic-payment-project-impact-baseline-result/v1.1",
+            self.report["schema"],
+        )
+        self.assertEqual("1.1.0", self.report["fixture_version"])
+        self.assertTrue(_primitive_only(self.report))
+        json.dumps(self.report, ensure_ascii=False, sort_keys=True, allow_nan=False)
+        self.assertEqual(self.spec_sha256, self.report["fixture_sha256"])
+        self.assertEqual(
+            hashlib.sha256(RUNNER_PATH.read_bytes()).hexdigest(),
+            self.report["runner_sha256"],
+        )
+        transition = self.report["measurement_transition"]
+        self.assertEqual("INVALID_MEASUREMENT", transition["before"]["status"])
+        self.assertEqual(
+            {"count": 5, "denominator": 12, "rate": "0.416667"},
+            transition["before"]["reported_gesr"],
+        )
+        self.assertEqual("CORRECTED_MEASUREMENT", transition["after"]["status"])
+        self.assertEqual(
+            self.report["metrics"]["governed_end_to_end_task_success_rate"],
+            transition["after"]["measured_gesr"],
+        )
+        self.assertEqual("NOT_APPLICABLE", self.report["project_impact_verdict"])
+        self.assertEqual("MEASURED_WITH_GAPS", self.report["execution_status"])
+
+    def test_repeat_three_has_identical_normalized_results(self) -> None:
+        repeatability = self.report["repeatability"]
+        self.assertEqual(3, repeatability["repeat_count"])
+        self.assertTrue(repeatability["all_identical"])
+        self.assertEqual(3, len(repeatability["normalized_sha256"]))
+        self.assertEqual(1, len(set(repeatability["normalized_sha256"])))
+        for digest in repeatability["normalized_sha256"]:
+            self.assertEqual(64, len(digest))
+        self.assertEqual(
+            ["output_path", "temporary_path", "current_time", "run_index"],
+            repeatability["normalization_excludes"],
+        )
+
+    def test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces(self) -> None:
+        self.assertEqual(
+            {
+                "total_tasks": 12,
+                "matched_tasks": 3,
+                "gap_tasks": 9,
+                "gap_task_ids": [
+                    task
+                    for task in ALL_TASK_IDS
+                    if task not in {"T01", "T09", "T12"}
+                ],
+            },
+            self.report["project_summary"],
+        )
+        expected_sources = {
+            "T01": "webshop_payment_fulfilment_outcome",
+            "T09": "webshop_payment_fulfilment_outcome",
+            "T10": "webshop_gate_outcome",
+            "T12": "webshop_payment_fulfilment_outcome",
+        }
+        for task_id in ALL_TASK_IDS:
+            with self.subTest(task=task_id):
+                item = self.by_id[task_id]
+                actual = item["actual"]
+                self.assertEqual(task_id in {"T01", "T09", "T12"}, item["matched"])
+                if task_id in expected_sources:
+                    self.assertEqual("VALID", actual["product_observed_trace_status"])
+                    self.assertEqual(
+                        expected_sources[task_id],
+                        actual["product_observed_trace_source"],
+                    )
+                    self.assertIn("authoritative_trace", actual["evidence_stages"])
+                    self.assertNotIn(
+                        "authoritative_trace", item["missing_evidence_stages"]
+                    )
+                    self.assertFalse(
+                        any(
+                            gap.startswith(
+                                "product_observed_trace_status_mismatch"
+                            )
+                            for gap in item["capability_gaps"]
+                        )
+                    )
+                else:
+                    self.assertEqual(
+                        "NOT_AVAILABLE",
+                        actual["product_observed_trace_status"],
+                    )
+                    self.assertIsNone(actual["product_observed_trace_source"])
+                    self.assertNotIn(
+                        "authoritative_trace", actual["evidence_stages"]
+                    )
+                    self.assertIn(
+                        "authoritative_trace", item["missing_evidence_stages"]
+                    )
+                    self.assertTrue(
+                        any(
+                            gap.startswith(
+                                "product_observed_trace_status_mismatch"
+                            )
+                            for gap in item["capability_gaps"]
+                        )
+                    )
+
+    def test_synthesized_replay_is_valid_diagnostic_but_never_product_trace(self) -> None:
+        for task_id in ALL_TASK_IDS:
+            with self.subTest(task=task_id):
+                item = self.by_id[task_id]
+                actual = item["actual"]
+                if task_id in SYNTHESIZED_REPLAY_TASKS:
+                    self.assertEqual(
+                        "VALID", actual["evaluator_synthesized_replay_status"]
+                    )
+                    self.assertEqual(
+                        FIVE_REPLAY_EVENTS,
+                        set(actual["evaluator_synthesized_replay_events"]),
+                    )
+                    self.assertEqual(
+                        "runner_constructed_from_fixed_facts",
+                        actual["evaluator_synthesized_replay_provenance"],
+                    )
+                    self.assertIn(
+                        "evaluator_synthesized_replay", actual["evidence_stages"]
+                    )
+                else:
+                    self.assertEqual(
+                        "NOT_AVAILABLE",
+                        actual["evaluator_synthesized_replay_status"],
+                    )
+                    self.assertEqual(
+                        [], actual["evaluator_synthesized_replay_events"]
+                    )
+                    self.assertIsNone(
+                        actual["evaluator_synthesized_replay_provenance"]
+                    )
+                self.assertEqual(
+                    "VALID"
+                    if task_id in {"T01", "T09", "T10", "T12"}
+                    else "NOT_AVAILABLE",
+                    actual["product_observed_trace_status"],
+                )
+                self.assertTrue(item["measurement_diagnostics_matched"])
+                self.assertTrue(
+                    item["measurement_diagnostics"][
+                        "trace_provenance_separated"
+                    ]
+                )
+                self.assertEqual([], item["measurement_integrity_gaps"])
+                if task_id in {"T01", "T09", "T10", "T12"}:
+                    self.assertEqual(
+                        (
+                            "webshop_payment_fulfilment_outcome"
+                            if task_id in {"T01", "T09", "T12"}
+                            else "webshop_gate_outcome"
+                        ),
+                        actual["product_observed_trace_source"],
+                    )
+                    self.assertEqual(
+                        "runner_constructed_from_fixed_facts",
+                        actual["evaluator_synthesized_replay_provenance"],
+                    )
+                    self.assertNotEqual(
+                        actual["product_observed_trace_source"],
+                        actual["evaluator_synthesized_replay_provenance"],
+                    )
+
+    def test_trace_provenance_closed_positive_matrix(self) -> None:
+        cases = (
+            (
+                "neither_present",
+                {
+                    "product_status": "NOT_AVAILABLE",
+                    "product_source": None,
+                    "replay_status": "NOT_AVAILABLE",
+                    "replay_provenance": None,
+                    "evidence_stages": set(),
+                },
+            ),
+            (
+                "product_only",
+                {
+                    "product_status": "VALID",
+                    "product_source": "explicit_product_outcome",
+                    "replay_status": "NOT_AVAILABLE",
+                    "replay_provenance": None,
+                    "evidence_stages": {"authoritative_trace"},
+                },
+            ),
+            (
+                "replay_only",
+                {
+                    "product_status": "NOT_AVAILABLE",
+                    "product_source": None,
+                    "replay_status": "VALID",
+                    "replay_provenance": "runner_constructed_from_fixed_facts",
+                    "evidence_stages": {"evaluator_synthesized_replay"},
+                },
+            ),
+            (
+                "both_distinct",
+                {
+                    "product_status": "VALID",
+                    "product_source": "webshop_gate_outcome",
+                    "replay_status": "VALID",
+                    "replay_provenance": "runner_constructed_from_fixed_facts",
+                    "evidence_stages": {
+                        "authoritative_trace",
+                        "evaluator_synthesized_replay",
+                    },
+                },
+            ),
+        )
+        for name, values in cases:
+            with self.subTest(name=name):
+                self.assertTrue(self.runner._trace_provenance_separated(**values))
+
+    def test_trace_provenance_closed_negative_matrix(self) -> None:
+        valid_both = {
+            "product_status": "VALID",
+            "product_source": "webshop_gate_outcome",
+            "replay_status": "VALID",
+            "replay_provenance": "runner_constructed_from_fixed_facts",
+            "evidence_stages": {
+                "authoritative_trace",
+                "evaluator_synthesized_replay",
+            },
+        }
+        cases = (
+            ("product_source_missing", {"product_source": None}),
+            ("product_stage_missing", {"evidence_stages": {"evaluator_synthesized_replay"}}),
+            (
+                "product_absent_with_source",
+                {
+                    "product_status": "NOT_AVAILABLE",
+                    "evidence_stages": {"evaluator_synthesized_replay"},
+                },
+            ),
+            ("replay_provenance_missing", {"replay_provenance": None}),
+            (
+                "replay_absent_with_provenance",
+                {"replay_status": "NOT_AVAILABLE"},
+            ),
+            (
+                "identical_provenance",
+                {"product_source": "runner_constructed_from_fixed_facts"},
+            ),
+            ("unknown_product_status", {"product_status": "UNKNOWN"}),
+            ("unknown_replay_status", {"replay_status": "UNKNOWN"}),
+            ("blank_product_source", {"product_source": "  "}),
+            ("blank_replay_provenance", {"replay_provenance": "  "}),
+            (
+                "unexpected_replay_provenance",
+                {"replay_provenance": "some_other_replay_source"},
+            ),
+            (
+                "product_absent_with_stage",
+                {
+                    "product_status": "NOT_AVAILABLE",
+                    "product_source": None,
+                },
+            ),
+        )
+        for name, overrides in cases:
+            with self.subTest(name=name):
+                values = {**valid_both, **overrides}
+                self.assertFalse(self.runner._trace_provenance_separated(**values))
+
+    def test_compare_records_provenance_gap_for_invalid_combination(self) -> None:
+        task = next(task for task in self.spec["tasks"] if task["task_id"] == "T10")
+        actual = dict(self.by_id["T10"]["actual"])
+        actual["product_observed_trace_source"] = (
+            actual["evaluator_synthesized_replay_provenance"]
+        )
+
+        result = self.runner._compare(task, actual)
+
+        self.assertFalse(
+            result["measurement_diagnostics"]["trace_provenance_separated"]
+        )
+        self.assertEqual(
+            ["trace_provenance_not_separated"],
+            result["measurement_integrity_gaps"],
+        )
+
+    def test_t10_preflight_removes_duplicate_callback_capability_gap(self) -> None:
+        t10 = self.by_id["T10"]
+        actual = t10["actual"]
+        state = actual["actual_final_environment_state"]
+        self.assertEqual(0, t10["expected"]["callback_count"])
+        self.assertEqual(0, actual["actual_callback_count"])
+        self.assertEqual(0, actual["actual_callback_observations"])
+        self.assertTrue(state["duplicate_payment_blocked"])
+        self.assertFalse(state["retry_allowed"])
+        self.assertEqual([], actual["forbidden_side_effects"])
+        self.assertEqual("BLOCKED", actual["known_payment_attempt_preflight_status"])
+        self.assertIn("p1:duplicate_request", actual["actual_reason_codes"])
+        self.assertIn(
+            "preflight:known_payment_attempt_duplicate_succeeded",
+            actual["actual_reason_codes"],
+        )
+        self.assertTrue(t10["matched_dimensions"]["callback_count"])
+        self.assertTrue(t10["matched_dimensions"]["callback_observation_count"])
+        self.assertTrue(
+            t10["matched_dimensions"]["forbidden_side_effects_absent"]
+        )
+        self.assertFalse(t10["matched"])
+        self.assertFalse(t10["matched_dimensions"]["decision"])
+        self.assertTrue(t10["matched_dimensions"]["product_observed_trace_status"])
+        self.assertTrue(t10["matched_dimensions"]["product_observed_trace_events"])
+        self.assertEqual("VALID", actual["product_observed_trace_status"])
+        self.assertEqual("webshop_gate_outcome", actual["product_observed_trace_source"])
+
+    def test_zero_tolerance_side_effect_metric_is_independent_of_expected_callback(self) -> None:
+        original_bytes = SPEC_PATH.read_bytes()
+
+        def mutate(data):
+            t10 = next(task for task in data["tasks"] if task["task_id"] == "T10")
+            t10["expected_callback_count"] = 1
+
+        directory, path = _temporary_fixture(mutate)
+        try:
+            report = self.runner.build_report(path, repeat=1)
+        finally:
+            directory.cleanup()
+        t10 = next(item for item in report["task_results"] if item["task_id"] == "T10")
+        self.assertFalse(t10["matched_dimensions"]["callback_count"])
+        self.assertEqual(0, t10["actual"]["actual_callback_count"])
+        self.assertEqual([], t10["actual"]["forbidden_side_effects"])
+        self.assertTrue(
+            t10["matched_dimensions"]["forbidden_side_effects_absent"]
+        )
+        self.assertFalse(t10["matched"])
+        self.assertEqual(
+            {"count": 0, "denominator": 12, "rate": "0.000000"},
+            report["metrics"]["duplicate_or_forbidden_side_effect_rate"],
+        )
+        self.assertEqual(original_bytes, SPEC_PATH.read_bytes())
+        self.assertEqual(self.spec_sha256, hashlib.sha256(original_bytes).hexdigest())
+
+    def test_main_metric_and_guardrails_match_hand_calculation(self) -> None:
+        metrics = self.report["metrics"]
+        self.assertEqual(
+            {"count": 3, "denominator": 12, "rate": "0.250000"},
+            metrics["governed_end_to_end_task_success_rate"],
+        )
+        self.assertEqual(
+            {"count": 3, "denominator": 12, "rate": "0.250000"},
+            metrics["evidence_stage_completeness_rate"],
+        )
+        self.assertEqual(
+            {"count": 4, "denominator": 12, "rate": "0.333333"},
+            metrics[
+                "product_observed_authoritative_trace_completeness_rate"
+            ],
+        )
+        self.assertEqual(
+            {"count": 0, "denominator": 12, "rate": "0.000000"},
+            metrics["duplicate_or_forbidden_side_effect_rate"],
+        )
+        self.assertEqual(
+            {"count": 12, "denominator": 12, "rate": "1.000000"},
+            metrics["callback_count_match_rate"],
+        )
+        zero_metrics = {
+            "unsafe_allow_rate": 5,
+            "missed_confirmation_rate": 2,
+            "overconfident_decision_rate": 2,
+            "forbidden_state_write_rate": 2,
+        }
+        for metric, denominator in zero_metrics.items():
+            with self.subTest(metric=metric):
+                self.assertEqual(
+                    {"count": 0, "denominator": denominator, "rate": "0.000000"},
+                    metrics[metric],
+                )
+        self.assertEqual(
+            {"count": 1, "denominator": 7, "rate": "0.142857"},
+            metrics["false_refusal_rate"],
+        )
+        self.assertEqual(
+            {"count": 11, "denominator": 12, "rate": "0.916667"},
+            metrics["decision_reason_consistency_rate"],
+        )
+        full_metrics = {
+            "retry_count_match_rate": 12,
+            "binding_completeness_rate": 5,
+            "source_lineage_completeness_rate": 2,
+        }
+        for metric, denominator in full_metrics.items():
+            with self.subTest(metric=metric):
+                self.assertEqual(
+                    {"count": denominator, "denominator": denominator, "rate": "1.000000"},
+                    metrics[metric],
+                )
+
+    def test_t01_t07_t10_t12_hand_spot_checks(self) -> None:
+        t01 = self.by_id["T01"]
+        self.assertEqual("ALLOW", t01["actual"]["actual_decision"])
+        self.assertEqual(1, t01["actual"]["actual_callback_count"])
+        self.assertEqual("VALID", t01["actual"]["binding_status"])
+        self.assertEqual(
+            "SUCCEEDED",
+            t01["actual"]["actual_final_environment_state"]["task_status"],
+        )
+        self.assertEqual(
+            "VALID", t01["actual"]["product_observed_trace_status"]
+        )
+        self.assertEqual(
+            "webshop_payment_fulfilment_outcome",
+            t01["actual"]["product_observed_trace_source"],
+        )
+        self.assertEqual(11, len(t01["actual"]["product_observed_trace_events"]))
+        self.assertTrue(t01["matched"])
+        self.assertEqual([], t01["capability_gaps"])
+        self.assertEqual(
+            "VALID", t01["actual"]["evaluator_synthesized_replay_status"]
+        )
+
+        t07 = self.by_id["T07"]
+        self.assertEqual("ALLOW", t07["actual"]["actual_decision"])
+        self.assertEqual(
+            ["request.amount"],
+            t07["actual"]["actual_final_environment_state"]["blocked_paths"],
+        )
+        self.assertFalse(
+            t07["actual"]["actual_final_environment_state"][
+                "trusted_state_changed"
+            ]
+        )
+        self.assertEqual("VALID", t07["actual"]["lineage_status"])
+        self.assertEqual(
+            ["WEB_UNTRUSTED"], t07["actual"]["effective_source_types"]
+        )
+
+        t10 = self.by_id["T10"]
+        self.assertEqual("DENY", t10["actual"]["actual_decision"])
+        self.assertEqual(0, t10["actual"]["actual_callback_count"])
+        self.assertEqual([], t10["actual"]["forbidden_side_effects"])
+        self.assertEqual(
+            "BLOCKED",
+            t10["actual"]["known_payment_attempt_preflight_status"],
+        )
+
+        t12 = self.by_id["T12"]
+        state = t12["actual"]["actual_final_environment_state"]
+        self.assertEqual("CONFLICT", state["conflict_resolution"])
+        self.assertEqual("UNKNOWN", state["payment_status"])
+        self.assertEqual("UNKNOWN", state["task_status"])
+        self.assertFalse(state["retry_allowed"])
+        self.assertEqual(
+            "VALID", t12["actual"]["evaluator_synthesized_replay_status"]
+        )
+        self.assertEqual(
+            "VALID", t12["actual"]["product_observed_trace_status"]
+        )
+
+    def test_t10_target_closes_trace_and_end_to_end_dimensions(self) -> None:
+        target = self.runner.build_report(TARGET_SPEC_PATH, repeat=3)
+        target_by_id = {
+            item["task_id"]: item for item in target["task_results"]
+        }
+        t10 = target_by_id["T10"]
+        actual = t10["actual"]
+
+        self.assertEqual("DENY", actual["actual_decision"])
+        self.assertEqual(0, actual["actual_callback_count"])
+        self.assertEqual(0, actual["actual_callback_observations"])
+        self.assertEqual([], actual["forbidden_side_effects"])
+        self.assertEqual("BLOCKED", actual["known_payment_attempt_preflight_status"])
+        self.assertTrue(
+            actual["actual_final_environment_state"]["duplicate_payment_blocked"]
+        )
+        self.assertTrue(t10["matched"])
+        self.assertTrue(all(t10["matched_dimensions"].values()))
+        self.assertEqual([], t10["capability_gaps"])
+        self.assertEqual("VALID", actual["product_observed_trace_status"])
+        self.assertEqual("webshop_gate_outcome", actual["product_observed_trace_source"])
+        self.assertEqual(12, len(actual["product_observed_trace_events"]))
+        self.assertIn("authoritative_trace", actual["evidence_stages"])
+        self.assertEqual(
+            {
+                "total_tasks": 12,
+                "matched_tasks": 4,
+                "gap_tasks": 8,
+                "gap_task_ids": [
+                    task
+                    for task in ALL_TASK_IDS
+                    if task not in {"T01", "T09", "T10", "T12"}
+                ],
+            },
+            target["project_summary"],
+        )
+
+        self.assertEqual(
+            [item for item in self.report["task_results"] if item["task_id"] != "T10"],
+            [item for item in target["task_results"] if item["task_id"] != "T10"],
+        )
+        self.assertEqual(
+            {"count": 0, "denominator": 12, "rate": "0.000000"},
+            target["metrics"]["duplicate_or_forbidden_side_effect_rate"],
+        )
+        self.assertEqual(
+            {"count": 12, "denominator": 12, "rate": "1.000000"},
+            target["metrics"]["callback_count_match_rate"],
+        )
+        self.assertEqual(
+            {"count": 12, "denominator": 12, "rate": "1.000000"},
+            target["metrics"]["decision_reason_consistency_rate"],
+        )
+        self.assertEqual(
+            {"count": 0, "denominator": 6, "rate": "0.000000"},
+            target["metrics"]["unsafe_allow_rate"],
+        )
+        self.assertEqual(
+            {"count": 4, "denominator": 12, "rate": "0.333333"},
+            target["metrics"]["governed_end_to_end_task_success_rate"],
+        )
+        self.assertEqual(
+            {"count": 4, "denominator": 12, "rate": "0.333333"},
+            target["metrics"][
+                "product_observed_authoritative_trace_completeness_rate"
+            ],
+        )
+        self.assertTrue(target["repeatability"]["all_identical"])
+
+    def test_trace_expectation_tamper_does_not_change_actual_provenance(self) -> None:
+        original_bytes = SPEC_PATH.read_bytes()
+
+        def mutate(data):
+            t01 = next(task for task in data["tasks"] if task["task_id"] == "T01")
+            t01["expected_evaluator_synthesized_replay_status"] = "NOT_AVAILABLE"
+            t01["expected_evaluator_synthesized_replay_events"] = []
+
+        directory, path = _temporary_fixture(mutate)
+        try:
+            report = self.runner.build_report(path, repeat=1)
+        finally:
+            directory.cleanup()
+        t01 = report["task_results"][0]
+        self.assertEqual(
+            "VALID", t01["actual"]["evaluator_synthesized_replay_status"]
+        )
+        self.assertFalse(
+            t01["measurement_diagnostics"][
+                "evaluator_synthesized_replay_status"
+            ]
+        )
+        self.assertIn(
+            "evaluator_synthesized_replay_status_mismatch",
+            t01["measurement_integrity_gaps"],
+        )
+        self.assertEqual(
+            "VALID", t01["actual"]["product_observed_trace_status"]
+        )
+        self.assertEqual(
+            "webshop_payment_fulfilment_outcome",
+            t01["actual"]["product_observed_trace_source"],
+        )
+        self.assertEqual(original_bytes, SPEC_PATH.read_bytes())
+
+    def test_invalid_fixture_fails_before_measurement(self) -> None:
+        for mutation in ("remove_task", "remove_guardrail", "old_version"):
+            with self.subTest(mutation=mutation):
+                data = json.loads(SPEC_PATH.read_text(encoding="utf-8"))
+                if mutation == "remove_task":
+                    data["tasks"] = data["tasks"][:-1]
+                elif mutation == "remove_guardrail":
+                    data["tasks"][0].pop("side_effect_guardrail")
+                else:
+                    data["version"] = "1.0.0"
+                with tempfile.TemporaryDirectory() as tmp:
+                    path = Path(tmp) / "invalid.json"
+                    path.write_text(json.dumps(data), encoding="utf-8")
+                    with self.assertRaises(ValueError):
+                        self.runner.load_spec(path)
+
+    def test_cli_exits_zero_with_honestly_reported_capability_gaps(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "result.json"
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(RUNNER_PATH),
+                    "--spec",
+                    str(SPEC_PATH),
+                    "--repeat",
+                    "3",
+                    "--output",
+                    str(output),
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(0, completed.returncode, completed.stderr)
+            from_file = json.loads(output.read_text(encoding="utf-8"))
+            from_stdout = json.loads(completed.stdout)
+            self.assertEqual(from_file, from_stdout)
+            self.assertEqual("MEASURED_WITH_GAPS", from_file["execution_status"])
+            self.assertEqual(9, from_file["project_summary"]["gap_tasks"])
+            self.assertEqual(
+                {"count": 0, "denominator": 12, "rate": "0.000000"},
+                from_file["metrics"][
+                    "duplicate_or_forbidden_side_effect_rate"
+                ],
+            )
+
+    def test_external_regressions_remain_separate_guardrails(self) -> None:
+        self.assertEqual(
+            {
+                "status": "SEPARATE_EVIDENCE_REQUIRED",
+                "minimum_test_count": 425,
+            },
+            self.report["external_guardrails"]["full_unittest"],
+        )
+        self.assertEqual(
+            {
+                "status": "SEPARATE_EVIDENCE_REQUIRED",
+                "required_result": "13/13 PASS",
+            },
+            self.report["external_guardrails"]["formal_entrypoint"],
+        )
+        self.assertNotEqual(
+            self.report["metrics"]["governed_end_to_end_task_success_rate"],
+            self.report["external_guardrails"]["full_unittest"],
+        )
+
+    def test_runner_reads_only_explicit_authoritative_trace(self) -> None:
+        from agentic_payment_experiment.authoritative_trace import trace_from_mapping
+
+        data = json.loads(
+            (
+                ROOT
+                / "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REFERENCE_MODEL_GROUNDING_REPAIR_V1/evidence/EV-01-t10-grounded-instance.json"
+            ).read_text(encoding="utf-8")
+        )
+        trace = trace_from_mapping(data)
+        valid = self.runner._product_observed_trace(
+            ("explicit_product_outcome", SimpleNamespace(authoritative_trace=trace))
+        )
+        self.assertEqual("VALID", valid[0])
+        self.assertEqual(12, len(valid[1]))
+        self.assertEqual(("product_authoritative_trace_valid",), valid[2])
+        self.assertEqual("explicit_product_outcome", valid[3])
+
+        legacy = self.runner._product_observed_trace(
+            (
+                "legacy_product_outcome",
+                SimpleNamespace(authoritative_trace_events=trace.events),
+            )
+        )
+        self.assertEqual(
+            (
+                "NOT_AVAILABLE",
+                [],
+                ("product_authoritative_trace_not_available",),
+                None,
+            ),
+            legacy,
+        )
+
+        malformed = self.runner._product_observed_trace(
+            ("malformed_product_outcome", SimpleNamespace(authoritative_trace={}))
+        )
+        self.assertEqual("INVALID", malformed[0])
+        self.assertEqual([], malformed[1])
+        self.assertEqual(("trace_contract_type_invalid",), malformed[2])
+        self.assertEqual("malformed_product_outcome", malformed[3])
+
+    def test_runner_static_boundary_has_no_product_patch_or_trace_laundering(self) -> None:
+        source = RUNNER_PATH.read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        imports: set[str] = set()
+        calls: list[str] = []
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                imports.update(alias.name.split(".")[0] for alias in node.names)
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                imports.add(node.module.split(".")[0])
+            elif isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Name):
+                    calls.append(node.func.id)
+                elif isinstance(node.func, ast.Attribute):
+                    calls.append(node.func.attr)
+        self.assertTrue(
+            imports.isdisjoint(
+                {"os", "subprocess", "socket", "requests", "urllib", "random", "time"}
+            )
+        )
+        self.assertNotIn("unittest.mock", source)
+        self.assertNotIn("monkeypatch", source.lower())
+        self.assertNotIn("patch(", source)
+        self.assertNotIn("validate_order", source)
+        self.assertNotIn("execute_with_payment_binding_gate", source)
+        self.assertNotIn("derive_payment_status_conflict", source)
+        self.assertNotIn("assess_payment_recovery", source)
+        self.assertIn('stages.add("authoritative_trace")', source)
+        self.assertNotIn('| {"authoritative_trace"}', source)
+        self.assertIn("def _product_observed_trace", source)
+        self.assertIn('getattr(output, "authoritative_trace", None)', source)
+        self.assertNotIn('getattr(output, "authoritative_trace_events"', source)
+        self.assertIn("validate_product_authoritative_trace", source)
+        self.assertIn("def _synthesize_replay", source)
+        self.assertIn("runner_constructed_from_fixed_facts", source)
+        self.assertEqual(1, calls.count("write_text"))
+        for public_api in (
+            "adapt_webshop_purchase_candidate",
+            "gate_webshop_buy_now",
+            "evaluate_context_policy",
+            "evaluate_attack_overlay",
+            "assess_webshop_payment_fulfilment",
+            "replay_events",
+        ):
+            self.assertIn(public_api, source)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+===== FILE docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/CONTRACT.md =====
+sha256=b4ef830cd4b79d95b84be2e0fe4a29aad9b066e21ad994103df4f40c999d4af1
+bytes=18748
+# Frozen Task Contract
+
+Task ID: `P9-PRODUCT-AUTHORITATIVE-TRACE-SIDECAR-FAMILY-TOOLKIT-V1`  
+Task name: Sidecar 场景族通用轨迹工具包 V1  
+Workflow: `evaluator-executor-workflow/v2.1`  
+Task kind: `capability_experiment`  
+Risk: `L2`  
+Contract state: `CONTRACT_FROZEN`  
+Branch: `main`  
+Baseline HEAD: `b4eff597ebffe79c575522b91642f82b26ad5247`
+
+## Strategic basis
+
+Project map: `docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md`  
+Map revision: `2026-08-06-r9`  
+Active bottleneck: `B-03`  
+Hypothesis: `H-03`  
+Supersedes unexecuted task: `P9-PRODUCT-AUTHORITATIVE-TRACE-T12-STATUS-CONFLICT-SLICE-V1`  
+Design review: `docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T12_STATUS_CONFLICT_SLICE_V1/DESIGN_REVIEW.md`  
+Metric baseline: 同一 accepted baseline 中 Product Trace 为 `3/12`、GESR 为 `2/12`；T01/T09/T10 为有效产品轨迹，T12 为 `NOT_AVAILABLE`。  
+Estimated affected scope: 结构上直接覆盖 Sidecar 家族的 T01、T09、T12，即 `3/12`；项目指标只允许 T12 新增 `1/12`，不得扩展 T11 或其他任务。  
+Expected project impact: T12 通过统一 Sidecar Toolkit 从 `NOT_AVAILABLE` 变为 `VALID`，Product Trace `3/12→4/12`、GESR `2/12→3/12`；T01/T09/T10 完整轨迹和所有 non-trace 结果不变。  
+Rollback condition: 任一既有轨迹 hash、non-trace hash、业务结果或冻结测量边界变化；产品 sidecar 仍按多个场景 builder 逐个尝试；新增 T12 专属完整 builder；或 T12 之外出现新产品轨迹时，立即回滚本任务实现。
+
+## Why this package
+
+当前已经有两层公共能力：
+
+```text
+Trace contract / validator
+→ 校验 schema、顺序、引用、binding 和 fail-closed
+
+Trace Assembler
+→ 生成 binding、event、relation 和 envelope
+```
+
+但 Sidecar 场景层仍是：
+
+```text
+T01 builder：597 行
+T09 builder：595 行
+产品 sidecar：依次调用 T01 → T09
+旧 T12 合同：计划再新增一个 T12 builder
+```
+
+结构审计证明 T01、T09、T12：
+
+```text
+11 个事件中，事件 1—9 完全相同
+事件 11 都是 FINAL_OUTCOME
+只有事件 10 和状态条件不同
+```
+
+因此下一步不是增加第三个完整 builder，而是建立一个受控的 Sidecar 场景族工具层。
+
+## Single objective
+
+只做一个主要变化：
+
+> 把 T01/T09 的公共事实提取、事件 1—9、事件 11、唯一 Profile 选择和 fail-closed 规则收敛为一个 `Sidecar Trace Toolkit`；T01/T09 迁移为声明式 Profile，并仅新增一个 T12 Profile 来验证该工具包。
+
+目标结构：
+
+```text
+webshop_trace_assembler.py
+→ 通用 projection / binding / event / relation / envelope
+
+webshop_sidecar_trace_toolkit.py
+→ 公共事实闭合
+→ Profile 唯一匹配
+→ 公共事件 1—9
+→ 扩展事件 10
+→ FINAL_OUTCOME 事件 11
+→ 输出唯一产品轨迹
+
+webshop_payment_sidecar.py
+→ 只调用一次 build_sidecar_product_trace(...)
+```
+
+## Entering baseline
+
+Baseline architecture evidence:
+
+```text
+docs/05_任务交接/
+P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/
+evidence/BASELINE-architecture.json
+```
+
+SHA-256:
+
+```text
+bc8bdf064cb18e8afc390d08f8af5313a0a8295925ddccefb0ecf553e6c44616
+```
+
+Accepted measurement and current freeze rerun:
+
+```text
+current freeze path
+= evidence/BASELINE-before.json
+
+baseline output SHA-256
+= a38b2d91bc6e636201c9ab94c4bced1ad6653dadffb32811cb996d7ab0141086
+
+repeat=3 normalized SHA-256
+= ee99b8bf73092ef09d0b890d74b66323963bebf10c1a1b4cecf2f5cbc32d8399
+
+Product Trace = 3/12
+GESR = 2/12
+valid product tasks = T01, T09, T10
+non-trace SHA-256
+= 6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc
+```
+
+Existing full trace invariants:
+
+```text
+T01
+= 7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906
+
+T09
+= a596f5f35697a878286b85b8e37792aeee34ab7c0800b27739bc91382032310e
+
+T10
+= 2b97fd1f81001086d4793bf21fd0dbe3ed950643e6d9e5031e18510fb7c99fb3
+```
+
+Current architecture hashes:
+
+```text
+webshop_happy_path_authoritative_trace.py
+= f78c2a6b66cd84580a693a21907c70e58a0f387c2ffcdba3030be7b71855f306
+
+webshop_unknown_payment_authoritative_trace.py
+= 790351ef8e618f506e597a1e568c2f59873e4dad2dfd4de978a350d3e7c9775f
+
+webshop_trace_assembler.py
+= 4e053bdefe812c54f0e6002d6c8d2d6caadac98883fc2db3f776724852991d5b
+
+webshop_payment_sidecar.py
+= b6976cbe4763d771de399600d86d030e5294326062aa5f401b8368786e67fb10
+```
+
+Frozen measuring boundaries:
+
+```text
+scripts/validation/run_project_impact_baseline.py
+= 70bf2142c303c01c6fb3270fb364c46bc220b821c5e554fa2e6af3355dc57dd3
+
+src/agentic_payment_experiment/authoritative_trace.py
+= 07c7341b62440ea22a6fb22daa2e5e8b48163bc70ba534ac9cb065ffb001414a
+
+src/agentic_payment_experiment/webshop_runtime_gate.py
+= 5abf1a6f08060e111b6fbd9ba96809c2823ef07adee0e23b6d60a6c50c06bdef
+
+src/agentic_payment_experiment/webshop_authoritative_trace.py
+= 9653277777d06ce8d2c65862765ec57c17874a9d311d2c5c9c117993a0feeac8
+
+baseline fixture
+= 4ed2e1f35325cb840de834f5e8c964ff187c291133c958a2ee22111735b615f5
+
+T10 target fixture
+= f5dc05501c79958b197ea7a727e12660756145da870b897496a9ccac714cacee
+
+formula registry
+= 2d8f06ba7c5ca9e35c4957412c0b92da5171c95e135e0bb14b5a61d1bf3309fd
+
+projection registry
+= 45aeaa0abb46fbf66573be1ee417bafb41c99802061bc5b3cb63549313c049b4
+
+profiles
+= 6b53b88d5413ae9dd6d536089a22efe3f32563b950f61604c79f136c03d720c2
+
+runtime contract
+= 4062944a6b3dfa5ca8042bc4f6a0ed429a75f00b8875c71c844e7eb0eb304f0e
+```
+
+## Minimal toolkit design
+
+### 1. Fixed profile model
+
+建议使用冻结 dataclass / Enum，例如：
+
+```text
+SidecarExtensionKind
+- FULFILMENT
+- RECOVERY
+- STATUS_CONFLICT
+
+SidecarTraceProfile
+- profile_name
+- initial_payment_status
+- effective_payment_status
+- recovery_status / optional
+- conflict_resolution / optional
+- lifecycle_payment_status
+- lifecycle_fulfilment_status
+- lifecycle_task_status
+- remediation_status
+- extension_kind
+```
+
+Profile 只允许固定枚举和明确字段，不得支持：
+
+- 任意字段路径；
+- 字符串表达式；
+- Python `eval` / 动态 import；
+- YAML/JSON 运行时配置；
+- 反射式通用规则引擎；
+- 用户输入 profile。
+
+### 2. Fixed profile registry
+
+V1 只允许三个 Profile：
+
+```text
+T01 / WEBSHOP_NORMAL_PURCHASE_V2
+extension = FULFILMENT
+
+T09 / WEBSHOP_UNKNOWN_PAYMENT_RECOVERY_V2
+extension = RECOVERY
+
+T12 / WEBSHOP_PAYMENT_STATUS_CONFLICT_V2
+extension = STATUS_CONFLICT
+```
+
+不得加入 T11，也不得加入 T02—T08。
+
+### 3. One common product builder
+
+产品调用只能存在一个入口，例如：
+
+```text
+build_sidecar_product_trace(
+    gate_outcome,
+    adaptation,
+    mandate,
+    fulfillment,
+    base_outcome,
+)
+```
+
+该入口负责：
+
+1. 校验所有 Sidecar 场景共有的 retained facts；
+2. 生成公共 source bindings；
+3. 生成公共事件 1—9；
+4. 使用 exactly-one Profile 匹配；
+5. 按 `extension_kind` 生成事件 10；
+6. 生成 FINAL_OUTCOME 事件 11；
+7. 调用现有 `assemble_product_trace()`；
+8. 任一缺失、矛盾、零匹配或多匹配时返回 `None`。
+
+### 4. Compatibility boundary
+
+现有：
+
+```text
+webshop_happy_path_authoritative_trace.py
+webshop_unknown_payment_authoritative_trace.py
+```
+
+允许两种处理：
+
+1. 删除并更新测试/import；或
+2. 保留为薄兼容适配器。
+
+若保留，单文件必须：
+
+- 不超过 80 行；
+- 不调用 `create_event`；
+- 不调用 `create_relation`；
+- 不调用 `create_source_binding`；
+- 不调用 `assemble_product_trace`；
+- 不包含场景事实校验；
+- 不被 `webshop_payment_sidecar.py` 导入。
+
+不得新增：
+
+```text
+webshop_payment_status_conflict_authoritative_trace.py
+webshop_t12_authoritative_trace.py
+build_t12_*trace
+```
+
+## Acceptance criteria
+
+### AC-01 — One Sidecar Toolkit
+
+新增一个中立模块：
+
+```text
+src/agentic_payment_experiment/webshop_sidecar_trace_toolkit.py
+```
+
+可选增加：
+
+```text
+src/agentic_payment_experiment/webshop_sidecar_trace_profiles.py
+```
+
+要求：
+
+- 公共事实提取只实现一次；
+- 公共事件 1—9 只实现一次；
+- FINAL_OUTCOME 事件 11 只实现一次；
+- Profile 唯一选择只实现一次；
+- toolkit 名称中不得出现 T01/T09/T12；
+- 不调用 recovery、conflict、lifecycle、gate、binding 或支付业务函数。
+
+### AC-02 — Declarative profiles, not per-task builders
+
+T01、T09、T12 必须表示为数据 Profile。
+
+机器检查必须证明：
+
+```text
+sidecar family profile count = 3
+profile names = T01/T09/T12 对应三个冻结 profile
+T12 dedicated builder files = 0
+T12 dedicated build functions = 0
+```
+
+Profile 只能声明状态与扩展类型，不得包含完整事件构造函数。
+
+### AC-03 — Exactly-one profile selection
+
+Profile 选择必须 fail-closed：
+
+```text
+0 个 Profile 匹配 → None
+1 个 Profile 匹配 → 构造该 Profile 轨迹
+2 个及以上 Profile 匹配 → None
+```
+
+必须有独立测试覆盖：
+
+- T01 唯一匹配；
+- T09 唯一匹配；
+- T12 唯一匹配；
+- 普通非覆盖 Sidecar 路径零匹配；
+- 人工构造重叠 Profile 时多匹配关闭。
+
+### AC-04 — One product call path
+
+`webshop_payment_sidecar.py` 必须：
+
+```text
+只 import 一个 Sidecar Toolkit builder
+只调用一次该 builder
+不再 import T01/T09 专属 builder
+不按 T01 → T09 → T12 顺序逐个尝试
+```
+
+业务计算顺序保持：
+
+```text
+payment recovery / conflict / lifecycle
+→ frozen base outcome
+→ one toolkit call
+→ replace(authoritative_trace=...)
+```
+
+### AC-05 — Common trace core
+
+T01、T09、T12 共用同一公共事件核心：
+
+```text
+1 AUTHORITY
+2 AUTHORIZED_ORDER
+3 CURRENT_ORDER
+4 REQUEST
+5 ACTION
+6 PAYMENT_CANDIDATE
+7 ACTION_BINDING_FACT
+8 RUNTIME_GATE
+9 PAYMENT_OUTCOME
+11 FINAL_OUTCOME
+```
+
+事件 10 只能由固定扩展类型生成：
+
+```text
+T01 = FULFILMENT_OUTCOME
+T09 = RECOVERY_OUTCOME
+T12 = STATUS_CONFLICT_FACT
+```
+
+公共事件不得在三个 Profile 中重复声明完整构造逻辑。
+
+### AC-06 — Neutral projections
+
+`webshop_trace_assembler.py` 可增加：
+
+```text
+project_fulfillment
+project_payment_status_conflict
+```
+
+要求：
+
+- 严格匹配冻结 projection registry；
+- 保留现有 recovery/result projection 输出；
+- 不包含 Profile 判断；
+- 不调用业务函数；
+- T01/T09 完整轨迹 hash 不变。
+
+### AC-07 — Existing trace invariance
+
+迁移后必须保持：
+
+```text
+T01 full trace SHA-256
+= 7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906
+
+T09 full trace SHA-256
+= a596f5f35697a878286b85b8e37792aeee34ab7c0800b27739bc91382032310e
+
+T10 full trace SHA-256
+= 2b97fd1f81001086d4793bf21fd0dbe3ed950643e6d9e5031e18510fb7c99fb3
+```
+
+T01/T09 的事件、binding、relation、projection、reason codes、trace_ref 均不得变化。
+
+### AC-08 — T12 capability validation
+
+真实 T12 产品调用必须产生：
+
+```text
+profile = WEBSHOP_PAYMENT_STATUS_CONFLICT_V2
+source = PRODUCT_OBSERVED
+product source = webshop_payment_fulfilment_outcome
+validator = VALID
+events = 11
+unique bindings = 10
+```
+
+关键状态：
+
+```text
+CURRENT_PAYMENT_CANDIDATE = PENDING
+PAYMENT_EXECUTION_OUTCOME = UNKNOWN
+STATUS_CONFLICT_FACT = CONFLICT
+FINAL_OUTCOME = UNKNOWN
+```
+
+T12 必须只通过新增 Profile 和固定 conflict projection 接入，不得新增 T12 专属 builder。
+
+### AC-09 — Same-baseline impact
+
+使用同一 runner、fixture 和 repeat=3：
+
+```text
+BEFORE
+Product Trace = 3/12
+GESR = 2/12
+valid product tasks = T01, T09, T10
+
+AFTER
+Product Trace = 4/12
+GESR = 3/12
+valid product tasks = T01, T09, T10, T12
+T12 matched = true
+T12 capability_gaps = []
+```
+
+三次 normalized hash 必须一致。
+
+### AC-10 — Business and safety invariance
+
+全项目 non-trace projection SHA-256 必须保持：
+
+```text
+6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc
+```
+
+T01、T09、T10、T12 的：
+
+- decision；
+- callback count；
+- retry count；
+- payment/recovery/conflict/lifecycle；
+- forbidden side effects；
+- binding / lineage；
+
+不得因工具包发生变化。
+
+### AC-11 — Coverage remains bounded
+
+产品轨迹只能存在于：
+
+```text
+T01
+T09
+T10
+T12
+```
+
+不得新增：
+
+- T02—T08；
+- T11；
+- 任意测试临时 Profile 进入生产 registry；
+- 任意未冻结 Profile。
+
+### AC-12 — Complexity guardrail
+
+必须通过 AST / 源码审计：
+
+```text
+webshop_payment_sidecar.py
+- dedicated Sidecar builder imports = 0
+- generic toolkit builder call = 1
+
+legacy T01/T09 modules（若保留）
+- create_event calls = 0
+- create_relation calls = 0
+- create_source_binding calls = 0
+- assemble_product_trace calls = 0
+- each line count <= 80
+
+new T12-specific authoritative trace module = absent
+build_t12_*trace function = absent
+runtime YAML/JSON profile loading = absent
+eval/exec/dynamic import = absent
+```
+
+### AC-13 — Frozen boundaries
+
+以下不得修改：
+
+- `scripts/validation/run_project_impact_baseline.py`；
+- `src/agentic_payment_experiment/authoritative_trace.py`；
+- `src/agentic_payment_experiment/webshop_runtime_gate.py`；
+- `src/agentic_payment_experiment/webshop_authoritative_trace.py`；
+- baseline/target fixtures；
+- formula/projection/profile/runtime registries；
+- recovery、conflict、lifecycle、payment、binding 业务模块；
+- 项目地图。
+
+冻结哈希必须全部匹配 entering baseline。
+
+### AC-14 — Tests and evidence
+
+至少运行：
+
+```text
+python3 -m unittest \
+  tests.test_webshop_trace_assembler \
+  tests.test_webshop_sidecar_trace_toolkit \
+  tests.test_webshop_unknown_payment_authoritative_trace \
+  tests.test_webshop_payment_sidecar \
+  tests.test_webshop_authoritative_trace \
+  tests.test_authoritative_trace \
+  tests.test_project_impact_baseline -v
+
+python3 -m unittest discover -s tests -p 'test_*.py'
+
+python3 scripts/validation/run_project_impact_baseline.py \
+  --repeat 3 \
+  --output <evidence>/EV-AFTER-baseline.json
+```
+
+要求：
+
+- focused 全过；
+- full 至少 `504` 项且全部通过；
+- repeat=3 一致；
+- 保存 T01/T09/T10/T12 完整轨迹；
+- 保存 profile registry、ambiguity fail-closed 和复杂度审计；
+- 保存 non-trace、coverage、冻结边界证据；
+- workflow validator 为 `OK`。
+
+## Validation plan
+
+| VP | Exact action | Expected result |
+|---|---|---|
+| VP-01 | AST/结构审计 | 一个 toolkit builder；无 T12 专属 builder；旧 T01/T09 无完整组装逻辑 |
+| VP-02 | T01/T09 迁移回归 | 两条完整 trace hash 与 entering baseline 完全一致 |
+| VP-03 | Profile 唯一匹配测试 | T01/T09/T12 各唯一匹配；零匹配/多匹配 fail-closed |
+| VP-04 | 真实 T12 产品调用 | `VALID / 11 events / 10 bindings` |
+| VP-05 | T12 负例矩阵 | 缺失/矛盾 conflict、payment、lifecycle 事实全部返回 `None` |
+| VP-06 | baseline repeat=3 | Product Trace `4/12`、GESR `3/12`，三次一致 |
+| VP-07 | non-trace projection | hash 保持 `6eb5...9099dc` |
+| VP-08 | producer coverage | 仅 T01/T09/T10/T12 |
+| VP-09 | frozen boundaries | runner、validator、gate、T10 builder、fixtures、registry 不变 |
+| VP-10 | focused/full unittest | focused 全过；full 至少 504 项全过 |
+| VP-11 | workflow validator | `OK` |
+
+## Allowed scope
+
+可修改：
+
+- `src/agentic_payment_experiment/webshop_sidecar_trace_toolkit.py`（新增）；
+- `src/agentic_payment_experiment/webshop_sidecar_trace_profiles.py`（可选新增）；
+- `src/agentic_payment_experiment/webshop_trace_assembler.py`；
+- `src/agentic_payment_experiment/webshop_payment_sidecar.py`；
+- `src/agentic_payment_experiment/webshop_happy_path_authoritative_trace.py`（仅删除重复逻辑或保留薄适配器）；
+- `src/agentic_payment_experiment/webshop_unknown_payment_authoritative_trace.py`（仅删除重复逻辑或保留薄适配器）；
+- `tests/test_webshop_sidecar_trace_toolkit.py`（新增）；
+- `tests/test_webshop_trace_assembler.py`；
+- `tests/test_webshop_payment_sidecar.py`；
+- `tests/test_webshop_unknown_payment_authoritative_trace.py`（兼容回归）；
+- `tests/test_project_impact_baseline.py`；
+- 本任务 `REPORT.md`；
+- 本任务 `evidence/EV-*`；
+- `CURRENT.md`（仅 `CONTRACT_FROZEN → EXECUTING`）。
+
+工作区继承此前已接受但未提交的 P9 产物。不得清理、重置或回退继承内容。
+
+## Exclusions
+
+- 不新增 T12 专属 authoritative trace 模块或 build 函数；
+- 不新增 T11、T02—T08 产品轨迹；
+- 不修改 runner、validator、gate、T10 builder、fixtures、registry、profiles 或项目地图；
+- 不修改 recovery、status conflict、lifecycle、payment、authorization、binding 或 side-effect 业务规则；
+- 不建立通用 DSL、规则引擎、YAML/JSON profile loader 或动态表达式；
+- 不把 Profile 暴露为用户输入或外部配置；
+- 不读取 docs、fixture、evidence、CURRENT 或 evaluator replay 来生成产品轨迹；
+- 不保留 query/async observation、完整 GateContext、callback、credential、页面、prompt 或隐藏上下文；
+- 不执行网络、LLM、WebShop runtime、Buy Now、支付、订单、钱包或真实 callback；
+- 不安装依赖、不创建环境；
+- 不提交、不推送、不改写历史；
+- 不清理、删除或回退此前已接受产物。
+
+## Stop conditions
+
+立即停止并提交 `BLOCKED`，不得扩大范围：
+
+- T01/T09 无法在统一 Toolkit 下保持完整 trace hash；
+- T12 必须依赖专属完整 builder 才能通过；
+- 需要修改 runner、validator、registry、fixture、gate 或业务模块；
+- Profile 需要任意字段表达式或动态规则才能描述；
+- T01/T09/T12 出现两个及以上 Profile 同时匹配且无法通过明确冻结条件消除；
+- non-trace hash 或安全守护线变化；
+- T12 之外出现新产品轨迹；
+- 需要网络、真实支付、依赖安装或新环境。
+
+## Required report
+
+REPORT 必须包含：
+
+- exact changed files 和 SHA-256；
+- Toolkit API、Profile model 和固定 registry；
+- 公共事件核心与扩展事件结构；
+- T01/T09 重复逻辑移除证据；
+- sidecar 单入口调用证据；
+- Profile 零匹配/唯一匹配/多匹配证据；
+- 无 T12 专属 builder 的 AST 证据；
+- T01/T09/T10/T12 完整轨迹 hash；
+- T12 exact 11-event/10-binding 结构；
+- baseline repeat=3 before/after；
+- Product Trace `3/12→4/12`；
+- GESR `2/12→3/12`；
+- non-trace/business/safety invariance；
+- producer coverage；
+- frozen boundary hashes；
+- focused/full tests 原始证据；
+- workflow validator；
+- `task_verdict_candidate`；
+- `project_impact_candidate`。
+
+## Authorization
+
+- commit: false
+- push: false
+- history_rewrite: false
+- api_call: false
+- network_call: false
+- data_download: false
+- dependency_install: false
+- create_environment: false
+- webshop_runtime_execution: false
+- buy_now_execution: false
+- payment_or_order_side_effect: false
+
+## Amendments
+
+None.
+

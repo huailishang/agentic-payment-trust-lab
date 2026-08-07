@@ -1,0 +1,1432 @@
+{
+  "all_classes_exist": true,
+  "all_extraction_roots_exist": true,
+  "schema_count": 16,
+  "schemas": [
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "mandate_id",
+        "user_id",
+        "max_amount",
+        "allowed_merchants",
+        "allowed_categories",
+        "expires_at",
+        "max_count",
+        "confirmation_above",
+        "expected_agent_id",
+        "currency",
+        "authority_version"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "mandate_id",
+          "root_exists": true,
+          "source_path": "mandate_id",
+          "source_root": "mandate_id",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "authority_version",
+          "root_exists": true,
+          "source_path": "authority_version",
+          "source_root": "authority_version",
+          "transform": "DIRECT"
+        }
+      ],
+      "projection_schema": "intent-mandate-trace/v2",
+      "source_class": "IntentMandate",
+      "source_file": "src/agentic_payment_experiment/models.py",
+      "source_module": "agentic_payment_experiment.models"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "order_id",
+        "order_version",
+        "merchant",
+        "payee",
+        "items",
+        "total_amount",
+        "currency",
+        "quote_expires_at",
+        "fulfilment_terms",
+        "mandate_ref",
+        "service_id",
+        "candidate_rails",
+        "authority_version_ref"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "order_id",
+          "root_exists": true,
+          "source_path": "order_id",
+          "source_root": "order_id",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "order_version",
+          "root_exists": true,
+          "source_path": "order_version",
+          "source_root": "order_version",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "mandate_ref",
+          "root_exists": true,
+          "source_path": "mandate_ref",
+          "source_root": "mandate_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "authority_version_ref",
+          "root_exists": true,
+          "source_path": "authority_version_ref",
+          "source_root": "authority_version_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "total_amount",
+          "root_exists": true,
+          "source_path": "total_amount",
+          "source_root": "total_amount",
+          "transform": "Decimal.canonical_string"
+        },
+        {
+          "projection_field": "currency",
+          "root_exists": true,
+          "source_path": "currency",
+          "source_root": "currency",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "merchant",
+          "root_exists": true,
+          "source_path": "merchant",
+          "source_root": "merchant",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "payee",
+          "root_exists": true,
+          "source_path": "payee",
+          "source_root": "payee",
+          "transform": "DIRECT"
+        }
+      ],
+      "projection_schema": "order-snapshot-trace/v2",
+      "source_class": "Order",
+      "source_file": "src/agentic_payment_experiment/models.py",
+      "source_module": "agentic_payment_experiment.models"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "request_id",
+        "amount",
+        "merchant",
+        "category",
+        "occurred_at",
+        "sequence_count",
+        "agent_id",
+        "currency",
+        "order_ref",
+        "authority_ref",
+        "authority_version_ref",
+        "payee"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "request_id",
+          "root_exists": true,
+          "source_path": "request_id",
+          "source_root": "request_id",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "order_ref",
+          "root_exists": true,
+          "source_path": "order_ref",
+          "source_root": "order_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "authority_ref",
+          "root_exists": true,
+          "source_path": "authority_ref",
+          "source_root": "authority_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "authority_version_ref",
+          "root_exists": true,
+          "source_path": "authority_version_ref",
+          "source_root": "authority_version_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "amount",
+          "root_exists": true,
+          "source_path": "amount",
+          "source_root": "amount",
+          "transform": "Decimal.canonical_string"
+        },
+        {
+          "projection_field": "currency",
+          "root_exists": true,
+          "source_path": "currency",
+          "source_root": "currency",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "merchant",
+          "root_exists": true,
+          "source_path": "merchant",
+          "source_root": "merchant",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "payee",
+          "root_exists": true,
+          "source_path": "payee",
+          "source_root": "payee",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "agent_id",
+          "root_exists": true,
+          "source_path": "agent_id",
+          "source_root": "agent_id",
+          "transform": "DIRECT"
+        }
+      ],
+      "projection_schema": "transaction-request-trace/v2",
+      "source_class": "TransactionRequest",
+      "source_file": "src/agentic_payment_experiment/models.py",
+      "source_module": "agentic_payment_experiment.models"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "action_id",
+        "action_type",
+        "subject_ref",
+        "agent_ref",
+        "executor_ref",
+        "authority_ref",
+        "authority_version",
+        "order_ref",
+        "order_version",
+        "request_ref",
+        "payment_ref",
+        "source_refs",
+        "side_effect_class",
+        "reversibility",
+        "occurred_at"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "action_id",
+          "root_exists": true,
+          "source_path": "action_id",
+          "source_root": "action_id",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "action_type",
+          "root_exists": true,
+          "source_path": "action_type",
+          "source_root": "action_type",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "agent_ref",
+          "root_exists": true,
+          "source_path": "agent_ref",
+          "source_root": "agent_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "executor_ref",
+          "root_exists": true,
+          "source_path": "executor_ref",
+          "source_root": "executor_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "authority_ref",
+          "root_exists": true,
+          "source_path": "authority_ref",
+          "source_root": "authority_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "authority_version",
+          "root_exists": true,
+          "source_path": "authority_version",
+          "source_root": "authority_version",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "order_ref",
+          "root_exists": true,
+          "source_path": "order_ref",
+          "source_root": "order_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "order_version",
+          "root_exists": true,
+          "source_path": "order_version",
+          "source_root": "order_version",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "request_ref",
+          "root_exists": true,
+          "source_path": "request_ref",
+          "source_root": "request_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "payment_ref",
+          "root_exists": true,
+          "source_path": "payment_ref",
+          "source_root": "payment_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "source_refs",
+          "root_exists": true,
+          "source_path": "source_refs",
+          "source_root": "source_refs",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "side_effect_class",
+          "root_exists": true,
+          "source_path": "side_effect_class",
+          "source_root": "side_effect_class",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "reversibility",
+          "root_exists": true,
+          "source_path": "reversibility",
+          "source_root": "reversibility",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "occurred_at",
+          "root_exists": true,
+          "source_path": "occurred_at",
+          "source_root": "occurred_at",
+          "transform": "datetime.isoformat"
+        }
+      ],
+      "projection_schema": "governed-payment-action-trace/v2",
+      "source_class": "GovernedPaymentAction",
+      "source_file": "src/agentic_payment_experiment/trusted_execution/governed_action.py",
+      "source_module": "agentic_payment_experiment.trusted_execution.governed_action"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "action_id",
+        "action_type",
+        "subject_ref",
+        "agent_ref",
+        "executor_ref",
+        "authority_ref",
+        "authority_version",
+        "order_ref",
+        "order_version",
+        "request_ref",
+        "payment_ref",
+        "source_refs",
+        "side_effect_class",
+        "reversibility",
+        "occurred_at"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "action_id",
+          "root_exists": true,
+          "source_path": "action_id",
+          "source_root": "action_id",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "action_type",
+          "root_exists": true,
+          "source_path": "action_type",
+          "source_root": "action_type",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "agent_ref",
+          "root_exists": true,
+          "source_path": "agent_ref",
+          "source_root": "agent_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "executor_ref",
+          "root_exists": true,
+          "source_path": "executor_ref",
+          "source_root": "executor_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "authority_ref",
+          "root_exists": true,
+          "source_path": "authority_ref",
+          "source_root": "authority_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "authority_version",
+          "root_exists": true,
+          "source_path": "authority_version",
+          "source_root": "authority_version",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "order_ref",
+          "root_exists": true,
+          "source_path": "order_ref",
+          "source_root": "order_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "order_version",
+          "root_exists": true,
+          "source_path": "order_version",
+          "source_root": "order_version",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "request_ref",
+          "root_exists": true,
+          "source_path": "request_ref",
+          "source_root": "request_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "payment_ref",
+          "root_exists": true,
+          "source_path": "payment_ref",
+          "source_root": "payment_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "source_refs",
+          "root_exists": true,
+          "source_path": "source_refs",
+          "source_root": "source_refs",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "side_effect_class",
+          "root_exists": true,
+          "source_path": "side_effect_class",
+          "source_root": "side_effect_class",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "reversibility",
+          "root_exists": true,
+          "source_path": "reversibility",
+          "source_root": "reversibility",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "occurred_at",
+          "root_exists": true,
+          "source_path": "occurred_at",
+          "source_root": "occurred_at",
+          "transform": "datetime.isoformat"
+        }
+      ],
+      "projection_schema": "governed-payment-action-missing-id-trace/v2",
+      "source_class": "GovernedPaymentAction",
+      "source_file": "src/agentic_payment_experiment/trusted_execution/governed_action.py",
+      "source_module": "agentic_payment_experiment.trusted_execution.governed_action"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "status",
+        "action_id",
+        "reason_codes",
+        "checked_action_type",
+        "checked_order_ref",
+        "checked_request_ref",
+        "checked_payment_ref"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "status",
+          "root_exists": true,
+          "source_path": "status",
+          "source_root": "status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "action_id",
+          "root_exists": true,
+          "source_path": "action_id",
+          "source_root": "action_id",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "reason_codes",
+          "root_exists": true,
+          "source_path": "reason_codes",
+          "source_root": "reason_codes",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "checked_action_type",
+          "root_exists": true,
+          "source_path": "checked_action_type",
+          "source_root": "checked_action_type",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "checked_order_ref",
+          "root_exists": true,
+          "source_path": "checked_order_ref",
+          "source_root": "checked_order_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "checked_request_ref",
+          "root_exists": true,
+          "source_path": "checked_request_ref",
+          "source_root": "checked_request_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "checked_payment_ref",
+          "root_exists": true,
+          "source_path": "checked_payment_ref",
+          "source_root": "checked_payment_ref",
+          "transform": "DIRECT"
+        }
+      ],
+      "projection_schema": "governed-action-binding-fact-trace/v2",
+      "source_class": "GovernedActionBindingFact",
+      "source_file": "src/agentic_payment_experiment/trusted_execution/governed_action.py",
+      "source_module": "agentic_payment_experiment.trusted_execution.governed_action"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "payment_id",
+        "request_id",
+        "order_id",
+        "status",
+        "amount",
+        "currency",
+        "occurred_at",
+        "receipt_ref",
+        "provider_ref",
+        "idempotency_key",
+        "authority_ref",
+        "agent_ref",
+        "transaction_object_ref",
+        "payee"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "payment_id",
+          "root_exists": true,
+          "source_path": "payment_id",
+          "source_root": "payment_id",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "request_id",
+          "root_exists": true,
+          "source_path": "request_id",
+          "source_root": "request_id",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "order_id",
+          "root_exists": true,
+          "source_path": "order_id",
+          "source_root": "order_id",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "status",
+          "root_exists": true,
+          "source_path": "status",
+          "source_root": "status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "amount",
+          "root_exists": true,
+          "source_path": "amount",
+          "source_root": "amount",
+          "transform": "Decimal.canonical_string"
+        },
+        {
+          "projection_field": "currency",
+          "root_exists": true,
+          "source_path": "currency",
+          "source_root": "currency",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "authority_ref",
+          "root_exists": true,
+          "source_path": "authority_ref",
+          "source_root": "authority_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "agent_ref",
+          "root_exists": true,
+          "source_path": "agent_ref",
+          "source_root": "agent_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "transaction_object_ref",
+          "root_exists": true,
+          "source_path": "transaction_object_ref",
+          "source_root": "transaction_object_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "payee",
+          "root_exists": true,
+          "source_path": "payee",
+          "source_root": "payee",
+          "transform": "DIRECT"
+        }
+      ],
+      "projection_schema": "payment-execution-record-trace/v2",
+      "source_class": "PaymentExecutionRecord",
+      "source_file": "src/agentic_payment_experiment/models.py",
+      "source_module": "agentic_payment_experiment.models"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "status",
+        "reason_codes",
+        "current_request_ref",
+        "related_attempt_refs",
+        "blocking_request_refs",
+        "limitations"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "status",
+          "root_exists": true,
+          "source_path": "status",
+          "source_root": "status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "reason_codes",
+          "root_exists": true,
+          "source_path": "reason_codes",
+          "source_root": "reason_codes",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "current_request_ref",
+          "root_exists": true,
+          "source_path": "current_request_ref",
+          "source_root": "current_request_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "related_attempt_refs",
+          "root_exists": true,
+          "source_path": "related_attempt_refs",
+          "source_root": "related_attempt_refs",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "blocking_request_refs",
+          "root_exists": true,
+          "source_path": "blocking_request_refs",
+          "source_root": "blocking_request_refs",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "limitations",
+          "root_exists": true,
+          "source_path": "limitations",
+          "source_root": "limitations",
+          "transform": "tuple.to_list"
+        }
+      ],
+      "projection_schema": "known-payment-attempt-preflight-fact-trace/v2",
+      "source_class": "KnownPaymentAttemptPreflightFact",
+      "source_file": "src/agentic_payment_experiment/trusted_execution/known_payment_attempt.py",
+      "source_module": "agentic_payment_experiment.trusted_execution.known_payment_attempt"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "decision",
+        "issues",
+        "evidence",
+        "rule_version",
+        "limitations",
+        "order_differences"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "decision",
+          "root_exists": true,
+          "source_path": "decision",
+          "source_root": "decision",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "issue_codes",
+          "root_exists": true,
+          "source_path": "issues[].code",
+          "source_root": "issues",
+          "transform": "tuple.map"
+        },
+        {
+          "projection_field": "evidence_paths",
+          "root_exists": true,
+          "source_path": "evidence[].field_path",
+          "source_root": "evidence",
+          "transform": "tuple.map"
+        },
+        {
+          "projection_field": "rule_version",
+          "root_exists": true,
+          "source_path": "rule_version",
+          "source_root": "rule_version",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "order_difference_paths",
+          "root_exists": true,
+          "source_path": "order_differences[].field_path",
+          "source_root": "order_differences",
+          "transform": "tuple.map"
+        }
+      ],
+      "projection_schema": "validation-result-trace/v2",
+      "source_class": "ValidationResult",
+      "source_file": "src/agentic_payment_experiment/models.py",
+      "source_module": "agentic_payment_experiment.models"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "preliminary_decision",
+        "final_decision",
+        "binding_status",
+        "binding_reason_codes",
+        "identity_status",
+        "identity_reason_codes",
+        "context_policy_status",
+        "context_policy_reason_codes",
+        "callback_executed",
+        "callback_count",
+        "callback_result_ref",
+        "reason_codes"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "preliminary_decision",
+          "root_exists": true,
+          "source_path": "preliminary_decision",
+          "source_root": "preliminary_decision",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "final_decision",
+          "root_exists": true,
+          "source_path": "final_decision",
+          "source_root": "final_decision",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "binding_status",
+          "root_exists": true,
+          "source_path": "binding_status",
+          "source_root": "binding_status",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "binding_reason_codes",
+          "root_exists": true,
+          "source_path": "binding_reason_codes",
+          "source_root": "binding_reason_codes",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "identity_status",
+          "root_exists": true,
+          "source_path": "identity_status",
+          "source_root": "identity_status",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "identity_reason_codes",
+          "root_exists": true,
+          "source_path": "identity_reason_codes",
+          "source_root": "identity_reason_codes",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "context_policy_status",
+          "root_exists": true,
+          "source_path": "context_policy_status",
+          "source_root": "context_policy_status",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "context_policy_reason_codes",
+          "root_exists": true,
+          "source_path": "context_policy_reason_codes",
+          "source_root": "context_policy_reason_codes",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "callback_executed",
+          "root_exists": true,
+          "source_path": "callback_executed",
+          "source_root": "callback_executed",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "callback_count",
+          "root_exists": true,
+          "source_path": "callback_count",
+          "source_root": "callback_count",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "callback_result_ref",
+          "root_exists": true,
+          "source_path": "callback_result_ref",
+          "source_root": "callback_result_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "reason_codes",
+          "root_exists": true,
+          "source_path": "reason_codes",
+          "source_root": "reason_codes",
+          "transform": "tuple.to_list"
+        }
+      ],
+      "projection_schema": "runtime-gate-record-trace/v2",
+      "source_class": "RuntimeGateRecord",
+      "source_file": "src/agentic_payment_experiment/trusted_execution/replay.py",
+      "source_module": "agentic_payment_experiment.trusted_execution.replay"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "decision",
+        "checkout_executed",
+        "callback_count",
+        "callback_result_ref",
+        "bound_request",
+        "prepayment_result",
+        "runtime_gate_record",
+        "reason_codes",
+        "governed_action_fact",
+        "known_payment_attempt_preflight_fact",
+        "limitations"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "decision",
+          "root_exists": true,
+          "source_path": "decision",
+          "source_root": "decision",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "checkout_executed",
+          "root_exists": true,
+          "source_path": "checkout_executed",
+          "source_root": "checkout_executed",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "callback_count",
+          "root_exists": true,
+          "source_path": "callback_count",
+          "source_root": "callback_count",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "callback_result_ref",
+          "root_exists": true,
+          "source_path": "callback_result_ref",
+          "source_root": "callback_result_ref",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "reason_codes",
+          "root_exists": true,
+          "source_path": "reason_codes",
+          "source_root": "reason_codes",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "limitations",
+          "root_exists": true,
+          "source_path": "limitations",
+          "source_root": "limitations",
+          "transform": "tuple.to_list"
+        }
+      ],
+      "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v2",
+      "source_class": "WebShopBuyNowGateOutcome",
+      "source_file": "src/agentic_payment_experiment/webshop_runtime_gate.py",
+      "source_module": "agentic_payment_experiment.webshop_runtime_gate"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "attack_id",
+        "title",
+        "source",
+        "source_type",
+        "source_ref",
+        "baseline_decision",
+        "defended_decision",
+        "attack_attempted",
+        "applied_paths",
+        "blocked_override_paths",
+        "trusted_state_changed",
+        "reason_codes",
+        "policy_version",
+        "decision_drift",
+        "evaluation",
+        "lineage_status",
+        "lineage_reason_codes",
+        "lineage_facts"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "attack_id",
+          "root_exists": true,
+          "source_path": "attack_id",
+          "source_root": "attack_id",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "source_type",
+          "root_exists": true,
+          "source_path": "source_type",
+          "source_root": "source_type",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "baseline_decision",
+          "root_exists": true,
+          "source_path": "baseline_decision",
+          "source_root": "baseline_decision",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "defended_decision",
+          "root_exists": true,
+          "source_path": "defended_decision",
+          "source_root": "defended_decision",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "attack_attempted",
+          "root_exists": true,
+          "source_path": "attack_attempted",
+          "source_root": "attack_attempted",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "applied_paths",
+          "root_exists": true,
+          "source_path": "applied_paths",
+          "source_root": "applied_paths",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "blocked_override_paths",
+          "root_exists": true,
+          "source_path": "blocked_override_paths",
+          "source_root": "blocked_override_paths",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "trusted_state_changed",
+          "root_exists": true,
+          "source_path": "trusted_state_changed",
+          "source_root": "trusted_state_changed",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "reason_codes",
+          "root_exists": true,
+          "source_path": "reason_codes",
+          "source_root": "reason_codes",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "policy_version",
+          "root_exists": true,
+          "source_path": "policy_version",
+          "source_root": "policy_version",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "decision_drift",
+          "root_exists": true,
+          "source_path": "decision_drift",
+          "source_root": "decision_drift",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "lineage_status",
+          "root_exists": true,
+          "source_path": "lineage_status",
+          "source_root": "lineage_status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "lineage_reason_codes",
+          "root_exists": true,
+          "source_path": "lineage_reason_codes",
+          "source_root": "lineage_reason_codes",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "lineage_fact_refs",
+          "root_exists": true,
+          "source_path": "lineage_facts[].fact_ref",
+          "source_root": "lineage_facts",
+          "transform": "tuple.map"
+        },
+        {
+          "projection_field": "lineage_effective_source_types",
+          "root_exists": true,
+          "source_path": "lineage_facts[].effective_source_types[]",
+          "source_root": "lineage_facts",
+          "transform": "tuple.flatten_enum_values"
+        }
+      ],
+      "projection_schema": "attack-overlay-result-trace/v2",
+      "source_class": "AttackOverlayResult",
+      "source_file": "src/agentic_payment_experiment/attack_overlay.py",
+      "source_module": "agentic_payment_experiment.attack_overlay"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "fulfillment_id",
+        "order_id",
+        "status",
+        "occurred_at",
+        "service_id",
+        "evidence_ref",
+        "failure_code"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "fulfillment_id",
+          "root_exists": true,
+          "source_path": "fulfillment_id",
+          "source_root": "fulfillment_id",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "order_id",
+          "root_exists": true,
+          "source_path": "order_id",
+          "source_root": "order_id",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "status",
+          "root_exists": true,
+          "source_path": "status",
+          "source_root": "status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "failure_code",
+          "root_exists": true,
+          "source_path": "failure_code",
+          "source_root": "failure_code",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "reason_codes",
+          "root_exists": true,
+          "source_path": "failure_code",
+          "source_root": "failure_code",
+          "transform": "optional.singleton_tuple"
+        }
+      ],
+      "projection_schema": "fulfillment-record-trace/v2",
+      "source_class": "FulfillmentRecord",
+      "source_file": "src/agentic_payment_experiment/models.py",
+      "source_module": "agentic_payment_experiment.models"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "initial_status",
+        "observed_status",
+        "effective_status",
+        "recovery_status",
+        "next_action",
+        "retry_allowed",
+        "issues",
+        "evidence",
+        "rule_version",
+        "limitations"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "initial_status",
+          "root_exists": true,
+          "source_path": "initial_status",
+          "source_root": "initial_status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "observed_status",
+          "root_exists": true,
+          "source_path": "observed_status",
+          "source_root": "observed_status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "effective_status",
+          "root_exists": true,
+          "source_path": "effective_status",
+          "source_root": "effective_status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "recovery_status",
+          "root_exists": true,
+          "source_path": "recovery_status",
+          "source_root": "recovery_status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "next_action",
+          "root_exists": true,
+          "source_path": "next_action",
+          "source_root": "next_action",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "retry_allowed",
+          "root_exists": true,
+          "source_path": "retry_allowed",
+          "source_root": "retry_allowed",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "issue_codes",
+          "root_exists": true,
+          "source_path": "issues[].code",
+          "source_root": "issues",
+          "transform": "tuple.map"
+        },
+        {
+          "projection_field": "evidence_paths",
+          "root_exists": true,
+          "source_path": "evidence[].field_path",
+          "source_root": "evidence",
+          "transform": "tuple.map"
+        },
+        {
+          "projection_field": "rule_version",
+          "root_exists": true,
+          "source_path": "rule_version",
+          "source_root": "rule_version",
+          "transform": "DIRECT"
+        }
+      ],
+      "projection_schema": "payment-recovery-result-trace/v2",
+      "source_class": "PaymentRecoveryResult",
+      "source_file": "src/agentic_payment_experiment/models.py",
+      "source_module": "agentic_payment_experiment.models"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "resolution",
+        "initial_status",
+        "query_status",
+        "query_observed_at",
+        "async_status",
+        "async_observed_at",
+        "effective_status",
+        "effective_status_terminal",
+        "reason_codes",
+        "business_success_confirmed",
+        "fulfillment_confirmed",
+        "user_task_success_confirmed",
+        "reconciliation_confirmed",
+        "settlement_confirmed",
+        "legal_finality_confirmed"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "resolution",
+          "root_exists": true,
+          "source_path": "resolution",
+          "source_root": "resolution",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "initial_status",
+          "root_exists": true,
+          "source_path": "initial_status",
+          "source_root": "initial_status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "query_status",
+          "root_exists": true,
+          "source_path": "query_status",
+          "source_root": "query_status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "query_observed_at",
+          "root_exists": true,
+          "source_path": "query_observed_at",
+          "source_root": "query_observed_at",
+          "transform": "datetime.isoformat_or_null"
+        },
+        {
+          "projection_field": "async_status",
+          "root_exists": true,
+          "source_path": "async_status",
+          "source_root": "async_status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "async_observed_at",
+          "root_exists": true,
+          "source_path": "async_observed_at",
+          "source_root": "async_observed_at",
+          "transform": "datetime.isoformat_or_null"
+        },
+        {
+          "projection_field": "effective_status",
+          "root_exists": true,
+          "source_path": "effective_status",
+          "source_root": "effective_status",
+          "transform": "Enum.value"
+        },
+        {
+          "projection_field": "effective_status_terminal",
+          "root_exists": true,
+          "source_path": "effective_status_terminal",
+          "source_root": "effective_status_terminal",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "reason_codes",
+          "root_exists": true,
+          "source_path": "reason_codes",
+          "source_root": "reason_codes",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "business_success_confirmed",
+          "root_exists": true,
+          "source_path": "business_success_confirmed",
+          "source_root": "business_success_confirmed",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "fulfillment_confirmed",
+          "root_exists": true,
+          "source_path": "fulfillment_confirmed",
+          "source_root": "fulfillment_confirmed",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "user_task_success_confirmed",
+          "root_exists": true,
+          "source_path": "user_task_success_confirmed",
+          "source_root": "user_task_success_confirmed",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "reconciliation_confirmed",
+          "root_exists": true,
+          "source_path": "reconciliation_confirmed",
+          "source_root": "reconciliation_confirmed",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "settlement_confirmed",
+          "root_exists": true,
+          "source_path": "settlement_confirmed",
+          "source_root": "settlement_confirmed",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "legal_finality_confirmed",
+          "root_exists": true,
+          "source_path": "legal_finality_confirmed",
+          "source_root": "legal_finality_confirmed",
+          "transform": "DIRECT"
+        }
+      ],
+      "projection_schema": "payment-status-conflict-fact-trace/v2",
+      "source_class": "PaymentStatusConflictFact",
+      "source_file": "src/agentic_payment_experiment/payment_status_conflict.py",
+      "source_module": "agentic_payment_experiment.payment_status_conflict"
+    },
+    {
+      "all_extraction_roots_exist": true,
+      "class_exists": true,
+      "class_fields": [
+        "ready",
+        "initial_payment",
+        "effective_payment",
+        "query_recovery",
+        "status_conflict",
+        "lifecycle",
+        "retry_allowed",
+        "duplicate_payment_blocked",
+        "reason_codes",
+        "limitations"
+      ],
+      "field_extractions": [
+        {
+          "projection_field": "ready",
+          "root_exists": true,
+          "source_path": "ready",
+          "source_root": "ready",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "initial_payment_status",
+          "root_exists": true,
+          "source_path": "initial_payment.status",
+          "source_root": "initial_payment",
+          "transform": "Enum.value_or_null"
+        },
+        {
+          "projection_field": "effective_payment_status",
+          "root_exists": true,
+          "source_path": "effective_payment.status",
+          "source_root": "effective_payment",
+          "transform": "Enum.value_or_null"
+        },
+        {
+          "projection_field": "query_recovery_status",
+          "root_exists": true,
+          "source_path": "query_recovery.recovery_status",
+          "source_root": "query_recovery",
+          "transform": "Enum.value_or_null"
+        },
+        {
+          "projection_field": "status_conflict_resolution",
+          "root_exists": true,
+          "source_path": "status_conflict.resolution",
+          "source_root": "status_conflict",
+          "transform": "Enum.value_or_null"
+        },
+        {
+          "projection_field": "lifecycle_payment_status",
+          "root_exists": true,
+          "source_path": "lifecycle.payment_status",
+          "source_root": "lifecycle",
+          "transform": "Enum.value_or_null"
+        },
+        {
+          "projection_field": "lifecycle_fulfillment_status",
+          "root_exists": true,
+          "source_path": "lifecycle.fulfillment_status",
+          "source_root": "lifecycle",
+          "transform": "Enum.value_or_null"
+        },
+        {
+          "projection_field": "lifecycle_task_status",
+          "root_exists": true,
+          "source_path": "lifecycle.task_status",
+          "source_root": "lifecycle",
+          "transform": "Enum.value_or_null"
+        },
+        {
+          "projection_field": "lifecycle_remediation_status",
+          "root_exists": true,
+          "source_path": "lifecycle.remediation.status",
+          "source_root": "lifecycle",
+          "transform": "Enum.value_or_null"
+        },
+        {
+          "projection_field": "retry_allowed",
+          "root_exists": true,
+          "source_path": "retry_allowed",
+          "source_root": "retry_allowed",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "duplicate_payment_blocked",
+          "root_exists": true,
+          "source_path": "duplicate_payment_blocked",
+          "source_root": "duplicate_payment_blocked",
+          "transform": "DIRECT"
+        },
+        {
+          "projection_field": "reason_codes",
+          "root_exists": true,
+          "source_path": "reason_codes",
+          "source_root": "reason_codes",
+          "transform": "tuple.to_list"
+        },
+        {
+          "projection_field": "limitations",
+          "root_exists": true,
+          "source_path": "limitations",
+          "source_root": "limitations",
+          "transform": "tuple.to_list"
+        }
+      ],
+      "projection_schema": "webshop-payment-fulfilment-outcome-result-trace/v2",
+      "source_class": "WebShopPaymentFulfilmentOutcome",
+      "source_file": "src/agentic_payment_experiment/webshop_payment_sidecar.py",
+      "source_module": "agentic_payment_experiment.webshop_payment_sidecar"
+    }
+  ],
+  "task_id": "P9-PRODUCT-AUTHORITATIVE-TRACE-REFERENCE-MODEL-GROUNDING-REPAIR-V1"
+}

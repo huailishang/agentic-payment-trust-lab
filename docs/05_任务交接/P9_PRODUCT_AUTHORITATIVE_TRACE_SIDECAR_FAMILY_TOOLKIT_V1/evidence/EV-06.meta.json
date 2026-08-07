@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-06",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/evidence/EV-06-workspace-snapshot.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/evidence/EV-06-workspace-snapshot.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-06T13:12:36.198706+00:00",
+  "finished_at_utc": "2026-08-06T13:12:43.394647+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-06.stdout.log",
+  "stderr_path": "EV-06.stderr.log",
+  "stdout_bytes": 7998,
+  "stderr_bytes": 0,
+  "stdout_sha256": "e3b94c6edcab37ca95c1df7fafdccc882139a039ae3881dc1429a5b165ff3a53",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

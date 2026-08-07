@@ -1,0 +1,49 @@
+{
+  "after_normalized_sha256": [
+    "6bab1053d389ac181a701a5701b0f523ed9bb864323fd1ad51fd53ceefa09b8c",
+    "6bab1053d389ac181a701a5701b0f523ed9bb864323fd1ad51fd53ceefa09b8c",
+    "6bab1053d389ac181a701a5701b0f523ed9bb864323fd1ad51fd53ceefa09b8c"
+  ],
+  "after_output_sha256": "b3fba30058acb1c421786cae0b5a93d3e7fdcf22aa6c4a5fa0f51dc821435a34",
+  "after_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/evidence/EV-03-after-baseline.json",
+  "before_output_sha256": "a38b2d91bc6e636201c9ab94c4bced1ad6653dadffb32811cb996d7ab0141086",
+  "before_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/evidence/BASELINE-before.json",
+  "gesr_after": {
+    "count": 3,
+    "denominator": 12,
+    "rate": "0.250000"
+  },
+  "gesr_before": {
+    "count": 2,
+    "denominator": 12,
+    "rate": "0.166667"
+  },
+  "non_trace_projection_sha256": "6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc",
+  "product_trace_after": {
+    "count": 4,
+    "denominator": 12,
+    "rate": "0.333333"
+  },
+  "product_trace_before": {
+    "count": 3,
+    "denominator": 12,
+    "rate": "0.250000"
+  },
+  "t12_after": {
+    "capability_gaps": [],
+    "event_count": 11,
+    "matched": true,
+    "trace_source": "webshop_payment_fulfilment_outcome",
+    "trace_status": "VALID"
+  },
+  "t12_before": {
+    "matched": false,
+    "trace_status": "NOT_AVAILABLE"
+  },
+  "valid_product_tasks": [
+    "T01",
+    "T09",
+    "T10",
+    "T12"
+  ]
+}

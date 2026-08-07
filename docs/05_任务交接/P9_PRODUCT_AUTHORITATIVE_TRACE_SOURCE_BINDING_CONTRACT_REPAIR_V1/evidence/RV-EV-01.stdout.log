@@ -1,0 +1,4501 @@
+{
+  "schema": "evaluator-independent-structural-review/v1",
+  "task_id": "P9-PRODUCT-AUTHORITATIVE-TRACE-SOURCE-BINDING-CONTRACT-REPAIR-V1",
+  "summary": {
+    "total": 691,
+    "passed": 691,
+    "failed": 0
+  },
+  "failed_checks": [],
+  "checks": [
+    {
+      "name": "exact-t01-t12",
+      "passed": true,
+      "detail": [
+        "T01",
+        "T02",
+        "T03",
+        "T04",
+        "T05",
+        "T06",
+        "T07",
+        "T08",
+        "T09",
+        "T10",
+        "T11",
+        "T12"
+      ]
+    },
+    {
+      "name": "all-not-available",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all-no-new-business-rule",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T01-roles-match-events",
+      "passed": true,
+      "detail": {
+        "declared": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "GOVERNED_ACTION",
+          "CURRENT_PAYMENT_CANDIDATE",
+          "ACTION_BINDING_FACT",
+          "RUNTIME_GATE_OBSERVATION",
+          "PAYMENT_EXECUTION_OUTCOME",
+          "FULFILMENT_OUTCOME",
+          "FINAL_OUTCOME"
+        ],
+        "actual": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "GOVERNED_ACTION",
+          "CURRENT_PAYMENT_CANDIDATE",
+          "ACTION_BINDING_FACT",
+          "RUNTIME_GATE_OBSERVATION",
+          "PAYMENT_EXECUTION_OUTCOME",
+          "FULFILMENT_OUTCOME",
+          "FINAL_OUTCOME"
+        ]
+      }
+    },
+    {
+      "name": "T01-sequence-contiguous",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T01-1-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-1-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-1-schema-known",
+      "passed": true,
+      "detail": "intent-mandate-trace/v1"
+    },
+    {
+      "name": "T01-1-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "IntentMandate",
+        "event": "IntentMandate"
+      }
+    },
+    {
+      "name": "T01-1-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T01-1-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T01-2-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-2-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-2-schema-known",
+      "passed": true,
+      "detail": "order-authorized-snapshot-trace/v1"
+    },
+    {
+      "name": "T01-2-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T01-2-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T01-2-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T01-3-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-3-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-3-schema-known",
+      "passed": true,
+      "detail": "order-current-snapshot-trace/v1"
+    },
+    {
+      "name": "T01-3-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T01-3-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T01-3-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T01-4-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-4-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-4-schema-known",
+      "passed": true,
+      "detail": "transaction-request-trace/v1"
+    },
+    {
+      "name": "T01-4-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "TransactionRequest",
+        "event": "TransactionRequest"
+      }
+    },
+    {
+      "name": "T01-4-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T01-4-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T01-5-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-5-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-5-schema-known",
+      "passed": true,
+      "detail": "governed-payment-action-trace/v1"
+    },
+    {
+      "name": "T01-5-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedPaymentAction",
+        "event": "GovernedPaymentAction"
+      }
+    },
+    {
+      "name": "T01-5-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T01-5-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T01-6-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-6-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-6-schema-known",
+      "passed": true,
+      "detail": "payment-execution-current-candidate-trace/v1"
+    },
+    {
+      "name": "T01-6-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentExecutionRecord",
+        "event": "PaymentExecutionRecord"
+      }
+    },
+    {
+      "name": "T01-6-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T01-6-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T01-7-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-7-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-7-schema-known",
+      "passed": true,
+      "detail": "governed-action-binding-fact-trace/v1"
+    },
+    {
+      "name": "T01-7-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedActionBindingFact",
+        "event": "GovernedActionBindingFact"
+      }
+    },
+    {
+      "name": "T01-7-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T01-7-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T01-8-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-8-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-8-schema-known",
+      "passed": true,
+      "detail": "runtime-gate-record-trace/v1"
+    },
+    {
+      "name": "T01-8-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "RuntimeGateRecord",
+        "event": "RuntimeGateRecord"
+      }
+    },
+    {
+      "name": "T01-8-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T01-8-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T01-9-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-9-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-9-schema-known",
+      "passed": true,
+      "detail": "payment-execution-outcome-trace/v1"
+    },
+    {
+      "name": "T01-9-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentExecutionRecord",
+        "event": "PaymentExecutionRecord"
+      }
+    },
+    {
+      "name": "T01-9-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T01-9-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T01-10-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-10-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-10-schema-known",
+      "passed": true,
+      "detail": "fulfilment-record-trace/v1"
+    },
+    {
+      "name": "T01-10-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "FulfillmentRecord",
+        "event": "FulfillmentRecord"
+      }
+    },
+    {
+      "name": "T01-10-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T01-10-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T01-11-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-11-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T01-11-schema-known",
+      "passed": true,
+      "detail": "webshop-payment-fulfilment-outcome-result-trace/v1"
+    },
+    {
+      "name": "T01-11-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "WebShopPaymentFulfilmentOutcome",
+        "event": "WebShopPaymentFulfilmentOutcome"
+      }
+    },
+    {
+      "name": "T01-11-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T01-11-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T02-roles-match-events",
+      "passed": true,
+      "detail": {
+        "declared": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "PREPAYMENT_VALIDATION",
+          "FINAL_OUTCOME"
+        ],
+        "actual": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "PREPAYMENT_VALIDATION",
+          "FINAL_OUTCOME"
+        ]
+      }
+    },
+    {
+      "name": "T02-sequence-contiguous",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T02-1-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T02-1-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T02-1-schema-known",
+      "passed": true,
+      "detail": "intent-mandate-trace/v1"
+    },
+    {
+      "name": "T02-1-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "IntentMandate",
+        "event": "IntentMandate"
+      }
+    },
+    {
+      "name": "T02-1-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T02-1-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T02-2-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T02-2-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T02-2-schema-known",
+      "passed": true,
+      "detail": "order-authorized-snapshot-trace/v1"
+    },
+    {
+      "name": "T02-2-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T02-2-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T02-2-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T02-3-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T02-3-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T02-3-schema-known",
+      "passed": true,
+      "detail": "order-current-snapshot-trace/v1"
+    },
+    {
+      "name": "T02-3-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T02-3-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T02-3-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T02-4-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T02-4-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T02-4-schema-known",
+      "passed": true,
+      "detail": "transaction-request-trace/v1"
+    },
+    {
+      "name": "T02-4-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "TransactionRequest",
+        "event": "TransactionRequest"
+      }
+    },
+    {
+      "name": "T02-4-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T02-4-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T02-5-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T02-5-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T02-5-schema-known",
+      "passed": true,
+      "detail": "validation-result-trace/v1"
+    },
+    {
+      "name": "T02-5-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "ValidationResult",
+        "event": "ValidationResult"
+      }
+    },
+    {
+      "name": "T02-5-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T02-5-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T02-6-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T02-6-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T02-6-schema-known",
+      "passed": true,
+      "detail": "webshop-buy-now-gate-outcome-result-trace/v1"
+    },
+    {
+      "name": "T02-6-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "WebShopBuyNowGateOutcome",
+        "event": "WebShopBuyNowGateOutcome"
+      }
+    },
+    {
+      "name": "T02-6-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T02-6-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T03-roles-match-events",
+      "passed": true,
+      "detail": {
+        "declared": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "PREPAYMENT_VALIDATION",
+          "FINAL_OUTCOME"
+        ],
+        "actual": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "PREPAYMENT_VALIDATION",
+          "FINAL_OUTCOME"
+        ]
+      }
+    },
+    {
+      "name": "T03-sequence-contiguous",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T03-1-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T03-1-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T03-1-schema-known",
+      "passed": true,
+      "detail": "intent-mandate-trace/v1"
+    },
+    {
+      "name": "T03-1-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "IntentMandate",
+        "event": "IntentMandate"
+      }
+    },
+    {
+      "name": "T03-1-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T03-1-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T03-2-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T03-2-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T03-2-schema-known",
+      "passed": true,
+      "detail": "order-authorized-snapshot-trace/v1"
+    },
+    {
+      "name": "T03-2-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T03-2-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T03-2-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T03-3-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T03-3-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T03-3-schema-known",
+      "passed": true,
+      "detail": "order-current-snapshot-trace/v1"
+    },
+    {
+      "name": "T03-3-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T03-3-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T03-3-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T03-4-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T03-4-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T03-4-schema-known",
+      "passed": true,
+      "detail": "transaction-request-trace/v1"
+    },
+    {
+      "name": "T03-4-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "TransactionRequest",
+        "event": "TransactionRequest"
+      }
+    },
+    {
+      "name": "T03-4-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T03-4-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T03-5-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T03-5-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T03-5-schema-known",
+      "passed": true,
+      "detail": "validation-result-trace/v1"
+    },
+    {
+      "name": "T03-5-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "ValidationResult",
+        "event": "ValidationResult"
+      }
+    },
+    {
+      "name": "T03-5-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T03-5-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T03-6-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T03-6-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T03-6-schema-known",
+      "passed": true,
+      "detail": "webshop-buy-now-gate-outcome-result-trace/v1"
+    },
+    {
+      "name": "T03-6-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "WebShopBuyNowGateOutcome",
+        "event": "WebShopBuyNowGateOutcome"
+      }
+    },
+    {
+      "name": "T03-6-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T03-6-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T04-roles-match-events",
+      "passed": true,
+      "detail": {
+        "declared": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "PREPAYMENT_VALIDATION",
+          "FINAL_OUTCOME"
+        ],
+        "actual": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "PREPAYMENT_VALIDATION",
+          "FINAL_OUTCOME"
+        ]
+      }
+    },
+    {
+      "name": "T04-sequence-contiguous",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T04-1-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T04-1-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T04-1-schema-known",
+      "passed": true,
+      "detail": "intent-mandate-trace/v1"
+    },
+    {
+      "name": "T04-1-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "IntentMandate",
+        "event": "IntentMandate"
+      }
+    },
+    {
+      "name": "T04-1-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T04-1-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T04-2-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T04-2-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T04-2-schema-known",
+      "passed": true,
+      "detail": "order-authorized-snapshot-trace/v1"
+    },
+    {
+      "name": "T04-2-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T04-2-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T04-2-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T04-3-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T04-3-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T04-3-schema-known",
+      "passed": true,
+      "detail": "order-current-snapshot-trace/v1"
+    },
+    {
+      "name": "T04-3-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T04-3-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T04-3-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T04-4-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T04-4-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T04-4-schema-known",
+      "passed": true,
+      "detail": "transaction-request-trace/v1"
+    },
+    {
+      "name": "T04-4-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "TransactionRequest",
+        "event": "TransactionRequest"
+      }
+    },
+    {
+      "name": "T04-4-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T04-4-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T04-5-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T04-5-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T04-5-schema-known",
+      "passed": true,
+      "detail": "validation-result-trace/v1"
+    },
+    {
+      "name": "T04-5-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "ValidationResult",
+        "event": "ValidationResult"
+      }
+    },
+    {
+      "name": "T04-5-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T04-5-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T04-6-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T04-6-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T04-6-schema-known",
+      "passed": true,
+      "detail": "webshop-buy-now-gate-outcome-result-trace/v1"
+    },
+    {
+      "name": "T04-6-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "WebShopBuyNowGateOutcome",
+        "event": "WebShopBuyNowGateOutcome"
+      }
+    },
+    {
+      "name": "T04-6-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T04-6-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T05-roles-match-events",
+      "passed": true,
+      "detail": {
+        "declared": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "PREPAYMENT_VALIDATION",
+          "GOVERNED_ACTION",
+          "ACTION_BINDING_FACT",
+          "FINAL_OUTCOME"
+        ],
+        "actual": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "PREPAYMENT_VALIDATION",
+          "GOVERNED_ACTION",
+          "ACTION_BINDING_FACT",
+          "FINAL_OUTCOME"
+        ]
+      }
+    },
+    {
+      "name": "T05-sequence-contiguous",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T05-1-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-1-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-1-schema-known",
+      "passed": true,
+      "detail": "intent-mandate-trace/v1"
+    },
+    {
+      "name": "T05-1-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "IntentMandate",
+        "event": "IntentMandate"
+      }
+    },
+    {
+      "name": "T05-1-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T05-1-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T05-2-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-2-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-2-schema-known",
+      "passed": true,
+      "detail": "order-authorized-snapshot-trace/v1"
+    },
+    {
+      "name": "T05-2-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T05-2-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T05-2-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T05-3-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-3-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-3-schema-known",
+      "passed": true,
+      "detail": "order-current-snapshot-trace/v1"
+    },
+    {
+      "name": "T05-3-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T05-3-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T05-3-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T05-4-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-4-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-4-schema-known",
+      "passed": true,
+      "detail": "transaction-request-trace/v1"
+    },
+    {
+      "name": "T05-4-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "TransactionRequest",
+        "event": "TransactionRequest"
+      }
+    },
+    {
+      "name": "T05-4-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T05-4-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T05-5-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-5-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-5-schema-known",
+      "passed": true,
+      "detail": "validation-result-trace/v1"
+    },
+    {
+      "name": "T05-5-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "ValidationResult",
+        "event": "ValidationResult"
+      }
+    },
+    {
+      "name": "T05-5-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T05-5-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T05-6-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-6-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-6-schema-known",
+      "passed": true,
+      "detail": "governed-payment-action-trace/v1"
+    },
+    {
+      "name": "T05-6-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedPaymentAction",
+        "event": "GovernedPaymentAction"
+      }
+    },
+    {
+      "name": "T05-6-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T05-6-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T05-7-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-7-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-7-schema-known",
+      "passed": true,
+      "detail": "governed-action-binding-fact-trace/v1"
+    },
+    {
+      "name": "T05-7-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedActionBindingFact",
+        "event": "GovernedActionBindingFact"
+      }
+    },
+    {
+      "name": "T05-7-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T05-7-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T05-8-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-8-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T05-8-schema-known",
+      "passed": true,
+      "detail": "webshop-buy-now-gate-outcome-result-trace/v1"
+    },
+    {
+      "name": "T05-8-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "WebShopBuyNowGateOutcome",
+        "event": "WebShopBuyNowGateOutcome"
+      }
+    },
+    {
+      "name": "T05-8-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T05-8-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T06-roles-match-events",
+      "passed": true,
+      "detail": {
+        "declared": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "PREPAYMENT_VALIDATION",
+          "GOVERNED_ACTION",
+          "ACTION_BINDING_FACT",
+          "FINAL_OUTCOME"
+        ],
+        "actual": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "PREPAYMENT_VALIDATION",
+          "GOVERNED_ACTION",
+          "ACTION_BINDING_FACT",
+          "FINAL_OUTCOME"
+        ]
+      }
+    },
+    {
+      "name": "T06-sequence-contiguous",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T06-1-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-1-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-1-schema-known",
+      "passed": true,
+      "detail": "intent-mandate-trace/v1"
+    },
+    {
+      "name": "T06-1-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "IntentMandate",
+        "event": "IntentMandate"
+      }
+    },
+    {
+      "name": "T06-1-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T06-1-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T06-2-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-2-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-2-schema-known",
+      "passed": true,
+      "detail": "order-authorized-snapshot-trace/v1"
+    },
+    {
+      "name": "T06-2-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T06-2-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T06-2-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T06-3-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-3-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-3-schema-known",
+      "passed": true,
+      "detail": "order-current-snapshot-trace/v1"
+    },
+    {
+      "name": "T06-3-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T06-3-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T06-3-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T06-4-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-4-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-4-schema-known",
+      "passed": true,
+      "detail": "transaction-request-trace/v1"
+    },
+    {
+      "name": "T06-4-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "TransactionRequest",
+        "event": "TransactionRequest"
+      }
+    },
+    {
+      "name": "T06-4-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T06-4-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T06-5-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-5-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-5-schema-known",
+      "passed": true,
+      "detail": "validation-result-trace/v1"
+    },
+    {
+      "name": "T06-5-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "ValidationResult",
+        "event": "ValidationResult"
+      }
+    },
+    {
+      "name": "T06-5-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T06-5-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T06-6-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-6-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-6-schema-known",
+      "passed": true,
+      "detail": "governed-payment-action-trace/v1"
+    },
+    {
+      "name": "T06-6-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedPaymentAction",
+        "event": "GovernedPaymentAction"
+      }
+    },
+    {
+      "name": "T06-6-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T06-6-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T06-7-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-7-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-7-schema-known",
+      "passed": true,
+      "detail": "governed-action-binding-fact-trace/v1"
+    },
+    {
+      "name": "T06-7-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedActionBindingFact",
+        "event": "GovernedActionBindingFact"
+      }
+    },
+    {
+      "name": "T06-7-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T06-7-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T06-8-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-8-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T06-8-schema-known",
+      "passed": true,
+      "detail": "webshop-buy-now-gate-outcome-result-trace/v1"
+    },
+    {
+      "name": "T06-8-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "WebShopBuyNowGateOutcome",
+        "event": "WebShopBuyNowGateOutcome"
+      }
+    },
+    {
+      "name": "T06-8-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T06-8-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T07-roles-match-events",
+      "passed": true,
+      "detail": {
+        "declared": [
+          "AUTHORITY",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "CONTEXT_POLICY_FACT",
+          "FACT_LINEAGE_RESULT",
+          "FINAL_OUTCOME"
+        ],
+        "actual": [
+          "AUTHORITY",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "CONTEXT_POLICY_FACT",
+          "FACT_LINEAGE_RESULT",
+          "FINAL_OUTCOME"
+        ]
+      }
+    },
+    {
+      "name": "T07-sequence-contiguous",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T07-1-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T07-1-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T07-1-schema-known",
+      "passed": true,
+      "detail": "intent-mandate-trace/v1"
+    },
+    {
+      "name": "T07-1-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "IntentMandate",
+        "event": "IntentMandate"
+      }
+    },
+    {
+      "name": "T07-1-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T07-1-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T07-2-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T07-2-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T07-2-schema-known",
+      "passed": true,
+      "detail": "order-current-snapshot-trace/v1"
+    },
+    {
+      "name": "T07-2-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T07-2-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T07-2-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T07-3-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T07-3-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T07-3-schema-known",
+      "passed": true,
+      "detail": "transaction-request-trace/v1"
+    },
+    {
+      "name": "T07-3-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "TransactionRequest",
+        "event": "TransactionRequest"
+      }
+    },
+    {
+      "name": "T07-3-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T07-3-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T07-4-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T07-4-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T07-4-schema-known",
+      "passed": true,
+      "detail": "context-policy-fact-trace/v1"
+    },
+    {
+      "name": "T07-4-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "ContextPolicyFact",
+        "event": "ContextPolicyFact"
+      }
+    },
+    {
+      "name": "T07-4-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T07-4-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T07-5-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T07-5-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T07-5-schema-known",
+      "passed": true,
+      "detail": "fact-lineage-result-trace/v1"
+    },
+    {
+      "name": "T07-5-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "FactLineageResult",
+        "event": "FactLineageResult"
+      }
+    },
+    {
+      "name": "T07-5-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T07-5-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T07-6-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T07-6-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T07-6-schema-known",
+      "passed": true,
+      "detail": "webshop-payment-fulfilment-outcome-result-trace/v1"
+    },
+    {
+      "name": "T07-6-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "WebShopPaymentFulfilmentOutcome",
+        "event": "WebShopPaymentFulfilmentOutcome"
+      }
+    },
+    {
+      "name": "T07-6-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T07-6-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T08-roles-match-events",
+      "passed": true,
+      "detail": {
+        "declared": [
+          "AUTHORITY",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "CONTEXT_POLICY_FACT",
+          "FACT_LINEAGE_RESULT",
+          "FINAL_OUTCOME"
+        ],
+        "actual": [
+          "AUTHORITY",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "CONTEXT_POLICY_FACT",
+          "FACT_LINEAGE_RESULT",
+          "FINAL_OUTCOME"
+        ]
+      }
+    },
+    {
+      "name": "T08-sequence-contiguous",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T08-1-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T08-1-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T08-1-schema-known",
+      "passed": true,
+      "detail": "intent-mandate-trace/v1"
+    },
+    {
+      "name": "T08-1-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "IntentMandate",
+        "event": "IntentMandate"
+      }
+    },
+    {
+      "name": "T08-1-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T08-1-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T08-2-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T08-2-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T08-2-schema-known",
+      "passed": true,
+      "detail": "order-current-snapshot-trace/v1"
+    },
+    {
+      "name": "T08-2-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T08-2-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T08-2-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T08-3-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T08-3-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T08-3-schema-known",
+      "passed": true,
+      "detail": "transaction-request-trace/v1"
+    },
+    {
+      "name": "T08-3-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "TransactionRequest",
+        "event": "TransactionRequest"
+      }
+    },
+    {
+      "name": "T08-3-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T08-3-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T08-4-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T08-4-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T08-4-schema-known",
+      "passed": true,
+      "detail": "context-policy-fact-trace/v1"
+    },
+    {
+      "name": "T08-4-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "ContextPolicyFact",
+        "event": "ContextPolicyFact"
+      }
+    },
+    {
+      "name": "T08-4-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T08-4-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T08-5-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T08-5-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T08-5-schema-known",
+      "passed": true,
+      "detail": "fact-lineage-result-trace/v1"
+    },
+    {
+      "name": "T08-5-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "FactLineageResult",
+        "event": "FactLineageResult"
+      }
+    },
+    {
+      "name": "T08-5-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T08-5-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T08-6-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T08-6-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T08-6-schema-known",
+      "passed": true,
+      "detail": "webshop-payment-fulfilment-outcome-result-trace/v1"
+    },
+    {
+      "name": "T08-6-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "WebShopPaymentFulfilmentOutcome",
+        "event": "WebShopPaymentFulfilmentOutcome"
+      }
+    },
+    {
+      "name": "T08-6-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T08-6-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T09-roles-match-events",
+      "passed": true,
+      "detail": {
+        "declared": [
+          "AUTHORITY",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "GOVERNED_ACTION",
+          "CURRENT_PAYMENT_CANDIDATE",
+          "ACTION_BINDING_FACT",
+          "RUNTIME_GATE_OBSERVATION",
+          "PAYMENT_EXECUTION_OUTCOME",
+          "RECOVERY_OUTCOME",
+          "FINAL_OUTCOME"
+        ],
+        "actual": [
+          "AUTHORITY",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "GOVERNED_ACTION",
+          "CURRENT_PAYMENT_CANDIDATE",
+          "ACTION_BINDING_FACT",
+          "RUNTIME_GATE_OBSERVATION",
+          "PAYMENT_EXECUTION_OUTCOME",
+          "RECOVERY_OUTCOME",
+          "FINAL_OUTCOME"
+        ]
+      }
+    },
+    {
+      "name": "T09-sequence-contiguous",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T09-1-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-1-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-1-schema-known",
+      "passed": true,
+      "detail": "intent-mandate-trace/v1"
+    },
+    {
+      "name": "T09-1-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "IntentMandate",
+        "event": "IntentMandate"
+      }
+    },
+    {
+      "name": "T09-1-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T09-1-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T09-2-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-2-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-2-schema-known",
+      "passed": true,
+      "detail": "order-current-snapshot-trace/v1"
+    },
+    {
+      "name": "T09-2-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T09-2-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T09-2-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T09-3-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-3-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-3-schema-known",
+      "passed": true,
+      "detail": "transaction-request-trace/v1"
+    },
+    {
+      "name": "T09-3-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "TransactionRequest",
+        "event": "TransactionRequest"
+      }
+    },
+    {
+      "name": "T09-3-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T09-3-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T09-4-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-4-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-4-schema-known",
+      "passed": true,
+      "detail": "governed-payment-action-trace/v1"
+    },
+    {
+      "name": "T09-4-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedPaymentAction",
+        "event": "GovernedPaymentAction"
+      }
+    },
+    {
+      "name": "T09-4-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T09-4-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T09-5-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-5-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-5-schema-known",
+      "passed": true,
+      "detail": "payment-execution-current-candidate-trace/v1"
+    },
+    {
+      "name": "T09-5-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentExecutionRecord",
+        "event": "PaymentExecutionRecord"
+      }
+    },
+    {
+      "name": "T09-5-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T09-5-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T09-6-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-6-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-6-schema-known",
+      "passed": true,
+      "detail": "governed-action-binding-fact-trace/v1"
+    },
+    {
+      "name": "T09-6-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedActionBindingFact",
+        "event": "GovernedActionBindingFact"
+      }
+    },
+    {
+      "name": "T09-6-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T09-6-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T09-7-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-7-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-7-schema-known",
+      "passed": true,
+      "detail": "runtime-gate-record-trace/v1"
+    },
+    {
+      "name": "T09-7-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "RuntimeGateRecord",
+        "event": "RuntimeGateRecord"
+      }
+    },
+    {
+      "name": "T09-7-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T09-7-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T09-8-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-8-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-8-schema-known",
+      "passed": true,
+      "detail": "payment-execution-outcome-trace/v1"
+    },
+    {
+      "name": "T09-8-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentExecutionRecord",
+        "event": "PaymentExecutionRecord"
+      }
+    },
+    {
+      "name": "T09-8-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T09-8-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T09-9-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-9-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-9-schema-known",
+      "passed": true,
+      "detail": "payment-recovery-result-trace/v1"
+    },
+    {
+      "name": "T09-9-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentRecoveryResult",
+        "event": "PaymentRecoveryResult"
+      }
+    },
+    {
+      "name": "T09-9-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T09-9-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T09-10-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-10-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T09-10-schema-known",
+      "passed": true,
+      "detail": "webshop-payment-fulfilment-outcome-result-trace/v1"
+    },
+    {
+      "name": "T09-10-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "WebShopPaymentFulfilmentOutcome",
+        "event": "WebShopPaymentFulfilmentOutcome"
+      }
+    },
+    {
+      "name": "T09-10-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T09-10-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-roles-match-events",
+      "passed": true,
+      "detail": {
+        "declared": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "GOVERNED_ACTION",
+          "CURRENT_PAYMENT_CANDIDATE",
+          "ACTION_BINDING_FACT",
+          "HISTORICAL_SUCCEEDED_PAYMENT",
+          "KNOWN_PAYMENT_PREFLIGHT_FACT",
+          "PREPAYMENT_VALIDATION",
+          "RUNTIME_GATE_OBSERVATION",
+          "FINAL_OUTCOME"
+        ],
+        "actual": [
+          "AUTHORITY",
+          "AUTHORIZED_ORDER_SNAPSHOT",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "GOVERNED_ACTION",
+          "CURRENT_PAYMENT_CANDIDATE",
+          "ACTION_BINDING_FACT",
+          "HISTORICAL_SUCCEEDED_PAYMENT",
+          "KNOWN_PAYMENT_PREFLIGHT_FACT",
+          "PREPAYMENT_VALIDATION",
+          "RUNTIME_GATE_OBSERVATION",
+          "FINAL_OUTCOME"
+        ]
+      }
+    },
+    {
+      "name": "T10-sequence-contiguous",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-1-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-1-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-1-schema-known",
+      "passed": true,
+      "detail": "intent-mandate-trace/v1"
+    },
+    {
+      "name": "T10-1-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "IntentMandate",
+        "event": "IntentMandate"
+      }
+    },
+    {
+      "name": "T10-1-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T10-1-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-2-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-2-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-2-schema-known",
+      "passed": true,
+      "detail": "order-authorized-snapshot-trace/v1"
+    },
+    {
+      "name": "T10-2-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T10-2-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T10-2-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-3-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-3-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-3-schema-known",
+      "passed": true,
+      "detail": "order-current-snapshot-trace/v1"
+    },
+    {
+      "name": "T10-3-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T10-3-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T10-3-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-4-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-4-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-4-schema-known",
+      "passed": true,
+      "detail": "transaction-request-trace/v1"
+    },
+    {
+      "name": "T10-4-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "TransactionRequest",
+        "event": "TransactionRequest"
+      }
+    },
+    {
+      "name": "T10-4-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T10-4-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-5-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-5-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-5-schema-known",
+      "passed": true,
+      "detail": "governed-payment-action-trace/v1"
+    },
+    {
+      "name": "T10-5-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedPaymentAction",
+        "event": "GovernedPaymentAction"
+      }
+    },
+    {
+      "name": "T10-5-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T10-5-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-6-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-6-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-6-schema-known",
+      "passed": true,
+      "detail": "payment-execution-current-candidate-trace/v1"
+    },
+    {
+      "name": "T10-6-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentExecutionRecord",
+        "event": "PaymentExecutionRecord"
+      }
+    },
+    {
+      "name": "T10-6-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T10-6-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-7-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-7-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-7-schema-known",
+      "passed": true,
+      "detail": "governed-action-binding-fact-trace/v1"
+    },
+    {
+      "name": "T10-7-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedActionBindingFact",
+        "event": "GovernedActionBindingFact"
+      }
+    },
+    {
+      "name": "T10-7-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T10-7-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-8-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-8-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-8-schema-known",
+      "passed": true,
+      "detail": "payment-execution-historical-succeeded-trace/v1"
+    },
+    {
+      "name": "T10-8-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentExecutionRecord",
+        "event": "PaymentExecutionRecord"
+      }
+    },
+    {
+      "name": "T10-8-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T10-8-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-9-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-9-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-9-schema-known",
+      "passed": true,
+      "detail": "known-payment-attempt-preflight-fact-trace/v1"
+    },
+    {
+      "name": "T10-9-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "KnownPaymentAttemptPreflightFact",
+        "event": "KnownPaymentAttemptPreflightFact"
+      }
+    },
+    {
+      "name": "T10-9-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T10-9-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-10-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-10-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-10-schema-known",
+      "passed": true,
+      "detail": "validation-result-duplicate-trace/v1"
+    },
+    {
+      "name": "T10-10-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "ValidationResult",
+        "event": "ValidationResult"
+      }
+    },
+    {
+      "name": "T10-10-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T10-10-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-11-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-11-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-11-schema-known",
+      "passed": true,
+      "detail": "runtime-gate-record-trace/v1"
+    },
+    {
+      "name": "T10-11-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "RuntimeGateRecord",
+        "event": "RuntimeGateRecord"
+      }
+    },
+    {
+      "name": "T10-11-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T10-11-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T10-12-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-12-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T10-12-schema-known",
+      "passed": true,
+      "detail": "webshop-buy-now-gate-outcome-result-trace/v1"
+    },
+    {
+      "name": "T10-12-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "WebShopBuyNowGateOutcome",
+        "event": "WebShopBuyNowGateOutcome"
+      }
+    },
+    {
+      "name": "T10-12-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T10-12-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T11-roles-match-events",
+      "passed": true,
+      "detail": {
+        "declared": [
+          "AUTHORITY",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "GOVERNED_ACTION",
+          "CURRENT_PAYMENT_CANDIDATE",
+          "ACTION_BINDING_FACT",
+          "RUNTIME_GATE_OBSERVATION",
+          "PAYMENT_EXECUTION_OUTCOME",
+          "FULFILMENT_OUTCOME",
+          "RECOVERY_OUTCOME",
+          "FINAL_OUTCOME"
+        ],
+        "actual": [
+          "AUTHORITY",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "GOVERNED_ACTION",
+          "CURRENT_PAYMENT_CANDIDATE",
+          "ACTION_BINDING_FACT",
+          "RUNTIME_GATE_OBSERVATION",
+          "PAYMENT_EXECUTION_OUTCOME",
+          "FULFILMENT_OUTCOME",
+          "RECOVERY_OUTCOME",
+          "FINAL_OUTCOME"
+        ]
+      }
+    },
+    {
+      "name": "T11-sequence-contiguous",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T11-1-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-1-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-1-schema-known",
+      "passed": true,
+      "detail": "intent-mandate-trace/v1"
+    },
+    {
+      "name": "T11-1-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "IntentMandate",
+        "event": "IntentMandate"
+      }
+    },
+    {
+      "name": "T11-1-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T11-1-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T11-2-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-2-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-2-schema-known",
+      "passed": true,
+      "detail": "order-current-snapshot-trace/v1"
+    },
+    {
+      "name": "T11-2-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T11-2-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T11-2-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T11-3-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-3-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-3-schema-known",
+      "passed": true,
+      "detail": "transaction-request-trace/v1"
+    },
+    {
+      "name": "T11-3-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "TransactionRequest",
+        "event": "TransactionRequest"
+      }
+    },
+    {
+      "name": "T11-3-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T11-3-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T11-4-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-4-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-4-schema-known",
+      "passed": true,
+      "detail": "governed-payment-action-trace/v1"
+    },
+    {
+      "name": "T11-4-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedPaymentAction",
+        "event": "GovernedPaymentAction"
+      }
+    },
+    {
+      "name": "T11-4-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T11-4-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T11-5-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-5-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-5-schema-known",
+      "passed": true,
+      "detail": "payment-execution-current-candidate-trace/v1"
+    },
+    {
+      "name": "T11-5-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentExecutionRecord",
+        "event": "PaymentExecutionRecord"
+      }
+    },
+    {
+      "name": "T11-5-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T11-5-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T11-6-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-6-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-6-schema-known",
+      "passed": true,
+      "detail": "governed-action-binding-fact-trace/v1"
+    },
+    {
+      "name": "T11-6-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedActionBindingFact",
+        "event": "GovernedActionBindingFact"
+      }
+    },
+    {
+      "name": "T11-6-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T11-6-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T11-7-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-7-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-7-schema-known",
+      "passed": true,
+      "detail": "runtime-gate-record-trace/v1"
+    },
+    {
+      "name": "T11-7-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "RuntimeGateRecord",
+        "event": "RuntimeGateRecord"
+      }
+    },
+    {
+      "name": "T11-7-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T11-7-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T11-8-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-8-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-8-schema-known",
+      "passed": true,
+      "detail": "payment-execution-outcome-trace/v1"
+    },
+    {
+      "name": "T11-8-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentExecutionRecord",
+        "event": "PaymentExecutionRecord"
+      }
+    },
+    {
+      "name": "T11-8-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T11-8-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T11-9-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-9-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-9-schema-known",
+      "passed": true,
+      "detail": "fulfilment-record-trace/v1"
+    },
+    {
+      "name": "T11-9-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "FulfillmentRecord",
+        "event": "FulfillmentRecord"
+      }
+    },
+    {
+      "name": "T11-9-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T11-9-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T11-10-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-10-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-10-schema-known",
+      "passed": true,
+      "detail": "payment-recovery-result-trace/v1"
+    },
+    {
+      "name": "T11-10-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentRecoveryResult",
+        "event": "PaymentRecoveryResult"
+      }
+    },
+    {
+      "name": "T11-10-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T11-10-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T11-11-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-11-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T11-11-schema-known",
+      "passed": true,
+      "detail": "webshop-payment-fulfilment-outcome-result-trace/v1"
+    },
+    {
+      "name": "T11-11-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "WebShopPaymentFulfilmentOutcome",
+        "event": "WebShopPaymentFulfilmentOutcome"
+      }
+    },
+    {
+      "name": "T11-11-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T11-11-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T12-roles-match-events",
+      "passed": true,
+      "detail": {
+        "declared": [
+          "AUTHORITY",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "GOVERNED_ACTION",
+          "CURRENT_PAYMENT_CANDIDATE",
+          "ACTION_BINDING_FACT",
+          "RUNTIME_GATE_OBSERVATION",
+          "PAYMENT_EXECUTION_OUTCOME",
+          "STATUS_CONFLICT_OUTCOME",
+          "FINAL_OUTCOME"
+        ],
+        "actual": [
+          "AUTHORITY",
+          "CURRENT_ORDER_SNAPSHOT",
+          "CURRENT_REQUEST",
+          "GOVERNED_ACTION",
+          "CURRENT_PAYMENT_CANDIDATE",
+          "ACTION_BINDING_FACT",
+          "RUNTIME_GATE_OBSERVATION",
+          "PAYMENT_EXECUTION_OUTCOME",
+          "STATUS_CONFLICT_OUTCOME",
+          "FINAL_OUTCOME"
+        ]
+      }
+    },
+    {
+      "name": "T12-sequence-contiguous",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T12-1-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-1-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-1-schema-known",
+      "passed": true,
+      "detail": "intent-mandate-trace/v1"
+    },
+    {
+      "name": "T12-1-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "IntentMandate",
+        "event": "IntentMandate"
+      }
+    },
+    {
+      "name": "T12-1-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T12-1-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T12-2-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-2-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-2-schema-known",
+      "passed": true,
+      "detail": "order-current-snapshot-trace/v1"
+    },
+    {
+      "name": "T12-2-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "Order",
+        "event": "Order"
+      }
+    },
+    {
+      "name": "T12-2-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T12-2-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T12-3-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-3-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-3-schema-known",
+      "passed": true,
+      "detail": "transaction-request-trace/v1"
+    },
+    {
+      "name": "T12-3-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "TransactionRequest",
+        "event": "TransactionRequest"
+      }
+    },
+    {
+      "name": "T12-3-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T12-3-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T12-4-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-4-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-4-schema-known",
+      "passed": true,
+      "detail": "governed-payment-action-trace/v1"
+    },
+    {
+      "name": "T12-4-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedPaymentAction",
+        "event": "GovernedPaymentAction"
+      }
+    },
+    {
+      "name": "T12-4-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T12-4-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T12-5-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-5-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-5-schema-known",
+      "passed": true,
+      "detail": "payment-execution-current-candidate-trace/v1"
+    },
+    {
+      "name": "T12-5-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentExecutionRecord",
+        "event": "PaymentExecutionRecord"
+      }
+    },
+    {
+      "name": "T12-5-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T12-5-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T12-6-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-6-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-6-schema-known",
+      "passed": true,
+      "detail": "governed-action-binding-fact-trace/v1"
+    },
+    {
+      "name": "T12-6-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "GovernedActionBindingFact",
+        "event": "GovernedActionBindingFact"
+      }
+    },
+    {
+      "name": "T12-6-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T12-6-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T12-7-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-7-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-7-schema-known",
+      "passed": true,
+      "detail": "runtime-gate-record-trace/v1"
+    },
+    {
+      "name": "T12-7-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "RuntimeGateRecord",
+        "event": "RuntimeGateRecord"
+      }
+    },
+    {
+      "name": "T12-7-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T12-7-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T12-8-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-8-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-8-schema-known",
+      "passed": true,
+      "detail": "payment-execution-outcome-trace/v1"
+    },
+    {
+      "name": "T12-8-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentExecutionRecord",
+        "event": "PaymentExecutionRecord"
+      }
+    },
+    {
+      "name": "T12-8-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "NATIVE_REF",
+        "event": "NATIVE_REF"
+      }
+    },
+    {
+      "name": "T12-8-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T12-9-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-9-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-9-schema-known",
+      "passed": true,
+      "detail": "payment-status-conflict-outcome-trace/v1"
+    },
+    {
+      "name": "T12-9-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "PaymentStatusConflictOutcome",
+        "event": "PaymentStatusConflictOutcome"
+      }
+    },
+    {
+      "name": "T12-9-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T12-9-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "T12-10-event-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-10-path-keys",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "T12-10-schema-known",
+      "passed": true,
+      "detail": "webshop-payment-fulfilment-outcome-result-trace/v1"
+    },
+    {
+      "name": "T12-10-source-type-match",
+      "passed": true,
+      "detail": {
+        "registry": "WebShopPaymentFulfilmentOutcome",
+        "event": "WebShopPaymentFulfilmentOutcome"
+      }
+    },
+    {
+      "name": "T12-10-ref-mode-match",
+      "passed": true,
+      "detail": {
+        "registry": "HASH_REF",
+        "event": "HASH_REF"
+      }
+    },
+    {
+      "name": "T12-10-binding-required",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "context-policy-fact-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "status",
+        "reason_codes",
+        "effective_source_types",
+        "blocked_paths"
+      ]
+    },
+    {
+      "name": "context-policy-fact-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "HASH_REF"
+    },
+    {
+      "name": "fact-lineage-result-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "status",
+        "reason_codes",
+        "effective_source_types",
+        "blocked_paths"
+      ]
+    },
+    {
+      "name": "fact-lineage-result-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "HASH_REF"
+    },
+    {
+      "name": "fulfilment-record-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "status",
+        "order_id",
+        "reason_codes"
+      ]
+    },
+    {
+      "name": "fulfilment-record-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "HASH_REF"
+    },
+    {
+      "name": "governed-action-binding-fact-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "status",
+        "action_id",
+        "reason_codes",
+        "checked_action_type",
+        "checked_order_ref",
+        "checked_request_ref",
+        "checked_payment_ref"
+      ]
+    },
+    {
+      "name": "governed-action-binding-fact-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "HASH_REF"
+    },
+    {
+      "name": "governed-payment-action-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "action_id",
+        "action_type",
+        "agent_ref",
+        "executor_ref",
+        "authority_ref",
+        "authority_version",
+        "order_ref",
+        "order_version",
+        "request_ref",
+        "payment_ref",
+        "source_refs",
+        "side_effect_class",
+        "reversibility",
+        "occurred_at"
+      ]
+    },
+    {
+      "name": "governed-payment-action-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "NATIVE_REF"
+    },
+    {
+      "name": "intent-mandate-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "mandate_id",
+        "authority_version"
+      ]
+    },
+    {
+      "name": "intent-mandate-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "NATIVE_REF"
+    },
+    {
+      "name": "known-payment-attempt-preflight-fact-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "status",
+        "reason_codes",
+        "current_request_ref",
+        "related_attempt_refs",
+        "blocking_request_refs"
+      ]
+    },
+    {
+      "name": "known-payment-attempt-preflight-fact-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "HASH_REF"
+    },
+    {
+      "name": "order-authorized-snapshot-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "order_id",
+        "order_version",
+        "mandate_ref",
+        "authority_version_ref",
+        "total_amount",
+        "currency",
+        "merchant",
+        "payee"
+      ]
+    },
+    {
+      "name": "order-authorized-snapshot-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "NATIVE_REF"
+    },
+    {
+      "name": "order-current-snapshot-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "order_id",
+        "order_version",
+        "mandate_ref",
+        "authority_version_ref",
+        "total_amount",
+        "currency",
+        "merchant",
+        "payee"
+      ]
+    },
+    {
+      "name": "order-current-snapshot-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "NATIVE_REF"
+    },
+    {
+      "name": "payment-execution-current-candidate-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "payment_id",
+        "request_id",
+        "order_id",
+        "status",
+        "amount",
+        "currency",
+        "authority_ref",
+        "agent_ref",
+        "transaction_object_ref",
+        "payee"
+      ]
+    },
+    {
+      "name": "payment-execution-current-candidate-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "NATIVE_REF"
+    },
+    {
+      "name": "payment-execution-historical-succeeded-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "payment_id",
+        "request_id",
+        "order_id",
+        "status",
+        "amount",
+        "currency",
+        "authority_ref",
+        "agent_ref",
+        "transaction_object_ref",
+        "payee"
+      ]
+    },
+    {
+      "name": "payment-execution-historical-succeeded-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "NATIVE_REF"
+    },
+    {
+      "name": "payment-execution-outcome-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "payment_id",
+        "request_id",
+        "order_id",
+        "status",
+        "amount",
+        "currency",
+        "authority_ref",
+        "agent_ref",
+        "transaction_object_ref",
+        "payee"
+      ]
+    },
+    {
+      "name": "payment-execution-outcome-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "NATIVE_REF"
+    },
+    {
+      "name": "payment-recovery-result-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "initial_status",
+        "observed_status",
+        "effective_status",
+        "recovery_status",
+        "next_action",
+        "retry_allowed",
+        "issue_codes",
+        "evidence_paths",
+        "rule_version"
+      ]
+    },
+    {
+      "name": "payment-recovery-result-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "HASH_REF"
+    },
+    {
+      "name": "payment-status-conflict-outcome-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "status",
+        "effective_status",
+        "reason_codes",
+        "retry_allowed"
+      ]
+    },
+    {
+      "name": "payment-status-conflict-outcome-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "HASH_REF"
+    },
+    {
+      "name": "runtime-gate-record-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "preliminary_decision",
+        "final_decision",
+        "binding_status",
+        "binding_reason_codes",
+        "identity_status",
+        "identity_reason_codes",
+        "context_policy_status",
+        "context_policy_reason_codes",
+        "callback_executed",
+        "callback_count",
+        "callback_result_ref",
+        "reason_codes"
+      ]
+    },
+    {
+      "name": "runtime-gate-record-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "HASH_REF"
+    },
+    {
+      "name": "transaction-request-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "request_id",
+        "order_ref",
+        "authority_ref",
+        "authority_version_ref",
+        "amount",
+        "currency",
+        "merchant",
+        "payee",
+        "agent_id"
+      ]
+    },
+    {
+      "name": "transaction-request-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "NATIVE_REF"
+    },
+    {
+      "name": "validation-result-duplicate-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "decision",
+        "issue_codes",
+        "evidence_paths",
+        "rule_version"
+      ]
+    },
+    {
+      "name": "validation-result-duplicate-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "HASH_REF"
+    },
+    {
+      "name": "validation-result-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "decision",
+        "issue_codes",
+        "evidence_paths",
+        "rule_version",
+        "order_difference_paths"
+      ]
+    },
+    {
+      "name": "validation-result-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "HASH_REF"
+    },
+    {
+      "name": "webshop-buy-now-gate-outcome-result-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "decision",
+        "checkout_executed",
+        "callback_count",
+        "callback_result_ref",
+        "reason_codes",
+        "limitations"
+      ]
+    },
+    {
+      "name": "webshop-buy-now-gate-outcome-result-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "HASH_REF"
+    },
+    {
+      "name": "webshop-payment-fulfilment-outcome-result-trace/v1-fields-list",
+      "passed": true,
+      "detail": [
+        "decision",
+        "payment_status",
+        "fulfilment_status",
+        "task_status",
+        "remediation_status",
+        "retry_allowed",
+        "reason_codes"
+      ]
+    },
+    {
+      "name": "webshop-payment-fulfilment-outcome-result-trace/v1-known-ref-mode",
+      "passed": true,
+      "detail": "HASH_REF"
+    },
+    {
+      "name": "forbidden-field-card_number",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-pan",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-cvv",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-wallet_private_key",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-credential",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-token",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-cookie",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-raw_page_text",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-raw_prompt",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-user_input_fulltext",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-memory_address",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-file_path",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-current_time",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "forbidden-field-random_value",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "t10-exact-12-events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "t10-exact-12-roles",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "design-has-source-bindings",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "design-has-payment-candidate-event",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "adapter-no-hidden-resolver",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "next-slice-conditional",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current-ready-for-review",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "head-is-baseline",
+      "passed": true,
+      "detail": "979ffc505bec0b626858d0d186f655867b5491bf"
+    },
+    {
+      "name": "no-protected-worktree-changes",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "no-product-trace-producer",
+      "passed": true,
+      "detail": []
+    }
+  ]
+}

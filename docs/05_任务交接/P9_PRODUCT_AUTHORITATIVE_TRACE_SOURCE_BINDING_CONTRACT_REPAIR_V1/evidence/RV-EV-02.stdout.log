@@ -1,0 +1,333 @@
+{
+  "schema": "evaluator-semantic-executability-review/v1",
+  "task_id": "P9-PRODUCT-AUTHORITATIVE-TRACE-SOURCE-BINDING-CONTRACT-REPAIR-V1",
+  "finding_count": 8,
+  "findings": [
+    {
+      "id": "F-01",
+      "severity": "BLOCKING",
+      "title": "T10 两个订单角色在真实路径上共享同一 native ref，却要求两个不同 canonical binding",
+      "facts": {
+        "t10_calls_default_gate_context": true,
+        "gate_context_aliases_authorized_to_current": true,
+        "authorized_schema": "order-authorized-snapshot-trace/v1",
+        "current_schema": "order-current-snapshot-trace/v1",
+        "both_ref_mode": "NATIVE_REF",
+        "binding_lookup_rule": "each event source_object_ref resolves to exactly one canonical binding",
+        "contradiction": "same source_object_ref + different projection_schema/canonical bytes cannot resolve to exactly one binding"
+      },
+      "minimum_repair": [
+        "给 source binding 单独定义 binding_ref，事件按 binding_ref 解析；或统一两个订单角色使用同一 projection schema",
+        "明确同一 native object 在多个 entity_role 下复用一个 binding 的规则",
+        "用 T10 当前/授权订单相同对象的反例做机器校验"
+      ]
+    },
+    {
+      "id": "F-02",
+      "severity": "BLOCKING",
+      "title": "T10 关系 target_ref 与 CURRENT_ORDER_SNAPSHOT 的实体 ref 规则不一致",
+      "facts": {
+        "current_order_entity_ref": "projection.order_id+projection.order_version",
+        "mismatches": [
+          {
+            "event": "REQUEST_RECORDED",
+            "source_role": "CURRENT_REQUEST",
+            "target_ref_path": "projection.order_ref",
+            "target_entity_ref_derivation": "projection.order_id+projection.order_version"
+          },
+          {
+            "event": "PAYMENT_CANDIDATE_RECORDED",
+            "source_role": "CURRENT_PAYMENT_CANDIDATE",
+            "target_ref_path": "projection.order_id",
+            "target_entity_ref_derivation": "projection.order_id+projection.order_version"
+          },
+          {
+            "event": "PAYMENT_OUTCOME_RECORDED",
+            "source_role": "HISTORICAL_SUCCEEDED_PAYMENT",
+            "target_ref_path": "projection.order_id",
+            "target_entity_ref_derivation": "projection.order_id+projection.order_version"
+          }
+        ],
+        "validator_rule": "relation target must exist with matching role/ref"
+      },
+      "minimum_repair": [
+        "冻结唯一 entity_ref 语法并让每个 relation 使用目标实体的同一推导规则",
+        "若 entity_ref 含 order_version，则 Request/Payment relation 必须能提供 version；否则将 entity_ref 明确定义为 role + native id 并把 version 留在 binding",
+        "增加逐 relation 的解析后 ref 相等测试，而不是只检查 path 字符串存在"
+      ]
+    },
+    {
+      "id": "F-03",
+      "severity": "BLOCKING",
+      "title": "primitive/canonical 合同遗漏 Decimal 转换，金额 projection 无法按合同序列化",
+      "facts": {
+        "decimal_fields_in_registry": [
+          {
+            "schema": "order-authorized-snapshot-trace/v1",
+            "source_type": "Order",
+            "field": "total_amount"
+          },
+          {
+            "schema": "order-current-snapshot-trace/v1",
+            "source_type": "Order",
+            "field": "total_amount"
+          },
+          {
+            "schema": "payment-execution-current-candidate-trace/v1",
+            "source_type": "PaymentExecutionRecord",
+            "field": "amount"
+          },
+          {
+            "schema": "payment-execution-historical-succeeded-trace/v1",
+            "source_type": "PaymentExecutionRecord",
+            "field": "amount"
+          },
+          {
+            "schema": "payment-execution-outcome-trace/v1",
+            "source_type": "PaymentExecutionRecord",
+            "field": "amount"
+          },
+          {
+            "schema": "transaction-request-trace/v1",
+            "source_type": "TransactionRequest",
+            "field": "amount"
+          }
+        ],
+        "design_mentions_decimal_conversion": false,
+        "declared_conversions": [
+          "Enum=.value",
+          "datetime=ISO-8601",
+          "tuple=array"
+        ]
+      },
+      "minimum_repair": [
+        "冻结 Decimal 的唯一表示方式（建议规范化十进制字符串，禁止 float）",
+        "给 total_amount/amount 正负、尾零和不同精度增加固定 canonical/ref 样例"
+      ]
+    },
+    {
+      "id": "F-04",
+      "severity": "BLOCKING",
+      "title": "完全相同的重复 binding 到底归一还是拒绝，设计与后续测量合同相互矛盾",
+      "facts": {
+        "design_behavior": "validator may normalize identical duplicate",
+        "adapter_negative_case": "duplicate identical binding not normalized must not be VALID"
+      },
+      "minimum_repair": [
+        "二选一冻结 exact verdict：INVALID 或 canonical dedupe 后继续",
+        "设计、coverage、measurement adapter 和测试矩阵使用同一规则"
+      ]
+    },
+    {
+      "id": "F-05",
+      "severity": "BLOCKING",
+      "title": "T01—T12 coverage 仍引用不存在的产品 source object 类型",
+      "facts": {
+        "unknown_source_types": [
+          "PaymentStatusConflictOutcome"
+        ],
+        "affected_events": [
+          {
+            "task_id": "T12",
+            "event_type": "STATUS_CONFLICT_RECORDED",
+            "source_object_type": "PaymentStatusConflictOutcome"
+          }
+        ],
+        "actual_type_present": true
+      },
+      "minimum_repair": [
+        "将 PaymentStatusConflictOutcome 修正为实际 PaymentStatusConflictFact",
+        "projection fields 和 status path 按实际 resolution/effective_status/reason_codes 冻结",
+        "增加 registry source_object_type 必须存在于代码对象清单的机器校验"
+      ]
+    },
+    {
+      "id": "F-06",
+      "severity": "BLOCKING",
+      "title": "多个 RESULT_RECORDED 把不存在于 WebShopPaymentFulfilmentOutcome 的 decision 当作 source projection",
+      "facts": {
+        "actual_sidecar_fields": [
+          "duplicate_payment_blocked",
+          "effective_payment",
+          "initial_payment",
+          "lifecycle",
+          "limitations",
+          "query_recovery",
+          "ready",
+          "reason_codes",
+          "retry_allowed",
+          "status_conflict"
+        ],
+        "declared_projection_fields": [
+          "decision",
+          "payment_status",
+          "fulfilment_status",
+          "task_status",
+          "remediation_status",
+          "retry_allowed",
+          "reason_codes"
+        ],
+        "missing_direct_fields": [
+          "decision",
+          "fulfilment_status",
+          "payment_status",
+          "remediation_status",
+          "task_status"
+        ],
+        "affected_tasks": [
+          "T01",
+          "T07",
+          "T08",
+          "T09",
+          "T11",
+          "T12"
+        ],
+        "hidden_gate_context_forbidden": true
+      },
+      "minimum_repair": [
+        "RESULT 使用真实包含 decision 的 gate outcome，或定义并实现一个真实的组合 outcome 类型",
+        "若 projection 允许从嵌套字段派生，必须冻结 source extraction paths；不得从未声明的另一个对象补 decision",
+        "对每个 projection field 增加“可从指定 source object 读取/派生”的静态核验"
+      ]
+    },
+    {
+      "id": "F-07",
+      "severity": "BLOCKING",
+      "title": "entity_ref_path 实际写成未定义的“+”表达式，不是可执行的字段路径",
+      "facts": {
+        "expressions": [
+          "projection.mandate_id+projection.authority_version",
+          "projection.order_id+projection.order_version"
+        ],
+        "grammar_or_separator_defined": false,
+        "collision_example": {
+          "left": [
+            "ab",
+            "c"
+          ],
+          "right": [
+            "a",
+            "bc"
+          ],
+          "both_naive_concat": "abc"
+        }
+      },
+      "minimum_repair": [
+        "将 path 与 derivation 分开：path 只能是单字段路径，复合 ref 使用关闭的函数/模板",
+        "复合 ref 必须使用带类型和分隔符的无歧义编码，并给出解析器与碰撞反例"
+      ]
+    },
+    {
+      "id": "F-08",
+      "severity": "BLOCKING",
+      "title": "NATIVE_REF 只绑定 ID/version，source binding 中其余关键 projection 字段未被 ref 承诺",
+      "facts": {
+        "affected_schemas": [
+          {
+            "schema": "governed-payment-action-trace/v1",
+            "uncommitted_fields": [
+              "action_type",
+              "agent_ref",
+              "authority_ref",
+              "authority_version",
+              "executor_ref",
+              "occurred_at",
+              "order_ref",
+              "order_version",
+              "payment_ref",
+              "request_ref",
+              "reversibility",
+              "side_effect_class",
+              "source_refs"
+            ]
+          },
+          {
+            "schema": "order-authorized-snapshot-trace/v1",
+            "uncommitted_fields": [
+              "authority_version_ref",
+              "currency",
+              "mandate_ref",
+              "merchant",
+              "payee",
+              "total_amount"
+            ]
+          },
+          {
+            "schema": "order-current-snapshot-trace/v1",
+            "uncommitted_fields": [
+              "authority_version_ref",
+              "currency",
+              "mandate_ref",
+              "merchant",
+              "payee",
+              "total_amount"
+            ]
+          },
+          {
+            "schema": "payment-execution-current-candidate-trace/v1",
+            "uncommitted_fields": [
+              "agent_ref",
+              "amount",
+              "authority_ref",
+              "currency",
+              "order_id",
+              "payee",
+              "request_id",
+              "status",
+              "transaction_object_ref"
+            ]
+          },
+          {
+            "schema": "payment-execution-historical-succeeded-trace/v1",
+            "uncommitted_fields": [
+              "agent_ref",
+              "amount",
+              "authority_ref",
+              "currency",
+              "order_id",
+              "payee",
+              "request_id",
+              "status",
+              "transaction_object_ref"
+            ]
+          },
+          {
+            "schema": "payment-execution-outcome-trace/v1",
+            "uncommitted_fields": [
+              "agent_ref",
+              "amount",
+              "authority_ref",
+              "currency",
+              "order_id",
+              "payee",
+              "request_id",
+              "status",
+              "transaction_object_ref"
+            ]
+          },
+          {
+            "schema": "transaction-request-trace/v1",
+            "uncommitted_fields": [
+              "agent_id",
+              "amount",
+              "authority_ref",
+              "authority_version_ref",
+              "currency",
+              "merchant",
+              "order_ref",
+              "payee"
+            ]
+          }
+        ],
+        "hidden_source_resolver_forbidden": true,
+        "consequence": "runner can detect internal mismatch against the supplied projection, but cannot detect a single fabricated projection carrying the same native ref"
+      },
+      "minimum_repair": [
+        "为所有 binding 增加 projection_digest/binding_ref=hash(schema+projection)，事件引用 binding_ref",
+        "保留 native source_object_ref 作为对象身份，但不要把它当作 projection 完整性证明",
+        "明确当前验证只证明产品输出内部一致性，不证明外部密码学真实性；签名/可信执行可后置"
+      ]
+    }
+  ],
+  "verdict": "BLOCKING_FINDINGS_PRESENT"
+}

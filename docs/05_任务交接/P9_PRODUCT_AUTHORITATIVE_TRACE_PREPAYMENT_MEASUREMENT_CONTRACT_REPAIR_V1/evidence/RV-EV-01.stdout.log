@@ -1,0 +1,7 @@
+semantic_diff_count=3
+diff=tasks[1].expected_product_observed_trace_events[3] :: 'DECISION_RECORDED' -> 'PREPAYMENT_DECISION_RECORDED'
+diff=tasks[2].expected_product_observed_trace_events[3] :: 'DECISION_RECORDED' -> 'PREPAYMENT_DECISION_RECORDED'
+diff=tasks[3].expected_product_observed_trace_events[3] :: 'DECISION_RECORDED' -> 'PREPAYMENT_DECISION_RECORDED'
+scripts/validation/run_project_impact_baseline.py=70bf2142c303c01c6fb3270fb364c46bc220b821c5e554fa2e6af3355dc57dd3
+src/agentic_payment_experiment/authoritative_trace.py=07c7341b62440ea22a6fb22daa2e5e8b48163bc70ba534ac9cb065ffb001414a
+RESULT=PASS

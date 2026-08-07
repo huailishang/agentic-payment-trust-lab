@@ -1,0 +1,25 @@
+{
+  "label": "EV-02",
+  "command_argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test*.py",
+    "-v"
+  ],
+  "command_display": "python3 -m unittest discover -s tests -p 'test*.py' -v",
+  "working_directory": ".",
+  "exit_code": 0,
+  "started_at_utc": "2026-08-06T07:22:11Z",
+  "ended_at_utc": "2026-08-06T07:22:24Z",
+  "stdout_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-02-full-unittest-tests-dir.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-02-full-unittest-tests-dir.stderr.log",
+  "stdout_bytes": 0,
+  "stderr_bytes": 83642,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e37a92571a4327902cfb63c8aa4301f419f3a97e2bff46ed4c15a09d9292c239"
+}

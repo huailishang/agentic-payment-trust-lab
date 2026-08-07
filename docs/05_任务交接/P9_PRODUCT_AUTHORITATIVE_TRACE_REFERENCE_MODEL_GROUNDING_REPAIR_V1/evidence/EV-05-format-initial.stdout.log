@@ -1,0 +1,18 @@
+FIX_IN_PLACE: /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REFERENCE_MODEL_GROUNDING_REPAIR_V1/REPORT.md: missing measurement evidence
+FIX_IN_PLACE: /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REFERENCE_MODEL_GROUNDING_REPAIR_V1/REPORT.md: missing guardrail result
+FIX_IN_PLACE: /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_REFERENCE_MODEL_GROUNDING_REPAIR_V1/REPORT.md: missing scope caveat
+FIX_IN_PLACE: EV-01: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-01.meta.json
+FIX_IN_PLACE: EV-01: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-01.stdout.log
+FIX_IN_PLACE: EV-01: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-01.stderr.log
+FIX_IN_PLACE: EV-02: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-02.meta.json
+FIX_IN_PLACE: EV-02: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-02.stdout.log
+FIX_IN_PLACE: EV-02: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-02.stderr.log
+FIX_IN_PLACE: EV-03: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-03.meta.json
+FIX_IN_PLACE: EV-03: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-03.stdout.log
+FIX_IN_PLACE: EV-03: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-03.stderr.log
+FIX_IN_PLACE: EV-04: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-04.meta.json
+FIX_IN_PLACE: EV-04: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-04.stdout.log
+FIX_IN_PLACE: EV-04: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-04.stderr.log
+FIX_IN_PLACE: EV-05: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-05.meta.json
+FIX_IN_PLACE: EV-05: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-05.stdout.log
+FIX_IN_PLACE: EV-05: missing evidence file /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/evidence/EV-05.stderr.log

@@ -1,0 +1,23 @@
+{
+  "task_id": "P9-PRODUCT-AUTHORITATIVE-TRACE-PROJECTION-IDENTITY-FORMULA-REPAIR-V1",
+  "checks_total": 159,
+  "checks_passed": 158,
+  "checks_failed": 1,
+  "failed": [
+    {
+      "name": "HEAD unchanged",
+      "passed": false,
+      "detail": "b4eff597ebffe79c575522b91642f82b26ad5247"
+    }
+  ],
+  "summary": {
+    "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+    "hash_schema_count": 9,
+    "parent_fixed_vectors": 7,
+    "derived_conformance_vectors": 2,
+    "t10_events": 12,
+    "t10_bindings": 11,
+    "head": "b4eff597ebffe79c575522b91642f82b26ad5247"
+  },
+  "verdict": "BLOCKING_FINDINGS_PRESENT"
+}

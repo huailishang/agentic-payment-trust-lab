@@ -1,0 +1,78 @@
+{
+  "schema": "evaluator-source-resolution-audit/v1",
+  "task_id": "P9-PRODUCT-AUTHORITATIVE-TRACE-MINIMUM-CONTRACT-REPAIR-V1",
+  "facts": {
+    "design_requires_ref_recomputation": true,
+    "design_requires_value_match_to_existing_fact": true,
+    "adapter_requires_strict_ref_recomputation": true,
+    "adapter_runner_reads_only_trace": true,
+    "runner_only_passes_outcomes_to_trace_reader": true,
+    "event_contract_has_verification_carrier": false,
+    "event_contract_present_carriers": [],
+    "gate_outcome_fields": [
+      "decision",
+      "checkout_executed",
+      "callback_count",
+      "callback_result_ref",
+      "bound_request",
+      "prepayment_result",
+      "runtime_gate_record",
+      "reason_codes",
+      "governed_action_fact",
+      "known_payment_attempt_preflight_fact",
+      "limitations"
+    ],
+    "sidecar_outcome_fields": [
+      "ready",
+      "initial_payment",
+      "effective_payment",
+      "query_recovery",
+      "status_conflict",
+      "lifecycle",
+      "retry_allowed",
+      "duplicate_payment_blocked",
+      "reason_codes",
+      "limitations"
+    ],
+    "t10_required_sources": [
+      "GovernedActionBindingFact",
+      "GovernedPaymentAction",
+      "IntentMandate",
+      "KnownPaymentAttemptPreflightFact",
+      "Order(authorized/current)",
+      "PaymentExecutionRecord(current candidate)",
+      "PaymentExecutionRecord(historical succeeded)",
+      "RuntimeGateRecord",
+      "TransactionRequest",
+      "WebShopBuyNowGateOutcome"
+    ],
+    "sources_directly_available_from_gate_outcome": [
+      "GovernedActionBindingFact",
+      "KnownPaymentAttemptPreflightFact",
+      "RuntimeGateRecord",
+      "TransactionRequest",
+      "ValidationResult",
+      "WebShopBuyNowGateOutcome"
+    ],
+    "t10_sources_not_directly_available_from_gate_outcome": [
+      "GovernedPaymentAction",
+      "IntentMandate",
+      "Order(authorized/current)",
+      "PaymentExecutionRecord(current candidate)",
+      "PaymentExecutionRecord(historical succeeded)"
+    ]
+  },
+  "finding": {
+    "id": "F-06",
+    "severity": "BLOCKING",
+    "title": "source_object_ref 缺少可执行的独立重算载体",
+    "reason": "合同要求 runner/validator 独立重算 source_object_ref 并核对事件值，但 trace event/envelope 未冻结 source projection、source registry 或 resolver；当前 runner 只拿到 outcome.authoritative_trace，而 outcome 不暴露 T10 所需的全部源对象。",
+    "minimum_repair": [
+      "冻结自包含的最小 source binding/registry，或冻结等价的显式 resolver 输入合同",
+      "每个 source ref 必须绑定 projection_schema 与 primitive canonical projection",
+      "冻结 event/entity/source-object 的 profile 映射及可核对字段路径",
+      "保持最小披露，不允许把任意完整对象无选择塞入 trace",
+      "修订 measurement adapter，先验证 source resolution 可执行，再冻结 runner 任务"
+    ]
+  }
+}

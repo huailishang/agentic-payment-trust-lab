@@ -1,0 +1,18 @@
+{
+  "label": "EV-03",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-03-measurement-audit.py"
+  ],
+  "command_display": "python3 docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-03-measurement-audit.py",
+  "working_directory": ".",
+  "exit_code": 0,
+  "started_at_utc": "2026-08-06T07:23:48Z",
+  "ended_at_utc": "2026-08-06T07:23:49Z",
+  "stdout_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-03-measurement-audit.stdout.log",
+  "stderr_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-03-measurement-audit.stderr.log",
+  "stdout_bytes": 87567,
+  "stderr_bytes": 0,
+  "stdout_sha256": "f8719900839cdb249c5406b91cc1612dade53529d856e6da8599fba24ed170c3",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

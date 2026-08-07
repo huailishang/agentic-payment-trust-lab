@@ -1,0 +1,50 @@
+{
+  "schema_version": "sidecar-trace-toolkit-architecture-baseline/v1",
+  "captured_on": "2026-08-06",
+  "baseline_head": "b4eff597ebffe79c575522b91642f82b26ad5247",
+  "accepted_measurement": {
+    "source_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T09_UNKNOWN_PAYMENT_RECOVERY_SLICE_V1/evidence/RV-EV-03-after-baseline.json",
+    "sha256": "a38b2d91bc6e636201c9ab94c4bced1ad6653dadffb32811cb996d7ab0141086",
+    "product_trace": "3/12",
+    "gesr": "2/12",
+    "valid_product_tasks": ["T01", "T09", "T10"],
+    "non_trace_sha256": "6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc"
+  },
+  "builder_files": {
+    "src/agentic_payment_experiment/webshop_happy_path_authoritative_trace.py": {
+      "line_count": 597,
+      "sha256": "f78c2a6b66cd84580a693a21907c70e58a0f387c2ffcdba3030be7b71855f306"
+    },
+    "src/agentic_payment_experiment/webshop_unknown_payment_authoritative_trace.py": {
+      "line_count": 595,
+      "sha256": "790351ef8e618f506e597a1e568c2f59873e4dad2dfd4de978a350d3e7c9775f"
+    },
+    "src/agentic_payment_experiment/webshop_trace_assembler.py": {
+      "line_count": 325,
+      "sha256": "4e053bdefe812c54f0e6002d6c8d2d6caadac98883fc2db3f776724852991d5b"
+    },
+    "src/agentic_payment_experiment/webshop_payment_sidecar.py": {
+      "sha256": "b6976cbe4763d771de399600d86d030e5294326062aa5f401b8368786e67fb10"
+    }
+  },
+  "trace_structure": {
+    "event_count_each": 11,
+    "common_prefix_event_count": 9,
+    "common_final_event": ["RESULT_RECORDED", "FINAL_OUTCOME"],
+    "extension_event": {
+      "T01": ["FULFILMENT_OUTCOME_RECORDED", "FULFILMENT_OUTCOME"],
+      "T09": ["RECOVERY_OUTCOME_RECORDED", "RECOVERY_OUTCOME"],
+      "T12": ["STATUS_CONFLICT_RECORDED", "STATUS_CONFLICT_FACT"]
+    }
+  },
+  "accepted_trace_hashes": {
+    "T01": "7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906",
+    "T09": "a596f5f35697a878286b85b8e37792aeee34ab7c0800b27739bc91382032310e",
+    "T10": "2b97fd1f81001086d4793bf21fd0dbe3ed950643e6d9e5031e18510fb7c99fb3"
+  },
+  "current_product_selection": [
+    "build_t01_happy_path_trace",
+    "build_unknown_payment_recovery_trace"
+  ],
+  "design_finding": "T01/T09/T12 share events 1-9 and 11; adding a third full builder would duplicate the family structure."
+}

@@ -1,0 +1,171 @@
+[
+  {
+    "task_id": "T01",
+    "profile": "WEBSHOP_NORMAL_PURCHASE_V2",
+    "profile_event_count": 11,
+    "expected_events": [
+      "AUTHORITY_RECORDED",
+      "ORDER_RECORDED",
+      "PAYMENT_OUTCOME_RECORDED",
+      "REQUEST_RECORDED",
+      "RUNTIME_DECISION_RECORDED"
+    ],
+    "missing_expected_event_in_profile": [],
+    "non_trace_capability_gaps": [],
+    "ready_for_same_fixture_slice": true
+  },
+  {
+    "task_id": "T02",
+    "profile": "WEBSHOP_PREPAYMENT_T02_V2",
+    "profile_event_count": 6,
+    "expected_events": [
+      "AUTHORITY_RECORDED",
+      "DECISION_RECORDED",
+      "ORDER_RECORDED",
+      "REQUEST_RECORDED"
+    ],
+    "missing_expected_event_in_profile": [
+      "DECISION_RECORDED"
+    ],
+    "non_trace_capability_gaps": [],
+    "ready_for_same_fixture_slice": false
+  },
+  {
+    "task_id": "T03",
+    "profile": "WEBSHOP_PREPAYMENT_T03_V2",
+    "profile_event_count": 6,
+    "expected_events": [
+      "AUTHORITY_RECORDED",
+      "DECISION_RECORDED",
+      "ORDER_RECORDED",
+      "REQUEST_RECORDED"
+    ],
+    "missing_expected_event_in_profile": [
+      "DECISION_RECORDED"
+    ],
+    "non_trace_capability_gaps": [],
+    "ready_for_same_fixture_slice": false
+  },
+  {
+    "task_id": "T04",
+    "profile": "WEBSHOP_PREPAYMENT_T04_V2",
+    "profile_event_count": 6,
+    "expected_events": [
+      "AUTHORITY_RECORDED",
+      "DECISION_RECORDED",
+      "ORDER_RECORDED",
+      "REQUEST_RECORDED"
+    ],
+    "missing_expected_event_in_profile": [
+      "DECISION_RECORDED"
+    ],
+    "non_trace_capability_gaps": [],
+    "ready_for_same_fixture_slice": false
+  },
+  {
+    "task_id": "T05",
+    "profile": "WEBSHOP_ACTION_BINDING_T05_V2",
+    "profile_event_count": 9,
+    "expected_events": [
+      "AUTHORITY_RECORDED",
+      "DECISION_RECORDED",
+      "ORDER_RECORDED",
+      "REQUEST_RECORDED"
+    ],
+    "missing_expected_event_in_profile": [
+      "DECISION_RECORDED"
+    ],
+    "non_trace_capability_gaps": [],
+    "ready_for_same_fixture_slice": false
+  },
+  {
+    "task_id": "T06",
+    "profile": "WEBSHOP_ACTION_BINDING_T06_V2",
+    "profile_event_count": 9,
+    "expected_events": [
+      "AUTHORITY_RECORDED",
+      "DECISION_RECORDED",
+      "ORDER_RECORDED",
+      "REQUEST_RECORDED"
+    ],
+    "missing_expected_event_in_profile": [
+      "DECISION_RECORDED"
+    ],
+    "non_trace_capability_gaps": [],
+    "ready_for_same_fixture_slice": false
+  },
+  {
+    "task_id": "T07",
+    "profile": "ATTACK_OVERLAY_T07_V2",
+    "profile_event_count": 3,
+    "expected_events": [
+      "INPUT_SOURCE_RECORDED",
+      "POLICY_DECISION_RECORDED"
+    ],
+    "missing_expected_event_in_profile": [
+      "INPUT_SOURCE_RECORDED"
+    ],
+    "non_trace_capability_gaps": [],
+    "ready_for_same_fixture_slice": false
+  },
+  {
+    "task_id": "T08",
+    "profile": "ATTACK_OVERLAY_T08_V2",
+    "profile_event_count": 3,
+    "expected_events": [
+      "INPUT_SOURCE_RECORDED",
+      "POLICY_DECISION_RECORDED"
+    ],
+    "missing_expected_event_in_profile": [
+      "INPUT_SOURCE_RECORDED"
+    ],
+    "non_trace_capability_gaps": [],
+    "ready_for_same_fixture_slice": false
+  },
+  {
+    "task_id": "T09",
+    "profile": "WEBSHOP_UNKNOWN_PAYMENT_RECOVERY_V2",
+    "profile_event_count": 11,
+    "expected_events": [
+      "AUTHORITY_RECORDED",
+      "ORDER_RECORDED",
+      "PAYMENT_OUTCOME_RECORDED",
+      "REQUEST_RECORDED",
+      "RUNTIME_DECISION_RECORDED"
+    ],
+    "missing_expected_event_in_profile": [],
+    "non_trace_capability_gaps": [],
+    "ready_for_same_fixture_slice": true
+  },
+  {
+    "task_id": "T11",
+    "profile": "WEBSHOP_FULFILMENT_FAILURE_V2",
+    "profile_event_count": 12,
+    "expected_events": [
+      "AUTHORITY_RECORDED",
+      "ORDER_RECORDED",
+      "PAYMENT_OUTCOME_RECORDED",
+      "REQUEST_RECORDED",
+      "RUNTIME_DECISION_RECORDED"
+    ],
+    "missing_expected_event_in_profile": [],
+    "non_trace_capability_gaps": [],
+    "ready_for_same_fixture_slice": true
+  },
+  {
+    "task_id": "T12",
+    "profile": "WEBSHOP_PAYMENT_STATUS_CONFLICT_V2",
+    "profile_event_count": 11,
+    "expected_events": [
+      "AUTHORITY_RECORDED",
+      "ORDER_RECORDED",
+      "PAYMENT_OUTCOME_RECORDED",
+      "REQUEST_RECORDED",
+      "RUNTIME_DECISION_RECORDED"
+    ],
+    "missing_expected_event_in_profile": [],
+    "non_trace_capability_gaps": [],
+    "ready_for_same_fixture_slice": true
+  }
+]
+READY=T01,T09,T11,T12

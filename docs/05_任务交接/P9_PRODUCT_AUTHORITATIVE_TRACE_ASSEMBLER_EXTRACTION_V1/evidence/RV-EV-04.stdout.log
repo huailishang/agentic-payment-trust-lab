@@ -1,0 +1,90 @@
+{
+  "baseline_file_sha256": "8d4304dce72bb4f3d572512ee4d09e2e4bd2ee06f34ec4e8e6b0887acf059d9a",
+  "combined_trace_hash": "d913fc7d3a69abfb0c7774356a988a5e23cf3780a70523a03ced2672bec5ac4c",
+  "file_hashes": {
+    "docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md": "4ab495ffcf7d6e21cbfc352a174f6f561b71e1bf6def7fe88f92b01974610836",
+    "samples/evaluation/project_impact_baseline_v1.json": "4ed2e1f35325cb840de834f5e8c964ff187c291133c958a2ee22111735b615f5",
+    "samples/evaluation/project_impact_t10_preflight_target_v1.json": "f5dc05501c79958b197ea7a727e12660756145da870b897496a9ccac714cacee",
+    "scripts/validation/run_project_impact_baseline.py": "70bf2142c303c01c6fb3270fb364c46bc220b821c5e554fa2e6af3355dc57dd3",
+    "src/agentic_payment_experiment/authoritative_trace.py": "07c7341b62440ea22a6fb22daa2e5e8b48163bc70ba534ac9cb065ffb001414a",
+    "src/agentic_payment_experiment/webshop_authoritative_trace.py": "9653277777d06ce8d2c65862765ec57c17874a9d311d2c5c9c117993a0feeac8",
+    "src/agentic_payment_experiment/webshop_happy_path_authoritative_trace.py": "0914030118e47419e27cf964e851ef7307fb62ee6608e477592b7fdbd6d61ce1",
+    "src/agentic_payment_experiment/webshop_payment_sidecar.py": "833a34c005061a69b29265190b3c609ec92278afe0bb0d48a700546b548436f7",
+    "src/agentic_payment_experiment/webshop_runtime_gate.py": "5abf1a6f08060e111b6fbd9ba96809c2823ef07adee0e23b6d60a6c50c06bdef",
+    "src/agentic_payment_experiment/webshop_trace_assembler.py": "725a6f55d061976f7217ba28b74ff15fce2f83adcc383350113e4eed6c550ed7",
+    "tests/test_webshop_trace_assembler.py": "4b7c71b086a12eacabcb18ba6fa863150dd5b4f85cab92cd096087c8e9468e50"
+  },
+  "gesr": {
+    "count": 1,
+    "denominator": 12,
+    "rate": "0.083333"
+  },
+  "import_boundary": {
+    "assembler_forbidden_calls": [],
+    "assembler_forbidden_imports": [],
+    "assembler_public_functions": [
+      "assemble_product_trace",
+      "create_event",
+      "create_relation",
+      "create_source_binding",
+      "project_action_binding_fact",
+      "project_governed_action",
+      "project_mandate",
+      "project_order",
+      "project_payment",
+      "project_request",
+      "project_runtime_gate"
+    ],
+    "cross_builder_imports": [],
+    "t01_imports_assembler": true,
+    "t10_imports_assembler": true
+  },
+  "non_trace_projection_sha256": "6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc",
+  "product_trace": {
+    "count": 2,
+    "denominator": 12,
+    "rate": "0.166667"
+  },
+  "registry_hashes": {
+    "formula_registry": "2d8f06ba7c5ca9e35c4957412c0b92da5171c95e135e0bb14b5a61d1bf3309fd",
+    "profiles": "6b53b88d5413ae9dd6d536089a22efe3f32563b950f61604c79f136c03d720c2",
+    "projection_registry": "45aeaa0abb46fbf66573be1ee417bafb41c99802061bc5b3cb63549313c049b4",
+    "runtime_contract": "4062944a6b3dfa5ca8042bc4f6a0ed429a75f00b8875c71c844e7eb0eb304f0e"
+  },
+  "repeatability": {
+    "all_identical": true,
+    "normalization_excludes": [
+      "output_path",
+      "temporary_path",
+      "current_time",
+      "run_index"
+    ],
+    "normalized_sha256": [
+      "56a82f9ab99cd5d83ae0b1259c2cef9f6b6cdf2a1b7183c029ba7569ab332619",
+      "56a82f9ab99cd5d83ae0b1259c2cef9f6b6cdf2a1b7183c029ba7569ab332619",
+      "56a82f9ab99cd5d83ae0b1259c2cef9f6b6cdf2a1b7183c029ba7569ab332619"
+    ],
+    "repeat_count": 3
+  },
+  "result": "PASS",
+  "trace_hashes": {
+    "T01": "7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906",
+    "T10": "2b97fd1f81001086d4793bf21fd0dbe3ed950643e6d9e5031e18510fb7c99fb3"
+  },
+  "trace_snapshot_equal": true,
+  "trace_structure": {
+    "T01": {
+      "bindings": 10,
+      "events": 11
+    },
+    "T10": {
+      "bindings": 11,
+      "events": 12
+    }
+  },
+  "valid_product_tasks": [
+    "T01",
+    "T10"
+  ]
+}
+RESULT=PASS

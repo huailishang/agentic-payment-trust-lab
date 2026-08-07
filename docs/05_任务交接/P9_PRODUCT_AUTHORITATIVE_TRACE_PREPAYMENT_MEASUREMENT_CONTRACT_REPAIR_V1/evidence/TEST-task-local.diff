@@ -1,0 +1,137 @@
+--- "docs/05_\344\273\273\345\212\241\344\272\244\346\216\245/P9_PRODUCT_AUTHORITATIVE_TRACE_PREPAYMENT_MEASUREMENT_CONTRACT_REPAIR_V1/evidence/TEST-start.py"	2026-08-07 11:24:34.660368500 +0800
++++ tests/test_project_impact_baseline.py	2026-08-07 11:17:48.664082800 +0800
+@@ -177,22 +177,25 @@
+             repeatability["normalization_excludes"],
+         )
+ 
+-    def test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces(self) -> None:
++    def test_corrected_baseline_records_expected_product_traces(self) -> None:
+         self.assertEqual(
+             {
+                 "total_tasks": 12,
+-                "matched_tasks": 3,
+-                "gap_tasks": 9,
++                "matched_tasks": 6,
++                "gap_tasks": 6,
+                 "gap_task_ids": [
+                     task
+                     for task in ALL_TASK_IDS
+-                    if task not in {"T01", "T09", "T12"}
++                    if task not in {"T01", "T02", "T03", "T04", "T09", "T12"}
+                 ],
+             },
+             self.report["project_summary"],
+         )
+         expected_sources = {
+             "T01": "webshop_payment_fulfilment_outcome",
++            "T02": "webshop_gate_outcome",
++            "T03": "webshop_gate_outcome",
++            "T04": "webshop_gate_outcome",
+             "T09": "webshop_payment_fulfilment_outcome",
+             "T10": "webshop_gate_outcome",
+             "T12": "webshop_payment_fulfilment_outcome",
+@@ -201,7 +204,10 @@
+             with self.subTest(task=task_id):
+                 item = self.by_id[task_id]
+                 actual = item["actual"]
+-                self.assertEqual(task_id in {"T01", "T09", "T12"}, item["matched"])
++                self.assertEqual(
++                    task_id in {"T01", "T02", "T03", "T04", "T09", "T12"},
++                    item["matched"],
++                )
+                 if task_id in expected_sources:
+                     self.assertEqual("VALID", actual["product_observed_trace_status"])
+                     self.assertEqual(
+@@ -274,7 +280,7 @@
+                     )
+                 self.assertEqual(
+                     "VALID"
+-                    if task_id in {"T01", "T09", "T10", "T12"}
++                    if task_id in {"T01", "T02", "T03", "T04", "T09", "T10", "T12"}
+                     else "NOT_AVAILABLE",
+                     actual["product_observed_trace_status"],
+                 )
+@@ -285,7 +291,7 @@
+                     ]
+                 )
+                 self.assertEqual([], item["measurement_integrity_gaps"])
+-                if task_id in {"T01", "T09", "T10", "T12"}:
++                if task_id in {"T01", "T02", "T03", "T04", "T09", "T10", "T12"}:
+                     self.assertEqual(
+                         (
+                             "webshop_payment_fulfilment_outcome"
+@@ -294,14 +300,19 @@
+                         ),
+                         actual["product_observed_trace_source"],
+                     )
+-                    self.assertEqual(
+-                        "runner_constructed_from_fixed_facts",
+-                        actual["evaluator_synthesized_replay_provenance"],
+-                    )
+-                    self.assertNotEqual(
+-                        actual["product_observed_trace_source"],
+-                        actual["evaluator_synthesized_replay_provenance"],
+-                    )
++                    if task_id in SYNTHESIZED_REPLAY_TASKS:
++                        self.assertEqual(
++                            "runner_constructed_from_fixed_facts",
++                            actual["evaluator_synthesized_replay_provenance"],
++                        )
++                        self.assertNotEqual(
++                            actual["product_observed_trace_source"],
++                            actual["evaluator_synthesized_replay_provenance"],
++                        )
++                    else:
++                        self.assertIsNone(
++                            actual["evaluator_synthesized_replay_provenance"]
++                        )
+ 
+     def test_trace_provenance_closed_positive_matrix(self) -> None:
+         cases = (
+@@ -479,15 +490,15 @@
+     def test_main_metric_and_guardrails_match_hand_calculation(self) -> None:
+         metrics = self.report["metrics"]
+         self.assertEqual(
+-            {"count": 3, "denominator": 12, "rate": "0.250000"},
++            {"count": 6, "denominator": 12, "rate": "0.500000"},
+             metrics["governed_end_to_end_task_success_rate"],
+         )
+         self.assertEqual(
+-            {"count": 3, "denominator": 12, "rate": "0.250000"},
++            {"count": 6, "denominator": 12, "rate": "0.500000"},
+             metrics["evidence_stage_completeness_rate"],
+         )
+         self.assertEqual(
+-            {"count": 4, "denominator": 12, "rate": "0.333333"},
++            {"count": 7, "denominator": 12, "rate": "0.583333"},
+             metrics[
+                 "product_observed_authoritative_trace_completeness_rate"
+             ],
+@@ -631,8 +642,16 @@
+         )
+ 
+         self.assertEqual(
+-            [item for item in self.report["task_results"] if item["task_id"] != "T10"],
+-            [item for item in target["task_results"] if item["task_id"] != "T10"],
++            {
++                item["task_id"]: item["actual"]
++                for item in self.report["task_results"]
++                if item["task_id"] != "T10"
++            },
++            {
++                item["task_id"]: item["actual"]
++                for item in target["task_results"]
++                if item["task_id"] != "T10"
++            },
+         )
+         self.assertEqual(
+             {"count": 0, "denominator": 12, "rate": "0.000000"},
+@@ -737,7 +756,7 @@
+             from_stdout = json.loads(completed.stdout)
+             self.assertEqual(from_file, from_stdout)
+             self.assertEqual("MEASURED_WITH_GAPS", from_file["execution_status"])
+-            self.assertEqual(9, from_file["project_summary"]["gap_tasks"])
++            self.assertEqual(6, from_file["project_summary"]["gap_tasks"])
+             self.assertEqual(
+                 {"count": 0, "denominator": 12, "rate": "0.000000"},
+                 from_file["metrics"][

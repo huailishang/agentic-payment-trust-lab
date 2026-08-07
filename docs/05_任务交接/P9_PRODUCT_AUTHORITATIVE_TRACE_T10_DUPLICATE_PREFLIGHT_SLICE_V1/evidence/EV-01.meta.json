@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-01",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T10_DUPLICATE_PREFLIGHT_SLICE_V1/evidence/EV-01-run-measurement.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T10_DUPLICATE_PREFLIGHT_SLICE_V1/evidence/EV-01-run-measurement.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-06T02:14:04.511049+00:00",
+  "finished_at_utc": "2026-08-06T02:14:05.915377+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-01.stdout.log",
+  "stderr_path": "EV-01.stderr.log",
+  "stdout_bytes": 175645,
+  "stderr_bytes": 0,
+  "stdout_sha256": "0755d0d5b0197be787a110cb0f7d9effac4f922b686e2b65b00c8ac8f47321e4",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

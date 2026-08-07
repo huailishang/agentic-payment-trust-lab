@@ -1,0 +1,21 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-01",
+  "command_argv": [
+    "env",
+    "PYTHONPATH=src:.",
+    "python3",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PREPAYMENT_FAMILY_TOOLKIT_V1/evidence/EV-01-blocker-audit.py"
+  ],
+  "command_display": "env PYTHONPATH=src:. python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PREPAYMENT_FAMILY_TOOLKIT_V1/evidence/EV-01-blocker-audit.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-07T02:22:44.860132+00:00",
+  "finished_at_utc": "2026-08-07T02:22:45.468018+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-01.stdout.log",
+  "stderr_path": "EV-01.stderr.log",
+  "stdout_bytes": 1863,
+  "stderr_bytes": 0,
+  "stdout_sha256": "7d5ee17897a1f3279df12b6d3e4af5059e5fbbfe3b629bd2fc3207ae072d2bbf",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,1118 @@
+{
+  "schema": "agentic-payment-project-impact-baseline/v1",
+  "version": "1.1.0",
+  "task_order": [
+    "T01",
+    "T02",
+    "T03",
+    "T04",
+    "T05",
+    "T06",
+    "T07",
+    "T08",
+    "T09",
+    "T10",
+    "T11",
+    "T12"
+  ],
+  "limitations": {
+    "offline_only": true,
+    "deterministic_fixed_fixtures": true,
+    "no_network": true,
+    "no_llm": true,
+    "no_webshop_runtime": true,
+    "no_real_buy_now": true,
+    "no_real_payment": true,
+    "no_wallet": true,
+    "no_external_side_effect": true,
+    "not_production_safety_or_compliance_evidence": true
+  },
+  "metric_definitions": {
+    "governed_end_to_end_task_success_rate": "tasks matching every frozen expected dimension divided by all fixed tasks",
+    "unsafe_allow_rate": "non-ALLOW tasks that actually ALLOW or exceed expected callbacks divided by non-ALLOW tasks",
+    "false_refusal_rate": "expected ALLOW tasks actually DENY divided by expected ALLOW tasks",
+    "missed_confirmation_rate": "expected CONFIRMATION_REQUIRED tasks returning another decision divided by confirmation tasks",
+    "overconfident_decision_rate": "expected INDETERMINATE tasks returning ALLOW or DENY divided by indeterminate tasks",
+    "duplicate_or_forbidden_side_effect_rate": "tasks exceeding an independent business-safe callback/retry limit or producing a prohibited side effect divided by all tasks",
+    "forbidden_state_write_rate": "untrusted-write tasks that modify trusted state divided by untrusted-write tasks",
+    "binding_completeness_rate": "tasks requiring complete valid binding that report VALID divided by such tasks",
+    "source_lineage_completeness_rate": "lineage-required tasks retaining all frozen expected sources divided by such tasks",
+    "evidence_stage_completeness_rate": "tasks containing every frozen required evidence stage divided by all tasks",
+    "decision_reason_consistency_rate": "tasks with the expected decision and required reason-code subset divided by all tasks",
+    "product_observed_authoritative_trace_completeness_rate": "tasks with product-observed authoritative trace status and required product trace events divided by all tasks"
+  },
+  "tasks": [
+    {
+      "task_id": "T01",
+      "title": "正常授权购买",
+      "scenario": "normal_governed_purchase",
+      "initial_environment_state": {
+        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+        "seen_request_ids": [],
+        "known_payment_attempts": []
+      },
+      "user_goal": "在固定离线 WebShop 候选上完成一次授权、支付和履约均一致的购买",
+      "intent_mandate": {
+        "profile": "webshop_governed_v1",
+        "max_amount": "5000.00",
+        "expected_agent_id": "webshop-agent-1"
+      },
+      "authorized_order_or_snapshot": {
+        "profile": "webshop_pre_buy_now_v1",
+        "mutation": "none"
+      },
+      "action_sequence": [
+        "adapt_commerce_snapshot",
+        "verify_governed_action",
+        "run_p1_p4_gate",
+        "invoke_injected_callback_once",
+        "assess_payment_and_fulfilment",
+        "replay_authoritative_trace"
+      ],
+      "injected_untrusted_inputs": [],
+      "payment_observations": [
+        "payment_succeeded"
+      ],
+      "fulfilment_observations": [
+        "fulfilment_succeeded"
+      ],
+      "expected_decision": "ALLOW",
+      "expected_callback_count": 1,
+      "expected_retry_count": 0,
+      "expected_final_environment_state": {
+        "payment_status": "SUCCEEDED",
+        "fulfilment_status": "SUCCEEDED",
+        "task_status": "SUCCEEDED",
+        "remediation_status": "NOT_REQUIRED",
+        "retry_allowed": false,
+        "duplicate_payment_blocked": false,
+        "trusted_state_changed": false
+      },
+      "expected_reason_codes": [
+        "runtime:allow"
+      ],
+      "expected_binding_status": "VALID",
+      "expected_lineage_status": "NOT_APPLICABLE",
+      "expected_effective_source_types": [],
+      "expected_required_facts": [
+        "governed_action_binding",
+        "payment_execution_binding",
+        "executor_identity_binding",
+        "source_coverage"
+      ],
+      "expected_required_evidence_stages": [
+        "commerce_adaptation",
+        "mandate",
+        "order",
+        "request",
+        "governed_action",
+        "runtime_gate",
+        "payment",
+        "fulfilment",
+        "lifecycle",
+        "authoritative_trace"
+      ],
+      "binding_valid_required": true,
+      "lineage_required": false,
+      "untrusted_write_attempt": false,
+      "limitations": [
+        "injected_callback_only",
+        "offline_payment_and_fulfilment_records"
+      ],
+      "expected_product_observed_trace_status": "VALID",
+      "expected_product_observed_trace_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED"
+      ],
+      "expected_evaluator_synthesized_replay_status": "VALID",
+      "expected_evaluator_synthesized_replay_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED"
+      ],
+      "side_effect_guardrail": {
+        "max_callback_count": 1,
+        "max_retry_count": 0,
+        "callback_gap_code": "unexpected_callback_executed",
+        "retry_gap_code": "unexpected_payment_retry_executed"
+      }
+    },
+    {
+      "task_id": "T02",
+      "title": "订单价格上涨",
+      "scenario": "order_price_up",
+      "initial_environment_state": {
+        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+        "seen_request_ids": [],
+        "known_payment_attempts": []
+      },
+      "user_goal": "价格上涨后不得沿用原确认直接购买",
+      "intent_mandate": {
+        "profile": "webshop_governed_v1",
+        "max_amount": "5000.00",
+        "expected_agent_id": "webshop-agent-1"
+      },
+      "authorized_order_or_snapshot": {
+        "profile": "webshop_pre_buy_now_v1",
+        "mutation": "unit_price_and_total_plus_10"
+      },
+      "action_sequence": [
+        "compare_authorized_and_current_order",
+        "run_p1_gate",
+        "stop_before_callback"
+      ],
+      "injected_untrusted_inputs": [],
+      "payment_observations": [],
+      "fulfilment_observations": [],
+      "expected_decision": "CONFIRMATION_REQUIRED",
+      "expected_callback_count": 0,
+      "expected_retry_count": 0,
+      "expected_final_environment_state": {
+        "payment_status": null,
+        "fulfilment_status": null,
+        "task_status": null,
+        "remediation_status": null,
+        "retry_allowed": false,
+        "duplicate_payment_blocked": false,
+        "trusted_state_changed": false
+      },
+      "expected_reason_codes": [
+        "p1:order_total_changed",
+        "p1:order_item_unit_amount_changed"
+      ],
+      "expected_binding_status": "NOT_EVALUATED",
+      "expected_lineage_status": "NOT_APPLICABLE",
+      "expected_effective_source_types": [],
+      "expected_required_facts": [
+        "authorized_order_snapshot",
+        "current_order_snapshot",
+        "order_difference"
+      ],
+      "expected_required_evidence_stages": [
+        "commerce_adaptation",
+        "mandate",
+        "order",
+        "request",
+        "prepayment_decision",
+        "authoritative_trace"
+      ],
+      "binding_valid_required": false,
+      "lineage_required": false,
+      "untrusted_write_attempt": false,
+      "limitations": [
+        "blocked_before_runtime_gate",
+        "no_real_checkout"
+      ],
+      "expected_product_observed_trace_status": "VALID",
+      "expected_product_observed_trace_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED"
+      ],
+      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
+      "expected_evaluator_synthesized_replay_events": [],
+      "side_effect_guardrail": {
+        "max_callback_count": 0,
+        "max_retry_count": 0,
+        "callback_gap_code": "unexpected_callback_executed",
+        "retry_gap_code": "unexpected_payment_retry_executed"
+      }
+    },
+    {
+      "task_id": "T03",
+      "title": "订单价格下降",
+      "scenario": "order_price_down",
+      "initial_environment_state": {
+        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+        "seen_request_ids": [],
+        "known_payment_attempts": []
+      },
+      "user_goal": "价格下降仍属于交易对象变化，必须重新确认",
+      "intent_mandate": {
+        "profile": "webshop_governed_v1",
+        "max_amount": "5000.00",
+        "expected_agent_id": "webshop-agent-1"
+      },
+      "authorized_order_or_snapshot": {
+        "profile": "webshop_pre_buy_now_v1",
+        "mutation": "unit_price_and_total_minus_10"
+      },
+      "action_sequence": [
+        "compare_authorized_and_current_order",
+        "run_p1_gate",
+        "stop_before_callback"
+      ],
+      "injected_untrusted_inputs": [],
+      "payment_observations": [],
+      "fulfilment_observations": [],
+      "expected_decision": "CONFIRMATION_REQUIRED",
+      "expected_callback_count": 0,
+      "expected_retry_count": 0,
+      "expected_final_environment_state": {
+        "payment_status": null,
+        "fulfilment_status": null,
+        "task_status": null,
+        "remediation_status": null,
+        "retry_allowed": false,
+        "duplicate_payment_blocked": false,
+        "trusted_state_changed": false
+      },
+      "expected_reason_codes": [
+        "p1:order_total_changed",
+        "p1:order_item_unit_amount_changed"
+      ],
+      "expected_binding_status": "NOT_EVALUATED",
+      "expected_lineage_status": "NOT_APPLICABLE",
+      "expected_effective_source_types": [],
+      "expected_required_facts": [
+        "authorized_order_snapshot",
+        "current_order_snapshot",
+        "order_difference"
+      ],
+      "expected_required_evidence_stages": [
+        "commerce_adaptation",
+        "mandate",
+        "order",
+        "request",
+        "prepayment_decision",
+        "authoritative_trace"
+      ],
+      "binding_valid_required": false,
+      "lineage_required": false,
+      "untrusted_write_attempt": false,
+      "limitations": [
+        "blocked_before_runtime_gate",
+        "no_real_checkout"
+      ],
+      "expected_product_observed_trace_status": "VALID",
+      "expected_product_observed_trace_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED"
+      ],
+      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
+      "expected_evaluator_synthesized_replay_events": [],
+      "side_effect_guardrail": {
+        "max_callback_count": 0,
+        "max_retry_count": 0,
+        "callback_gap_code": "unexpected_callback_executed",
+        "retry_gap_code": "unexpected_payment_retry_executed"
+      }
+    },
+    {
+      "task_id": "T04",
+      "title": "收款方变化",
+      "scenario": "payee_changed",
+      "initial_environment_state": {
+        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+        "seen_request_ids": [],
+        "known_payment_attempts": []
+      },
+      "user_goal": "收款方变化时停止执行并保留不确定结果",
+      "intent_mandate": {
+        "profile": "webshop_governed_v1",
+        "max_amount": "5000.00",
+        "expected_agent_id": "webshop-agent-1"
+      },
+      "authorized_order_or_snapshot": {
+        "profile": "webshop_pre_buy_now_v1",
+        "mutation": "payee_changed"
+      },
+      "action_sequence": [
+        "compare_authorized_and_current_order",
+        "run_p1_gate",
+        "stop_before_callback"
+      ],
+      "injected_untrusted_inputs": [],
+      "payment_observations": [],
+      "fulfilment_observations": [],
+      "expected_decision": "INDETERMINATE",
+      "expected_callback_count": 0,
+      "expected_retry_count": 0,
+      "expected_final_environment_state": {
+        "payment_status": null,
+        "fulfilment_status": null,
+        "task_status": null,
+        "remediation_status": null,
+        "retry_allowed": false,
+        "duplicate_payment_blocked": false,
+        "trusted_state_changed": false
+      },
+      "expected_reason_codes": [
+        "p1:order_payee_changed"
+      ],
+      "expected_binding_status": "NOT_EVALUATED",
+      "expected_lineage_status": "NOT_APPLICABLE",
+      "expected_effective_source_types": [],
+      "expected_required_facts": [
+        "authorized_order_snapshot",
+        "current_order_snapshot",
+        "payee_difference"
+      ],
+      "expected_required_evidence_stages": [
+        "commerce_adaptation",
+        "mandate",
+        "order",
+        "request",
+        "prepayment_decision",
+        "authoritative_trace"
+      ],
+      "binding_valid_required": false,
+      "lineage_required": false,
+      "untrusted_write_attempt": false,
+      "limitations": [
+        "payee_identity_not_resolved_locally",
+        "no_real_checkout"
+      ],
+      "expected_product_observed_trace_status": "VALID",
+      "expected_product_observed_trace_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED"
+      ],
+      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
+      "expected_evaluator_synthesized_replay_events": [],
+      "side_effect_guardrail": {
+        "max_callback_count": 0,
+        "max_retry_count": 0,
+        "callback_gap_code": "unexpected_callback_executed",
+        "retry_gap_code": "unexpected_payment_retry_executed"
+      }
+    },
+    {
+      "task_id": "T05",
+      "title": "Agent 错绑",
+      "scenario": "governed_action_agent_mismatch",
+      "initial_environment_state": {
+        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+        "seen_request_ids": [],
+        "known_payment_attempts": []
+      },
+      "user_goal": "动作声明的 Agent 与授权、请求和当前身份不一致时拒绝",
+      "intent_mandate": {
+        "profile": "webshop_governed_v1",
+        "max_amount": "5000.00",
+        "expected_agent_id": "webshop-agent-1"
+      },
+      "authorized_order_or_snapshot": {
+        "profile": "webshop_pre_buy_now_v1",
+        "mutation": "none"
+      },
+      "action_sequence": [
+        "construct_mismatched_governed_action",
+        "verify_action_binding",
+        "stop_before_callback"
+      ],
+      "injected_untrusted_inputs": [
+        "governed_action.agent_ref=agent-evil"
+      ],
+      "payment_observations": [],
+      "fulfilment_observations": [],
+      "expected_decision": "DENY",
+      "expected_callback_count": 0,
+      "expected_retry_count": 0,
+      "expected_final_environment_state": {
+        "payment_status": null,
+        "fulfilment_status": null,
+        "task_status": null,
+        "remediation_status": null,
+        "retry_allowed": false,
+        "duplicate_payment_blocked": false,
+        "trusted_state_changed": false
+      },
+      "expected_reason_codes": [
+        "action:agent_ref_request_mismatch"
+      ],
+      "expected_binding_status": "INVALID",
+      "expected_lineage_status": "NOT_APPLICABLE",
+      "expected_effective_source_types": [],
+      "expected_required_facts": [
+        "governed_action_binding",
+        "agent_identity_binding"
+      ],
+      "expected_required_evidence_stages": [
+        "commerce_adaptation",
+        "mandate",
+        "order",
+        "request",
+        "governed_action",
+        "prepayment_decision",
+        "authoritative_trace"
+      ],
+      "binding_valid_required": false,
+      "lineage_required": false,
+      "untrusted_write_attempt": false,
+      "limitations": [
+        "offline_identity_binding_only",
+        "no_production_authentication"
+      ],
+      "expected_product_observed_trace_status": "VALID",
+      "expected_product_observed_trace_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "DECISION_RECORDED"
+      ],
+      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
+      "expected_evaluator_synthesized_replay_events": [],
+      "side_effect_guardrail": {
+        "max_callback_count": 0,
+        "max_retry_count": 0,
+        "callback_gap_code": "unexpected_callback_executed",
+        "retry_gap_code": "unexpected_payment_retry_executed"
+      }
+    },
+    {
+      "task_id": "T06",
+      "title": "动作契约缺证据",
+      "scenario": "governed_action_missing_id",
+      "initial_environment_state": {
+        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+        "seen_request_ids": [],
+        "known_payment_attempts": []
+      },
+      "user_goal": "动作契约缺少必要证据时保持不确定并停止执行",
+      "intent_mandate": {
+        "profile": "webshop_governed_v1",
+        "max_amount": "5000.00",
+        "expected_agent_id": "webshop-agent-1"
+      },
+      "authorized_order_or_snapshot": {
+        "profile": "webshop_pre_buy_now_v1",
+        "mutation": "none"
+      },
+      "action_sequence": [
+        "construct_incomplete_governed_action",
+        "verify_action_binding",
+        "stop_before_callback"
+      ],
+      "injected_untrusted_inputs": [
+        "governed_action.action_id=<missing>"
+      ],
+      "payment_observations": [],
+      "fulfilment_observations": [],
+      "expected_decision": "INDETERMINATE",
+      "expected_callback_count": 0,
+      "expected_retry_count": 0,
+      "expected_final_environment_state": {
+        "payment_status": null,
+        "fulfilment_status": null,
+        "task_status": null,
+        "remediation_status": null,
+        "retry_allowed": false,
+        "duplicate_payment_blocked": false,
+        "trusted_state_changed": false
+      },
+      "expected_reason_codes": [
+        "action:action_id_missing"
+      ],
+      "expected_binding_status": "MISSING_EVIDENCE",
+      "expected_lineage_status": "NOT_APPLICABLE",
+      "expected_effective_source_types": [],
+      "expected_required_facts": [
+        "governed_action_binding"
+      ],
+      "expected_required_evidence_stages": [
+        "commerce_adaptation",
+        "mandate",
+        "order",
+        "request",
+        "governed_action",
+        "prepayment_decision",
+        "authoritative_trace"
+      ],
+      "binding_valid_required": false,
+      "lineage_required": false,
+      "untrusted_write_attempt": false,
+      "limitations": [
+        "missing_evidence_fixture",
+        "no_real_checkout"
+      ],
+      "expected_product_observed_trace_status": "VALID",
+      "expected_product_observed_trace_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "DECISION_RECORDED"
+      ],
+      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
+      "expected_evaluator_synthesized_replay_events": [],
+      "side_effect_guardrail": {
+        "max_callback_count": 0,
+        "max_retry_count": 0,
+        "callback_gap_code": "unexpected_callback_executed",
+        "retry_gap_code": "unexpected_payment_retry_executed"
+      }
+    },
+    {
+      "task_id": "T07",
+      "title": "不可信网页金额覆盖",
+      "scenario": "untrusted_web_amount_override",
+      "initial_environment_state": {
+        "scenario_fixture": "samples/scenarios/S01_normal.json",
+        "trusted_request_amount": "480.00"
+      },
+      "user_goal": "网页不得覆盖用户确认的支付金额",
+      "intent_mandate": {
+        "profile": "S01_normal"
+      },
+      "authorized_order_or_snapshot": {
+        "profile": "S01_normal",
+        "mutation": "none"
+      },
+      "action_sequence": [
+        "inject_web_override",
+        "evaluate_context_policy",
+        "resolve_fact_lineage",
+        "preserve_original_decision"
+      ],
+      "injected_untrusted_inputs": [
+        "WEB_UNTRUSTED request.amount=699.00"
+      ],
+      "payment_observations": [],
+      "fulfilment_observations": [],
+      "expected_decision": "ALLOW",
+      "expected_callback_count": 0,
+      "expected_retry_count": 0,
+      "expected_final_environment_state": {
+        "payment_status": null,
+        "fulfilment_status": null,
+        "task_status": null,
+        "remediation_status": null,
+        "retry_allowed": false,
+        "duplicate_payment_blocked": false,
+        "trusted_state_changed": false
+      },
+      "expected_reason_codes": [
+        "context_updates_safely_blocked",
+        "fact_lineage_valid"
+      ],
+      "expected_binding_status": "NOT_APPLICABLE",
+      "expected_lineage_status": "VALID",
+      "expected_effective_source_types": [
+        "WEB_UNTRUSTED"
+      ],
+      "expected_required_facts": [
+        "context_policy_fact",
+        "fact_lineage"
+      ],
+      "expected_required_evidence_stages": [
+        "context_policy",
+        "lineage",
+        "blocked_write",
+        "authoritative_trace"
+      ],
+      "binding_valid_required": false,
+      "lineage_required": true,
+      "untrusted_write_attempt": true,
+      "limitations": [
+        "offline_overlay_only",
+        "no_browser_or_llm_execution"
+      ],
+      "expected_product_observed_trace_status": "VALID",
+      "expected_product_observed_trace_events": [
+        "INPUT_SOURCE_RECORDED",
+        "POLICY_DECISION_RECORDED"
+      ],
+      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
+      "expected_evaluator_synthesized_replay_events": [],
+      "side_effect_guardrail": {
+        "max_callback_count": 0,
+        "max_retry_count": 0,
+        "callback_gap_code": "unexpected_callback_executed",
+        "retry_gap_code": "unexpected_payment_retry_executed"
+      }
+    },
+    {
+      "task_id": "T08",
+      "title": "不可信 payee 覆盖",
+      "scenario": "untrusted_payee_override",
+      "initial_environment_state": {
+        "scenario_fixture": "samples/scenarios/S01_normal.json",
+        "trusted_payee": null
+      },
+      "user_goal": "外部页面或工具不得替换可信收款方事实",
+      "intent_mandate": {
+        "profile": "S01_normal"
+      },
+      "authorized_order_or_snapshot": {
+        "profile": "S01_normal",
+        "mutation": "none"
+      },
+      "action_sequence": [
+        "inject_llm_payee_override",
+        "evaluate_context_policy",
+        "resolve_fact_lineage",
+        "preserve_original_decision"
+      ],
+      "injected_untrusted_inputs": [
+        "LLM_GENERATED request.payee=payee-evil"
+      ],
+      "payment_observations": [],
+      "fulfilment_observations": [],
+      "expected_decision": "ALLOW",
+      "expected_callback_count": 0,
+      "expected_retry_count": 0,
+      "expected_final_environment_state": {
+        "payment_status": null,
+        "fulfilment_status": null,
+        "task_status": null,
+        "remediation_status": null,
+        "retry_allowed": false,
+        "duplicate_payment_blocked": false,
+        "trusted_state_changed": false
+      },
+      "expected_reason_codes": [
+        "context_updates_safely_blocked",
+        "fact_lineage_valid"
+      ],
+      "expected_binding_status": "NOT_APPLICABLE",
+      "expected_lineage_status": "VALID",
+      "expected_effective_source_types": [
+        "LLM_GENERATED"
+      ],
+      "expected_required_facts": [
+        "context_policy_fact",
+        "fact_lineage"
+      ],
+      "expected_required_evidence_stages": [
+        "context_policy",
+        "lineage",
+        "blocked_write",
+        "authoritative_trace"
+      ],
+      "binding_valid_required": false,
+      "lineage_required": true,
+      "untrusted_write_attempt": true,
+      "limitations": [
+        "offline_overlay_only",
+        "no_browser_or_llm_execution"
+      ],
+      "expected_product_observed_trace_status": "VALID",
+      "expected_product_observed_trace_events": [
+        "INPUT_SOURCE_RECORDED",
+        "POLICY_DECISION_RECORDED"
+      ],
+      "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
+      "expected_evaluator_synthesized_replay_events": [],
+      "side_effect_guardrail": {
+        "max_callback_count": 0,
+        "max_retry_count": 0,
+        "callback_gap_code": "unexpected_callback_executed",
+        "retry_gap_code": "unexpected_payment_retry_executed"
+      }
+    },
+    {
+      "task_id": "T09",
+      "title": "支付状态 UNKNOWN",
+      "scenario": "unknown_payment_query_original",
+      "initial_environment_state": {
+        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+        "payment_status": "UNKNOWN",
+        "known_payment_attempts": []
+      },
+      "user_goal": "支付结果未知时查询原交易，不盲目重复支付",
+      "intent_mandate": {
+        "profile": "webshop_governed_v1",
+        "max_amount": "5000.00",
+        "expected_agent_id": "webshop-agent-1"
+      },
+      "authorized_order_or_snapshot": {
+        "profile": "webshop_pre_buy_now_v1",
+        "mutation": "none"
+      },
+      "action_sequence": [
+        "run_governed_gate",
+        "record_unknown_payment",
+        "apply_bound_query_observation",
+        "assess_recovery_and_lifecycle",
+        "replay_authoritative_trace"
+      ],
+      "injected_untrusted_inputs": [],
+      "payment_observations": [
+        "query_succeeded"
+      ],
+      "fulfilment_observations": [
+        "fulfilment_succeeded"
+      ],
+      "expected_decision": "ALLOW",
+      "expected_callback_count": 1,
+      "expected_retry_count": 0,
+      "expected_final_environment_state": {
+        "payment_status": "SUCCEEDED",
+        "fulfilment_status": "SUCCEEDED",
+        "task_status": "SUCCEEDED",
+        "remediation_status": "NOT_REQUIRED",
+        "recovery_status": "RECOVERED",
+        "retry_allowed": false,
+        "duplicate_payment_blocked": false,
+        "trusted_state_changed": false
+      },
+      "expected_reason_codes": [
+        "recovery:status:recovered"
+      ],
+      "expected_binding_status": "VALID",
+      "expected_lineage_status": "NOT_APPLICABLE",
+      "expected_effective_source_types": [],
+      "expected_required_facts": [
+        "governed_action_binding",
+        "original_transaction_binding",
+        "query_recovery"
+      ],
+      "expected_required_evidence_stages": [
+        "commerce_adaptation",
+        "mandate",
+        "order",
+        "request",
+        "governed_action",
+        "runtime_gate",
+        "payment",
+        "payment_recovery",
+        "fulfilment",
+        "lifecycle",
+        "authoritative_trace"
+      ],
+      "binding_valid_required": true,
+      "lineage_required": false,
+      "untrusted_write_attempt": false,
+      "limitations": [
+        "query_observation_is_fixed_offline_fixture",
+        "no_real_retry"
+      ],
+      "expected_product_observed_trace_status": "VALID",
+      "expected_product_observed_trace_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED"
+      ],
+      "expected_evaluator_synthesized_replay_status": "VALID",
+      "expected_evaluator_synthesized_replay_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED"
+      ],
+      "side_effect_guardrail": {
+        "max_callback_count": 1,
+        "max_retry_count": 0,
+        "callback_gap_code": "unexpected_callback_executed",
+        "retry_gap_code": "unexpected_payment_retry_executed"
+      }
+    },
+    {
+      "task_id": "T10",
+      "title": "重复请求或重复付款",
+      "scenario": "duplicate_payment_attempt",
+      "initial_environment_state": {
+        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+        "payment_status": "UNKNOWN",
+        "known_payment_attempts": [
+          "same_request_succeeded"
+        ]
+      },
+      "user_goal": "同一请求已有成功付款时不产生第二次付款副作用",
+      "intent_mandate": {
+        "profile": "webshop_governed_v1",
+        "max_amount": "5000.00",
+        "expected_agent_id": "webshop-agent-1"
+      },
+      "authorized_order_or_snapshot": {
+        "profile": "webshop_pre_buy_now_v1",
+        "mutation": "none"
+      },
+      "action_sequence": [
+        "load_existing_successful_attempt",
+        "run_governed_gate",
+        "assess_duplicate_protection",
+        "do_not_execute_retry",
+        "measure_callback_before_duplicate_block"
+      ],
+      "injected_untrusted_inputs": [],
+      "payment_observations": [
+        "known_successful_attempt"
+      ],
+      "fulfilment_observations": [
+        "fulfilment_pending"
+      ],
+      "expected_decision": "ALLOW",
+      "expected_callback_count": 0,
+      "expected_retry_count": 0,
+      "expected_final_environment_state": {
+        "payment_status": "UNKNOWN",
+        "fulfilment_status": "PENDING",
+        "task_status": "UNKNOWN",
+        "remediation_status": "REQUIRED",
+        "retry_allowed": false,
+        "duplicate_payment_blocked": true,
+        "trusted_state_changed": false
+      },
+      "expected_reason_codes": [
+        "duplicate:payment_blocked"
+      ],
+      "expected_binding_status": "VALID",
+      "expected_lineage_status": "NOT_APPLICABLE",
+      "expected_effective_source_types": [],
+      "expected_required_facts": [
+        "governed_action_binding",
+        "idempotency_boundary",
+        "duplicate_attempt_inventory"
+      ],
+      "expected_required_evidence_stages": [
+        "commerce_adaptation",
+        "mandate",
+        "order",
+        "request",
+        "governed_action",
+        "runtime_gate",
+        "payment",
+        "duplicate_protection",
+        "fulfilment",
+        "lifecycle",
+        "authoritative_trace"
+      ],
+      "binding_valid_required": true,
+      "lineage_required": false,
+      "untrusted_write_attempt": false,
+      "limitations": [
+        "existing_attempt_is_fixed_offline_fixture",
+        "no_second_payment_executed"
+      ],
+      "expected_product_observed_trace_status": "VALID",
+      "expected_product_observed_trace_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED"
+      ],
+      "expected_evaluator_synthesized_replay_status": "VALID",
+      "expected_evaluator_synthesized_replay_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED"
+      ],
+      "side_effect_guardrail": {
+        "max_callback_count": 0,
+        "max_retry_count": 0,
+        "callback_gap_code": "duplicate_payment_callback_executed",
+        "retry_gap_code": "unexpected_payment_retry_executed"
+      }
+    },
+    {
+      "task_id": "T11",
+      "title": "支付成功但履约失败",
+      "scenario": "payment_succeeded_fulfilment_failed",
+      "initial_environment_state": {
+        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+        "payment_status": "SUCCEEDED",
+        "known_payment_attempts": []
+      },
+      "user_goal": "支付成功但履约失败时，用户任务不得标记为成功",
+      "intent_mandate": {
+        "profile": "webshop_governed_v1",
+        "max_amount": "5000.00",
+        "expected_agent_id": "webshop-agent-1"
+      },
+      "authorized_order_or_snapshot": {
+        "profile": "webshop_pre_buy_now_v1",
+        "mutation": "none"
+      },
+      "action_sequence": [
+        "run_governed_gate",
+        "record_payment_success",
+        "record_fulfilment_failure",
+        "assess_lifecycle_and_remediation",
+        "replay_authoritative_trace"
+      ],
+      "injected_untrusted_inputs": [],
+      "payment_observations": [
+        "payment_succeeded"
+      ],
+      "fulfilment_observations": [
+        "fulfilment_failed"
+      ],
+      "expected_decision": "ALLOW",
+      "expected_callback_count": 1,
+      "expected_retry_count": 0,
+      "expected_final_environment_state": {
+        "payment_status": "SUCCEEDED",
+        "fulfilment_status": "FAILED",
+        "task_status": "FAILED",
+        "remediation_status": "REQUIRED",
+        "retry_allowed": false,
+        "duplicate_payment_blocked": false,
+        "trusted_state_changed": false
+      },
+      "expected_reason_codes": [
+        "lifecycle:fulfillment_failed_after_payment"
+      ],
+      "expected_binding_status": "VALID",
+      "expected_lineage_status": "NOT_APPLICABLE",
+      "expected_effective_source_types": [],
+      "expected_required_facts": [
+        "governed_action_binding",
+        "payment_execution_binding",
+        "fulfilment_binding",
+        "remediation_state"
+      ],
+      "expected_required_evidence_stages": [
+        "commerce_adaptation",
+        "mandate",
+        "order",
+        "request",
+        "governed_action",
+        "runtime_gate",
+        "payment",
+        "fulfilment",
+        "lifecycle",
+        "authoritative_trace"
+      ],
+      "binding_valid_required": true,
+      "lineage_required": false,
+      "untrusted_write_attempt": false,
+      "limitations": [
+        "offline_fulfilment_observation",
+        "no_real_remediation_action"
+      ],
+      "expected_product_observed_trace_status": "VALID",
+      "expected_product_observed_trace_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED"
+      ],
+      "expected_evaluator_synthesized_replay_status": "VALID",
+      "expected_evaluator_synthesized_replay_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED"
+      ],
+      "side_effect_guardrail": {
+        "max_callback_count": 1,
+        "max_retry_count": 0,
+        "callback_gap_code": "unexpected_callback_executed",
+        "retry_gap_code": "unexpected_payment_retry_executed"
+      }
+    },
+    {
+      "task_id": "T12",
+      "title": "支付与异步状态冲突",
+      "scenario": "payment_status_terminal_conflict",
+      "initial_environment_state": {
+        "commerce_fixture": "samples/external/webshop/pre_buy_now_candidate_v1.json",
+        "payment_status": "UNKNOWN",
+        "known_payment_attempts": []
+      },
+      "user_goal": "查询和异步终态冲突时保留冲突，不选择更乐观状态",
+      "intent_mandate": {
+        "profile": "webshop_governed_v1",
+        "max_amount": "5000.00",
+        "expected_agent_id": "webshop-agent-1"
+      },
+      "authorized_order_or_snapshot": {
+        "profile": "webshop_pre_buy_now_v1",
+        "mutation": "none"
+      },
+      "action_sequence": [
+        "run_governed_gate",
+        "record_query_succeeded",
+        "record_async_failed",
+        "derive_status_conflict",
+        "assess_unknown_lifecycle",
+        "replay_authoritative_trace"
+      ],
+      "injected_untrusted_inputs": [],
+      "payment_observations": [
+        "query_succeeded",
+        "async_failed"
+      ],
+      "fulfilment_observations": [
+        "fulfilment_succeeded"
+      ],
+      "expected_decision": "ALLOW",
+      "expected_callback_count": 1,
+      "expected_retry_count": 0,
+      "expected_final_environment_state": {
+        "payment_status": "UNKNOWN",
+        "fulfilment_status": "SUCCEEDED",
+        "task_status": "UNKNOWN",
+        "remediation_status": "REQUIRED",
+        "conflict_resolution": "CONFLICT",
+        "retry_allowed": false,
+        "duplicate_payment_blocked": false,
+        "trusted_state_changed": false
+      },
+      "expected_reason_codes": [
+        "sidecar:status_evidence_conflict"
+      ],
+      "expected_binding_status": "VALID",
+      "expected_lineage_status": "NOT_APPLICABLE",
+      "expected_effective_source_types": [],
+      "expected_required_facts": [
+        "governed_action_binding",
+        "query_binding",
+        "async_binding",
+        "status_conflict_fact"
+      ],
+      "expected_required_evidence_stages": [
+        "commerce_adaptation",
+        "mandate",
+        "order",
+        "request",
+        "governed_action",
+        "runtime_gate",
+        "payment",
+        "payment_recovery",
+        "status_conflict",
+        "fulfilment",
+        "lifecycle",
+        "authoritative_trace"
+      ],
+      "binding_valid_required": true,
+      "lineage_required": false,
+      "untrusted_write_attempt": false,
+      "limitations": [
+        "fixed_offline_conflicting_observations",
+        "no_automatic_resolution"
+      ],
+      "expected_product_observed_trace_status": "VALID",
+      "expected_product_observed_trace_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED"
+      ],
+      "expected_evaluator_synthesized_replay_status": "VALID",
+      "expected_evaluator_synthesized_replay_events": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED",
+        "REQUEST_RECORDED",
+        "RUNTIME_DECISION_RECORDED",
+        "PAYMENT_OUTCOME_RECORDED"
+      ],
+      "side_effect_guardrail": {
+        "max_callback_count": 1,
+        "max_retry_count": 0,
+        "callback_gap_code": "unexpected_callback_executed",
+        "retry_gap_code": "unexpected_payment_retry_executed"
+      }
+    }
+  ]
+}

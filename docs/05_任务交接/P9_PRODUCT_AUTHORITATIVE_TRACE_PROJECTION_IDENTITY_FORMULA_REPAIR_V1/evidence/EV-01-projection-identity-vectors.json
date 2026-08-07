@@ -1,0 +1,581 @@
+{
+  "baseline": {
+    "gesr": "0/12",
+    "new_business_rule_required": false,
+    "product_observed_authoritative_trace": "0/12 VALID"
+  },
+  "formula": {
+    "canonical_json": {
+      "allow_nan": false,
+      "encoding": "UTF-8",
+      "ensure_ascii": false,
+      "separators": [
+        ",",
+        ":"
+      ],
+      "sort_keys": true
+    },
+    "digest_encoding": "lowercase-hex-64",
+    "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+    "hash_algorithm": "SHA-256",
+    "mode": "PROJECTION_HASH_IDENTITY",
+    "payload_excludes": [
+      "binding_ref",
+      "source_object_ref"
+    ],
+    "payload_fields": [
+      "projection_schema",
+      "projection"
+    ],
+    "prefix_template": "{source_object_type}:projection-sha256:",
+    "source_object_type_in_payload": false,
+    "source_object_type_in_prefix": true
+  },
+  "generated_for_task": "P9-PRODUCT-AUTHORITATIVE-TRACE-PROJECTION-IDENTITY-FORMULA-REPAIR-V1",
+  "independent_checker_forbidden_input": "EV-01-build-grounded-reference-model.py",
+  "negative_matrix": [
+    {
+      "actual": "FormulaInputError",
+      "case_id": "missing_projection_schema",
+      "detail": "projection_schema is required",
+      "expected": "fail closed",
+      "verdict": "FAIL_CLOSED"
+    },
+    {
+      "actual": "ref_changed",
+      "case_id": "payload_projection_only",
+      "detail": {
+        "fixed_ref": "GovernedActionBindingFact:projection-sha256:74603b9f9e87329f3c5b54387741a5bd4a3ba1054a37c8db718edb57835aa34a",
+        "tampered_ref": "GovernedActionBindingFact:projection-sha256:e3d691652dcfb1d7e6a7ced62c38c7848e57c53c61dcfe5b7b4d41ae26059d20"
+      },
+      "expected": "ref mismatch / INVALID",
+      "verdict": "INVALID_REF_MISMATCH"
+    },
+    {
+      "actual": "ref_changed",
+      "case_id": "schema_string_changed",
+      "detail": "GovernedActionBindingFact:projection-sha256:688108cc61e6dcaeaf1c70b2b60c416dc959f5a234bbea8a03579f6ddbc35983",
+      "expected": "ref changed",
+      "verdict": "REF_CHANGED"
+    },
+    {
+      "actual": "ref_changed",
+      "case_id": "projection_field_changed",
+      "detail": {
+        "field": "action_id",
+        "tampered_ref": "GovernedActionBindingFact:projection-sha256:a5abfe76c5a3b8abb0054d94960dc5881da7727ccd89d1873f6b5f18deadee69"
+      },
+      "expected": "ref changed",
+      "verdict": "REF_CHANGED"
+    },
+    {
+      "actual": "prefix_changed",
+      "case_id": "source_type_prefix_changed",
+      "detail": "GovernedActionBindingFactTampered:projection-sha256:74603b9f9e87329f3c5b54387741a5bd4a3ba1054a37c8db718edb57835aa34a",
+      "expected": "object identity mismatch / INVALID",
+      "verdict": "INVALID_OBJECT_IDENTITY_MISMATCH"
+    },
+    {
+      "actual": "prefix_changed",
+      "case_id": "prefix_case_changed",
+      "detail": "GovernedActionBindingFact:Projection-SHA256:74603b9f9e87329f3c5b54387741a5bd4a3ba1054a37c8db718edb57835aa34a",
+      "expected": "prefix mismatch / INVALID",
+      "verdict": "INVALID_PREFIX_MISMATCH"
+    },
+    {
+      "actual": "uppercase_digest",
+      "case_id": "digest_uppercase",
+      "detail": "GovernedActionBindingFact:projection-sha256:74603B9F9E87329F3C5B54387741A5BD4A3BA1054A37C8DB718EDB57835AA34A",
+      "expected": "encoding mismatch / INVALID",
+      "verdict": "INVALID_DIGEST_ENCODING_MISMATCH"
+    },
+    {
+      "actual": "digest_length=63",
+      "case_id": "digest_not_64_hex",
+      "detail": "GovernedActionBindingFact:projection-sha256:74603b9f9e87329f3c5b54387741a5bd4a3ba1054a37c8db718edb57835aa34",
+      "expected": "format mismatch / INVALID",
+      "verdict": "INVALID_DIGEST_FORMAT_MISMATCH"
+    },
+    {
+      "actual": "FormulaInputError",
+      "case_id": "float_input",
+      "detail": "float is forbidden",
+      "expected": "canonicalization fail closed",
+      "verdict": "FAIL_CLOSED"
+    },
+    {
+      "actual": "FormulaInputError",
+      "case_id": "nan_input",
+      "detail": "float is forbidden",
+      "expected": "canonicalization fail closed",
+      "verdict": "FAIL_CLOSED"
+    },
+    {
+      "actual": "FormulaInputError",
+      "case_id": "infinity_input",
+      "detail": "float is forbidden",
+      "expected": "canonicalization fail closed",
+      "verdict": "FAIL_CLOSED"
+    },
+    {
+      "actual": "payload_fields_changed",
+      "case_id": "payload_includes_source_object_ref",
+      "detail": "GovernedActionBindingFact:projection-sha256:4817751d51de3b42c6ebff6c862c9c789d2761a41047fe019173ac320ff115f5",
+      "expected": "schema/payload mismatch / INVALID",
+      "verdict": "INVALID_PAYLOAD_SCHEMA_MISMATCH"
+    },
+    {
+      "actual": "not_read_or_imported",
+      "case_id": "parent_ev_builder_as_resolver",
+      "detail": "Independent checker input contract excludes EV-01-build-grounded-reference-model.py",
+      "expected": "forbidden",
+      "verdict": "FORBIDDEN_RESOLVER"
+    }
+  ],
+  "next_slice_checks": {
+    "conditional_not_frozen": true,
+    "hashes_tbd": true,
+    "measurement_adapter_prerequisite": true,
+    "t10_12_events_11_bindings": true
+  },
+  "parent_fixed_artifact_hashes_after": {
+    "EV-01-coverage-reference-grounding.json": "3d9904094556680137eb296e016a9abc573534d0f2c13060c0a288292f79d4fa",
+    "EV-01-reference-examples.json": "7975b44690d6712d9188bc1e39f0c70449e3082c7815f2f5d250540420fdcfb4",
+    "EV-01-t10-grounded-instance.json": "c6e87f42a7a7a6074bb83d76d457d5519609c68b9a48a7e836f18a680f2d056d",
+    "EV-01-t12-sidecar-examples.json": "bb9f88a4271391216ee2369d824c45a75d1c28f609503fdf93446515555a309f"
+  },
+  "parent_fixed_artifact_hashes_before": {
+    "EV-01-coverage-reference-grounding.json": "3d9904094556680137eb296e016a9abc573534d0f2c13060c0a288292f79d4fa",
+    "EV-01-reference-examples.json": "7975b44690d6712d9188bc1e39f0c70449e3082c7815f2f5d250540420fdcfb4",
+    "EV-01-t10-grounded-instance.json": "c6e87f42a7a7a6074bb83d76d457d5519609c68b9a48a7e836f18a680f2d056d",
+    "EV-01-t12-sidecar-examples.json": "bb9f88a4271391216ee2369d824c45a75d1c28f609503fdf93446515555a309f"
+  },
+  "parent_fixed_artifacts_unchanged": true,
+  "positive_summary": {
+    "all_binding_refs_recomputed": true,
+    "all_source_refs_recomputed": true,
+    "derived_conformance_schema_count": 2,
+    "parent_persisted_fixed_schema_count": 7,
+    "schema_count": 9
+  },
+  "positive_vectors": [
+    {
+      "binding_ref_unchanged": true,
+      "expected_binding_ref": "TraceSourceBinding:sha256:e781ad542cde19e1b26ce9f3a10d5f47d16843a783e87b03f81dba65e615a4ab",
+      "expected_source_object_ref": "GovernedActionBindingFact:projection-sha256:74603b9f9e87329f3c5b54387741a5bd4a3ba1054a37c8db718edb57835aa34a",
+      "origin": "parent_t10",
+      "parent_fixed": true,
+      "projection": {
+        "action_id": "project-baseline-action-1",
+        "checked_action_type": "execute_payment",
+        "checked_order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "checked_payment_ref": "project-baseline-payment-1",
+        "checked_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "reason_codes": [
+          "governed_action_binding_valid"
+        ],
+        "status": "VALID"
+      },
+      "projection_schema": "governed-action-binding-fact-trace/v2",
+      "recomputed_binding_ref": "TraceSourceBinding:sha256:e781ad542cde19e1b26ce9f3a10d5f47d16843a783e87b03f81dba65e615a4ab",
+      "recomputed_source_object_ref": "GovernedActionBindingFact:projection-sha256:74603b9f9e87329f3c5b54387741a5bd4a3ba1054a37c8db718edb57835aa34a",
+      "source_object_type": "GovernedActionBindingFact",
+      "source_ref_unchanged": true
+    },
+    {
+      "binding_ref_unchanged": true,
+      "expected_binding_ref": "TraceSourceBinding:sha256:a26c70ab069c6cd4f14301965ba895dd099654ba076a4195992cb20329305f3d",
+      "expected_source_object_ref": "GovernedPaymentAction:projection-sha256:4f90ef7032f8075747b73bfa9edca75e3467f781da5197f53635039754cef0e9",
+      "origin": "derived_from_parent_t10_governed_action_with_empty_action_id",
+      "parent_fixed": false,
+      "projection": {
+        "action_id": "",
+        "action_type": "execute_payment",
+        "agent_ref": "webshop-agent-1",
+        "authority_ref": "experiment-context-mandate-ref-v1",
+        "authority_version": "experiment-authority-v1",
+        "executor_ref": "offline-webshop-executor",
+        "occurred_at": "2026-08-02T05:00:00.500000+00:00",
+        "order_ref": "webshop-order-9eccab2b0154fca4af27f322",
+        "order_version": "webshop-v1",
+        "payment_ref": "project-baseline-payment-1",
+        "request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "reversibility": "COMPENSATABLE_NOT_REVERSIBLE",
+        "side_effect_class": "PAYMENT_EXECUTION",
+        "source_refs": [
+          "source:fixed-commerce-snapshot",
+          "source:fixed-user-confirmation"
+        ]
+      },
+      "projection_schema": "governed-payment-action-missing-id-trace/v2",
+      "recomputed_binding_ref": "TraceSourceBinding:sha256:a26c70ab069c6cd4f14301965ba895dd099654ba076a4195992cb20329305f3d",
+      "recomputed_source_object_ref": "GovernedPaymentAction:projection-sha256:4f90ef7032f8075747b73bfa9edca75e3467f781da5197f53635039754cef0e9",
+      "source_object_type": "GovernedPaymentAction",
+      "source_ref_unchanged": true
+    },
+    {
+      "binding_ref_unchanged": true,
+      "expected_binding_ref": "TraceSourceBinding:sha256:b345731cb725a1f942c5c7112e0982d68802909de0d3279faa9ac78b28c9a014",
+      "expected_source_object_ref": "KnownPaymentAttemptPreflightFact:projection-sha256:34014c67bd38aedbc564454fc138f7c6ecd96786b691ac1ff01fa0fe9273f59b",
+      "origin": "parent_t10",
+      "parent_fixed": true,
+      "projection": {
+        "blocking_request_refs": [
+          "webshop-request-6c6a78eddffdb552c2af66ef"
+        ],
+        "current_request_ref": "webshop-request-6c6a78eddffdb552c2af66ef",
+        "limitations": [
+          "offline_fact_only",
+          "exact_payment_execution_records_only",
+          "succeeded_attempts_only",
+          "pending_or_unknown_attempt_policy_not_defined",
+          "no_external_payment_status_query"
+        ],
+        "reason_codes": [
+          "known_payment_attempt_duplicate_succeeded"
+        ],
+        "related_attempt_refs": [
+          "project-baseline-payment-existing-success"
+        ],
+        "status": "BLOCKED"
+      },
+      "projection_schema": "known-payment-attempt-preflight-fact-trace/v2",
+      "recomputed_binding_ref": "TraceSourceBinding:sha256:b345731cb725a1f942c5c7112e0982d68802909de0d3279faa9ac78b28c9a014",
+      "recomputed_source_object_ref": "KnownPaymentAttemptPreflightFact:projection-sha256:34014c67bd38aedbc564454fc138f7c6ecd96786b691ac1ff01fa0fe9273f59b",
+      "source_object_type": "KnownPaymentAttemptPreflightFact",
+      "source_ref_unchanged": true
+    },
+    {
+      "binding_ref_unchanged": true,
+      "expected_binding_ref": "TraceSourceBinding:sha256:690dda294ef50338020becb4faea526899cc8e35ecc408f7257daa0a7150a4a1",
+      "expected_source_object_ref": "PaymentRecoveryResult:projection-sha256:ca29e5e28c4c81f24a3f1a0b044f2ab4f301b271b488138f89d956ebbc2d415b",
+      "origin": "derived_from_current_payment_recovery_contract_shape",
+      "parent_fixed": false,
+      "projection": {
+        "effective_status": "SUCCEEDED",
+        "evidence_paths": [
+          "payment.payment_id",
+          "payment.status",
+          "payment_status_observation.payment_id",
+          "payment_status_observation.status"
+        ],
+        "initial_status": "UNKNOWN",
+        "issue_codes": [
+          "payment_state_recovered_as_succeeded"
+        ],
+        "next_action": "continue_with_original_payment",
+        "observed_status": "SUCCEEDED",
+        "recovery_status": "RECOVERED",
+        "retry_allowed": false,
+        "rule_version": "payment-recovery-rules-v0.2"
+      },
+      "projection_schema": "payment-recovery-result-trace/v2",
+      "recomputed_binding_ref": "TraceSourceBinding:sha256:690dda294ef50338020becb4faea526899cc8e35ecc408f7257daa0a7150a4a1",
+      "recomputed_source_object_ref": "PaymentRecoveryResult:projection-sha256:ca29e5e28c4c81f24a3f1a0b044f2ab4f301b271b488138f89d956ebbc2d415b",
+      "source_object_type": "PaymentRecoveryResult",
+      "source_ref_unchanged": true
+    },
+    {
+      "binding_ref_unchanged": true,
+      "expected_binding_ref": "TraceSourceBinding:sha256:445f5c4b28fbb2270a253bb5596627eab69d1f18e7f536fed63c1d0672f9e6b8",
+      "expected_source_object_ref": "PaymentStatusConflictFact:projection-sha256:c828d25274ce8bf42082930f7ab7b2421a41b0b475df42a8ea6beeddc9ffa715",
+      "origin": "parent_t12.conflict_fact",
+      "parent_fixed": true,
+      "projection": {
+        "async_observed_at": "2026-08-02T05:02:01+00:00",
+        "async_status": "FAILED",
+        "business_success_confirmed": false,
+        "effective_status": "UNKNOWN",
+        "effective_status_terminal": false,
+        "fulfillment_confirmed": false,
+        "initial_status": "UNKNOWN",
+        "legal_finality_confirmed": false,
+        "query_observed_at": "2026-08-02T05:01:01+00:00",
+        "query_status": "SUCCEEDED",
+        "reason_codes": [
+          "payment_status_opposite_terminal_claims"
+        ],
+        "reconciliation_confirmed": false,
+        "resolution": "CONFLICT",
+        "settlement_confirmed": false,
+        "user_task_success_confirmed": false
+      },
+      "projection_schema": "payment-status-conflict-fact-trace/v2",
+      "recomputed_binding_ref": "TraceSourceBinding:sha256:445f5c4b28fbb2270a253bb5596627eab69d1f18e7f536fed63c1d0672f9e6b8",
+      "recomputed_source_object_ref": "PaymentStatusConflictFact:projection-sha256:c828d25274ce8bf42082930f7ab7b2421a41b0b475df42a8ea6beeddc9ffa715",
+      "source_object_type": "PaymentStatusConflictFact",
+      "source_ref_unchanged": true
+    },
+    {
+      "binding_ref_unchanged": true,
+      "expected_binding_ref": "TraceSourceBinding:sha256:28e748efa4e94c1f22749a11f092fbd171a6a538a2688a1e064ff062c88eee65",
+      "expected_source_object_ref": "RuntimeGateRecord:projection-sha256:6f97df6c3be8ebb35b07fa7516179f0f0b985a87855886c4cf679b1eabd4a6ac",
+      "origin": "parent_t10",
+      "parent_fixed": true,
+      "projection": {
+        "binding_reason_codes": [
+          "payment_execution_binding_match"
+        ],
+        "binding_status": "VALID",
+        "callback_count": 0,
+        "callback_executed": false,
+        "callback_result_ref": null,
+        "context_policy_reason_codes": [
+          "context_policy_valid"
+        ],
+        "context_policy_status": "VALID",
+        "final_decision": "DENY",
+        "identity_reason_codes": [
+          "identity_executor_binding_match"
+        ],
+        "identity_status": "VALID",
+        "preliminary_decision": "DENY",
+        "reason_codes": [
+          "p1:duplicate_request",
+          "p1:upstream_prepayment_non_allow",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "preflight:known_payment_attempt_duplicate_succeeded"
+        ]
+      },
+      "projection_schema": "runtime-gate-record-trace/v2",
+      "recomputed_binding_ref": "TraceSourceBinding:sha256:28e748efa4e94c1f22749a11f092fbd171a6a538a2688a1e064ff062c88eee65",
+      "recomputed_source_object_ref": "RuntimeGateRecord:projection-sha256:6f97df6c3be8ebb35b07fa7516179f0f0b985a87855886c4cf679b1eabd4a6ac",
+      "source_object_type": "RuntimeGateRecord",
+      "source_ref_unchanged": true
+    },
+    {
+      "binding_ref_unchanged": true,
+      "expected_binding_ref": "TraceSourceBinding:sha256:d353007ae6b55db14cd27f1437798e902b4eb5065762988385dedc3ec3a74c53",
+      "expected_source_object_ref": "ValidationResult:projection-sha256:38b16f4c11051af137d1fafeb5525e755466d50bde2d80a276586d3e13299e83",
+      "origin": "parent_t10",
+      "parent_fixed": true,
+      "projection": {
+        "decision": "DENY",
+        "evidence_paths": [
+          "mandate.mandate_id",
+          "request.request_id",
+          "request.request_id"
+        ],
+        "issue_codes": [
+          "duplicate_request"
+        ],
+        "order_difference_paths": [],
+        "rule_version": "mandate-rules-v0.1"
+      },
+      "projection_schema": "validation-result-trace/v2",
+      "recomputed_binding_ref": "TraceSourceBinding:sha256:d353007ae6b55db14cd27f1437798e902b4eb5065762988385dedc3ec3a74c53",
+      "recomputed_source_object_ref": "ValidationResult:projection-sha256:38b16f4c11051af137d1fafeb5525e755466d50bde2d80a276586d3e13299e83",
+      "source_object_type": "ValidationResult",
+      "source_ref_unchanged": true
+    },
+    {
+      "binding_ref_unchanged": true,
+      "expected_binding_ref": "TraceSourceBinding:sha256:9a917ff5d59e0f8a39278f6859f72bfb34c67a80461be26e8c75c99de3e66944",
+      "expected_source_object_ref": "WebShopBuyNowGateOutcome:projection-sha256:ff91f0ebcc747768c4f4304c986db7ef7e9e9ef18287987606fff73a1110ec92",
+      "origin": "parent_t10",
+      "parent_fixed": true,
+      "projection": {
+        "callback_count": 0,
+        "callback_result_ref": null,
+        "checkout_executed": false,
+        "decision": "DENY",
+        "limitations": [
+          "offline_interception_only",
+          "no_webshop_runtime_execution",
+          "no_real_buy_now_execution",
+          "no_real_payment_or_fulfilment",
+          "instruction_is_not_authorization_mandate",
+          "checkout_callback_is_injected_test_seam"
+        ],
+        "reason_codes": [
+          "p1:duplicate_request",
+          "p1:upstream_prepayment_non_allow",
+          "p2:payment_execution_binding_match",
+          "p3:identity_executor_binding_match",
+          "p4:context_policy_valid",
+          "preflight:known_payment_attempt_duplicate_succeeded"
+        ]
+      },
+      "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v2",
+      "recomputed_binding_ref": "TraceSourceBinding:sha256:9a917ff5d59e0f8a39278f6859f72bfb34c67a80461be26e8c75c99de3e66944",
+      "recomputed_source_object_ref": "WebShopBuyNowGateOutcome:projection-sha256:ff91f0ebcc747768c4f4304c986db7ef7e9e9ef18287987606fff73a1110ec92",
+      "source_object_type": "WebShopBuyNowGateOutcome",
+      "source_ref_unchanged": true
+    },
+    {
+      "binding_ref_unchanged": true,
+      "expected_binding_ref": "TraceSourceBinding:sha256:da9d97d4821156889c6a2258ad0fb14bd4599e232eacd2dbdd9bb7b212f0f6b3",
+      "expected_source_object_ref": "WebShopPaymentFulfilmentOutcome:projection-sha256:aa14a6decf0b4e8638ba1962782c9d7d821ffb2fc8e31c0d501e554c5af4dfa2",
+      "origin": "parent_t12.sidecar_result",
+      "parent_fixed": true,
+      "projection": {
+        "duplicate_payment_blocked": false,
+        "effective_payment_status": "UNKNOWN",
+        "initial_payment_status": "UNKNOWN",
+        "lifecycle_fulfillment_status": "SUCCEEDED",
+        "lifecycle_payment_status": "UNKNOWN",
+        "lifecycle_remediation_status": "REQUIRED",
+        "lifecycle_task_status": "UNKNOWN",
+        "limitations": [
+          "offline_sidecar_only",
+          "no_real_payment_execution",
+          "no_real_status_query_or_async_callback",
+          "no_real_fulfilment",
+          "no_automatic_payment_retry",
+          "no_real_refund_or_dispute",
+          "webshop_reward_not_used_as_payment_or_task_success"
+        ],
+        "query_recovery_status": "RECOVERED",
+        "ready": true,
+        "reason_codes": [
+          "conflict:resolution:conflict",
+          "conflict:payment_status_opposite_terminal_claims",
+          "sidecar:status_evidence_conflict",
+          "retry:not_allowed"
+        ],
+        "retry_allowed": false,
+        "status_conflict_resolution": "CONFLICT"
+      },
+      "projection_schema": "webshop-payment-fulfilment-outcome-result-trace/v2",
+      "recomputed_binding_ref": "TraceSourceBinding:sha256:da9d97d4821156889c6a2258ad0fb14bd4599e232eacd2dbdd9bb7b212f0f6b3",
+      "recomputed_source_object_ref": "WebShopPaymentFulfilmentOutcome:projection-sha256:aa14a6decf0b4e8638ba1962782c9d7d821ffb2fc8e31c0d501e554c5af4dfa2",
+      "source_object_type": "WebShopPaymentFulfilmentOutcome",
+      "source_ref_unchanged": true
+    }
+  ],
+  "schema_version": "projection-hash-identity-vectors/v1",
+  "t10_regression": {
+    "all_fixed_values_unchanged": true,
+    "authorized_and_current_order_share_binding": true,
+    "binding_results": [
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:6846a2e93cbc9b36f697457c57f2e0baa3baeed29af38ffa62c22f6b17ef5a97",
+        "expected_source_object_ref": "IntentMandate:experiment-context-mandate-ref-v1:experiment-authority-v1",
+        "projection_schema": "intent-mandate-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:6846a2e93cbc9b36f697457c57f2e0baa3baeed29af38ffa62c22f6b17ef5a97",
+        "recomputed_source_object_ref": "IntentMandate:experiment-context-mandate-ref-v1:experiment-authority-v1",
+        "source_ref_unchanged": true
+      },
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc",
+        "expected_source_object_ref": "Order:webshop-order-9eccab2b0154fca4af27f322:webshop-v1",
+        "projection_schema": "order-snapshot-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc",
+        "recomputed_source_object_ref": "Order:webshop-order-9eccab2b0154fca4af27f322:webshop-v1",
+        "source_ref_unchanged": true
+      },
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:4a49cc543a483038d2c2b3600da1011246a2b9c1230558c7bc553cfee9b5a77c",
+        "expected_source_object_ref": "TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef",
+        "projection_schema": "transaction-request-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:4a49cc543a483038d2c2b3600da1011246a2b9c1230558c7bc553cfee9b5a77c",
+        "recomputed_source_object_ref": "TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef",
+        "source_ref_unchanged": true
+      },
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:64a143fc5449570a2fddfd481fe89932fe0afed3ff5c3f1854b9316e928bf543",
+        "expected_source_object_ref": "GovernedPaymentAction:project-baseline-action-1",
+        "projection_schema": "governed-payment-action-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:64a143fc5449570a2fddfd481fe89932fe0afed3ff5c3f1854b9316e928bf543",
+        "recomputed_source_object_ref": "GovernedPaymentAction:project-baseline-action-1",
+        "source_ref_unchanged": true
+      },
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:a1ac5292694802a04c5799b80f2856f8ee2736a103d24fba00e918f435e483ea",
+        "expected_source_object_ref": "PaymentExecutionRecord:project-baseline-payment-1",
+        "projection_schema": "payment-execution-record-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:a1ac5292694802a04c5799b80f2856f8ee2736a103d24fba00e918f435e483ea",
+        "recomputed_source_object_ref": "PaymentExecutionRecord:project-baseline-payment-1",
+        "source_ref_unchanged": true
+      },
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:e781ad542cde19e1b26ce9f3a10d5f47d16843a783e87b03f81dba65e615a4ab",
+        "expected_source_object_ref": "GovernedActionBindingFact:projection-sha256:74603b9f9e87329f3c5b54387741a5bd4a3ba1054a37c8db718edb57835aa34a",
+        "projection_schema": "governed-action-binding-fact-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:e781ad542cde19e1b26ce9f3a10d5f47d16843a783e87b03f81dba65e615a4ab",
+        "recomputed_source_object_ref": "GovernedActionBindingFact:projection-sha256:74603b9f9e87329f3c5b54387741a5bd4a3ba1054a37c8db718edb57835aa34a",
+        "source_ref_unchanged": true
+      },
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:95c4c09dd1a7b5ea0e494edd6988dd311680cf700fce6d4301ff2edbba3b94e8",
+        "expected_source_object_ref": "PaymentExecutionRecord:project-baseline-payment-existing-success",
+        "projection_schema": "payment-execution-record-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:95c4c09dd1a7b5ea0e494edd6988dd311680cf700fce6d4301ff2edbba3b94e8",
+        "recomputed_source_object_ref": "PaymentExecutionRecord:project-baseline-payment-existing-success",
+        "source_ref_unchanged": true
+      },
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:b345731cb725a1f942c5c7112e0982d68802909de0d3279faa9ac78b28c9a014",
+        "expected_source_object_ref": "KnownPaymentAttemptPreflightFact:projection-sha256:34014c67bd38aedbc564454fc138f7c6ecd96786b691ac1ff01fa0fe9273f59b",
+        "projection_schema": "known-payment-attempt-preflight-fact-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:b345731cb725a1f942c5c7112e0982d68802909de0d3279faa9ac78b28c9a014",
+        "recomputed_source_object_ref": "KnownPaymentAttemptPreflightFact:projection-sha256:34014c67bd38aedbc564454fc138f7c6ecd96786b691ac1ff01fa0fe9273f59b",
+        "source_ref_unchanged": true
+      },
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:d353007ae6b55db14cd27f1437798e902b4eb5065762988385dedc3ec3a74c53",
+        "expected_source_object_ref": "ValidationResult:projection-sha256:38b16f4c11051af137d1fafeb5525e755466d50bde2d80a276586d3e13299e83",
+        "projection_schema": "validation-result-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:d353007ae6b55db14cd27f1437798e902b4eb5065762988385dedc3ec3a74c53",
+        "recomputed_source_object_ref": "ValidationResult:projection-sha256:38b16f4c11051af137d1fafeb5525e755466d50bde2d80a276586d3e13299e83",
+        "source_ref_unchanged": true
+      },
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:28e748efa4e94c1f22749a11f092fbd171a6a538a2688a1e064ff062c88eee65",
+        "expected_source_object_ref": "RuntimeGateRecord:projection-sha256:6f97df6c3be8ebb35b07fa7516179f0f0b985a87855886c4cf679b1eabd4a6ac",
+        "projection_schema": "runtime-gate-record-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:28e748efa4e94c1f22749a11f092fbd171a6a538a2688a1e064ff062c88eee65",
+        "recomputed_source_object_ref": "RuntimeGateRecord:projection-sha256:6f97df6c3be8ebb35b07fa7516179f0f0b985a87855886c4cf679b1eabd4a6ac",
+        "source_ref_unchanged": true
+      },
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:9a917ff5d59e0f8a39278f6859f72bfb34c67a80461be26e8c75c99de3e66944",
+        "expected_source_object_ref": "WebShopBuyNowGateOutcome:projection-sha256:ff91f0ebcc747768c4f4304c986db7ef7e9e9ef18287987606fff73a1110ec92",
+        "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:9a917ff5d59e0f8a39278f6859f72bfb34c67a80461be26e8c75c99de3e66944",
+        "recomputed_source_object_ref": "WebShopBuyNowGateOutcome:projection-sha256:ff91f0ebcc747768c4f4304c986db7ef7e9e9ef18287987606fff73a1110ec92",
+        "source_ref_unchanged": true
+      }
+    ],
+    "event_count": 12,
+    "relations_resolved": true,
+    "unique_binding_count": 11
+  },
+  "t12_regression": {
+    "all_fixed_values_unchanged": true,
+    "binding_results": [
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:445f5c4b28fbb2270a253bb5596627eab69d1f18e7f536fed63c1d0672f9e6b8",
+        "expected_source_object_ref": "PaymentStatusConflictFact:projection-sha256:c828d25274ce8bf42082930f7ab7b2421a41b0b475df42a8ea6beeddc9ffa715",
+        "projection_schema": "payment-status-conflict-fact-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:445f5c4b28fbb2270a253bb5596627eab69d1f18e7f536fed63c1d0672f9e6b8",
+        "recomputed_source_object_ref": "PaymentStatusConflictFact:projection-sha256:c828d25274ce8bf42082930f7ab7b2421a41b0b475df42a8ea6beeddc9ffa715",
+        "source_ref_unchanged": true
+      },
+      {
+        "binding_ref_unchanged": true,
+        "expected_binding_ref": "TraceSourceBinding:sha256:da9d97d4821156889c6a2258ad0fb14bd4599e232eacd2dbdd9bb7b212f0f6b3",
+        "expected_source_object_ref": "WebShopPaymentFulfilmentOutcome:projection-sha256:aa14a6decf0b4e8638ba1962782c9d7d821ffb2fc8e31c0d501e554c5af4dfa2",
+        "projection_schema": "webshop-payment-fulfilment-outcome-result-trace/v2",
+        "recomputed_binding_ref": "TraceSourceBinding:sha256:da9d97d4821156889c6a2258ad0fb14bd4599e232eacd2dbdd9bb7b212f0f6b3",
+        "recomputed_source_object_ref": "WebShopPaymentFulfilmentOutcome:projection-sha256:aa14a6decf0b4e8638ba1962782c9d7d821ffb2fc8e31c0d501e554c5af4dfa2",
+        "source_ref_unchanged": true
+      }
+    ],
+    "sidecar_decision_extraction": null
+  }
+}

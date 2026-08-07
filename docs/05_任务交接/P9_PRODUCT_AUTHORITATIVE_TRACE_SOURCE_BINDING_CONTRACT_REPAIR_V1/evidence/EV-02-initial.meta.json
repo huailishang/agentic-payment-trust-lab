@@ -1,0 +1,11 @@
+{
+  "label": "EV-02",
+  "command": [
+    "python3",
+    "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SOURCE_BINDING_CONTRACT_REPAIR_V1/evidence/EV-02-design-check.py"
+  ],
+  "cwd": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-05T02:26:19.502761+00:00",
+  "finished_at_utc": "2026-08-05T02:26:19.655637+00:00",
+  "exit_code": 1
+}

@@ -1,0 +1,20 @@
+{
+  "total_checks": 856,
+  "passed": 853,
+  "failed": 3,
+  "coverage_sha256": "a13be8fb7a1a752d1ab242bb57289db4a1162ce237a342651916d1a3d138435c",
+  "failures": [
+    [
+      "schema-fact-lineage-result-trace/v1-result-excludes-trace",
+      "None"
+    ],
+    [
+      "schema-payment-recovery-result-trace/v1-result-excludes-trace",
+      "None"
+    ],
+    [
+      "schema-validation-result-trace/v1-result-excludes-trace",
+      "None"
+    ]
+  ]
+}

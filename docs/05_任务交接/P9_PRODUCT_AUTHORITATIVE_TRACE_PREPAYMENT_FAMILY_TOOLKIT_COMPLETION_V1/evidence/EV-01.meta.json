@@ -1,0 +1,21 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-01",
+  "command_argv": [
+    "env",
+    "PYTHONPATH=src:.",
+    "python3",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PREPAYMENT_FAMILY_TOOLKIT_COMPLETION_V1/evidence/EV-01-frozen-boundary-audit.py"
+  ],
+  "command_display": "env PYTHONPATH=src:. python3 'docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PREPAYMENT_FAMILY_TOOLKIT_COMPLETION_V1/evidence/EV-01-frozen-boundary-audit.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-07T06:40:45.483016+00:00",
+  "finished_at_utc": "2026-08-07T06:40:45.646423+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-01.stdout.log",
+  "stderr_path": "EV-01.stderr.log",
+  "stdout_bytes": 894,
+  "stderr_bytes": 0,
+  "stdout_sha256": "e164eb446aad2faf28a9b04aab813395fc1bb5036997a5698728649677f0ebef",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

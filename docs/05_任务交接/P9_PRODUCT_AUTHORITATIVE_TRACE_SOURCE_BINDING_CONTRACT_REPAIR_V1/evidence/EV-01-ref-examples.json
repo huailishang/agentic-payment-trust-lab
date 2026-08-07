@@ -1,0 +1,46 @@
+{
+  "canonical_json": "UTF-8; object keys sorted; separators ',' ':'; Enum=.value; datetime=native ISO-8601; tuple=array",
+  "hash_ref": {
+    "expected_source_object_ref": "GovernedActionBindingFact:sha256:e62e98a4cb2277587917f06fad9f5ae98f5159aa689c9c3d3ddfb76334c3e5d2",
+    "projection": {
+      "action_id": "action-1",
+      "checked_action_type": "execute_payment",
+      "checked_order_ref": "order-1",
+      "checked_payment_ref": "payment-current-1",
+      "checked_request_ref": "request-1",
+      "reason_codes": [],
+      "status": "VALID"
+    },
+    "projection_schema": "governed-action-binding-fact-trace/v1",
+    "source_object_type": "GovernedActionBindingFact"
+  },
+  "native_ref": {
+    "expected_source_object_ref": "IntentMandate:mandate-1:v1",
+    "projection": {
+      "authority_version": "v1",
+      "mandate_id": "mandate-1"
+    },
+    "projection_schema": "intent-mandate-trace/v1",
+    "source_object_type": "IntentMandate"
+  },
+  "result_cycle_closed": {
+    "excluded_field": "authoritative_trace",
+    "expected_source_object_ref": "WebShopBuyNowGateOutcome:sha256:2591ae5cd379ac7ae1c099ead978f3def99026b52ada66902547150e0e84939a",
+    "projection": {
+      "callback_count": 0,
+      "callback_result_ref": null,
+      "checkout_executed": false,
+      "decision": "DENY",
+      "limitations": [
+        "offline_interception_only",
+        "no_real_buy_now_execution"
+      ],
+      "reason_codes": [
+        "p1:duplicate_request",
+        "preflight:known_payment_attempt_duplicate_succeeded"
+      ]
+    },
+    "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v1",
+    "source_object_type": "WebShopBuyNowGateOutcome"
+  }
+}

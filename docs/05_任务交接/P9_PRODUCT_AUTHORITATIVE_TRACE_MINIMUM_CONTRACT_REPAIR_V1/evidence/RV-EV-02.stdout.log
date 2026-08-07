@@ -1,0 +1,302 @@
+{
+  "schema": "evaluator-independent-review/v1",
+  "task_id": "P9-PRODUCT-AUTHORITATIVE-TRACE-MINIMUM-CONTRACT-REPAIR-V1",
+  "reviewed_head": "979ffc505bec0b626858d0d186f655867b5491bf",
+  "checks": {
+    "coverage_exact_12": {
+      "pass": true,
+      "details": [
+        "T01",
+        "T02",
+        "T03",
+        "T04",
+        "T05",
+        "T06",
+        "T07",
+        "T08",
+        "T09",
+        "T10",
+        "T11",
+        "T12"
+      ]
+    },
+    "coverage_no_duplicates": {
+      "pass": true,
+      "details": null
+    },
+    "coverage_all_not_available": {
+      "pass": true,
+      "details": null
+    },
+    "coverage_no_new_business_rule": {
+      "pass": true,
+      "details": null
+    },
+    "coverage_consistency_key": {
+      "pass": true,
+      "details": null
+    },
+    "coverage_sha256": {
+      "pass": true,
+      "details": "2f7ee5dc446efbe4c0b55f1cc0e705c3aa939606309154cb7e38babf1f70821d"
+    },
+    "T02_two_order_snapshots": {
+      "pass": true,
+      "details": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[AUTHORIZED_ORDER_SNAPSHOT]",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ]
+    },
+    "T03_two_order_snapshots": {
+      "pass": true,
+      "details": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[AUTHORIZED_ORDER_SNAPSHOT]",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ]
+    },
+    "T04_two_order_snapshots": {
+      "pass": true,
+      "details": [
+        "AUTHORITY_RECORDED",
+        "ORDER_RECORDED[AUTHORIZED_ORDER_SNAPSHOT]",
+        "ORDER_RECORDED[CURRENT_ORDER_SNAPSHOT]",
+        "REQUEST_RECORDED",
+        "PREPAYMENT_DECISION_RECORDED",
+        "RESULT_RECORDED"
+      ]
+    },
+    "T04_no_orderdifference_source": {
+      "pass": true,
+      "details": [
+        "IntentMandate",
+        "Order(authorized)",
+        "Order(current)",
+        "TransactionRequest",
+        "ValidationResult",
+        "ValidationResult.evidence",
+        "ConfirmationBindingFact / order-binding evidence"
+      ]
+    },
+    "T04_evidence_source_present": {
+      "pass": true,
+      "details": null
+    },
+    "T05_action_binding_decision": {
+      "pass": true,
+      "details": [
+        {
+          "event": "ACTION_BINDING_DECISION_RECORDED",
+          "source": "GovernedActionBindingFact.status",
+          "value": "INVALID → DENY"
+        }
+      ]
+    },
+    "T05_event_sequence": {
+      "pass": true,
+      "details": null
+    },
+    "T06_action_binding_decision": {
+      "pass": true,
+      "details": [
+        {
+          "event": "ACTION_BINDING_DECISION_RECORDED",
+          "source": "GovernedActionBindingFact.status",
+          "value": "MISSING_EVIDENCE → INDETERMINATE"
+        }
+      ]
+    },
+    "T06_event_sequence": {
+      "pass": true,
+      "details": null
+    },
+    "T10_dual_payment_roles": {
+      "pass": true,
+      "details": [
+        "ACTION_BINDING_FACT",
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "CURRENT_REQUEST",
+        "FINAL_OUTCOME",
+        "GOVERNED_ACTION",
+        "HISTORICAL_SUCCEEDED_PAYMENT",
+        "KNOWN_PAYMENT_PREFLIGHT_FACT",
+        "RUNTIME_GATE_OBSERVATION"
+      ]
+    },
+    "T10_historical_event": {
+      "pass": true,
+      "details": null
+    },
+    "T10_two_entities": {
+      "pass": true,
+      "details": [
+        "CURRENT_PAYMENT_CANDIDATE",
+        "HISTORICAL_SUCCEEDED_PAYMENT"
+      ]
+    },
+    "T10_distinct_refs": {
+      "pass": true,
+      "details": null
+    },
+    "T10_historical_succeeded": {
+      "pass": true,
+      "details": null
+    },
+    "T10_current_action_relation": {
+      "pass": true,
+      "details": null
+    },
+    "T10_historical_preflight_relation": {
+      "pass": true,
+      "details": null
+    },
+    "design_contains::AUTHORIZED_ORDER_SNAPSHOT": {
+      "pass": true,
+      "details": null
+    },
+    "design_contains::CURRENT_ORDER_SNAPSHOT": {
+      "pass": true,
+      "details": null
+    },
+    "design_contains::CURRENT_PAYMENT_CANDIDATE": {
+      "pass": true,
+      "details": null
+    },
+    "design_contains::HISTORICAL_SUCCEEDED_PAYMENT": {
+      "pass": true,
+      "details": null
+    },
+    "design_contains::ACTION_BINDING_DECISION_RECORDED": {
+      "pass": true,
+      "details": null
+    },
+    "design_contains::(entity_type, entity_role)": {
+      "pass": true,
+      "details": null
+    },
+    "design_contains::projection_schema": {
+      "pass": true,
+      "details": null
+    },
+    "design_contains::RESULT ref 只 hash outcome projection excluding authoritative_trace": {
+      "pass": true,
+      "details": null
+    },
+    "design_stage_split": {
+      "pass": true,
+      "details": null
+    },
+    "design_no_runner_product_same_experiment": {
+      "pass": true,
+      "details": null
+    },
+    "adapter_contains::Task kind: `maintenance`": {
+      "pass": true,
+      "details": null
+    },
+    "adapter_contains::runner 只读取 `outcome.authoritative_trace`": {
+      "pass": true,
+      "details": null
+    },
+    "adapter_contains::evaluator replay 不得回退计入": {
+      "pass": true,
+      "details": null
+    },
+    "adapter_contains::产品 outcome 继续不产出 trace": {
+      "pass": true,
+      "details": null
+    },
+    "adapter_contains::0/12 VALID": {
+      "pass": true,
+      "details": null
+    },
+    "next_slice_contains::CONDITIONAL_NOT_FROZEN": {
+      "pass": true,
+      "details": null
+    },
+    "next_slice_contains::prerequisite = measurement adapter accepted": {
+      "pass": true,
+      "details": null
+    },
+    "next_slice_contains::runner hash = TBD_AFTER_ADAPTER_ACCEPTANCE": {
+      "pass": true,
+      "details": null
+    },
+    "next_slice_contains::before hash = TBD_AFTER_ADAPTER_ACCEPTANCE": {
+      "pass": true,
+      "details": null
+    },
+    "T10_capability_contract_absent": {
+      "pass": true,
+      "details": null
+    },
+    "known_payment_current_request_ref": {
+      "pass": true,
+      "details": null
+    },
+    "known_payment_related_attempt_refs": {
+      "pass": true,
+      "details": null
+    },
+    "known_payment_same_request_filter": {
+      "pass": true,
+      "details": null
+    },
+    "governed_action_request_ref": {
+      "pass": true,
+      "details": null
+    },
+    "governed_action_payment_ref": {
+      "pass": true,
+      "details": null
+    },
+    "zero_product_trace_producers_static": {
+      "pass": true,
+      "details": []
+    },
+    "protected_manifest_no_missing": {
+      "pass": true,
+      "details": []
+    },
+    "protected_manifest_unchanged": {
+      "pass": true,
+      "details": []
+    },
+    "protected_manifest_count": {
+      "pass": true,
+      "details": 256
+    },
+    "reviewed_head": {
+      "pass": true,
+      "details": "979ffc505bec0b626858d0d186f655867b5491bf"
+    },
+    "workspace_clean_before_evaluator_files": {
+      "pass": true,
+      "details": [
+        "?? \"docs/05_\\344\\273\\273\\345\\212\\241\\344\\272\\244\\346\\216\\245/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/RV-EV-01-initial.meta.json\"",
+        "?? \"docs/05_\\344\\273\\273\\345\\212\\241\\344\\272\\244\\346\\216\\245/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/RV-EV-01-initial.stderr.log\"",
+        "?? \"docs/05_\\344\\273\\273\\345\\212\\241\\344\\272\\244\\346\\216\\245/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/RV-EV-01-initial.stdout.log\"",
+        "?? \"docs/05_\\344\\273\\273\\345\\212\\241\\344\\272\\244\\346\\216\\245/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/RV-EV-01-review-check.py\"",
+        "?? \"docs/05_\\344\\273\\273\\345\\212\\241\\344\\272\\244\\346\\216\\245/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/RV-EV-01.meta.json\"",
+        "?? \"docs/05_\\344\\273\\273\\345\\212\\241\\344\\272\\244\\346\\216\\245/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/RV-EV-01.stderr.log\"",
+        "?? \"docs/05_\\344\\273\\273\\345\\212\\241\\344\\272\\244\\346\\216\\245/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/evidence/RV-EV-01.stdout.log\""
+      ]
+    }
+  },
+  "failed": [],
+  "summary": {
+    "passed": 53,
+    "failed": 0,
+    "total": 53
+  }
+}

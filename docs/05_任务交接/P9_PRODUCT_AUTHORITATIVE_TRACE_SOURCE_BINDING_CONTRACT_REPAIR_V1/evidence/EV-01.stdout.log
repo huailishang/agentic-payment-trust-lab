@@ -1,0 +1,14 @@
+{
+  "written": [
+    "docs/03_架构设计/产品权威轨迹最小合同_v1.md",
+    "docs/04_验证体系/产品权威轨迹12项覆盖映射_v1.md",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_V1/NEXT_SLICE.md",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_MINIMUM_CONTRACT_REPAIR_V1/MEASUREMENT_ADAPTER.md",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SOURCE_BINDING_CONTRACT_REPAIR_V1/evidence/EV-01-coverage-source-binding.json",
+    "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SOURCE_BINDING_CONTRACT_REPAIR_V1/evidence/EV-01-ref-examples.json"
+  ],
+  "coverage_sha256": "a13be8fb7a1a752d1ab242bb57289db4a1162ce237a342651916d1a3d138435c",
+  "ref_examples_sha256": "90599423a63479d449612d3972988901bca16abc08bf71f9b327c801e32912b7",
+  "tasks": 12,
+  "t10_events": 12
+}

@@ -1,0 +1,2218 @@
+===== FILE CURRENT.md =====
+sha256=bce09b71e0e2d44e7017baf8be4f0d297801c7a8ee010132201865a062be8de4
+bytes=3945
+# Evaluator ↔ Executor Current State
+
+<!-- evaluator-executor-workflow:v2.1 -->
+
+```yaml
+workflow: evaluator-executor-workflow/v2.1
+task_id: P9-PRODUCT-AUTHORITATIVE-TRACE-ASSEMBLER-EXTRACTION-V1
+task_kind: maintenance
+state: EXECUTING
+current_role: Executor
+baseline_commit: b4eff597ebffe79c575522b91642f82b26ad5247
+project_map_path: docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md
+project_map_revision: 2026-08-06-r7
+active_bottleneck_id: B-03
+hypothesis_id: H-03
+contract_path: docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_ASSEMBLER_EXTRACTION_V1/CONTRACT.md
+executor_report_path: docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_ASSEMBLER_EXTRACTION_V1/REPORT.md
+evaluator_review_path: docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_ASSEMBLER_EXTRACTION_V1/REVIEW.md
+next_artifact_path: docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_ASSEMBLER_EXTRACTION_V1/REPORT.md
+authorization_commit: false
+authorization_push: false
+authorization_history_rewrite: false
+authorization_api_call: false
+authorization_network_call: false
+authorization_data_download: false
+authorization_dependency_install: false
+authorization_create_environment: false
+authorization_webshop_runtime_execution: false
+authorization_buy_now_execution: false
+authorization_payment_or_order_side_effect: false
+```
+
+## Current action
+
+```text
+Read:
+- docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md revision 2026-08-06-r7
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/REVIEW.md
+- docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_ASSEMBLER_EXTRACTION_V1/CONTRACT.md
+
+Execute exactly one maintenance change:
+1. Add neutral webshop_trace_assembler.py.
+2. Move shared binding/event/relation/common projection/envelope mechanics into it.
+3. Make T01 and T10 builders depend on the neutral assembler, not on each other.
+4. Preserve both complete product traces byte-for-byte against the frozen snapshot.
+5. Preserve baseline output hash, repeatability, Product Trace 2/12, GESR 1/12 and non-trace hash.
+6. Keep product trace producers exactly T01 and T10.
+7. Do not modify gate, sidecar, runner, validator, fixtures, registries, profiles or business rules.
+8. Save EV triplets, full trace after snapshot, baseline repeat=3 and REPORT while CURRENT remains EXECUTING / Executor after work begins.
+
+Allowed implementation files:
+- src/agentic_payment_experiment/webshop_trace_assembler.py
+- src/agentic_payment_experiment/webshop_authoritative_trace.py
+- src/agentic_payment_experiment/webshop_happy_path_authoritative_trace.py
+- tests/test_webshop_trace_assembler.py
+- tests/test_webshop_authoritative_trace.py
+- tests/test_webshop_payment_sidecar.py
+- this task REPORT/evidence EV files
+- CURRENT.md only for CONTRACT_FROZEN -> EXECUTING
+
+Frozen baseline inputs:
+- evidence/BASELINE-generate-trace-snapshots.py
+- evidence/BASELINE-trace-snapshots.json
+
+Do not:
+- add product traces for T02-T09, T11 or T12;
+- change product facts, call paths, outcomes, decisions, callbacks, payments, recovery, conflict, lifecycle or side-effect rules;
+- modify runtime gate, payment sidecar, runner, authoritative_trace.py, fixtures, registry, profiles or project map;
+- execute WebShop runtime, Buy Now, network, LLM, wallet, payment, order or callback side effects;
+- install dependencies, create environments, commit, push, reset or rewrite history;
+- clean, delete, overwrite or revert inherited accepted artifacts.
+```
+
+## Routing rule
+
+The Executor owns `CONTRACT_FROZEN` and `EXECUTING`. After work begins it may atomically route to `EXECUTING / Executor`, then must submit implementation, EV evidence, exact before/after trace hashes, repeat-3 baseline and `REPORT.md` while CURRENT remains `EXECUTING / Executor`. Only the Evaluator may accept the submitted snapshot, route to `READY_FOR_REVIEW`, independently verify byte-for-byte invariance and issue `PASS / REJECTED` plus `NOT_APPLICABLE` project impact for this maintenance task.
+
+===== FILE src/agentic_payment_experiment/webshop_trace_assembler.py =====
+sha256=725a6f55d061976f7217ba28b74ff15fce2f83adcc383350113e4eed6c550ed7
+bytes=8466
+"""Neutral mechanical assembly helpers for WebShop product traces.
+
+The functions in this module only project already-produced immutable facts and
+assemble trace contract objects. They do not decide whether a business scenario
+is valid, rerun payment controls, read external state, or perform side effects.
+"""
+
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import Any
+
+from .authoritative_trace import (
+    EXPECTED_COMPLETENESS_STATUS,
+    EXPECTED_TRACE_SCHEMA_VERSION,
+    EXPECTED_TRACE_SOURCE,
+    ProductAuthoritativeTrace,
+    ProductTraceEvent,
+    TraceBindingAssertion,
+    TraceRelation,
+    TraceSourceBinding,
+    compute_binding_ref,
+    compute_projection_source_ref,
+    render_entity_ref,
+)
+from .models import IntentMandate, Order, PaymentExecutionRecord, TransactionRequest
+from .trusted_execution import (
+    GovernedActionBindingFact,
+    GovernedPaymentAction,
+    RuntimeGateRecord,
+)
+
+
+def create_source_binding(
+    source_object_type: str,
+    projection_schema: str,
+    projection: Mapping[str, Any],
+) -> TraceSourceBinding:
+    """Create one deterministic source binding from a frozen projection."""
+
+    source_object_ref = compute_projection_source_ref(
+        source_object_type,
+        projection_schema,
+        projection,
+    )
+    payload = {
+        "source_object_type": source_object_type,
+        "source_object_ref": source_object_ref,
+        "projection_schema": projection_schema,
+        "projection": projection,
+    }
+    return TraceSourceBinding(
+        binding_ref=compute_binding_ref(payload),
+        source_object_type=source_object_type,
+        source_object_ref=source_object_ref,
+        projection_schema=projection_schema,
+        projection=projection,
+    )
+
+
+def create_relation(
+    relation_type: str,
+    target_entity_type: str,
+    target_entity_role: str,
+    target_entity_ref: str,
+    *,
+    assertions: tuple[TraceBindingAssertion, ...] = (),
+) -> TraceRelation:
+    """Create a resolved relation to another trace entity."""
+
+    return TraceRelation(
+        relation_type=relation_type,
+        target_entity_type=target_entity_type,
+        target_entity_role=target_entity_role,
+        target_entity_ref=target_entity_ref,
+        target_binding_assertions=assertions,
+        target_resolved=True,
+    )
+
+
+def create_event(
+    sequence_no: int,
+    event_type: str,
+    entity_type: str,
+    entity_role: str,
+    binding: TraceSourceBinding,
+    entity_ref_template: str,
+    *,
+    decision: str | None = None,
+    status: str | None = None,
+    reason_codes: tuple[str, ...] = (),
+    relations: tuple[TraceRelation, ...] = (),
+) -> ProductTraceEvent:
+    """Create one event bound to an existing deterministic source binding."""
+
+    return ProductTraceEvent(
+        sequence_no=sequence_no,
+        event_type=event_type,
+        entity_type=entity_type,
+        entity_role=entity_role,
+        entity_ref=render_entity_ref(binding, entity_ref_template),
+        source_binding_ref=binding.binding_ref,
+        decision=decision,
+        status=status,
+        reason_codes=reason_codes,
+        relations=relations,
+    )
+
+
+def project_mandate(mandate: IntentMandate) -> dict[str, Any]:
+    return {
+        "mandate_id": mandate.mandate_id,
+        "authority_version": mandate.authority_version,
+    }
+
+
+def project_order(order: Order) -> dict[str, Any]:
+    return {
+        "order_id": order.order_id,
+        "order_version": order.order_version,
+        "mandate_ref": order.mandate_ref,
+        "authority_version_ref": order.authority_version_ref,
+        "total_amount": order.total_amount,
+        "currency": order.currency,
+        "merchant": order.merchant,
+        "payee": order.payee,
+    }
+
+
+def project_request(request: TransactionRequest) -> dict[str, Any]:
+    return {
+        "request_id": request.request_id,
+        "order_ref": request.order_ref,
+        "authority_ref": request.authority_ref,
+        "authority_version_ref": request.authority_version_ref,
+        "amount": request.amount,
+        "currency": request.currency,
+        "merchant": request.merchant,
+        "payee": request.payee,
+        "agent_id": request.agent_id,
+    }
+
+
+def project_governed_action(action: GovernedPaymentAction) -> dict[str, Any]:
+    return {
+        "action_id": action.action_id,
+        "action_type": action.action_type,
+        "agent_ref": action.agent_ref,
+        "executor_ref": action.executor_ref,
+        "authority_ref": action.authority_ref,
+        "authority_version": action.authority_version,
+        "order_ref": action.order_ref,
+        "order_version": action.order_version,
+        "request_ref": action.request_ref,
+        "payment_ref": action.payment_ref,
+        "source_refs": action.source_refs,
+        "side_effect_class": action.side_effect_class,
+        "reversibility": action.reversibility,
+        "occurred_at": action.occurred_at,
+    }
+
+
+def project_payment(payment: PaymentExecutionRecord) -> dict[str, Any]:
+    return {
+        "payment_id": payment.payment_id,
+        "request_id": payment.request_id,
+        "order_id": payment.order_id,
+        "status": payment.status,
+        "amount": payment.amount,
+        "currency": payment.currency,
+        "authority_ref": payment.authority_ref,
+        "agent_ref": payment.agent_ref,
+        "transaction_object_ref": payment.transaction_object_ref,
+        "payee": payment.payee,
+    }
+
+
+def project_action_binding_fact(fact: GovernedActionBindingFact) -> dict[str, Any]:
+    return {
+        "status": fact.status,
+        "action_id": fact.action_id,
+        "reason_codes": fact.reason_codes,
+        "checked_action_type": fact.checked_action_type,
+        "checked_order_ref": fact.checked_order_ref,
+        "checked_request_ref": fact.checked_request_ref,
+        "checked_payment_ref": fact.checked_payment_ref,
+    }
+
+
+def project_runtime_gate(record: RuntimeGateRecord) -> dict[str, Any]:
+    return {
+        "preliminary_decision": record.preliminary_decision,
+        "final_decision": record.final_decision,
+        "binding_status": record.binding_status,
+        "binding_reason_codes": record.binding_reason_codes,
+        "identity_status": record.identity_status,
+        "identity_reason_codes": record.identity_reason_codes,
+        "context_policy_status": record.context_policy_status,
+        "context_policy_reason_codes": record.context_policy_reason_codes,
+        "callback_executed": record.callback_executed,
+        "callback_count": record.callback_count,
+        "callback_result_ref": record.callback_result_ref,
+        "reason_codes": record.reason_codes,
+    }
+
+
+def assemble_product_trace(
+    *,
+    profile: str,
+    trace_ref: str,
+    events: tuple[ProductTraceEvent, ...],
+    source_bindings: tuple[TraceSourceBinding, ...],
+    expected_unique_binding_count: int,
+) -> ProductAuthoritativeTrace | None:
+    """Assemble a complete product trace or fail closed for invalid mechanics."""
+
+    if type(profile) is not str or not profile:
+        return None
+    if type(trace_ref) is not str or not trace_ref:
+        return None
+    if type(events) is not tuple or not events:
+        return None
+    if type(source_bindings) is not tuple or not source_bindings:
+        return None
+    if type(expected_unique_binding_count) is not int:
+        return None
+    if expected_unique_binding_count <= 0:
+        return None
+    if not all(type(event) is ProductTraceEvent for event in events):
+        return None
+    if not all(type(binding) is TraceSourceBinding for binding in source_bindings):
+        return None
+    unique_binding_refs = {binding.binding_ref for binding in source_bindings}
+    if len(unique_binding_refs) != len(source_bindings):
+        return None
+    if len(unique_binding_refs) != expected_unique_binding_count:
+        return None
+
+    return ProductAuthoritativeTrace(
+        schema_version=EXPECTED_TRACE_SCHEMA_VERSION,
+        source=EXPECTED_TRACE_SOURCE,
+        profile=profile,
+        trace_ref=trace_ref,
+        completeness_status=EXPECTED_COMPLETENESS_STATUS,
+        events=events,
+        source_bindings=source_bindings,
+    )
+
+
+__all__ = [
+    "assemble_product_trace",
+    "create_event",
+    "create_relation",
+    "create_source_binding",
+    "project_action_binding_fact",
+    "project_governed_action",
+    "project_mandate",
+    "project_order",
+    "project_payment",
+    "project_request",
+    "project_runtime_gate",
+]
+
+===== FILE src/agentic_payment_experiment/webshop_authoritative_trace.py =====
+sha256=9653277777d06ce8d2c65862765ec57c17874a9d311d2c5c9c117993a0feeac8
+bytes=19450
+"""Pure product-observed authoritative trace builder for the T10 slice.
+
+This module only projects immutable facts that the WebShop Buy Now gate has
+already produced.  It does not rerun authorization, binding, duplicate-payment,
+or payment execution logic, and it has no file, clock, random, network, or
+callback dependency.
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+from .authoritative_trace import (
+    ProductAuthoritativeTrace,
+    TraceBindingAssertion,
+    TraceContractError,
+)
+from .models import (
+    Decision,
+    IntentMandate,
+    Order,
+    PaymentExecutionRecord,
+    PaymentStatus,
+    TransactionRequest,
+    ValidationResult,
+)
+from .trusted_execution import (
+    GovernedActionBindingFact,
+    GovernedPaymentAction,
+    KnownPaymentAttemptPreflightFact,
+    KnownPaymentAttemptPreflightStatus,
+    RuntimeGateRecord,
+    VerificationStatus,
+)
+from .webshop_trace_assembler import (
+    assemble_product_trace,
+    create_event,
+    create_relation,
+    create_source_binding,
+    project_action_binding_fact,
+    project_governed_action,
+    project_mandate,
+    project_order,
+    project_payment,
+    project_request,
+    project_runtime_gate,
+)
+
+
+T10_PROFILE = "WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V2"
+
+
+def _known_fact_projection(
+    fact: KnownPaymentAttemptPreflightFact,
+) -> dict[str, Any]:
+    return {
+        "status": fact.status,
+        "reason_codes": fact.reason_codes,
+        "current_request_ref": fact.current_request_ref,
+        "related_attempt_refs": fact.related_attempt_refs,
+        "blocking_request_refs": fact.blocking_request_refs,
+        "limitations": fact.limitations,
+    }
+
+
+def _validation_projection(result: ValidationResult) -> dict[str, Any]:
+    return {
+        "decision": result.decision,
+        "issue_codes": tuple(issue.code for issue in result.issues),
+        "evidence_paths": tuple(item.field_path for item in result.evidence),
+        "rule_version": result.rule_version,
+        "order_difference_paths": tuple(
+            item.field_path for item in result.order_differences
+        ),
+    }
+
+
+def _outcome_projection(
+    *,
+    decision: Decision,
+    checkout_executed: bool,
+    callback_count: int,
+    callback_result_ref: str | None,
+    reason_codes: tuple[str, ...],
+    limitations: tuple[str, ...],
+) -> dict[str, Any]:
+    return {
+        "decision": decision,
+        "checkout_executed": checkout_executed,
+        "callback_count": callback_count,
+        "callback_result_ref": callback_result_ref,
+        "reason_codes": reason_codes,
+        "limitations": limitations,
+    }
+
+
+def _unique_historical_success(
+    known_payment_attempts: tuple[PaymentExecutionRecord, ...],
+    known_attempt_fact: KnownPaymentAttemptPreflightFact,
+    current_request: TransactionRequest,
+    execution_candidate: PaymentExecutionRecord,
+) -> PaymentExecutionRecord | None:
+    if type(known_payment_attempts) is not tuple:
+        return None
+    if len(known_attempt_fact.related_attempt_refs) != 1:
+        return None
+    if known_attempt_fact.current_request_ref != current_request.request_id:
+        return None
+    if known_attempt_fact.blocking_request_refs != (current_request.request_id,):
+        return None
+
+    expected_payment_ref = known_attempt_fact.related_attempt_refs[0]
+    matches = tuple(
+        attempt
+        for attempt in known_payment_attempts
+        if type(attempt) is PaymentExecutionRecord
+        and attempt.payment_id == expected_payment_ref
+    )
+    if len(matches) != 1:
+        return None
+    historical = matches[0]
+    if historical.status is not PaymentStatus.SUCCEEDED:
+        return None
+    if historical.payment_id == execution_candidate.payment_id:
+        return None
+    return historical
+
+
+def build_t10_duplicate_preflight_trace(
+    *,
+    mandate: IntentMandate,
+    authorized_order: Order,
+    current_order: Order,
+    bound_request: TransactionRequest,
+    governed_action: GovernedPaymentAction | None,
+    execution_candidate: PaymentExecutionRecord,
+    governed_action_fact: GovernedActionBindingFact | None,
+    known_payment_attempts: tuple[PaymentExecutionRecord, ...],
+    known_attempt_fact: KnownPaymentAttemptPreflightFact,
+    duplicate_result: ValidationResult,
+    runtime_record: RuntimeGateRecord,
+    outcome_decision: Decision,
+    outcome_checkout_executed: bool,
+    outcome_callback_count: int,
+    outcome_callback_result_ref: str | None,
+    outcome_reason_codes: tuple[str, ...],
+    outcome_limitations: tuple[str, ...],
+) -> ProductAuthoritativeTrace | None:
+    """Build the exact T10 product trace or fail closed with ``None``.
+
+    All inputs are already-produced immutable facts from one gate invocation.
+    The function deliberately performs no business-rule calls or side effects.
+    """
+
+    exact_types = (
+        type(mandate) is IntentMandate,
+        type(authorized_order) is Order,
+        type(current_order) is Order,
+        type(bound_request) is TransactionRequest,
+        type(execution_candidate) is PaymentExecutionRecord,
+        type(known_attempt_fact) is KnownPaymentAttemptPreflightFact,
+        type(duplicate_result) is ValidationResult,
+        type(runtime_record) is RuntimeGateRecord,
+        type(outcome_decision) is Decision,
+        type(outcome_reason_codes) is tuple,
+        type(outcome_limitations) is tuple,
+    )
+    if not all(exact_types):
+        return None
+    if type(governed_action) is not GovernedPaymentAction:
+        return None
+    if type(governed_action_fact) is not GovernedActionBindingFact:
+        return None
+    if governed_action_fact.status is not VerificationStatus.VALID:
+        return None
+    if known_attempt_fact.status is not KnownPaymentAttemptPreflightStatus.BLOCKED:
+        return None
+    if duplicate_result.decision is not Decision.DENY:
+        return None
+    if runtime_record.final_decision is not Decision.DENY:
+        return None
+    if outcome_decision is not Decision.DENY:
+        return None
+    if outcome_checkout_executed or outcome_callback_count != 0:
+        return None
+    if outcome_callback_result_ref is not None:
+        return None
+    if runtime_record.callback_executed or runtime_record.callback_count != 0:
+        return None
+    if runtime_record.callback_result_ref is not None:
+        return None
+
+    authorized_projection = project_order(authorized_order)
+    current_projection = project_order(current_order)
+    if authorized_projection != current_projection:
+        return None
+
+    historical_payment = _unique_historical_success(
+        known_payment_attempts,
+        known_attempt_fact,
+        bound_request,
+        execution_candidate,
+    )
+    if historical_payment is None:
+        return None
+
+    try:
+        mandate_binding = create_source_binding(
+            "IntentMandate",
+            "intent-mandate-trace/v2",
+            project_mandate(mandate),
+        )
+        order_binding = create_source_binding(
+            "Order",
+            "order-snapshot-trace/v2",
+            current_projection,
+        )
+        request_binding = create_source_binding(
+            "TransactionRequest",
+            "transaction-request-trace/v2",
+            project_request(bound_request),
+        )
+        action_binding = create_source_binding(
+            "GovernedPaymentAction",
+            "governed-payment-action-trace/v2",
+            project_governed_action(governed_action),
+        )
+        candidate_binding = create_source_binding(
+            "PaymentExecutionRecord",
+            "payment-execution-record-trace/v2",
+            project_payment(execution_candidate),
+        )
+        action_fact_binding = create_source_binding(
+            "GovernedActionBindingFact",
+            "governed-action-binding-fact-trace/v2",
+            project_action_binding_fact(governed_action_fact),
+        )
+        historical_binding = create_source_binding(
+            "PaymentExecutionRecord",
+            "payment-execution-record-trace/v2",
+            project_payment(historical_payment),
+        )
+        known_fact_binding = create_source_binding(
+            "KnownPaymentAttemptPreflightFact",
+            "known-payment-attempt-preflight-fact-trace/v2",
+            _known_fact_projection(known_attempt_fact),
+        )
+        validation_binding = create_source_binding(
+            "ValidationResult",
+            "validation-result-trace/v2",
+            _validation_projection(duplicate_result),
+        )
+        runtime_binding = create_source_binding(
+            "RuntimeGateRecord",
+            "runtime-gate-record-trace/v2",
+            project_runtime_gate(runtime_record),
+        )
+        outcome_binding = create_source_binding(
+            "WebShopBuyNowGateOutcome",
+            "webshop-buy-now-gate-outcome-result-trace/v2",
+            _outcome_projection(
+                decision=outcome_decision,
+                checkout_executed=outcome_checkout_executed,
+                callback_count=outcome_callback_count,
+                callback_result_ref=outcome_callback_result_ref,
+                reason_codes=outcome_reason_codes,
+                limitations=outcome_limitations,
+            ),
+        )
+
+        authority_ref = f"IntentMandate:{mandate.mandate_id}"
+        order_ref = f"Order:{current_order.order_id}"
+        request_ref = f"TransactionRequest:{bound_request.request_id}"
+        action_ref = f"GovernedPaymentAction:{governed_action.action_id}"
+        candidate_ref = (
+            f"PaymentExecutionRecord:{execution_candidate.payment_id}"
+        )
+        historical_ref = (
+            f"PaymentExecutionRecord:{historical_payment.payment_id}"
+        )
+
+        authority_version_assertion = TraceBindingAssertion(
+            source_path="projection.authority_version_ref",
+            target_path="projection.authority_version",
+        )
+        action_authority_assertion = TraceBindingAssertion(
+            source_path="projection.authority_version",
+            target_path="projection.authority_version",
+        )
+        action_order_assertion = TraceBindingAssertion(
+            source_path="projection.order_version",
+            target_path="projection.order_version",
+        )
+
+        events = (
+            create_event(
+                1,
+                "AUTHORITY_RECORDED",
+                "IntentMandate",
+                "AUTHORITY",
+                mandate_binding,
+                "IntentMandate:{projection.mandate_id}",
+            ),
+            create_event(
+                2,
+                "ORDER_RECORDED",
+                "Order",
+                "AUTHORIZED_ORDER_SNAPSHOT",
+                order_binding,
+                "Order:{projection.order_id}",
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "IntentMandate",
+                        "AUTHORITY",
+                        authority_ref,
+                        assertions=(authority_version_assertion,),
+                    ),
+                ),
+            ),
+            create_event(
+                3,
+                "ORDER_RECORDED",
+                "Order",
+                "CURRENT_ORDER_SNAPSHOT",
+                order_binding,
+                "Order:{projection.order_id}",
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "IntentMandate",
+                        "AUTHORITY",
+                        authority_ref,
+                        assertions=(authority_version_assertion,),
+                    ),
+                ),
+            ),
+            create_event(
+                4,
+                "REQUEST_RECORDED",
+                "TransactionRequest",
+                "CURRENT_REQUEST",
+                request_binding,
+                "TransactionRequest:{projection.request_id}",
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "IntentMandate",
+                        "AUTHORITY",
+                        authority_ref,
+                        assertions=(authority_version_assertion,),
+                    ),
+                ),
+            ),
+            create_event(
+                5,
+                "ACTION_RECORDED",
+                "GovernedPaymentAction",
+                "GOVERNED_ACTION",
+                action_binding,
+                "GovernedPaymentAction:{projection.action_id}",
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "IntentMandate",
+                        "AUTHORITY",
+                        authority_ref,
+                        assertions=(action_authority_assertion,),
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                        assertions=(action_order_assertion,),
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "TransactionRequest",
+                        "CURRENT_REQUEST",
+                        request_ref,
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "PaymentExecutionRecord",
+                        "CURRENT_PAYMENT_CANDIDATE",
+                        candidate_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                6,
+                "PAYMENT_CANDIDATE_RECORDED",
+                "PaymentExecutionRecord",
+                "CURRENT_PAYMENT_CANDIDATE",
+                candidate_binding,
+                "PaymentExecutionRecord:{projection.payment_id}",
+                status=execution_candidate.status.value,
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "TransactionRequest",
+                        "CURRENT_REQUEST",
+                        request_ref,
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                7,
+                "ACTION_BINDING_DECISION_RECORDED",
+                "GovernedActionBindingFact",
+                "ACTION_BINDING_FACT",
+                action_fact_binding,
+                "GovernedActionBindingFact:binding:{binding_digest}",
+                status=governed_action_fact.status.value,
+                reason_codes=governed_action_fact.reason_codes,
+                relations=(
+                    create_relation(
+                        "VALIDATED_AGAINST",
+                        "GovernedPaymentAction",
+                        "GOVERNED_ACTION",
+                        action_ref,
+                    ),
+                    create_relation(
+                        "VALIDATED_AGAINST",
+                        "PaymentExecutionRecord",
+                        "CURRENT_PAYMENT_CANDIDATE",
+                        candidate_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                8,
+                "PAYMENT_OUTCOME_RECORDED",
+                "PaymentExecutionRecord",
+                "HISTORICAL_SUCCEEDED_PAYMENT",
+                historical_binding,
+                "PaymentExecutionRecord:{projection.payment_id}",
+                status=historical_payment.status.value,
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "TransactionRequest",
+                        "CURRENT_REQUEST",
+                        request_ref,
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                9,
+                "KNOWN_PAYMENT_PREFLIGHT_RECORDED",
+                "KnownPaymentAttemptPreflightFact",
+                "KNOWN_PAYMENT_PREFLIGHT_FACT",
+                known_fact_binding,
+                "KnownPaymentAttemptPreflightFact:binding:{binding_digest}",
+                status=known_attempt_fact.status.value,
+                reason_codes=known_attempt_fact.reason_codes,
+                relations=(
+                    create_relation(
+                        "VALIDATED_AGAINST",
+                        "TransactionRequest",
+                        "CURRENT_REQUEST",
+                        request_ref,
+                    ),
+                    create_relation(
+                        "MEMBER_OF",
+                        "PaymentExecutionRecord",
+                        "HISTORICAL_SUCCEEDED_PAYMENT",
+                        historical_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                10,
+                "PREPAYMENT_DECISION_RECORDED",
+                "ValidationResult",
+                "PREPAYMENT_VALIDATION",
+                validation_binding,
+                "ValidationResult:binding:{binding_digest}",
+                decision=duplicate_result.decision.value,
+                reason_codes=tuple(issue.code for issue in duplicate_result.issues),
+            ),
+            create_event(
+                11,
+                "RUNTIME_DECISION_RECORDED",
+                "RuntimeGateRecord",
+                "RUNTIME_GATE_OBSERVATION",
+                runtime_binding,
+                "RuntimeGateRecord:binding:{binding_digest}",
+                decision=runtime_record.final_decision.value,
+                status=runtime_record.binding_status,
+                reason_codes=runtime_record.reason_codes,
+            ),
+            create_event(
+                12,
+                "RESULT_RECORDED",
+                "WebShopBuyNowGateOutcome",
+                "FINAL_OUTCOME",
+                outcome_binding,
+                "WebShopBuyNowGateOutcome:binding:{binding_digest}",
+                decision=outcome_decision.value,
+                reason_codes=outcome_reason_codes,
+            ),
+        )
+
+        source_bindings = (
+            mandate_binding,
+            order_binding,
+            request_binding,
+            action_binding,
+            candidate_binding,
+            action_fact_binding,
+            historical_binding,
+            known_fact_binding,
+            validation_binding,
+            runtime_binding,
+            outcome_binding,
+        )
+        return assemble_product_trace(
+            profile=T10_PROFILE,
+            trace_ref=(
+                f"ProductAuthoritativeTrace:{T10_PROFILE}:"
+                f"{bound_request.request_id}"
+            ),
+            events=events,
+            source_bindings=source_bindings,
+            expected_unique_binding_count=11,
+        )
+    except (KeyError, TypeError, ValueError, TraceContractError):
+        return None
+
+
+__all__ = ["T10_PROFILE", "build_t10_duplicate_preflight_trace"]
+
+===== FILE src/agentic_payment_experiment/webshop_happy_path_authoritative_trace.py =====
+sha256=0914030118e47419e27cf964e851ef7307fb62ee6608e477592b7fdbd6d61ce1
+bytes=22018
+"""Pure product-observed authoritative trace builder for the T01 happy path.
+
+The builder projects immutable facts already retained by the WebShop gate and
+produced by the payment/fulfilment sidecar. It does not rerun authorization,
+binding, payment recovery, conflict resolution, lifecycle, or side effects.
+"""
+
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import Any
+
+from .adapters.webshop import WebShopCommerceAdaptation
+from .authoritative_trace import (
+    ProductAuthoritativeTrace,
+    TraceBindingAssertion,
+    TraceContractError,
+)
+from .models import (
+    Decision,
+    FulfillmentRecord,
+    FulfillmentStatus,
+    IntentMandate,
+    Order,
+    PaymentExecutionRecord,
+    PaymentStatus,
+    RemediationStatus,
+    TaskStatus,
+    TransactionRequest,
+)
+from .trusted_execution import (
+    GovernedActionBindingFact,
+    GovernedPaymentAction,
+    RuntimeGateRecord,
+    VerificationStatus,
+)
+from .webshop_trace_assembler import (
+    assemble_product_trace,
+    create_event,
+    create_relation,
+    create_source_binding,
+    project_action_binding_fact,
+    project_governed_action,
+    project_mandate,
+    project_order,
+    project_payment,
+    project_request,
+    project_runtime_gate,
+)
+from .webshop_payment_sidecar import WebShopPaymentFulfilmentOutcome
+from .webshop_runtime_gate import WebShopBuyNowGateOutcome
+
+
+T01_PROFILE = "WEBSHOP_NORMAL_PURCHASE_V2"
+
+
+def _fulfillment_projection(record: FulfillmentRecord) -> dict[str, Any]:
+    return {
+        "fulfillment_id": record.fulfillment_id,
+        "order_id": record.order_id,
+        "status": record.status,
+        "failure_code": record.failure_code,
+        "reason_codes": (() if record.failure_code is None else (record.failure_code,)),
+    }
+
+
+def _sidecar_projection(
+    outcome: WebShopPaymentFulfilmentOutcome,
+) -> dict[str, Any]:
+    lifecycle = outcome.lifecycle
+    return {
+        "ready": outcome.ready,
+        "initial_payment_status": (
+            outcome.initial_payment.status if outcome.initial_payment else None
+        ),
+        "effective_payment_status": (
+            outcome.effective_payment.status if outcome.effective_payment else None
+        ),
+        "query_recovery_status": (
+            outcome.query_recovery.recovery_status
+            if outcome.query_recovery is not None
+            else None
+        ),
+        "status_conflict_resolution": (
+            outcome.status_conflict.resolution
+            if outcome.status_conflict is not None
+            else None
+        ),
+        "lifecycle_payment_status": (
+            lifecycle.payment_status if lifecycle is not None else None
+        ),
+        "lifecycle_fulfillment_status": (
+            lifecycle.fulfillment_status if lifecycle is not None else None
+        ),
+        "lifecycle_task_status": (
+            lifecycle.task_status if lifecycle is not None else None
+        ),
+        "lifecycle_remediation_status": (
+            lifecycle.remediation.status if lifecycle is not None else None
+        ),
+        "retry_allowed": outcome.retry_allowed,
+        "duplicate_payment_blocked": outcome.duplicate_payment_blocked,
+        "reason_codes": outcome.reason_codes,
+        "limitations": outcome.limitations,
+    }
+
+
+def _same_projection(
+    left: Mapping[str, Any],
+    right: Mapping[str, Any],
+) -> bool:
+    return dict(left) == dict(right)
+
+
+def _happy_path_facts(
+    *,
+    gate_outcome: WebShopBuyNowGateOutcome,
+    adaptation: WebShopCommerceAdaptation,
+    mandate: IntentMandate,
+    payment: PaymentExecutionRecord,
+    fulfillment: FulfillmentRecord,
+    base_outcome: WebShopPaymentFulfilmentOutcome,
+) -> tuple[
+    Order,
+    Order,
+    TransactionRequest,
+    GovernedPaymentAction,
+    PaymentExecutionRecord,
+    GovernedActionBindingFact,
+    RuntimeGateRecord,
+] | None:
+    if not adaptation.ready:
+        return None
+    if type(adaptation.order) is not Order:
+        return None
+    if type(adaptation.payment_request) is not TransactionRequest:
+        return None
+    if type(gate_outcome.authorized_order_snapshot) is not Order:
+        return None
+    if type(gate_outcome.bound_request) is not TransactionRequest:
+        return None
+    if type(gate_outcome.governed_action) is not GovernedPaymentAction:
+        return None
+    if type(gate_outcome.execution_candidate) is not PaymentExecutionRecord:
+        return None
+    if type(gate_outcome.governed_action_fact) is not GovernedActionBindingFact:
+        return None
+    if type(gate_outcome.runtime_gate_record) is not RuntimeGateRecord:
+        return None
+
+    authorized_order = gate_outcome.authorized_order_snapshot
+    current_order = adaptation.order
+    bound_request = gate_outcome.bound_request
+    governed_action = gate_outcome.governed_action
+    candidate = gate_outcome.execution_candidate
+    action_fact = gate_outcome.governed_action_fact
+    runtime_record = gate_outcome.runtime_gate_record
+
+    if gate_outcome.decision is not Decision.ALLOW:
+        return None
+    if not gate_outcome.checkout_executed or gate_outcome.callback_count != 1:
+        return None
+    if runtime_record.final_decision is not Decision.ALLOW:
+        return None
+    if not runtime_record.callback_executed or runtime_record.callback_count != 1:
+        return None
+    if action_fact.status is not VerificationStatus.VALID:
+        return None
+    if gate_outcome.known_payment_attempt_preflight_fact is not None:
+        return None
+    if candidate.status is not PaymentStatus.PENDING:
+        return None
+
+    if not _same_projection(
+        project_order(authorized_order),
+        project_order(current_order),
+    ):
+        return None
+    expected_adapter_request = dict(project_request(adaptation.payment_request))
+    expected_adapter_request["agent_id"] = bound_request.agent_id
+    if not _same_projection(
+        project_request(bound_request),
+        expected_adapter_request,
+    ):
+        return None
+
+    if mandate.mandate_id != current_order.mandate_ref:
+        return None
+    if mandate.authority_version != current_order.authority_version_ref:
+        return None
+    if bound_request.order_ref != current_order.order_id:
+        return None
+    if bound_request.authority_ref != mandate.mandate_id:
+        return None
+    if bound_request.authority_version_ref != mandate.authority_version:
+        return None
+    if governed_action.authority_ref != mandate.mandate_id:
+        return None
+    if governed_action.authority_version != mandate.authority_version:
+        return None
+    if governed_action.order_ref != current_order.order_id:
+        return None
+    if governed_action.order_version != current_order.order_version:
+        return None
+    if governed_action.request_ref != bound_request.request_id:
+        return None
+    if governed_action.payment_ref != candidate.payment_id:
+        return None
+    if action_fact.action_id != governed_action.action_id:
+        return None
+    if action_fact.checked_order_ref != current_order.order_id:
+        return None
+    if action_fact.checked_request_ref != bound_request.request_id:
+        return None
+    if action_fact.checked_payment_ref != candidate.payment_id:
+        return None
+
+    if not base_outcome.ready:
+        return None
+    if type(base_outcome.initial_payment) is not PaymentExecutionRecord:
+        return None
+    if type(base_outcome.effective_payment) is not PaymentExecutionRecord:
+        return None
+    if base_outcome.initial_payment != payment:
+        return None
+    if base_outcome.effective_payment != payment:
+        return None
+    if payment.status is not PaymentStatus.SUCCEEDED:
+        return None
+    if base_outcome.initial_payment.status is not PaymentStatus.SUCCEEDED:
+        return None
+    if base_outcome.effective_payment.status is not PaymentStatus.SUCCEEDED:
+        return None
+    if candidate.payment_id != payment.payment_id:
+        return None
+    if candidate.request_id != payment.request_id:
+        return None
+    if candidate.order_id != payment.order_id:
+        return None
+    if payment.request_id != bound_request.request_id:
+        return None
+    if payment.order_id != current_order.order_id:
+        return None
+    if fulfillment.status is not FulfillmentStatus.SUCCEEDED:
+        return None
+    if fulfillment.order_id != current_order.order_id:
+        return None
+    if base_outcome.query_recovery is not None:
+        return None
+    if base_outcome.status_conflict is not None:
+        return None
+    if base_outcome.retry_allowed:
+        return None
+    if base_outcome.duplicate_payment_blocked:
+        return None
+    if base_outcome.lifecycle is None:
+        return None
+    if base_outcome.lifecycle.payment_status is not PaymentStatus.SUCCEEDED:
+        return None
+    if base_outcome.lifecycle.fulfillment_status is not FulfillmentStatus.SUCCEEDED:
+        return None
+    if base_outcome.lifecycle.task_status is not TaskStatus.SUCCEEDED:
+        return None
+    if base_outcome.lifecycle.remediation.status is not RemediationStatus.NOT_REQUIRED:
+        return None
+
+    return (
+        authorized_order,
+        current_order,
+        bound_request,
+        governed_action,
+        candidate,
+        action_fact,
+        runtime_record,
+    )
+
+
+def build_t01_happy_path_trace(
+    *,
+    gate_outcome: WebShopBuyNowGateOutcome,
+    adaptation: WebShopCommerceAdaptation,
+    mandate: IntentMandate,
+    payment: PaymentExecutionRecord,
+    fulfillment: FulfillmentRecord,
+    base_outcome: WebShopPaymentFulfilmentOutcome,
+) -> ProductAuthoritativeTrace | None:
+    """Build the exact T01 product trace or fail closed with ``None``."""
+
+    exact_types = (
+        type(gate_outcome) is WebShopBuyNowGateOutcome,
+        type(adaptation) is WebShopCommerceAdaptation,
+        type(mandate) is IntentMandate,
+        type(payment) is PaymentExecutionRecord,
+        type(fulfillment) is FulfillmentRecord,
+        type(base_outcome) is WebShopPaymentFulfilmentOutcome,
+    )
+    if not all(exact_types):
+        return None
+
+    facts = _happy_path_facts(
+        gate_outcome=gate_outcome,
+        adaptation=adaptation,
+        mandate=mandate,
+        payment=payment,
+        fulfillment=fulfillment,
+        base_outcome=base_outcome,
+    )
+    if facts is None:
+        return None
+    (
+        authorized_order,
+        current_order,
+        bound_request,
+        governed_action,
+        candidate,
+        action_fact,
+        runtime_record,
+    ) = facts
+
+    try:
+        mandate_binding = create_source_binding(
+            "IntentMandate",
+            "intent-mandate-trace/v2",
+            project_mandate(mandate),
+        )
+        order_binding = create_source_binding(
+            "Order",
+            "order-snapshot-trace/v2",
+            project_order(current_order),
+        )
+        request_binding = create_source_binding(
+            "TransactionRequest",
+            "transaction-request-trace/v2",
+            project_request(bound_request),
+        )
+        action_binding = create_source_binding(
+            "GovernedPaymentAction",
+            "governed-payment-action-trace/v2",
+            project_governed_action(governed_action),
+        )
+        candidate_binding = create_source_binding(
+            "PaymentExecutionRecord",
+            "payment-execution-record-trace/v2",
+            project_payment(candidate),
+        )
+        action_fact_binding = create_source_binding(
+            "GovernedActionBindingFact",
+            "governed-action-binding-fact-trace/v2",
+            project_action_binding_fact(action_fact),
+        )
+        runtime_binding = create_source_binding(
+            "RuntimeGateRecord",
+            "runtime-gate-record-trace/v2",
+            project_runtime_gate(runtime_record),
+        )
+        payment_binding = create_source_binding(
+            "PaymentExecutionRecord",
+            "payment-execution-record-trace/v2",
+            project_payment(payment),
+        )
+        fulfillment_binding = create_source_binding(
+            "FulfillmentRecord",
+            "fulfillment-record-trace/v2",
+            _fulfillment_projection(fulfillment),
+        )
+        outcome_binding = create_source_binding(
+            "WebShopPaymentFulfilmentOutcome",
+            "webshop-payment-fulfilment-outcome-result-trace/v2",
+            _sidecar_projection(base_outcome),
+        )
+
+        if candidate_binding.binding_ref == payment_binding.binding_ref:
+            return None
+        if candidate_binding.source_object_ref != payment_binding.source_object_ref:
+            return None
+
+        authority_ref = f"IntentMandate:{mandate.mandate_id}"
+        order_ref = f"Order:{current_order.order_id}"
+        request_ref = f"TransactionRequest:{bound_request.request_id}"
+        action_ref = f"GovernedPaymentAction:{governed_action.action_id}"
+        candidate_ref = f"PaymentExecutionRecord:{candidate.payment_id}"
+
+        authority_version_assertion = TraceBindingAssertion(
+            source_path="projection.authority_version_ref",
+            target_path="projection.authority_version",
+        )
+        action_authority_assertion = TraceBindingAssertion(
+            source_path="projection.authority_version",
+            target_path="projection.authority_version",
+        )
+        action_order_assertion = TraceBindingAssertion(
+            source_path="projection.order_version",
+            target_path="projection.order_version",
+        )
+
+        events = (
+            create_event(
+                1,
+                "AUTHORITY_RECORDED",
+                "IntentMandate",
+                "AUTHORITY",
+                mandate_binding,
+                "IntentMandate:{projection.mandate_id}",
+            ),
+            create_event(
+                2,
+                "ORDER_RECORDED",
+                "Order",
+                "AUTHORIZED_ORDER_SNAPSHOT",
+                order_binding,
+                "Order:{projection.order_id}",
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "IntentMandate",
+                        "AUTHORITY",
+                        authority_ref,
+                        assertions=(authority_version_assertion,),
+                    ),
+                ),
+            ),
+            create_event(
+                3,
+                "ORDER_RECORDED",
+                "Order",
+                "CURRENT_ORDER_SNAPSHOT",
+                order_binding,
+                "Order:{projection.order_id}",
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "IntentMandate",
+                        "AUTHORITY",
+                        authority_ref,
+                        assertions=(authority_version_assertion,),
+                    ),
+                ),
+            ),
+            create_event(
+                4,
+                "REQUEST_RECORDED",
+                "TransactionRequest",
+                "CURRENT_REQUEST",
+                request_binding,
+                "TransactionRequest:{projection.request_id}",
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "IntentMandate",
+                        "AUTHORITY",
+                        authority_ref,
+                        assertions=(authority_version_assertion,),
+                    ),
+                ),
+            ),
+            create_event(
+                5,
+                "ACTION_RECORDED",
+                "GovernedPaymentAction",
+                "GOVERNED_ACTION",
+                action_binding,
+                "GovernedPaymentAction:{projection.action_id}",
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "IntentMandate",
+                        "AUTHORITY",
+                        authority_ref,
+                        assertions=(action_authority_assertion,),
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                        assertions=(action_order_assertion,),
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "TransactionRequest",
+                        "CURRENT_REQUEST",
+                        request_ref,
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "PaymentExecutionRecord",
+                        "CURRENT_PAYMENT_CANDIDATE",
+                        candidate_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                6,
+                "PAYMENT_CANDIDATE_RECORDED",
+                "PaymentExecutionRecord",
+                "CURRENT_PAYMENT_CANDIDATE",
+                candidate_binding,
+                "PaymentExecutionRecord:{projection.payment_id}",
+                status=candidate.status.value,
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "TransactionRequest",
+                        "CURRENT_REQUEST",
+                        request_ref,
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                7,
+                "ACTION_BINDING_DECISION_RECORDED",
+                "GovernedActionBindingFact",
+                "ACTION_BINDING_FACT",
+                action_fact_binding,
+                "GovernedActionBindingFact:binding:{binding_digest}",
+                status=action_fact.status.value,
+                reason_codes=action_fact.reason_codes,
+                relations=(
+                    create_relation(
+                        "VALIDATED_AGAINST",
+                        "GovernedPaymentAction",
+                        "GOVERNED_ACTION",
+                        action_ref,
+                    ),
+                    create_relation(
+                        "VALIDATED_AGAINST",
+                        "PaymentExecutionRecord",
+                        "CURRENT_PAYMENT_CANDIDATE",
+                        candidate_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                8,
+                "RUNTIME_DECISION_RECORDED",
+                "RuntimeGateRecord",
+                "RUNTIME_GATE_OBSERVATION",
+                runtime_binding,
+                "RuntimeGateRecord:binding:{binding_digest}",
+                decision=runtime_record.final_decision.value,
+                status=runtime_record.binding_status,
+                reason_codes=runtime_record.reason_codes,
+            ),
+            create_event(
+                9,
+                "PAYMENT_OUTCOME_RECORDED",
+                "PaymentExecutionRecord",
+                "PAYMENT_EXECUTION_OUTCOME",
+                payment_binding,
+                "PaymentExecutionRecord:{projection.payment_id}",
+                status=payment.status.value,
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "TransactionRequest",
+                        "CURRENT_REQUEST",
+                        request_ref,
+                    ),
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                10,
+                "FULFILMENT_OUTCOME_RECORDED",
+                "FulfillmentRecord",
+                "FULFILMENT_OUTCOME",
+                fulfillment_binding,
+                "FulfillmentRecord:{projection.fulfillment_id}",
+                status=fulfillment.status.value,
+                reason_codes=(
+                    () if fulfillment.failure_code is None else (fulfillment.failure_code,)
+                ),
+                relations=(
+                    create_relation(
+                        "BOUND_TO",
+                        "Order",
+                        "CURRENT_ORDER_SNAPSHOT",
+                        order_ref,
+                    ),
+                ),
+            ),
+            create_event(
+                11,
+                "RESULT_RECORDED",
+                "WebShopPaymentFulfilmentOutcome",
+                "FINAL_OUTCOME",
+                outcome_binding,
+                "WebShopPaymentFulfilmentOutcome:binding:{binding_digest}",
+                status=base_outcome.lifecycle.task_status.value,
+                reason_codes=base_outcome.reason_codes,
+            ),
+        )
+
+        source_bindings = (
+            mandate_binding,
+            order_binding,
+            request_binding,
+            action_binding,
+            candidate_binding,
+            action_fact_binding,
+            runtime_binding,
+            payment_binding,
+            fulfillment_binding,
+            outcome_binding,
+        )
+        return assemble_product_trace(
+            profile=T01_PROFILE,
+            trace_ref=(
+                f"ProductAuthoritativeTrace:{T01_PROFILE}:"
+                f"{bound_request.request_id}"
+            ),
+            events=events,
+            source_bindings=source_bindings,
+            expected_unique_binding_count=10,
+        )
+    except (KeyError, TypeError, ValueError, TraceContractError):
+        return None
+
+
+__all__ = ["T01_PROFILE", "build_t01_happy_path_trace"]
+
+===== FILE tests/test_webshop_trace_assembler.py =====
+sha256=4b7c71b086a12eacabcb18ba6fa863150dd5b4f85cab92cd096087c8e9468e50
+bytes=9362
+from __future__ import annotations
+
+import ast
+from pathlib import Path
+import sys
+import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from agentic_payment_experiment.webshop_trace_assembler import (
+    __all__ as ASSEMBLER_PUBLIC_API,
+    assemble_product_trace,
+    create_source_binding,
+    project_action_binding_fact,
+    project_governed_action,
+    project_mandate,
+    project_order,
+    project_payment,
+    project_request,
+    project_runtime_gate,
+)
+from tests.test_webshop_authoritative_trace import _valid_t10
+from tests import test_webshop_payment_sidecar as sidecar_tests
+
+
+ROOT = Path(__file__).resolve().parents[1]
+ASSEMBLER_PATH = ROOT / "src/agentic_payment_experiment/webshop_trace_assembler.py"
+T01_BUILDER_PATH = (
+    ROOT / "src/agentic_payment_experiment/webshop_happy_path_authoritative_trace.py"
+)
+T10_BUILDER_PATH = ROOT / "src/agentic_payment_experiment/webshop_authoritative_trace.py"
+
+
+class WebShopTraceAssemblerTest(unittest.TestCase):
+    def test_public_surface_is_neutral_and_contains_shared_mechanics(self) -> None:
+        self.assertIn("assemble_product_trace", ASSEMBLER_PUBLIC_API)
+        self.assertIn("create_source_binding", ASSEMBLER_PUBLIC_API)
+        self.assertIn("create_relation", ASSEMBLER_PUBLIC_API)
+        self.assertIn("create_event", ASSEMBLER_PUBLIC_API)
+        self.assertIn("project_order", ASSEMBLER_PUBLIC_API)
+        self.assertTrue(all(not name.startswith("_") for name in ASSEMBLER_PUBLIC_API))
+        self.assertTrue(
+            all("t01" not in name.lower() and "t10" not in name.lower() for name in ASSEMBLER_PUBLIC_API)
+        )
+
+    def test_shared_projections_recreate_t10_source_bindings(self) -> None:
+        case, historical, outcome, _ = _valid_t10()
+        trace = outcome.authoritative_trace
+        assert trace is not None
+        fact = outcome.governed_action_fact
+        runtime_record = outcome.runtime_gate_record
+        assert fact is not None
+        assert runtime_record is not None
+
+        rebuilt = (
+            create_source_binding(
+                "IntentMandate",
+                "intent-mandate-trace/v2",
+                project_mandate(case.mandate),
+            ),
+            create_source_binding(
+                "Order",
+                "order-snapshot-trace/v2",
+                project_order(case.adaptation.order),
+            ),
+            create_source_binding(
+                "TransactionRequest",
+                "transaction-request-trace/v2",
+                project_request(case.bound_request),
+            ),
+            create_source_binding(
+                "GovernedPaymentAction",
+                "governed-payment-action-trace/v2",
+                project_governed_action(case.governed_action),
+            ),
+            create_source_binding(
+                "PaymentExecutionRecord",
+                "payment-execution-record-trace/v2",
+                project_payment(case.execution),
+            ),
+            create_source_binding(
+                "GovernedActionBindingFact",
+                "governed-action-binding-fact-trace/v2",
+                project_action_binding_fact(fact),
+            ),
+            create_source_binding(
+                "PaymentExecutionRecord",
+                "payment-execution-record-trace/v2",
+                project_payment(historical),
+            ),
+            create_source_binding(
+                "RuntimeGateRecord",
+                "runtime-gate-record-trace/v2",
+                project_runtime_gate(runtime_record),
+            ),
+        )
+        actual_by_ref = {binding.binding_ref: binding for binding in trace.source_bindings}
+        for binding in rebuilt:
+            with self.subTest(source_object_type=binding.source_object_type):
+                self.assertIn(binding.binding_ref, actual_by_ref)
+                self.assertEqual(binding, actual_by_ref[binding.binding_ref])
+
+    def test_shared_envelope_reassembles_existing_t01_and_t10_traces(self) -> None:
+        _, _, t10_outcome, _ = _valid_t10()
+        t10_trace = t10_outcome.authoritative_trace
+        assert t10_trace is not None
+        rebuilt_t10 = assemble_product_trace(
+            profile=t10_trace.profile,
+            trace_ref=t10_trace.trace_ref,
+            events=t10_trace.events,
+            source_bindings=t10_trace.source_bindings,
+            expected_unique_binding_count=11,
+        )
+        self.assertEqual(t10_trace, rebuilt_t10)
+
+        case = sidecar_tests.WebShopPaymentSidecarTest(methodName="runTest")
+        case.setUp()
+        gate, _, payment, fulfillment = case.happy_path_inputs()
+        t01_outcome = case.assess(
+            gate_outcome=gate,
+            payment=payment,
+            fulfillment=fulfillment,
+        )
+        t01_trace = t01_outcome.authoritative_trace
+        assert t01_trace is not None
+        rebuilt_t01 = assemble_product_trace(
+            profile=t01_trace.profile,
+            trace_ref=t01_trace.trace_ref,
+            events=t01_trace.events,
+            source_bindings=t01_trace.source_bindings,
+            expected_unique_binding_count=10,
+        )
+        self.assertEqual(t01_trace, rebuilt_t01)
+
+    def test_envelope_fails_closed_for_duplicate_or_wrong_binding_count(self) -> None:
+        _, _, outcome, _ = _valid_t10()
+        trace = outcome.authoritative_trace
+        assert trace is not None
+
+        duplicate_bindings = (*trace.source_bindings, trace.source_bindings[0])
+        self.assertIsNone(
+            assemble_product_trace(
+                profile=trace.profile,
+                trace_ref=trace.trace_ref,
+                events=trace.events,
+                source_bindings=duplicate_bindings,
+                expected_unique_binding_count=11,
+            )
+        )
+        self.assertIsNone(
+            assemble_product_trace(
+                profile=trace.profile,
+                trace_ref=trace.trace_ref,
+                events=trace.events,
+                source_bindings=trace.source_bindings,
+                expected_unique_binding_count=10,
+            )
+        )
+        self.assertIsNone(
+            assemble_product_trace(
+                profile="",
+                trace_ref=trace.trace_ref,
+                events=trace.events,
+                source_bindings=trace.source_bindings,
+                expected_unique_binding_count=11,
+            )
+        )
+
+    def test_builders_share_assembler_without_cross_builder_imports(self) -> None:
+        def imports(path: Path) -> set[str]:
+            tree = ast.parse(path.read_text(encoding="utf-8"))
+            return {
+                node.module or ""
+                for node in ast.walk(tree)
+                if isinstance(node, ast.ImportFrom)
+            }
+
+        t01_imports = imports(T01_BUILDER_PATH)
+        t10_imports = imports(T10_BUILDER_PATH)
+        self.assertIn("webshop_trace_assembler", t01_imports)
+        self.assertIn("webshop_trace_assembler", t10_imports)
+        self.assertNotIn("webshop_authoritative_trace", t01_imports)
+        self.assertNotIn("webshop_happy_path_authoritative_trace", t10_imports)
+
+        t01_source = T01_BUILDER_PATH.read_text(encoding="utf-8")
+        t10_source = T10_BUILDER_PATH.read_text(encoding="utf-8")
+        self.assertIn("assemble_product_trace(", t01_source)
+        self.assertIn("assemble_product_trace(", t10_source)
+
+    def test_assembler_has_no_business_or_external_state_dependency(self) -> None:
+        source = ASSEMBLER_PATH.read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        imports: set[str] = set()
+        called: set[str] = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                imports.update(alias.name.split(".")[0] for alias in node.names)
+            elif isinstance(node, ast.ImportFrom):
+                imports.add(node.module or "")
+            elif isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Name):
+                    called.add(node.func.id)
+                elif isinstance(node.func, ast.Attribute):
+                    called.add(node.func.attr)
+
+        self.assertTrue(
+            imports.isdisjoint(
+                {"os", "pathlib", "socket", "subprocess", "requests", "urllib", "random", "time"}
+            ),
+            imports,
+        )
+        self.assertTrue(
+            called.isdisjoint(
+                {
+                    "open",
+                    "read_text",
+                    "write_text",
+                    "getenv",
+                    "run",
+                    "Popen",
+                    "urlopen",
+                    "socket",
+                    "validate_request",
+                    "verify_governed_payment_action",
+                    "derive_known_payment_attempt_preflight",
+                    "observe_payment_execution_gate",
+                    "assess_payment_recovery",
+                    "derive_payment_status_conflict",
+                    "assess_lifecycle",
+                    "checkout_callback",
+                    "execute_payment",
+                }
+            ),
+            called,
+        )
+        for forbidden in ("T01", "T10", "GateContext", "CURRENT.md", "evidence/"):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, source)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+===== FILE docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_ASSEMBLER_EXTRACTION_V1/CONTRACT.md =====
+sha256=cfc09a7bb59cb78e16ff051e787b58cb88432895862c602400f9b9cfc60805d2
+bytes=12994
+# Frozen Task Contract
+
+Task ID: `P9-PRODUCT-AUTHORITATIVE-TRACE-ASSEMBLER-EXTRACTION-V1`  
+Task name: 产品权威轨迹统一 Assembler 等价抽取  
+Workflow: `evaluator-executor-workflow/v2.1`  
+Task kind: `maintenance`  
+Risk: `L1`  
+Contract state: `CONTRACT_FROZEN`  
+Branch: `main`  
+Baseline HEAD: `b4eff597ebffe79c575522b91642f82b26ad5247`
+
+## Strategic basis
+
+Project map: `docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md`  
+Map revision: `2026-08-06-r7`  
+Related bottleneck: `B-03`  
+Related hypothesis: `H-03`  
+Parent task: `P9-PRODUCT-AUTHORITATIVE-TRACE-T01-HAPPY-PATH-SLICE-V1`  
+Parent verdict: `PASS / IMPROVED`
+
+T10 拒绝链与 T01 正常成功链已经分别形成真实产品权威轨迹：
+
+```text
+T10 = VALID / 12 events / 11 bindings
+T01 = VALID / 11 events / 10 bindings
+Product Trace = 2/12
+baseline GESR = 1/12
+```
+
+两个 builder 已复用 binding、event、relation 和多类 projection，但这些公共函数仍位于 T10 命名模块 `webshop_authoritative_trace.py`，T01 通过 `_xxx` 私有函数跨模块引用。第三个场景前必须先抽成中立公共组装层，避免继续形成按 T 编号复制的实现。
+
+本任务只做架构等价维护，不宣称 B-03 再次缩小。正确项目影响应为 `NOT_APPLICABLE`，任何产品覆盖或业务指标变化都视为回归。
+
+## Single objective
+
+新增中立的 WebShop Trace Assembler，把 T01/T10 已验证的机械能力统一到一个模块：
+
+```text
+事实 projection
+→ source binding
+→ relation
+→ event
+→ envelope
+→ ProductAuthoritativeTrace
+```
+
+T01/T10 仅保留：
+
+```text
+场景事实是否成立
++ 场景专用 projection
++ 事件顺序与角色组合
++ profile / trace_ref
+```
+
+重构前后，T01/T10 的完整轨迹快照、baseline 输出、指标、产品行为和所有安全守护线必须完全一致。
+
+## Entering baseline
+
+### Product and measurement baseline
+
+```text
+Product Trace = 2/12
+baseline GESR = 1/12
+T01 trace = VALID / webshop_payment_fulfilment_outcome / 11 events / 10 bindings
+T10 trace = VALID / webshop_gate_outcome / 12 events / 11 bindings
+valid product tasks = T01, T10
+non-trace projection SHA-256
+= 6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc
+```
+
+Accepted baseline repeat=3：
+
+```text
+baseline output SHA-256
+= 8d4304dce72bb4f3d572512ee4d09e2e4bd2ee06f34ec4e8e6b0887acf059d9a
+
+normalized SHA-256 × 3
+= 56a82f9ab99cd5d83ae0b1259c2cef9f6b6cdf2a1b7183c029ba7569ab332619
+```
+
+### Full trace snapshot baseline
+
+Frozen snapshot：
+
+```text
+docs/05_任务交接/
+P9_PRODUCT_AUTHORITATIVE_TRACE_ASSEMBLER_EXTRACTION_V1/
+evidence/BASELINE-trace-snapshots.json
+```
+
+Accepted hashes：
+
+```text
+snapshot file SHA-256
+= 2d33116baca3e6fd401afbb3c4f01552decbd5959d8452d2d6301fcf1fd58234
+
+T01 canonical full trace SHA-256
+= 7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906
+
+T10 canonical full trace SHA-256
+= 2b97fd1f81001086d4793bf21fd0dbe3ed950643e6d9e5031e18510fb7c99fb3
+
+combined T01+T10 canonical trace SHA-256
+= d913fc7d3a69abfb0c7774356a988a5e23cf3780a70523a03ced2672bec5ac4c
+```
+
+### Current implementation hashes
+
+```text
+webshop_authoritative_trace.py
+= e6864905f4b67ef3024b7f7118b547c27c586127c60d537a3f5bab5a48f1e2c9
+
+webshop_happy_path_authoritative_trace.py
+= 51b2d6873d66bb28ebbefa321f90e4ea4ab9a6d0102e38e9f8b312413b244880
+
+webshop_runtime_gate.py
+= 5abf1a6f08060e111b6fbd9ba96809c2823ef07adee0e23b6d60a6c50c06bdef
+
+webshop_payment_sidecar.py
+= 833a34c005061a69b29265190b3c609ec92278afe0bb0d48a700546b548436f7
+```
+
+T01/T10 builder 文件允许因等价重构改变；gate、sidecar、runner、validator、fixtures 和 registry 必须保持冻结哈希。
+
+## Single principal change
+
+只做一个主要变化：
+
+> 把 T01/T10 已复用的机械轨迹构造能力从 T10 命名模块抽到中立 `webshop_trace_assembler.py`，并让两个场景 builder 同时使用它。
+
+不得同时增加第三个场景、改变业务事实留存、修改产品调用路径或调整测量工具。
+
+## Acceptance criteria
+
+### AC-01 — Neutral assembler module
+
+新增：
+
+```text
+src/agentic_payment_experiment/webshop_trace_assembler.py
+```
+
+该模块统一承载已验证的机械能力：
+
+- source binding 构造；
+- relation 构造；
+- event 构造；
+- mandate/order/request/action/payment/action fact/runtime 等公共 projection；
+- `ProductAuthoritativeTrace` envelope 组装；
+- 期望 unique binding 数量检查和 fail-closed。
+
+模块名、公开函数和文档不得带 T01 或 T10 专属含义。
+
+### AC-02 — No private cross-builder dependency
+
+重构后：
+
+```text
+webshop_happy_path_authoritative_trace.py
+不得 import webshop_authoritative_trace.py 的任何 _xxx 私有函数
+
+webshop_authoritative_trace.py
+不得 import webshop_happy_path_authoritative_trace.py
+```
+
+两个 builder 只能共同依赖中立 assembler 和现有数据合同。
+
+### AC-03 — One shared envelope assembly path
+
+T01 与 T10 必须使用同一个中立 envelope assembly 函数。该函数至少接收：
+
+- profile；
+- trace ref 或稳定 trace ref 输入；
+- ordered events；
+- ordered source bindings；
+- expected unique binding count。
+
+它负责统一设置：
+
+```text
+schema_version = product-authoritative-trace/v1
+source = PRODUCT_OBSERVED
+completeness_status = COMPLETE
+```
+
+并在类型、重复 binding 或数量不符时 fail-closed。
+
+### AC-04 — T01 full trace invariance
+
+使用冻结生成脚本重新生成快照，T01 必须保持：
+
+```text
+canonical full trace SHA-256
+= 7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906
+
+events = 11
+bindings = 10
+profile = WEBSHOP_NORMAL_PURCHASE_V2
+source = PRODUCT_OBSERVED
+validator = VALID
+```
+
+事件、relation、source ref、binding ref、entity ref、status、decision、reason codes 和 projection 均不得变化。
+
+### AC-05 — T10 full trace invariance
+
+使用冻结生成脚本重新生成快照，T10 必须保持：
+
+```text
+canonical full trace SHA-256
+= 2b97fd1f81001086d4793bf21fd0dbe3ed950643e6d9e5031e18510fb7c99fb3
+
+events = 12
+bindings = 11
+profile = WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V2
+source = PRODUCT_OBSERVED
+validator = VALID
+```
+
+事件、relation、source ref、binding ref、entity ref、status、decision、reason codes 和 projection 均不得变化。
+
+### AC-06 — Baseline byte and metric invariance
+
+使用同一 accepted fixture、runner 和 `repeat=3`，必须保持：
+
+```text
+baseline output SHA-256
+= 8d4304dce72bb4f3d572512ee4d09e2e4bd2ee06f34ec4e8e6b0887acf059d9a
+
+normalized SHA-256 × 3
+= 56a82f9ab99cd5d83ae0b1259c2cef9f6b6cdf2a1b7183c029ba7569ab332619
+
+Product Trace = 2/12
+baseline GESR = 1/12
+valid product tasks = T01, T10
+non-trace projection SHA-256
+= 6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc
+```
+
+### AC-07 — Pure mechanical boundary
+
+Assembler 不得：
+
+- 调用 authorization、order validation、binding verification、Runtime Gate、payment、recovery、conflict、lifecycle 或 side-effect 业务函数；
+- 判断 T01/T10 场景是否成立；
+- 读取 runner、fixture、docs、CURRENT、evidence、文件、环境变量、当前时间或随机数；
+- 访问网络、进程、WebShop、callback 或外部服务；
+- 补造缺失事实。
+
+任一无效机械输入必须返回 `None` 或抛出已接受的 `TraceContractError`，由场景 builder 统一 fail-closed。
+
+### AC-08 — Coverage remains exactly T01 and T10
+
+重构后产品轨迹覆盖必须仍然只有：
+
+```text
+T01
+T10
+```
+
+不得新增 T02—T09、T11、T12 producer，不得修改 gate/sidecar 事实留存或产品调用路径。
+
+### AC-09 — Frozen boundaries
+
+以下 SHA-256 必须保持：
+
+```text
+runner
+= 70bf2142c303c01c6fb3270fb364c46bc220b821c5e554fa2e6af3355dc57dd3
+
+authoritative_trace.py
+= 07c7341b62440ea22a6fb22daa2e5e8b48163bc70ba534ac9cb065ffb001414a
+
+baseline fixture
+= 4ed2e1f35325cb840de834f5e8c964ff187c291133c958a2ee22111735b615f5
+
+T10 target fixture
+= f5dc05501c79958b197ea7a727e12660756145da870b897496a9ccac714cacee
+
+gate
+= 5abf1a6f08060e111b6fbd9ba96809c2823ef07adee0e23b6d60a6c50c06bdef
+
+sidecar
+= 833a34c005061a69b29265190b3c609ec92278afe0bb0d48a700546b548436f7
+
+formula registry
+= 2d8f06ba7c5ca9e35c4957412c0b92da5171c95e135e0bb14b5a61d1bf3309fd
+
+projection registry
+= 45aeaa0abb46fbf66573be1ee417bafb41c99802061bc5b3cb63549313c049b4
+
+profiles
+= 6b53b88d5413ae9dd6d536089a22efe3f32563b950f61604c79f136c03d720c2
+
+runtime contract
+= 4062944a6b3dfa5ca8042bc4f6a0ed429a75f00b8875c71c844e7eb0eb304f0e
+```
+
+### AC-10 — Tests and evidence
+
+运行：
+
+```text
+python3 -m unittest \
+  tests.test_webshop_trace_assembler \
+  tests.test_webshop_authoritative_trace \
+  tests.test_webshop_payment_sidecar \
+  tests.test_authoritative_trace \
+  tests.test_project_impact_baseline -v
+
+python3 -m unittest discover -s tests -p 'test_*.py'
+
+python3 scripts/validation/run_project_impact_baseline.py \
+  --repeat 3 \
+  --output <evidence>/EV-AFTER-baseline.json
+
+PYTHONPATH=src:. python3 \
+  <task-evidence>/BASELINE-generate-trace-snapshots.py
+```
+
+要求：
+
+- focused 全过；
+- full 至少 `492` 项且全部通过；
+- baseline output 和 normalized hashes 完全一致；
+- T01/T10 full trace hashes 完全一致；
+- 保存 AST/import boundary audit；
+- workflow validator 为 `OK`。
+
+## Validation plan
+
+| VP | Exact action | Expected result |
+|---|---|---|
+| VP-01 | AST 检查两个 builder import | 两者只共享中立 assembler，不再私有跨引用 |
+| VP-02 | assembler 单元测试 | binding/event/relation/projection/envelope 与 fail-closed 均通过 |
+| VP-03 | 重跑 full trace snapshot | T01、T10、combined hashes 与冻结值一致 |
+| VP-04 | T01/T10 真实产品调用 | 两条轨迹继续 `VALID`，事件与 binding 数量不变 |
+| VP-05 | baseline repeat=3 | 输出 SHA、normalized SHA、Product Trace、GESR 完全不变 |
+| VP-06 | producer coverage scan | 产品轨迹仍仅 T01、T10 |
+| VP-07 | frozen hash audit | runner、validator、fixtures、gate、sidecar、registries 全部不变 |
+| VP-08 | focused/full unittest | focused 全过；full 至少 492 项全过 |
+| VP-09 | workflow validator | `OK` |
+
+## Allowed scope
+
+可修改：
+
+- `src/agentic_payment_experiment/webshop_trace_assembler.py`（新增）；
+- `src/agentic_payment_experiment/webshop_authoritative_trace.py`；
+- `src/agentic_payment_experiment/webshop_happy_path_authoritative_trace.py`；
+- `tests/test_webshop_trace_assembler.py`（新增）；
+- `tests/test_webshop_authoritative_trace.py`；
+- `tests/test_webshop_payment_sidecar.py`；
+- 本任务 `REPORT.md`；
+- 本任务 `evidence/EV-*`；
+- `CURRENT.md`（仅 `CONTRACT_FROZEN → EXECUTING`）。
+
+冻结 baseline 文件：
+
+- `evidence/BASELINE-generate-trace-snapshots.py`；
+- `evidence/BASELINE-trace-snapshots.json`。
+
+工作区继承此前已接受但未提交的 P9 产物。不得清理、重置、覆盖或回退继承内容。
+
+## Exclusions
+
+- 不修改 `webshop_runtime_gate.py` 或 `webshop_payment_sidecar.py`；
+- 不修改 `authoritative_trace.py`、runner、fixtures、registry、profile 或项目地图；
+- 不新增 T02—T09、T11、T12 产品轨迹；
+- 不改变任何授权、确认、binding、Runtime Gate、payment、recovery、conflict、lifecycle 或 side-effect 规则；
+- 不新增或移除 gate/sidecar outcome 字段；
+- 不改变 T01/T10 product source、profile、trace ref、事件、projection、binding 或 relation；
+- 不调用网络、LLM、外部 API、WebShop runtime、Buy Now、钱包、支付或订单；
+- 不安装依赖、不创建环境；
+- 不提交、不推送、不改写历史；
+- 不清理、删除、重置或回退继承产物。
+
+## Stop conditions
+
+立即停止并报告，不得扩大范围：
+
+- 任一 T01/T10 full trace hash 变化；
+- baseline output/normalized/non-trace hash 变化；
+- Product Trace 或 GESR 变化；
+- 需要修改 gate、sidecar、runner、validator、fixture 或 registry；
+- 需要改变场景事实判断或业务规则；
+- 出现第三个产品 trace producer；
+- 无法在中立模块中消除 T01 对 T10 私有函数的依赖；
+- 需要外部副作用、依赖安装或新环境。
+
+## Required report
+
+REPORT 必须包含：
+
+- exact changed files 和 SHA-256；
+- 抽取前后模块依赖图；
+- 统一 assembler 的公开函数与职责边界；
+- T01/T10 builder 保留的场景专属逻辑；
+- T01/T10 full trace before/after hashes；
+- baseline repeat=3 output/normalized hashes；
+- Product Trace、GESR 和 non-trace hash；
+- producer coverage scan；
+- frozen boundary hashes；
+- focused/full tests 原始证据；
+- workflow validator；
+- `task_verdict_candidate`；
+- `project_impact_candidate: NOT_APPLICABLE`。
+
+## Authorization
+
+- commit: false
+- push: false
+- history_rewrite: false
+- api_call: false
+- network_call: false
+- data_download: false
+- dependency_install: false
+- create_environment: false
+- webshop_runtime_execution: false
+- buy_now_execution: false
+- payment_or_order_side_effect: false
+
+## Amendments
+
+None.
+

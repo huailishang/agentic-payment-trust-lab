@@ -1,0 +1,160 @@
+test_assembler_has_no_business_or_external_state_dependency (tests.test_webshop_trace_assembler.WebShopTraceAssemblerTest.test_assembler_has_no_business_or_external_state_dependency) ... ok
+test_envelope_fails_closed_for_duplicate_or_wrong_binding_count (tests.test_webshop_trace_assembler.WebShopTraceAssemblerTest.test_envelope_fails_closed_for_duplicate_or_wrong_binding_count) ... ok
+test_fulfillment_and_conflict_projections_recreate_family_bindings (tests.test_webshop_trace_assembler.WebShopTraceAssemblerTest.test_fulfillment_and_conflict_projections_recreate_family_bindings) ... ok
+test_public_surface_is_neutral_and_contains_shared_mechanics (tests.test_webshop_trace_assembler.WebShopTraceAssemblerTest.test_public_surface_is_neutral_and_contains_shared_mechanics) ... ok
+test_recovery_and_sidecar_projections_recreate_t09_bindings (tests.test_webshop_trace_assembler.WebShopTraceAssemblerTest.test_recovery_and_sidecar_projections_recreate_t09_bindings) ... ok
+test_shared_envelope_reassembles_existing_t01_and_t10_traces (tests.test_webshop_trace_assembler.WebShopTraceAssemblerTest.test_shared_envelope_reassembles_existing_t01_and_t10_traces) ... ok
+test_shared_projections_recreate_t10_source_bindings (tests.test_webshop_trace_assembler.WebShopTraceAssemblerTest.test_shared_projections_recreate_t10_source_bindings) ... ok
+test_sidecar_family_delegates_to_one_toolkit_assembly_path (tests.test_webshop_trace_assembler.WebShopTraceAssemblerTest.test_sidecar_family_delegates_to_one_toolkit_assembly_path) ... ok
+test_authorized_and_current_snapshot_inputs_remain_immutable (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_authorized_and_current_snapshot_inputs_remain_immutable) ... ok
+test_authorized_snapshot_api_is_keyword_only (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_authorized_snapshot_api_is_keyword_only) ... ok
+test_bound_succeeded_attempt_denies_before_callback_via_duplicate_gate (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_bound_succeeded_attempt_denies_before_callback_via_duplicate_gate) ... ok
+test_callback_exception_is_one_attempt_no_retry_and_no_false_success (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_callback_exception_is_one_attempt_no_retry_and_no_false_success) ... ok
+test_confirmation_required_and_indeterminate_preserve_zero_callbacks (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_confirmation_required_and_indeterminate_preserve_zero_callbacks) ... ok
+test_duplicate_request_is_denied_before_runtime_gate (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_duplicate_request_is_denied_before_runtime_gate) ... ok
+test_empty_known_attempt_input_preserves_prior_gate_result (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_empty_known_attempt_input_preserves_prior_gate_result) ... ok
+test_every_mandatory_explicit_input_is_required (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_every_mandatory_explicit_input_is_required) ... ok
+test_explicit_unchanged_snapshot_still_enforces_p2_p3_and_p4 (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_explicit_unchanged_snapshot_still_enforces_p2_p3_and_p4) ... ok
+test_gate_reuses_validate_request_without_duplicate_order_state_machine (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_gate_reuses_validate_request_without_duplicate_order_state_machine) ... ok
+test_governed_action_and_all_gate_inputs_remain_immutable (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_governed_action_and_all_gate_inputs_remain_immutable) ... ok
+test_governed_action_api_is_keyword_only_and_optional (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_governed_action_api_is_keyword_only_and_optional) ... ok
+test_governed_action_context_action_mismatch_stops_before_p4 (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_governed_action_context_action_mismatch_stops_before_p4) ... ok
+test_hard_snapshot_changes_preserve_existing_fail_closed_decisions (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_hard_snapshot_changes_preserve_existing_fail_closed_decisions) ... ok
+test_incomplete_authorized_snapshot_fails_closed (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_incomplete_authorized_snapshot_fails_closed) ... ok
+test_invalid_governed_action_is_denied_and_never_reconstructed (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_invalid_governed_action_is_denied_and_never_reconstructed) ... ok
+test_invalid_governed_action_outer_types_are_denied_without_exception (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_invalid_governed_action_outer_types_are_denied_without_exception) ... ok
+test_invalid_known_attempt_outer_types_fail_closed_without_attribute_reads (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_invalid_known_attempt_outer_types_fail_closed_without_attribute_reads) ... ok
+test_invalid_or_missing_succeeded_attempt_binding_is_indeterminate (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_invalid_or_missing_succeeded_attempt_binding_is_indeterminate) ... ok
+test_known_payment_attempt_api_is_keyword_only_with_empty_tuple_default (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_known_payment_attempt_api_is_keyword_only_with_empty_tuple_default) ... ok
+test_machine_readable_anomaly_matrix_matches_all_expected_decisions (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_machine_readable_anomaly_matrix_matches_all_expected_decisions) ... ok
+test_missing_governed_action_evidence_is_indeterminate_before_callback (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_missing_governed_action_evidence_is_indeterminate_before_callback) ... ok
+test_mixed_known_attempt_inventories_are_order_independent (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_mixed_known_attempt_inventories_are_order_independent) ... ok
+test_not_ready_adaptation_and_blank_declared_agent_fail_closed (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_not_ready_adaptation_and_blank_declared_agent_fail_closed) ... ok
+test_optional_authorized_snapshot_is_backward_compatible (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_optional_authorized_snapshot_is_backward_compatible) ... ok
+test_p2_request_order_authority_agent_payee_amount_currency_mismatches_block (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_p2_request_order_authority_agent_payee_amount_currency_mismatches_block) ... ok
+test_p3_missing_and_mismatched_executor_identity_block (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_p3_missing_and_mismatched_executor_identity_block) ... ok
+test_p4_missing_invalid_stale_and_value_mismatched_coverage_block (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_p4_missing_invalid_stale_and_value_mismatched_coverage_block) ... ok
+test_pending_and_unknown_known_attempts_do_not_define_new_policy (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_pending_and_unknown_known_attempts_do_not_define_new_policy) ... ok
+test_permissive_explicit_mandate_allows_one_injected_callback (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_permissive_explicit_mandate_allows_one_injected_callback) ... ok
+test_pre_payment_amount_currency_merchant_category_expiry_and_count_fail_closed (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_pre_payment_amount_currency_merchant_category_expiry_and_count_fail_closed) ... ok
+test_production_gate_has_no_file_network_process_environment_or_webshop_dependency (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_production_gate_has_no_file_network_process_environment_or_webshop_dependency) ... ok
+test_public_api_is_exported_from_package_root (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_public_api_is_exported_from_package_root) ... ok
+test_restrictive_instruction_like_mandate_denies_console_table (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_restrictive_instruction_like_mandate_denies_console_table) ... ok
+test_same_inputs_are_deterministic_except_callback_observation (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_same_inputs_are_deterministic_except_callback_observation) ... ok
+test_same_request_malformed_attempt_remains_indeterminate (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_same_request_malformed_attempt_remains_indeterminate) ... ok
+test_snapshot_changes_reuse_order_validation_and_require_confirmation (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_snapshot_changes_reuse_order_validation_and_require_confirmation) ... ok
+test_unrelated_malformed_attempt_is_clear_and_checkout_still_runs (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_unrelated_malformed_attempt_is_clear_and_checkout_still_runs) ... ok
+test_unrelated_succeeded_attempt_is_clear_and_checkout_still_runs (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_unrelated_succeeded_attempt_is_clear_and_checkout_still_runs) ... ok
+test_valid_governed_action_continues_through_p2_p4_and_one_callback (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_valid_governed_action_continues_through_p2_p4_and_one_callback) ... ok
+test_valid_governed_action_does_not_replace_p1_p2_p3_or_p4 (tests.test_webshop_runtime_gate.WebShopRuntimeGateTest.test_valid_governed_action_does_not_replace_p1_p2_p3_or_p4) ... ok
+test_cli_exits_zero_with_honestly_reported_capability_gaps (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_cli_exits_zero_with_honestly_reported_capability_gaps) ... ok
+test_compare_records_provenance_gap_for_invalid_combination (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_compare_records_provenance_gap_for_invalid_combination) ... ok
+test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces) ... 
+  test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces) (task='T02') ... FAIL
+  test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces) (task='T03') ... FAIL
+  test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces) (task='T04') ... FAIL
+test_external_regressions_remain_separate_guardrails (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_external_regressions_remain_separate_guardrails) ... ok
+test_fixture_v1_1_freezes_t01_t12_and_measurement_integrity_fields (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_fixture_v1_1_freezes_t01_t12_and_measurement_integrity_fields) ... ok
+test_invalid_fixture_fails_before_measurement (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_invalid_fixture_fails_before_measurement) ... ok
+test_main_metric_and_guardrails_match_hand_calculation (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_main_metric_and_guardrails_match_hand_calculation) ... FAIL
+test_repeat_three_has_identical_normalized_results (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_repeat_three_has_identical_normalized_results) ... ok
+test_report_is_machine_readable_and_records_corrected_measurement (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_report_is_machine_readable_and_records_corrected_measurement) ... ok
+test_runner_reads_only_explicit_authoritative_trace (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_runner_reads_only_explicit_authoritative_trace) ... ok
+test_runner_static_boundary_has_no_product_patch_or_trace_laundering (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_runner_static_boundary_has_no_product_patch_or_trace_laundering) ... ok
+test_synthesized_replay_is_valid_diagnostic_but_never_product_trace (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_synthesized_replay_is_valid_diagnostic_but_never_product_trace) ... 
+  test_synthesized_replay_is_valid_diagnostic_but_never_product_trace (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_synthesized_replay_is_valid_diagnostic_but_never_product_trace) (task='T02') ... FAIL
+  test_synthesized_replay_is_valid_diagnostic_but_never_product_trace (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_synthesized_replay_is_valid_diagnostic_but_never_product_trace) (task='T03') ... FAIL
+  test_synthesized_replay_is_valid_diagnostic_but_never_product_trace (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_synthesized_replay_is_valid_diagnostic_but_never_product_trace) (task='T04') ... FAIL
+test_t01_t07_t10_t12_hand_spot_checks (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_t01_t07_t10_t12_hand_spot_checks) ... ok
+test_t10_fixture_requires_zero_callback_and_preserves_business_goal (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_t10_fixture_requires_zero_callback_and_preserves_business_goal) ... ok
+test_t10_preflight_removes_duplicate_callback_capability_gap (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_t10_preflight_removes_duplicate_callback_capability_gap) ... ok
+test_t10_target_closes_trace_and_end_to_end_dimensions (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_t10_target_closes_trace_and_end_to_end_dimensions) ... ok
+test_trace_expectation_tamper_does_not_change_actual_provenance (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_trace_expectation_tamper_does_not_change_actual_provenance) ... ok
+test_trace_provenance_closed_negative_matrix (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_trace_provenance_closed_negative_matrix) ... ok
+test_trace_provenance_closed_positive_matrix (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_trace_provenance_closed_positive_matrix) ... ok
+test_zero_tolerance_side_effect_metric_is_independent_of_expected_callback (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_zero_tolerance_side_effect_metric_is_independent_of_expected_callback) ... ok
+
+======================================================================
+FAIL: test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces) (task='T02')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/tests/test_project_impact_baseline.py", line 224, in test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces
+    self.assertEqual(
+AssertionError: 'NOT_AVAILABLE' != 'VALID'
+- NOT_AVAILABLE
++ VALID
+
+
+======================================================================
+FAIL: test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces) (task='T03')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/tests/test_project_impact_baseline.py", line 224, in test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces
+    self.assertEqual(
+AssertionError: 'NOT_AVAILABLE' != 'VALID'
+- NOT_AVAILABLE
++ VALID
+
+
+======================================================================
+FAIL: test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces) (task='T04')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/tests/test_project_impact_baseline.py", line 224, in test_corrected_baseline_records_t01_t09_t10_and_t12_product_traces
+    self.assertEqual(
+AssertionError: 'NOT_AVAILABLE' != 'VALID'
+- NOT_AVAILABLE
++ VALID
+
+
+======================================================================
+FAIL: test_main_metric_and_guardrails_match_hand_calculation (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_main_metric_and_guardrails_match_hand_calculation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/tests/test_project_impact_baseline.py", line 485, in test_main_metric_and_guardrails_match_hand_calculation
+    self.assertEqual(
+AssertionError: {'count': 3, 'denominator': 12, 'rate': '0.250000'} != {'count': 6, 'denominator': 12, 'rate': '0.500000'}
+- {'count': 3, 'denominator': 12, 'rate': '0.250000'}
+?           ^                                -
+
++ {'count': 6, 'denominator': 12, 'rate': '0.500000'}
+?           ^                                 +
+
+
+======================================================================
+FAIL: test_synthesized_replay_is_valid_diagnostic_but_never_product_trace (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_synthesized_replay_is_valid_diagnostic_but_never_product_trace) (task='T02')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/tests/test_project_impact_baseline.py", line 275, in test_synthesized_replay_is_valid_diagnostic_but_never_product_trace
+    self.assertEqual(
+AssertionError: 'NOT_AVAILABLE' != 'VALID'
+- NOT_AVAILABLE
++ VALID
+
+
+======================================================================
+FAIL: test_synthesized_replay_is_valid_diagnostic_but_never_product_trace (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_synthesized_replay_is_valid_diagnostic_but_never_product_trace) (task='T03')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/tests/test_project_impact_baseline.py", line 275, in test_synthesized_replay_is_valid_diagnostic_but_never_product_trace
+    self.assertEqual(
+AssertionError: 'NOT_AVAILABLE' != 'VALID'
+- NOT_AVAILABLE
++ VALID
+
+
+======================================================================
+FAIL: test_synthesized_replay_is_valid_diagnostic_but_never_product_trace (tests.test_project_impact_baseline.ProjectImpactBaselineTest.test_synthesized_replay_is_valid_diagnostic_but_never_product_trace) (task='T04')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/tests/test_project_impact_baseline.py", line 275, in test_synthesized_replay_is_valid_diagnostic_but_never_product_trace
+    self.assertEqual(
+AssertionError: 'NOT_AVAILABLE' != 'VALID'
+- NOT_AVAILABLE
++ VALID
+
+
+----------------------------------------------------------------------
+Ran 69 tests in 1.553s
+
+FAILED (failures=7)

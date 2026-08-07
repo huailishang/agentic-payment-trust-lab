@@ -1,0 +1,13 @@
+INNER_COMMAND=/usr/bin/python3 /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/scripts/validation/run_project_impact_baseline.py --spec /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/samples/evaluation/project_impact_baseline_v1.json --repeat 3 --output /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PREPAYMENT_MEASUREMENT_CONTRACT_REPAIR_V1/evidence/EV-AFTER-baseline.json
+INNER_EXIT_CODE=0
+output_sha256=f7a8a2ec067e74ee25b6f8c10765f4895b5892ce33c2359f98b7fe82250b8c26
+normalized_sha256=f8acb6d0916cec773793ccb0a112fd27fc4a92e75639f18abb6a2fb9b9873206
+repeatability_all_identical=True
+product_trace=7/12:0.583333
+gesr=6/12:0.500000
+matched_tasks=T01,T02,T03,T04,T09,T12
+T02=CONFIRMATION_REQUIRED,callback=0,retry=0,gaps=[]
+T03=CONFIRMATION_REQUIRED,callback=0,retry=0,gaps=[]
+T04=INDETERMINATE,callback=0,retry=0,gaps=[]
+accepted_existing_traces=T01,T09,T10,T12:VALID
+RESULT=PASS

@@ -1,0 +1,32 @@
+{
+  "output_sha256": "8d4304dce72bb4f3d572512ee4d09e2e4bd2ee06f34ec4e8e6b0887acf059d9a",
+  "normalized_sha256": [
+    "56a82f9ab99cd5d83ae0b1259c2cef9f6b6cdf2a1b7183c029ba7569ab332619",
+    "56a82f9ab99cd5d83ae0b1259c2cef9f6b6cdf2a1b7183c029ba7569ab332619",
+    "56a82f9ab99cd5d83ae0b1259c2cef9f6b6cdf2a1b7183c029ba7569ab332619"
+  ],
+  "product_trace": {
+    "count": 2,
+    "denominator": 12,
+    "rate": "0.166667"
+  },
+  "gesr": {
+    "count": 1,
+    "denominator": 12,
+    "rate": "0.083333"
+  },
+  "valid_product_tasks": [
+    "T01",
+    "T10"
+  ],
+  "non_trace_projection_sha256": "6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc",
+  "t01": {
+    "matched": true,
+    "trace_source": "webshop_payment_fulfilment_outcome",
+    "event_count": 11
+  },
+  "t10": {
+    "trace_source": "webshop_gate_outcome",
+    "event_count": 12
+  }
+}

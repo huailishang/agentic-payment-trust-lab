@@ -1,0 +1,8 @@
+baseline_changed_paths=["repeatability.normalized_sha256.0", "repeatability.normalized_sha256.1", "repeatability.normalized_sha256.2", "runner_sha256", "task_results.T10.measurement_diagnostics.trace_provenance_separated", "task_results.T10.measurement_diagnostics_matched", "task_results.T10.measurement_integrity_gaps.length"]
+target_changed_paths=["repeatability.normalized_sha256.0", "repeatability.normalized_sha256.1", "repeatability.normalized_sha256.2", "runner_sha256", "task_results.T10.measurement_diagnostics.trace_provenance_separated", "task_results.T10.measurement_diagnostics_matched", "task_results.T10.measurement_integrity_gaps.length"]
+runner_sha256=70bf2142c303c01c6fb3270fb364c46bc220b821c5e554fa2e6af3355dc57dd3
+non_trace_projection_sha256=6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc
+product_trace=1/12
+target_gesr=1/12
+t10_measurement_integrity_gaps=[]
+RESULT=PASS

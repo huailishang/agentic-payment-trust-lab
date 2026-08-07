@@ -1,0 +1,48 @@
+{
+  "after_normalized_sha256": [
+    "ee99b8bf73092ef09d0b890d74b66323963bebf10c1a1b4cecf2f5cbc32d8399",
+    "ee99b8bf73092ef09d0b890d74b66323963bebf10c1a1b4cecf2f5cbc32d8399",
+    "ee99b8bf73092ef09d0b890d74b66323963bebf10c1a1b4cecf2f5cbc32d8399"
+  ],
+  "after_output_sha256": "a38b2d91bc6e636201c9ab94c4bced1ad6653dadffb32811cb996d7ab0141086",
+  "after_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T09_UNKNOWN_PAYMENT_RECOVERY_SLICE_V1/evidence/EV-03-after-baseline.json",
+  "before_output_sha256": "8d4304dce72bb4f3d572512ee4d09e2e4bd2ee06f34ec4e8e6b0887acf059d9a",
+  "before_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_ASSEMBLER_EXTRACTION_V1/evidence/EV-03-after-baseline.json",
+  "gesr_after": {
+    "count": 2,
+    "denominator": 12,
+    "rate": "0.166667"
+  },
+  "gesr_before": {
+    "count": 1,
+    "denominator": 12,
+    "rate": "0.083333"
+  },
+  "non_trace_projection_sha256": "6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc",
+  "product_trace_after": {
+    "count": 3,
+    "denominator": 12,
+    "rate": "0.250000"
+  },
+  "product_trace_before": {
+    "count": 2,
+    "denominator": 12,
+    "rate": "0.166667"
+  },
+  "t09_after": {
+    "capability_gaps": [],
+    "event_count": 11,
+    "matched": true,
+    "trace_source": "webshop_payment_fulfilment_outcome",
+    "trace_status": "VALID"
+  },
+  "t09_before": {
+    "matched": false,
+    "trace_status": "NOT_AVAILABLE"
+  },
+  "valid_product_tasks": [
+    "T01",
+    "T09",
+    "T10"
+  ]
+}

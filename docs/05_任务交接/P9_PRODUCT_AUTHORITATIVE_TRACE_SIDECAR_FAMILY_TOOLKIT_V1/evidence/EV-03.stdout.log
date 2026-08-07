@@ -1,0 +1,14 @@
+INNER_COMMAND=/usr/bin/python3 /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/scripts/validation/run_project_impact_baseline.py --spec /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/samples/evaluation/project_impact_baseline_v1.json --repeat 3 --output /mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/evidence/EV-03-after-baseline.json
+INNER_EXIT_CODE=0
+repeatability_all_identical=True
+product_trace_before=3/12:0.250000
+product_trace_after=4/12:0.333333
+gesr_before=2/12:0.166667
+gesr_after=3/12:0.250000
+valid_product_tasks=T01,T09,T10,T12
+t12_before=NOT_AVAILABLE,matched=False
+t12_after=VALID,matched=True,events=11
+non_trace_projection_sha256=6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc
+after_output_sha256=b3fba30058acb1c421786cae0b5a93d3e7fdcf22aa6c4a5fa0f51dc821435a34
+after_normalized_sha256=6bab1053d389ac181a701a5701b0f523ed9bb864323fd1ad51fd53ceefa09b8c
+RESULT=PASS

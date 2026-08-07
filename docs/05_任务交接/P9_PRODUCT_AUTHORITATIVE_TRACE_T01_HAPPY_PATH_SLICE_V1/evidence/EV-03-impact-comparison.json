@@ -1,0 +1,64 @@
+{
+  "before_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T10_DUPLICATE_PREFLIGHT_SLICE_V1/evidence/EV-01-after-baseline.json",
+  "after_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T01_HAPPY_PATH_SLICE_V1/evidence/EV-03-after-baseline.json",
+  "runner_sha256": "70bf2142c303c01c6fb3270fb364c46bc220b821c5e554fa2e6af3355dc57dd3",
+  "fixture_sha256": "4ed2e1f35325cb840de834f5e8c964ff187c291133c958a2ee22111735b615f5",
+  "after_output_sha256": "8d4304dce72bb4f3d572512ee4d09e2e4bd2ee06f34ec4e8e6b0887acf059d9a",
+  "after_normalized_sha256": [
+    "56a82f9ab99cd5d83ae0b1259c2cef9f6b6cdf2a1b7183c029ba7569ab332619",
+    "56a82f9ab99cd5d83ae0b1259c2cef9f6b6cdf2a1b7183c029ba7569ab332619",
+    "56a82f9ab99cd5d83ae0b1259c2cef9f6b6cdf2a1b7183c029ba7569ab332619"
+  ],
+  "non_trace_projection_sha256": "6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc",
+  "product_trace_before": {
+    "count": 1,
+    "denominator": 12,
+    "rate": "0.083333"
+  },
+  "product_trace_after": {
+    "count": 2,
+    "denominator": 12,
+    "rate": "0.166667"
+  },
+  "gesr_before": {
+    "count": 0,
+    "denominator": 12,
+    "rate": "0.000000"
+  },
+  "gesr_after": {
+    "count": 1,
+    "denominator": 12,
+    "rate": "0.083333"
+  },
+  "project_summary_after": {
+    "gap_task_ids": [
+      "T02",
+      "T03",
+      "T04",
+      "T05",
+      "T06",
+      "T07",
+      "T08",
+      "T09",
+      "T10",
+      "T11",
+      "T12"
+    ],
+    "gap_tasks": 11,
+    "matched_tasks": 1,
+    "total_tasks": 12
+  },
+  "t01": {
+    "matched": true,
+    "trace_status": "VALID",
+    "trace_source": "webshop_payment_fulfilment_outcome",
+    "event_count": 11,
+    "capability_gaps": []
+  },
+  "t10": {
+    "matched": false,
+    "trace_status": "VALID",
+    "trace_source": "webshop_gate_outcome",
+    "event_count": 12
+  }
+}

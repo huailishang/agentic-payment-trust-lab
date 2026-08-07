@@ -1,0 +1,4727 @@
+{
+  "canonical_decimal": {
+    "examples": {
+      "-0": "0",
+      "0": "0",
+      "0.10": "0.1",
+      "1": "1",
+      "1.00": "1",
+      "1000.000": "1000"
+    },
+    "examples_sha256": "7f50c2d41d35aad95c173ec002bdd928bff69c644195cad78485bcd1a5674751",
+    "float_allowed": false,
+    "non_finite_allowed": false
+  },
+  "coverage_validation": {
+    "check_count": 600,
+    "failed_count": 0
+  },
+  "current_product_observed_valid": "0/12",
+  "forbidden_projection_fields": [
+    "card_number",
+    "pan",
+    "cvv",
+    "payment_instrument_plaintext",
+    "wallet_private_key",
+    "credential",
+    "token",
+    "cookie",
+    "raw_page_text",
+    "raw_prompt",
+    "user_input_fulltext",
+    "memory_address",
+    "file_path",
+    "current_time",
+    "random_value"
+  ],
+  "generated_for_task": "P9-PRODUCT-AUTHORITATIVE-TRACE-PROJECTION-IDENTITY-FORMULA-REPAIR-V1",
+  "gesr": "0/12",
+  "new_business_rule_required": false,
+  "parent_fixed_artifact_hashes": {
+    "EV-01-coverage-reference-grounding.json": "3d9904094556680137eb296e016a9abc573534d0f2c13060c0a288292f79d4fa",
+    "EV-01-reference-examples.json": "7975b44690d6712d9188bc1e39f0c70449e3082c7815f2f5d250540420fdcfb4",
+    "EV-01-t10-grounded-instance.json": "c6e87f42a7a7a6074bb83d76d457d5519609c68b9a48a7e836f18a680f2d056d",
+    "EV-01-t12-sidecar-examples.json": "bb9f88a4271391216ee2369d824c45a75d1c28f609503fdf93446515555a309f"
+  },
+  "projection_identity_formula_registry": {
+    "PROJECTION_HASH_IDENTITY_V1": {
+      "canonical_json": {
+        "allow_nan": false,
+        "encoding": "UTF-8",
+        "ensure_ascii": false,
+        "separators": [
+          ",",
+          ":"
+        ],
+        "sort_keys": true
+      },
+      "digest_encoding": "lowercase-hex-64",
+      "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+      "hash_algorithm": "SHA-256",
+      "mode": "PROJECTION_HASH_IDENTITY",
+      "payload_excludes": [
+        "binding_ref",
+        "source_object_ref"
+      ],
+      "payload_fields": [
+        "projection_schema",
+        "projection"
+      ],
+      "prefix_template": "{source_object_type}:projection-sha256:",
+      "source_object_type_in_payload": false,
+      "source_object_type_in_prefix": true
+    }
+  },
+  "projection_registry": {
+    "attack-overlay-result-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "AttackOverlayResult:{projection.attack_id}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "applied_paths": {
+          "path": "applied_paths",
+          "transform": "tuple.to_list"
+        },
+        "attack_attempted": {
+          "path": "attack_attempted",
+          "transform": "DIRECT"
+        },
+        "attack_id": {
+          "path": "attack_id",
+          "transform": "DIRECT"
+        },
+        "baseline_decision": {
+          "path": "baseline_decision",
+          "transform": "Enum.value"
+        },
+        "blocked_override_paths": {
+          "path": "blocked_override_paths",
+          "transform": "tuple.to_list"
+        },
+        "decision_drift": {
+          "path": "decision_drift",
+          "transform": "DIRECT"
+        },
+        "defended_decision": {
+          "path": "defended_decision",
+          "transform": "Enum.value"
+        },
+        "lineage_effective_source_types": {
+          "path": "lineage_facts[].effective_source_types[]",
+          "transform": "tuple.flatten_enum_values"
+        },
+        "lineage_fact_refs": {
+          "path": "lineage_facts[].fact_ref",
+          "transform": "tuple.map"
+        },
+        "lineage_reason_codes": {
+          "path": "lineage_reason_codes",
+          "transform": "tuple.to_list"
+        },
+        "lineage_status": {
+          "path": "lineage_status",
+          "transform": "Enum.value"
+        },
+        "policy_version": {
+          "path": "policy_version",
+          "transform": "DIRECT"
+        },
+        "reason_codes": {
+          "path": "reason_codes",
+          "transform": "tuple.to_list"
+        },
+        "source_type": {
+          "path": "source_type",
+          "transform": "Enum.value"
+        },
+        "trusted_state_changed": {
+          "path": "trusted_state_changed",
+          "transform": "DIRECT"
+        }
+      },
+      "projection_fields": [
+        "attack_id",
+        "source_type",
+        "baseline_decision",
+        "defended_decision",
+        "attack_attempted",
+        "applied_paths",
+        "blocked_override_paths",
+        "trusted_state_changed",
+        "reason_codes",
+        "policy_version",
+        "decision_drift",
+        "lineage_status",
+        "lineage_reason_codes",
+        "lineage_fact_refs",
+        "lineage_effective_source_types"
+      ],
+      "source_class": "AttackOverlayResult",
+      "source_identity": {
+        "mode": "NATIVE_TEMPLATE",
+        "template": "AttackOverlayResult:{attack_id}"
+      },
+      "source_module": "agentic_payment_experiment.attack_overlay",
+      "source_object_type": "AttackOverlayResult"
+    },
+    "fulfillment-record-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "FulfillmentRecord:{projection.fulfillment_id}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "failure_code": {
+          "path": "failure_code",
+          "transform": "DIRECT"
+        },
+        "fulfillment_id": {
+          "path": "fulfillment_id",
+          "transform": "DIRECT"
+        },
+        "order_id": {
+          "path": "order_id",
+          "transform": "DIRECT"
+        },
+        "reason_codes": {
+          "path": "failure_code",
+          "transform": "optional.singleton_tuple"
+        },
+        "status": {
+          "path": "status",
+          "transform": "Enum.value"
+        }
+      },
+      "projection_fields": [
+        "fulfillment_id",
+        "order_id",
+        "status",
+        "failure_code",
+        "reason_codes"
+      ],
+      "source_class": "FulfillmentRecord",
+      "source_identity": {
+        "mode": "NATIVE_TEMPLATE",
+        "template": "FulfillmentRecord:{fulfillment_id}"
+      },
+      "source_module": "agentic_payment_experiment.models",
+      "source_object_type": "FulfillmentRecord"
+    },
+    "governed-action-binding-fact-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "GovernedActionBindingFact:binding:{binding_digest}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "action_id": {
+          "path": "action_id",
+          "transform": "DIRECT"
+        },
+        "checked_action_type": {
+          "path": "checked_action_type",
+          "transform": "DIRECT"
+        },
+        "checked_order_ref": {
+          "path": "checked_order_ref",
+          "transform": "DIRECT"
+        },
+        "checked_payment_ref": {
+          "path": "checked_payment_ref",
+          "transform": "DIRECT"
+        },
+        "checked_request_ref": {
+          "path": "checked_request_ref",
+          "transform": "DIRECT"
+        },
+        "reason_codes": {
+          "path": "reason_codes",
+          "transform": "tuple.to_list"
+        },
+        "status": {
+          "path": "status",
+          "transform": "Enum.value"
+        }
+      },
+      "projection_fields": [
+        "status",
+        "action_id",
+        "reason_codes",
+        "checked_action_type",
+        "checked_order_ref",
+        "checked_request_ref",
+        "checked_payment_ref"
+      ],
+      "source_class": "GovernedActionBindingFact",
+      "source_identity": {
+        "canonical_json": {
+          "allow_nan": false,
+          "encoding": "UTF-8",
+          "ensure_ascii": false,
+          "separators": [
+            ",",
+            ":"
+          ],
+          "sort_keys": true
+        },
+        "digest_encoding": "lowercase-hex-64",
+        "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+        "hash_algorithm": "SHA-256",
+        "mode": "PROJECTION_HASH_IDENTITY",
+        "payload_fields": [
+          "projection_schema",
+          "projection"
+        ],
+        "prefix_template": "{source_object_type}:projection-sha256:"
+      },
+      "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+      "source_object_type": "GovernedActionBindingFact"
+    },
+    "governed-payment-action-missing-id-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "GovernedPaymentAction:binding:{binding_digest}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "action_id": {
+          "path": "action_id",
+          "transform": "DIRECT"
+        },
+        "action_type": {
+          "path": "action_type",
+          "transform": "Enum.value"
+        },
+        "agent_ref": {
+          "path": "agent_ref",
+          "transform": "DIRECT"
+        },
+        "authority_ref": {
+          "path": "authority_ref",
+          "transform": "DIRECT"
+        },
+        "authority_version": {
+          "path": "authority_version",
+          "transform": "DIRECT"
+        },
+        "executor_ref": {
+          "path": "executor_ref",
+          "transform": "DIRECT"
+        },
+        "occurred_at": {
+          "path": "occurred_at",
+          "transform": "datetime.isoformat"
+        },
+        "order_ref": {
+          "path": "order_ref",
+          "transform": "DIRECT"
+        },
+        "order_version": {
+          "path": "order_version",
+          "transform": "DIRECT"
+        },
+        "payment_ref": {
+          "path": "payment_ref",
+          "transform": "DIRECT"
+        },
+        "request_ref": {
+          "path": "request_ref",
+          "transform": "DIRECT"
+        },
+        "reversibility": {
+          "path": "reversibility",
+          "transform": "Enum.value"
+        },
+        "side_effect_class": {
+          "path": "side_effect_class",
+          "transform": "Enum.value"
+        },
+        "source_refs": {
+          "path": "source_refs",
+          "transform": "tuple.to_list"
+        }
+      },
+      "projection_fields": [
+        "action_id",
+        "action_type",
+        "agent_ref",
+        "executor_ref",
+        "authority_ref",
+        "authority_version",
+        "order_ref",
+        "order_version",
+        "request_ref",
+        "payment_ref",
+        "source_refs",
+        "side_effect_class",
+        "reversibility",
+        "occurred_at"
+      ],
+      "source_class": "GovernedPaymentAction",
+      "source_identity": {
+        "canonical_json": {
+          "allow_nan": false,
+          "encoding": "UTF-8",
+          "ensure_ascii": false,
+          "separators": [
+            ",",
+            ":"
+          ],
+          "sort_keys": true
+        },
+        "digest_encoding": "lowercase-hex-64",
+        "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+        "hash_algorithm": "SHA-256",
+        "mode": "PROJECTION_HASH_IDENTITY",
+        "payload_fields": [
+          "projection_schema",
+          "projection"
+        ],
+        "prefix_template": "{source_object_type}:projection-sha256:"
+      },
+      "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+      "source_object_type": "GovernedPaymentAction"
+    },
+    "governed-payment-action-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "GovernedPaymentAction:{projection.action_id}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "action_id": {
+          "path": "action_id",
+          "transform": "DIRECT"
+        },
+        "action_type": {
+          "path": "action_type",
+          "transform": "Enum.value"
+        },
+        "agent_ref": {
+          "path": "agent_ref",
+          "transform": "DIRECT"
+        },
+        "authority_ref": {
+          "path": "authority_ref",
+          "transform": "DIRECT"
+        },
+        "authority_version": {
+          "path": "authority_version",
+          "transform": "DIRECT"
+        },
+        "executor_ref": {
+          "path": "executor_ref",
+          "transform": "DIRECT"
+        },
+        "occurred_at": {
+          "path": "occurred_at",
+          "transform": "datetime.isoformat"
+        },
+        "order_ref": {
+          "path": "order_ref",
+          "transform": "DIRECT"
+        },
+        "order_version": {
+          "path": "order_version",
+          "transform": "DIRECT"
+        },
+        "payment_ref": {
+          "path": "payment_ref",
+          "transform": "DIRECT"
+        },
+        "request_ref": {
+          "path": "request_ref",
+          "transform": "DIRECT"
+        },
+        "reversibility": {
+          "path": "reversibility",
+          "transform": "Enum.value"
+        },
+        "side_effect_class": {
+          "path": "side_effect_class",
+          "transform": "Enum.value"
+        },
+        "source_refs": {
+          "path": "source_refs",
+          "transform": "tuple.to_list"
+        }
+      },
+      "projection_fields": [
+        "action_id",
+        "action_type",
+        "agent_ref",
+        "executor_ref",
+        "authority_ref",
+        "authority_version",
+        "order_ref",
+        "order_version",
+        "request_ref",
+        "payment_ref",
+        "source_refs",
+        "side_effect_class",
+        "reversibility",
+        "occurred_at"
+      ],
+      "source_class": "GovernedPaymentAction",
+      "source_identity": {
+        "mode": "NATIVE_TEMPLATE",
+        "template": "GovernedPaymentAction:{action_id}"
+      },
+      "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+      "source_object_type": "GovernedPaymentAction"
+    },
+    "intent-mandate-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "IntentMandate:{projection.mandate_id}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "authority_version": {
+          "path": "authority_version",
+          "transform": "DIRECT"
+        },
+        "mandate_id": {
+          "path": "mandate_id",
+          "transform": "DIRECT"
+        }
+      },
+      "projection_fields": [
+        "mandate_id",
+        "authority_version"
+      ],
+      "source_class": "IntentMandate",
+      "source_identity": {
+        "mode": "NATIVE_TEMPLATE",
+        "template": "IntentMandate:{mandate_id}:{authority_version}"
+      },
+      "source_module": "agentic_payment_experiment.models",
+      "source_object_type": "IntentMandate"
+    },
+    "known-payment-attempt-preflight-fact-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "KnownPaymentAttemptPreflightFact:binding:{binding_digest}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "blocking_request_refs": {
+          "path": "blocking_request_refs",
+          "transform": "tuple.to_list"
+        },
+        "current_request_ref": {
+          "path": "current_request_ref",
+          "transform": "DIRECT"
+        },
+        "limitations": {
+          "path": "limitations",
+          "transform": "tuple.to_list"
+        },
+        "reason_codes": {
+          "path": "reason_codes",
+          "transform": "tuple.to_list"
+        },
+        "related_attempt_refs": {
+          "path": "related_attempt_refs",
+          "transform": "tuple.to_list"
+        },
+        "status": {
+          "path": "status",
+          "transform": "Enum.value"
+        }
+      },
+      "projection_fields": [
+        "status",
+        "reason_codes",
+        "current_request_ref",
+        "related_attempt_refs",
+        "blocking_request_refs",
+        "limitations"
+      ],
+      "source_class": "KnownPaymentAttemptPreflightFact",
+      "source_identity": {
+        "canonical_json": {
+          "allow_nan": false,
+          "encoding": "UTF-8",
+          "ensure_ascii": false,
+          "separators": [
+            ",",
+            ":"
+          ],
+          "sort_keys": true
+        },
+        "digest_encoding": "lowercase-hex-64",
+        "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+        "hash_algorithm": "SHA-256",
+        "mode": "PROJECTION_HASH_IDENTITY",
+        "payload_fields": [
+          "projection_schema",
+          "projection"
+        ],
+        "prefix_template": "{source_object_type}:projection-sha256:"
+      },
+      "source_module": "agentic_payment_experiment.trusted_execution.known_payment_attempt",
+      "source_object_type": "KnownPaymentAttemptPreflightFact"
+    },
+    "order-snapshot-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "Order:{projection.order_id}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "authority_version_ref": {
+          "path": "authority_version_ref",
+          "transform": "DIRECT"
+        },
+        "currency": {
+          "path": "currency",
+          "transform": "DIRECT"
+        },
+        "mandate_ref": {
+          "path": "mandate_ref",
+          "transform": "DIRECT"
+        },
+        "merchant": {
+          "path": "merchant",
+          "transform": "DIRECT"
+        },
+        "order_id": {
+          "path": "order_id",
+          "transform": "DIRECT"
+        },
+        "order_version": {
+          "path": "order_version",
+          "transform": "DIRECT"
+        },
+        "payee": {
+          "path": "payee",
+          "transform": "DIRECT"
+        },
+        "total_amount": {
+          "path": "total_amount",
+          "transform": "Decimal.canonical_string"
+        }
+      },
+      "projection_fields": [
+        "order_id",
+        "order_version",
+        "mandate_ref",
+        "authority_version_ref",
+        "total_amount",
+        "currency",
+        "merchant",
+        "payee"
+      ],
+      "source_class": "Order",
+      "source_identity": {
+        "mode": "NATIVE_TEMPLATE",
+        "template": "Order:{order_id}:{order_version}"
+      },
+      "source_module": "agentic_payment_experiment.models",
+      "source_object_type": "Order"
+    },
+    "payment-execution-record-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "agent_ref": {
+          "path": "agent_ref",
+          "transform": "DIRECT"
+        },
+        "amount": {
+          "path": "amount",
+          "transform": "Decimal.canonical_string"
+        },
+        "authority_ref": {
+          "path": "authority_ref",
+          "transform": "DIRECT"
+        },
+        "currency": {
+          "path": "currency",
+          "transform": "DIRECT"
+        },
+        "order_id": {
+          "path": "order_id",
+          "transform": "DIRECT"
+        },
+        "payee": {
+          "path": "payee",
+          "transform": "DIRECT"
+        },
+        "payment_id": {
+          "path": "payment_id",
+          "transform": "DIRECT"
+        },
+        "request_id": {
+          "path": "request_id",
+          "transform": "DIRECT"
+        },
+        "status": {
+          "path": "status",
+          "transform": "Enum.value"
+        },
+        "transaction_object_ref": {
+          "path": "transaction_object_ref",
+          "transform": "DIRECT"
+        }
+      },
+      "projection_fields": [
+        "payment_id",
+        "request_id",
+        "order_id",
+        "status",
+        "amount",
+        "currency",
+        "authority_ref",
+        "agent_ref",
+        "transaction_object_ref",
+        "payee"
+      ],
+      "source_class": "PaymentExecutionRecord",
+      "source_identity": {
+        "mode": "NATIVE_TEMPLATE",
+        "template": "PaymentExecutionRecord:{payment_id}"
+      },
+      "source_module": "agentic_payment_experiment.models",
+      "source_object_type": "PaymentExecutionRecord"
+    },
+    "payment-recovery-result-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "PaymentRecoveryResult:binding:{binding_digest}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "effective_status": {
+          "path": "effective_status",
+          "transform": "Enum.value"
+        },
+        "evidence_paths": {
+          "path": "evidence[].field_path",
+          "transform": "tuple.map"
+        },
+        "initial_status": {
+          "path": "initial_status",
+          "transform": "Enum.value"
+        },
+        "issue_codes": {
+          "path": "issues[].code",
+          "transform": "tuple.map"
+        },
+        "next_action": {
+          "path": "next_action",
+          "transform": "DIRECT"
+        },
+        "observed_status": {
+          "path": "observed_status",
+          "transform": "Enum.value"
+        },
+        "recovery_status": {
+          "path": "recovery_status",
+          "transform": "Enum.value"
+        },
+        "retry_allowed": {
+          "path": "retry_allowed",
+          "transform": "DIRECT"
+        },
+        "rule_version": {
+          "path": "rule_version",
+          "transform": "DIRECT"
+        }
+      },
+      "projection_fields": [
+        "initial_status",
+        "observed_status",
+        "effective_status",
+        "recovery_status",
+        "next_action",
+        "retry_allowed",
+        "issue_codes",
+        "evidence_paths",
+        "rule_version"
+      ],
+      "source_class": "PaymentRecoveryResult",
+      "source_identity": {
+        "canonical_json": {
+          "allow_nan": false,
+          "encoding": "UTF-8",
+          "ensure_ascii": false,
+          "separators": [
+            ",",
+            ":"
+          ],
+          "sort_keys": true
+        },
+        "digest_encoding": "lowercase-hex-64",
+        "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+        "hash_algorithm": "SHA-256",
+        "mode": "PROJECTION_HASH_IDENTITY",
+        "payload_fields": [
+          "projection_schema",
+          "projection"
+        ],
+        "prefix_template": "{source_object_type}:projection-sha256:"
+      },
+      "source_module": "agentic_payment_experiment.models",
+      "source_object_type": "PaymentRecoveryResult"
+    },
+    "payment-status-conflict-fact-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "PaymentStatusConflictFact:binding:{binding_digest}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "async_observed_at": {
+          "path": "async_observed_at",
+          "transform": "datetime.isoformat_or_null"
+        },
+        "async_status": {
+          "path": "async_status",
+          "transform": "Enum.value"
+        },
+        "business_success_confirmed": {
+          "path": "business_success_confirmed",
+          "transform": "DIRECT"
+        },
+        "effective_status": {
+          "path": "effective_status",
+          "transform": "Enum.value"
+        },
+        "effective_status_terminal": {
+          "path": "effective_status_terminal",
+          "transform": "DIRECT"
+        },
+        "fulfillment_confirmed": {
+          "path": "fulfillment_confirmed",
+          "transform": "DIRECT"
+        },
+        "initial_status": {
+          "path": "initial_status",
+          "transform": "Enum.value"
+        },
+        "legal_finality_confirmed": {
+          "path": "legal_finality_confirmed",
+          "transform": "DIRECT"
+        },
+        "query_observed_at": {
+          "path": "query_observed_at",
+          "transform": "datetime.isoformat_or_null"
+        },
+        "query_status": {
+          "path": "query_status",
+          "transform": "Enum.value"
+        },
+        "reason_codes": {
+          "path": "reason_codes",
+          "transform": "tuple.to_list"
+        },
+        "reconciliation_confirmed": {
+          "path": "reconciliation_confirmed",
+          "transform": "DIRECT"
+        },
+        "resolution": {
+          "path": "resolution",
+          "transform": "Enum.value"
+        },
+        "settlement_confirmed": {
+          "path": "settlement_confirmed",
+          "transform": "DIRECT"
+        },
+        "user_task_success_confirmed": {
+          "path": "user_task_success_confirmed",
+          "transform": "DIRECT"
+        }
+      },
+      "projection_fields": [
+        "resolution",
+        "initial_status",
+        "query_status",
+        "query_observed_at",
+        "async_status",
+        "async_observed_at",
+        "effective_status",
+        "effective_status_terminal",
+        "reason_codes",
+        "business_success_confirmed",
+        "fulfillment_confirmed",
+        "user_task_success_confirmed",
+        "reconciliation_confirmed",
+        "settlement_confirmed",
+        "legal_finality_confirmed"
+      ],
+      "source_class": "PaymentStatusConflictFact",
+      "source_identity": {
+        "canonical_json": {
+          "allow_nan": false,
+          "encoding": "UTF-8",
+          "ensure_ascii": false,
+          "separators": [
+            ",",
+            ":"
+          ],
+          "sort_keys": true
+        },
+        "digest_encoding": "lowercase-hex-64",
+        "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+        "hash_algorithm": "SHA-256",
+        "mode": "PROJECTION_HASH_IDENTITY",
+        "payload_fields": [
+          "projection_schema",
+          "projection"
+        ],
+        "prefix_template": "{source_object_type}:projection-sha256:"
+      },
+      "source_module": "agentic_payment_experiment.payment_status_conflict",
+      "source_object_type": "PaymentStatusConflictFact"
+    },
+    "runtime-gate-record-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "RuntimeGateRecord:binding:{binding_digest}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "binding_reason_codes": {
+          "path": "binding_reason_codes",
+          "transform": "tuple.to_list"
+        },
+        "binding_status": {
+          "path": "binding_status",
+          "transform": "DIRECT"
+        },
+        "callback_count": {
+          "path": "callback_count",
+          "transform": "DIRECT"
+        },
+        "callback_executed": {
+          "path": "callback_executed",
+          "transform": "DIRECT"
+        },
+        "callback_result_ref": {
+          "path": "callback_result_ref",
+          "transform": "DIRECT"
+        },
+        "context_policy_reason_codes": {
+          "path": "context_policy_reason_codes",
+          "transform": "tuple.to_list"
+        },
+        "context_policy_status": {
+          "path": "context_policy_status",
+          "transform": "DIRECT"
+        },
+        "final_decision": {
+          "path": "final_decision",
+          "transform": "Enum.value"
+        },
+        "identity_reason_codes": {
+          "path": "identity_reason_codes",
+          "transform": "tuple.to_list"
+        },
+        "identity_status": {
+          "path": "identity_status",
+          "transform": "DIRECT"
+        },
+        "preliminary_decision": {
+          "path": "preliminary_decision",
+          "transform": "Enum.value"
+        },
+        "reason_codes": {
+          "path": "reason_codes",
+          "transform": "tuple.to_list"
+        }
+      },
+      "projection_fields": [
+        "preliminary_decision",
+        "final_decision",
+        "binding_status",
+        "binding_reason_codes",
+        "identity_status",
+        "identity_reason_codes",
+        "context_policy_status",
+        "context_policy_reason_codes",
+        "callback_executed",
+        "callback_count",
+        "callback_result_ref",
+        "reason_codes"
+      ],
+      "source_class": "RuntimeGateRecord",
+      "source_identity": {
+        "canonical_json": {
+          "allow_nan": false,
+          "encoding": "UTF-8",
+          "ensure_ascii": false,
+          "separators": [
+            ",",
+            ":"
+          ],
+          "sort_keys": true
+        },
+        "digest_encoding": "lowercase-hex-64",
+        "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+        "hash_algorithm": "SHA-256",
+        "mode": "PROJECTION_HASH_IDENTITY",
+        "payload_fields": [
+          "projection_schema",
+          "projection"
+        ],
+        "prefix_template": "{source_object_type}:projection-sha256:"
+      },
+      "source_module": "agentic_payment_experiment.trusted_execution.replay",
+      "source_object_type": "RuntimeGateRecord"
+    },
+    "transaction-request-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "TransactionRequest:{projection.request_id}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "agent_id": {
+          "path": "agent_id",
+          "transform": "DIRECT"
+        },
+        "amount": {
+          "path": "amount",
+          "transform": "Decimal.canonical_string"
+        },
+        "authority_ref": {
+          "path": "authority_ref",
+          "transform": "DIRECT"
+        },
+        "authority_version_ref": {
+          "path": "authority_version_ref",
+          "transform": "DIRECT"
+        },
+        "currency": {
+          "path": "currency",
+          "transform": "DIRECT"
+        },
+        "merchant": {
+          "path": "merchant",
+          "transform": "DIRECT"
+        },
+        "order_ref": {
+          "path": "order_ref",
+          "transform": "DIRECT"
+        },
+        "payee": {
+          "path": "payee",
+          "transform": "DIRECT"
+        },
+        "request_id": {
+          "path": "request_id",
+          "transform": "DIRECT"
+        }
+      },
+      "projection_fields": [
+        "request_id",
+        "order_ref",
+        "authority_ref",
+        "authority_version_ref",
+        "amount",
+        "currency",
+        "merchant",
+        "payee",
+        "agent_id"
+      ],
+      "source_class": "TransactionRequest",
+      "source_identity": {
+        "mode": "NATIVE_TEMPLATE",
+        "template": "TransactionRequest:{request_id}"
+      },
+      "source_module": "agentic_payment_experiment.models",
+      "source_object_type": "TransactionRequest"
+    },
+    "validation-result-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "ValidationResult:binding:{binding_digest}",
+      "excluded_fields": [],
+      "field_extractions": {
+        "decision": {
+          "path": "decision",
+          "transform": "Enum.value"
+        },
+        "evidence_paths": {
+          "path": "evidence[].field_path",
+          "transform": "tuple.map"
+        },
+        "issue_codes": {
+          "path": "issues[].code",
+          "transform": "tuple.map"
+        },
+        "order_difference_paths": {
+          "path": "order_differences[].field_path",
+          "transform": "tuple.map"
+        },
+        "rule_version": {
+          "path": "rule_version",
+          "transform": "DIRECT"
+        }
+      },
+      "projection_fields": [
+        "decision",
+        "issue_codes",
+        "evidence_paths",
+        "rule_version",
+        "order_difference_paths"
+      ],
+      "source_class": "ValidationResult",
+      "source_identity": {
+        "canonical_json": {
+          "allow_nan": false,
+          "encoding": "UTF-8",
+          "ensure_ascii": false,
+          "separators": [
+            ",",
+            ":"
+          ],
+          "sort_keys": true
+        },
+        "digest_encoding": "lowercase-hex-64",
+        "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+        "hash_algorithm": "SHA-256",
+        "mode": "PROJECTION_HASH_IDENTITY",
+        "payload_fields": [
+          "projection_schema",
+          "projection"
+        ],
+        "prefix_template": "{source_object_type}:projection-sha256:"
+      },
+      "source_module": "agentic_payment_experiment.models",
+      "source_object_type": "ValidationResult"
+    },
+    "webshop-buy-now-gate-outcome-result-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "WebShopBuyNowGateOutcome:binding:{binding_digest}",
+      "excluded_fields": [
+        "authoritative_trace"
+      ],
+      "field_extractions": {
+        "callback_count": {
+          "path": "callback_count",
+          "transform": "DIRECT"
+        },
+        "callback_result_ref": {
+          "path": "callback_result_ref",
+          "transform": "DIRECT"
+        },
+        "checkout_executed": {
+          "path": "checkout_executed",
+          "transform": "DIRECT"
+        },
+        "decision": {
+          "path": "decision",
+          "transform": "Enum.value"
+        },
+        "limitations": {
+          "path": "limitations",
+          "transform": "tuple.to_list"
+        },
+        "reason_codes": {
+          "path": "reason_codes",
+          "transform": "tuple.to_list"
+        }
+      },
+      "projection_fields": [
+        "decision",
+        "checkout_executed",
+        "callback_count",
+        "callback_result_ref",
+        "reason_codes",
+        "limitations"
+      ],
+      "source_class": "WebShopBuyNowGateOutcome",
+      "source_identity": {
+        "canonical_json": {
+          "allow_nan": false,
+          "encoding": "UTF-8",
+          "ensure_ascii": false,
+          "separators": [
+            ",",
+            ":"
+          ],
+          "sort_keys": true
+        },
+        "digest_encoding": "lowercase-hex-64",
+        "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+        "hash_algorithm": "SHA-256",
+        "mode": "PROJECTION_HASH_IDENTITY",
+        "payload_fields": [
+          "projection_schema",
+          "projection"
+        ],
+        "prefix_template": "{source_object_type}:projection-sha256:"
+      },
+      "source_module": "agentic_payment_experiment.webshop_runtime_gate",
+      "source_object_type": "WebShopBuyNowGateOutcome"
+    },
+    "webshop-payment-fulfilment-outcome-result-trace/v2": {
+      "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+      "entity_ref_template": "WebShopPaymentFulfilmentOutcome:binding:{binding_digest}",
+      "excluded_fields": [
+        "authoritative_trace"
+      ],
+      "field_extractions": {
+        "duplicate_payment_blocked": {
+          "path": "duplicate_payment_blocked",
+          "transform": "DIRECT"
+        },
+        "effective_payment_status": {
+          "path": "effective_payment.status",
+          "transform": "Enum.value_or_null"
+        },
+        "initial_payment_status": {
+          "path": "initial_payment.status",
+          "transform": "Enum.value_or_null"
+        },
+        "lifecycle_fulfillment_status": {
+          "path": "lifecycle.fulfillment_status",
+          "transform": "Enum.value_or_null"
+        },
+        "lifecycle_payment_status": {
+          "path": "lifecycle.payment_status",
+          "transform": "Enum.value_or_null"
+        },
+        "lifecycle_remediation_status": {
+          "path": "lifecycle.remediation.status",
+          "transform": "Enum.value_or_null"
+        },
+        "lifecycle_task_status": {
+          "path": "lifecycle.task_status",
+          "transform": "Enum.value_or_null"
+        },
+        "limitations": {
+          "path": "limitations",
+          "transform": "tuple.to_list"
+        },
+        "query_recovery_status": {
+          "path": "query_recovery.recovery_status",
+          "transform": "Enum.value_or_null"
+        },
+        "ready": {
+          "path": "ready",
+          "transform": "DIRECT"
+        },
+        "reason_codes": {
+          "path": "reason_codes",
+          "transform": "tuple.to_list"
+        },
+        "retry_allowed": {
+          "path": "retry_allowed",
+          "transform": "DIRECT"
+        },
+        "status_conflict_resolution": {
+          "path": "status_conflict.resolution",
+          "transform": "Enum.value_or_null"
+        }
+      },
+      "projection_fields": [
+        "ready",
+        "initial_payment_status",
+        "effective_payment_status",
+        "query_recovery_status",
+        "status_conflict_resolution",
+        "lifecycle_payment_status",
+        "lifecycle_fulfillment_status",
+        "lifecycle_task_status",
+        "lifecycle_remediation_status",
+        "retry_allowed",
+        "duplicate_payment_blocked",
+        "reason_codes",
+        "limitations"
+      ],
+      "source_class": "WebShopPaymentFulfilmentOutcome",
+      "source_identity": {
+        "canonical_json": {
+          "allow_nan": false,
+          "encoding": "UTF-8",
+          "ensure_ascii": false,
+          "separators": [
+            ",",
+            ":"
+          ],
+          "sort_keys": true
+        },
+        "digest_encoding": "lowercase-hex-64",
+        "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+        "hash_algorithm": "SHA-256",
+        "mode": "PROJECTION_HASH_IDENTITY",
+        "payload_fields": [
+          "projection_schema",
+          "projection"
+        ],
+        "prefix_template": "{source_object_type}:projection-sha256:"
+      },
+      "source_module": "agentic_payment_experiment.webshop_payment_sidecar",
+      "source_object_type": "WebShopPaymentFulfilmentOutcome"
+    }
+  },
+  "reference_model": {
+    "binding_ref": "exact projection commitment for every source object",
+    "duplicate_binding_ref_verdict": "INVALID",
+    "entity_ref": "profile entity identity generated by a closed typed template",
+    "evaluator_reconstruction_allowed": false,
+    "event_binding_lookup": "ProductTraceEvent.source_binding_ref",
+    "external_cryptographic_authenticity_claimed": false,
+    "hidden_resolver_allowed": false,
+    "missing_binding_verdict": "INDETERMINATE",
+    "relation_target_entity_ref": "must equal an existing target event entity_ref",
+    "source_object_ref": "source object identity only",
+    "unreferenced_binding_verdict": "INVALID"
+  },
+  "schema_version": "product-authoritative-trace-coverage/v4",
+  "tasks": [
+    {
+      "current_status": "NOT_AVAILABLE",
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "GOVERNED_ACTION",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "ACTION_BINDING_FACT",
+        "RUNTIME_GATE_OBSERVATION",
+        "PAYMENT_EXECUTION_OUTCOME",
+        "FULFILMENT_OUTCOME",
+        "FINAL_OUTCOME"
+      ],
+      "events": [
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "IntentMandate:{projection.mandate_id}",
+          "entity_role": "AUTHORITY",
+          "entity_type": "IntentMandate",
+          "event_type": "AUTHORITY_RECORDED",
+          "projection_schema": "intent-mandate-trace/v2",
+          "relations": [],
+          "sequence_no": 1,
+          "source_binding_ref_required": true,
+          "source_class": "IntentMandate",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "IntentMandate",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "AUTHORIZED_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 2,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "CURRENT_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 3,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "TransactionRequest:{projection.request_id}",
+          "entity_role": "CURRENT_REQUEST",
+          "entity_type": "TransactionRequest",
+          "event_type": "REQUEST_RECORDED",
+          "projection_schema": "transaction-request-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 4,
+          "source_binding_ref_required": true,
+          "source_class": "TransactionRequest",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "TransactionRequest",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedPaymentAction:{projection.action_id}",
+          "entity_role": "GOVERNED_ACTION",
+          "entity_type": "GovernedPaymentAction",
+          "event_type": "ACTION_RECORDED",
+          "projection_schema": "governed-payment-action-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.order_version",
+                  "target_path": "projection.order_version"
+                }
+              ],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 5,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedPaymentAction",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "GovernedPaymentAction",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+          "entity_role": "CURRENT_PAYMENT_CANDIDATE",
+          "entity_type": "PaymentExecutionRecord",
+          "event_type": "PAYMENT_CANDIDATE_RECORDED",
+          "projection_schema": "payment-execution-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 6,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentExecutionRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "PaymentExecutionRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedActionBindingFact:binding:{binding_digest}",
+          "entity_role": "ACTION_BINDING_FACT",
+          "entity_type": "GovernedActionBindingFact",
+          "event_type": "ACTION_BINDING_DECISION_RECORDED",
+          "projection_schema": "governed-action-binding-fact-trace/v2",
+          "relations": [
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.action_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "GovernedPaymentAction:{value}",
+              "target_entity_role": "GOVERNED_ACTION",
+              "target_entity_type": "GovernedPaymentAction",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.checked_payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 7,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedActionBindingFact",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "GovernedActionBindingFact",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "RuntimeGateRecord:binding:{binding_digest}",
+          "entity_role": "RUNTIME_GATE_OBSERVATION",
+          "entity_type": "RuntimeGateRecord",
+          "event_type": "RUNTIME_DECISION_RECORDED",
+          "projection_schema": "runtime-gate-record-trace/v2",
+          "relations": [],
+          "sequence_no": 8,
+          "source_binding_ref_required": true,
+          "source_class": "RuntimeGateRecord",
+          "source_module": "agentic_payment_experiment.trusted_execution.replay",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "RuntimeGateRecord",
+          "value_paths": {
+            "decision_path": "projection.final_decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.binding_status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+          "entity_role": "PAYMENT_EXECUTION_OUTCOME",
+          "entity_type": "PaymentExecutionRecord",
+          "event_type": "PAYMENT_OUTCOME_RECORDED",
+          "projection_schema": "payment-execution-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 9,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentExecutionRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "PaymentExecutionRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "FulfillmentRecord:{projection.fulfillment_id}",
+          "entity_role": "FULFILMENT_OUTCOME",
+          "entity_type": "FulfillmentRecord",
+          "event_type": "FULFILMENT_OUTCOME_RECORDED",
+          "projection_schema": "fulfillment-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 10,
+          "source_binding_ref_required": true,
+          "source_class": "FulfillmentRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "FulfillmentRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "WebShopPaymentFulfilmentOutcome:binding:{binding_digest}",
+          "entity_role": "FINAL_OUTCOME",
+          "entity_type": "WebShopPaymentFulfilmentOutcome",
+          "event_type": "RESULT_RECORDED",
+          "projection_schema": "webshop-payment-fulfilment-outcome-result-trace/v2",
+          "relations": [],
+          "sequence_no": 11,
+          "source_binding_ref_required": true,
+          "source_class": "WebShopPaymentFulfilmentOutcome",
+          "source_module": "agentic_payment_experiment.webshop_payment_sidecar",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "WebShopPaymentFulfilmentOutcome",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.lifecycle_task_status"
+          }
+        }
+      ],
+      "new_business_rule_required": false,
+      "profile": "WEBSHOP_NORMAL_PURCHASE_V2",
+      "task_id": "T01",
+      "title": "正常授权购买"
+    },
+    {
+      "current_status": "NOT_AVAILABLE",
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "PREPAYMENT_VALIDATION",
+        "FINAL_OUTCOME"
+      ],
+      "events": [
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "IntentMandate:{projection.mandate_id}",
+          "entity_role": "AUTHORITY",
+          "entity_type": "IntentMandate",
+          "event_type": "AUTHORITY_RECORDED",
+          "projection_schema": "intent-mandate-trace/v2",
+          "relations": [],
+          "sequence_no": 1,
+          "source_binding_ref_required": true,
+          "source_class": "IntentMandate",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "IntentMandate",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "AUTHORIZED_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 2,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "CURRENT_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 3,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "TransactionRequest:{projection.request_id}",
+          "entity_role": "CURRENT_REQUEST",
+          "entity_type": "TransactionRequest",
+          "event_type": "REQUEST_RECORDED",
+          "projection_schema": "transaction-request-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 4,
+          "source_binding_ref_required": true,
+          "source_class": "TransactionRequest",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "TransactionRequest",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "ValidationResult:binding:{binding_digest}",
+          "entity_role": "PREPAYMENT_VALIDATION",
+          "entity_type": "ValidationResult",
+          "event_type": "PREPAYMENT_DECISION_RECORDED",
+          "projection_schema": "validation-result-trace/v2",
+          "relations": [],
+          "sequence_no": 5,
+          "source_binding_ref_required": true,
+          "source_class": "ValidationResult",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "ValidationResult",
+          "value_paths": {
+            "decision_path": "projection.decision",
+            "reason_codes_path": "projection.issue_codes",
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "WebShopBuyNowGateOutcome:binding:{binding_digest}",
+          "entity_role": "FINAL_OUTCOME",
+          "entity_type": "WebShopBuyNowGateOutcome",
+          "event_type": "RESULT_RECORDED",
+          "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v2",
+          "relations": [],
+          "sequence_no": 6,
+          "source_binding_ref_required": true,
+          "source_class": "WebShopBuyNowGateOutcome",
+          "source_module": "agentic_payment_experiment.webshop_runtime_gate",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "WebShopBuyNowGateOutcome",
+          "value_paths": {
+            "decision_path": "projection.decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": null
+          }
+        }
+      ],
+      "new_business_rule_required": false,
+      "profile": "WEBSHOP_PREPAYMENT_T02_V2",
+      "task_id": "T02",
+      "title": "订单价格上涨"
+    },
+    {
+      "current_status": "NOT_AVAILABLE",
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "PREPAYMENT_VALIDATION",
+        "FINAL_OUTCOME"
+      ],
+      "events": [
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "IntentMandate:{projection.mandate_id}",
+          "entity_role": "AUTHORITY",
+          "entity_type": "IntentMandate",
+          "event_type": "AUTHORITY_RECORDED",
+          "projection_schema": "intent-mandate-trace/v2",
+          "relations": [],
+          "sequence_no": 1,
+          "source_binding_ref_required": true,
+          "source_class": "IntentMandate",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "IntentMandate",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "AUTHORIZED_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 2,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "CURRENT_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 3,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "TransactionRequest:{projection.request_id}",
+          "entity_role": "CURRENT_REQUEST",
+          "entity_type": "TransactionRequest",
+          "event_type": "REQUEST_RECORDED",
+          "projection_schema": "transaction-request-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 4,
+          "source_binding_ref_required": true,
+          "source_class": "TransactionRequest",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "TransactionRequest",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "ValidationResult:binding:{binding_digest}",
+          "entity_role": "PREPAYMENT_VALIDATION",
+          "entity_type": "ValidationResult",
+          "event_type": "PREPAYMENT_DECISION_RECORDED",
+          "projection_schema": "validation-result-trace/v2",
+          "relations": [],
+          "sequence_no": 5,
+          "source_binding_ref_required": true,
+          "source_class": "ValidationResult",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "ValidationResult",
+          "value_paths": {
+            "decision_path": "projection.decision",
+            "reason_codes_path": "projection.issue_codes",
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "WebShopBuyNowGateOutcome:binding:{binding_digest}",
+          "entity_role": "FINAL_OUTCOME",
+          "entity_type": "WebShopBuyNowGateOutcome",
+          "event_type": "RESULT_RECORDED",
+          "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v2",
+          "relations": [],
+          "sequence_no": 6,
+          "source_binding_ref_required": true,
+          "source_class": "WebShopBuyNowGateOutcome",
+          "source_module": "agentic_payment_experiment.webshop_runtime_gate",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "WebShopBuyNowGateOutcome",
+          "value_paths": {
+            "decision_path": "projection.decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": null
+          }
+        }
+      ],
+      "new_business_rule_required": false,
+      "profile": "WEBSHOP_PREPAYMENT_T03_V2",
+      "task_id": "T03",
+      "title": "订单价格下降"
+    },
+    {
+      "current_status": "NOT_AVAILABLE",
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "PREPAYMENT_VALIDATION",
+        "FINAL_OUTCOME"
+      ],
+      "events": [
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "IntentMandate:{projection.mandate_id}",
+          "entity_role": "AUTHORITY",
+          "entity_type": "IntentMandate",
+          "event_type": "AUTHORITY_RECORDED",
+          "projection_schema": "intent-mandate-trace/v2",
+          "relations": [],
+          "sequence_no": 1,
+          "source_binding_ref_required": true,
+          "source_class": "IntentMandate",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "IntentMandate",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "AUTHORIZED_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 2,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "CURRENT_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 3,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "TransactionRequest:{projection.request_id}",
+          "entity_role": "CURRENT_REQUEST",
+          "entity_type": "TransactionRequest",
+          "event_type": "REQUEST_RECORDED",
+          "projection_schema": "transaction-request-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 4,
+          "source_binding_ref_required": true,
+          "source_class": "TransactionRequest",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "TransactionRequest",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "ValidationResult:binding:{binding_digest}",
+          "entity_role": "PREPAYMENT_VALIDATION",
+          "entity_type": "ValidationResult",
+          "event_type": "PREPAYMENT_DECISION_RECORDED",
+          "projection_schema": "validation-result-trace/v2",
+          "relations": [],
+          "sequence_no": 5,
+          "source_binding_ref_required": true,
+          "source_class": "ValidationResult",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "ValidationResult",
+          "value_paths": {
+            "decision_path": "projection.decision",
+            "reason_codes_path": "projection.issue_codes",
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "WebShopBuyNowGateOutcome:binding:{binding_digest}",
+          "entity_role": "FINAL_OUTCOME",
+          "entity_type": "WebShopBuyNowGateOutcome",
+          "event_type": "RESULT_RECORDED",
+          "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v2",
+          "relations": [],
+          "sequence_no": 6,
+          "source_binding_ref_required": true,
+          "source_class": "WebShopBuyNowGateOutcome",
+          "source_module": "agentic_payment_experiment.webshop_runtime_gate",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "WebShopBuyNowGateOutcome",
+          "value_paths": {
+            "decision_path": "projection.decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": null
+          }
+        }
+      ],
+      "new_business_rule_required": false,
+      "profile": "WEBSHOP_PREPAYMENT_T04_V2",
+      "task_id": "T04",
+      "title": "收款方变化"
+    },
+    {
+      "current_status": "NOT_AVAILABLE",
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "PREPAYMENT_VALIDATION",
+        "GOVERNED_ACTION",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "ACTION_BINDING_FACT",
+        "FINAL_OUTCOME"
+      ],
+      "events": [
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "IntentMandate:{projection.mandate_id}",
+          "entity_role": "AUTHORITY",
+          "entity_type": "IntentMandate",
+          "event_type": "AUTHORITY_RECORDED",
+          "projection_schema": "intent-mandate-trace/v2",
+          "relations": [],
+          "sequence_no": 1,
+          "source_binding_ref_required": true,
+          "source_class": "IntentMandate",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "IntentMandate",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "AUTHORIZED_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 2,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "CURRENT_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 3,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "TransactionRequest:{projection.request_id}",
+          "entity_role": "CURRENT_REQUEST",
+          "entity_type": "TransactionRequest",
+          "event_type": "REQUEST_RECORDED",
+          "projection_schema": "transaction-request-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 4,
+          "source_binding_ref_required": true,
+          "source_class": "TransactionRequest",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "TransactionRequest",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "ValidationResult:binding:{binding_digest}",
+          "entity_role": "PREPAYMENT_VALIDATION",
+          "entity_type": "ValidationResult",
+          "event_type": "PREPAYMENT_DECISION_RECORDED",
+          "projection_schema": "validation-result-trace/v2",
+          "relations": [],
+          "sequence_no": 5,
+          "source_binding_ref_required": true,
+          "source_class": "ValidationResult",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "ValidationResult",
+          "value_paths": {
+            "decision_path": "projection.decision",
+            "reason_codes_path": "projection.issue_codes",
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedPaymentAction:{projection.action_id}",
+          "entity_role": "GOVERNED_ACTION",
+          "entity_type": "GovernedPaymentAction",
+          "event_type": "ACTION_RECORDED",
+          "projection_schema": "governed-payment-action-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.order_version",
+                  "target_path": "projection.order_version"
+                }
+              ],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 6,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedPaymentAction",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "GovernedPaymentAction",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+          "entity_role": "CURRENT_PAYMENT_CANDIDATE",
+          "entity_type": "PaymentExecutionRecord",
+          "event_type": "PAYMENT_CANDIDATE_RECORDED",
+          "projection_schema": "payment-execution-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 7,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentExecutionRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "PaymentExecutionRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedActionBindingFact:binding:{binding_digest}",
+          "entity_role": "ACTION_BINDING_FACT",
+          "entity_type": "GovernedActionBindingFact",
+          "event_type": "ACTION_BINDING_DECISION_RECORDED",
+          "projection_schema": "governed-action-binding-fact-trace/v2",
+          "relations": [
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.action_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "GovernedPaymentAction:{value}",
+              "target_entity_role": "GOVERNED_ACTION",
+              "target_entity_type": "GovernedPaymentAction",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.checked_payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 8,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedActionBindingFact",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "GovernedActionBindingFact",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "WebShopBuyNowGateOutcome:binding:{binding_digest}",
+          "entity_role": "FINAL_OUTCOME",
+          "entity_type": "WebShopBuyNowGateOutcome",
+          "event_type": "RESULT_RECORDED",
+          "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v2",
+          "relations": [],
+          "sequence_no": 9,
+          "source_binding_ref_required": true,
+          "source_class": "WebShopBuyNowGateOutcome",
+          "source_module": "agentic_payment_experiment.webshop_runtime_gate",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "WebShopBuyNowGateOutcome",
+          "value_paths": {
+            "decision_path": "projection.decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": null
+          }
+        }
+      ],
+      "new_business_rule_required": false,
+      "profile": "WEBSHOP_ACTION_BINDING_T05_V2",
+      "task_id": "T05",
+      "title": "Action Agent 不匹配"
+    },
+    {
+      "current_status": "NOT_AVAILABLE",
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "PREPAYMENT_VALIDATION",
+        "GOVERNED_ACTION",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "ACTION_BINDING_FACT",
+        "FINAL_OUTCOME"
+      ],
+      "events": [
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "IntentMandate:{projection.mandate_id}",
+          "entity_role": "AUTHORITY",
+          "entity_type": "IntentMandate",
+          "event_type": "AUTHORITY_RECORDED",
+          "projection_schema": "intent-mandate-trace/v2",
+          "relations": [],
+          "sequence_no": 1,
+          "source_binding_ref_required": true,
+          "source_class": "IntentMandate",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "IntentMandate",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "AUTHORIZED_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 2,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "CURRENT_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 3,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "TransactionRequest:{projection.request_id}",
+          "entity_role": "CURRENT_REQUEST",
+          "entity_type": "TransactionRequest",
+          "event_type": "REQUEST_RECORDED",
+          "projection_schema": "transaction-request-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 4,
+          "source_binding_ref_required": true,
+          "source_class": "TransactionRequest",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "TransactionRequest",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "ValidationResult:binding:{binding_digest}",
+          "entity_role": "PREPAYMENT_VALIDATION",
+          "entity_type": "ValidationResult",
+          "event_type": "PREPAYMENT_DECISION_RECORDED",
+          "projection_schema": "validation-result-trace/v2",
+          "relations": [],
+          "sequence_no": 5,
+          "source_binding_ref_required": true,
+          "source_class": "ValidationResult",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "ValidationResult",
+          "value_paths": {
+            "decision_path": "projection.decision",
+            "reason_codes_path": "projection.issue_codes",
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedPaymentAction:binding:{binding_digest}",
+          "entity_role": "GOVERNED_ACTION",
+          "entity_type": "GovernedPaymentAction",
+          "event_type": "ACTION_RECORDED",
+          "projection_schema": "governed-payment-action-missing-id-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.order_version",
+                  "target_path": "projection.order_version"
+                }
+              ],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 6,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedPaymentAction",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "GovernedPaymentAction",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+          "entity_role": "CURRENT_PAYMENT_CANDIDATE",
+          "entity_type": "PaymentExecutionRecord",
+          "event_type": "PAYMENT_CANDIDATE_RECORDED",
+          "projection_schema": "payment-execution-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 7,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentExecutionRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "PaymentExecutionRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedActionBindingFact:binding:{binding_digest}",
+          "entity_role": "ACTION_BINDING_FACT",
+          "entity_type": "GovernedActionBindingFact",
+          "event_type": "ACTION_BINDING_DECISION_RECORDED",
+          "projection_schema": "governed-action-binding-fact-trace/v2",
+          "relations": [
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.checked_payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 8,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedActionBindingFact",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "GovernedActionBindingFact",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "WebShopBuyNowGateOutcome:binding:{binding_digest}",
+          "entity_role": "FINAL_OUTCOME",
+          "entity_type": "WebShopBuyNowGateOutcome",
+          "event_type": "RESULT_RECORDED",
+          "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v2",
+          "relations": [],
+          "sequence_no": 9,
+          "source_binding_ref_required": true,
+          "source_class": "WebShopBuyNowGateOutcome",
+          "source_module": "agentic_payment_experiment.webshop_runtime_gate",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "WebShopBuyNowGateOutcome",
+          "value_paths": {
+            "decision_path": "projection.decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": null
+          }
+        }
+      ],
+      "new_business_rule_required": false,
+      "profile": "WEBSHOP_ACTION_BINDING_T06_V2",
+      "task_id": "T06",
+      "title": "Action ID 缺失"
+    },
+    {
+      "current_status": "NOT_AVAILABLE",
+      "entity_roles": [
+        "ATTACK_POLICY_RESULT",
+        "ATTACK_LINEAGE_RESULT",
+        "FINAL_OUTCOME"
+      ],
+      "events": [
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "AttackOverlayResult:{projection.attack_id}",
+          "entity_role": "ATTACK_POLICY_RESULT",
+          "entity_type": "AttackOverlayResult",
+          "event_type": "POLICY_DECISION_RECORDED",
+          "projection_schema": "attack-overlay-result-trace/v2",
+          "relations": [],
+          "sequence_no": 1,
+          "source_binding_ref_required": true,
+          "source_class": "AttackOverlayResult",
+          "source_module": "agentic_payment_experiment.attack_overlay",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "AttackOverlayResult",
+          "value_paths": {
+            "decision_path": "projection.defended_decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "AttackOverlayResult:{projection.attack_id}",
+          "entity_role": "ATTACK_LINEAGE_RESULT",
+          "entity_type": "AttackOverlayResult",
+          "event_type": "LINEAGE_DECISION_RECORDED",
+          "projection_schema": "attack-overlay-result-trace/v2",
+          "relations": [],
+          "sequence_no": 2,
+          "source_binding_ref_required": true,
+          "source_class": "AttackOverlayResult",
+          "source_module": "agentic_payment_experiment.attack_overlay",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "AttackOverlayResult",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.lineage_reason_codes",
+            "status_path": "projection.lineage_status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "AttackOverlayResult:{projection.attack_id}",
+          "entity_role": "FINAL_OUTCOME",
+          "entity_type": "AttackOverlayResult",
+          "event_type": "RESULT_RECORDED",
+          "projection_schema": "attack-overlay-result-trace/v2",
+          "relations": [],
+          "sequence_no": 3,
+          "source_binding_ref_required": true,
+          "source_class": "AttackOverlayResult",
+          "source_module": "agentic_payment_experiment.attack_overlay",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "AttackOverlayResult",
+          "value_paths": {
+            "decision_path": "projection.defended_decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": null
+          }
+        }
+      ],
+      "new_business_rule_required": false,
+      "profile": "ATTACK_OVERLAY_T07_V2",
+      "task_id": "T07",
+      "title": "不可信网页金额覆盖被阻断"
+    },
+    {
+      "current_status": "NOT_AVAILABLE",
+      "entity_roles": [
+        "ATTACK_POLICY_RESULT",
+        "ATTACK_LINEAGE_RESULT",
+        "FINAL_OUTCOME"
+      ],
+      "events": [
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "AttackOverlayResult:{projection.attack_id}",
+          "entity_role": "ATTACK_POLICY_RESULT",
+          "entity_type": "AttackOverlayResult",
+          "event_type": "POLICY_DECISION_RECORDED",
+          "projection_schema": "attack-overlay-result-trace/v2",
+          "relations": [],
+          "sequence_no": 1,
+          "source_binding_ref_required": true,
+          "source_class": "AttackOverlayResult",
+          "source_module": "agentic_payment_experiment.attack_overlay",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "AttackOverlayResult",
+          "value_paths": {
+            "decision_path": "projection.defended_decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "AttackOverlayResult:{projection.attack_id}",
+          "entity_role": "ATTACK_LINEAGE_RESULT",
+          "entity_type": "AttackOverlayResult",
+          "event_type": "LINEAGE_DECISION_RECORDED",
+          "projection_schema": "attack-overlay-result-trace/v2",
+          "relations": [],
+          "sequence_no": 2,
+          "source_binding_ref_required": true,
+          "source_class": "AttackOverlayResult",
+          "source_module": "agentic_payment_experiment.attack_overlay",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "AttackOverlayResult",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.lineage_reason_codes",
+            "status_path": "projection.lineage_status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "AttackOverlayResult:{projection.attack_id}",
+          "entity_role": "FINAL_OUTCOME",
+          "entity_type": "AttackOverlayResult",
+          "event_type": "RESULT_RECORDED",
+          "projection_schema": "attack-overlay-result-trace/v2",
+          "relations": [],
+          "sequence_no": 3,
+          "source_binding_ref_required": true,
+          "source_class": "AttackOverlayResult",
+          "source_module": "agentic_payment_experiment.attack_overlay",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "AttackOverlayResult",
+          "value_paths": {
+            "decision_path": "projection.defended_decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": null
+          }
+        }
+      ],
+      "new_business_rule_required": false,
+      "profile": "ATTACK_OVERLAY_T08_V2",
+      "task_id": "T08",
+      "title": "不可信收款方覆盖被阻断"
+    },
+    {
+      "current_status": "NOT_AVAILABLE",
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "GOVERNED_ACTION",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "ACTION_BINDING_FACT",
+        "RUNTIME_GATE_OBSERVATION",
+        "PAYMENT_EXECUTION_OUTCOME",
+        "RECOVERY_OUTCOME",
+        "FINAL_OUTCOME"
+      ],
+      "events": [
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "IntentMandate:{projection.mandate_id}",
+          "entity_role": "AUTHORITY",
+          "entity_type": "IntentMandate",
+          "event_type": "AUTHORITY_RECORDED",
+          "projection_schema": "intent-mandate-trace/v2",
+          "relations": [],
+          "sequence_no": 1,
+          "source_binding_ref_required": true,
+          "source_class": "IntentMandate",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "IntentMandate",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "AUTHORIZED_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 2,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "CURRENT_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 3,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "TransactionRequest:{projection.request_id}",
+          "entity_role": "CURRENT_REQUEST",
+          "entity_type": "TransactionRequest",
+          "event_type": "REQUEST_RECORDED",
+          "projection_schema": "transaction-request-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 4,
+          "source_binding_ref_required": true,
+          "source_class": "TransactionRequest",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "TransactionRequest",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedPaymentAction:{projection.action_id}",
+          "entity_role": "GOVERNED_ACTION",
+          "entity_type": "GovernedPaymentAction",
+          "event_type": "ACTION_RECORDED",
+          "projection_schema": "governed-payment-action-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.order_version",
+                  "target_path": "projection.order_version"
+                }
+              ],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 5,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedPaymentAction",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "GovernedPaymentAction",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+          "entity_role": "CURRENT_PAYMENT_CANDIDATE",
+          "entity_type": "PaymentExecutionRecord",
+          "event_type": "PAYMENT_CANDIDATE_RECORDED",
+          "projection_schema": "payment-execution-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 6,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentExecutionRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "PaymentExecutionRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedActionBindingFact:binding:{binding_digest}",
+          "entity_role": "ACTION_BINDING_FACT",
+          "entity_type": "GovernedActionBindingFact",
+          "event_type": "ACTION_BINDING_DECISION_RECORDED",
+          "projection_schema": "governed-action-binding-fact-trace/v2",
+          "relations": [
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.action_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "GovernedPaymentAction:{value}",
+              "target_entity_role": "GOVERNED_ACTION",
+              "target_entity_type": "GovernedPaymentAction",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.checked_payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 7,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedActionBindingFact",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "GovernedActionBindingFact",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "RuntimeGateRecord:binding:{binding_digest}",
+          "entity_role": "RUNTIME_GATE_OBSERVATION",
+          "entity_type": "RuntimeGateRecord",
+          "event_type": "RUNTIME_DECISION_RECORDED",
+          "projection_schema": "runtime-gate-record-trace/v2",
+          "relations": [],
+          "sequence_no": 8,
+          "source_binding_ref_required": true,
+          "source_class": "RuntimeGateRecord",
+          "source_module": "agentic_payment_experiment.trusted_execution.replay",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "RuntimeGateRecord",
+          "value_paths": {
+            "decision_path": "projection.final_decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.binding_status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+          "entity_role": "PAYMENT_EXECUTION_OUTCOME",
+          "entity_type": "PaymentExecutionRecord",
+          "event_type": "PAYMENT_OUTCOME_RECORDED",
+          "projection_schema": "payment-execution-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 9,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentExecutionRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "PaymentExecutionRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentRecoveryResult:binding:{binding_digest}",
+          "entity_role": "RECOVERY_OUTCOME",
+          "entity_type": "PaymentRecoveryResult",
+          "event_type": "RECOVERY_OUTCOME_RECORDED",
+          "projection_schema": "payment-recovery-result-trace/v2",
+          "relations": [],
+          "sequence_no": 10,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentRecoveryResult",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "PaymentRecoveryResult",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.issue_codes",
+            "status_path": "projection.recovery_status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "WebShopPaymentFulfilmentOutcome:binding:{binding_digest}",
+          "entity_role": "FINAL_OUTCOME",
+          "entity_type": "WebShopPaymentFulfilmentOutcome",
+          "event_type": "RESULT_RECORDED",
+          "projection_schema": "webshop-payment-fulfilment-outcome-result-trace/v2",
+          "relations": [],
+          "sequence_no": 11,
+          "source_binding_ref_required": true,
+          "source_class": "WebShopPaymentFulfilmentOutcome",
+          "source_module": "agentic_payment_experiment.webshop_payment_sidecar",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "WebShopPaymentFulfilmentOutcome",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.lifecycle_task_status"
+          }
+        }
+      ],
+      "new_business_rule_required": false,
+      "profile": "WEBSHOP_UNKNOWN_PAYMENT_RECOVERY_V2",
+      "task_id": "T09",
+      "title": "UNKNOWN 支付状态恢复"
+    },
+    {
+      "current_status": "NOT_AVAILABLE",
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "GOVERNED_ACTION",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "ACTION_BINDING_FACT",
+        "HISTORICAL_SUCCEEDED_PAYMENT",
+        "KNOWN_PAYMENT_PREFLIGHT_FACT",
+        "PREPAYMENT_VALIDATION",
+        "RUNTIME_GATE_OBSERVATION",
+        "FINAL_OUTCOME"
+      ],
+      "events": [
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "IntentMandate:{projection.mandate_id}",
+          "entity_role": "AUTHORITY",
+          "entity_type": "IntentMandate",
+          "event_type": "AUTHORITY_RECORDED",
+          "projection_schema": "intent-mandate-trace/v2",
+          "relations": [],
+          "sequence_no": 1,
+          "source_binding_ref_required": true,
+          "source_class": "IntentMandate",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "IntentMandate",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "AUTHORIZED_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 2,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "CURRENT_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 3,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "TransactionRequest:{projection.request_id}",
+          "entity_role": "CURRENT_REQUEST",
+          "entity_type": "TransactionRequest",
+          "event_type": "REQUEST_RECORDED",
+          "projection_schema": "transaction-request-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 4,
+          "source_binding_ref_required": true,
+          "source_class": "TransactionRequest",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "TransactionRequest",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedPaymentAction:{projection.action_id}",
+          "entity_role": "GOVERNED_ACTION",
+          "entity_type": "GovernedPaymentAction",
+          "event_type": "ACTION_RECORDED",
+          "projection_schema": "governed-payment-action-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.order_version",
+                  "target_path": "projection.order_version"
+                }
+              ],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 5,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedPaymentAction",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "GovernedPaymentAction",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+          "entity_role": "CURRENT_PAYMENT_CANDIDATE",
+          "entity_type": "PaymentExecutionRecord",
+          "event_type": "PAYMENT_CANDIDATE_RECORDED",
+          "projection_schema": "payment-execution-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 6,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentExecutionRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "PaymentExecutionRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedActionBindingFact:binding:{binding_digest}",
+          "entity_role": "ACTION_BINDING_FACT",
+          "entity_type": "GovernedActionBindingFact",
+          "event_type": "ACTION_BINDING_DECISION_RECORDED",
+          "projection_schema": "governed-action-binding-fact-trace/v2",
+          "relations": [
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.action_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "GovernedPaymentAction:{value}",
+              "target_entity_role": "GOVERNED_ACTION",
+              "target_entity_type": "GovernedPaymentAction",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.checked_payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 7,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedActionBindingFact",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "GovernedActionBindingFact",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+          "entity_role": "HISTORICAL_SUCCEEDED_PAYMENT",
+          "entity_type": "PaymentExecutionRecord",
+          "event_type": "PAYMENT_OUTCOME_RECORDED",
+          "projection_schema": "payment-execution-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 8,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentExecutionRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "PaymentExecutionRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "KnownPaymentAttemptPreflightFact:binding:{binding_digest}",
+          "entity_role": "KNOWN_PAYMENT_PREFLIGHT_FACT",
+          "entity_type": "KnownPaymentAttemptPreflightFact",
+          "event_type": "KNOWN_PAYMENT_PREFLIGHT_RECORDED",
+          "projection_schema": "known-payment-attempt-preflight-fact-trace/v2",
+          "relations": [
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.current_request_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "MEMBER_OF",
+              "source_assertion_path": "projection.related_attempt_refs[]",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "HISTORICAL_SUCCEEDED_PAYMENT",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "EACH_VALUE"
+            }
+          ],
+          "sequence_no": 9,
+          "source_binding_ref_required": true,
+          "source_class": "KnownPaymentAttemptPreflightFact",
+          "source_module": "agentic_payment_experiment.trusted_execution.known_payment_attempt",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "KnownPaymentAttemptPreflightFact",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "ValidationResult:binding:{binding_digest}",
+          "entity_role": "PREPAYMENT_VALIDATION",
+          "entity_type": "ValidationResult",
+          "event_type": "PREPAYMENT_DECISION_RECORDED",
+          "projection_schema": "validation-result-trace/v2",
+          "relations": [],
+          "sequence_no": 10,
+          "source_binding_ref_required": true,
+          "source_class": "ValidationResult",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "ValidationResult",
+          "value_paths": {
+            "decision_path": "projection.decision",
+            "reason_codes_path": "projection.issue_codes",
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "RuntimeGateRecord:binding:{binding_digest}",
+          "entity_role": "RUNTIME_GATE_OBSERVATION",
+          "entity_type": "RuntimeGateRecord",
+          "event_type": "RUNTIME_DECISION_RECORDED",
+          "projection_schema": "runtime-gate-record-trace/v2",
+          "relations": [],
+          "sequence_no": 11,
+          "source_binding_ref_required": true,
+          "source_class": "RuntimeGateRecord",
+          "source_module": "agentic_payment_experiment.trusted_execution.replay",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "RuntimeGateRecord",
+          "value_paths": {
+            "decision_path": "projection.final_decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.binding_status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "WebShopBuyNowGateOutcome:binding:{binding_digest}",
+          "entity_role": "FINAL_OUTCOME",
+          "entity_type": "WebShopBuyNowGateOutcome",
+          "event_type": "RESULT_RECORDED",
+          "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v2",
+          "relations": [],
+          "sequence_no": 12,
+          "source_binding_ref_required": true,
+          "source_class": "WebShopBuyNowGateOutcome",
+          "source_module": "agentic_payment_experiment.webshop_runtime_gate",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "WebShopBuyNowGateOutcome",
+          "value_paths": {
+            "decision_path": "projection.decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": null
+          }
+        }
+      ],
+      "new_business_rule_required": false,
+      "profile": "WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V2",
+      "task_id": "T10",
+      "title": "重复付款预检阻断"
+    },
+    {
+      "current_status": "NOT_AVAILABLE",
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "GOVERNED_ACTION",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "ACTION_BINDING_FACT",
+        "RUNTIME_GATE_OBSERVATION",
+        "PAYMENT_EXECUTION_OUTCOME",
+        "FULFILMENT_OUTCOME",
+        "RECOVERY_OUTCOME",
+        "FINAL_OUTCOME"
+      ],
+      "events": [
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "IntentMandate:{projection.mandate_id}",
+          "entity_role": "AUTHORITY",
+          "entity_type": "IntentMandate",
+          "event_type": "AUTHORITY_RECORDED",
+          "projection_schema": "intent-mandate-trace/v2",
+          "relations": [],
+          "sequence_no": 1,
+          "source_binding_ref_required": true,
+          "source_class": "IntentMandate",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "IntentMandate",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "AUTHORIZED_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 2,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "CURRENT_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 3,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "TransactionRequest:{projection.request_id}",
+          "entity_role": "CURRENT_REQUEST",
+          "entity_type": "TransactionRequest",
+          "event_type": "REQUEST_RECORDED",
+          "projection_schema": "transaction-request-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 4,
+          "source_binding_ref_required": true,
+          "source_class": "TransactionRequest",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "TransactionRequest",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedPaymentAction:{projection.action_id}",
+          "entity_role": "GOVERNED_ACTION",
+          "entity_type": "GovernedPaymentAction",
+          "event_type": "ACTION_RECORDED",
+          "projection_schema": "governed-payment-action-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.order_version",
+                  "target_path": "projection.order_version"
+                }
+              ],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 5,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedPaymentAction",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "GovernedPaymentAction",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+          "entity_role": "CURRENT_PAYMENT_CANDIDATE",
+          "entity_type": "PaymentExecutionRecord",
+          "event_type": "PAYMENT_CANDIDATE_RECORDED",
+          "projection_schema": "payment-execution-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 6,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentExecutionRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "PaymentExecutionRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedActionBindingFact:binding:{binding_digest}",
+          "entity_role": "ACTION_BINDING_FACT",
+          "entity_type": "GovernedActionBindingFact",
+          "event_type": "ACTION_BINDING_DECISION_RECORDED",
+          "projection_schema": "governed-action-binding-fact-trace/v2",
+          "relations": [
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.action_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "GovernedPaymentAction:{value}",
+              "target_entity_role": "GOVERNED_ACTION",
+              "target_entity_type": "GovernedPaymentAction",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.checked_payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 7,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedActionBindingFact",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "GovernedActionBindingFact",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "RuntimeGateRecord:binding:{binding_digest}",
+          "entity_role": "RUNTIME_GATE_OBSERVATION",
+          "entity_type": "RuntimeGateRecord",
+          "event_type": "RUNTIME_DECISION_RECORDED",
+          "projection_schema": "runtime-gate-record-trace/v2",
+          "relations": [],
+          "sequence_no": 8,
+          "source_binding_ref_required": true,
+          "source_class": "RuntimeGateRecord",
+          "source_module": "agentic_payment_experiment.trusted_execution.replay",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "RuntimeGateRecord",
+          "value_paths": {
+            "decision_path": "projection.final_decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.binding_status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+          "entity_role": "PAYMENT_EXECUTION_OUTCOME",
+          "entity_type": "PaymentExecutionRecord",
+          "event_type": "PAYMENT_OUTCOME_RECORDED",
+          "projection_schema": "payment-execution-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 9,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentExecutionRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "PaymentExecutionRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "FulfillmentRecord:{projection.fulfillment_id}",
+          "entity_role": "FULFILMENT_OUTCOME",
+          "entity_type": "FulfillmentRecord",
+          "event_type": "FULFILMENT_OUTCOME_RECORDED",
+          "projection_schema": "fulfillment-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 10,
+          "source_binding_ref_required": true,
+          "source_class": "FulfillmentRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "FulfillmentRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentRecoveryResult:binding:{binding_digest}",
+          "entity_role": "RECOVERY_OUTCOME",
+          "entity_type": "PaymentRecoveryResult",
+          "event_type": "RECOVERY_OUTCOME_RECORDED",
+          "projection_schema": "payment-recovery-result-trace/v2",
+          "relations": [],
+          "sequence_no": 11,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentRecoveryResult",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "PaymentRecoveryResult",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.issue_codes",
+            "status_path": "projection.recovery_status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "WebShopPaymentFulfilmentOutcome:binding:{binding_digest}",
+          "entity_role": "FINAL_OUTCOME",
+          "entity_type": "WebShopPaymentFulfilmentOutcome",
+          "event_type": "RESULT_RECORDED",
+          "projection_schema": "webshop-payment-fulfilment-outcome-result-trace/v2",
+          "relations": [],
+          "sequence_no": 12,
+          "source_binding_ref_required": true,
+          "source_class": "WebShopPaymentFulfilmentOutcome",
+          "source_module": "agentic_payment_experiment.webshop_payment_sidecar",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "WebShopPaymentFulfilmentOutcome",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.lifecycle_task_status"
+          }
+        }
+      ],
+      "new_business_rule_required": false,
+      "profile": "WEBSHOP_FULFILMENT_FAILURE_V2",
+      "task_id": "T11",
+      "title": "付款成功但履约失败"
+    },
+    {
+      "current_status": "NOT_AVAILABLE",
+      "entity_roles": [
+        "AUTHORITY",
+        "AUTHORIZED_ORDER_SNAPSHOT",
+        "CURRENT_ORDER_SNAPSHOT",
+        "CURRENT_REQUEST",
+        "GOVERNED_ACTION",
+        "CURRENT_PAYMENT_CANDIDATE",
+        "ACTION_BINDING_FACT",
+        "RUNTIME_GATE_OBSERVATION",
+        "PAYMENT_EXECUTION_OUTCOME",
+        "STATUS_CONFLICT_FACT",
+        "FINAL_OUTCOME"
+      ],
+      "events": [
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "IntentMandate:{projection.mandate_id}",
+          "entity_role": "AUTHORITY",
+          "entity_type": "IntentMandate",
+          "event_type": "AUTHORITY_RECORDED",
+          "projection_schema": "intent-mandate-trace/v2",
+          "relations": [],
+          "sequence_no": 1,
+          "source_binding_ref_required": true,
+          "source_class": "IntentMandate",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "IntentMandate",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "AUTHORIZED_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 2,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": "AUTHORIZED_CURRENT_ORDER_SHARED_BINDING",
+          "entity_ref_template": "Order:{projection.order_id}",
+          "entity_role": "CURRENT_ORDER_SNAPSHOT",
+          "entity_type": "Order",
+          "event_type": "ORDER_RECORDED",
+          "projection_schema": "order-snapshot-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.mandate_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 3,
+          "source_binding_ref_required": true,
+          "source_class": "Order",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "Order",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "TransactionRequest:{projection.request_id}",
+          "entity_role": "CURRENT_REQUEST",
+          "entity_type": "TransactionRequest",
+          "event_type": "REQUEST_RECORDED",
+          "projection_schema": "transaction-request-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version_ref",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 4,
+          "source_binding_ref_required": true,
+          "source_class": "TransactionRequest",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "TransactionRequest",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedPaymentAction:{projection.action_id}",
+          "entity_role": "GOVERNED_ACTION",
+          "entity_type": "GovernedPaymentAction",
+          "event_type": "ACTION_RECORDED",
+          "projection_schema": "governed-payment-action-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.authority_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.authority_version",
+                  "target_path": "projection.authority_version"
+                }
+              ],
+              "target_entity_ref_template": "IntentMandate:{value}",
+              "target_entity_role": "AUTHORITY",
+              "target_entity_type": "IntentMandate",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_ref",
+              "target_binding_assertions": [
+                {
+                  "source_path": "projection.order_version",
+                  "target_path": "projection.order_version"
+                }
+              ],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 5,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedPaymentAction",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "GovernedPaymentAction",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": null
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+          "entity_role": "CURRENT_PAYMENT_CANDIDATE",
+          "entity_type": "PaymentExecutionRecord",
+          "event_type": "PAYMENT_CANDIDATE_RECORDED",
+          "projection_schema": "payment-execution-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 6,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentExecutionRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "PaymentExecutionRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "GovernedActionBindingFact:binding:{binding_digest}",
+          "entity_role": "ACTION_BINDING_FACT",
+          "entity_type": "GovernedActionBindingFact",
+          "event_type": "ACTION_BINDING_DECISION_RECORDED",
+          "projection_schema": "governed-action-binding-fact-trace/v2",
+          "relations": [
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.action_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "GovernedPaymentAction:{value}",
+              "target_entity_role": "GOVERNED_ACTION",
+              "target_entity_type": "GovernedPaymentAction",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "VALIDATED_AGAINST",
+              "source_assertion_path": "projection.checked_payment_ref",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "PaymentExecutionRecord:{value}",
+              "target_entity_role": "CURRENT_PAYMENT_CANDIDATE",
+              "target_entity_type": "PaymentExecutionRecord",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 7,
+          "source_binding_ref_required": true,
+          "source_class": "GovernedActionBindingFact",
+          "source_module": "agentic_payment_experiment.trusted_execution.governed_action",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "GovernedActionBindingFact",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "RuntimeGateRecord:binding:{binding_digest}",
+          "entity_role": "RUNTIME_GATE_OBSERVATION",
+          "entity_type": "RuntimeGateRecord",
+          "event_type": "RUNTIME_DECISION_RECORDED",
+          "projection_schema": "runtime-gate-record-trace/v2",
+          "relations": [],
+          "sequence_no": 8,
+          "source_binding_ref_required": true,
+          "source_class": "RuntimeGateRecord",
+          "source_module": "agentic_payment_experiment.trusted_execution.replay",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "RuntimeGateRecord",
+          "value_paths": {
+            "decision_path": "projection.final_decision",
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.binding_status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentExecutionRecord:{projection.payment_id}",
+          "entity_role": "PAYMENT_EXECUTION_OUTCOME",
+          "entity_type": "PaymentExecutionRecord",
+          "event_type": "PAYMENT_OUTCOME_RECORDED",
+          "projection_schema": "payment-execution-record-trace/v2",
+          "relations": [
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.request_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "TransactionRequest:{value}",
+              "target_entity_role": "CURRENT_REQUEST",
+              "target_entity_type": "TransactionRequest",
+              "value_mode": "SCALAR"
+            },
+            {
+              "relation_type": "BOUND_TO",
+              "source_assertion_path": "projection.order_id",
+              "target_binding_assertions": [],
+              "target_entity_ref_template": "Order:{value}",
+              "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+              "target_entity_type": "Order",
+              "value_mode": "SCALAR"
+            }
+          ],
+          "sequence_no": 9,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentExecutionRecord",
+          "source_module": "agentic_payment_experiment.models",
+          "source_object_ref_mode": "NATIVE_TEMPLATE",
+          "source_object_type": "PaymentExecutionRecord",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": null,
+            "status_path": "projection.status"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "PaymentStatusConflictFact:binding:{binding_digest}",
+          "entity_role": "STATUS_CONFLICT_FACT",
+          "entity_type": "PaymentStatusConflictFact",
+          "event_type": "STATUS_CONFLICT_RECORDED",
+          "projection_schema": "payment-status-conflict-fact-trace/v2",
+          "relations": [],
+          "sequence_no": 10,
+          "source_binding_ref_required": true,
+          "source_class": "PaymentStatusConflictFact",
+          "source_module": "agentic_payment_experiment.payment_status_conflict",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "PaymentStatusConflictFact",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.resolution"
+          }
+        },
+        {
+          "binding_alias_group": null,
+          "entity_ref_template": "WebShopPaymentFulfilmentOutcome:binding:{binding_digest}",
+          "entity_role": "FINAL_OUTCOME",
+          "entity_type": "WebShopPaymentFulfilmentOutcome",
+          "event_type": "RESULT_RECORDED",
+          "projection_schema": "webshop-payment-fulfilment-outcome-result-trace/v2",
+          "relations": [],
+          "sequence_no": 11,
+          "source_binding_ref_required": true,
+          "source_class": "WebShopPaymentFulfilmentOutcome",
+          "source_module": "agentic_payment_experiment.webshop_payment_sidecar",
+          "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+          "source_object_type": "WebShopPaymentFulfilmentOutcome",
+          "value_paths": {
+            "decision_path": null,
+            "reason_codes_path": "projection.reason_codes",
+            "status_path": "projection.lifecycle_task_status"
+          }
+        }
+      ],
+      "new_business_rule_required": false,
+      "profile": "WEBSHOP_PAYMENT_STATUS_CONFLICT_V2",
+      "task_id": "T12",
+      "title": "终态冲突"
+    }
+  ]
+}

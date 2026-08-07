@@ -1,0 +1,39 @@
+{
+  "frozen_boundaries_unchanged": true,
+  "gesr": "2/12",
+  "negative_case_count": 20,
+  "negative_cases": [
+    "base_retry_allowed",
+    "candidate_not_pending",
+    "duplicate_blocked",
+    "effective_id_mismatch",
+    "effective_not_succeeded",
+    "initial_id_mismatch",
+    "initial_not_unknown",
+    "lifecycle_fulfilment_not_success",
+    "lifecycle_payment_not_success",
+    "lifecycle_task_not_success",
+    "missing_recovery",
+    "observed_not_succeeded",
+    "recovery_effective_not_succeeded",
+    "recovery_not_recovered",
+    "recovery_retry_allowed",
+    "remediation_required",
+    "retained_action_missing",
+    "retained_candidate_missing",
+    "retained_order_missing",
+    "status_conflict_present"
+  ],
+  "non_trace_unchanged": true,
+  "product_trace": "3/12",
+  "result": "PASS",
+  "t01_trace_unchanged": true,
+  "t09_trace_sha256": "a596f5f35697a878286b85b8e37792aeee34ab7c0800b27739bc91382032310e",
+  "t10_trace_unchanged": true,
+  "valid_product_tasks": [
+    "T01",
+    "T09",
+    "T10"
+  ]
+}
+RESULT=PASS

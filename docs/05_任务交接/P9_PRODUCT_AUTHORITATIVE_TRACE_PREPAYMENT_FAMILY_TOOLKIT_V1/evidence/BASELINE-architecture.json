@@ -1,0 +1,60 @@
+{
+  "schema_version": "prepayment-trace-toolkit-architecture-baseline/v1",
+  "captured_on": "2026-08-06",
+  "baseline_head": "b4eff597ebffe79c575522b91642f82b26ad5247",
+  "accepted_measurement": {
+    "source_path": "docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_SIDECAR_FAMILY_TOOLKIT_V1/evidence/RV-EV-03-after-baseline.json",
+    "sha256": "b3fba30058acb1c421786cae0b5a93d3e7fdcf22aa6c4a5fa0f51dc821435a34",
+    "normalized_sha256": "6bab1053d389ac181a701a5701b0f523ed9bb864323fd1ad51fd53ceefa09b8c",
+    "product_trace": "4/12",
+    "gesr": "3/12",
+    "valid_product_tasks": ["T01", "T09", "T10", "T12"],
+    "non_trace_sha256": "6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc"
+  },
+  "family": {
+    "task_ids": ["T02", "T03", "T04"],
+    "event_count_each": 6,
+    "unique_binding_count_each": 6,
+    "common_events": [
+      [1, "AUTHORITY_RECORDED", "AUTHORITY"],
+      [2, "ORDER_RECORDED", "AUTHORIZED_ORDER_SNAPSHOT"],
+      [3, "ORDER_RECORDED", "CURRENT_ORDER_SNAPSHOT"],
+      [4, "REQUEST_RECORDED", "CURRENT_REQUEST"],
+      [5, "PREPAYMENT_DECISION_RECORDED", "PREPAYMENT_VALIDATION"],
+      [6, "RESULT_RECORDED", "FINAL_OUTCOME"]
+    ],
+    "profiles": {
+      "T02": {
+        "profile": "WEBSHOP_PREPAYMENT_T02_V2",
+        "decision": "CONFIRMATION_REQUIRED",
+        "scenario_kind": "PRICE_INCREASE",
+        "actual_reason_codes": ["p1:order_item_unit_amount_changed", "p1:order_total_changed"]
+      },
+      "T03": {
+        "profile": "WEBSHOP_PREPAYMENT_T03_V2",
+        "decision": "CONFIRMATION_REQUIRED",
+        "scenario_kind": "PRICE_DECREASE",
+        "actual_reason_codes": ["p1:order_item_unit_amount_changed", "p1:order_total_changed"]
+      },
+      "T04": {
+        "profile": "WEBSHOP_PREPAYMENT_T04_V2",
+        "decision": "INDETERMINATE",
+        "scenario_kind": "PAYEE_CHANGE",
+        "actual_reason_codes": ["p1:order_payee_changed"]
+      }
+    }
+  },
+  "existing_trace_hashes": {
+    "T01": "7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906",
+    "T09": "a596f5f35697a878286b85b8e37792aeee34ab7c0800b27739bc91382032310e",
+    "T10": "2b97fd1f81001086d4793bf21fd0dbe3ed950643e6d9e5031e18510fb7c99fb3",
+    "T12": "ebb38113abb2582d52f434b1a1b30247cc68ee8f4b57c0c18f52efa37bb1c230"
+  },
+  "frozen_architecture_hashes": {
+    "webshop_sidecar_trace_profiles.py": "eb03ed375c3cb5c0b2a80ad248b4de00e833c007e8dfb687f742d97cca643941",
+    "webshop_sidecar_trace_toolkit.py": "1ccf37b62f6eedc0eff41216ec983ddaea74aed7a0e0529be686f6b15aefbbf3",
+    "webshop_payment_sidecar.py": "e74939a0b1da9eba5e70f34ab8f745ac61e8ae2254c2ab823ee92c5299a210c8",
+    "webshop_authoritative_trace.py": "9653277777d06ce8d2c65862765ec57c17874a9d311d2c5c9c117993a0feeac8"
+  },
+  "design_finding": "T02/T03/T04 have identical six-event trace contracts. T02 and T03 share reason codes and must be distinguished from immutable authorized/current order value direction, not by separate full builders."
+}

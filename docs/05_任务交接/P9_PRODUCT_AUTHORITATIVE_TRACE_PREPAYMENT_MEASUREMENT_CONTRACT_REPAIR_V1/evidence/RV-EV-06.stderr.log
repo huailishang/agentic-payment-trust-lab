@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PREPAYMENT_MEASUREMENT_CONTRACT_REPAIR_V1/evidence/RV-EV-06-invariance-audit.py", line 38, in <module>
+    assert actual["decision"] == decision
+           ~~~~~~^^^^^^^^^^^^
+KeyError: 'decision'

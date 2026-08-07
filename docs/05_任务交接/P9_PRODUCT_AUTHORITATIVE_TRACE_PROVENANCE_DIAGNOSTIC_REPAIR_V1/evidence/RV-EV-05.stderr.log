@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PROVENANCE_DIAGNOSTIC_REPAIR_V1/evidence/RV-EV-05-review-audit.py", line 209, in <module>
+    main()
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PROVENANCE_DIAGNOSTIC_REPAIR_V1/evidence/RV-EV-05-review-audit.py", line 183, in main
+    check_pair(OLD_BASELINE, NEW_BASELINE, "baseline")
+  File "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab/docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_PROVENANCE_DIAGNOSTIC_REPAIR_V1/evidence/RV-EV-05-review-audit.py", line 136, in check_pair
+    assert paths == ALLOWED_CHANGED_PATHS, (label, sorted(paths))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('baseline', ['repeatability.normalized_sha256.0', 'repeatability.normalized_sha256.1', 'repeatability.normalized_sha256.2', 'runner_sha256', 'task_results.T10.measurement_diagnostics.trace_provenance_separated', 'task_results.T10.measurement_diagnostics_matched', 'task_results.T10.measurement_integrity_gaps.length'])

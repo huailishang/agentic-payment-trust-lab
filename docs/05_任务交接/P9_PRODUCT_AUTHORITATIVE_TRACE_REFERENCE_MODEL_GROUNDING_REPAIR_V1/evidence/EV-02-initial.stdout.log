@@ -1,0 +1,19 @@
+checks_total=2306
+checks_passed=2290
+checks_failed=16
+FAIL	registry:attack-overlay-result-trace/v2:projection-fields	
+FAIL	registry:fulfillment-record-trace/v2:projection-fields	
+FAIL	registry:governed-action-binding-fact-trace/v2:projection-fields	
+FAIL	registry:governed-payment-action-missing-id-trace/v2:projection-fields	
+FAIL	registry:governed-payment-action-trace/v2:projection-fields	
+FAIL	registry:intent-mandate-trace/v2:projection-fields	
+FAIL	registry:known-payment-attempt-preflight-fact-trace/v2:projection-fields	
+FAIL	registry:order-snapshot-trace/v2:projection-fields	
+FAIL	registry:payment-execution-record-trace/v2:projection-fields	
+FAIL	registry:payment-recovery-result-trace/v2:projection-fields	
+FAIL	registry:payment-status-conflict-fact-trace/v2:projection-fields	
+FAIL	registry:runtime-gate-record-trace/v2:projection-fields	
+FAIL	registry:transaction-request-trace/v2:projection-fields	
+FAIL	registry:validation-result-trace/v2:projection-fields	
+FAIL	registry:webshop-buy-now-gate-outcome-result-trace/v2:projection-fields	
+FAIL	registry:webshop-payment-fulfilment-outcome-result-trace/v2:projection-fields	

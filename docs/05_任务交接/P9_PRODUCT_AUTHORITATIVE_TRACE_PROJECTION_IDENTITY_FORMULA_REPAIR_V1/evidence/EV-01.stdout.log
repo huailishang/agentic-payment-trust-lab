@@ -1,0 +1,15 @@
+task_id=P9-PRODUCT-AUTHORITATIVE-TRACE-PROJECTION-IDENTITY-FORMULA-REPAIR-V1
+formula_id=PROJECTION_HASH_IDENTITY_V1
+hash_schema_count=9
+parent_persisted_fixed_schema_count=7
+derived_conformance_schema_count=2
+positive_source_refs_unchanged=True
+positive_binding_refs_unchanged=True
+negative_case_count=13
+t10_events=12
+t10_unique_bindings=11
+t10_fixed_values_unchanged=True
+t12_fixed_values_unchanged=True
+parent_fixed_artifacts_unchanged=True
+coverage_sha256=69b5c65eee924b011f606eb8284d0870971e40724f2fc62d59763cd18bcd703f
+vectors_sha256=d8fbd0410f650c5efa36b9cae6ea81c38d4b997456c6c25a8e11c6279c2d1839

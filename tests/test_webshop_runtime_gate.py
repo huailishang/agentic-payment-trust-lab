@@ -219,6 +219,9 @@ class WebShopRuntimeGateTest(unittest.TestCase):
         self.assertFalse(outcome.checkout_executed)
         self.assertEqual(0, outcome.callback_count)
         self.assertIsNone(outcome.callback_result_ref)
+        self.assertIsNone(outcome.authorized_order_snapshot)
+        self.assertIsNone(outcome.governed_action)
+        self.assertIsNone(outcome.execution_candidate)
         self.assertEqual([], calls)
 
     def test_governed_action_api_is_keyword_only_and_optional(self) -> None:
@@ -230,6 +233,10 @@ class WebShopRuntimeGateTest(unittest.TestCase):
         outcome, calls = self.invoke()
         self.assertEqual(Decision.ALLOW, outcome.decision)
         self.assertIsNone(outcome.governed_action_fact)
+        self.assertEqual(self.adaptation.order, outcome.authorized_order_snapshot)
+        self.assertIsNone(outcome.governed_action)
+        self.assertEqual(self.execution, outcome.execution_candidate)
+        self.assertIsNone(outcome.authoritative_trace)
         self.assertEqual(["checkout"], calls)
 
     def test_valid_governed_action_continues_through_p2_p4_and_one_callback(self) -> None:
@@ -249,6 +256,12 @@ class WebShopRuntimeGateTest(unittest.TestCase):
             outcome.governed_action_fact.reason_codes,
         )
         self.assertIsNotNone(outcome.runtime_gate_record)
+        self.assertEqual(self.adaptation.order, outcome.authorized_order_snapshot)
+        self.assertEqual(self.governed_action, outcome.governed_action)
+        self.assertEqual(self.execution, outcome.execution_candidate)
+        self.assertIsNone(outcome.authoritative_trace)
+        with self.assertRaises(FrozenInstanceError):
+            outcome.authorized_order_snapshot = None  # type: ignore[misc]
         self.assertIn("runtime:allow", outcome.reason_codes)
 
     def test_missing_governed_action_evidence_is_indeterminate_before_callback(self) -> None:

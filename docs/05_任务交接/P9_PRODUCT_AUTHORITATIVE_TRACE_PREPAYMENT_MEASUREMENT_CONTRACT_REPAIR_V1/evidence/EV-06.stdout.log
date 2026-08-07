@@ -1,0 +1,7 @@
+src_python_file_count=55
+src_hashes_unchanged_from_task_start=True
+all_12_actual_product_outputs_equal_parent_pre_repair=True
+non_trace_projection_sha256=6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc
+T02/T03/T04 callback=0,retry=0,forbidden_side_effects=[]
+T01/T09/T10/T12 product_trace_status=VALID and sources unchanged
+RESULT=PASS

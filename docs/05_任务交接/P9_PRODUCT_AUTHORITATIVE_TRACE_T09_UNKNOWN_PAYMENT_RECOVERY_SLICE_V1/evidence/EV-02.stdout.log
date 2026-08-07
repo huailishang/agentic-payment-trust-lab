@@ -1,0 +1,14 @@
+validator_status=VALID
+profile=WEBSHOP_UNKNOWN_PAYMENT_RECOVERY_V2
+source=PRODUCT_OBSERVED
+product_source=webshop_payment_fulfilment_outcome
+events=11
+unique_bindings=10
+candidate_status=PENDING
+payment_outcome_status=SUCCEEDED
+recovery_status=RECOVERED
+final_status=SUCCEEDED
+canonical_trace_sha256=a596f5f35697a878286b85b8e37792aeee34ab7c0800b27739bc91382032310e
+trace_file_sha256=1ac93448482a9c85cdca06d64b2f4a7bb886e130ddfcb5d6b700e2119ba45b44
+saved_trace=docs/05_任务交接/P9_PRODUCT_AUTHORITATIVE_TRACE_T09_UNKNOWN_PAYMENT_RECOVERY_SLICE_V1/evidence/EV-02-t09-full-trace.json
+RESULT=PASS

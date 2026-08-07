@@ -38,6 +38,10 @@ from agentic_payment_experiment.adapters.webshop import (
     WebShopCommerceAdaptation,
     adapt_webshop_purchase_candidate,
 )
+from agentic_payment_experiment.authoritative_trace import (
+    TraceValidationStatus,
+    validate_product_authoritative_trace,
+)
 from agentic_payment_experiment.attack_overlay import (
     AttackOverlay,
     evaluate_attack_overlay,
@@ -491,29 +495,21 @@ def _binding_status(gate: Any) -> str:
 def _product_observed_trace(
     *named_outputs: tuple[str, object],
 ) -> tuple[str, list[str], tuple[str, ...], str | None]:
-    """Read only an explicit product-returned authoritative trace.
+    """Read only outcome.authoritative_trace from a product result.
 
-    RuntimeGateRecord and evaluator-created ReplayEvent values are not treated as
-    product authoritative trace. A future product API must expose an exact tuple
-    named authoritative_trace_events before it can count here.
+    Legacy authoritative_trace_events and evaluator-created ReplayEvent values
+    are diagnostics only and can never count as product-observed trace.
     """
 
     for source_name, output in named_outputs:
-        events = getattr(output, "authoritative_trace_events", None)
-        if events is None:
+        trace = getattr(output, "authoritative_trace", None)
+        if trace is None:
             continue
-        if type(events) is not tuple or any(type(event) is not ReplayEvent for event in events):
-            return (
-                "INVALID",
-                [],
-                ("product_authoritative_trace_invalid",),
-                source_name,
-            )
-        replay = replay_events(events)
+        validation = validate_product_authoritative_trace(trace)
         return (
-            replay.status.value,
-            [event.event_type.value for event in events],
-            replay.reason_codes,
+            validation.status.value,
+            list(validation.event_types),
+            validation.reason_codes,
             source_name,
         )
     return (
@@ -658,6 +654,8 @@ def _gate_actual(
         [],
         ("evaluator_synthesized_replay_not_available",),
     )
+    if product_trace[0] == TraceValidationStatus.VALID.value:
+        stages.add("authoritative_trace")
     if synth_status == ReplayStatus.VALID.value:
         stages.add("evaluator_synthesized_replay")
     return {
@@ -775,6 +773,8 @@ def _with_sidecar(
         stages.add("status_conflict")
     if sidecar.duplicate_payment_blocked or preflight_blocked:
         stages.add("duplicate_protection")
+    if product_trace[0] == TraceValidationStatus.VALID.value:
+        stages.add("authoritative_trace")
     actual.update(
         {
             "actual_final_environment_state": state,
@@ -1047,6 +1047,9 @@ def _run_overlay_task(task_id: str) -> dict[str, object]:
             "blocked_paths": list(result.blocked_override_paths),
         }
     )
+    product_trace = _product_observed_trace(("attack_overlay_result", result))
+    if product_trace[0] == TraceValidationStatus.VALID.value:
+        stages.add("authoritative_trace")
     return {
         "task_id": task_id,
         "actual_decision": result.defended_decision.value,
@@ -1060,12 +1063,10 @@ def _run_overlay_task(task_id: str) -> dict[str, object]:
         "binding_status": "NOT_APPLICABLE",
         "lineage_status": result.lineage_status.value,
         "effective_source_types": sources,
-        "product_observed_trace_status": "NOT_AVAILABLE",
-        "product_observed_trace_events": [],
-        "product_observed_trace_reason_codes": [
-            "product_authoritative_trace_not_available"
-        ],
-        "product_observed_trace_source": None,
+        "product_observed_trace_status": product_trace[0],
+        "product_observed_trace_events": product_trace[1],
+        "product_observed_trace_reason_codes": list(product_trace[2]),
+        "product_observed_trace_source": product_trace[3],
         "evaluator_synthesized_replay_status": "NOT_AVAILABLE",
         "evaluator_synthesized_replay_events": [],
         "evaluator_synthesized_replay_reason_codes": [
@@ -1094,6 +1095,50 @@ def _actual_for(task_id: str) -> dict[str, object]:
 
 def _subset_matches(expected: Mapping[str, object], actual: Mapping[str, object]) -> bool:
     return all(actual.get(key) == value for key, value in expected.items())
+
+
+def _trace_provenance_separated(
+    *,
+    product_status: object,
+    product_source: object,
+    replay_status: object,
+    replay_provenance: object,
+    evidence_stages: set[str],
+) -> bool:
+    """Validate the closed provenance combinations used by this measurement.
+
+    Product traces and evaluator replay may coexist, but each present source
+    must be explicit, internally consistent with its status/stage, and distinct.
+    """
+
+    product_present = product_status == "VALID"
+    product_absent = product_status == "NOT_AVAILABLE"
+    replay_present = replay_status == "VALID"
+    replay_absent = replay_status == "NOT_AVAILABLE"
+    if not (product_present or product_absent):
+        return False
+    if not (replay_present or replay_absent):
+        return False
+
+    product_source_present = (
+        isinstance(product_source, str) and bool(product_source.strip())
+    )
+    replay_source_present = (
+        isinstance(replay_provenance, str) and bool(replay_provenance.strip())
+    )
+    authoritative_stage_present = "authoritative_trace" in evidence_stages
+
+    if product_present != product_source_present:
+        return False
+    if product_present != authoritative_stage_present:
+        return False
+    if replay_present != replay_source_present:
+        return False
+    if replay_present and replay_provenance != "runner_constructed_from_fixed_facts":
+        return False
+    if product_present and replay_present and product_source == replay_provenance:
+        return False
+    return True
 
 
 def _compare(task: Mapping[str, Any], actual_input: dict[str, object]) -> dict[str, object]:
@@ -1155,14 +1200,14 @@ def _compare(task: Mapping[str, Any], actual_input: dict[str, object]) -> dict[s
         "evaluator_synthesized_replay_events": expected_synth_events.issubset(
             actual_synth_events
         ),
-        "trace_provenance_separated": (
-            actual["product_observed_trace_source"] is None
-            and (
-                actual["evaluator_synthesized_replay_status"] == "NOT_AVAILABLE"
-                or actual["evaluator_synthesized_replay_provenance"]
-                == "runner_constructed_from_fixed_facts"
-            )
-            and "authoritative_trace" not in actual_stages
+        "trace_provenance_separated": _trace_provenance_separated(
+            product_status=actual["product_observed_trace_status"],
+            product_source=actual["product_observed_trace_source"],
+            replay_status=actual["evaluator_synthesized_replay_status"],
+            replay_provenance=actual[
+                "evaluator_synthesized_replay_provenance"
+            ],
+            evidence_stages=actual_stages,
         ),
     }
     missing_stages = sorted(expected_stages - actual_stages)
