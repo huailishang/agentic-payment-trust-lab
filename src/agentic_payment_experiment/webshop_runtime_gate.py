@@ -7,10 +7,12 @@ from dataclasses import dataclass, replace
 from typing import Any
 
 from .adapters.webshop import WebShopCommerceAdaptation
+from .authoritative_trace import ProductAuthoritativeTrace
 from .models import (
     AgentIdentity,
     Decision,
     IntentMandate,
+    Order,
     PaymentExecutionRecord,
     TransactionRequest,
     ValidationResult,
@@ -29,6 +31,8 @@ from .trusted_execution import (
     verify_governed_payment_action,
 )
 from .validator import validate_request
+from .webshop_authoritative_trace import build_t10_duplicate_preflight_trace
+from .webshop_prepayment_trace_toolkit import build_prepayment_product_trace
 
 
 WEBSHOP_GATE_LIMITATIONS = (
@@ -56,6 +60,10 @@ class WebShopBuyNowGateOutcome:
     reason_codes: tuple[str, ...]
     governed_action_fact: GovernedActionBindingFact | None = None
     known_payment_attempt_preflight_fact: KnownPaymentAttemptPreflightFact | None = None
+    authorized_order_snapshot: Order | None = None
+    governed_action: GovernedPaymentAction | None = None
+    execution_candidate: PaymentExecutionRecord | None = None
+    authoritative_trace: ProductAuthoritativeTrace | None = None
     limitations: tuple[str, ...] = WEBSHOP_GATE_LIMITATIONS
 
 
@@ -133,7 +141,7 @@ def gate_webshop_buy_now(
         confirmation_record=confirmation_record,
     )
     if prepayment_result.decision is not Decision.ALLOW:
-        return WebShopBuyNowGateOutcome(
+        base_outcome = WebShopBuyNowGateOutcome(
             decision=prepayment_result.decision,
             checkout_executed=False,
             callback_count=0,
@@ -143,6 +151,15 @@ def gate_webshop_buy_now(
             runtime_gate_record=None,
             reason_codes=_prepayment_reason_codes(prepayment_result),
         )
+        authoritative_trace = build_prepayment_product_trace(
+            mandate=mandate,
+            authorized_order=authorized_snapshot.order,
+            current_order=adaptation.order,
+            bound_request=bound_request,
+            validation_result=prepayment_result,
+            base_outcome=base_outcome,
+        )
+        return replace(base_outcome, authoritative_trace=authoritative_trace)
 
     governed_action_fact: GovernedActionBindingFact | None = None
     if governed_action is not None:
@@ -263,7 +280,7 @@ def gate_webshop_buy_now(
                     )
                 ),
             )
-            return WebShopBuyNowGateOutcome(
+            base_outcome = WebShopBuyNowGateOutcome(
                 decision=duplicate_result.decision,
                 checkout_executed=False,
                 callback_count=runtime_record.callback_count,
@@ -275,6 +292,26 @@ def gate_webshop_buy_now(
                 governed_action_fact=governed_action_fact,
                 known_payment_attempt_preflight_fact=known_attempt_fact,
             )
+            authoritative_trace = build_t10_duplicate_preflight_trace(
+                mandate=mandate,
+                authorized_order=authorized_snapshot.order,
+                current_order=adaptation.order,
+                bound_request=bound_request,
+                governed_action=governed_action,
+                execution_candidate=execution_candidate,
+                governed_action_fact=governed_action_fact,
+                known_payment_attempts=known_payment_attempts,
+                known_attempt_fact=known_attempt_fact,
+                duplicate_result=duplicate_result,
+                runtime_record=runtime_record,
+                outcome_decision=base_outcome.decision,
+                outcome_checkout_executed=base_outcome.checkout_executed,
+                outcome_callback_count=base_outcome.callback_count,
+                outcome_callback_result_ref=base_outcome.callback_result_ref,
+                outcome_reason_codes=base_outcome.reason_codes,
+                outcome_limitations=base_outcome.limitations,
+            )
+            return replace(base_outcome, authoritative_trace=authoritative_trace)
 
     runtime_record = observe_runtime(prepayment_result.decision)
 
@@ -299,7 +336,7 @@ def gate_webshop_buy_now(
             known_payment_attempt_preflight_fact=known_attempt_fact,
         )
 
-    return WebShopBuyNowGateOutcome(
+    base_outcome = WebShopBuyNowGateOutcome(
         decision=runtime_record.final_decision,
         checkout_executed=(
             runtime_record.final_decision is Decision.ALLOW
@@ -314,6 +351,14 @@ def gate_webshop_buy_now(
         reason_codes=runtime_record.reason_codes,
         governed_action_fact=governed_action_fact,
         known_payment_attempt_preflight_fact=known_attempt_fact,
+    )
+    if not base_outcome.checkout_executed:
+        return base_outcome
+    return replace(
+        base_outcome,
+        authorized_order_snapshot=authorized_snapshot.order,
+        governed_action=governed_action,
+        execution_candidate=execution_candidate,
     )
 
 

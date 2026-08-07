@@ -1,48 +1,70 @@
 # Next Capability Slice — Conditional Freeze
 
-Task ID: `P9-PRODUCT-AUTHORITATIVE-TRACE-T10-DUPLICATE-PREFLIGHT-SLICE-V1`  
-Task kind: `capability_experiment`  
-State: `CONDITIONAL_NOT_FROZEN`  
-Project map revision: `2026-08-04-r5`  
-Active bottleneck: `B-03`  
-Hypothesis: `H-03`  
-Slice task: `T10`  
-Trace profile: `WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V1`
+Task ID: `P9-PRODUCT-AUTHORITATIVE-TRACE-T10-DUPLICATE-PREFLIGHT-SLICE-V1`
+Task kind: `capability_experiment`
+State: `SUPERSEDED_BY_FROZEN_CONTRACT`
+Project map revision: `2026-08-04-r5`
+Active bottleneck: `B-03`
+Hypothesis: `H-03`
+Slice task: `T10`
+Trace profile: `WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V2`
 
 ## 1. 前置条件
 
 ```text
 prerequisite = measurement adapter accepted
-runner hash = TBD_AFTER_ADAPTER_ACCEPTANCE
-before hash = TBD_AFTER_ADAPTER_ACCEPTANCE
-target hash = TBD_AFTER_ADAPTER_ACCEPTANCE
-non-trace projection hash = TBD_AFTER_ADAPTER_ACCEPTANCE
-state = CONDITIONAL_NOT_FROZEN
+runner hash = cbeafe9a3badcc5a69e7972420a5c90bb815f84bdd0d5bcde3d05f739c072100
+before target output hash = ac3ec88433718bbd097f2738cd2330267107431ce18c9c7b2a45964f9971b488
+target fixture hash = f5dc05501c79958b197ea7a727e12660756145da870b897496a9ccac714cacee
+non-trace projection hash = 6eb5bca0c0aba10ac75eff3cf5d12ceed015b71d974d685dfa96b7e91e9099dc
+state = SUPERSEDED_BY_FROZEN_CONTRACT
 ```
 
-在 Evaluator 独立接受阶段 A 的 runner 和重新冻结的 `0/12 VALID` BEFORE 前：
+正式执行合同已冻结为：
 
-- 不得创建本任务 `CONTRACT.md`；
-- 不得进入 `CONTRACT_FROZEN`；
-- 不得修改 T10 产品 outcome；
-- 当前旧 runner hash `a7d71fd92cacd7ebdb8e4a1da383067aa57b0e6dcbf20c41f043f4e461fc1fc4` 只能作为阶段 A 输入基线，不能作为阶段 B runner。
+```text
+docs/05_任务交接/
+P9_PRODUCT_AUTHORITATIVE_TRACE_T10_DUPLICATE_PREFLIGHT_SLICE_V1/
+CONTRACT.md
+```
+
+本文件只保留原条件切片设计，不再作为执行入口。
 
 ## 2. 单一产品变量
 
-前置条件满足后，本 slice 只允许：
-
-> 在 `gate_webshop_buy_now` 的 known-payment duplicate preflight `BLOCKED` 返回中，让 `WebShopBuyNowGateOutcome` 直接携带一条 `PRODUCT_OBSERVED`、profile 为 `WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V1` 的权威轨迹。
-
-不得同时修改 runner、trace validator 或项目指标计算。
-
-## 3. BEFORE / AFTER
-
-### BEFORE
-
-由“阶段 A 已接受 runner + 旧产品行为”生成：
+前置条件满足后，只允许 T10 duplicate-preflight `BLOCKED` 返回的 `WebShopBuyNowGateOutcome` 携带：
 
 ```text
-T10 product_trace_status = NOT_AVAILABLE
+ProductAuthoritativeTrace
+source = PRODUCT_OBSERVED
+profile = WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V2
+events = exact 12
+source_bindings = exact 11 unique bindings
+```
+
+两个 ORDER event 必须共享同一个 `source_binding_ref`；Action、当前付款候选和历史成功付款分别记录。
+
+## 3. 四类引用
+
+```text
+source_object_ref = 对象身份
+binding_ref = projection digest
+entity_ref = typed profile identity
+relation.target_entity_ref = exact target event ref
+```
+
+每个 event 只能通过 `source_binding_ref` 解析 binding。禁止 hidden resolver、evaluator replay 和外部 registry。
+
+## 4. BEFORE / AFTER
+
+```text
+BEFORE: T10 product_trace_status = NOT_AVAILABLE
+AFTER:  T10 product_trace_status = VALID
+```
+
+以下业务投影必须不变：
+
+```text
 decision = DENY
 callback_count = 0
 known_payment_attempt_preflight_status = BLOCKED
@@ -51,86 +73,34 @@ retry_allowed = false
 trusted_state_changed = false
 ```
 
-### AFTER
-
-由“同一阶段 A runner + 仅 T10 产品 trace”生成：
+## 5. Exact 12-event sequence
 
 ```text
-T10 product_trace_status = VALID
-decision = DENY
-callback_count = 0
-known_payment_attempt_preflight_status = BLOCKED
-duplicate_payment_blocked = true
-retry_allowed = false
-trusted_state_changed = false
+1  AUTHORITY_RECORDED [AUTHORITY]
+2  ORDER_RECORDED [AUTHORIZED_ORDER_SNAPSHOT]
+3  ORDER_RECORDED [CURRENT_ORDER_SNAPSHOT]
+4  REQUEST_RECORDED [CURRENT_REQUEST]
+5  ACTION_RECORDED [GOVERNED_ACTION]
+6  PAYMENT_CANDIDATE_RECORDED [CURRENT_PAYMENT_CANDIDATE]
+7  ACTION_BINDING_DECISION_RECORDED [ACTION_BINDING_FACT]
+8  PAYMENT_OUTCOME_RECORDED [HISTORICAL_SUCCEEDED_PAYMENT]
+9  KNOWN_PAYMENT_PREFLIGHT_RECORDED [KNOWN_PAYMENT_PREFLIGHT_FACT]
+10 PREPAYMENT_DECISION_RECORDED [PREPAYMENT_VALIDATION]
+11 RUNTIME_DECISION_RECORDED [RUNTIME_GATE_OBSERVATION]
+12 RESULT_RECORDED [FINAL_OUTCOME]
 ```
 
-唯一预期收益是 T10 产品轨迹从 `NOT_AVAILABLE` 变为 `VALID`。
+## 6. 回滚条件
 
-## 4. T10 事件序列
-
-```text
-1 AUTHORITY_RECORDED
-2 ORDER_RECORDED [CURRENT_ORDER_SNAPSHOT]
-3 REQUEST_RECORDED [CURRENT_REQUEST]
-4 ACTION_RECORDED [GOVERNED_ACTION / CURRENT_PAYMENT_CANDIDATE]
-5 ACTION_BINDING_DECISION_RECORDED [ACTION_BINDING_FACT]
-6 PAYMENT_OUTCOME_RECORDED [HISTORICAL_SUCCEEDED_PAYMENT]
-7 KNOWN_PAYMENT_PREFLIGHT_RECORDED [KNOWN_PAYMENT_PREFLIGHT_FACT]
-8 PREPAYMENT_DECISION_RECORDED [PREPAYMENT_VALIDATION]
-9 RUNTIME_DECISION_RECORDED [RUNTIME_GATE_OBSERVATION]
-10 RESULT_RECORDED [FINAL_OUTCOME]
-```
-
-## 5. 双 Payment 关系
-
-```text
-CURRENT_PAYMENT_CANDIDATE
-payment_ref = GovernedPaymentAction.payment_ref
-payment_ref = execution_candidate.payment_id
-
-HISTORICAL_SUCCEEDED_PAYMENT
-payment_ref ∈ KnownPaymentAttemptPreflightFact.related_attempt_refs
-status = SUCCEEDED
-
-两个 payment ref 允许不同
-两个角色都必须通过现有 fact 关系闭合到 current request
-```
-
-一致性按 `(entity_type, entity_role)` 校验，不得要求两个 Payment ref 相同。
-
-## 6. 稳定引用
-
-- native ID 使用 `<type>:<id>[:<version>]`；
-- `RuntimeGateRecord` 使用 `runtime-gate-record-ref/v1 + to_dict()` canonical hash；
-- `GovernedActionBindingFact`、`KnownPaymentAttemptPreflightFact` 使用各自 `to_dict()` canonical hash；
-- `WebShopBuyNowGateOutcome` RESULT ref 使用排除 `authoritative_trace` 的 outcome projection，避免循环 hash。
-
-## 7. 守护线
-
-阶段 B 合同冻结时至少继承：
-
-```text
-重复或禁止副作用 = 0/12
-callback match = 12/12
-false refusal = 0/6
-missed confirmation = 0/2
-forbidden state write = 0/2
-formal entry = 13/13
-full tests >= 阶段 A accepted baseline
-其余 11 项非 trace 业务投影 hash 完全不变
-```
-
-## 8. 回滚条件
-
-- runner 或 validator 与阶段 A accepted hash 不同；
+- runner/validator 不等于阶段 A accepted hash；
+- 不是 12 events / 11 unique bindings；
+- 两个 Order event 未共享 binding；
+- duplicate binding_ref 未判 INVALID；
+- Decimal canonicalization 或 source grounding 不一致；
+- relation target 不能精确解析；
 - decision、callback、状态、binding 或 side effect 变化；
-- evaluator replay 被用于补齐产品事件；
-- T10 两个 Payment 角色发生错误合并；
-- RESULT ref 包含 trace 自身；
-- 其余 11 项业务投影变化；
 - 需要网络、真实支付、WebShop runtime 或外部副作用。
 
-## 9. 当前裁定
+## 7. 当前裁定
 
-本文件只保留条件设计，不构成可执行合同。下一步必须先由 Evaluator 冻结独立 measurement-adapter 任务。
+Measurement Adapter 已由 Evaluator 判定 `PASS / NOT_APPLICABLE`。本条件设计已被正式冻结合同取代，不再作为执行入口；执行者只读取 `CURRENT.md` 指向的新 `CONTRACT.md`。

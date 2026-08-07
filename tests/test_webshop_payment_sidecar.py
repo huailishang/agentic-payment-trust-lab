@@ -17,9 +17,13 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from agentic_payment_experiment import (
+    ActionReversibility,
+    AgentIdentity,
     Decision,
     FulfillmentRecord,
     FulfillmentStatus,
+    GovernedActionType,
+    GovernedPaymentAction,
     IntentMandate,
     PaymentExecutionRecord,
     PaymentRecoveryStatus,
@@ -27,18 +31,37 @@ from agentic_payment_experiment import (
     PaymentStatusConflictResolution,
     PaymentStatusObservation,
     RemediationStatus,
+    SideEffectClass,
     TaskStatus,
     WebShopBuyNowGateOutcome,
     WebShopPaymentFulfilmentOutcome,
     assess_webshop_payment_fulfilment,
+    gate_webshop_buy_now,
 )
 from agentic_payment_experiment.adapters.webshop import adapt_webshop_purchase_candidate
-from agentic_payment_experiment.trusted_execution import RuntimeGateRecord
+from agentic_payment_experiment.authoritative_trace import (
+    TraceValidationStatus,
+    validate_product_authoritative_trace,
+)
+from agentic_payment_experiment.payment_execution import (
+    PAYMENT_CONTEXT_ACTION,
+    PAYMENT_REQUIRED_SOURCE_PATHS,
+)
+from agentic_payment_experiment.trusted_execution import (
+    POLICY_VERSION,
+    RuntimeGateRecord,
+    SourceType,
+    create_confirmation_record,
+    evaluate_context_policy,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE_PATH = ROOT / "samples/external/webshop/pre_buy_now_candidate_v1.json"
 SIDECAR_PATH = ROOT / "src/agentic_payment_experiment/webshop_payment_sidecar.py"
+HAPPY_PATH_TRACE_PATH = (
+    ROOT / "src/agentic_payment_experiment/webshop_happy_path_authoritative_trace.py"
+)
 REQUIRED_LIMITATIONS = {
     "offline_sidecar_only",
     "no_real_payment_execution",
@@ -161,6 +184,107 @@ class WebShopPaymentSidecarTest(unittest.TestCase):
         }
         values.update(overrides)
         return assess_webshop_payment_fulfilment(**values)
+
+    def happy_path_inputs(self):
+        candidate = replace(
+            self.payment,
+            status=PaymentStatus.PENDING,
+            receipt_ref=None,
+            provider_ref="offline-webshop-provider",
+        )
+        payment = replace(
+            candidate,
+            status=PaymentStatus.SUCCEEDED,
+            receipt_ref="offline-happy-path-receipt",
+        )
+        fulfillment = replace(
+            self.fulfillment,
+            status=FulfillmentStatus.SUCCEEDED,
+            failure_code=None,
+        )
+        identity = AgentIdentity(
+            agent_id=self.agent_id,
+            provider="offline-webshop-provider",
+            executor_instance_id="offline-webshop-executor",
+            status="active",
+        )
+        state = {
+            "mandate": {"mandate_id": self.mandate.mandate_id},
+            "final_order": {"order_id": self.adaptation.order.order_id},
+            "request": {
+                "request_id": self.request.request_id,
+                "agent_id": self.request.agent_id,
+                "amount": self.request.amount,
+                "payee": self.request.payee,
+                "currency": self.request.currency,
+            },
+        }
+        sources = {
+            "mandate.mandate_id": SourceType.USER_CONFIRMED,
+            "final_order.order_id": SourceType.USER_CONFIRMED,
+            "request.request_id": SourceType.PROTOCOL_VERIFIED,
+            "request.agent_id": SourceType.USER_CONFIRMED,
+            "request.amount": SourceType.USER_CONFIRMED,
+            "request.payee": SourceType.USER_CONFIRMED,
+            "request.currency": SourceType.USER_CONFIRMED,
+        }
+        context_fact = evaluate_context_policy(
+            state,
+            trusted_sources=sources,
+            required_source_paths=PAYMENT_REQUIRED_SOURCE_PATHS,
+            current_action=PAYMENT_CONTEXT_ACTION,
+            policy_version=POLICY_VERSION,
+        ).fact
+        action = GovernedPaymentAction(
+            action_id="webshop-happy-path-action-1",
+            action_type=GovernedActionType.EXECUTE_PAYMENT,
+            subject_ref=self.mandate.user_id,
+            agent_ref=self.agent_id,
+            executor_ref="offline-webshop-executor",
+            authority_ref=self.mandate.mandate_id,
+            authority_version=self.mandate.authority_version,
+            order_ref=self.adaptation.order.order_id,
+            order_version=self.adaptation.order.order_version,
+            request_ref=self.request.request_id,
+            payment_ref=candidate.payment_id,
+            source_refs=(
+                "source:webshop-checkout-snapshot",
+                "source:user-mandate",
+            ),
+            side_effect_class=SideEffectClass.PAYMENT_EXECUTION,
+            reversibility=ActionReversibility.COMPENSATABLE_NOT_REVERSIBLE,
+            occurred_at=self.request.occurred_at + timedelta(milliseconds=500),
+        )
+        confirmation = create_confirmation_record(
+            confirmation_id="webshop-happy-path-confirmation-1",
+            authority_id=self.mandate.mandate_id,
+            authority_version=self.mandate.authority_version,
+            order=self.adaptation.order,
+            confirmed_at=self.request.occurred_at - timedelta(minutes=1),
+            expires_at=self.request.occurred_at + timedelta(minutes=30),
+        )
+        callbacks: list[str] = []
+
+        def callback():
+            callbacks.append("checkout")
+            return "simulated-webshop-checkout"
+
+        gate = gate_webshop_buy_now(
+            adaptation=self.adaptation,
+            mandate=self.mandate,
+            declared_agent_id=self.agent_id,
+            execution_candidate=candidate,
+            agent_identity=identity,
+            current_provider_ref="offline-webshop-provider",
+            current_executor_instance_ref="offline-webshop-executor",
+            context_policy_fact=context_fact,
+            checkout_callback=callback,
+            confirmation_record=confirmation,
+            authorized_adaptation=self.adaptation,
+            governed_action=action,
+        )
+        self.assertEqual(["checkout"], callbacks, gate)
+        return gate, candidate, payment, fulfillment
 
     def test_gate_and_explicit_input_prerequisite_matrix_fails_closed(self) -> None:
         cases = (
@@ -360,6 +484,218 @@ class WebShopPaymentSidecarTest(unittest.TestCase):
         self.assertEqual(RemediationStatus.NOT_REQUIRED, outcome.lifecycle.remediation.status)
         self.assertFalse(outcome.retry_allowed)
         self.assertFalse(outcome.duplicate_payment_blocked)
+
+    def test_t01_happy_path_emits_exact_valid_product_trace(self) -> None:
+        gate, candidate, payment, fulfillment = self.happy_path_inputs()
+        outcome = assess_webshop_payment_fulfilment(
+            gate_outcome=gate,
+            adaptation=self.adaptation,
+            mandate=self.mandate,
+            payment=payment,
+            fulfillment=fulfillment,
+        )
+
+        self.assertTrue(outcome.ready)
+        self.assertIsNotNone(outcome.authoritative_trace)
+        trace = outcome.authoritative_trace
+        assert trace is not None
+        validation = validate_product_authoritative_trace(trace)
+        self.assertEqual(TraceValidationStatus.VALID, validation.status)
+        self.assertEqual("WEBSHOP_NORMAL_PURCHASE_V2", validation.profile)
+        self.assertEqual(11, len(trace.events))
+        self.assertEqual(10, len(trace.source_bindings))
+        self.assertEqual(
+            (
+                "AUTHORITY_RECORDED",
+                "ORDER_RECORDED",
+                "ORDER_RECORDED",
+                "REQUEST_RECORDED",
+                "ACTION_RECORDED",
+                "PAYMENT_CANDIDATE_RECORDED",
+                "ACTION_BINDING_DECISION_RECORDED",
+                "RUNTIME_DECISION_RECORDED",
+                "PAYMENT_OUTCOME_RECORDED",
+                "FULFILMENT_OUTCOME_RECORDED",
+                "RESULT_RECORDED",
+            ),
+            tuple(event.event_type for event in trace.events),
+        )
+        by_role = {event.entity_role: event for event in trace.events}
+        self.assertEqual(
+            by_role["AUTHORIZED_ORDER_SNAPSHOT"].source_binding_ref,
+            by_role["CURRENT_ORDER_SNAPSHOT"].source_binding_ref,
+        )
+        candidate_event = by_role["CURRENT_PAYMENT_CANDIDATE"]
+        payment_event = by_role["PAYMENT_EXECUTION_OUTCOME"]
+        self.assertEqual(candidate_event.entity_ref, payment_event.entity_ref)
+        self.assertNotEqual(
+            candidate_event.source_binding_ref,
+            payment_event.source_binding_ref,
+        )
+        self.assertEqual(PaymentStatus.PENDING.value, candidate_event.status)
+        self.assertEqual(PaymentStatus.SUCCEEDED.value, payment_event.status)
+        self.assertEqual(candidate.payment_id, payment.payment_id)
+        self.assertEqual(TaskStatus.SUCCEEDED.value, by_role["FINAL_OUTCOME"].status)
+        binding_by_ref = {
+            binding.binding_ref: binding for binding in trace.source_bindings
+        }
+        result_projection = binding_by_ref[
+            by_role["FINAL_OUTCOME"].source_binding_ref
+        ].projection
+        self.assertNotIn("authoritative_trace", result_projection)
+        self.assertNotIn("authoritative_trace", outcome.to_dict())
+        repeated = assess_webshop_payment_fulfilment(
+            gate_outcome=gate,
+            adaptation=self.adaptation,
+            mandate=self.mandate,
+            payment=payment,
+            fulfillment=fulfillment,
+        )
+        self.assertEqual(trace, repeated.authoritative_trace)
+        with self.assertRaises(FrozenInstanceError):
+            outcome.authoritative_trace = None  # type: ignore[misc]
+
+    def test_t01_trace_fails_closed_outside_exact_happy_path(self) -> None:
+        gate, candidate, payment, fulfillment = self.happy_path_inputs()
+        existing = replace(
+            payment,
+            payment_id="webshop-happy-existing-success",
+            status=PaymentStatus.SUCCEEDED,
+        )
+        cases = (
+            (
+                "legacy_gate_missing_retained_facts",
+                self.gate,
+                payment,
+                fulfillment,
+                (),
+            ),
+            (
+                "authorized_snapshot_missing",
+                replace(gate, authorized_order_snapshot=None),
+                payment,
+                fulfillment,
+                (),
+            ),
+            (
+                "governed_action_missing",
+                replace(gate, governed_action=None),
+                payment,
+                fulfillment,
+                (),
+            ),
+            (
+                "candidate_not_pending",
+                replace(
+                    gate,
+                    execution_candidate=replace(
+                        candidate,
+                        status=PaymentStatus.SUCCEEDED,
+                    ),
+                ),
+                payment,
+                fulfillment,
+                (),
+            ),
+            (
+                "candidate_payment_id_mismatch",
+                replace(
+                    gate,
+                    execution_candidate=replace(
+                        candidate,
+                        payment_id="different-payment-candidate",
+                    ),
+                ),
+                payment,
+                fulfillment,
+                (),
+            ),
+            (
+                "payment_failed",
+                gate,
+                replace(payment, status=PaymentStatus.FAILED),
+                fulfillment,
+                (),
+            ),
+            (
+                "fulfillment_failed",
+                gate,
+                payment,
+                replace(
+                    fulfillment,
+                    status=FulfillmentStatus.FAILED,
+                    failure_code="merchant_did_not_fulfil",
+                ),
+                (),
+            ),
+            (
+                "duplicate_attempt_present",
+                gate,
+                payment,
+                fulfillment,
+                (existing,),
+            ),
+        )
+        for name, selected_gate, selected_payment, selected_fulfillment, attempts in cases:
+            with self.subTest(name=name):
+                outcome = assess_webshop_payment_fulfilment(
+                    gate_outcome=selected_gate,
+                    adaptation=self.adaptation,
+                    mandate=self.mandate,
+                    payment=selected_payment,
+                    fulfillment=selected_fulfillment,
+                    known_attempts=attempts,
+                )
+                self.assertIsNone(outcome.authoritative_trace)
+
+    def test_t01_trace_builder_has_no_hidden_inputs_or_business_rule_calls(self) -> None:
+        source = HAPPY_PATH_TRACE_PATH.read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        imports: set[str] = set()
+        called: set[str] = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                imports.update(alias.name.split(".")[0] for alias in node.names)
+            elif isinstance(node, ast.ImportFrom):
+                imports.add(node.module or "")
+            elif isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Name):
+                    called.add(node.func.id)
+                elif isinstance(node.func, ast.Attribute):
+                    called.add(node.func.attr)
+        self.assertTrue(
+            imports.isdisjoint(
+                {"os", "pathlib", "socket", "subprocess", "requests", "urllib", "random", "time"}
+            ),
+            imports,
+        )
+        self.assertTrue(
+            called.isdisjoint(
+                {
+                    "open",
+                    "read_text",
+                    "write_text",
+                    "getenv",
+                    "run",
+                    "Popen",
+                    "urlopen",
+                    "socket",
+                    "validate_request",
+                    "verify_governed_payment_action",
+                    "derive_known_payment_attempt_preflight",
+                    "observe_payment_execution_gate",
+                    "assess_payment_recovery",
+                    "derive_payment_status_conflict",
+                    "assess_lifecycle",
+                    "checkout_callback",
+                    "execute_payment",
+                }
+            ),
+            called,
+        )
+        self.assertNotIn("GateContext", source)
+        self.assertNotIn("run_project_impact_baseline", source)
+        self.assertNotIn("CURRENT.md", source)
 
     def test_payment_success_and_fulfillment_failure_require_remediation(self) -> None:
         payment = replace(self.payment, status=PaymentStatus.SUCCEEDED)

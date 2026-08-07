@@ -9,6 +9,7 @@ from enum import Enum
 from typing import Any
 
 from .adapters.webshop import WebShopCommerceAdaptation
+from .authoritative_trace import ProductAuthoritativeTrace
 from .lifecycle import assess_lifecycle
 from .models import (
     Decision,
@@ -80,6 +81,7 @@ class WebShopPaymentFulfilmentOutcome:
     retry_allowed: bool
     duplicate_payment_blocked: bool
     reason_codes: tuple[str, ...]
+    authoritative_trace: ProductAuthoritativeTrace | None = None
     limitations: tuple[str, ...] = WEBSHOP_PAYMENT_SIDECAR_LIMITATIONS
 
     def to_dict(self) -> dict[str, object]:
@@ -302,7 +304,7 @@ def assess_webshop_payment_fulfilment(
     else:
         reasons.append("retry:not_allowed")
 
-    return WebShopPaymentFulfilmentOutcome(
+    base_outcome = WebShopPaymentFulfilmentOutcome(
         ready=not evidence_invalid,
         initial_payment=payment,
         effective_payment=effective_payment,
@@ -313,6 +315,16 @@ def assess_webshop_payment_fulfilment(
         duplicate_payment_blocked=duplicate_payment_blocked,
         reason_codes=_deduplicate(reasons),
     )
+    from .webshop_sidecar_trace_toolkit import build_sidecar_product_trace
+
+    authoritative_trace = build_sidecar_product_trace(
+        gate_outcome=gate_outcome,
+        adaptation=adaptation,
+        mandate=mandate,
+        fulfillment=fulfillment,
+        base_outcome=base_outcome,
+    )
+    return replace(base_outcome, authoritative_trace=authoritative_trace)
 
 
 def _prerequisite_reasons(

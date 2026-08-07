@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import json
 from copy import deepcopy
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Any, Mapping
 
+from .authoritative_trace import ProductAuthoritativeTrace
 from .evaluator import EvaluationResult, ExpectedOutcome, ObservedOutcome, evaluate_outcome
 from .models import Decision, ValidationResult
 from .scenario_loader import Scenario, load_scenario
@@ -128,6 +129,7 @@ class AttackOverlayResult:
     lineage_status: VerificationStatus
     lineage_reason_codes: tuple[str, ...]
     lineage_facts: tuple[AttackOverrideLineageFact, ...]
+    authoritative_trace: ProductAuthoritativeTrace | None = None
 
 
 @dataclass(frozen=True)
@@ -236,7 +238,7 @@ def evaluate_attack_overlay(scenario: Scenario, overlay: AttackOverlay) -> Attac
             observed_effects=observed_effects,
         ),
     )
-    return AttackOverlayResult(
+    base_result = AttackOverlayResult(
         attack_id=overlay.attack_id,
         title=overlay.title,
         source=overlay.source,
@@ -255,6 +257,14 @@ def evaluate_attack_overlay(scenario: Scenario, overlay: AttackOverlay) -> Attac
         lineage_status=boundary.lineage_status,
         lineage_reason_codes=boundary.lineage_reason_codes,
         lineage_facts=boundary.lineage_facts,
+    )
+    from .attack_overlay_trace_toolkit import build_attack_overlay_product_trace
+
+    authoritative_trace = build_attack_overlay_product_trace(base_result)
+    return (
+        replace(base_result, authoritative_trace=authoritative_trace)
+        if authoritative_trace is not None
+        else base_result
     )
 
 

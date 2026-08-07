@@ -213,7 +213,7 @@
         "AUTHORITY_RECORDED",
         "ORDER_RECORDED",
         "REQUEST_RECORDED",
-        "DECISION_RECORDED"
+        "PREPAYMENT_DECISION_RECORDED"
       ],
       "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
       "expected_evaluator_synthesized_replay_events": [],
@@ -295,7 +295,7 @@
         "AUTHORITY_RECORDED",
         "ORDER_RECORDED",
         "REQUEST_RECORDED",
-        "DECISION_RECORDED"
+        "PREPAYMENT_DECISION_RECORDED"
       ],
       "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
       "expected_evaluator_synthesized_replay_events": [],
@@ -376,7 +376,7 @@
         "AUTHORITY_RECORDED",
         "ORDER_RECORDED",
         "REQUEST_RECORDED",
-        "DECISION_RECORDED"
+        "PREPAYMENT_DECISION_RECORDED"
       ],
       "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
       "expected_evaluator_synthesized_replay_events": [],
@@ -459,7 +459,7 @@
         "AUTHORITY_RECORDED",
         "ORDER_RECORDED",
         "REQUEST_RECORDED",
-        "DECISION_RECORDED"
+        "ACTION_BINDING_DECISION_RECORDED"
       ],
       "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
       "expected_evaluator_synthesized_replay_events": [],
@@ -541,7 +541,7 @@
         "AUTHORITY_RECORDED",
         "ORDER_RECORDED",
         "REQUEST_RECORDED",
-        "DECISION_RECORDED"
+        "ACTION_BINDING_DECISION_RECORDED"
       ],
       "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
       "expected_evaluator_synthesized_replay_events": [],
@@ -619,7 +619,7 @@
       ],
       "expected_product_observed_trace_status": "VALID",
       "expected_product_observed_trace_events": [
-        "INPUT_SOURCE_RECORDED",
+        "LINEAGE_DECISION_RECORDED",
         "POLICY_DECISION_RECORDED"
       ],
       "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
@@ -698,7 +698,7 @@
       ],
       "expected_product_observed_trace_status": "VALID",
       "expected_product_observed_trace_events": [
-        "INPUT_SOURCE_RECORDED",
+        "LINEAGE_DECISION_RECORDED",
         "POLICY_DECISION_RECORDED"
       ],
       "expected_evaluator_synthesized_replay_status": "NOT_AVAILABLE",
