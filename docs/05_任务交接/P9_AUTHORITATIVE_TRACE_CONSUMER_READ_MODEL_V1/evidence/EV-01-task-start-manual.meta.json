@@ -1,0 +1,14 @@
+{
+  "id": "EV-01",
+  "label": "task-start-boundary-freeze",
+  "task_id": "P9-AUTHORITATIVE-TRACE-CONSUMER-READ-MODEL-V1",
+  "workflow": "evaluator-executor-workflow/v2.1",
+  "expected_review_baseline_commit": "b4eff597ebffe79c575522b91642f82b26ad5247",
+  "observed_task_start_head": "c18a24066973b3fb33742a0c5c59a0bd8a35e1ae",
+  "existing_src_manifest_sha256": "7506518544e6f0901ee709b233fd7708fd48a88c6247e468305b8d033aaa35f1",
+  "contract_sha256": "81a76197df07c6e10f023d26340a1ca96f14b9ae601faa147ffc1c3552806a33",
+  "stdout": "EV-01.stdout.log",
+  "stderr": "EV-01.stderr.log",
+  "exit_code": 0,
+  "note": "Observed HEAD is the later accepted/pushed repository snapshot; the frozen existing-src manifest exactly matches the contract digest, so the implementation source entering boundary is unchanged from the contract freeze."
+}

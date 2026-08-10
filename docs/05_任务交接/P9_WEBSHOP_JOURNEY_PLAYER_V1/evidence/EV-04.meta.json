@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-04",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_WEBSHOP_JOURNEY_PLAYER_V1/evidence/EV-04-boundary-security-audit.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_WEBSHOP_JOURNEY_PLAYER_V1/evidence/EV-04-boundary-security-audit.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-10T08:36:52.171378+00:00",
+  "finished_at_utc": "2026-08-10T08:36:53.255662+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-04.stdout.log",
+  "stderr_path": "EV-04.stderr.log",
+  "stdout_bytes": 2474,
+  "stderr_bytes": 0,
+  "stdout_sha256": "03c635a12b556670e3075f5d32fede58e396d97043286f0cca29ec2de6670a7c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

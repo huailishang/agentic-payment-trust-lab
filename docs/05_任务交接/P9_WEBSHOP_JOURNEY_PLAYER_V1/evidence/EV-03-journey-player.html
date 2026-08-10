@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebShop 购买旅程只读播放器</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1f2328;background:#f6f8fa}body{margin:0}.page{max-width:1180px;margin:0 auto;padding:24px}.card{background:#fff;border:1px solid #d0d7de;border-radius:10px;padding:18px;margin:14px 0}.notice{border-left:4px solid #57606a;padding:8px 12px;margin:10px 0;background:#f6f8fa}.warning{border-left-color:#9a6700}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}.field{border-bottom:1px solid #eaeef2;padding:8px 0}.label{display:block;font-size:12px;color:#57606a;margin-bottom:4px}.value{white-space:pre-wrap;overflow-wrap:anywhere}.controls{display:flex;gap:8px;flex-wrap:wrap}.controls button{padding:8px 14px;border:1px solid #8c959f;border-radius:6px;background:#fff;cursor:pointer}.controls button:disabled{opacity:.45;cursor:not-allowed}.source-nav button[aria-pressed="true"]{font-weight:700;border-color:#57606a;background:#f6f8fa}.source-section[hidden]{display:none}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f6f8fa;border-radius:6px;padding:10px}.step{font-size:14px;color:#57606a}.empty{color:#6e7781}.pill{display:inline-block;border:1px solid #d0d7de;border-radius:999px;padding:3px 8px;margin:2px;font-size:12px}.ok{font-weight:700}.source-title{margin-bottom:4px}.subtle{color:#57606a}.correlation{border-top:1px solid #eaeef2;padding-top:12px;margin-top:12px}</style>
+</head>
+<body>
+<main class="page">
+<h1>WebShop 购买旅程只读播放器</h1>
+<p class="notice warning">固定脚本轨迹，不代表自主 Agent。页面只展示已冻结证据，不会执行 WebShop、Buy Now、支付、订单、履约或任何网络动作。</p>
+<p class="notice">实验补充字段不是 WebShop 核验事实；支付权威轨迹是独立证据源。</p>
+<p class="notice warning">用户需求与所选商品会原样并列展示。本页面不判断二者是否匹配，也不会做语义修复。</p>
+<section class="card"><h2>旅程摘要</h2><div id="summary" class="grid"></div></section>
+<section class="card"><h2>事实源导航</h2><div class="controls source-nav" id="sourceNav"></div></section>
+<section id="sourceSections">
+<section class="card source-section" data-source="webshop_runtime"><h2 class="source-title">1. 用户需求与商城动作 / webshop_runtime</h2><p class="subtle">来自冻结 WebShop/runtime-facing evidence。</p><div id="webshopRuntime"></div></section>
+<section class="card source-section" data-source="experiment_context" hidden><h2 class="source-title">2. 实验补充上下文 / experiment_context</h2><p class="subtle">显式实验上下文，不提升为 WebShop、支付或用户确认事实。</p><div id="experimentContext"></div></section>
+<section class="card source-section" data-source="commerce_adaptation" hidden><h2 class="source-title">3. Commerce 派生对象 / commerce_adaptation</h2><p class="subtle">已接受 Adapter 的机械投影，不在页面重新映射业务。</p><div id="commerceAdaptation"></div></section>
+<section class="card source-section" data-source="payment_authoritative_trace" hidden><h2 class="source-title">4. 支付权威证据 / payment_authoritative_trace</h2><p class="subtle">独立支付证据源；仅回放已接受的权威轨迹。</p><div class="controls"><button id="previousPayment" type="button">上一步</button><button id="nextPayment" type="button">下一步</button><button id="resetPayment" type="button">回到起点</button><button id="playPausePayment" type="button">自动播放</button></div><p id="paymentStep" class="step"></p><div id="paymentEvent"></div><h3>关系证据</h3><div id="paymentRelations"></div><h3>来源绑定</h3><div id="paymentBinding"></div></section>
+<section class="card source-section" data-source="correlations" hidden><h2 class="source-title">5. 跨源关联 / correlations</h2><p class="subtle">只展示 Read Model 中已机械验证的路径、值与 equality。</p><div id="correlations"></div></section>
+<section class="card source-section" data-source="limitations" hidden><h2 class="source-title">6. 限制与事实边界 / limitations</h2><div id="limitations"></div></section>
+</section>
+</main>
+<script id="journey-payload" type="application/json">{"commerce_adaptation":{"experiment_context_origin":"explicit_experiment_context_not_webshop_verified","fixture_version":"v1","limitations":["instruction_product_match_not_assessed","instruction_is_not_authorization_mandate","merchant_and_payee_from_experiment_context","no_runtime_authorization_decision","no_purchase_or_payment_executed","offline_mapping_only","webshop_reward_not_mapped"],"missing_fields":[],"order":{"authority_version_ref":"experiment-authority-v1","candidate_rails":[],"currency":"USD","fulfilment_terms":"offline_experiment_only_no_fulfilment_commitment","items":[{"category":"home_furniture","item_id":"B06Y3VLDFB","kind":"product","name":"Vhomes Lights Reclaimed Wood Console Table The Genessis Collection Sofa-Tables","quantity":1,"unit_amount":"877.80"}],"mandate_ref":"experiment-context-mandate-ref-v1","merchant":"webshop-experiment-merchant-v1","order_id":"webshop-order-9eccab2b0154fca4af27f322","order_version":"webshop-v1","payee":"webshop-experiment-payee-v1","quote_expires_at":"2026-08-03T05:00:00+00:00","service_id":null,"total_amount":"877.80"},"payment_request":{"agent_id":null,"amount":"877.80","authority_ref":"experiment-context-mandate-ref-v1","authority_version_ref":"experiment-authority-v1","category":"home_furniture","currency":"USD","merchant":"webshop-experiment-merchant-v1","occurred_at":"2026-08-02T05:00:00+00:00","order_ref":"webshop-order-9eccab2b0154fca4af27f322","payee":"webshop-experiment-payee-v1","request_id":"webshop-request-6c6a78eddffdb552c2af66ef","sequence_count":1},"ready":true,"selected_options":[],"source_asset_hashes":[["items_human_ins.json","cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3"],["items_ins_v2_1000.json","f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f"],["items_shuffle_1000.json","30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269"]],"source_commit":"64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd","source_smoke_sha256":"d1998c49a7afa14ee4534cd266d4e9e9c386ff2c2c8d85114aad19c304467e74","unmapped_fields":[],"user_intent_text":"hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars"},"correlations":[{"correlation_id":"session_task_identifier","equal":true,"source_path":"webshop_runtime.task_identifier","source_value":"webshop-session-hndpizntka","target_path":"webshop_runtime.session_id","target_value":"webshop-session-hndpizntka"},{"correlation_id":"instruction_to_user_intent","equal":true,"source_path":"webshop_runtime.instruction_text","source_value":"hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars","target_path":"commerce_adaptation.user_intent_text","target_value":"hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars"},{"correlation_id":"product_asin_to_order_item","equal":true,"source_path":"webshop_runtime.product.asin","source_value":"B06Y3VLDFB","target_path":"commerce_adaptation.order.items[0].item_id","target_value":"B06Y3VLDFB"},{"correlation_id":"product_name_to_order_item","equal":true,"source_path":"webshop_runtime.product.title","source_value":"Vhomes Lights Reclaimed Wood Console Table The Genessis Collection Sofa-Tables","target_path":"commerce_adaptation.order.items[0].name","target_value":"Vhomes Lights Reclaimed Wood Console Table The Genessis Collection Sofa-Tables"},{"correlation_id":"product_unit_amount_to_order_item","equal":true,"source_path":"webshop_runtime.product.unit_price","source_value":"877.80","target_path":"commerce_adaptation.order.items[0].unit_amount","target_value":"877.80"},{"correlation_id":"product_quantity_to_order_item","equal":true,"source_path":"webshop_runtime.product.quantity","source_value":1,"target_path":"commerce_adaptation.order.items[0].quantity","target_value":1},{"correlation_id":"product_total_to_order","equal":true,"source_path":"webshop_runtime.product.order_total","source_value":"877.80","target_path":"commerce_adaptation.order.total_amount","target_value":"877.80"},{"correlation_id":"selected_options_to_adaptation","equal":true,"source_path":"webshop_runtime.product.selected_options","source_value":[],"target_path":"commerce_adaptation.selected_options","target_value":[]},{"correlation_id":"experiment_origin_to_adaptation","equal":true,"source_path":"experiment_context.origin","source_value":"explicit_experiment_context_not_webshop_verified","target_path":"commerce_adaptation.experiment_context_origin","target_value":"explicit_experiment_context_not_webshop_verified"},{"correlation_id":"source_commit_to_adaptation","equal":true,"source_path":"webshop_runtime.source.webshop_commit","source_value":"64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd","target_path":"commerce_adaptation.source_commit","target_value":"64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd"},{"correlation_id":"source_smoke_sha_to_adaptation","equal":true,"source_path":"webshop_runtime.source.smoke_result_sha256","source_value":"d1998c49a7afa14ee4534cd266d4e9e9c386ff2c2c8d85114aad19c304467e74","target_path":"commerce_adaptation.source_smoke_sha256","target_value":"d1998c49a7afa14ee4534cd266d4e9e9c386ff2c2c8d85114aad19c304467e74"},{"correlation_id":"source_asset_hashes_to_adaptation","equal":true,"source_path":"webshop_runtime.source.asset_hashes","source_value":[["items_human_ins.json","cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3"],["items_ins_v2_1000.json","f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f"],["items_shuffle_1000.json","30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269"]],"target_path":"commerce_adaptation.source_asset_hashes","target_value":[["items_human_ins.json","cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3"],["items_ins_v2_1000.json","f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f"],["items_shuffle_1000.json","30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269"]]},{"correlation_id":"adaptation_order_request_binding","equal":true,"source_path":"commerce_adaptation.payment_request.order_ref","source_value":"webshop-order-9eccab2b0154fca4af27f322","target_path":"commerce_adaptation.order.order_id","target_value":"webshop-order-9eccab2b0154fca4af27f322"},{"correlation_id":"order_id_to_payment_trace","equal":true,"source_path":"commerce_adaptation.order.order_id","source_value":"webshop-order-9eccab2b0154fca4af27f322","target_path":"payment_authoritative_trace.Order.projection.order_id","target_value":"webshop-order-9eccab2b0154fca4af27f322"},{"correlation_id":"request_id_to_payment_trace","equal":true,"source_path":"commerce_adaptation.payment_request.request_id","source_value":"webshop-request-6c6a78eddffdb552c2af66ef","target_path":"payment_authoritative_trace.TransactionRequest.projection.request_id","target_value":"webshop-request-6c6a78eddffdb552c2af66ef"},{"correlation_id":"trace_request_order_binding","equal":true,"source_path":"payment_authoritative_trace.TransactionRequest.projection.order_ref","source_value":"webshop-order-9eccab2b0154fca4af27f322","target_path":"commerce_adaptation.order.order_id","target_value":"webshop-order-9eccab2b0154fca4af27f322"},{"correlation_id":"trace_ref_to_request_id","equal":true,"source_path":"payment_authoritative_trace.trace_ref.request_suffix","source_value":"webshop-request-6c6a78eddffdb552c2af66ef","target_path":"commerce_adaptation.payment_request.request_id","target_value":"webshop-request-6c6a78eddffdb552c2af66ef"}],"experiment_context":{"authority_version":"experiment-authority-v1","category":"home_furniture","currency":"USD","fulfilment_terms":"offline_experiment_only_no_fulfilment_commitment","mandate_ref":"experiment-context-mandate-ref-v1","merchant":"webshop-experiment-merchant-v1","origin":"explicit_experiment_context_not_webshop_verified","payee":"webshop-experiment-payee-v1","quote_expires_at":"2026-08-03T05:00:00+00:00","request_timestamp":"2026-08-02T05:00:00+00:00"},"journey_ref":"WebShopJourneyReadModel:sha256:9996b91b6e0603d93592ae9b29337767962de2b7b27ca9c9794b39f770fc8da8","limitations":["fixed_script_webshop_smoke_not_autonomous_agent","experiment_context_not_webshop_verified","payment_authoritative_trace_is_separate_evidence_namespace","ui_neutral_read_model_only","no_webshop_or_payment_execution"],"payment_authoritative_trace":{"completeness_status":"COMPLETE","events":[{"decision":null,"entity_ref":"IntentMandate:experiment-context-mandate-ref-v1","entity_role":"AUTHORITY","entity_type":"IntentMandate","event_type":"AUTHORITY_RECORDED","reason_codes":[],"relations":[],"sequence_no":1,"source_binding_ref":"TraceSourceBinding:sha256:6846a2e93cbc9b36f697457c57f2e0baa3baeed29af38ffa62c22f6b17ef5a97","status":null},{"decision":null,"entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","entity_role":"AUTHORIZED_ORDER_SNAPSHOT","entity_type":"Order","event_type":"ORDER_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[{"equal":null,"source_path":"projection.authority_version_ref","source_value":null,"target_path":"projection.authority_version","target_value":null}],"target_entity_ref":"IntentMandate:experiment-context-mandate-ref-v1","target_entity_role":"AUTHORITY","target_entity_type":"IntentMandate","target_resolved":true}],"sequence_no":2,"source_binding_ref":"TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc","status":null},{"decision":null,"entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","entity_role":"CURRENT_ORDER_SNAPSHOT","entity_type":"Order","event_type":"ORDER_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[{"equal":null,"source_path":"projection.authority_version_ref","source_value":null,"target_path":"projection.authority_version","target_value":null}],"target_entity_ref":"IntentMandate:experiment-context-mandate-ref-v1","target_entity_role":"AUTHORITY","target_entity_type":"IntentMandate","target_resolved":true}],"sequence_no":3,"source_binding_ref":"TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc","status":null},{"decision":null,"entity_ref":"TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef","entity_role":"CURRENT_REQUEST","entity_type":"TransactionRequest","event_type":"REQUEST_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","target_entity_role":"CURRENT_ORDER_SNAPSHOT","target_entity_type":"Order","target_resolved":true},{"relation_type":"BOUND_TO","target_binding_assertions":[{"equal":null,"source_path":"projection.authority_version_ref","source_value":null,"target_path":"projection.authority_version","target_value":null}],"target_entity_ref":"IntentMandate:experiment-context-mandate-ref-v1","target_entity_role":"AUTHORITY","target_entity_type":"IntentMandate","target_resolved":true}],"sequence_no":4,"source_binding_ref":"TraceSourceBinding:sha256:4a49cc543a483038d2c2b3600da1011246a2b9c1230558c7bc553cfee9b5a77c","status":null},{"decision":null,"entity_ref":"GovernedPaymentAction:webshop-happy-path-action-1","entity_role":"GOVERNED_ACTION","entity_type":"GovernedPaymentAction","event_type":"ACTION_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[{"equal":null,"source_path":"projection.authority_version","source_value":null,"target_path":"projection.authority_version","target_value":null}],"target_entity_ref":"IntentMandate:experiment-context-mandate-ref-v1","target_entity_role":"AUTHORITY","target_entity_type":"IntentMandate","target_resolved":true},{"relation_type":"BOUND_TO","target_binding_assertions":[{"equal":null,"source_path":"projection.order_version","source_value":null,"target_path":"projection.order_version","target_value":null}],"target_entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","target_entity_role":"CURRENT_ORDER_SNAPSHOT","target_entity_type":"Order","target_resolved":true},{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef","target_entity_role":"CURRENT_REQUEST","target_entity_type":"TransactionRequest","target_resolved":true},{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"PaymentExecutionRecord:webshop-payment-1","target_entity_role":"CURRENT_PAYMENT_CANDIDATE","target_entity_type":"PaymentExecutionRecord","target_resolved":true}],"sequence_no":5,"source_binding_ref":"TraceSourceBinding:sha256:0da7094bcb4ccb9f2587bd22c8fcf3874c8ab868a72fd487f2cc21b9440633b2","status":null},{"decision":null,"entity_ref":"PaymentExecutionRecord:webshop-payment-1","entity_role":"CURRENT_PAYMENT_CANDIDATE","entity_type":"PaymentExecutionRecord","event_type":"PAYMENT_CANDIDATE_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef","target_entity_role":"CURRENT_REQUEST","target_entity_type":"TransactionRequest","target_resolved":true},{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","target_entity_role":"CURRENT_ORDER_SNAPSHOT","target_entity_type":"Order","target_resolved":true}],"sequence_no":6,"source_binding_ref":"TraceSourceBinding:sha256:db2fbacaee9832e6f0dd7376e531bee8f1561466a8603023d65792cdc5d128ba","status":"PENDING"},{"decision":null,"entity_ref":"GovernedActionBindingFact:binding:60fc5757c16957a3e62938231d62a30e367f6280ce61b4b667aec8f51f792963","entity_role":"ACTION_BINDING_FACT","entity_type":"GovernedActionBindingFact","event_type":"ACTION_BINDING_DECISION_RECORDED","reason_codes":["governed_action_binding_valid"],"relations":[{"relation_type":"VALIDATED_AGAINST","target_binding_assertions":[],"target_entity_ref":"GovernedPaymentAction:webshop-happy-path-action-1","target_entity_role":"GOVERNED_ACTION","target_entity_type":"GovernedPaymentAction","target_resolved":true},{"relation_type":"VALIDATED_AGAINST","target_binding_assertions":[],"target_entity_ref":"PaymentExecutionRecord:webshop-payment-1","target_entity_role":"CURRENT_PAYMENT_CANDIDATE","target_entity_type":"PaymentExecutionRecord","target_resolved":true}],"sequence_no":7,"source_binding_ref":"TraceSourceBinding:sha256:60fc5757c16957a3e62938231d62a30e367f6280ce61b4b667aec8f51f792963","status":"VALID"},{"decision":"ALLOW","entity_ref":"RuntimeGateRecord:binding:483bc2d06c50ca11e255e22622f3300cb14a728321b5de5764989b21552f258f","entity_role":"RUNTIME_GATE_OBSERVATION","entity_type":"RuntimeGateRecord","event_type":"RUNTIME_DECISION_RECORDED","reason_codes":["p2:payment_execution_binding_match","p3:identity_executor_binding_match","p4:context_policy_valid","runtime:allow"],"relations":[],"sequence_no":8,"source_binding_ref":"TraceSourceBinding:sha256:483bc2d06c50ca11e255e22622f3300cb14a728321b5de5764989b21552f258f","status":"VALID"},{"decision":null,"entity_ref":"PaymentExecutionRecord:webshop-payment-1","entity_role":"PAYMENT_EXECUTION_OUTCOME","entity_type":"PaymentExecutionRecord","event_type":"PAYMENT_OUTCOME_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef","target_entity_role":"CURRENT_REQUEST","target_entity_type":"TransactionRequest","target_resolved":true},{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","target_entity_role":"CURRENT_ORDER_SNAPSHOT","target_entity_type":"Order","target_resolved":true}],"sequence_no":9,"source_binding_ref":"TraceSourceBinding:sha256:3600d53655bf2c2f17ddcf3e86858efbf5bd0a8942e85b6a7782884d4d07c0ca","status":"SUCCEEDED"},{"decision":null,"entity_ref":"FulfillmentRecord:webshop-fulfillment-1","entity_role":"FULFILMENT_OUTCOME","entity_type":"FulfillmentRecord","event_type":"FULFILMENT_OUTCOME_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","target_entity_role":"CURRENT_ORDER_SNAPSHOT","target_entity_type":"Order","target_resolved":true}],"sequence_no":10,"source_binding_ref":"TraceSourceBinding:sha256:0513083cc1d2fcd0377bb7c2ba2a4478f2e66beb2726260be436703ceaf9ecd4","status":"SUCCEEDED"},{"decision":null,"entity_ref":"WebShopPaymentFulfilmentOutcome:binding:adc15bb129ffa8ed3c27f68577a6f4dba7d37cb73d209a0838ea063f479d8134","entity_role":"FINAL_OUTCOME","entity_type":"WebShopPaymentFulfilmentOutcome","event_type":"RESULT_RECORDED","reason_codes":["payment:initial_status:succeeded","lifecycle:payment_status:succeeded","lifecycle:fulfillment_status:succeeded","lifecycle:task_status:succeeded","lifecycle:remediation:not_required","retry:not_allowed"],"relations":[],"sequence_no":11,"source_binding_ref":"TraceSourceBinding:sha256:adc15bb129ffa8ed3c27f68577a6f4dba7d37cb73d209a0838ea063f479d8134","status":"SUCCEEDED"}],"profile":"WEBSHOP_NORMAL_PURCHASE_V2","reason_codes":[],"schema_version":"product-authoritative-trace/v1","source":"PRODUCT_OBSERVED","source_bindings":[{"binding_ref":"TraceSourceBinding:sha256:6846a2e93cbc9b36f697457c57f2e0baa3baeed29af38ffa62c22f6b17ef5a97","projection":{"authority_version":"experiment-authority-v1","mandate_id":"experiment-context-mandate-ref-v1"},"projection_schema":"intent-mandate-trace/v2","source_object_ref":"IntentMandate:experiment-context-mandate-ref-v1:experiment-authority-v1","source_object_type":"IntentMandate"},{"binding_ref":"TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc","projection":{"authority_version_ref":"experiment-authority-v1","currency":"USD","mandate_ref":"experiment-context-mandate-ref-v1","merchant":"webshop-experiment-merchant-v1","order_id":"webshop-order-9eccab2b0154fca4af27f322","order_version":"webshop-v1","payee":"webshop-experiment-payee-v1","total_amount":"877.8"},"projection_schema":"order-snapshot-trace/v2","source_object_ref":"Order:webshop-order-9eccab2b0154fca4af27f322:webshop-v1","source_object_type":"Order"},{"binding_ref":"TraceSourceBinding:sha256:4a49cc543a483038d2c2b3600da1011246a2b9c1230558c7bc553cfee9b5a77c","projection":{"agent_id":"webshop-agent-1","amount":"877.8","authority_ref":"experiment-context-mandate-ref-v1","authority_version_ref":"experiment-authority-v1","currency":"USD","merchant":"webshop-experiment-merchant-v1","order_ref":"webshop-order-9eccab2b0154fca4af27f322","payee":"webshop-experiment-payee-v1","request_id":"webshop-request-6c6a78eddffdb552c2af66ef"},"projection_schema":"transaction-request-trace/v2","source_object_ref":"TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef","source_object_type":"TransactionRequest"},{"binding_ref":"TraceSourceBinding:sha256:0da7094bcb4ccb9f2587bd22c8fcf3874c8ab868a72fd487f2cc21b9440633b2","projection":{"action_id":"webshop-happy-path-action-1","action_type":"execute_payment","agent_ref":"webshop-agent-1","authority_ref":"experiment-context-mandate-ref-v1","authority_version":"experiment-authority-v1","executor_ref":"offline-webshop-executor","occurred_at":"2026-08-02T05:00:00.500000+00:00","order_ref":"webshop-order-9eccab2b0154fca4af27f322","order_version":"webshop-v1","payment_ref":"webshop-payment-1","request_ref":"webshop-request-6c6a78eddffdb552c2af66ef","reversibility":"COMPENSATABLE_NOT_REVERSIBLE","side_effect_class":"PAYMENT_EXECUTION","source_refs":["source:webshop-checkout-snapshot","source:user-mandate"]},"projection_schema":"governed-payment-action-trace/v2","source_object_ref":"GovernedPaymentAction:webshop-happy-path-action-1","source_object_type":"GovernedPaymentAction"},{"binding_ref":"TraceSourceBinding:sha256:db2fbacaee9832e6f0dd7376e531bee8f1561466a8603023d65792cdc5d128ba","projection":{"agent_ref":"webshop-agent-1","amount":"877.8","authority_ref":"experiment-context-mandate-ref-v1","currency":"USD","order_id":"webshop-order-9eccab2b0154fca4af27f322","payee":"webshop-experiment-payee-v1","payment_id":"webshop-payment-1","request_id":"webshop-request-6c6a78eddffdb552c2af66ef","status":"PENDING","transaction_object_ref":"webshop-request-6c6a78eddffdb552c2af66ef"},"projection_schema":"payment-execution-record-trace/v2","source_object_ref":"PaymentExecutionRecord:webshop-payment-1","source_object_type":"PaymentExecutionRecord"},{"binding_ref":"TraceSourceBinding:sha256:60fc5757c16957a3e62938231d62a30e367f6280ce61b4b667aec8f51f792963","projection":{"action_id":"webshop-happy-path-action-1","checked_action_type":"execute_payment","checked_order_ref":"webshop-order-9eccab2b0154fca4af27f322","checked_payment_ref":"webshop-payment-1","checked_request_ref":"webshop-request-6c6a78eddffdb552c2af66ef","reason_codes":["governed_action_binding_valid"],"status":"VALID"},"projection_schema":"governed-action-binding-fact-trace/v2","source_object_ref":"GovernedActionBindingFact:projection-sha256:24d3a97cdc689bd5d2ebd455d5657db868982ce45e189c4d90179d807ae47765","source_object_type":"GovernedActionBindingFact"},{"binding_ref":"TraceSourceBinding:sha256:483bc2d06c50ca11e255e22622f3300cb14a728321b5de5764989b21552f258f","projection":{"binding_reason_codes":["payment_execution_binding_match"],"binding_status":"VALID","callback_count":1,"callback_executed":true,"callback_result_ref":"simulated-webshop-checkout","context_policy_reason_codes":["context_policy_valid"],"context_policy_status":"VALID","final_decision":"ALLOW","identity_reason_codes":["identity_executor_binding_match"],"identity_status":"VALID","preliminary_decision":"ALLOW","reason_codes":["p2:payment_execution_binding_match","p3:identity_executor_binding_match","p4:context_policy_valid","runtime:allow"]},"projection_schema":"runtime-gate-record-trace/v2","source_object_ref":"RuntimeGateRecord:projection-sha256:309c3495324db1791c1fb56b22bf1876005bef58d8ece0f2d0a226451d168b23","source_object_type":"RuntimeGateRecord"},{"binding_ref":"TraceSourceBinding:sha256:3600d53655bf2c2f17ddcf3e86858efbf5bd0a8942e85b6a7782884d4d07c0ca","projection":{"agent_ref":"webshop-agent-1","amount":"877.8","authority_ref":"experiment-context-mandate-ref-v1","currency":"USD","order_id":"webshop-order-9eccab2b0154fca4af27f322","payee":"webshop-experiment-payee-v1","payment_id":"webshop-payment-1","request_id":"webshop-request-6c6a78eddffdb552c2af66ef","status":"SUCCEEDED","transaction_object_ref":"webshop-request-6c6a78eddffdb552c2af66ef"},"projection_schema":"payment-execution-record-trace/v2","source_object_ref":"PaymentExecutionRecord:webshop-payment-1","source_object_type":"PaymentExecutionRecord"},{"binding_ref":"TraceSourceBinding:sha256:0513083cc1d2fcd0377bb7c2ba2a4478f2e66beb2726260be436703ceaf9ecd4","projection":{"failure_code":null,"fulfillment_id":"webshop-fulfillment-1","order_id":"webshop-order-9eccab2b0154fca4af27f322","reason_codes":[],"status":"SUCCEEDED"},"projection_schema":"fulfillment-record-trace/v2","source_object_ref":"FulfillmentRecord:webshop-fulfillment-1","source_object_type":"FulfillmentRecord"},{"binding_ref":"TraceSourceBinding:sha256:adc15bb129ffa8ed3c27f68577a6f4dba7d37cb73d209a0838ea063f479d8134","projection":{"duplicate_payment_blocked":false,"effective_payment_status":"SUCCEEDED","initial_payment_status":"SUCCEEDED","lifecycle_fulfillment_status":"SUCCEEDED","lifecycle_payment_status":"SUCCEEDED","lifecycle_remediation_status":"NOT_REQUIRED","lifecycle_task_status":"SUCCEEDED","limitations":["offline_sidecar_only","no_real_payment_execution","no_real_status_query_or_async_callback","no_real_fulfilment","no_automatic_payment_retry","no_real_refund_or_dispute","webshop_reward_not_used_as_payment_or_task_success"],"query_recovery_status":null,"ready":true,"reason_codes":["payment:initial_status:succeeded","lifecycle:payment_status:succeeded","lifecycle:fulfillment_status:succeeded","lifecycle:task_status:succeeded","lifecycle:remediation:not_required","retry:not_allowed"],"retry_allowed":false,"status_conflict_resolution":null},"projection_schema":"webshop-payment-fulfilment-outcome-result-trace/v2","source_object_ref":"WebShopPaymentFulfilmentOutcome:projection-sha256:13d9886fe5ec4091c2f85dd1a85c761db28df81c045976e9d341457e03efbe58","source_object_type":"WebShopPaymentFulfilmentOutcome"}],"trace_ref":"ProductAuthoritativeTrace:WEBSHOP_NORMAL_PURCHASE_V2:webshop-request-6c6a78eddffdb552c2af66ef"},"schema_version":"webshop-journey-read-model/v1","source_classification_status":"VERIFIED_SEPARATE_SOURCES","webshop_runtime":{"actions_executed":["search[vhomes lights reclaimed]","click[b06y3vldfb]"],"buy_now_available":true,"buy_now_executed":false,"instruction_text":"hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars","product":{"asin":"B06Y3VLDFB","order_total":"877.80","quantity":1,"selected_options":{},"title":"Vhomes Lights Reclaimed Wood Console Table The Genessis Collection Sofa-Tables","unit_price":"877.80"},"session_id":"hndpizntka","source":{"asset_hashes":{"items_human_ins.json":"cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3","items_ins_v2_1000.json":"f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f","items_shuffle_1000.json":"30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269"},"evidence_path":"docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/rv_webshop_small_smoke.json","provenance":{"immutable":true,"kind":"local_p9_a2_evidence"},"smoke_result_sha256":"d1998c49a7afa14ee4534cd266d4e9e9c386ff2c2c8d85114aad19c304467e74","webshop_commit":"64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd"},"task_identifier":"webshop-session-hndpizntka"}}</script>
+<script>
+"use strict";
+const payload = JSON.parse(document.getElementById("journey-payload").textContent);
+const sourceDefinitions = [
+  ["webshop_runtime", "商城事实"],
+  ["experiment_context", "实验上下文"],
+  ["commerce_adaptation", "Commerce 派生"],
+  ["payment_authoritative_trace", "支付权威证据"],
+  ["correlations", "跨源关联"],
+  ["limitations", "事实边界"]
+];
+const sourceNav = document.getElementById("sourceNav");
+const sourceSections = Array.from(document.querySelectorAll(".source-section"));
+const summaryNode = document.getElementById("summary");
+const runtimeNode = document.getElementById("webshopRuntime");
+const experimentNode = document.getElementById("experimentContext");
+const commerceNode = document.getElementById("commerceAdaptation");
+const correlationNode = document.getElementById("correlations");
+const limitationNode = document.getElementById("limitations");
+const paymentEventNode = document.getElementById("paymentEvent");
+const paymentRelationsNode = document.getElementById("paymentRelations");
+const paymentBindingNode = document.getElementById("paymentBinding");
+const paymentStepNode = document.getElementById("paymentStep");
+const previousPayment = document.getElementById("previousPayment");
+const nextPayment = document.getElementById("nextPayment");
+const resetPayment = document.getElementById("resetPayment");
+const playPausePayment = document.getElementById("playPausePayment");
+const paymentBindings = new Map(payload.payment_authoritative_trace.source_bindings.map((item) => [item.binding_ref, item]));
+let paymentIndex = 0;
+let paymentTimer = null;
+
+function appendField(parent, label, value) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "field";
+  const labelNode = document.createElement("span");
+  labelNode.className = "label";
+  labelNode.textContent = label;
+  const valueNode = document.createElement("span");
+  valueNode.className = "value";
+  valueNode.textContent = value === null || value === undefined ? "—" : String(value);
+  wrapper.append(labelNode, valueNode);
+  parent.appendChild(wrapper);
+}
+function appendJson(parent, label, value) {
+  const wrapper = document.createElement("div");
+  const labelNode = document.createElement("div");
+  labelNode.className = "label";
+  labelNode.textContent = label;
+  const valueNode = document.createElement("pre");
+  valueNode.textContent = JSON.stringify(value, null, 2);
+  wrapper.append(labelNode, valueNode);
+  parent.appendChild(wrapper);
+}
+function showSource(name) {
+  sourceSections.forEach((section) => { section.hidden = section.dataset.source !== name; });
+  Array.from(sourceNav.querySelectorAll("button")).forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.source === name));
+  });
+}
+function renderSourceNav() {
+  sourceDefinitions.forEach(([name, label], index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.source = name;
+    button.textContent = `${index + 1}. ${label}`;
+    button.setAttribute("aria-pressed", String(index === 0));
+    button.addEventListener("click", () => showSource(name));
+    sourceNav.appendChild(button);
+  });
+}
+function renderSummary() {
+  const runtime = payload.webshop_runtime;
+  const product = runtime.product;
+  appendField(summaryNode, "Journey 引用", payload.journey_ref);
+  appendField(summaryNode, "来源分类状态", payload.source_classification_status);
+  appendField(summaryNode, "用户需求（原文）", runtime.instruction_text);
+  appendField(summaryNode, "所选商品（原文）", product.title);
+  appendField(summaryNode, "商品 ASIN", product.asin);
+  appendField(summaryNode, "商品总额", product.order_total);
+  appendField(summaryNode, "Buy Now 可用", runtime.buy_now_available);
+  appendField(summaryNode, "Buy Now 已执行", runtime.buy_now_executed);
+}
+function renderRuntime() {
+  runtimeNode.replaceChildren();
+  appendField(runtimeNode, "会话（session_id）", payload.webshop_runtime.session_id);
+  appendField(runtimeNode, "任务标识（task_identifier）", payload.webshop_runtime.task_identifier);
+  appendField(runtimeNode, "用户需求（instruction_text）", payload.webshop_runtime.instruction_text);
+  appendJson(runtimeNode, "商城动作（actions_executed）", payload.webshop_runtime.actions_executed);
+  appendField(runtimeNode, "Buy Now 可用", payload.webshop_runtime.buy_now_available);
+  appendField(runtimeNode, "Buy Now 已执行", payload.webshop_runtime.buy_now_executed);
+  appendJson(runtimeNode, "所选商品（product）", payload.webshop_runtime.product);
+  appendJson(runtimeNode, "商城证据来源（source）", payload.webshop_runtime.source);
+}
+function renderExperiment() {
+  experimentNode.replaceChildren();
+  appendField(experimentNode, "来源语义（origin）", payload.experiment_context.origin);
+  appendJson(experimentNode, "实验补充上下文", payload.experiment_context);
+}
+function renderCommerce() {
+  commerceNode.replaceChildren();
+  appendField(commerceNode, "用户意图投影", payload.commerce_adaptation.user_intent_text);
+  appendField(commerceNode, "Experiment Context 来源", payload.commerce_adaptation.experiment_context_origin);
+  appendField(commerceNode, "Adapter ready", payload.commerce_adaptation.ready);
+  appendJson(commerceNode, "订单（order）", payload.commerce_adaptation.order);
+  appendJson(commerceNode, "支付请求（payment_request）", payload.commerce_adaptation.payment_request);
+  appendJson(commerceNode, "来源元数据", {
+    source_commit: payload.commerce_adaptation.source_commit,
+    fixture_version: payload.commerce_adaptation.fixture_version,
+    source_smoke_sha256: payload.commerce_adaptation.source_smoke_sha256,
+    source_asset_hashes: payload.commerce_adaptation.source_asset_hashes
+  });
+  appendJson(commerceNode, "Adapter 限制", payload.commerce_adaptation.limitations);
+}
+function renderPaymentEvent() {
+  const events = payload.payment_authoritative_trace.events;
+  const event = events[paymentIndex];
+  paymentEventNode.replaceChildren();
+  paymentRelationsNode.replaceChildren();
+  paymentBindingNode.replaceChildren();
+  paymentStepNode.textContent = `支付轨迹第 ${paymentIndex + 1} / ${events.length} 步`;
+  appendField(paymentEventNode, "序号", event.sequence_no);
+  appendField(paymentEventNode, "事件类型", event.event_type);
+  appendField(paymentEventNode, "实体类型", event.entity_type);
+  appendField(paymentEventNode, "实体角色", event.entity_role);
+  appendField(paymentEventNode, "实体引用", event.entity_ref);
+  appendField(paymentEventNode, "来源绑定", event.source_binding_ref);
+  appendField(paymentEventNode, "决策", event.decision);
+  appendField(paymentEventNode, "状态", event.status);
+  appendJson(paymentEventNode, "原因码", event.reason_codes);
+  if (event.relations.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "empty";
+    empty.textContent = "当前支付事件没有关系记录。";
+    paymentRelationsNode.appendChild(empty);
+  } else {
+    event.relations.forEach((relation, index) => appendJson(paymentRelationsNode, `关系 ${index + 1}`, relation));
+  }
+  const binding = paymentBindings.get(event.source_binding_ref);
+  appendField(paymentBindingNode, "绑定引用", binding.binding_ref);
+  appendField(paymentBindingNode, "来源对象类型", binding.source_object_type);
+  appendField(paymentBindingNode, "来源对象引用", binding.source_object_ref);
+  appendField(paymentBindingNode, "投影模式", binding.projection_schema);
+  appendJson(paymentBindingNode, "冻结投影", binding.projection);
+  previousPayment.disabled = paymentIndex === 0;
+  nextPayment.disabled = paymentIndex === events.length - 1;
+}
+function stopPaymentPlayback() {
+  if (paymentTimer !== null) {
+    clearInterval(paymentTimer);
+    paymentTimer = null;
+  }
+  playPausePayment.textContent = "自动播放";
+}
+function renderCorrelations() {
+  correlationNode.replaceChildren();
+  payload.correlations.forEach((item, index) => {
+    const group = document.createElement("div");
+    group.className = "correlation";
+    appendField(group, `关联 ${index + 1}`, item.correlation_id);
+    appendField(group, "来源路径", item.source_path);
+    appendJson(group, "来源值", item.source_value);
+    appendField(group, "目标路径", item.target_path);
+    appendJson(group, "目标值", item.target_value);
+    appendField(group, "机械相等（equal）", item.equal);
+    correlationNode.appendChild(group);
+  });
+}
+function renderLimitations() {
+  limitationNode.replaceChildren();
+  payload.limitations.forEach((item) => {
+    const pill = document.createElement("span");
+    pill.className = "pill";
+    pill.textContent = item;
+    limitationNode.appendChild(pill);
+  });
+}
+previousPayment.addEventListener("click", () => { stopPaymentPlayback(); paymentIndex = Math.max(0, paymentIndex - 1); renderPaymentEvent(); });
+nextPayment.addEventListener("click", () => { stopPaymentPlayback(); paymentIndex = Math.min(payload.payment_authoritative_trace.events.length - 1, paymentIndex + 1); renderPaymentEvent(); });
+resetPayment.addEventListener("click", () => { stopPaymentPlayback(); paymentIndex = 0; renderPaymentEvent(); });
+playPausePayment.addEventListener("click", () => {
+  if (paymentTimer !== null) { stopPaymentPlayback(); return; }
+  playPausePayment.textContent = "暂停";
+  paymentTimer = setInterval(() => {
+    if (paymentIndex >= payload.payment_authoritative_trace.events.length - 1) { stopPaymentPlayback(); return; }
+    paymentIndex += 1;
+    renderPaymentEvent();
+  }, 1200);
+});
+renderSourceNav();
+renderSummary();
+renderRuntime();
+renderExperiment();
+renderCommerce();
+renderPaymentEvent();
+renderCorrelations();
+renderLimitations();
+</script>
+</body>
+</html>

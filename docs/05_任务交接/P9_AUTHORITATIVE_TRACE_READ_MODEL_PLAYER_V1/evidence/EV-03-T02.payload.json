@@ -1,0 +1,251 @@
+{
+  "completeness_status": "COMPLETE",
+  "events": [
+    {
+      "decision": null,
+      "entity_ref": "IntentMandate:mandate-prepayment-1",
+      "entity_role": "AUTHORITY",
+      "entity_type": "IntentMandate",
+      "event_type": "AUTHORITY_RECORDED",
+      "reason_codes": [],
+      "relations": [],
+      "sequence_no": 1,
+      "source_binding_ref": "TraceSourceBinding:sha256:3db3ae4ae039d9f46b14679d44dc367c7e367c8f5cc9627f3fa1183848cebcc9",
+      "status": null
+    },
+    {
+      "decision": null,
+      "entity_ref": "Order:order-prepayment-1",
+      "entity_role": "AUTHORIZED_ORDER_SNAPSHOT",
+      "entity_type": "Order",
+      "event_type": "ORDER_RECORDED",
+      "reason_codes": [],
+      "relations": [
+        {
+          "relation_type": "BOUND_TO",
+          "target_binding_assertions": [
+            {
+              "equal": true,
+              "source_path": "projection.authority_version_ref",
+              "source_value": null,
+              "target_path": "projection.authority_version",
+              "target_value": null
+            }
+          ],
+          "target_entity_ref": "IntentMandate:mandate-prepayment-1",
+          "target_entity_role": "AUTHORITY",
+          "target_entity_type": "IntentMandate",
+          "target_resolved": true
+        }
+      ],
+      "sequence_no": 2,
+      "source_binding_ref": "TraceSourceBinding:sha256:5f3fc4151f96698a14586a45162546f9263c11a5bbd26cf6e7bd6b35517fe554",
+      "status": null
+    },
+    {
+      "decision": null,
+      "entity_ref": "Order:order-prepayment-1",
+      "entity_role": "CURRENT_ORDER_SNAPSHOT",
+      "entity_type": "Order",
+      "event_type": "ORDER_RECORDED",
+      "reason_codes": [],
+      "relations": [
+        {
+          "relation_type": "BOUND_TO",
+          "target_binding_assertions": [
+            {
+              "equal": true,
+              "source_path": "projection.authority_version_ref",
+              "source_value": null,
+              "target_path": "projection.authority_version",
+              "target_value": null
+            }
+          ],
+          "target_entity_ref": "IntentMandate:mandate-prepayment-1",
+          "target_entity_role": "AUTHORITY",
+          "target_entity_type": "IntentMandate",
+          "target_resolved": true
+        }
+      ],
+      "sequence_no": 3,
+      "source_binding_ref": "TraceSourceBinding:sha256:54aefdbbea2528016c1c30da79c215027fe293f66c7ce4431cb2e05f9ada2c0a",
+      "status": null
+    },
+    {
+      "decision": null,
+      "entity_ref": "TransactionRequest:request-order-v2",
+      "entity_role": "CURRENT_REQUEST",
+      "entity_type": "TransactionRequest",
+      "event_type": "REQUEST_RECORDED",
+      "reason_codes": [],
+      "relations": [
+        {
+          "relation_type": "BOUND_TO",
+          "target_binding_assertions": [],
+          "target_entity_ref": "Order:order-prepayment-1",
+          "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+          "target_entity_type": "Order",
+          "target_resolved": true
+        },
+        {
+          "relation_type": "BOUND_TO",
+          "target_binding_assertions": [
+            {
+              "equal": true,
+              "source_path": "projection.authority_version_ref",
+              "source_value": null,
+              "target_path": "projection.authority_version",
+              "target_value": null
+            }
+          ],
+          "target_entity_ref": "IntentMandate:mandate-prepayment-1",
+          "target_entity_role": "AUTHORITY",
+          "target_entity_type": "IntentMandate",
+          "target_resolved": true
+        }
+      ],
+      "sequence_no": 4,
+      "source_binding_ref": "TraceSourceBinding:sha256:11be3d3e4fe64f0617e69d412246b909c9f172cf9b4f5827091ae153c05612f5",
+      "status": null
+    },
+    {
+      "decision": "CONFIRMATION_REQUIRED",
+      "entity_ref": "ValidationResult:binding:bb8c97c19e5abb1c77af728cc421ff3ab41b44fc179d9f4fb3fe2025701547fe",
+      "entity_role": "PREPAYMENT_VALIDATION",
+      "entity_type": "ValidationResult",
+      "event_type": "PREPAYMENT_DECISION_RECORDED",
+      "reason_codes": [
+        "order_item_unit_amount_changed",
+        "order_total_changed"
+      ],
+      "relations": [],
+      "sequence_no": 5,
+      "source_binding_ref": "TraceSourceBinding:sha256:bb8c97c19e5abb1c77af728cc421ff3ab41b44fc179d9f4fb3fe2025701547fe",
+      "status": null
+    },
+    {
+      "decision": "CONFIRMATION_REQUIRED",
+      "entity_ref": "WebShopBuyNowGateOutcome:binding:656831f1958b5426e5d0e07f7c2bcb273f5258e437341b6fae9c69e692c3a470",
+      "entity_role": "FINAL_OUTCOME",
+      "entity_type": "WebShopBuyNowGateOutcome",
+      "event_type": "RESULT_RECORDED",
+      "reason_codes": [
+        "p1:order_item_unit_amount_changed",
+        "p1:order_total_changed"
+      ],
+      "relations": [],
+      "sequence_no": 6,
+      "source_binding_ref": "TraceSourceBinding:sha256:656831f1958b5426e5d0e07f7c2bcb273f5258e437341b6fae9c69e692c3a470",
+      "status": null
+    }
+  ],
+  "profile": "WEBSHOP_PREPAYMENT_T02_V2",
+  "reason_codes": [],
+  "schema_version": "product-authoritative-trace/v1",
+  "source": "PRODUCT_OBSERVED",
+  "source_bindings": [
+    {
+      "binding_ref": "TraceSourceBinding:sha256:3db3ae4ae039d9f46b14679d44dc367c7e367c8f5cc9627f3fa1183848cebcc9",
+      "projection": {
+        "authority_version": "authority-v1",
+        "mandate_id": "mandate-prepayment-1"
+      },
+      "projection_schema": "intent-mandate-trace/v2",
+      "source_object_ref": "IntentMandate:mandate-prepayment-1:authority-v1",
+      "source_object_type": "IntentMandate"
+    },
+    {
+      "binding_ref": "TraceSourceBinding:sha256:5f3fc4151f96698a14586a45162546f9263c11a5bbd26cf6e7bd6b35517fe554",
+      "projection": {
+        "authority_version_ref": "authority-v1",
+        "currency": "CNY",
+        "mandate_ref": "mandate-prepayment-1",
+        "merchant": "merchant-prepayment",
+        "order_id": "order-prepayment-1",
+        "order_version": "order-v1",
+        "payee": "payee-prepayment-a",
+        "total_amount": "30"
+      },
+      "projection_schema": "order-snapshot-trace/v2",
+      "source_object_ref": "Order:order-prepayment-1:order-v1",
+      "source_object_type": "Order"
+    },
+    {
+      "binding_ref": "TraceSourceBinding:sha256:54aefdbbea2528016c1c30da79c215027fe293f66c7ce4431cb2e05f9ada2c0a",
+      "projection": {
+        "authority_version_ref": "authority-v1",
+        "currency": "CNY",
+        "mandate_ref": "mandate-prepayment-1",
+        "merchant": "merchant-prepayment",
+        "order_id": "order-prepayment-1",
+        "order_version": "order-v2",
+        "payee": "payee-prepayment-a",
+        "total_amount": "31"
+      },
+      "projection_schema": "order-snapshot-trace/v2",
+      "source_object_ref": "Order:order-prepayment-1:order-v2",
+      "source_object_type": "Order"
+    },
+    {
+      "binding_ref": "TraceSourceBinding:sha256:11be3d3e4fe64f0617e69d412246b909c9f172cf9b4f5827091ae153c05612f5",
+      "projection": {
+        "agent_id": "agent-prepayment-1",
+        "amount": "31",
+        "authority_ref": "mandate-prepayment-1",
+        "authority_version_ref": "authority-v1",
+        "currency": "CNY",
+        "merchant": "merchant-prepayment",
+        "order_ref": "order-prepayment-1",
+        "payee": "payee-prepayment-a",
+        "request_id": "request-order-v2"
+      },
+      "projection_schema": "transaction-request-trace/v2",
+      "source_object_ref": "TransactionRequest:request-order-v2",
+      "source_object_type": "TransactionRequest"
+    },
+    {
+      "binding_ref": "TraceSourceBinding:sha256:bb8c97c19e5abb1c77af728cc421ff3ab41b44fc179d9f4fb3fe2025701547fe",
+      "projection": {
+        "decision": "CONFIRMATION_REQUIRED",
+        "evidence_paths": [],
+        "issue_codes": [
+          "order_item_unit_amount_changed",
+          "order_total_changed"
+        ],
+        "order_difference_paths": [
+          "items[item-a].unit_amount",
+          "total_amount"
+        ],
+        "rule_version": "mandate-rules-v0.1"
+      },
+      "projection_schema": "validation-result-trace/v2",
+      "source_object_ref": "ValidationResult:projection-sha256:2e00f5bc37720f66c5f8ee921c48ac4c3e38d5d8794f5cfcf7f6a90041cf487d",
+      "source_object_type": "ValidationResult"
+    },
+    {
+      "binding_ref": "TraceSourceBinding:sha256:656831f1958b5426e5d0e07f7c2bcb273f5258e437341b6fae9c69e692c3a470",
+      "projection": {
+        "callback_count": 0,
+        "callback_result_ref": null,
+        "checkout_executed": false,
+        "decision": "CONFIRMATION_REQUIRED",
+        "limitations": [
+          "offline_interception_only",
+          "no_webshop_runtime_execution",
+          "no_real_buy_now_execution",
+          "no_real_payment_or_fulfilment",
+          "instruction_is_not_authorization_mandate",
+          "checkout_callback_is_injected_test_seam"
+        ],
+        "reason_codes": [
+          "p1:order_item_unit_amount_changed",
+          "p1:order_total_changed"
+        ]
+      },
+      "projection_schema": "webshop-buy-now-gate-outcome-result-trace/v2",
+      "source_object_ref": "WebShopBuyNowGateOutcome:projection-sha256:4cae84213a20c8a900cbdd4e9a708687502311a160e02c9e6eba82deef00786e",
+      "source_object_type": "WebShopBuyNowGateOutcome"
+    }
+  ],
+  "trace_ref": "WebShopPrepaymentTrace:WEBSHOP_PREPAYMENT_T02_V2:request-order-v2"
+}

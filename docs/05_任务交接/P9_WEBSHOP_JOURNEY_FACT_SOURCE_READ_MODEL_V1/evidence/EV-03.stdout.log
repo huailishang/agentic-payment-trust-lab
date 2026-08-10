@@ -1,0 +1,199 @@
+{
+  "journey_source_classified_representative_path": "1/1",
+  "source_classification_status": "VERIFIED_SEPARATE_SOURCES",
+  "journey_ref": "WebShopJourneyReadModel:sha256:9996b91b6e0603d93592ae9b29337767962de2b7b27ca9c9794b39f770fc8da8",
+  "journey_sha256_x3": [
+    "2358a21be630fb2e31ba3b8f2dbbd8cd3c853c8b3ad9053f66337f8047d660ad",
+    "2358a21be630fb2e31ba3b8f2dbbd8cd3c853c8b3ad9053f66337f8047d660ad",
+    "2358a21be630fb2e31ba3b8f2dbbd8cd3c853c8b3ad9053f66337f8047d660ad"
+  ],
+  "namespace_keys": [
+    "webshop_runtime",
+    "experiment_context",
+    "commerce_adaptation",
+    "payment_authoritative_trace"
+  ],
+  "webshop_actions": [
+    "search[vhomes lights reclaimed]",
+    "click[b06y3vldfb]"
+  ],
+  "buy_now_available": true,
+  "buy_now_executed": false,
+  "experiment_context_origin": "explicit_experiment_context_not_webshop_verified",
+  "payment_trace_sha256": "7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906",
+  "payment_namespace_sha256": "7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906",
+  "correlation_count": 17,
+  "correlations": [
+    {
+      "correlation_id": "session_task_identifier",
+      "source_path": "webshop_runtime.task_identifier",
+      "target_path": "webshop_runtime.session_id",
+      "source_value": "webshop-session-hndpizntka",
+      "target_value": "webshop-session-hndpizntka",
+      "equal": true
+    },
+    {
+      "correlation_id": "instruction_to_user_intent",
+      "source_path": "webshop_runtime.instruction_text",
+      "target_path": "commerce_adaptation.user_intent_text",
+      "source_value": "hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars",
+      "target_value": "hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars",
+      "equal": true
+    },
+    {
+      "correlation_id": "product_asin_to_order_item",
+      "source_path": "webshop_runtime.product.asin",
+      "target_path": "commerce_adaptation.order.items[0].item_id",
+      "source_value": "B06Y3VLDFB",
+      "target_value": "B06Y3VLDFB",
+      "equal": true
+    },
+    {
+      "correlation_id": "product_name_to_order_item",
+      "source_path": "webshop_runtime.product.title",
+      "target_path": "commerce_adaptation.order.items[0].name",
+      "source_value": "Vhomes Lights Reclaimed Wood Console Table The Genessis Collection Sofa-Tables",
+      "target_value": "Vhomes Lights Reclaimed Wood Console Table The Genessis Collection Sofa-Tables",
+      "equal": true
+    },
+    {
+      "correlation_id": "product_unit_amount_to_order_item",
+      "source_path": "webshop_runtime.product.unit_price",
+      "target_path": "commerce_adaptation.order.items[0].unit_amount",
+      "source_value": "877.80",
+      "target_value": "877.80",
+      "equal": true
+    },
+    {
+      "correlation_id": "product_quantity_to_order_item",
+      "source_path": "webshop_runtime.product.quantity",
+      "target_path": "commerce_adaptation.order.items[0].quantity",
+      "source_value": 1,
+      "target_value": 1,
+      "equal": true
+    },
+    {
+      "correlation_id": "product_total_to_order",
+      "source_path": "webshop_runtime.product.order_total",
+      "target_path": "commerce_adaptation.order.total_amount",
+      "source_value": "877.80",
+      "target_value": "877.80",
+      "equal": true
+    },
+    {
+      "correlation_id": "selected_options_to_adaptation",
+      "source_path": "webshop_runtime.product.selected_options",
+      "target_path": "commerce_adaptation.selected_options",
+      "source_value": [],
+      "target_value": [],
+      "equal": true
+    },
+    {
+      "correlation_id": "experiment_origin_to_adaptation",
+      "source_path": "experiment_context.origin",
+      "target_path": "commerce_adaptation.experiment_context_origin",
+      "source_value": "explicit_experiment_context_not_webshop_verified",
+      "target_value": "explicit_experiment_context_not_webshop_verified",
+      "equal": true
+    },
+    {
+      "correlation_id": "source_commit_to_adaptation",
+      "source_path": "webshop_runtime.source.webshop_commit",
+      "target_path": "commerce_adaptation.source_commit",
+      "source_value": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+      "target_value": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+      "equal": true
+    },
+    {
+      "correlation_id": "source_smoke_sha_to_adaptation",
+      "source_path": "webshop_runtime.source.smoke_result_sha256",
+      "target_path": "commerce_adaptation.source_smoke_sha256",
+      "source_value": "d1998c49a7afa14ee4534cd266d4e9e9c386ff2c2c8d85114aad19c304467e74",
+      "target_value": "d1998c49a7afa14ee4534cd266d4e9e9c386ff2c2c8d85114aad19c304467e74",
+      "equal": true
+    },
+    {
+      "correlation_id": "source_asset_hashes_to_adaptation",
+      "source_path": "webshop_runtime.source.asset_hashes",
+      "target_path": "commerce_adaptation.source_asset_hashes",
+      "source_value": [
+        [
+          "items_human_ins.json",
+          "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3"
+        ],
+        [
+          "items_ins_v2_1000.json",
+          "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f"
+        ],
+        [
+          "items_shuffle_1000.json",
+          "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269"
+        ]
+      ],
+      "target_value": [
+        [
+          "items_human_ins.json",
+          "cf78667548a71786e1d9049c24b802e48e1084ad4bb021cae56ce1f6d96954a3"
+        ],
+        [
+          "items_ins_v2_1000.json",
+          "f88a36314a397b53b3d9c3fa5878e5f7b26d35019a51ec83fbedeca61a948f6f"
+        ],
+        [
+          "items_shuffle_1000.json",
+          "30a4765c3a327af72d9a9a95a6b2486d516f0fa1d3ecd83681901ce82a21b269"
+        ]
+      ],
+      "equal": true
+    },
+    {
+      "correlation_id": "adaptation_order_request_binding",
+      "source_path": "commerce_adaptation.payment_request.order_ref",
+      "target_path": "commerce_adaptation.order.order_id",
+      "source_value": "webshop-order-9eccab2b0154fca4af27f322",
+      "target_value": "webshop-order-9eccab2b0154fca4af27f322",
+      "equal": true
+    },
+    {
+      "correlation_id": "order_id_to_payment_trace",
+      "source_path": "commerce_adaptation.order.order_id",
+      "target_path": "payment_authoritative_trace.Order.projection.order_id",
+      "source_value": "webshop-order-9eccab2b0154fca4af27f322",
+      "target_value": "webshop-order-9eccab2b0154fca4af27f322",
+      "equal": true
+    },
+    {
+      "correlation_id": "request_id_to_payment_trace",
+      "source_path": "commerce_adaptation.payment_request.request_id",
+      "target_path": "payment_authoritative_trace.TransactionRequest.projection.request_id",
+      "source_value": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "target_value": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "equal": true
+    },
+    {
+      "correlation_id": "trace_request_order_binding",
+      "source_path": "payment_authoritative_trace.TransactionRequest.projection.order_ref",
+      "target_path": "commerce_adaptation.order.order_id",
+      "source_value": "webshop-order-9eccab2b0154fca4af27f322",
+      "target_value": "webshop-order-9eccab2b0154fca4af27f322",
+      "equal": true
+    },
+    {
+      "correlation_id": "trace_ref_to_request_id",
+      "source_path": "payment_authoritative_trace.trace_ref.request_suffix",
+      "target_path": "commerce_adaptation.payment_request.request_id",
+      "source_value": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "target_value": "webshop-request-6c6a78eddffdb552c2af66ef",
+      "equal": true
+    }
+  ],
+  "limitations": [
+    "fixed_script_webshop_smoke_not_autonomous_agent",
+    "experiment_context_not_webshop_verified",
+    "payment_authoritative_trace_is_separate_evidence_namespace",
+    "ui_neutral_read_model_only",
+    "no_webshop_or_payment_execution"
+  ],
+  "evidence_file": "EV-03-journey-read-model.json"
+}
+RESULT=PASS

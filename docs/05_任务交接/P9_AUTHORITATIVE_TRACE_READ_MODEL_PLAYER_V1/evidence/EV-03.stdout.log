@@ -1,0 +1,90 @@
+{
+  "ui_ready": "4/4",
+  "families": {
+    "T01": {
+      "profile": "WEBSHOP_NORMAL_PURCHASE_V2",
+      "event_count": 11,
+      "source_binding_count": 10,
+      "relation_count": 15,
+      "binding_assertion_count": 5,
+      "html_sha256_x3": [
+        "b734c65965095775d3f7017c55d26edc5f947259da5e29b88731a677bad042fb",
+        "b734c65965095775d3f7017c55d26edc5f947259da5e29b88731a677bad042fb",
+        "b734c65965095775d3f7017c55d26edc5f947259da5e29b88731a677bad042fb"
+      ],
+      "embedded_payload_sha256_x3": [
+        "7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906",
+        "7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906",
+        "7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906"
+      ],
+      "payload_exact_equal": true,
+      "all_source_binding_refs_resolve_exactly_once": true,
+      "html_file": "EV-03-T01.html",
+      "payload_file": "EV-03-T01.payload.json"
+    },
+    "T02": {
+      "profile": "WEBSHOP_PREPAYMENT_T02_V2",
+      "event_count": 6,
+      "source_binding_count": 6,
+      "relation_count": 4,
+      "binding_assertion_count": 3,
+      "html_sha256_x3": [
+        "d41db3b5438a466533885e948790bd335e150ff5c262fac19570098f9a51f032",
+        "d41db3b5438a466533885e948790bd335e150ff5c262fac19570098f9a51f032",
+        "d41db3b5438a466533885e948790bd335e150ff5c262fac19570098f9a51f032"
+      ],
+      "embedded_payload_sha256_x3": [
+        "fb1a79d73931f3e0bb87eafeffdaffe4004add137998d107ea425554605be624",
+        "fb1a79d73931f3e0bb87eafeffdaffe4004add137998d107ea425554605be624",
+        "fb1a79d73931f3e0bb87eafeffdaffe4004add137998d107ea425554605be624"
+      ],
+      "payload_exact_equal": true,
+      "all_source_binding_refs_resolve_exactly_once": true,
+      "html_file": "EV-03-T02.html",
+      "payload_file": "EV-03-T02.payload.json"
+    },
+    "T07": {
+      "profile": "ATTACK_OVERLAY_T07_V2",
+      "event_count": 3,
+      "source_binding_count": 1,
+      "relation_count": 0,
+      "binding_assertion_count": 0,
+      "html_sha256_x3": [
+        "7bc20fcc3c997250a50b7694e75e416d8ef0e4ae6e408e2e5873a3f194a02f7a",
+        "7bc20fcc3c997250a50b7694e75e416d8ef0e4ae6e408e2e5873a3f194a02f7a",
+        "7bc20fcc3c997250a50b7694e75e416d8ef0e4ae6e408e2e5873a3f194a02f7a"
+      ],
+      "embedded_payload_sha256_x3": [
+        "157acc5d315013a51c1977159c78a08afad7beb058c4929e8aab74f16990d403",
+        "157acc5d315013a51c1977159c78a08afad7beb058c4929e8aab74f16990d403",
+        "157acc5d315013a51c1977159c78a08afad7beb058c4929e8aab74f16990d403"
+      ],
+      "payload_exact_equal": true,
+      "all_source_binding_refs_resolve_exactly_once": true,
+      "html_file": "EV-03-T07.html",
+      "payload_file": "EV-03-T07.payload.json"
+    },
+    "T10": {
+      "profile": "WEBSHOP_DUPLICATE_PREFLIGHT_BLOCK_V2",
+      "event_count": 12,
+      "source_binding_count": 11,
+      "relation_count": 16,
+      "binding_assertion_count": 5,
+      "html_sha256_x3": [
+        "bc6f44840c70ab1c45fbb7e4748f14504884253f8429628aaf9add33c6f8d659",
+        "bc6f44840c70ab1c45fbb7e4748f14504884253f8429628aaf9add33c6f8d659",
+        "bc6f44840c70ab1c45fbb7e4748f14504884253f8429628aaf9add33c6f8d659"
+      ],
+      "embedded_payload_sha256_x3": [
+        "2b97fd1f81001086d4793bf21fd0dbe3ed950643e6d9e5031e18510fb7c99fb3",
+        "2b97fd1f81001086d4793bf21fd0dbe3ed950643e6d9e5031e18510fb7c99fb3",
+        "2b97fd1f81001086d4793bf21fd0dbe3ed950643e6d9e5031e18510fb7c99fb3"
+      ],
+      "payload_exact_equal": true,
+      "all_source_binding_refs_resolve_exactly_once": true,
+      "html_file": "EV-03-T10.html",
+      "payload_file": "EV-03-T10.payload.json"
+    }
+  }
+}
+RESULT=PASS

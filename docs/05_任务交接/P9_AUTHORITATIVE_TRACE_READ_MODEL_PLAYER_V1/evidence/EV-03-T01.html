@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>权威轨迹只读播放器</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1f2328;background:#f6f8fa}
+body{margin:0}.page{max-width:1100px;margin:0 auto;padding:24px}.card{background:#fff;border:1px solid #d0d7de;border-radius:10px;padding:18px;margin:14px 0}.notice{border-left:4px solid #57606a;padding-left:12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}.field{border-bottom:1px solid #eaeef2;padding:8px 0}.label{display:block;font-size:12px;color:#57606a;margin-bottom:4px}.value{white-space:pre-wrap;overflow-wrap:anywhere}.controls{display:flex;gap:8px;flex-wrap:wrap}.controls button{padding:8px 14px;border:1px solid #8c959f;border-radius:6px;background:#fff;cursor:pointer}.controls button:disabled{opacity:.45;cursor:not-allowed}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f6f8fa;border-radius:6px;padding:10px}.step{font-size:14px;color:#57606a}.empty{color:#6e7781}</style>
+</head>
+<body>
+<main class="page">
+<h1>权威轨迹只读播放器</h1>
+<p class="notice">离线只读：播放仅展示已冻结证据，不会执行 WebShop、Buy Now、支付、订单或履约动作。</p>
+<section class="card"><h2>轨迹元数据</h2><div id="metadata" class="grid"></div></section>
+<section class="card"><div class="controls"><button id="previous" type="button">上一步</button><button id="next" type="button">下一步</button><button id="reset" type="button">回到起点</button><button id="playPause" type="button">自动播放</button></div><p id="step" class="step"></p></section>
+<section class="card"><h2>当前事件</h2><div id="event"></div></section>
+<section class="card"><h2>关系证据</h2><div id="relations"></div></section>
+<section class="card"><h2>来源绑定证据</h2><div id="binding"></div></section>
+</main>
+<script id="trace-payload" type="application/json">{"completeness_status":"COMPLETE","events":[{"decision":null,"entity_ref":"IntentMandate:experiment-context-mandate-ref-v1","entity_role":"AUTHORITY","entity_type":"IntentMandate","event_type":"AUTHORITY_RECORDED","reason_codes":[],"relations":[],"sequence_no":1,"source_binding_ref":"TraceSourceBinding:sha256:6846a2e93cbc9b36f697457c57f2e0baa3baeed29af38ffa62c22f6b17ef5a97","status":null},{"decision":null,"entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","entity_role":"AUTHORIZED_ORDER_SNAPSHOT","entity_type":"Order","event_type":"ORDER_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[{"equal":null,"source_path":"projection.authority_version_ref","source_value":null,"target_path":"projection.authority_version","target_value":null}],"target_entity_ref":"IntentMandate:experiment-context-mandate-ref-v1","target_entity_role":"AUTHORITY","target_entity_type":"IntentMandate","target_resolved":true}],"sequence_no":2,"source_binding_ref":"TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc","status":null},{"decision":null,"entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","entity_role":"CURRENT_ORDER_SNAPSHOT","entity_type":"Order","event_type":"ORDER_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[{"equal":null,"source_path":"projection.authority_version_ref","source_value":null,"target_path":"projection.authority_version","target_value":null}],"target_entity_ref":"IntentMandate:experiment-context-mandate-ref-v1","target_entity_role":"AUTHORITY","target_entity_type":"IntentMandate","target_resolved":true}],"sequence_no":3,"source_binding_ref":"TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc","status":null},{"decision":null,"entity_ref":"TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef","entity_role":"CURRENT_REQUEST","entity_type":"TransactionRequest","event_type":"REQUEST_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","target_entity_role":"CURRENT_ORDER_SNAPSHOT","target_entity_type":"Order","target_resolved":true},{"relation_type":"BOUND_TO","target_binding_assertions":[{"equal":null,"source_path":"projection.authority_version_ref","source_value":null,"target_path":"projection.authority_version","target_value":null}],"target_entity_ref":"IntentMandate:experiment-context-mandate-ref-v1","target_entity_role":"AUTHORITY","target_entity_type":"IntentMandate","target_resolved":true}],"sequence_no":4,"source_binding_ref":"TraceSourceBinding:sha256:4a49cc543a483038d2c2b3600da1011246a2b9c1230558c7bc553cfee9b5a77c","status":null},{"decision":null,"entity_ref":"GovernedPaymentAction:webshop-happy-path-action-1","entity_role":"GOVERNED_ACTION","entity_type":"GovernedPaymentAction","event_type":"ACTION_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[{"equal":null,"source_path":"projection.authority_version","source_value":null,"target_path":"projection.authority_version","target_value":null}],"target_entity_ref":"IntentMandate:experiment-context-mandate-ref-v1","target_entity_role":"AUTHORITY","target_entity_type":"IntentMandate","target_resolved":true},{"relation_type":"BOUND_TO","target_binding_assertions":[{"equal":null,"source_path":"projection.order_version","source_value":null,"target_path":"projection.order_version","target_value":null}],"target_entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","target_entity_role":"CURRENT_ORDER_SNAPSHOT","target_entity_type":"Order","target_resolved":true},{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef","target_entity_role":"CURRENT_REQUEST","target_entity_type":"TransactionRequest","target_resolved":true},{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"PaymentExecutionRecord:webshop-payment-1","target_entity_role":"CURRENT_PAYMENT_CANDIDATE","target_entity_type":"PaymentExecutionRecord","target_resolved":true}],"sequence_no":5,"source_binding_ref":"TraceSourceBinding:sha256:0da7094bcb4ccb9f2587bd22c8fcf3874c8ab868a72fd487f2cc21b9440633b2","status":null},{"decision":null,"entity_ref":"PaymentExecutionRecord:webshop-payment-1","entity_role":"CURRENT_PAYMENT_CANDIDATE","entity_type":"PaymentExecutionRecord","event_type":"PAYMENT_CANDIDATE_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef","target_entity_role":"CURRENT_REQUEST","target_entity_type":"TransactionRequest","target_resolved":true},{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","target_entity_role":"CURRENT_ORDER_SNAPSHOT","target_entity_type":"Order","target_resolved":true}],"sequence_no":6,"source_binding_ref":"TraceSourceBinding:sha256:db2fbacaee9832e6f0dd7376e531bee8f1561466a8603023d65792cdc5d128ba","status":"PENDING"},{"decision":null,"entity_ref":"GovernedActionBindingFact:binding:60fc5757c16957a3e62938231d62a30e367f6280ce61b4b667aec8f51f792963","entity_role":"ACTION_BINDING_FACT","entity_type":"GovernedActionBindingFact","event_type":"ACTION_BINDING_DECISION_RECORDED","reason_codes":["governed_action_binding_valid"],"relations":[{"relation_type":"VALIDATED_AGAINST","target_binding_assertions":[],"target_entity_ref":"GovernedPaymentAction:webshop-happy-path-action-1","target_entity_role":"GOVERNED_ACTION","target_entity_type":"GovernedPaymentAction","target_resolved":true},{"relation_type":"VALIDATED_AGAINST","target_binding_assertions":[],"target_entity_ref":"PaymentExecutionRecord:webshop-payment-1","target_entity_role":"CURRENT_PAYMENT_CANDIDATE","target_entity_type":"PaymentExecutionRecord","target_resolved":true}],"sequence_no":7,"source_binding_ref":"TraceSourceBinding:sha256:60fc5757c16957a3e62938231d62a30e367f6280ce61b4b667aec8f51f792963","status":"VALID"},{"decision":"ALLOW","entity_ref":"RuntimeGateRecord:binding:483bc2d06c50ca11e255e22622f3300cb14a728321b5de5764989b21552f258f","entity_role":"RUNTIME_GATE_OBSERVATION","entity_type":"RuntimeGateRecord","event_type":"RUNTIME_DECISION_RECORDED","reason_codes":["p2:payment_execution_binding_match","p3:identity_executor_binding_match","p4:context_policy_valid","runtime:allow"],"relations":[],"sequence_no":8,"source_binding_ref":"TraceSourceBinding:sha256:483bc2d06c50ca11e255e22622f3300cb14a728321b5de5764989b21552f258f","status":"VALID"},{"decision":null,"entity_ref":"PaymentExecutionRecord:webshop-payment-1","entity_role":"PAYMENT_EXECUTION_OUTCOME","entity_type":"PaymentExecutionRecord","event_type":"PAYMENT_OUTCOME_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef","target_entity_role":"CURRENT_REQUEST","target_entity_type":"TransactionRequest","target_resolved":true},{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","target_entity_role":"CURRENT_ORDER_SNAPSHOT","target_entity_type":"Order","target_resolved":true}],"sequence_no":9,"source_binding_ref":"TraceSourceBinding:sha256:3600d53655bf2c2f17ddcf3e86858efbf5bd0a8942e85b6a7782884d4d07c0ca","status":"SUCCEEDED"},{"decision":null,"entity_ref":"FulfillmentRecord:webshop-fulfillment-1","entity_role":"FULFILMENT_OUTCOME","entity_type":"FulfillmentRecord","event_type":"FULFILMENT_OUTCOME_RECORDED","reason_codes":[],"relations":[{"relation_type":"BOUND_TO","target_binding_assertions":[],"target_entity_ref":"Order:webshop-order-9eccab2b0154fca4af27f322","target_entity_role":"CURRENT_ORDER_SNAPSHOT","target_entity_type":"Order","target_resolved":true}],"sequence_no":10,"source_binding_ref":"TraceSourceBinding:sha256:0513083cc1d2fcd0377bb7c2ba2a4478f2e66beb2726260be436703ceaf9ecd4","status":"SUCCEEDED"},{"decision":null,"entity_ref":"WebShopPaymentFulfilmentOutcome:binding:adc15bb129ffa8ed3c27f68577a6f4dba7d37cb73d209a0838ea063f479d8134","entity_role":"FINAL_OUTCOME","entity_type":"WebShopPaymentFulfilmentOutcome","event_type":"RESULT_RECORDED","reason_codes":["payment:initial_status:succeeded","lifecycle:payment_status:succeeded","lifecycle:fulfillment_status:succeeded","lifecycle:task_status:succeeded","lifecycle:remediation:not_required","retry:not_allowed"],"relations":[],"sequence_no":11,"source_binding_ref":"TraceSourceBinding:sha256:adc15bb129ffa8ed3c27f68577a6f4dba7d37cb73d209a0838ea063f479d8134","status":"SUCCEEDED"}],"profile":"WEBSHOP_NORMAL_PURCHASE_V2","reason_codes":[],"schema_version":"product-authoritative-trace/v1","source":"PRODUCT_OBSERVED","source_bindings":[{"binding_ref":"TraceSourceBinding:sha256:6846a2e93cbc9b36f697457c57f2e0baa3baeed29af38ffa62c22f6b17ef5a97","projection":{"authority_version":"experiment-authority-v1","mandate_id":"experiment-context-mandate-ref-v1"},"projection_schema":"intent-mandate-trace/v2","source_object_ref":"IntentMandate:experiment-context-mandate-ref-v1:experiment-authority-v1","source_object_type":"IntentMandate"},{"binding_ref":"TraceSourceBinding:sha256:7ce3794f67e0729813b1c7a5c08898815d4abf512d6b159b2a06e3d6276d0bfc","projection":{"authority_version_ref":"experiment-authority-v1","currency":"USD","mandate_ref":"experiment-context-mandate-ref-v1","merchant":"webshop-experiment-merchant-v1","order_id":"webshop-order-9eccab2b0154fca4af27f322","order_version":"webshop-v1","payee":"webshop-experiment-payee-v1","total_amount":"877.8"},"projection_schema":"order-snapshot-trace/v2","source_object_ref":"Order:webshop-order-9eccab2b0154fca4af27f322:webshop-v1","source_object_type":"Order"},{"binding_ref":"TraceSourceBinding:sha256:4a49cc543a483038d2c2b3600da1011246a2b9c1230558c7bc553cfee9b5a77c","projection":{"agent_id":"webshop-agent-1","amount":"877.8","authority_ref":"experiment-context-mandate-ref-v1","authority_version_ref":"experiment-authority-v1","currency":"USD","merchant":"webshop-experiment-merchant-v1","order_ref":"webshop-order-9eccab2b0154fca4af27f322","payee":"webshop-experiment-payee-v1","request_id":"webshop-request-6c6a78eddffdb552c2af66ef"},"projection_schema":"transaction-request-trace/v2","source_object_ref":"TransactionRequest:webshop-request-6c6a78eddffdb552c2af66ef","source_object_type":"TransactionRequest"},{"binding_ref":"TraceSourceBinding:sha256:0da7094bcb4ccb9f2587bd22c8fcf3874c8ab868a72fd487f2cc21b9440633b2","projection":{"action_id":"webshop-happy-path-action-1","action_type":"execute_payment","agent_ref":"webshop-agent-1","authority_ref":"experiment-context-mandate-ref-v1","authority_version":"experiment-authority-v1","executor_ref":"offline-webshop-executor","occurred_at":"2026-08-02T05:00:00.500000+00:00","order_ref":"webshop-order-9eccab2b0154fca4af27f322","order_version":"webshop-v1","payment_ref":"webshop-payment-1","request_ref":"webshop-request-6c6a78eddffdb552c2af66ef","reversibility":"COMPENSATABLE_NOT_REVERSIBLE","side_effect_class":"PAYMENT_EXECUTION","source_refs":["source:webshop-checkout-snapshot","source:user-mandate"]},"projection_schema":"governed-payment-action-trace/v2","source_object_ref":"GovernedPaymentAction:webshop-happy-path-action-1","source_object_type":"GovernedPaymentAction"},{"binding_ref":"TraceSourceBinding:sha256:db2fbacaee9832e6f0dd7376e531bee8f1561466a8603023d65792cdc5d128ba","projection":{"agent_ref":"webshop-agent-1","amount":"877.8","authority_ref":"experiment-context-mandate-ref-v1","currency":"USD","order_id":"webshop-order-9eccab2b0154fca4af27f322","payee":"webshop-experiment-payee-v1","payment_id":"webshop-payment-1","request_id":"webshop-request-6c6a78eddffdb552c2af66ef","status":"PENDING","transaction_object_ref":"webshop-request-6c6a78eddffdb552c2af66ef"},"projection_schema":"payment-execution-record-trace/v2","source_object_ref":"PaymentExecutionRecord:webshop-payment-1","source_object_type":"PaymentExecutionRecord"},{"binding_ref":"TraceSourceBinding:sha256:60fc5757c16957a3e62938231d62a30e367f6280ce61b4b667aec8f51f792963","projection":{"action_id":"webshop-happy-path-action-1","checked_action_type":"execute_payment","checked_order_ref":"webshop-order-9eccab2b0154fca4af27f322","checked_payment_ref":"webshop-payment-1","checked_request_ref":"webshop-request-6c6a78eddffdb552c2af66ef","reason_codes":["governed_action_binding_valid"],"status":"VALID"},"projection_schema":"governed-action-binding-fact-trace/v2","source_object_ref":"GovernedActionBindingFact:projection-sha256:24d3a97cdc689bd5d2ebd455d5657db868982ce45e189c4d90179d807ae47765","source_object_type":"GovernedActionBindingFact"},{"binding_ref":"TraceSourceBinding:sha256:483bc2d06c50ca11e255e22622f3300cb14a728321b5de5764989b21552f258f","projection":{"binding_reason_codes":["payment_execution_binding_match"],"binding_status":"VALID","callback_count":1,"callback_executed":true,"callback_result_ref":"simulated-webshop-checkout","context_policy_reason_codes":["context_policy_valid"],"context_policy_status":"VALID","final_decision":"ALLOW","identity_reason_codes":["identity_executor_binding_match"],"identity_status":"VALID","preliminary_decision":"ALLOW","reason_codes":["p2:payment_execution_binding_match","p3:identity_executor_binding_match","p4:context_policy_valid","runtime:allow"]},"projection_schema":"runtime-gate-record-trace/v2","source_object_ref":"RuntimeGateRecord:projection-sha256:309c3495324db1791c1fb56b22bf1876005bef58d8ece0f2d0a226451d168b23","source_object_type":"RuntimeGateRecord"},{"binding_ref":"TraceSourceBinding:sha256:3600d53655bf2c2f17ddcf3e86858efbf5bd0a8942e85b6a7782884d4d07c0ca","projection":{"agent_ref":"webshop-agent-1","amount":"877.8","authority_ref":"experiment-context-mandate-ref-v1","currency":"USD","order_id":"webshop-order-9eccab2b0154fca4af27f322","payee":"webshop-experiment-payee-v1","payment_id":"webshop-payment-1","request_id":"webshop-request-6c6a78eddffdb552c2af66ef","status":"SUCCEEDED","transaction_object_ref":"webshop-request-6c6a78eddffdb552c2af66ef"},"projection_schema":"payment-execution-record-trace/v2","source_object_ref":"PaymentExecutionRecord:webshop-payment-1","source_object_type":"PaymentExecutionRecord"},{"binding_ref":"TraceSourceBinding:sha256:0513083cc1d2fcd0377bb7c2ba2a4478f2e66beb2726260be436703ceaf9ecd4","projection":{"failure_code":null,"fulfillment_id":"webshop-fulfillment-1","order_id":"webshop-order-9eccab2b0154fca4af27f322","reason_codes":[],"status":"SUCCEEDED"},"projection_schema":"fulfillment-record-trace/v2","source_object_ref":"FulfillmentRecord:webshop-fulfillment-1","source_object_type":"FulfillmentRecord"},{"binding_ref":"TraceSourceBinding:sha256:adc15bb129ffa8ed3c27f68577a6f4dba7d37cb73d209a0838ea063f479d8134","projection":{"duplicate_payment_blocked":false,"effective_payment_status":"SUCCEEDED","initial_payment_status":"SUCCEEDED","lifecycle_fulfillment_status":"SUCCEEDED","lifecycle_payment_status":"SUCCEEDED","lifecycle_remediation_status":"NOT_REQUIRED","lifecycle_task_status":"SUCCEEDED","limitations":["offline_sidecar_only","no_real_payment_execution","no_real_status_query_or_async_callback","no_real_fulfilment","no_automatic_payment_retry","no_real_refund_or_dispute","webshop_reward_not_used_as_payment_or_task_success"],"query_recovery_status":null,"ready":true,"reason_codes":["payment:initial_status:succeeded","lifecycle:payment_status:succeeded","lifecycle:fulfillment_status:succeeded","lifecycle:task_status:succeeded","lifecycle:remediation:not_required","retry:not_allowed"],"retry_allowed":false,"status_conflict_resolution":null},"projection_schema":"webshop-payment-fulfilment-outcome-result-trace/v2","source_object_ref":"WebShopPaymentFulfilmentOutcome:projection-sha256:13d9886fe5ec4091c2f85dd1a85c761db28df81c045976e9d341457e03efbe58","source_object_type":"WebShopPaymentFulfilmentOutcome"}],"trace_ref":"ProductAuthoritativeTrace:WEBSHOP_NORMAL_PURCHASE_V2:webshop-request-6c6a78eddffdb552c2af66ef"}</script>
+<script>
+"use strict";
+const payload = JSON.parse(document.getElementById("trace-payload").textContent);
+const metadataNode = document.getElementById("metadata");
+const eventNode = document.getElementById("event");
+const relationsNode = document.getElementById("relations");
+const bindingNode = document.getElementById("binding");
+const stepNode = document.getElementById("step");
+const previousButton = document.getElementById("previous");
+const nextButton = document.getElementById("next");
+const resetButton = document.getElementById("reset");
+const playPauseButton = document.getElementById("playPause");
+const bindingsByRef = new Map(payload.source_bindings.map((item) => [item.binding_ref, item]));
+let playbackIndex = 0;
+let playbackTimer = null;
+
+function appendField(parent, label, value) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "field";
+  const labelNode = document.createElement("span");
+  labelNode.className = "label";
+  labelNode.textContent = label;
+  const valueNode = document.createElement("span");
+  valueNode.className = "value";
+  valueNode.textContent = value === null || value === undefined ? "—" : String(value);
+  wrapper.append(labelNode, valueNode);
+  parent.appendChild(wrapper);
+}
+
+function appendJson(parent, label, value) {
+  const wrapper = document.createElement("div");
+  const labelNode = document.createElement("div");
+  labelNode.className = "label";
+  labelNode.textContent = label;
+  const valueNode = document.createElement("pre");
+  valueNode.textContent = JSON.stringify(value, null, 2);
+  wrapper.append(labelNode, valueNode);
+  parent.appendChild(wrapper);
+}
+
+function renderMetadata() {
+  metadataNode.replaceChildren();
+  appendField(metadataNode, "轨迹引用（trace_ref）", payload.trace_ref);
+  appendField(metadataNode, "轨迹配置（profile）", payload.profile);
+  appendField(metadataNode, "模式版本（schema_version）", payload.schema_version);
+  appendField(metadataNode, "证据来源（source）", payload.source);
+  appendField(metadataNode, "完整性（completeness_status）", payload.completeness_status);
+  appendJson(metadataNode, "轨迹原因码（reason_codes）", payload.reason_codes);
+}
+
+function renderRelations(event) {
+  relationsNode.replaceChildren();
+  if (event.relations.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "empty";
+    empty.textContent = "当前事件没有关系记录。";
+    relationsNode.appendChild(empty);
+    return;
+  }
+  event.relations.forEach((relation, index) => {
+    const group = document.createElement("div");
+    appendField(group, `关系 ${index + 1} 类型（relation_type）`, relation.relation_type);
+    appendField(group, "目标实体类型（target_entity_type）", relation.target_entity_type);
+    appendField(group, "目标实体角色（target_entity_role）", relation.target_entity_role);
+    appendField(group, "目标实体引用（target_entity_ref）", relation.target_entity_ref);
+    appendField(group, "目标已解析（target_resolved）", relation.target_resolved);
+    appendJson(group, "绑定断言（target_binding_assertions）", relation.target_binding_assertions);
+    relationsNode.appendChild(group);
+  });
+}
+
+function renderBinding(event) {
+  bindingNode.replaceChildren();
+  const binding = bindingsByRef.get(event.source_binding_ref);
+  appendField(bindingNode, "绑定引用（binding_ref）", binding.binding_ref);
+  appendField(bindingNode, "来源对象类型（source_object_type）", binding.source_object_type);
+  appendField(bindingNode, "来源对象引用（source_object_ref）", binding.source_object_ref);
+  appendField(bindingNode, "投影模式（projection_schema）", binding.projection_schema);
+  appendJson(bindingNode, "冻结投影（projection）", binding.projection);
+}
+
+function renderCurrentEvent() {
+  const event = payload.events[playbackIndex];
+  eventNode.replaceChildren();
+  stepNode.textContent = `第 ${playbackIndex + 1} / ${payload.events.length} 步`;
+  appendField(eventNode, "序号（sequence_no）", event.sequence_no);
+  appendField(eventNode, "事件类型（event_type）", event.event_type);
+  appendField(eventNode, "实体类型（entity_type）", event.entity_type);
+  appendField(eventNode, "实体角色（entity_role）", event.entity_role);
+  appendField(eventNode, "实体引用（entity_ref）", event.entity_ref);
+  appendField(eventNode, "来源绑定（source_binding_ref）", event.source_binding_ref);
+  appendField(eventNode, "决策（decision）", event.decision);
+  appendField(eventNode, "状态（status）", event.status);
+  appendJson(eventNode, "原因码（reason_codes）", event.reason_codes);
+  renderRelations(event);
+  renderBinding(event);
+  previousButton.disabled = playbackIndex === 0;
+  nextButton.disabled = playbackIndex === payload.events.length - 1;
+}
+
+function stopPlayback() {
+  if (playbackTimer !== null) {
+    clearInterval(playbackTimer);
+    playbackTimer = null;
+  }
+  playPauseButton.textContent = "自动播放";
+}
+
+previousButton.addEventListener("click", () => {
+  stopPlayback();
+  playbackIndex = Math.max(0, playbackIndex - 1);
+  renderCurrentEvent();
+});
+nextButton.addEventListener("click", () => {
+  stopPlayback();
+  playbackIndex = Math.min(payload.events.length - 1, playbackIndex + 1);
+  renderCurrentEvent();
+});
+resetButton.addEventListener("click", () => {
+  stopPlayback();
+  playbackIndex = 0;
+  renderCurrentEvent();
+});
+playPauseButton.addEventListener("click", () => {
+  if (playbackTimer !== null) {
+    stopPlayback();
+    return;
+  }
+  playPauseButton.textContent = "暂停";
+  playbackTimer = setInterval(() => {
+    if (playbackIndex >= payload.events.length - 1) {
+      stopPlayback();
+      return;
+    }
+    playbackIndex += 1;
+    renderCurrentEvent();
+  }, 1200);
+});
+renderMetadata();
+renderCurrentEvent();
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+  "task_start_src_count": 59,
+  "current_src_count": 60,
+  "added_src": [
+    "src/agentic_payment_experiment/webshop_journey_read_model.py"
+  ],
+  "preexisting_src_unchanged": true,
+  "journey_source_sha256": "70d6c19fe7d48d27fc377f943ba53b0db276391f3f48402b66f0a57490d1ba7d",
+  "journey_test_sha256": "9767c6bb0877d081812bd43d43b2d939f6353bf0d59b56988a02b37a9ccd5263",
+  "frozen_hashes": {
+    "samples/external/webshop/pre_buy_now_candidate_v1.json": "6e9d67c3b787cc2d9202bd22b30dec88bf9f920dfa3741bdeb364108a2a3c8e5",
+    "src/agentic_payment_experiment/adapters/webshop.py": "035e6bb20d44b0a52be3f6adab2830c402e01f53839e917698343761c5481ec4",
+    "src/agentic_payment_experiment/authoritative_trace_consumer.py": "6ad65118a4ab50e648e4f6098f6c2c5009ce5731232ae0a4e11d2f60c0c431b5",
+    "src/agentic_payment_experiment/authoritative_trace_player.py": "9cd38620ee966632191b376f13d95446711ff55d08b18aa844f9a7fb6ef74541",
+    "samples/evaluation/project_impact_baseline_v1.json": "e7a1d338ece0c65c6417ce58384e8dc9eb2dc29b2e37ad461cf92b9deb9b89c0",
+    "scripts/validation/run_project_impact_baseline.py": "70bf2142c303c01c6fb3270fb364c46bc220b821c5e554fa2e6af3355dc57dd3"
+  },
+  "accepted_trace_hashes": {
+    "T01": "7c47cb15b6dcc687f35ac158eae556979ad05520ec7f36f8511a4bcf13e66906",
+    "T02": "fb1a79d73931f3e0bb87eafeffdaffe4004add137998d107ea425554605be624",
+    "T03": "7f0e1ccb14cc9256c5c336fb460647ce040bf0549a3328764c061c7b766c92a7",
+    "T04": "405e6b8971f9f5e3ad67069ace074df15af4fee6f80418a70466315dcd642c33",
+    "T09": "a596f5f35697a878286b85b8e37792aeee34ab7c0800b27739bc91382032310e",
+    "T10": "2b97fd1f81001086d4793bf21fd0dbe3ed950643e6d9e5031e18510fb7c99fb3",
+    "T12": "ebb38113abb2582d52f434b1a1b30247cc68ee8f4b57c0c18f52efa37bb1c230"
+  },
+  "static_audit": {
+    "imports": [
+      "__future__",
+      "adapters.webshop",
+      "authoritative_trace_consumer",
+      "dataclasses",
+      "datetime",
+      "decimal",
+      "enum",
+      "hashlib",
+      "json",
+      "typing"
+    ],
+    "fixed_task_profile_ids": false,
+    "adapter_reexecution": false,
+    "player_import": false,
+    "business_execution_calls": false,
+    "network_browser_calls": false
+  }
+}
+RESULT=PASS

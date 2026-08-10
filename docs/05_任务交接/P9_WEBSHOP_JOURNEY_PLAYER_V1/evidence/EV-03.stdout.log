@@ -1,0 +1,29 @@
+{
+  "journey_ui_ready_representative_path": "1/1",
+  "journey_source_classified": "1/1",
+  "journey_read_model_sha256": "2358a21be630fb2e31ba3b8f2dbbd8cd3c853c8b3ad9053f66337f8047d660ad",
+  "html_sha256_x3": [
+    "4ce46fa5ccffb656ad6c463b408476d3a873b6bd76c8aeb49379d4b623cfddfa",
+    "4ce46fa5ccffb656ad6c463b408476d3a873b6bd76c8aeb49379d4b623cfddfa",
+    "4ce46fa5ccffb656ad6c463b408476d3a873b6bd76c8aeb49379d4b623cfddfa"
+  ],
+  "embedded_payload_sha256_x3": [
+    "2358a21be630fb2e31ba3b8f2dbbd8cd3c853c8b3ad9053f66337f8047d660ad",
+    "2358a21be630fb2e31ba3b8f2dbbd8cd3c853c8b3ad9053f66337f8047d660ad",
+    "2358a21be630fb2e31ba3b8f2dbbd8cd3c853c8b3ad9053f66337f8047d660ad"
+  ],
+  "embedded_payload_exact_equal": true,
+  "instruction_preserved": "hello, i'm looking for a pair of cargo pants for everyday casual wear? but also hiking-friendly. also, i want an orange pair please, and price lower than 30.00 dollars",
+  "selected_product_title": "Vhomes Lights Reclaimed Wood Console Table The Genessis Collection Sofa-Tables",
+  "selected_product_total": "877.80",
+  "experiment_context_origin": "explicit_experiment_context_not_webshop_verified",
+  "correlation_count": 17,
+  "payment_event_count": 11,
+  "payment_source_binding_count": 10,
+  "all_payment_source_binding_refs_resolve": true,
+  "fixed_script_boundary_visible": true,
+  "autonomous_agent_completion_claim": false,
+  "html_file": "EV-03-journey-player.html",
+  "payload_file": "EV-03-journey-player.payload.json"
+}
+RESULT=PASS

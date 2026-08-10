@@ -1,0 +1,19 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "EV-01",
+  "command_argv": [
+    "python3",
+    "docs/05_任务交接/P9_AUTHORITATIVE_TRACE_READ_MODEL_PLAYER_V1/evidence/EV-01-task-start-audit.py"
+  ],
+  "command_display": "python3 'docs/05_任务交接/P9_AUTHORITATIVE_TRACE_READ_MODEL_PLAYER_V1/evidence/EV-01-task-start-audit.py'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-08-10T05:54:23.266565+00:00",
+  "finished_at_utc": "2026-08-10T05:54:23.608424+00:00",
+  "exit_code": 0,
+  "stdout_path": "EV-01.stdout.log",
+  "stderr_path": "EV-01.stderr.log",
+  "stdout_bytes": 901,
+  "stderr_bytes": 0,
+  "stdout_sha256": "ba8a88b8ff108446eb3b94610f7d6a5c2fb0da2983bb485483456ad133e75aff",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
