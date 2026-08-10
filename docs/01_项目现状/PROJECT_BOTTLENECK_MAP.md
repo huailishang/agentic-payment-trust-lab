@@ -1,7 +1,7 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-08-07-r12
-Last reviewed: 2026-08-07
+Map revision: 2026-08-10-r15
+Last reviewed: 2026-08-10
 Map owner: Evaluator / Human Task Owner  
 Status: ACTIVE  
 > 当前新任务统一使用 `evaluator-executor-workflow/v2.1`，按“瓶颈—假设—同基线实验—保留或回滚”闭环推进。
@@ -152,7 +152,9 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 | B-01 | 项目级评测 / V3 环境 | 固定 12 项任务、统一命令、独立副作用护栏和轨迹来源分类已经建立并独立复核 | 所有未来 capability experiment 的 100% | P9 Measurement Integrity Repair REVIEW：三次一致、15/15 专项、428/428 全量 | high | RESOLVED / BASELINE_ESTABLISHED |
 | B-02 | Fact Lineage | 组件级来源传播已通过，但尚未测量它在固定端到端任务中减少了多少来源丢失、错误放行或证据缺口 | 所有包含派生事实的外部环境任务；具体比例 unknown | P9 Fact Lineage REVIEW：16/16 矩阵、12/12 专项、Overlay 投影不变 | medium | WATCH / IMPLEMENTED_UNMEASURED |
 | B-03 | Authoritative Trace | T01/T02/T03/T04/T07/T08/T09/T10/T12 已形成 `VALID` 产品权威轨迹；仅 T05/T06/T11 尚未公开产品轨迹 | 剩余 3/12 固定任务 | P9 Attack Overlay Family REVIEW：Product Trace 7/12→9/12，GESR 6/12→8/12；T07/T08 统一 Toolkit 15/15 专项、538/538 全量、repeat=3 通过，其他 10 项 actual 不变 | high | WATCH / REPRESENTATIVE_COVERAGE_SUFFICIENT |
-| B-08 | Trace Consumer / UI Read Model | 9 条产品轨迹已经机器可验证，但 `html_report.py` / `interactive_lab.py` / `interactive_server.py` 尚未消费 `ProductAuthoritativeTrace`；轨迹还没有形成协议中立、只读的下游时间线数据 | 当前 4 个已验证结构族，后续覆盖 9/12 已有轨迹 | P9 Attack Overlay Family REVIEW + `WebShop购买轨迹可视化UI规划_20260802.md`：UI 必须读取机器生成轨迹而非日志反推；当前 consumer baseline=0/4 代表结构族 | high | ACTIVE |
+| B-08 | Trace Consumer / UI Read Model | 通用只读 Consumer 与 Trace Player 已贯通：T01/T02/T07/T10 四类代表轨迹均可由同一 Read Model 进入同一只读 UI，事件、relation、source binding 可机械回指 | 当前 4 个已验证结构族；UI-ready 4/4 | P9 Authoritative Trace Player REVIEW：21/21 Player、19/19 Consumer、21/21 project-impact、578/578 全量、13/13 正式入口、repeat=3；UI-ready 0/4→4/4 且旧轨迹/UI/Consumer hash 不变 | high | RESOLVED / TRACE_PLAYER_READY |
+| B-09 | WebShop Journey 多事实源合同 | WebShop runtime、experiment context、Commerce Adaptation、payment authoritative trace 四类证据已能在一个 deterministic Journey Read Model 中分层保存并机械关联；错绑 fail closed | 第一轮 1 条固定 WebShop smoke/T01 正常购买路径，Journey source-classified 1/1 | P9 Journey Fact Source Read Model REVIEW：27/27 专项、21/21 Player、19/19 Consumer、21/21 project-impact、605/605 全量、13/13 正式入口、repeat=3；17 条 correlation 全 true，来源边界不变 | high | RESOLVED / SOURCE_CLASSIFIED_JOURNEY_READY |
+| B-10 | WebShop Journey UI composition | 多事实源 Journey Read Model 已建立，但用户仍只能分别看支付 Trace Player，尚没有一个页面把“需求→搜索/点击→商品→Adapter→支付可信轨迹”按来源分区串成完整购买 Journey | 第一轮 1 条固定脚本 Journey；后续才扩自主 Agent | H-09 已证明四命名空间可安全合并到 UI-neutral Read Model；现有 WebShop UI 规划要求完整购买链且必须标注固定脚本/自主 Agent 区别 | high | ACTIVE / JOURNEY_UI_GAP |
 | B-07 | 副作用前重复付款保护 | 同 request 已成功付款时，Runtime Gate 已在 callback 前 DENY；无关异常记录不误阻断 | 1/12 固定任务；零容忍支付副作用已消除 | P9 Capability Revalidation REVIEW：duplicate side effect 1/12 → 0/12，callback match 11/12 → 12/12 | high | RESOLVED / MEASURED_IMPROVED |
 | B-04 | 外部 Agent 行为 | 现有大量测试输入由固定样例提供，尚不能证明真实 Agent 在多步骤环境中不会走偏 | V3—V5 环境任务，比例 unknown | 验证体系统一路线 | high | WATCH |
 | B-05 | 数据最小化 | PayBench D1 两题不可执行，缺少数据披露事实与必要性判断 | PayBench 2/10，后续收货和身份任务 | measured：PayBench 8/10 可执行 | high | WATCH |
@@ -160,127 +162,91 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 
 ## Active bottleneck / 当前第一瓶颈
 
-Active bottleneck ID: B-08
+Active bottleneck ID: B-10
 
 ### 为什么现在排第一
 
-B-03 已通过多轮同基线实验把产品轨迹从 `0/12` 提升到 `9/12`，并覆盖四种不同结构族：Sidecar、Prepayment、Attack Overlay、Duplicate/Preflight。当前剩余 `T05/T06/T11` 三项仍没有产品轨迹，但继续追求 `12/12` 已不再是最早阻塞点。
+H-09 已独立复核通过：同一条固定 WebShop/T01 路径已经能够形成 `WebShopJourneyReadModel`，并把 `webshop_runtime`、`experiment_context`、`commerce_adaptation`、`payment_authoritative_trace` 四类证据严格分开；17 条跨源 correlation 可机械验证，错绑 fail closed，Journey source-classified 从 `0/1 -> 1/1`。B-09 因此完成。
 
-当前新的可观察失败是：
+当前最早的新失败点是：
 
 ```text
-产品已经生成 VALID Authoritative Trace
-→ 评测器可以验证
-→ 但产品 UI / Interactive Lab 尚未真正消费这些轨迹
-→ 普通用户仍看不到统一的“发生了什么、为什么允许/阻断”的时间线
+完整 Journey Read Model（已完成 1/1）
+→ 还没有用户可见 Journey Player
+→ 用户仍不能在一个页面按步骤看“需求→搜索/点击→商品→Adapter→支付可信轨迹”
 ```
-
-`docs/02_未来规划/WebShop购买轨迹可视化UI规划_20260802.md` 已明确：UI 必须读取机器生成的轨迹文件，不允许从日志或文案反推事实。现在 9 条产品轨迹已经提供足够的代表性输入，应该先验证一个协议中立、只读的 Trace Consumer / Read Model，而不是继续机械补 T05/T06/T11。
 
 ### 量级估算
 
-- 产品观测权威轨迹完整率：9/12；
-- baseline GESR：8/12；
-- 已验证产品轨迹：T01、T02、T03、T04、T07、T08、T09、T10、T12；
-- 剩余 B-03 产品轨迹缺口：3/12（T05/T06/T11）；
-- 已验证结构族：Sidecar、Prepayment、Attack Overlay、Duplicate/Preflight，共 4 类；
-- Trace Consumer 代表结构覆盖 baseline：0/4；当前没有一个下游 read model 统一消费这四类 VALID trace；
-- 信心：高，Attack Overlay family 独立复核 10/10 + 15/15 + 21/21 + 538/538，repeat=3，且其他 10 项 actual 与旧 7 条 trace hash 全部不变。
+- Product Trace：9/12；
+- GESR：8/12；
+- Trace Player UI-ready：4/4；
+- Journey source-classified：1/1；
+- Journey UI-ready：0/1；
+- 自主 Agent Journey：0，继续由 B-04 WATCH；
+- 信心：高，H-09 独立复核 27/27 Journey、605/605 全量、repeat=3，旧支付/轨迹指标不变。
 
 ### 分阶段原则
 
-不再以“补满 12/12”为默认推进方式。先用四种已验证结构族建立一个只读 Trace Consumer / Read Model，证明轨迹能够被下游统一消费；Consumer 通过后再进入 P9-E UI。T05/T06/T11 是否补齐，改为由下游真实需要和新增覆盖价值决定。
+下一步只让一个新的只读 Journey Player 消费 accepted `WebShopJourneyReadModel`。页面必须把四类证据来源分区显示，并明确标记这是“固定脚本轨迹”，不是自主 Agent。通过后才进入 B-04 的自主 Agent 行为采集与展示。
 
 ### 竞争瓶颈
 
-竞争瓶颈：`B-03 Authoritative Trace` 与 `B-02 Fact Lineage`。
-
-B-03 仍有 T05/T06/T11 三项缺口，但已有 9/12、四种结构族，继续补覆盖不会回答“这些轨迹能否真正被 UI / Replay 统一消费”。B-02 继续保留为组件已实现、项目影响待测；当前先解决 B-08 的消费缺口。
+竞争瓶颈为 `B-04 外部 Agent 行为`、`B-03 Authoritative Trace` 与 `B-02 Fact Lineage`。当前先完成 B-10，因为事实合同已经干净，UI composition 是进入自主 Agent 展示前最后一个可直接验证的下游缺口。
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: H-07
+Hypothesis ID: H-10
 
 ### 可证伪假设
 
-如果一个协议中立、只读的 Trace Consumer 只接受 frozen `VALID ProductAuthoritativeTrace`，把已有事件、引用、关系和 source binding 机械映射成 deterministic UI-neutral timeline，而不重跑任何业务规则，那么四个代表结构族可以被同一个 Consumer 正确消费，并且输出可回指原始 trace、重复消费完全一致、非法轨迹 fail closed。
-
-代表结构冻结为：
-
-```text
-T01 = Sidecar
-T02 = Prepayment
-T07 = Attack Overlay
-T10 = Duplicate / Preflight
-```
+如果 Journey UI 只消费 accepted `WebShopJourneyReadModel` primitive，不重新读取 WebShop fixture、Commerce Adapter 或支付 Trace producer，那么一条固定脚本 Journey 可以被确定性地展示成完整购买链，同时四类来源标签、关联证据和“不代表自主 Agent”的边界保持不变。
 
 ### 当前测量状态
 
 ```text
-固定任务：12
+Journey source-classified representative path：1/1
+Journey UI-ready representative path：0/1
+Trace Player UI-ready：4/4
 Product Trace：9/12
 GESR：8/12
-重复或禁止副作用：0/12
-callback 次数匹配：12/12
-已验证产品轨迹结构族：4
-Consumer-ready 代表结构族：0/4
 ```
-
-现状已经证明“产品会产轨迹”，但还没有证明“下游能统一消费轨迹”。因此 H-07 不再增加产品轨迹覆盖率，而是验证 Authoritative Trace 能否成为 Replay / UI 的稳定输入契约。
-
-### 估计影响范围
-
-- 第一轮直接影响：4 个代表结构族，T01/T02/T07/T10；
-- 后续可复用范围：当前已有 `VALID` 产品轨迹的 9/12 任务；
-- P9-E UI 将消费 Consumer Read Model，不直接解析各 family 产品对象；
-- B-03 剩余 T05/T06/T11 暂不进入本轮；
-- 不引入网络、真实支付、浏览器控制或生产身份。
 
 ### 当前单一主要变化
 
 ```text
-ProductAuthoritativeTrace
-→ 一个通用、只读 Trace Consumer
-→ deterministic Timeline / Read Model JSON
+accepted WebShopJourneyReadModel
+→ generic read-only Journey Player
+→ 完整购买链逐步展示
 ```
-
-本轮不做最终 UI，不扩展任何 trace producer，也不补 T05/T06/T11。
 
 ### 成功阈值
 
-1. Consumer 输入必须先通过 frozen authoritative trace validator；
-2. `INVALID / INDETERMINATE / malformed` 输入 fail closed，不生成伪造 timeline；
-3. 对 VALID trace 精确保留事件顺序和事件数量；
-4. 每个 Read Model event 至少保留 `sequence_no / event_type / entity_type / entity_role / entity_ref / source_binding_ref / decision / status / reason_codes / relations`；
-5. source binding 可由 Read Model 回指原始 trace binding；
-6. T01/T02/T07/T10 四类代表轨迹由同一个 Consumer 处理，不允许 profile/task 专属分支；
-7. 同一 trace 连续消费 3 次输出规范化 SHA 完全一致；
-8. Consumer-ready representative families 从 `0/4 -> 4/4`；
-9. Product Trace 保持 `9/12`、GESR 保持 `8/12`，所有产品 trace hash 与业务结果不变；
-10. Consumer 不调用支付、Policy、Lineage、validator 业务规则、runner 或 evaluator 重算事实。
+1. UI 唯一产品数据输入是 `WebShopJourneyReadModel` primitive；
+2. 四类证据命名空间在 UI 中有明确来源标签，不扁平化成同一事实池；
+3. 页面能展示用户 instruction、WebShop actions/selected product/Buy Now 状态、Commerce order/request、支付 authoritative trace 摘要与证据 drill-down；
+4. 明确显示 `fixed_script_webshop_smoke_not_autonomous_agent`，不得标成自主 Agent；
+5. cargo-pants instruction 与 console-table product 均原样展示，不声称匹配；
+6. 页面字段与 Journey Read Model 可机械对账，重复 render 3 次 HTML/payload SHA 稳定；
+7. Journey UI-ready 从 `0/1 -> 1/1`；
+8. Journey source-classified 保持 `1/1`、Trace Player UI-ready 保持 `4/4`、Product Trace `9/12`、GESR `8/12`；
+9. 不修改 Journey Read Model、Consumer、Trace Player、trace producer、fixture 或 Adapter；
+10. 不执行 WebShop、Buy Now、支付、网络或任何副作用。
 
-### 无可测收益阈值
+### 回滚阈值
 
-- 只支持某一个 profile / task 的特殊分支；
-- 丢掉引用、关系或 reason codes，导致 UI 无法回指证据；
-- 接受 INVALID trace 或自行补造缺失事件；
-- 输出依赖对象 repr、自由文本或运行时随机值，无法稳定序列化；
-- 只写 UI mock，没有稳定 Read Model 契约。
-
-### 回归或回滚阈值
-
-- 为 Consumer 修改现有 trace producer、registry、runner、fixture 或业务决策；
-- 任何既有产品 trace hash 改变；
-- Product Trace / GESR 或 non-trace 业务投影发生变化；
-- Consumer 需要 task ID / profile 名硬编码才能工作；
-- 引入网络、真实支付、未授权副作用或在消费阶段重新执行业务规则。
+- UI 把 experiment context 标成 WebShop verified；
+- UI 隐藏或改写用户需求与实际商品不匹配的事实；
+- UI 为展示而重新运行 Adapter/支付逻辑；
+- 需要 task/profile 硬编码；
+- 任何冻结指标或 accepted hash 退化。
 
 ## Candidate experiments / 候选实验与设计任务
 
 | 优先级 | 假设 | 主要变化 | 同基线比较 | 预期收益 | 成本 / 风险 |
 |---:|---|---|---|---:|---|
-| 1 | H-07 / Trace Consumer Read Model V1 | 一个协议中立、只读 Consumer，把 `ProductAuthoritativeTrace` 转成 deterministic timeline/read model | T01/T02/T07/T10 consumer-ready `0/4→4/4`；Product Trace 保持 `9/12`、GESR 保持 `8/12` | 首次证明四类产品轨迹可被统一 Replay/UI 消费 | 低中；不得修改任何 producer/registry/runner/fixture，不得重跑业务规则 |
-| 2 | H-07 / P9-E UI V1 | UI 只消费 Trace Read Model，作为证据播放器展示购买、检查、支付/阻断过程 | UI 展示字段与 Read Model / 原始 trace 独立对账 | 把已有可信轨迹变成普通用户可理解的产品能力 | 中；UI 不能成为事实源、不能重新执行购买或决策 |
+| 1 | H-10 / WebShop Journey Player V1 | 一个新的只读 Journey Player 只消费 accepted `WebShopJourneyReadModel`，按四类来源分区展示完整固定脚本购买链 | Journey UI-ready `0/1→1/1`；Journey source-classified 保持 `1/1`、Trace Player `4/4`、Product Trace `9/12`、GESR `8/12` | 首次把用户需求、商城动作、Adapter 与支付可信证据放到同一可审计页面 | 中；不得重跑 Adapter/WebShop/支付，不得冒充自主 Agent |
+| 2 | B-04 / autonomous Agent journey capture | Journey Player 通过后，再定义真实 Agent 搜索/选择/点击行为的结构化轨迹合同和评测 | 固定脚本与 autonomous Agent 明确分开测量 | 从“固定脚本演示”进入真正自主购买行为验证 | 高；需要新的环境运行授权与行为评测合同 |
 | 3 | H-03 / Action Binding family toolkit | 如 Consumer/UI 证明 T05/T06 有真实下游价值，再用统一 Action Binding family 表达最终 binding 状态 | 当前 9/12 baseline 上做同族 before/after | 可选补 2 项产品轨迹 | 中；暂缓，不为 12/12 数字机械开发 |
 | 4 | H-03 / T11 design review | 如下游需要完整履约失败展示，再核对 T11 与 Sidecar Toolkit 的复用边界 | 只设计/测量，不先声称增益 | 决定最后 1 项是否值得补齐 | 中；避免为 T11 再造完整专属 builder |
 | 5 | H-02 | Fact Lineage 能消除派生来源丢失 | 同一端到端来源攻击任务 before / after | lineage 完整率提高，错误放行不增加 | 中 |
@@ -314,3 +280,6 @@ ProductAuthoritativeTrace
 | `2026-08-06-r10` | 2026-08-06 | Sidecar Family Toolkit 独立复核 PASS / IMPROVED：T01/T09 迁移为 43/40 行兼容层，产品 sidecar 仅一个 Toolkit 调用，无 T12 专属 builder；Product Trace `3/12→4/12`、GESR `2/12→3/12`，512/512 全量通过 | B-03 缩小到剩余 8/12 产品轨迹缺口，仍为第一瓶颈；场景族工具化路线得到验证 | H-03 继续获支持；下一步一次覆盖结构完全相同的 T02/T03/T04 Prepayment 家族 |
 | `2026-08-07-r11` | 2026-08-07 | Prepayment Family Toolkit completion 独立复核 PASS / IMPROVED：T02/T03/T04 用一个 Toolkit + 3 个固定 Profile，10/10 边界、152/152 focused、522/522 全量、repeat=3 通过；Product Trace `4/12→7/12`、GESR `3/12→6/12`，12 项 actual 与旧 trace hashes 全部不变 | B-03 缩小到剩余 5/12（T05/T06/T07/T08/T11）；同时发现剩余 fixture 有 4 个 stale event-name expectations，先统一修 measurement contract | H-03 获得 Prepayment family 支持；修尺子后优先进入 T07/T08 Attack Overlay family |
 | `2026-08-07-r12` | 2026-08-07 | Attack Overlay Family Toolkit 独立复核 PASS / IMPROVED：10/10 existing、15/15 family、21/21 project-impact、538/538 全量、repeat=3；Product Trace `7/12→9/12`、GESR `6/12→8/12`；其他 10 项 actual、旧 7 条 trace hash 与 non-trace 全部不变 | B-03 降为 WATCH，仅剩 T05/T06/T11；新增 B-08 Trace Consumer / UI Read Model 并升为第一瓶颈，因为已有四种代表轨迹结构但下游 consumer=0/4 | H-03 获得 Attack Overlay family 支持；激活 H-07，先证明轨迹可被统一只读消费，再进入 P9-E UI |
+| `2026-08-10-r13` | 2026-08-10 | Authoritative Trace Consumer 独立复核 PASS / IMPROVED：19/19 consumer、21/21 project-impact、557/557 全量、13/13 正式入口、repeat=3；Consumer-ready `0/4→4/4`，Product Trace `9/12`、GESR `8/12`、旧 src 与 accepted trace hashes 不变 | B-08 保持第一瓶颈，但失败位置从“缺统一 Consumer”下移到“UI 尚未消费稳定 Read Model”；B-03 继续 WATCH | H-07 SUPPORTED；激活 H-08，先做只读 Trace Read Model Player，再讨论完整 WebShop Journey UI |
+| `2026-08-10-r14` | 2026-08-10 | Authoritative Trace Player 独立复核 PASS / IMPROVED：21/21 Player、19/19 Consumer、21/21 project-impact、578/578 全量、13/13 正式入口、repeat=3；UI-ready `0/4→4/4`，source-binding drill-down 与 hostile-string 边界通过，既有 Product Trace/GESR 不变 | B-08 完成；新增 B-09 WebShop Journey 多事实源合同并升为第一瓶颈，先解决商城事实、experiment context 与支付权威证据的来源分离 | H-08 SUPPORTED；激活 H-09，先做 UI-neutral source-classified Journey Read Model，再进入完整 Journey UI / 自主 Agent |
+| `2026-08-10-r15` | 2026-08-10 | WebShop Journey Fact Source Read Model 独立复核 PASS / IMPROVED：27/27 Journey、21/21 Player、19/19 Consumer、21/21 project-impact、605/605 全量、13/13 正式入口、repeat=3；Journey source-classified `0/1→1/1`，17 条跨源 correlation 全 true，错绑 fail closed，既有指标不变 | B-09 完成；新增 B-10 Journey UI composition 并升为第一瓶颈 | H-09 SUPPORTED；激活 H-10，只让 UI 消费 accepted Journey Read Model，之后再进入 B-04 自主 Agent |
