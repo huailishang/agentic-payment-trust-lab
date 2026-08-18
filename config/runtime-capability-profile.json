@@ -1,0 +1,52 @@
+{
+  "profile_id": "agentic-payment-trust-lab",
+  "version": "2",
+  "capabilities": [
+    {
+      "capability_id": "governance.policy-gate",
+      "plugin_id": "payment.governance",
+      "implementation_id": "runtime-authorization-gate",
+      "enabled": true,
+      "config": {"runtime_wired": false, "status": "active_domain_implementation"}
+    },
+    {
+      "capability_id": "governance.approval-gate",
+      "plugin_id": "payment.approval",
+      "implementation_id": "human-confirmation-gate",
+      "enabled": true,
+      "config": {"runtime_wired": false, "status": "active_domain_implementation"}
+    },
+    {
+      "capability_id": "validation.validator",
+      "plugin_id": "payment.validation",
+      "implementation_id": "governed-action-validator",
+      "enabled": true,
+      "config": {"runtime_wired": false, "status": "active_domain_implementation"}
+    },
+    {
+      "capability_id": "observability.trace-sink",
+      "plugin_id": "payment.trace",
+      "implementation_id": "authoritative-trace",
+      "enabled": true,
+      "config": {"runtime_wired": false, "status": "active_domain_implementation"}
+    },
+    {
+      "capability_id": "lifecycle.recovery",
+      "plugin_id": "payment.recovery",
+      "implementation_id": "query-and-recovery",
+      "enabled": true,
+      "config": {"runtime_wired": false, "status": "active_domain_implementation"}
+    }
+  ],
+  "permissions": {},
+  "policy": {
+    "fail_closed_on_missing_authority": true,
+    "zero_duplicate_side_effect": true
+  },
+  "metadata": {
+    "owner_project": "agentic-payment-trust-lab",
+    "source_of_truth": "docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md",
+    "domain_extensions": ["payment binding model", "payment fact lineage", "payment finality", "merchant and mandate rules"],
+    "note": "Slot-to-implementation inventory only; not yet loaded by agent-runtime-platform."
+  }
+}
