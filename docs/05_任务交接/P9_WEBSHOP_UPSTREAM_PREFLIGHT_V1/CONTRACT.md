@@ -46,7 +46,7 @@ The user authorized creating a separate environment when `agent` is unsuitable. 
 
 Primary project reference:
 
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`
 
 ## 2. Single objective
 
@@ -192,7 +192,7 @@ Tracked project paths:
 
 - `scripts/validation/webshop/check_webshop_upstream.py`
 - `tests/test_webshop_upstream_contract.py`
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`（only factual status correction if needed）
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`（only factual status correction if needed）
 - `docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/REPORT.md`
 - `docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/evidence/EV-*`
 

@@ -29,7 +29,7 @@ mandate / order / request / payment references
 
 这些字段由多个参数分别传入，没有形成一个可记录、可验证、可进入后续权威轨迹的动作对象。
 
-`docs/reference/ArbiterOS治理机制与项目吸收方案_20260802.md` 已声明下一步为：
+`docs/reference/03_身份与治理/ArbiterOS治理机制与项目吸收方案_20260802.md` 已声明下一步为：
 
 ```text
 P9-C2-A 支付动作契约
@@ -369,8 +369,8 @@ formal entrypoint 13/13 PASS
 - `tests/test_webshop_runtime_gate.py`
 - `samples/external/webshop/governed_payment_action_matrix_v1.json`（optional matrix specification）
 - `scripts/validation/webshop/run_governed_payment_action_matrix.py`（optional deterministic runner）
-- `docs/reference/ArbiterOS治理机制与项目吸收方案_20260802.md`（factual status only）
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`（factual status only）
+- `docs/reference/03_身份与治理/ArbiterOS治理机制与项目吸收方案_20260802.md`（factual status only）
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`（factual status only）
 - `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md`（factual status only）
 - `docs/05_任务交接/P9_GOVERNED_PAYMENT_ACTION_CONTRACT_V1/REPORT.md`
 - `docs/05_任务交接/P9_GOVERNED_PAYMENT_ACTION_CONTRACT_V1/evidence/EV-*`

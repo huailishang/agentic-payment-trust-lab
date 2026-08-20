@@ -136,7 +136,7 @@ approved fallback: only another Python 3.8.x patch release, and only after raw s
 
 Primary references:
 
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`
 - `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md`
 - `docs/05_任务交接/P9_WEBSHOP_UPSTREAM_PREFLIGHT_V1/REVIEW.md`
 
@@ -335,7 +335,7 @@ It must not claim WebShop is integrated with the payment project merely because 
 - `scripts/validation/webshop/verify_webshop_small_assets.py`
 - `scripts/validation/webshop/smoke_webshop_small.py`
 - `tests/test_webshop_small_runtime_contract.py`
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`（only factual P9-A2 status/deviation update）
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`（only factual P9-A2 status/deviation update）
 - `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md`（only factual P9-A2 status/deviation update）
 - `docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/REPORT.md`
 - `docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/evidence/EV-*`

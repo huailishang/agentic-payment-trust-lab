@@ -40,7 +40,7 @@ authority_ref
 Runtime Authorization Gate
 ```
 
-外部参考见 [Agent 身份与运行时授权开源项目参考](../reference/Agent身份与运行时授权开源项目参考_20260729.md)。
+外部参考见 [Agent 身份与运行时授权开源项目参考](../reference/03_身份与治理/Agent身份与运行时授权开源项目参考_20260729.md)。
 
 ## 2. 为什么复用 S08 / S09
 

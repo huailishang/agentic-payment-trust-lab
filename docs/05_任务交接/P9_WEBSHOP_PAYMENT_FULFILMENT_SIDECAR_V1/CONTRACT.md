@@ -24,7 +24,7 @@ Primary references:
 
 - `docs/05_任务交接/P9_WEBSHOP_RUNTIME_GATE_REASON_EVIDENCE_REPAIR_V1/REVIEW.md`
 - `docs/05_任务交接/P9_WEBSHOP_BUY_NOW_RUNTIME_GATE_V1/REVIEW.md`
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`
 - `src/agentic_payment_experiment/webshop_runtime_gate.py`
 - `src/agentic_payment_experiment/payment_recovery.py`
 - `src/agentic_payment_experiment/payment_status_conflict.py`
@@ -323,7 +323,7 @@ The report must explicitly state that all post-payment facts are offline fixture
 - `src/agentic_payment_experiment/webshop_payment_sidecar.py`
 - `src/agentic_payment_experiment/__init__.py`（only export new public API）
 - `tests/test_webshop_payment_sidecar.py`
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`（factual status only）
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`（factual status only）
 - `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md`（factual status only）
 - `docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/REPORT.md`
 - `docs/05_任务交接/P9_WEBSHOP_PAYMENT_FULFILMENT_SIDECAR_V1/evidence/EV-*`

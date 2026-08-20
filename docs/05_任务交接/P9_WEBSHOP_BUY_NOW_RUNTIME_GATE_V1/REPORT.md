@@ -337,7 +337,7 @@ SimServer.done()
 | `src/agentic_payment_experiment/webshop_runtime_gate.py` | `5aadec69b787825dc7909276d1ea6881f1620d911d4b7f83839bf3400f39e368` |
 | `src/agentic_payment_experiment/__init__.py` | `f41704928b0dcd39d7666867bc69485fb8de40529ec7254c0a50cb5b4a19add3` |
 | `tests/test_webshop_runtime_gate.py` | `a7fbfe1f340f3ac35934edd5fb71bb70b20969d763cc75166e688e29bfcddef8` |
-| `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md` | `15c80abd6010b7aae6d82ccf153f2129b49a126a2140da1e8b784dbc18cb4523` |
+| `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md` | `15c80abd6010b7aae6d82ccf153f2129b49a126a2140da1e8b784dbc18cb4523` |
 | `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md` | `36d6738a7c9ca2a68951ed136a3d80326935ad09ad4de6595e7b50ea7f1dc5c5` |
 
 `src/agentic_payment_experiment/__init__.py` 在任务开始前已有继承改动，本任务只增加新 public API 的 import 和 `__all__` 两项导出。

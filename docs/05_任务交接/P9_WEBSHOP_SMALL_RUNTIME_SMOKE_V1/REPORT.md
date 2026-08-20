@@ -68,7 +68,7 @@ P9-A2 的功能与安全验收已经完成：
 | `scripts/validation/webshop/verify_webshop_small_assets.py` | `c8e8d49de928c87710317cc88f77d253f1411cd6389e019f855813a82feff571` | 固定来源/哈希/结构门禁、原子 promotion、资源构建、索引查询 |
 | `scripts/validation/webshop/smoke_webshop_small.py` | `8628023cbee0c131ff496f0810090d6cc1fb8509cda0333b9474a19aa47d953d` | 真实文本环境 smoke，禁止 Buy Now |
 | `tests/test_webshop_small_runtime_contract.py` | `e3617c9a0f8e30b1c7f92848c4c8d6b05a5a07f7826bbe1adeabd37a072f6f13` | 14 项 fail-closed 合同测试 |
-| `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md` | `e5dbed07c0c6f6204f3b78d0a16d4a46b4eb4a110741a7377b86295de968a12c` | 更新 P9-A2 事实状态和 P9-B 边界 |
+| `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md` | `e5dbed07c0c6f6204f3b78d0a16d4a46b4eb4a110741a7377b86295de968a12c` | 更新 P9-A2 事实状态和 P9-B 边界 |
 | `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md` | `9da59f0ebca51a180e3be623814eeb666f4cc8d42cd9eba237616552359ad808` | 更新验证路线状态 |
 
 评估者修改并冻结的合同：

@@ -218,7 +218,7 @@ all_non_allow_have_causal_reason = true
 | `src/agentic_payment_experiment/payment_execution.py` | `25113d7c067a6ba43bcae7a182c60ec77404a50229987b0314805b1c10e0ce71` |
 | `tests/trusted_execution/test_payment_binding.py` | `2f18ca0f41ddb94174bad779738a6cddc5711e7dee7a21c1ecfe21e32ae7ea69` |
 | `tests/test_webshop_runtime_gate.py` | `0b370c909209970981671d983cafb024f0c601646b74e3e105a8ac8e2794d4a4` |
-| `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md` | `e7b51baa54c90f27b3cb2917c5841e4e934df3aa268f8b38e05597ef421c511a` |
+| `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md` | `e7b51baa54c90f27b3cb2917c5841e4e934df3aa268f8b38e05597ef421c511a` |
 | `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md` | `00e2bea16afd8afa7030599aa3b29309c6f2800fd896d7a122e760a0acbf79b9` |
 
 证据：EV-07。

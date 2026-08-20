@@ -93,7 +93,7 @@ None.
 
 1. Four `CAPABILITY_FACT` entries currently carry a constant presentation status of `PASS`. The current status is supported by the independently passing P3–P6/full-suite evidence, so it does not invalidate P7. However, future external-validation work must not extend this into a general pattern of hard-coded success. A later evidence registry or adapter result should drive dynamic external conformance status.
 2. The old selector wording remains only in a non-visible `data-legacy-label` attribute for compatibility tests. It is not rendered as first-level navigation and does not violate AC-04.
-3. The user-directed research document `docs/reference/智能体支付产业动态核验与外部测试路线_20260801.md` was created during this evaluator turn. It is not attributed to the P7 implementation scope.
+3. The user-directed research document `docs/reference/05_产业与机构资料/智能体支付产业动态核验与外部测试路线_20260801.md` was created during this evaluator turn. It is not attributed to the P7 implementation scope.
 
 ## 5. Final decision
 

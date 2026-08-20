@@ -26,7 +26,7 @@ P9-B2 只实现这个离线控制点。它不运行 WebShop，也不执行真正
 Primary references:
 
 - `docs/05_任务交接/P9_WEBSHOP_COMMERCE_ADAPTER_V1/REVIEW.md`
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`
 - `docs/03_架构设计/Agent_Trust_Control_Plane_最小领域模型_v1.md`
 - `src/agentic_payment_experiment/adapters/webshop.py`
 - `src/agentic_payment_experiment/validator.py`
@@ -278,7 +278,7 @@ The report must explicitly state:
 - `src/agentic_payment_experiment/webshop_runtime_gate.py`
 - `src/agentic_payment_experiment/__init__.py`（only export of the new public API）
 - `tests/test_webshop_runtime_gate.py`
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`（factual status only）
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`（factual status only）
 - `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md`（factual status only）
 - `docs/05_任务交接/P9_WEBSHOP_BUY_NOW_RUNTIME_GATE_V1/REPORT.md`
 - `docs/05_任务交接/P9_WEBSHOP_BUY_NOW_RUNTIME_GATE_V1/evidence/EV-*`
