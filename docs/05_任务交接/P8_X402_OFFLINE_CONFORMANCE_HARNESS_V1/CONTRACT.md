@@ -23,7 +23,7 @@ Before any testnet or production interaction, the project needs a deterministic 
 
 Primary reference:
 
-- `docs/reference/智能体支付产业动态核验与外部测试路线_20260801.md`
+- `docs/reference/05_产业与机构资料/智能体支付产业动态核验与外部测试路线_20260801.md`
 - Coinbase x402 buyer/seller and facilitator documentation linked from that file
 
 ## 2. Single objective

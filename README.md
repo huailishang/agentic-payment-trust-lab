@@ -239,7 +239,7 @@ P4 Trust Source / Context / Policy Input【执行者候选已完成，待独立�
 - [P1 授权绑定与执行前核验执行记录](docs/04_验证体系/P1授权绑定与执行前核验执行记录_20260730.md)
 - [P3 Agent / Executor Identity 执行者记录](docs/04_验证体系/P3_Agent_Executor_Identity_执行记录_20260731.md)
 - [P4 Trust Source / Context / Policy Input 执行记录](docs/04_验证体系/P4_Trust_Source_Context_Policy_执行记录_20260731.md)
-- [外部项目与开源参考台账](docs/reference/开源项目台账.md)
+- [外部项目与开源参考台账](docs/reference/00_索引/开源项目台账.md)
 
 ## License
 

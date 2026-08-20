@@ -439,4 +439,4 @@ commit / push / history rewrite
 | `evidence/webshop_upstream_manifest.json` | `fb3318af30c650fcf8898d9a8466954024b9bb7515cce5e27bc482f9fa632e98` |
 | `REPORT.md` | final hash recorded by EV-07 |
 
-`docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md` 未修改。主仓库 HEAD 保持基线，未 commit、未 push。
+`docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md` 未修改。主仓库 HEAD 保持基线，未 commit、未 push。

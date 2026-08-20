@@ -269,7 +269,7 @@ subprocess / os / pathlib
 | `scripts/validation/webshop/export_webshop_commerce_fixture.py` | `aae4c6109586f20e6e78c35ba48b6c94dfee76e478134842731140f50a9382f0` |
 | `samples/external/webshop/pre_buy_now_candidate_v1.json` | `6e9d67c3b787cc2d9202bd22b30dec88bf9f920dfa3741bdeb364108a2a3c8e5` |
 | `tests/test_webshop_adapter.py` | `c815dbe1515d5326562540d7f732c79484af4a5f3d42f8a6e1b0c45c44277f20` |
-| `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md` | `7056c3eab259f5237d74319b37ec13d2bcaaec3e0d136ce6961f86c0e58d5665` |
+| `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md` | `7056c3eab259f5237d74319b37ec13d2bcaaec3e0d136ce6961f86c0e58d5665` |
 | `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md` | `948753ca9f28aa3968b9780313f7cdd0b9767aefea00779ec3dc54a75709011f` |
 
 `REPORT.md`、`CURRENT.md` 和 evidence triplets 属于工作流状态/证据文件；各 EV metadata 记录对应 stdout/stderr 的大小和 SHA-256。

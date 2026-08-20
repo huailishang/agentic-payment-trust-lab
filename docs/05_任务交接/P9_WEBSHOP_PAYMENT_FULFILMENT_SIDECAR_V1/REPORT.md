@@ -338,7 +338,7 @@ webshop_reward_not_used_as_payment_or_task_success
 | `src/agentic_payment_experiment/webshop_payment_sidecar.py` | `a7950308864d71a25b36c43ff11aed8cfeef1f0fe4d373ab305849b770f95c3b` |
 | `src/agentic_payment_experiment/__init__.py` | `a62c310ba1dad90a905be35414e6d294a0dcbd382a0e625c72b1f64009a13c02` |
 | `tests/test_webshop_payment_sidecar.py` | `02b2a757f3d2656dbe38704d00001ef687c8935d70410c48669e1fb5ae832c74` |
-| `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md` | `2167b676762153f202683a003bd4993f3b2f4b78fe5e9924a02c6f6bda911acd` |
+| `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md` | `2167b676762153f202683a003bd4993f3b2f4b78fe5e9924a02c6f6bda911acd` |
 | `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md` | `c86982461648ff0df439895a907412fd73a42701fe9a26ce1d4a45d0bca298a4` |
 
 `__init__.py` 在任务开始前已有继承修改；本任务只新增 Sidecar API import 与 `__all__` 导出。

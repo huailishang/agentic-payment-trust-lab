@@ -165,7 +165,7 @@ Report exact changed files and SHA-256. Confirm:
 - `src/agentic_payment_experiment/webshop_runtime_gate.py`（only if needed to forward shared reasons）
 - `tests/trusted_execution/test_payment_binding.py`
 - `tests/test_webshop_runtime_gate.py`
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`（factual status only）
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`（factual status only）
 - `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md`（factual status only）
 - `docs/05_任务交接/P9_WEBSHOP_RUNTIME_GATE_REASON_EVIDENCE_REPAIR_V1/REPORT.md`
 - `docs/05_任务交接/P9_WEBSHOP_RUNTIME_GATE_REASON_EVIDENCE_REPAIR_V1/evidence/EV-*`

@@ -248,7 +248,7 @@ formal entrypoint 13/13 PASS
 - `tests/test_webshop_runtime_gate.py`
 - `samples/external/webshop/checkout_snapshot_anomalies_v1.json`（optional machine-readable matrix）
 - `scripts/validation/webshop/run_checkout_snapshot_anomalies.py`（optional deterministic runner）
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`（factual status only）
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`（factual status only）
 - `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md`（factual status only）
 - `docs/05_任务交接/P9_WEBSHOP_CHECKOUT_SNAPSHOT_CONTINUITY_GATE_V1/REPORT.md`
 - `docs/05_任务交接/P9_WEBSHOP_CHECKOUT_SNAPSHOT_CONTINUITY_GATE_V1/evidence/EV-*`

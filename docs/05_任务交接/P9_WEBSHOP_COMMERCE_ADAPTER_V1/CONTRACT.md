@@ -30,7 +30,7 @@ P9-A2 只证明外部运行时和购买动作前接点稳定，不证明：
 Primary references:
 
 - `docs/05_任务交接/P9_WEBSHOP_SMALL_RUNTIME_SMOKE_V1/REVIEW.md`
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`
 - `src/agentic_payment_experiment/models.py`
 - `src/agentic_payment_experiment/adapters/acp.py`
 - `src/agentic_payment_experiment/adapters/ap2.py`
@@ -235,7 +235,7 @@ The report must explicitly state that P9-B1 is an offline mapping layer and that
 - `scripts/validation/webshop/export_webshop_commerce_fixture.py`
 - `samples/external/webshop/pre_buy_now_candidate_v1.json`
 - `tests/test_webshop_adapter.py`
-- `docs/reference/WebShop外部商城接入分析与分批执行路线_20260801.md`（only factual P9-B1 status/boundary update）
+- `docs/reference/04_商城与外部环境/WebShop外部商城接入分析与分批执行路线_20260801.md`（only factual P9-B1 status/boundary update）
 - `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md`（only factual P9-B1 status/boundary update）
 - `docs/05_任务交接/P9_WEBSHOP_COMMERCE_ADAPTER_V1/REPORT.md`
 - `docs/05_任务交接/P9_WEBSHOP_COMMERCE_ADAPTER_V1/evidence/EV-*`
