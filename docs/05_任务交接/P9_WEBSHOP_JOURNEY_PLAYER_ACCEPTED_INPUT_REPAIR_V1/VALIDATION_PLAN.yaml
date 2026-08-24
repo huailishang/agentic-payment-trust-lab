@@ -1,0 +1,62 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: P9-WEBSHOP-JOURNEY-PLAYER-ACCEPTED-INPUT-REPAIR-V1
+
+checks:
+  - id: VP-01
+    ac:
+      - AC-01
+      - AC-02
+      - AC-03
+      - AC-05
+    cwd: .
+    command:
+      - python
+      - -m
+      - unittest
+      - tests.test_webshop_journey_player
+      - -v
+    evaluator_command:
+      - python
+      - docs/05_任务交接/P9_WEBSHOP_JOURNEY_PLAYER_ACCEPTED_INPUT_REPAIR_V1/evaluator_checks/accepted_input_counterexamples.py
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-02
+    ac:
+      - AC-03
+      - AC-04
+    cwd: .
+    command:
+      - python
+      - -m
+      - unittest
+      - tests.test_webshop_journey_read_model
+      - tests.test_authoritative_trace_player
+      - tests.test_authoritative_trace_consumer
+      - -v
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-03
+    ac:
+      - AC-04
+    cwd: .
+    command:
+      - python
+      - run_experiment.py
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-04
+    ac:
+      - AC-04
+    cwd: .
+    command:
+      - python
+      - scripts/validation/run_project_impact_baseline.py
+      - --repeat
+      - "3"
+      - --output
+      - docs/05_任务交接/P9_WEBSHOP_JOURNEY_PLAYER_ACCEPTED_INPUT_REPAIR_V1/evidence/EV-AFTER-baseline.json
+    expected_exit_code: 0
+    mandatory: true

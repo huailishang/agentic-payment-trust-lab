@@ -8,6 +8,8 @@ from typing import Any, Mapping
 
 from .webshop_journey_read_model import (
     EXPECTED_EXPERIMENT_CONTEXT_ORIGIN,
+    JOURNEY_SCHEMA_VERSION,
+    SOURCE_CLASSIFICATION_STATUS,
     WebShopJourneyReadModel,
     webshop_journey_read_model_to_primitive,
 )
@@ -98,9 +100,16 @@ def _require_string_list(value: object, label: str) -> list[str]:
 def _validate_payload(payload: object) -> dict[str, Any]:
     top = _require_mapping(payload, "journey read model")
     _require_exact_keys(top, _REQUIRED_TOP_LEVEL, "journey read model")
-    _require_text(top["schema_version"], "schema_version")
+    if top["schema_version"] != JOURNEY_SCHEMA_VERSION:
+        raise WebShopJourneyPlayerInputError(
+            f"schema_version must be {JOURNEY_SCHEMA_VERSION}"
+        )
     _require_text(top["journey_ref"], "journey_ref")
-    _require_text(top["source_classification_status"], "source_classification_status")
+    if top["source_classification_status"] != SOURCE_CLASSIFICATION_STATUS:
+        raise WebShopJourneyPlayerInputError(
+            "source_classification_status must be "
+            f"{SOURCE_CLASSIFICATION_STATUS}"
+        )
 
     runtime = _require_mapping(top["webshop_runtime"], "webshop_runtime")
     _require_exact_keys(runtime, _REQUIRED_RUNTIME, "webshop_runtime")

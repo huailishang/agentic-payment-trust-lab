@@ -1,10 +1,10 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-08-10-r15
-Last reviewed: 2026-08-10
+Map revision: 2026-08-24-r18
+Last reviewed: 2026-08-24
 Map owner: Evaluator / Human Task Owner  
 Status: ACTIVE  
-> 当前新任务统一使用 `evaluator-executor-workflow/v2.1`，按“瓶颈—假设—同基线实验—保留或回滚”闭环推进。
+> 当前新任务统一使用 `evaluator-executor-workflow/v2.2`，按“瓶颈—假设—同基线实验—保留或回滚”闭环推进。
 
 ## Project outcome / 项目结果
 
@@ -154,26 +154,27 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 | B-03 | Authoritative Trace | T01/T02/T03/T04/T07/T08/T09/T10/T12 已形成 `VALID` 产品权威轨迹；仅 T05/T06/T11 尚未公开产品轨迹 | 剩余 3/12 固定任务 | P9 Attack Overlay Family REVIEW：Product Trace 7/12→9/12，GESR 6/12→8/12；T07/T08 统一 Toolkit 15/15 专项、538/538 全量、repeat=3 通过，其他 10 项 actual 不变 | high | WATCH / REPRESENTATIVE_COVERAGE_SUFFICIENT |
 | B-08 | Trace Consumer / UI Read Model | 通用只读 Consumer 与 Trace Player 已贯通：T01/T02/T07/T10 四类代表轨迹均可由同一 Read Model 进入同一只读 UI，事件、relation、source binding 可机械回指 | 当前 4 个已验证结构族；UI-ready 4/4 | P9 Authoritative Trace Player REVIEW：21/21 Player、19/19 Consumer、21/21 project-impact、578/578 全量、13/13 正式入口、repeat=3；UI-ready 0/4→4/4 且旧轨迹/UI/Consumer hash 不变 | high | RESOLVED / TRACE_PLAYER_READY |
 | B-09 | WebShop Journey 多事实源合同 | WebShop runtime、experiment context、Commerce Adaptation、payment authoritative trace 四类证据已能在一个 deterministic Journey Read Model 中分层保存并机械关联；错绑 fail closed | 第一轮 1 条固定 WebShop smoke/T01 正常购买路径，Journey source-classified 1/1 | P9 Journey Fact Source Read Model REVIEW：27/27 专项、21/21 Player、19/19 Consumer、21/21 project-impact、605/605 全量、13/13 正式入口、repeat=3；17 条 correlation 全 true，来源边界不变 | high | RESOLVED / SOURCE_CLASSIFIED_JOURNEY_READY |
-| B-10 | WebShop Journey UI composition | 多事实源 Journey Read Model 已建立，但用户仍只能分别看支付 Trace Player，尚没有一个页面把“需求→搜索/点击→商品→Adapter→支付可信轨迹”按来源分区串成完整购买 Journey | 第一轮 1 条固定脚本 Journey；后续才扩自主 Agent | H-09 已证明四命名空间可安全合并到 UI-neutral Read Model；现有 WebShop UI 规划要求完整购买链且必须标注固定脚本/自主 Agent 区别 | high | ACTIVE / JOURNEY_UI_GAP |
+| B-10 | WebShop Journey UI composition | 固定脚本 Journey 已能按来源安全进入一个 deterministic Player；accepted-input schema/source-classification 两个反例已全部 fail closed | 第一轮固定脚本 Journey UI-ready 1/1 | Journey Player 父任务合法路径 1/1；accepted-input repair L2/L3 4/4、Player 27/27、两个反例 4 个入口组合全拒绝 | high | RESOLVED / SAFE_JOURNEY_PLAYER_READY |
 | B-07 | 副作用前重复付款保护 | 同 request 已成功付款时，Runtime Gate 已在 callback 前 DENY；无关异常记录不误阻断 | 1/12 固定任务；零容忍支付副作用已消除 | P9 Capability Revalidation REVIEW：duplicate side effect 1/12 → 0/12，callback match 11/12 → 12/12 | high | RESOLVED / MEASURED_IMPROVED |
-| B-04 | 外部 Agent 行为 | 现有大量测试输入由固定样例提供，尚不能证明真实 Agent 在多步骤环境中不会走偏 | V3—V5 环境任务，比例 unknown | 验证体系统一路线 | high | WATCH |
+| B-04 | 外部 Agent 行为 | 当前 WebShop Journey 仍来自固定 search/click 脚本；没有一条 Agent 只根据 instruction、当前 observation 和 available actions 自主选择商品/选项并被结构化评分的真实环境轨迹 | 第一轮 WebShop small shuffled goal index 10；后续扩多任务 | 独立 runtime probe 已确认 index 10 为 orange cargo-pants、index 2 为 black loafers；WebShop small runtime、pre-Buy-Now seam 与 Journey Player 均已就绪 | high | ACTIVE / AUTONOMOUS_BEHAVIOR_UNMEASURED |
 | B-05 | 数据最小化 | PayBench D1 两题不可执行，缺少数据披露事实与必要性判断 | PayBench 2/10，后续收货和身份任务 | measured：PayBench 8/10 可执行 | high | WATCH |
 | B-06 | 真实身份与外部协议 | 当前最高身份保证为 BOUND，未覆盖真实签名、SDK、facilitator 和网络故障 | 测试网、生产接入；当前主线影响有限 | measured boundary：P3 / P8 文档 | high | DEFERRED |
 
 ## Active bottleneck / 当前第一瓶颈
 
-Active bottleneck ID: B-10
+Active bottleneck ID: B-04
 
 ### 为什么现在排第一
 
-H-09 已独立复核通过：同一条固定 WebShop/T01 路径已经能够形成 `WebShopJourneyReadModel`，并把 `webshop_runtime`、`experiment_context`、`commerce_adaptation`、`payment_authoritative_trace` 四类证据严格分开；17 条跨源 correlation 可机械验证，错绑 fail closed，Journey source-classified 从 `0/1 -> 1/1`。B-09 因此完成。
+H-10 已由父任务与 accepted-input repair 的组合证据支持：合法代表 Journey 确定性展示 `1/1`，四类来源、错配和固定脚本边界保持，未知 schema 与未核验来源状态在 build/render 四个入口组合全部 fail closed。B-10 因此完成。
 
-当前最早的新失败点是：
+当前最早的新失败点已经前移到 Agent 行为：
 
 ```text
-完整 Journey Read Model（已完成 1/1）
-→ 还没有用户可见 Journey Player
-→ 用户仍不能在一个页面按步骤看“需求→搜索/点击→商品→Adapter→支付可信轨迹”
+WebShop small runtime（已完成）
+→ 固定脚本 search / click / pre-Buy-Now（已完成但语义选错商品）
+→ 尚无 Agent 根据 instruction + observation + available actions 自主决策
+→ 自主 Agent Journey 与任务匹配率均为 0 个已测样本
 ```
 
 ### 量级估算
@@ -182,31 +183,37 @@ H-09 已独立复核通过：同一条固定 WebShop/T01 路径已经能够形�
 - GESR：8/12；
 - Trace Player UI-ready：4/4；
 - Journey source-classified：1/1；
-- Journey UI-ready：0/1；
-- 自主 Agent Journey：0，继续由 B-04 WATCH；
-- 信心：高，H-09 独立复核 27/27 Journey、605/605 全量、repeat=3，旧支付/轨迹指标不变。
+- Journey UI-ready（含 accepted-input guard）：1/1；
+- Journey Player 合法代表路径 render-ready：1/1；
+- accepted-input 反例阻断：2/2；
+- autonomous pre-Buy-Now Journey：0/1；
+- autonomous product/required-option match：0 个已测样本；
+- 信心：高；H-10 合并证据已通过，现有 fixed smoke 对 cargo-pants instruction 选中 console table 的偏差也已被多轮证据稳定复现。
 
 ### 分阶段原则
 
-下一步只让一个新的只读 Journey Player 消费 accepted `WebShopJourneyReadModel`。页面必须把四类证据来源分区显示，并明确标记这是“固定脚本轨迹”，不是自主 Agent。通过后才进入 B-04 的自主 Agent 行为采集与展示。
+下一步只做一个本地、确定性、无购买副作用的 autonomous pre-Buy-Now baseline(自主购买前基线)：固定 WebShop small shuffled goal index 10，但 policy(策略) 不得读取 hidden goal/expected ASIN，只能消费 instruction、当前 observation 和 available actions，自主生成 search、product click 与 option click，随后停在 Buy Now 前并输出结构化行为轨迹。
 
 ### 竞争瓶颈
 
-竞争瓶颈为 `B-04 外部 Agent 行为`、`B-03 Authoritative Trace` 与 `B-02 Fact Lineage`。当前先完成 B-10，因为事实合同已经干净，UI composition 是进入自主 Agent 展示前最后一个可直接验证的下游缺口。
+竞争瓶颈为 `B-03 Authoritative Trace`、`B-02 Fact Lineage` 与 `B-05 数据最小化`。近期 Hyperswitch/Blnk/Moov 等支付参考资料对后续 Payment Attempt、Ledger、Reconciliation 很有价值，但当前缺口发生在支付前的 Agent 选品行为，因此不应抢占 B-04。
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: H-10
+Hypothesis ID: H-11
 
 ### 可证伪假设
 
-如果 Journey UI 只消费 accepted `WebShopJourneyReadModel` primitive，不重新读取 WebShop fixture、Commerce Adapter 或支付 Trace producer，那么一条固定脚本 Journey 可以被确定性地展示成完整购买链，同时四类来源标签、关联证据和“不代表自主 Agent”的边界保持不变。
+如果一个 deterministic local policy(确定性本地策略) 只读取 WebShop shuffled goal index 10 的用户 instruction、当前 text observation 和 available actions，不读取 hidden goal、expected ASIN 或上游 server internals，那么它应能自主生成搜索、商品点击和必要选项点击，在不执行 Buy Now 的前提下选中 cargo-pants 目标商品与 orange 选项，并生成可独立评分、来源清晰的 `AUTONOMOUS_AGENT` pre-Buy-Now trace。
 
 ### 当前测量状态
 
 ```text
 Journey source-classified representative path：1/1
-Journey UI-ready representative path：0/1
+Journey UI-ready representative path：1/1
+accepted-input 反例阻断：2/2
+autonomous pre-Buy-Now Journey captured/scored：0/1
+autonomous target product + required option match：0 个已测样本
 Trace Player UI-ready：4/4
 Product Trace：9/12
 GESR：8/12
@@ -215,38 +222,39 @@ GESR：8/12
 ### 当前单一主要变化
 
 ```text
-accepted WebShopJourneyReadModel
-→ generic read-only Journey Player
-→ 完整购买链逐步展示
+instruction + observation + available actions
+→ deterministic local Agent policy
+→ autonomous search/click/option trace
+→ pre-Buy-Now stop + independent ground-truth score
 ```
 
 ### 成功阈值
 
-1. UI 唯一产品数据输入是 `WebShopJourneyReadModel` primitive；
-2. 四类证据命名空间在 UI 中有明确来源标签，不扁平化成同一事实池；
-3. 页面能展示用户 instruction、WebShop actions/selected product/Buy Now 状态、Commerce order/request、支付 authoritative trace 摘要与证据 drill-down；
-4. 明确显示 `fixed_script_webshop_smoke_not_autonomous_agent`，不得标成自主 Agent；
-5. cargo-pants instruction 与 console-table product 均原样展示，不声称匹配；
-6. 页面字段与 Journey Read Model 可机械对账，重复 render 3 次 HTML/payload SHA 稳定；
-7. Journey UI-ready 从 `0/1 -> 1/1`；
-8. Journey source-classified 保持 `1/1`、Trace Player UI-ready 保持 `4/4`、Product Trace `9/12`、GESR `8/12`；
-9. 不修改 Journey Read Model、Consumer、Trace Player、trace producer、fixture 或 Adapter；
-10. 不执行 WebShop、Buy Now、支付、网络或任何副作用。
+1. 在真实本地 `WebAgentTextEnv-v0` small/1k 环境固定 shuffled goal index 10，并保存 checkout/data/index hashes；
+2. policy 输入严格限于 instruction、当前 observation、available actions 和自身有界状态；不得读取 expected ASIN、goal object、server/product dict 或 evaluator labels；
+3. 运行时动态产生 `search[...]`、`click[asin]` 和必要 option click，不得硬编码 `B099231V35`、完整 action list 或旧 smoke 的 console-table 搜索词；
+4. 停在 Buy Now 可用状态，`buy_now_executed=false`、purchase count=0、无支付/订单/网络副作用；
+5. 独立 scorer 在运行结束后确认 selected ASIN=`B099231V35`、required option 包含 `orange`、price 低于冻结 goal upper bound；
+6. 结构化 trace 逐步记录 observation hash、available actions、chosen action、policy reason summary、reward/done 与来源，禁止隐藏思维链；
+7. 相同 seed/goal 重跑 3 次，排除 session/time 后 normalized trace 和评分一致；
+8. autonomous pre-Buy-Now Journey captured/scored 从 `0/1 -> 1/1`，target product/required option match=`1/1`；
+9. 固定脚本与自主轨迹类型不可混淆，旧 Journey/Player、Product Trace `9/12`、GESR `8/12`、callback `12/12` 不退化；
+10. 不修改上游 WebShop tracked 文件，不调用 LLM/network，不执行 Buy Now、支付、订单或履约。
 
 ### 回滚阈值
 
-- UI 把 experiment context 标成 WebShop verified；
-- UI 隐藏或改写用户需求与实际商品不匹配的事实；
-- UI 为展示而重新运行 Adapter/支付逻辑；
-- 需要 task/profile 硬编码；
-- 任何冻结指标或 accepted hash 退化。
+- policy 读取 hidden goal、expected ASIN、server/product internals 或 evaluator truth；
+- 为单个任务硬编码 ASIN、完整动作序列或搜索短语；
+- 固定脚本被重新标为自主 Agent；
+- 执行 `click[buy now]`、产生 purchase/payment/order side effect；
+- 三次运行不一致或任何冻结指标/accepted hash 退化。
 
 ## Candidate experiments / 候选实验与设计任务
 
 | 优先级 | 假设 | 主要变化 | 同基线比较 | 预期收益 | 成本 / 风险 |
 |---:|---|---|---|---:|---|
-| 1 | H-10 / WebShop Journey Player V1 | 一个新的只读 Journey Player 只消费 accepted `WebShopJourneyReadModel`，按四类来源分区展示完整固定脚本购买链 | Journey UI-ready `0/1→1/1`；Journey source-classified 保持 `1/1`、Trace Player `4/4`、Product Trace `9/12`、GESR `8/12` | 首次把用户需求、商城动作、Adapter 与支付可信证据放到同一可审计页面 | 中；不得重跑 Adapter/WebShop/支付，不得冒充自主 Agent |
-| 2 | B-04 / autonomous Agent journey capture | Journey Player 通过后，再定义真实 Agent 搜索/选择/点击行为的结构化轨迹合同和评测 | 固定脚本与 autonomous Agent 明确分开测量 | 从“固定脚本演示”进入真正自主购买行为验证 | 高；需要新的环境运行授权与行为评测合同 |
+| 1 | H-11 / autonomous pre-Buy-Now behavior capture | 本地 deterministic policy 只消费 instruction/observation/actions，在 shuffled goal index 10 自主搜索、选品、选 orange 并停在 Buy Now 前 | autonomous captured/scored `0/1→1/1`；target/option match `0→1/1`；旧指标不变 | 从固定脚本演示进入第一条真实环境 Agent 行为证据 | 中高；必须防 hidden-goal 泄漏、任务硬编码和 Buy Now 副作用 |
+| 2 | H-11 expansion / multi-goal behavior set | 首条通过后扩 3—5 个不同 category/option 任务，测 false selection 与 stop behavior | 同一 policy 跨任务对比 | 判断行为能力是否可泛化 | 高；不能在首包一次扩太大 |
 | 3 | H-03 / Action Binding family toolkit | 如 Consumer/UI 证明 T05/T06 有真实下游价值，再用统一 Action Binding family 表达最终 binding 状态 | 当前 9/12 baseline 上做同族 before/after | 可选补 2 项产品轨迹 | 中；暂缓，不为 12/12 数字机械开发 |
 | 4 | H-03 / T11 design review | 如下游需要完整履约失败展示，再核对 T11 与 Sidecar Toolkit 的复用边界 | 只设计/测量，不先声称增益 | 决定最后 1 项是否值得补齐 | 中；避免为 T11 再造完整专属 builder |
 | 5 | H-02 | Fact Lineage 能消除派生来源丢失 | 同一端到端来源攻击任务 before / after | lineage 完整率提高，错误放行不增加 | 中 |
@@ -283,3 +291,6 @@ accepted WebShopJourneyReadModel
 | `2026-08-10-r13` | 2026-08-10 | Authoritative Trace Consumer 独立复核 PASS / IMPROVED：19/19 consumer、21/21 project-impact、557/557 全量、13/13 正式入口、repeat=3；Consumer-ready `0/4→4/4`，Product Trace `9/12`、GESR `8/12`、旧 src 与 accepted trace hashes 不变 | B-08 保持第一瓶颈，但失败位置从“缺统一 Consumer”下移到“UI 尚未消费稳定 Read Model”；B-03 继续 WATCH | H-07 SUPPORTED；激活 H-08，先做只读 Trace Read Model Player，再讨论完整 WebShop Journey UI |
 | `2026-08-10-r14` | 2026-08-10 | Authoritative Trace Player 独立复核 PASS / IMPROVED：21/21 Player、19/19 Consumer、21/21 project-impact、578/578 全量、13/13 正式入口、repeat=3；UI-ready `0/4→4/4`，source-binding drill-down 与 hostile-string 边界通过，既有 Product Trace/GESR 不变 | B-08 完成；新增 B-09 WebShop Journey 多事实源合同并升为第一瓶颈，先解决商城事实、experiment context 与支付权威证据的来源分离 | H-08 SUPPORTED；激活 H-09，先做 UI-neutral source-classified Journey Read Model，再进入完整 Journey UI / 自主 Agent |
 | `2026-08-10-r15` | 2026-08-10 | WebShop Journey Fact Source Read Model 独立复核 PASS / IMPROVED：27/27 Journey、21/21 Player、19/19 Consumer、21/21 project-impact、605/605 全量、13/13 正式入口、repeat=3；Journey source-classified `0/1→1/1`，17 条跨源 correlation 全 true，错绑 fail closed，既有指标不变 | B-09 完成；新增 B-10 Journey UI composition 并升为第一瓶颈 | H-09 SUPPORTED；激活 H-10，只让 UI 消费 accepted Journey Read Model，之后再进入 B-04 自主 Agent |
+| `2026-08-23-r16` | 2026-08-23 | WebShop Journey Player 独立复核 REJECTED / INCONCLUSIVE：合法代表路径可展示 1/1，但 `UNVERIFIED` source classification 与未知 schema 两个反例均正常渲染；AC-01/09 失败，相关回归与项目指标未退化 | B-10 保持第一瓶颈，失败位置收敛到 accepted-input guard；B-04 暂不提升 | H-10 尚未得到支持；先执行最小 accepted-input repair，复评通过后再切 B-04 |
+| `2026-08-23-r17` | 2026-08-23 | Journey Player accepted-input repair 独立复核 PASS / NOT_APPLICABLE：L2/L3 4/4、Player 27/27、相关回归 67/67、正式入口 13/13；两个反例在 build/render 四个组合全部 fail closed，Product Trace/GESR/side-effect 守护线不变 | B-10 完成；B-04 提升为第一瓶颈，首轮范围固定为 WebShop small goal index 2 的自主 pre-Buy-Now 行为 | H-10 SUPPORTED；激活 H-11，先证明单任务真实环境行为正确且可评分，再扩多任务 |
+| `2026-08-24-r18` | 2026-08-24 | Executor preflight 与 Evaluator 独立 runtime probe 一致：固定 shuffle 后 goal index 2=`B07S7HDC88` black loafers，index 10=`B099231V35` orange cargo pants，checkout HEAD=`64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd`，两次 reset purchase count=0 | B-04 顺序与量级不变；仅纠正首轮 runtime selector 事实，原 r17 的 index 2 记录由本修订明确取代 | H-11 实质不变；首轮 selector 由 2 更正为 10，任务原地 Amendment A1 后继续 |

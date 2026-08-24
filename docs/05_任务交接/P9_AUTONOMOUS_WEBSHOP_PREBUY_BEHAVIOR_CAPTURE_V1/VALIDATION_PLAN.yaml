@@ -1,0 +1,112 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: P9-AUTONOMOUS-WEBSHOP-PREBUY-BEHAVIOR-CAPTURE-V1
+
+checks:
+  - id: VP-01
+    ac:
+      - AC-01
+      - AC-03
+      - AC-06
+    cwd: .
+    command:
+      - python
+      - -m
+      - unittest
+      - tests.test_webshop_agent_behavior
+      - -v
+    evaluator_command:
+      - python
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_PREBUY_BEHAVIOR_CAPTURE_V1/evaluator_checks/policy_source_boundary.py
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-02
+    ac:
+      - AC-02
+      - AC-03
+      - AC-04
+    cwd: .
+    command:
+      - <LOCAL_SOFTWARE>\Anaconda\workspace\.conda\envs\webshop38\python.exe
+      - scripts/validation/webshop/run_autonomous_prebuy_behavior.py
+      - --checkout
+      - local_sources/third_party/webshop
+      - --goal-index
+      - "10"
+      - --seed
+      - "20260823"
+      - --repeat
+      - "3"
+      - --expected-asin
+      - B099231V35
+      - --expected-option
+      - orange
+      - --expected-price
+      - "16.79"
+      - --output
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_PREBUY_BEHAVIOR_CAPTURE_V1/evidence/EV-AUTONOMOUS-BEHAVIOR.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-03
+    ac:
+      - AC-02
+      - AC-03
+      - AC-04
+    cwd: .
+    command:
+      - python
+      - scripts/validation/webshop/validate_autonomous_prebuy_behavior.py
+      - --result
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_PREBUY_BEHAVIOR_CAPTURE_V1/evidence/EV-AUTONOMOUS-BEHAVIOR.json
+    evaluator_command:
+      - python
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_PREBUY_BEHAVIOR_CAPTURE_V1/evaluator_checks/runtime_result_audit.py
+      - --result
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_PREBUY_BEHAVIOR_CAPTURE_V1/evidence/EV-AUTONOMOUS-BEHAVIOR.json
+      - --expected-asin
+      - B099231V35
+      - --expected-option
+      - orange
+      - --expected-price
+      - "16.79"
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-04
+    ac:
+      - AC-05
+    cwd: .
+    command:
+      - python
+      - -m
+      - unittest
+      - tests.test_webshop_journey_player
+      - tests.test_webshop_journey_read_model
+      - -v
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-05
+    ac:
+      - AC-05
+    cwd: .
+    command:
+      - python
+      - run_experiment.py
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-06
+    ac:
+      - AC-05
+    cwd: .
+    command:
+      - python
+      - scripts/validation/run_project_impact_baseline.py
+      - --repeat
+      - "3"
+      - --output
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_PREBUY_BEHAVIOR_CAPTURE_V1/evidence/EV-AFTER-baseline.json
+    expected_exit_code: 0
+    mandatory: true

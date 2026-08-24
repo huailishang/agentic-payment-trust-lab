@@ -66,6 +66,35 @@ class WebShopJourneyPlayerTest(unittest.TestCase):
                 with self.assertRaises(WebShopJourneyPlayerInputError):
                     build_webshop_journey_player_payload(value)
 
+    def test_unverified_source_classification_fails_closed(self) -> None:
+        bad = replace(self.journey, source_classification_status="UNVERIFIED")
+        for operation in (
+            build_webshop_journey_player_payload,
+            render_webshop_journey_player,
+        ):
+            with self.subTest(operation=operation.__name__):
+                with self.assertRaisesRegex(
+                    WebShopJourneyPlayerInputError,
+                    "source_classification_status",
+                ):
+                    operation(bad)
+
+    def test_unknown_journey_schema_version_fails_closed(self) -> None:
+        bad = replace(
+            self.journey,
+            schema_version="webshop-journey-read-model/v999",
+        )
+        for operation in (
+            build_webshop_journey_player_payload,
+            render_webshop_journey_player,
+        ):
+            with self.subTest(operation=operation.__name__):
+                with self.assertRaisesRegex(
+                    WebShopJourneyPlayerInputError,
+                    "schema_version",
+                ):
+                    operation(bad)
+
     def test_embedded_payload_equals_journey_primitive_exactly(self) -> None:
         html = render_webshop_journey_player(self.journey)
         self.assertEqual(self.primitive, embedded_payload(html))
