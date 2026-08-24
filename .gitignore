@@ -11,3 +11,7 @@ build/
 artifacts/
 local_sources/
 local_archive/
+
+# Evaluator/Executor raw execution evidence is local-only in this public repository.
+# Keep TASK_CONTRACT / EXECUTOR_REPORT / EVALUATOR_REVIEW in Git; regenerate raw evidence locally.
+docs/05_任务交接/**/evidence/
