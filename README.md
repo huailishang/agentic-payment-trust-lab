@@ -1,8 +1,8 @@
 # Agentic Payment Trust Lab
 
-**智能体支付可信实验室**：一个本地、离线、可重复的智能体支付安全与可信执行实验项目。
+**智能体支付可信实验室**：Enterprise Agent Control Plane（企业智能体控制平面）的**高风险交易 / 智能体支付信任验证场，也是当前最严格的 Security（安全）压力测试场**。项目用本地、离线、可重复实验验证：当 Agent 开始代表用户下单、付款、退款和恢复时，控制平面的身份、授权、策略、Binding（绑定）、交易完整性、幂等、Trace（轨迹）与审计 / 恢复机制是否足够可靠。
 
-> 仓库名与公开项目名统一为 `agentic-payment-trust-lab`。项目面向通用智能体支付授权、安全、可信执行与评测，不局限于信用卡。
+> 仓库名与公开项目名统一为 `agentic-payment-trust-lab`。项目面向未来通用智能体支付，不局限于信用卡；支付业务规则留在本项目，跨领域稳定复用的控制机制才考虑回抽 `agent-runtime-platform`。
 
 本项目不教智能体“怎样更快付款”，而是重点研究：
 
@@ -23,6 +23,20 @@ Agent 凭什么可以付？
 ```
 
 本项目只用于学习、研究、回放和开发者验证，不接生产支付、真实银行卡、真实客户数据、真实资金、生产私钥或清算网络。实验通过不等于生产安全、业务合法或监管合规。
+
+## Security（安全）与 Blockchain（区块链）边界
+
+Payment Trust 不等于传统防火墙 / 漏洞扫描，而是重点验证 Agent 时代的 Identity（身份）、Delegated Authorization（委托授权）、Context / Tool Integrity（上下文 / 工具完整性）、Transaction Integrity（交易完整性）、Credential / Key（凭据 / 密钥）、Replay / Idempotency（重放 / 幂等）、Audit / Recovery（审计 / 恢复）等高风险安全问题。
+
+Blockchain（区块链）**不是本项目的新主线**，只在真实问题需要时作为外部机制参考或实验来源：
+
+- Wallet / Key / Credential（钱包 / 密钥 / 凭据）；
+- Signature + Transaction Binding（签名 + 具体交易绑定）；
+- Nonce / Replay Protection（随机数 / 重放防护）；
+- Verifiable Transaction / Finality（可验证交易 / 最终性）；
+- 跨主体确有需要时的 Audit / Settlement Evidence（审计 / 结算证据）。
+
+如果普通数据库审计日志、签名、幂等键或现有支付网络已经能满足问题，默认不用链；Token、发币、DeFi、共识、智能合约和“所有数据上链”不会因为使用了区块链技术就自动进入开发范围。
 
 ## 当前能力
 
