@@ -367,6 +367,7 @@ transaction_object_ref
 payment_ref
 source_type
 source_ref
+action_origin
 decision
 reason_codes
 previous_event_ref
@@ -410,6 +411,35 @@ PAYMENT_PROVIDER_OBSERVED
 ```
 
 这比“再加 10 个 Prompt Injection 案例”更接近真正稳定的 Trust Boundary 能力。
+
+### 8.4 Action Origin 与责任证据视图
+
+`source_type` 回答“这条事实从哪里来”，但在自主 Agent 场景中还需要额外回答：
+
+> **这一步是谁决定的：用户明确授权、Agent 自主选择、Runtime 裁决，还是外部系统返回的事实 / 执行结果？**
+
+首版不新增领域对象，只给 Evidence / Replay 与 Autonomous Trace 增加 `action_origin`（行为来源）语义：
+
+```text
+USER_AUTHORITY
+    用户明确表达或确认的目标、约束与授权
+
+AGENT_DECISION
+    Agent 在授权边界内自主形成的搜索、选择、选项或动作
+
+RUNTIME_DECISION
+    Runtime Authorization Gate / Policy 的执行前裁决
+
+EXTERNAL_FACT
+    商户、支付服务商、网页、工具或协议提供的外部事实
+
+EXECUTION_RESULT
+    支付执行、状态、履约、退款或恢复结果
+```
+
+`action_origin` 与 `source_type` 不重复：同一个 `AGENT_DECISION` 仍可能依赖不同来源事实；同一个 `EXTERNAL_FACT` 也必须保留它来自 `MERCHANT_PROVIDED`、`PAYMENT_PROVIDER_OBSERVED` 还是 `WEB_UNTRUSTED`。
+
+在此基础上允许生成一个派生的 `Accountability View`（责任证据视图）：沿 User Intent → Authority → Agent Decision → Runtime Decision → Execution → Recovery 找到**首个违反既定 Trust Contract 的证据断点**。该断点可标记为 `responsibility_breakpoint`，用于审计、回放和技术归因，但**不得直接推导法律责任、赔偿责任、监管责任或机构间最终权责分配**。
 
 ## 9. 六个对象之间最重要的关系
 
@@ -480,7 +510,7 @@ Payment Execution
 Evidence / Replay Events
 ```
 
-必须能还原完整因果链。
+必须能还原完整因果链，并机械区分 `USER_AUTHORITY`（用户授权）与 `AGENT_DECISION`（Agent 自主决策）；需要责任分析时，再从既有事件链派生 `responsibility_breakpoint`（责任断点），不新增第 7 个领域对象。
 
 ### R6. Runtime Authorization Gate：关系汇合后的执行前裁决
 
