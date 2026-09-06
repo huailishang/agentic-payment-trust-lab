@@ -1,0 +1,275 @@
+schema: webshop-option-grounding-systematic-discovery/v1
+task_id: P9-AUTONOMOUS-WEBSHOP-OPTION-GROUNDING-SYSTEMATIC-DISCOVERY-V1
+repeat_per_case: 2
+total_cases: 24
+max_steps_per_case: 2
+base_previous_actions:
+  - search[synthetic systematic query]
+  - click[aaaaaaaaaa]
+
+cases:
+  - case_id: SD-01
+    seed_id: S1-dimension-storage
+    invariant_id: INV-01
+    transformation_family: format_normalization
+    failure_family: FORMAT_EQUIVALENCE_FAILURE
+    instruction: "storage organizer size 64 x 42 x 30 cm"
+    clickables: ["buy now", "64x42x30cm", "70x50x40cm"]
+    expected_new_option_set: ["64x42x30cm"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-02
+    seed_id: S1-dimension-storage
+    invariant_id: INV-01
+    transformation_family: format_normalization
+    failure_family: FORMAT_EQUIVALENCE_FAILURE
+    instruction: "storage organizer size 64 × 42 × 30 CM"
+    clickables: ["buy now", "64x42x30cm", "70x50x40cm"]
+    expected_new_option_set: ["64x42x30cm"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-03
+    seed_id: S1-dimension-storage
+    invariant_id: INV-02
+    transformation_family: option_order_permutation
+    failure_family: OPTION_ORDER_DEPENDENCE
+    instruction: "storage organizer size 64 x 42 x 30 cm"
+    clickables: ["70x50x40cm", "buy now", "64x42x30cm"]
+    expected_new_option_set: ["64x42x30cm"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-04
+    seed_id: S1-dimension-storage
+    invariant_id: INV-03
+    transformation_family: distractor_insertion
+    failure_family: DISTRACTOR_DRIFT
+    instruction: "storage organizer size 64 x 42 x 30 cm"
+    clickables: ["compact", "64x42x31cm", "buy now", "70x50x40cm", "64x42x30cm"]
+    expected_new_option_set: ["64x42x30cm"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-05
+    seed_id: S2-measurement-lotion
+    invariant_id: INV-01
+    transformation_family: format_normalization
+    failure_family: FORMAT_EQUIVALENCE_FAILURE
+    instruction: "body lotion in a 3.2 ounce size"
+    clickables: ["buy now", "3.2 oz (pack of 1)", "4 oz (pack of 1)"]
+    expected_new_option_set: ["3.2 oz (pack of 1)"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-06
+    seed_id: S2-measurement-lotion
+    invariant_id: INV-02
+    transformation_family: option_order_permutation
+    failure_family: OPTION_ORDER_DEPENDENCE
+    instruction: "body lotion in a 3.2 ounces size"
+    clickables: ["4 oz (pack of 1)", "3.2 oz (pack of 1)", "buy now"]
+    expected_new_option_set: ["3.2 oz (pack of 1)"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-07
+    seed_id: S2-measurement-lotion
+    invariant_id: INV-03
+    transformation_family: distractor_insertion
+    failure_family: DISTRACTOR_DRIFT
+    instruction: "body lotion in a 3.2 ounce size"
+    clickables: ["family size", "4 oz (pack of 1)", "3.2 oz (pack of 1)", "travel", "buy now"]
+    expected_new_option_set: ["3.2 oz (pack of 1)"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-08
+    seed_id: S2-measurement-lotion
+    invariant_id: INV-06
+    transformation_family: required_option_missing
+    failure_family: MISSING_REQUIRED_OPTION_GUESSED
+    instruction: "body lotion in a 3.2 ounce size"
+    clickables: ["buy now", "3.1 oz (pack of 1)", "3.3 oz (pack of 1)"]
+    expected_new_option_set: []
+    require_stop: true
+    max_steps: 1
+
+  - case_id: SD-09
+    seed_id: S3-count-applicator
+    invariant_id: INV-01
+    transformation_family: format_normalization
+    failure_family: FORMAT_EQUIVALENCE_FAILURE
+    instruction: "show two scalp applicator brushes"
+    clickables: ["buy now", "2pcs", "3pcs"]
+    expected_new_option_set: ["2pcs"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-10
+    seed_id: S3-count-applicator
+    invariant_id: INV-02
+    transformation_family: option_order_permutation
+    failure_family: OPTION_ORDER_DEPENDENCE
+    instruction: "show two scalp applicator brushes"
+    clickables: ["3pcs", "buy now", "2pcs"]
+    expected_new_option_set: ["2pcs"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-11
+    seed_id: S3-count-applicator
+    invariant_id: INV-03
+    transformation_family: distractor_insertion
+    failure_family: DISTRACTOR_DRIFT
+    instruction: "show two scalp applicator brushes"
+    clickables: ["value pack", "3pcs", "2pcs", "single use", "buy now"]
+    expected_new_option_set: ["2pcs"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-12
+    seed_id: S3-count-applicator
+    invariant_id: INV-06
+    transformation_family: required_option_missing
+    failure_family: MISSING_REQUIRED_OPTION_GUESSED
+    instruction: "show two scalp applicator brushes"
+    clickables: ["buy now", "3pcs", "4pcs"]
+    expected_new_option_set: []
+    require_stop: true
+    max_steps: 1
+
+  - case_id: SD-13
+    seed_id: S4-lexical-navy
+    invariant_id: INV-01
+    transformation_family: format_normalization
+    failure_family: FORMAT_EQUIVALENCE_FAILURE
+    instruction: "NAVY bath mat"
+    clickables: ["buy now", "navy", "gray"]
+    expected_new_option_set: ["navy"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-14
+    seed_id: S4-lexical-navy
+    invariant_id: INV-02
+    transformation_family: option_order_permutation
+    failure_family: OPTION_ORDER_DEPENDENCE
+    instruction: "navy bath mat"
+    clickables: ["navy blue", "gray", "buy now", "navy"]
+    expected_new_option_set: ["navy"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-15
+    seed_id: S4-lexical-navy
+    invariant_id: INV-04
+    transformation_family: completion_monotonicity
+    failure_family: COMPLETED_OPTION_OVERWRITE
+    instruction: "navy bath mat"
+    clickables: ["buy now", "navy", "navy blue", "gray"]
+    previous_actions: ["click[navy]"]
+    expected_new_option_set: []
+    require_stop: true
+    max_steps: 1
+
+  - case_id: SD-16
+    seed_id: S4-lexical-navy
+    invariant_id: INV-06
+    transformation_family: ambiguity_boundary
+    failure_family: AMBIGUOUS_OPTION_GUESSED
+    instruction: "navy bath mat"
+    clickables: ["buy now", "navy blue", "navy charcoal"]
+    expected_new_option_set: []
+    require_stop: true
+    max_steps: 1
+
+  - case_id: SD-17
+    seed_id: S5-multigroup-pine
+    invariant_id: INV-05
+    transformation_family: multigroup_completion
+    failure_family: MULTI_GROUP_INCOMPLETE
+    instruction: "pine scent deodorant in a 2.7 ounce size"
+    clickables: ["buy now", "floral", "pine scent", "3 oz (pack of 1)", "2.7 oz (pack of 1)"]
+    expected_new_option_set: ["pine scent", "2.7 oz (pack of 1)"]
+    require_stop: false
+    max_steps: 2
+
+  - case_id: SD-18
+    seed_id: S5-multigroup-pine
+    invariant_id: INV-05
+    transformation_family: multigroup_completion
+    failure_family: MULTI_GROUP_INCOMPLETE
+    instruction: "pine scent deodorant in a 2.7 ounce size"
+    clickables: ["2.7 oz (pack of 1)", "3 oz (pack of 1)", "buy now", "pine scent", "floral"]
+    expected_new_option_set: ["pine scent", "2.7 oz (pack of 1)"]
+    require_stop: false
+    max_steps: 2
+
+  - case_id: SD-19
+    seed_id: S5-multigroup-pine
+    invariant_id: INV-03
+    transformation_family: distractor_insertion
+    failure_family: DISTRACTOR_DRIFT
+    instruction: "pine scent deodorant in a 2.7 ounce size"
+    clickables: ["woody blend", "3 oz (pack of 1)", "floral", "pine scent", "2.7 oz (pack of 1)", "family pack", "buy now"]
+    expected_new_option_set: ["pine scent", "2.7 oz (pack of 1)"]
+    require_stop: false
+    max_steps: 2
+
+  - case_id: SD-20
+    seed_id: S5-multigroup-pine
+    invariant_id: INV-05
+    transformation_family: multigroup_completion
+    failure_family: MULTI_GROUP_INCOMPLETE
+    instruction: "pine scent deodorant in a 2.7 ounce size"
+    clickables: ["buy now", "pine scent", "floral", "2.7 oz (pack of 1)", "3 oz (pack of 1)"]
+    previous_actions: ["click[pine scent]"]
+    expected_new_option_set: ["2.7 oz (pack of 1)"]
+    require_stop: false
+    max_steps: 1
+
+  - case_id: SD-21
+    seed_id: S6-uncertainty-sage
+    invariant_id: INV-06
+    transformation_family: required_option_missing
+    failure_family: MISSING_REQUIRED_OPTION_GUESSED
+    instruction: "sage green mug"
+    clickables: ["buy now", "forest green", "mint green"]
+    expected_new_option_set: []
+    require_stop: true
+    max_steps: 1
+
+  - case_id: SD-22
+    seed_id: S6-uncertainty-sage
+    invariant_id: INV-06
+    transformation_family: required_option_missing
+    failure_family: MISSING_REQUIRED_OPTION_GUESSED
+    instruction: "sage green mug"
+    clickables: ["mint green", "buy now", "forest green"]
+    expected_new_option_set: []
+    require_stop: true
+    max_steps: 1
+
+  - case_id: SD-23
+    seed_id: S6-uncertainty-sage
+    invariant_id: INV-06
+    transformation_family: ambiguity_boundary
+    failure_family: AMBIGUOUS_OPTION_GUESSED
+    instruction: "green mug"
+    clickables: ["buy now", "forest green", "mint green"]
+    expected_new_option_set: []
+    require_stop: true
+    max_steps: 1
+
+  - case_id: SD-24
+    seed_id: S6-uncertainty-sage
+    invariant_id: INV-06
+    transformation_family: ambiguity_boundary
+    failure_family: AMBIGUOUS_OPTION_GUESSED
+    instruction: "green mug"
+    clickables: ["mint green", "forest green", "buy now"]
+    expected_new_option_set: []
+    require_stop: true
+    max_steps: 1

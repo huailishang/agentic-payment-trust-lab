@@ -1,0 +1,36 @@
+{
+  "schema": "same-journey-baseline-lifecycle/v1",
+  "historical": {
+    "accepted_behavior_path": "docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_PREBUY_BEHAVIOR_CAPTURE_V1/evidence/EV-AUTONOMOUS-BEHAVIOR.json",
+    "accepted_behavior_sha256": "cb11bdc27e514118c8e9ae69384be16d188ec08bba7c1d4514d6b3c50e316dd0",
+    "policy_sha256": "af2a8530c661709c35a806f4074c38691ba9718f63d2f4d3aa8a2f5d2aa61189",
+    "trace_sha256": "8c0a03b2f2e5dd9dce051ce176c546e2e171b5e7eacfdb36b258ba04dddd5897",
+    "role": "historical_behavior_and_safety_regression_only"
+  },
+  "current": {
+    "policy_path": "src/agentic_payment_experiment/webshop_agent_behavior.py",
+    "policy_sha256": "6133eaac32d2c806028d6ecdd9ab4887f45eb4a2a63e0bc8a5cc63331d4ddd5f",
+    "driver_path": "scripts/validation/webshop/run_autonomous_prebuy_behavior.py",
+    "driver_sha256": "8c3b1b893449502dd2096cc86ac5b6ada693468667acde10f1c01c2064109a40",
+    "checkout_head": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+    "baseline_path": "docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_SAME_JOURNEY_BASELINE_LIFECYCLE_REPAIR_V1/evaluator_baseline/CURRENT_POLICY_AUTONOMOUS_BEHAVIOR.json",
+    "baseline_sha256": "cdbece32497a4935ecd8048d8e83c5c26105d393657dfa6a645950e815ca234d",
+    "trace_sha256": "b99e99e8be4ffa43c744375deec287130e0cee0275a07a4d1de34ed11a6187a5",
+    "goal_index": 10,
+    "seed": 20260823,
+    "repeat": 3,
+    "repeat_identical": true,
+    "selected_asin": "B099231V35",
+    "selected_option": "orange",
+    "selected_price": "16.79",
+    "real_buy_now_count": 0,
+    "real_payment_order_network_side_effect_count": 0,
+    "role": "current_policy_reproducibility_identity"
+  },
+  "measurement_rule": {
+    "historical_trace_must_equal_current_trace": false,
+    "historical_final_behavior_must_regress": true,
+    "current_policy_trace_must_repeat_identically": true,
+    "same_journey_correlation_uses_current_baseline": true
+  }
+}

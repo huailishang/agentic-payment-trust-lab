@@ -1,0 +1,90 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: P9-AUTONOMOUS-WEBSHOP-SAME-JOURNEY-BASELINE-LIFECYCLE-REPAIR-V1
+
+checks:
+  - id: VP-01
+    ac: [AC-01, AC-02]
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_SAME_JOURNEY_BASELINE_LIFECYCLE_REPAIR_V1/evaluator_checks/baseline_lifecycle_audit.py
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-02
+    ac: [AC-02, AC-07]
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_SAME_JOURNEY_BASELINE_LIFECYCLE_REPAIR_V1/evaluator_checks/same_journey_source_audit.py
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-03
+    ac: [AC-03, AC-04, AC-05, AC-06]
+    cwd: .
+    command:
+      - /mnt/d/SoftWare/Anaconda/workspace/.conda/envs/webshop38/python.exe
+      - scripts/validation/webshop/run_same_journey_responsibility.py
+      - --checkout
+      - local_sources/third_party/webshop
+      - --goal-index
+      - "10"
+      - --seed
+      - "20260823"
+      - --repeat
+      - "2"
+      - --accepted-behavior
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_SAME_JOURNEY_BASELINE_LIFECYCLE_REPAIR_V1/evaluator_baseline/CURRENT_POLICY_AUTONOMOUS_BEHAVIOR.json
+      - --experiment-context
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_SAME_JOURNEY_BASELINE_LIFECYCLE_REPAIR_V1/evaluator_fixtures/SAME_JOURNEY_EXPERIMENT_CONTEXT.json
+      - --output
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_SAME_JOURNEY_BASELINE_LIFECYCLE_REPAIR_V1/evidence/SAME_JOURNEY_RESULT.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-04
+    ac: [AC-03, AC-04, AC-05, AC-06]
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_SAME_JOURNEY_BASELINE_LIFECYCLE_REPAIR_V1/evaluator_checks/same_journey_result_audit.py
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_SAME_JOURNEY_BASELINE_LIFECYCLE_REPAIR_V1/evidence/SAME_JOURNEY_RESULT.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-05
+    ac: [AC-07]
+    cwd: .
+    command:
+      - python3
+      - -m
+      - unittest
+      - tests.test_action_origin
+      - tests.test_webshop_adapter
+      - tests.test_webshop_runtime_gate
+      - tests.test_webshop_payment_sidecar
+      - -v
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-06
+    ac: [AC-07]
+    cwd: .
+    command: [python3, run_experiment.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-07
+    ac: [AC-07]
+    cwd: .
+    command: [python3, scripts/validation/run_project_impact_baseline.py, --repeat, "3"]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-08
+    ac: [AC-07, AC-08]
+    cwd: .
+    command: [python3, -m, unittest, discover, -s, tests, -v]
+    expected_exit_code: 0
+    mandatory: true

@@ -414,6 +414,8 @@ PAYMENT_PROVIDER_OBSERVED
 
 ### 8.4 Action Origin 与责任证据视图
 
+> 2026-09-06 状态：H-13 已完成五类 `action_origin` `0/5→5/5`；H-17 在修正 stale cross-policy baseline 后又由 Executor L2 与 Evaluator L3 独立证明同一 autonomous journey 的 `C01..C08=8/8`、Trace=`VALID`，因此 B-11 `Action Origin / Responsibility Trace` 已阶段性关闭，当前没有证据要求继续扩全局 `ProductTraceEvent` schema。现阶段 H-18 把这套责任语义作为既有能力，放进 success、UNKNOWN→trusted query、fulfillment failure、query/async conflict 四个互斥离线 payment lifecycle branch（支付生命周期分支）中，测量 Payment State / Finality / Recovery / Lifecycle / Trace 是否仍保持同一 Order/Request/Payment 引用。只有分支测量暴露真实消费者价值或重复断点时，才讨论下沉稳定 Trace contract；technical responsibility trace 仍不得自动推导法律 / 赔偿 / 监管责任。
+
 `source_type` 回答“这条事实从哪里来”，但在自主 Agent 场景中还需要额外回答：
 
 > **这一步是谁决定的：用户明确授权、Agent 自主选择、Runtime 裁决，还是外部系统返回的事实 / 执行结果？**

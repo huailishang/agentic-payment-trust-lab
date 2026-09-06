@@ -1,7 +1,7 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-08-24-r18
-Last reviewed: 2026-08-24
+Map revision: 2026-09-06-r28
+Last reviewed: 2026-09-06
 Map owner: Evaluator / Human Task Owner  
 Status: ACTIVE  
 > 当前新任务统一使用 `evaluator-executor-workflow/v2.2`，按“瓶颈—假设—同基线实验—保留或回滚”闭环推进。
@@ -139,6 +139,9 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 ### 已知盲区
 
 - 当前测试数量增长不能直接等价为项目能力增长；
+- H-14 当前 `5` 个 synthetic/metamorphic probe（合成 / 变形探针）只覆盖**已经暴露出来的规格失败机制**，不是 option-grounding（规格匹配）能力全集；即使达到 `5/5`，也只能证明当前假设在冻结代表样本上成立，不能声称“规格问题已经测全”；
+- 规格能力仍存在未系统发现的组合空间，例如同义表达、大小写/空格/标点变化、单位与数字格式、多个干扰选项、多个规格组、缺失规格、歧义候选、页面顺序变化、部分匹配与冲突请求；这些未知细节不能靠人工逐条穷举，而要用 property/metamorphic testing（性质 / 变形测试）系统发现；
+- 已揭晓 Blind Holdout 只能作为回归证据；任何新的“泛化成立”结论都必须来自下一轮产品修改前冻结的 fresh unseen evidence（新鲜未见证据）；
 - WebShop 已形成多个离线切片，但还没有冻结统一的多步骤 Agent 任务集；
 - 当前没有生产网络、真实支付、真实身份和真实 LLM 行为；
 - PayBench D1 数据最小化仍未覆盖；
@@ -156,108 +159,134 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 | B-09 | WebShop Journey 多事实源合同 | WebShop runtime、experiment context、Commerce Adaptation、payment authoritative trace 四类证据已能在一个 deterministic Journey Read Model 中分层保存并机械关联；错绑 fail closed | 第一轮 1 条固定 WebShop smoke/T01 正常购买路径，Journey source-classified 1/1 | P9 Journey Fact Source Read Model REVIEW：27/27 专项、21/21 Player、19/19 Consumer、21/21 project-impact、605/605 全量、13/13 正式入口、repeat=3；17 条 correlation 全 true，来源边界不变 | high | RESOLVED / SOURCE_CLASSIFIED_JOURNEY_READY |
 | B-10 | WebShop Journey UI composition | 固定脚本 Journey 已能按来源安全进入一个 deterministic Player；accepted-input schema/source-classification 两个反例已全部 fail closed | 第一轮固定脚本 Journey UI-ready 1/1 | Journey Player 父任务合法路径 1/1；accepted-input repair L2/L3 4/4、Player 27/27、两个反例 4 个入口组合全拒绝 | high | RESOLVED / SAFE_JOURNEY_PLAYER_READY |
 | B-07 | 副作用前重复付款保护 | 同 request 已成功付款时，Runtime Gate 已在 callback 前 DENY；无关异常记录不误阻断 | 1/12 固定任务；零容忍支付副作用已消除 | P9 Capability Revalidation REVIEW：duplicate side effect 1/12 → 0/12，callback match 11/12 → 12/12 | high | RESOLVED / MEASURED_IMPROVED |
-| B-04 | 外部 Agent 行为 | 当前 WebShop Journey 仍来自固定 search/click 脚本；没有一条 Agent 只根据 instruction、当前 observation 和 available actions 自主选择商品/选项并被结构化评分的真实环境轨迹 | 第一轮 WebShop small shuffled goal index 10；后续扩多任务 | 独立 runtime probe 已确认 index 10 为 orange cargo-pants、index 2 为 black loafers；WebShop small runtime、pre-Buy-Now seam 与 Journey Player 均已就绪 | high | ACTIVE / AUTONOMOUS_BEHAVIOR_UNMEASURED |
+| B-04 | 外部 Agent 行为 | 已形成真实多步骤 autonomous behavior、H-12 `5/5` 开发/回归证据、Blind Holdout `3/8` 泛化边界、H-14 通用修复与 Systematic Discovery `19/24`；已证明 Agent 可产生真实行为，也证明意图/规格存在难穷举长尾 | 当前价值已从“继续提高购物理解准确率”转为向信任链提供真实 Agent 行为与已知限制；H-15 `2/5` probe 保留为回归资产，不再阻塞主线 | H-14 `PASS / IMPROVED`；Systematic Discovery `PASS / NOT_APPLICABLE`、L3 `4/4 PASS`、48 observations all reproducible、safety hits 0；H-15 在 Executor 开始前 superseded | high | WATCH / BEHAVIOR_BASELINE_ESTABLISHED |
+| B-11 | Action Origin / Responsibility Trace | H-13 已完成 Action Origin `0/5→5/5`；H-17 修正跨 policy 版本基线后，同一 autonomous journey 的 Agent→Order/Request→Runtime→offline Payment/Fulfillment→Trace 连续关联 `8/8`，五类 origin 可投影 | 代表性 happy-path responsibility chain 已闭合；不再继续扩 Action Origin 字段 | H-17 Evaluator REVIEW：Task `PASS`、Project impact `NOT_APPLICABLE`、L3 `8/8 PASS`、same-journey `8/8`、657/657 全量、真实副作用 0 | high | RESOLVED / STAGE_CLOSED |
+| B-12 | Same-Journey Payment Lifecycle / Recovery Continuity | H-17 只证明成功支付+成功履约 happy path；UNKNOWN/PENDING、trusted query recovery、payment/fulfillment 分离失败、query/async status conflict 尚未在同一 autonomous journey 上统一测量 | L5-L9 支付执行、状态、履约、补救与归档主线；直接影响 Payment Finality / Recovery / Accountability 是否能承接真实 Agent 行为 | 现有组件单测已分别覆盖 UNKNOWN→query SUCCEEDED、PENDING 不盲重试、支付成功但履约失败、query/async CONFLICT；但 same-journey branch coverage 当前未建立 | high | ACTIVE / LIFECYCLE_BRANCH_MEASUREMENT |
 | B-05 | 数据最小化 | PayBench D1 两题不可执行，缺少数据披露事实与必要性判断 | PayBench 2/10，后续收货和身份任务 | measured：PayBench 8/10 可执行 | high | WATCH |
 | B-06 | 真实身份与外部协议 | 当前最高身份保证为 BOUND，未覆盖真实签名、SDK、facilitator 和网络故障 | 测试网、生产接入；当前主线影响有限 | measured boundary：P3 / P8 文档 | high | DEFERRED |
 
 ## Active bottleneck / 当前第一瓶颈
 
-Active bottleneck ID: B-04
+Active bottleneck ID: B-12
 
-### 为什么现在排第一
+### 当前判断
 
-H-10 已由父任务与 accepted-input repair 的组合证据支持：合法代表 Journey 确定性展示 `1/1`，四类来源、错配和固定脚本边界保持，未知 schema 与未核验来源状态在 build/render 四个入口组合全部 fail closed。B-10 因此完成。
-
-当前最早的新失败点已经前移到 Agent 行为：
+H-17 已由 Executor L2 与 Evaluator L3 独立复核通过：
 
 ```text
-WebShop small runtime（已完成）
-→ 固定脚本 search / click / pre-Buy-Now（已完成但语义选错商品）
-→ 尚无 Agent 根据 instruction + observation + available actions 自主决策
-→ 自主 Agent Journey 与任务匹配率均为 0 个已测样本
+Task verdict: PASS
+Project impact: NOT_APPLICABLE
+L3: 8/8 PASS
+same-journey correlations: 8/8
+Action Origin: 5/5
+Trace: VALID
+full unittest: 657/657
+real side effects: 0
 ```
 
-### 量级估算
+因此 B-11 可以阶段性关闭。当前项目已经能在一条代表性 autonomous WebShop happy path 中机械回答：用户授权了什么、Agent 做了什么、Runtime 如何裁决、同一个 Order/Request 如何进入支付/履约，以及最终 Trace 如何回指。
 
-- Product Trace：9/12；
-- GESR：8/12；
-- Trace Player UI-ready：4/4；
-- Journey source-classified：1/1；
-- Journey UI-ready（含 accepted-input guard）：1/1；
-- Journey Player 合法代表路径 render-ready：1/1；
-- accepted-input 反例阻断：2/2；
-- autonomous pre-Buy-Now Journey：0/1；
-- autonomous product/required-option match：0 个已测样本；
-- 信心：高；H-10 合并证据已通过，现有 fixed smoke 对 cargo-pants instruction 选中 console table 的偏差也已被多轮证据稳定复现。
+下一第一未知量不再是“责任字段还缺什么”，而是：
 
-### 分阶段原则
+> **同一条 autonomous journey 进入 UNKNOWN/PENDING、支付状态恢复、履约失败和状态冲突后，Order / Request / Payment / Trace / Action Origin 的连续性还能不能保持？**
 
-下一步只做一个本地、确定性、无购买副作用的 autonomous pre-Buy-Now baseline(自主购买前基线)：固定 WebShop small shuffled goal index 10，但 policy(策略) 不得读取 hidden goal/expected ASIN，只能消费 instruction、当前 observation 和 available actions，自主生成 search、product click 与 option click，随后停在 Buy Now 前并输出结构化行为轨迹。
+现有 Sidecar / Recovery / Payment Query Finality / Status Conflict / Lifecycle / Remediation 已分别有组件证据，所以当前先测组合，不预设产品修复。
 
-### 竞争瓶颈
+### 当前主线
 
-竞争瓶颈为 `B-03 Authoritative Trace`、`B-02 Fact Lineage` 与 `B-05 数据最小化`。近期 Hyperswitch/Blnk/Moov 等支付参考资料对后续 Payment Attempt、Ledger、Reconciliation 很有价值，但当前缺口发生在支付前的 Agent 选品行为，因此不应抢占 B-04。
+```text
+B-04 Autonomous Agent Behavior【WATCH】
+        ↓
+B-11 Action Origin + Same-Journey Responsibility【STAGE CLOSED】
+        ↓
+B-12 / H-18 Same-Journey Payment Lifecycle Branch Measurement【CURRENT】
+        ↓
+J01 success + fulfilled
+J02 UNKNOWN → trusted query SUCCEEDED
+J03 payment SUCCEEDED + fulfillment FAILED
+J04 query SUCCEEDED / async FAILED conflict
+        ↓
+根据 semantic X/4 + continuity Y/4 + first breakpoints 决定：
+    existing lifecycle components already sufficient
+    或仅修第一个真实主线断点
+        ↓
+Payment / Finality / Fulfillment / Recovery
+        ↓
+Evidence / Replay / Accountability / Closure
+```
+
+H-15 / Fresh Unseen 继续作为 B-04 WATCH；不因为自然语言长尾重新打断支付生命周期主线。
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: H-11
+Hypothesis ID: H-18
+Hypothesis status: `ACTIVE / LIFECYCLE_BRANCH_MEASUREMENT`
 
-### 可证伪假设
+### 假设
 
-如果一个 deterministic local policy(确定性本地策略) 只读取 WebShop shuffled goal index 10 的用户 instruction、当前 text observation 和 available actions，不读取 hidden goal、expected ASIN 或上游 server internals，那么它应能自主生成搜索、商品点击和必要选项点击，在不执行 Buy Now 的前提下选中 cargo-pants 目标商品与 orange 选项，并生成可独立评分、来源清晰的 `AUTONOMOUS_AGENT` pre-Buy-Now trace。
+> 现有 Payment Sidecar、Recovery、Payment Query Finality、Status Conflict、Lifecycle、Remediation、Authoritative Trace 与 Action Origin 已分别具备代表性分支能力；把它们放到 H-17 已验收的同一 pre-payment journey 上做四个互斥 counterfactual branch（反事实分支）后，可以测出真实的 branch continuity，而无需预先增加产品能力。
 
-### 当前测量状态
+H-18 是 measurement-only `one_off`：Task 是否通过看测量完整性、确定性、证据真实性和零真实副作用，**不要求 branch continuity 必须 4/4**。任何 `semantic_match=false` 或 `continuity_pass=false` 都作为项目 finding 交给 Evaluator，不允许 Executor 现场修产品。
 
-```text
-Journey source-classified representative path：1/1
-Journey UI-ready representative path：1/1
-accepted-input 反例阻断：2/2
-autonomous pre-Buy-Now Journey captured/scored：0/1
-autonomous target product + required option match：0 个已测样本
-Trace Player UI-ready：4/4
-Product Trace：9/12
-GESR：8/12
-```
-
-### 当前单一主要变化
+### 四个冻结分支
 
 ```text
-instruction + observation + available actions
-→ deterministic local Agent policy
-→ autonomous search/click/option trace
-→ pre-Buy-Now stop + independent ground-truth score
+J01_SUCCESS_FULFILLED
+  payment SUCCEEDED
+  fulfillment SUCCEEDED
+
+J02_UNKNOWN_QUERY_SUCCEEDED
+  initial UNKNOWN
+  trusted query SUCCEEDED
+  recovery / payment-status finality
+
+J03_PAYMENT_SUCCEEDED_FULFILLMENT_FAILED
+  payment SUCCEEDED
+  fulfillment FAILED
+  remediation REQUIRED
+
+J04_QUERY_ASYNC_TERMINAL_CONFLICT
+  query SUCCEEDED
+  async FAILED
+  effective UNKNOWN / no blind retry
 ```
 
-### 成功阈值
+四个 Case 共用 H-17 的 parent session/order/request/payment 身份，但它们是互斥的离线反事实分支，不得表述为四笔真实交易，也不得执行真实支付/履约。
 
-1. 在真实本地 `WebAgentTextEnv-v0` small/1k 环境固定 shuffled goal index 10，并保存 checkout/data/index hashes；
-2. policy 输入严格限于 instruction、当前 observation、available actions 和自身有界状态；不得读取 expected ASIN、goal object、server/product dict 或 evaluator labels；
-3. 运行时动态产生 `search[...]`、`click[asin]` 和必要 option click，不得硬编码 `B099231V35`、完整 action list 或旧 smoke 的 console-table 搜索词；
-4. 停在 Buy Now 可用状态，`buy_now_executed=false`、purchase count=0、无支付/订单/网络副作用；
-5. 独立 scorer 在运行结束后确认 selected ASIN=`B099231V35`、required option 包含 `orange`、price 低于冻结 goal upper bound；
-6. 结构化 trace 逐步记录 observation hash、available actions、chosen action、policy reason summary、reward/done 与来源，禁止隐藏思维链；
-7. 相同 seed/goal 重跑 3 次，排除 session/time 后 normalized trace 和评分一致；
-8. autonomous pre-Buy-Now Journey captured/scored 从 `0/1 -> 1/1`，target product/required option match=`1/1`；
-9. 固定脚本与自主轨迹类型不可混淆，旧 Journey/Player、Product Trace `9/12`、GESR `8/12`、callback `12/12` 不退化；
-10. 不修改上游 WebShop tracked 文件，不调用 LLM/network，不执行 Buy Now、支付、订单或履约。
+### 核心测量
 
-### 回滚阈值
+每个 Case `repeat=2`，输出：
 
-- policy 读取 hidden goal、expected ASIN、server/product internals 或 evaluator truth；
-- 为单个任务硬编码 ASIN、完整动作序列或搜索短语；
-- 固定脚本被重新标为自主 Agent；
-- 执行 `click[buy now]`、产生 purchase/payment/order side effect；
-- 三次运行不一致或任何冻结指标/accepted hash 退化。
+```text
+observed semantics
+semantic_match
+actual refs
+trace availability / validity / refs
+Action Origin projectability
+8 continuity checks
+continuity_pass
+first_breakpoint
+```
+
+项目层关注：
+
+```text
+semantic matches X/4
+branch continuity Y/4
+每个失败的 first breakpoint
+```
+
+成功的测量任务不等于所有分支都 PASS；真正重复、主线相关的产品断点由下一轮单一 capability package 处理。
 
 ## Candidate experiments / 候选实验与设计任务
 
-| 优先级 | 假设 | 主要变化 | 同基线比较 | 预期收益 | 成本 / 风险 |
+| 优先级 | 假设 / 任务 | 主要变化 | 同基线比较 | 预期收益 | 成本 / 风险 |
 |---:|---|---|---|---:|---|
-| 1 | H-11 / autonomous pre-Buy-Now behavior capture | 本地 deterministic policy 只消费 instruction/observation/actions，在 shuffled goal index 10 自主搜索、选品、选 orange 并停在 Buy Now 前 | autonomous captured/scored `0/1→1/1`；target/option match `0→1/1`；旧指标不变 | 从固定脚本演示进入第一条真实环境 Agent 行为证据 | 中高；必须防 hidden-goal 泄漏、任务硬编码和 Buy Now 副作用 |
-| 2 | H-11 expansion / multi-goal behavior set | 首条通过后扩 3—5 个不同 category/option 任务，测 false selection 与 stop behavior | 同一 policy 跨任务对比 | 判断行为能力是否可泛化 | 高；不能在首包一次扩太大 |
-| 3 | H-03 / Action Binding family toolkit | 如 Consumer/UI 证明 T05/T06 有真实下游价值，再用统一 Action Binding family 表达最终 binding 状态 | 当前 9/12 baseline 上做同族 before/after | 可选补 2 项产品轨迹 | 中；暂缓，不为 12/12 数字机械开发 |
-| 4 | H-03 / T11 design review | 如下游需要完整履约失败展示，再核对 T11 与 Sidecar Toolkit 的复用边界 | 只设计/测量，不先声称增益 | 决定最后 1 项是否值得补齐 | 中；避免为 T11 再造完整专属 builder |
-| 5 | H-02 | Fact Lineage 能消除派生来源丢失 | 同一端到端来源攻击任务 before / after | lineage 完整率提高，错误放行不增加 | 中 |
+| 1 | H-18 Same-Journey Payment Lifecycle Branch Measurement【当前】 | 新增 measurement-only runner；4 个 lifecycle branches ×2；不改产品 | H-17 happy-path only → semantic `X/4` + continuity `Y/4` | 找到支付状态/恢复/履约/冲突在真实 Agent journey 上的第一个断点 | 低到中；全离线、零真实交易 |
+| 2 | Lifecycle first-breakpoint repair【条件任务】 | 仅 H-18 出现重复/高影响真实断点时，按第一个断点冻结单一产品修复 | H-18 finding | 避免把 Recovery / Finality / Trace 一起大改 | unknown |
+| 3 | Payment / Finality / Fulfillment / Recovery closure | H-18 或后续 repair 后扩到剩余关键 lifecycle branch / closure evidence | branch continuity + recovery evidence | 完成高风险交易生命周期闭环 | 中 |
+| 4 | Accountability / Replay / Closure consumer | 生命周期证据稳定后消费 responsibility breakpoint / recovery evidence | consumer-visible closure | 让责任链进入审计回放与结束状态 | 中 |
+| 5 | H-15 / Fresh unseen WATCH | policy/model 大改或真实阻塞信任链时重跑 | regression only | 保存 Agent 长尾边界 | 低 |
 
 ## Reassessment triggers / 重新排序触发器
 
@@ -294,3 +323,13 @@ instruction + observation + available actions
 | `2026-08-23-r16` | 2026-08-23 | WebShop Journey Player 独立复核 REJECTED / INCONCLUSIVE：合法代表路径可展示 1/1，但 `UNVERIFIED` source classification 与未知 schema 两个反例均正常渲染；AC-01/09 失败，相关回归与项目指标未退化 | B-10 保持第一瓶颈，失败位置收敛到 accepted-input guard；B-04 暂不提升 | H-10 尚未得到支持；先执行最小 accepted-input repair，复评通过后再切 B-04 |
 | `2026-08-23-r17` | 2026-08-23 | Journey Player accepted-input repair 独立复核 PASS / NOT_APPLICABLE：L2/L3 4/4、Player 27/27、相关回归 67/67、正式入口 13/13；两个反例在 build/render 四个组合全部 fail closed，Product Trace/GESR/side-effect 守护线不变 | B-10 完成；B-04 提升为第一瓶颈，首轮范围固定为 WebShop small goal index 2 的自主 pre-Buy-Now 行为 | H-10 SUPPORTED；激活 H-11，先证明单任务真实环境行为正确且可评分，再扩多任务 |
 | `2026-08-24-r18` | 2026-08-24 | Executor preflight 与 Evaluator 独立 runtime probe 一致：固定 shuffle 后 goal index 2=`B07S7HDC88` black loafers，index 10=`B099231V35` orange cargo pants，checkout HEAD=`64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd`，两次 reset purchase count=0 | B-04 顺序与量级不变；仅纠正首轮 runtime selector 事实，原 r17 的 index 2 记录由本修订明确取代 | H-11 实质不变；首轮 selector 由 2 更正为 10，任务原地 Amendment A1 后继续 |
+| `2026-09-02-r19` | 2026-09-02 | H-11 独立复核 `PASS / IMPROVED`：L3 `6/6 PASS`，goal 10 autonomous Journey/target+option `0/1→1/1`，零 Buy Now/支付副作用；随后 frozen multigoal checker 对 goals 0/2/7/9/10、repeat=2 复现 `3/5`，goal 2/7 均错选商品 | B-04 保持第一瓶颈，但失败位置从“无自主 Agent 行为”下移到“multi-goal product ranking / option matching 泛化不足” | H-11 `SUPPORTED(single-goal)`；激活 H-12，把同一五题 baseline `3/5→5/5`，禁止目标真值/goal-index 补丁 |
+| `2026-09-05-r20` | 2026-09-05 | H-12 Evaluator REVIEW：Task `PASS`、Project impact `IMPROVED`、L3 `7/7 PASS`，冻结五目标 `3/5→5/5`，643/643 全量回归且零购买/支付副作用；额外等价 UI 顺序反例得到 `order_invariant=false`；同时发现 H-11 accepted-but-uncommitted policy 只保留 hash、未保留 exact source snapshot | B-04 保持第一瓶颈，但从“已知五题 generalization failure”下移为“unseen-task transfer / semantic robustness 未测量”；不再继续调五题 | H-12 `SUPPORTED_ON_FROZEN_SET`；下一步先做 Evaluator-only Blind Holdout Measurement；H-13 在盲测结论前不激活 |
+| `2026-09-06-r21` | 2026-09-06 | Blind Holdout measurement Evaluator REVIEW：Task `PASS / NOT_APPLICABLE`，L3 `3/3 PASS`，L2=L3；8 个原未见任务 exact `3/8`、deterministic `8/8`、零 Buy Now/购买副作用；失败族 `REQUIRED_OPTION_MISMATCH=4`、`TARGET_PRODUCT_MISMATCH=1` | B-04 保持第一瓶颈，但从“unseen transfer 未测量”下移为“option-grounding generalization（规格匹配泛化）”；已揭晓 8 Case 降级为 regression set，不再作为无偏盲测集 | H-12 项目外推边界确认不足；激活 H-14，用不同值 synthetic/metamorphic probe `1/5→5/5` 验证通用规格匹配机制；H-13 继续后置 |
+| `2026-09-06-r22` | 2026-09-06 | Human 明确要求防止把当前已知规格细节误当成“能力已测全”；Evaluator 补充能力不变量、系统性变形发现、新鲜未见迁移测量与失败族台账原则 | B-04 第一瓶颈不变；补充 H-14 后的测量收敛链，避免继续逐题补丁 | H-14 单一主要变化不变；`5/5` 只作为已知失败机制修复门，后续必须经过系统性变形发现 + fresh unseen evidence，再决定 CONTINUE / SWITCH / H-13 |
+| `2026-09-06-r23` | 2026-09-06 | H-14 Evaluator REVIEW：Task `PASS`、Project impact `IMPROVED`、L3 `8/8 PASS`；frozen option-grounding probe `1/5→5/5`，H-12 real regression `5/5`，647/647 全量回归，Product Trace `9/12`、GESR `8/12`、零 Buy Now/外部副作用 | B-04 保持第一瓶颈，但“已知规格失败机制”已收敛；当前第一未知量转为系统性边界发现 + fresh unseen transfer | H-14 `SUPPORTED_ON_KNOWN_MECHANISMS`；下一步进入 Evaluator-owned Systematic Metamorphic Discovery，不直接继续改代码，也不进入 H-13 |
+| `2026-09-06-r24` | 2026-09-06 | Systematic Discovery Evaluator REVIEW：Task `PASS / NOT_APPLICABLE`，L3 `4/4 PASS`；24 Case=`19 PASS / 5 FAIL`、48 observations 全可重复、safety hits 0；`AMBIGUOUS_OPTION_GUESSED=3` 跨 2 independent seeds；H-15 新 probe baseline `2/5` | B-04 保持第一瓶颈，但从“系统性边界未知”下移为“证据不足 / 候选不唯一时仍猜规格” | 激活 H-15 Option Grounding Uncertainty Gate；先修重复 uncertainty mechanism，再做 fresh unseen transfer |
+| `2026-09-06-r25` | 2026-09-06 | 主线纠偏：确认 P9/WebShop 的目的不是穷举意图/规格准确率；B-04 已形成真实自主行为 + 泛化失败证据，H-15 在 Executor 开始前 superseded 并降为 WATCH；代码侧 GovernedPaymentAction / Runtime Gate / Authoritative Trace / Payment-Fulfillment 底座已存在，但 machine-readable Action Origin 仍为 0/5 | 新增并激活 B-11 Action Origin / Responsibility Trace；B-04 改为 WATCH / BEHAVIOR_BASELINE_ESTABLISHED | 冻结 H-13 read-only Action Origin minimal slice；Fresh unseen 不再是 H-13 强制前置门槛 |
+| `2026-09-06-r26` | 2026-09-06 | H-13 Evaluator REVIEW：Task `PASS`、Project impact `IMPROVED`、L3 `8/8 PASS`；Action Origin `0/5→5/5`，657/657 全量回归；同时确认 autonomous behavior fixture 与 T01 payment trace 仍是独立证据，不能声称 same-journey responsibility chain | B-11 继续 ACTIVE，但瓶颈从“无机器可读 Action Origin”下移为“无同一 journey 连续责任关联” | H-13 `SUPPORTED`；激活 H-16 one-off Same-Journey Responsibility Correlation，先测现有组件能否自然串联，不预设产品修复 |
+| `2026-09-06-r27` | 2026-09-06 | H-16 Executor L2 + Evaluator L3 均在 C01 复现 stale cross-policy trace baseline：历史 policy `af2a...` / trace `8c0a...`，当前 policy `6133...` / trace `b99e...`；最终商品/规格/价格与零副作用仍一致；Evaluator fresh current-policy replay 3/3 deterministic | B-11 继续 ACTIVE，但断点从“same-journey 未串通”进一步收敛为“baseline lifecycle 测量合同错误”，尚无证据表明下游产品链失败 | H-16 `REJECTED / INCONCLUSIVE / SWITCH`；激活 H-17，只修测量合同并直接重跑 C01..C08，不改任何产品/runner |
+| `2026-09-06-r28` | 2026-09-06 | H-17 Evaluator REVIEW：Task `PASS`、Project impact `NOT_APPLICABLE`、L3 `8/8 PASS`；baseline lifecycle 修正后现有 same-journey responsibility `C01..C08=8/8`、Action Origin 5/5、Trace VALID、657/657、真实副作用 0 | B-11 `RESOLVED / STAGE_CLOSED`；新增 B-12 Same-Journey Payment Lifecycle / Recovery Continuity 并升为第一瓶颈 | H-17 证明 H-16 主要是测量合同问题；激活 H-18 measurement-only 四分支测量，先测现有 Recovery/Finality/Lifecycle/Trace 组合，不预设产品修复 |

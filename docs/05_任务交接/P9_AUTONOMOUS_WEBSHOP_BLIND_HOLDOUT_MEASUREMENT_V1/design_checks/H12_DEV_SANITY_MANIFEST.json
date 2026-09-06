@@ -1,0 +1,18 @@
+{
+  "schema": "webshop-blind-holdout-manifest/v1",
+  "selection_rule": "H-12 known development cases for measurement-runner sanity only",
+  "checkout_head": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+  "seed_before_load": 20260823,
+  "goal_shuffle_seed": 233,
+  "num_products": 1000,
+  "goal_count": 13,
+  "development_exclusions": [],
+  "holdout_count": 5,
+  "cases": [
+    {"goal_index": 0, "expected_asin": "B09MW563KN", "required_options": ["blue"], "expected_price": 22.9},
+    {"goal_index": 2, "expected_asin": "B07S7HDC88", "required_options": ["black1901", "10.5"], "expected_price": 35.421970457880775},
+    {"goal_index": 7, "expected_asin": "B09HX5CD2D", "required_options": ["heather charcoal", "small"], "expected_price": 39.95},
+    {"goal_index": 9, "expected_asin": "B09KP78G37", "required_options": ["red", "x-large"], "expected_price": 55.69454800459104},
+    {"goal_index": 10, "expected_asin": "B099231V35", "required_options": ["orange"], "expected_price": 16.79}
+  ]
+}

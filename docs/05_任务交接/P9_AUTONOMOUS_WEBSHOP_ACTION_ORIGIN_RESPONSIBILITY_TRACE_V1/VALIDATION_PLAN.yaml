@@ -1,0 +1,79 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: P9-AUTONOMOUS-WEBSHOP-ACTION-ORIGIN-RESPONSIBILITY-TRACE-V1
+
+checks:
+  - id: VP-01
+    ac: [AC-01, AC-02, AC-03, AC-04, AC-05]
+    cwd: .
+    command: [python3, -m, unittest, tests.test_action_origin, -v]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-02
+    ac: [AC-01, AC-02, AC-03, AC-04, AC-05]
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_ACTION_ORIGIN_RESPONSIBILITY_TRACE_V1/evaluator_checks/action_origin_probe.py
+      - --require-all
+      - --output
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_ACTION_ORIGIN_RESPONSIBILITY_TRACE_V1/evidence/ACTION_ORIGIN_RESULT.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-03
+    ac: [AC-06, AC-07]
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_ACTION_ORIGIN_RESPONSIBILITY_TRACE_V1/evaluator_checks/action_origin_source_audit.py
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-04
+    ac: [AC-06, AC-07]
+    cwd: .
+    command:
+      - python3
+      - -m
+      - unittest
+      - tests.test_authoritative_trace
+      - tests.test_authoritative_trace_consumer
+      - tests.test_webshop_agent_behavior
+      - -v
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-05
+    ac: [AC-06, AC-07]
+    cwd: .
+    command:
+      - python3
+      - -m
+      - unittest
+      - tests.test_webshop_journey_read_model
+      - tests.test_webshop_journey_player
+      - -v
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-06
+    ac: [AC-07, AC-08]
+    cwd: .
+    command: [python3, run_experiment.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-07
+    ac: [AC-07, AC-08]
+    cwd: .
+    command: [python3, scripts/validation/run_project_impact_baseline.py, --repeat, "3"]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-08
+    ac: [AC-07, AC-08]
+    cwd: .
+    command: [python3, -m, unittest, discover, -s, tests, -v]
+    expected_exit_code: 0
+    mandatory: true

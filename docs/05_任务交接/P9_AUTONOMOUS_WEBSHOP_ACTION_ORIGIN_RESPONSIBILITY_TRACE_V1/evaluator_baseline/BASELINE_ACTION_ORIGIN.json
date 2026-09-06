@@ -1,0 +1,21 @@
+{
+  "schema": "action-origin-baseline/v1",
+  "evaluated_at": "2026-09-06",
+  "closed_origin_type_count": 0,
+  "expected_closed_origin_types": [
+    "USER_AUTHORITY",
+    "AGENT_DECISION",
+    "RUNTIME_DECISION",
+    "EXTERNAL_FACT",
+    "EXECUTION_RESULT"
+  ],
+  "autonomous_behavior_action_origin_records": 0,
+  "authoritative_trace_action_origin_records": 0,
+  "autonomous_behavior_fixture_sha256": "cb11bdc27e514118c8e9ae69384be16d188ec08bba7c1d4514d6b3c50e316dd0",
+  "t01_trace_fixture_sha256": "7663a7c0f6387197d3d7bf6054a74025ff4a1f975b62482a99dff2fa4a7c6cca",
+  "product_policy_sha256": "6133eaac32d2c806028d6ecdd9ab4887f45eb4a2a63e0bc8a5cc63331d4ddd5f",
+  "product_policy_test_sha256": "36f51bbec44313e8e6fde98ec35d2d0a16ee2730e81e0e2b6916387da2e28b20",
+  "authoritative_trace_sha256": "07c7341b62440ea22a6fb22daa2e5e8b48163bc70ba534ac9cb065ffb001414a",
+  "authoritative_trace_consumer_sha256": "6ad65118a4ab50e648e4f6098f6c2c5009ce5731232ae0a4e11d2f60c0c431b5",
+  "note": "No machine-readable Action Origin contract exists in product code at baseline. H-13 introduces a read-only responsibility-evidence layer without changing shopping policy or payment decision semantics."
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "webshop-option-grounding-uncertainty-gate-probe/v1",
+  "case_count": 5,
+  "passed_count": 2,
+  "failed_count": 3,
+  "all_passed": false,
+  "cases": [
+    {
+      "case_id": "UG-01-exact-unique-lexical",
+      "expected_action": "click[burgundy]",
+      "expected_stop": false,
+      "actual": {
+        "action": "click[burgundy]",
+        "reason_summary": "select an explicitly requested visible option",
+        "stop": false
+      },
+      "passed": true
+    },
+    {
+      "case_id": "UG-02-unique-partial-extension",
+      "expected_action": "click[turquoise blue]",
+      "expected_stop": false,
+      "actual": {
+        "action": "click[turquoise blue]",
+        "reason_summary": "select an explicitly requested visible option",
+        "stop": false
+      },
+      "passed": true
+    },
+    {
+      "case_id": "UG-03-ambiguous-shared-root",
+      "expected_action": null,
+      "expected_stop": true,
+      "actual": {
+        "action": "click[olive brown]",
+        "reason_summary": "select an explicitly requested visible option",
+        "stop": false
+      },
+      "passed": false
+    },
+    {
+      "case_id": "UG-04-missing-specific-modifier",
+      "expected_action": null,
+      "expected_stop": true,
+      "actual": {
+        "action": "click[light violet]",
+        "reason_summary": "select an explicitly requested visible option",
+        "stop": false
+      },
+      "passed": false
+    },
+    {
+      "case_id": "UG-05-ambiguous-style-modifier",
+      "expected_action": null,
+      "expected_stop": true,
+      "actual": {
+        "action": "click[polished silver]",
+        "reason_summary": "select an explicitly requested visible option",
+        "stop": false
+      },
+      "passed": false
+    }
+  ]
+}

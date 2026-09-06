@@ -1,0 +1,302 @@
+{
+  "checkout_head": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+  "goal_index": 10,
+  "hidden_truth_exposed_to_policy": false,
+  "java_home_resolved": "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\webshop38\\Library\\lib\\jvm",
+  "java_home_source": "sys.prefix/Library/lib/jvm",
+  "no_llm": true,
+  "overall_pass": true,
+  "payment_order_network_side_effect_count": 0,
+  "policy_input_fields": [
+    "instruction_text",
+    "observation",
+    "available_actions",
+    "step_index",
+    "previous_actions"
+  ],
+  "policy_type": "DETERMINISTIC_LOCAL_POLICY",
+  "repeat": 3,
+  "repeat_identical": true,
+  "runs": [
+    {
+      "buy_now_available": true,
+      "buy_now_executed": false,
+      "normalized_trace_sha256": "b99e99e8be4ffa43c744375deec287130e0cee0275a07a4d1de34ed11a6187a5",
+      "purchase_count": 0,
+      "score": {
+        "price_match": true,
+        "required_option_match": true,
+        "selected_asin": "B099231V35",
+        "selected_option_values": [
+          "orange"
+        ],
+        "selected_price": 16.79,
+        "target_match": true
+      },
+      "steps": [
+        {
+          "available_actions": {
+            "clickables": [
+              "search"
+            ],
+            "has_search_bar": true
+          },
+          "chosen_action": "search[cargo pants casual wear hiking-friendly orange 50.00]",
+          "done": false,
+          "observation_sha256": "79ba02a884dc73da34b3adc7bd18595a48856a70a37519b0b127789300ce3578",
+          "reason_summary": "search using terms derived from the user instruction",
+          "reward": 0.0,
+          "sequence": 0,
+          "source": "WEBSHOP_RUNTIME_OBSERVATION"
+        },
+        {
+          "available_actions": {
+            "clickables": [
+              "back to search",
+              "next >",
+              "b099231v35",
+              "b09q5zhrvm",
+              "b09q67h373",
+              "b09nnmv9ln",
+              "b09msz4vs8",
+              "b09kxchwgd",
+              "b09qcvcyvy",
+              "b09r9ycm6r",
+              "b09b2hn6nn",
+              "b09hgfv91w"
+            ],
+            "has_search_bar": false
+          },
+          "chosen_action": "click[b099231v35]",
+          "done": false,
+          "observation_sha256": "3507020175f46b41e344c5b4b150ad8219fd0fe1a02cecd996bc90463448804c",
+          "reason_summary": "open the visible result with the strongest instruction match",
+          "reward": 0.0,
+          "sequence": 1,
+          "source": "WEBSHOP_RUNTIME_OBSERVATION"
+        },
+        {
+          "available_actions": {
+            "clickables": [
+              "back to search",
+              "< prev",
+              "description",
+              "features",
+              "reviews",
+              "buy now",
+              "black",
+              "green",
+              "orange",
+              "yellow",
+              "small",
+              "medium",
+              "large",
+              "x-large",
+              "xx-large",
+              "3x-large"
+            ],
+            "has_search_bar": false
+          },
+          "chosen_action": "click[orange]",
+          "done": false,
+          "observation_sha256": "c59131128e1c5e50ac746fa2e0510f880c524bd4ffde7d4e655b92e2a2f7a11e",
+          "reason_summary": "select an explicitly requested visible option",
+          "reward": 0.0,
+          "sequence": 2,
+          "source": "WEBSHOP_RUNTIME_OBSERVATION"
+        }
+      ]
+    },
+    {
+      "buy_now_available": true,
+      "buy_now_executed": false,
+      "normalized_trace_sha256": "b99e99e8be4ffa43c744375deec287130e0cee0275a07a4d1de34ed11a6187a5",
+      "purchase_count": 0,
+      "score": {
+        "price_match": true,
+        "required_option_match": true,
+        "selected_asin": "B099231V35",
+        "selected_option_values": [
+          "orange"
+        ],
+        "selected_price": 16.79,
+        "target_match": true
+      },
+      "steps": [
+        {
+          "available_actions": {
+            "clickables": [
+              "search"
+            ],
+            "has_search_bar": true
+          },
+          "chosen_action": "search[cargo pants casual wear hiking-friendly orange 50.00]",
+          "done": false,
+          "observation_sha256": "79ba02a884dc73da34b3adc7bd18595a48856a70a37519b0b127789300ce3578",
+          "reason_summary": "search using terms derived from the user instruction",
+          "reward": 0.0,
+          "sequence": 0,
+          "source": "WEBSHOP_RUNTIME_OBSERVATION"
+        },
+        {
+          "available_actions": {
+            "clickables": [
+              "back to search",
+              "next >",
+              "b099231v35",
+              "b09q5zhrvm",
+              "b09q67h373",
+              "b09nnmv9ln",
+              "b09msz4vs8",
+              "b09kxchwgd",
+              "b09qcvcyvy",
+              "b09r9ycm6r",
+              "b09b2hn6nn",
+              "b09hgfv91w"
+            ],
+            "has_search_bar": false
+          },
+          "chosen_action": "click[b099231v35]",
+          "done": false,
+          "observation_sha256": "3507020175f46b41e344c5b4b150ad8219fd0fe1a02cecd996bc90463448804c",
+          "reason_summary": "open the visible result with the strongest instruction match",
+          "reward": 0.0,
+          "sequence": 1,
+          "source": "WEBSHOP_RUNTIME_OBSERVATION"
+        },
+        {
+          "available_actions": {
+            "clickables": [
+              "back to search",
+              "< prev",
+              "description",
+              "features",
+              "reviews",
+              "buy now",
+              "black",
+              "green",
+              "orange",
+              "yellow",
+              "small",
+              "medium",
+              "large",
+              "x-large",
+              "xx-large",
+              "3x-large"
+            ],
+            "has_search_bar": false
+          },
+          "chosen_action": "click[orange]",
+          "done": false,
+          "observation_sha256": "c59131128e1c5e50ac746fa2e0510f880c524bd4ffde7d4e655b92e2a2f7a11e",
+          "reason_summary": "select an explicitly requested visible option",
+          "reward": 0.0,
+          "sequence": 2,
+          "source": "WEBSHOP_RUNTIME_OBSERVATION"
+        }
+      ]
+    },
+    {
+      "buy_now_available": true,
+      "buy_now_executed": false,
+      "normalized_trace_sha256": "b99e99e8be4ffa43c744375deec287130e0cee0275a07a4d1de34ed11a6187a5",
+      "purchase_count": 0,
+      "score": {
+        "price_match": true,
+        "required_option_match": true,
+        "selected_asin": "B099231V35",
+        "selected_option_values": [
+          "orange"
+        ],
+        "selected_price": 16.79,
+        "target_match": true
+      },
+      "steps": [
+        {
+          "available_actions": {
+            "clickables": [
+              "search"
+            ],
+            "has_search_bar": true
+          },
+          "chosen_action": "search[cargo pants casual wear hiking-friendly orange 50.00]",
+          "done": false,
+          "observation_sha256": "79ba02a884dc73da34b3adc7bd18595a48856a70a37519b0b127789300ce3578",
+          "reason_summary": "search using terms derived from the user instruction",
+          "reward": 0.0,
+          "sequence": 0,
+          "source": "WEBSHOP_RUNTIME_OBSERVATION"
+        },
+        {
+          "available_actions": {
+            "clickables": [
+              "back to search",
+              "next >",
+              "b099231v35",
+              "b09q5zhrvm",
+              "b09q67h373",
+              "b09nnmv9ln",
+              "b09msz4vs8",
+              "b09kxchwgd",
+              "b09qcvcyvy",
+              "b09r9ycm6r",
+              "b09b2hn6nn",
+              "b09hgfv91w"
+            ],
+            "has_search_bar": false
+          },
+          "chosen_action": "click[b099231v35]",
+          "done": false,
+          "observation_sha256": "3507020175f46b41e344c5b4b150ad8219fd0fe1a02cecd996bc90463448804c",
+          "reason_summary": "open the visible result with the strongest instruction match",
+          "reward": 0.0,
+          "sequence": 1,
+          "source": "WEBSHOP_RUNTIME_OBSERVATION"
+        },
+        {
+          "available_actions": {
+            "clickables": [
+              "back to search",
+              "< prev",
+              "description",
+              "features",
+              "reviews",
+              "buy now",
+              "black",
+              "green",
+              "orange",
+              "yellow",
+              "small",
+              "medium",
+              "large",
+              "x-large",
+              "xx-large",
+              "3x-large"
+            ],
+            "has_search_bar": false
+          },
+          "chosen_action": "click[orange]",
+          "done": false,
+          "observation_sha256": "c59131128e1c5e50ac746fa2e0510f880c524bd4ffde7d4e655b92e2a2f7a11e",
+          "reason_summary": "select an explicitly requested visible option",
+          "reward": 0.0,
+          "sequence": 2,
+          "source": "WEBSHOP_RUNTIME_OBSERVATION"
+        }
+      ]
+    }
+  ],
+  "schema": "webshop-autonomous-prebuy-behavior/v1",
+  "score": {
+    "price_match": true,
+    "required_option_match": true,
+    "selected_asin": "B099231V35",
+    "selected_option_values": [
+      "orange"
+    ],
+    "selected_price": 16.79,
+    "target_match": true
+  },
+  "seed": 20260823,
+  "trace_type": "AUTONOMOUS_AGENT"
+}

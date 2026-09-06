@@ -1,0 +1,16 @@
+{
+  "schema": "same-journey-responsibility-baseline/v1",
+  "evaluated_at": "2026-09-06",
+  "same_journey_correlation_complete": false,
+  "required_correlation_passed": 0,
+  "required_correlation_total": 8,
+  "accepted_autonomous_behavior_sha256": "cb11bdc27e514118c8e9ae69384be16d188ec08bba7c1d4514d6b3c50e316dd0",
+  "accepted_autonomous_normalized_trace_sha256": "8c0a03b2f2e5dd9dce051ce176c546e2e171b5e7eacfdb36b258ba04dddd5897",
+  "goal_index": 10,
+  "seed": 20260823,
+  "checkout_head": "64fa2a5c15c7daa698b9ac93f5bb5437b634c9bd",
+  "accepted_asin": "B099231V35",
+  "accepted_option": "orange",
+  "accepted_price": "16.79",
+  "note": "H-13 established Action Origin semantics across two independent evidence namespaces. No accepted artifact currently proves autonomous action, Commerce Order/Request, Runtime decision and execution result are from the same WebShop journey."
+}

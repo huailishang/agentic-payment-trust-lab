@@ -1,0 +1,59 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: P9-AUTONOMOUS-WEBSHOP-OPTION-GROUNDING-SYSTEMATIC-DISCOVERY-V1
+
+checks:
+  - id: VP-01
+    ac:
+      - AC-01
+      - AC-05
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_SYSTEMATIC_DISCOVERY_V1/evaluator_checks/systematic_discovery_snapshot_audit.py
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-02
+    ac:
+      - AC-02
+      - AC-03
+      - AC-04
+      - AC-06
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_SYSTEMATIC_DISCOVERY_V1/evaluator_checks/systematic_discovery_runner.py
+      - --matrix
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_SYSTEMATIC_DISCOVERY_V1/TRANSFORMATION_MATRIX.yaml
+      - --output
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_SYSTEMATIC_DISCOVERY_V1/evidence/SYSTEMATIC_DISCOVERY_RESULT.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-03
+    ac:
+      - AC-02
+      - AC-03
+      - AC-04
+      - AC-06
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_SYSTEMATIC_DISCOVERY_V1/evaluator_checks/systematic_discovery_validator.py
+      - --result
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_SYSTEMATIC_DISCOVERY_V1/evidence/SYSTEMATIC_DISCOVERY_RESULT.json
+      - --matrix
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_SYSTEMATIC_DISCOVERY_V1/TRANSFORMATION_MATRIX.yaml
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-04
+    ac:
+      - AC-01
+      - AC-05
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_GENERALIZATION_V1/evaluator_checks/option_grounding_source_audit.py
+    expected_exit_code: 0
+    mandatory: true

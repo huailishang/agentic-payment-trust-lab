@@ -1,0 +1,7 @@
+{
+  "schema": "action-origin-evaluator-probe/v1",
+  "all_passed": false,
+  "passed_count": 0,
+  "failed_count": 5,
+  "error": "action-origin module unavailable: ModuleNotFoundError: No module named 'agentic_payment_experiment.action_origin'"
+}

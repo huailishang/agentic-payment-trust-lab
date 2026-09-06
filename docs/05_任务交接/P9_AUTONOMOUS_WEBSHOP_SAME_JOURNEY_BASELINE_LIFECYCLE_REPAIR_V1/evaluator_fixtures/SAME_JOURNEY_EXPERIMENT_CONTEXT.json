@@ -1,0 +1,42 @@
+{
+  "schema": "same-journey-experiment-context/v1",
+  "commerce_context": {
+    "merchant": "webshop-experiment-merchant-autonomous-v1",
+    "payee": "webshop-experiment-payee-autonomous-v1",
+    "category": "apparel",
+    "currency": "USD",
+    "quote_expires_at": "2026-09-07T00:00:00+00:00",
+    "fulfilment_terms": "offline_experiment_only_no_fulfilment_commitment",
+    "mandate_ref": "same-journey-explicit-mandate-v1",
+    "authority_version": "same-journey-authority-v1",
+    "request_timestamp": "2026-09-06T00:00:00+00:00",
+    "origin": "explicit_experiment_context_not_webshop_verified"
+  },
+  "authority": {
+    "mandate_id": "same-journey-explicit-mandate-v1",
+    "authority_version": "same-journey-authority-v1",
+    "user_id": "same-journey-user-1",
+    "max_amount": "40.00",
+    "max_count": 1,
+    "expected_agent_id": "same-journey-agent-1",
+    "currency": "USD",
+    "expires_at": "2026-09-07T00:00:00+00:00"
+  },
+  "runtime_identity": {
+    "provider": "offline-webshop-provider",
+    "executor_instance_id": "offline-webshop-executor",
+    "credential_ref": "offline-webshop-credential-v1"
+  },
+  "offline_execution": {
+    "callback_result_ref": "offline-same-journey-checkout-seam",
+    "payment_status": "SUCCEEDED",
+    "fulfillment_status": "SUCCEEDED",
+    "real_payment_execution": false,
+    "real_fulfillment_execution": false
+  },
+  "semantic_boundary": {
+    "instruction_is_authorization": false,
+    "experiment_context_is_webshop_verified": false,
+    "callback_is_real_buy_now": false
+  }
+}

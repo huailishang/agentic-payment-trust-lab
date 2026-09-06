@@ -1,0 +1,135 @@
+{
+  "schema": "same-journey-payment-lifecycle-branch-matrix/v1",
+  "parent": {
+    "h17_result_path": "docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_SAME_JOURNEY_BASELINE_LIFECYCLE_REPAIR_V1/evidence/SAME_JOURNEY_RESULT.json",
+    "h17_result_sha256": "9c611dfe121d970569ea41d1e1831d0f829da307c61a6839996846ca893545fc",
+    "session_id": "10",
+    "order_id": "webshop-order-c3345ef469f6d13dab2688e5",
+    "request_id": "webshop-request-096ba6496e0c73b413933ae1",
+    "payment_id": "same-journey-payment-webshop-request-096ba6496e0c73b413933ae1",
+    "selected_asin": "B099231V35",
+    "selected_option": "orange",
+    "selected_price": "16.79"
+  },
+  "repeat_per_case": 2,
+  "cases": [
+    {
+      "case_id": "J01_SUCCESS_FULFILLED",
+      "input": {
+        "initial_payment_status": "SUCCEEDED",
+        "query_status": null,
+        "async_status": null,
+        "fulfillment_status": "SUCCEEDED",
+        "fulfillment_failure_code": null
+      },
+      "expected_semantics": {
+        "sidecar_ready": true,
+        "effective_payment_status": "SUCCEEDED",
+        "query_recovery_status": null,
+        "status_conflict_resolution": null,
+        "task_status": "SUCCEEDED",
+        "remediation_status": "NOT_REQUIRED",
+        "retry_allowed": false,
+        "payment_query_finality": null
+      }
+    },
+    {
+      "case_id": "J02_UNKNOWN_QUERY_SUCCEEDED",
+      "input": {
+        "initial_payment_status": "UNKNOWN",
+        "query_status": "SUCCEEDED",
+        "async_status": null,
+        "fulfillment_status": "SUCCEEDED",
+        "fulfillment_failure_code": null
+      },
+      "expected_semantics": {
+        "sidecar_ready": true,
+        "effective_payment_status": "SUCCEEDED",
+        "query_recovery_status": "RECOVERED",
+        "status_conflict_resolution": null,
+        "task_status": "SUCCEEDED",
+        "remediation_status": "NOT_REQUIRED",
+        "retry_allowed": false,
+        "payment_query_finality": {
+          "evidence_stage": "QUERY_CONFIRMED",
+          "effective_status": "SUCCEEDED",
+          "effective_status_terminal": true,
+          "business_success_confirmed": false,
+          "fulfillment_confirmed": false,
+          "user_task_success_confirmed": false,
+          "reconciliation_confirmed": false,
+          "settlement_confirmed": false,
+          "legal_finality_confirmed": false
+        }
+      }
+    },
+    {
+      "case_id": "J03_PAYMENT_SUCCEEDED_FULFILLMENT_FAILED",
+      "input": {
+        "initial_payment_status": "SUCCEEDED",
+        "query_status": null,
+        "async_status": null,
+        "fulfillment_status": "FAILED",
+        "fulfillment_failure_code": "merchant_did_not_fulfil"
+      },
+      "expected_semantics": {
+        "sidecar_ready": true,
+        "effective_payment_status": "SUCCEEDED",
+        "query_recovery_status": null,
+        "status_conflict_resolution": null,
+        "task_status": "FAILED",
+        "remediation_status": "REQUIRED",
+        "retry_allowed": false,
+        "payment_query_finality": null
+      }
+    },
+    {
+      "case_id": "J04_QUERY_ASYNC_TERMINAL_CONFLICT",
+      "input": {
+        "initial_payment_status": "UNKNOWN",
+        "query_status": "SUCCEEDED",
+        "async_status": "FAILED",
+        "fulfillment_status": "SUCCEEDED",
+        "fulfillment_failure_code": null
+      },
+      "expected_semantics": {
+        "sidecar_ready": true,
+        "effective_payment_status": "UNKNOWN",
+        "query_recovery_status": "RECOVERED",
+        "status_conflict_resolution": "CONFLICT",
+        "task_status": "UNKNOWN",
+        "remediation_status": "REQUIRED",
+        "retry_allowed": false,
+        "payment_query_finality": {
+          "evidence_stage": "QUERY_CONFIRMED",
+          "effective_status": "SUCCEEDED",
+          "effective_status_terminal": true,
+          "business_success_confirmed": false,
+          "fulfillment_confirmed": false,
+          "user_task_success_confirmed": false,
+          "reconciliation_confirmed": false,
+          "settlement_confirmed": false,
+          "legal_finality_confirmed": false
+        }
+      }
+    }
+  ],
+  "continuity_checks": [
+    "PARENT_JOURNEY_IDENTITY",
+    "ORDER_REQUEST_CONTINUITY",
+    "PAYMENT_ORDER_REQUEST_CONTINUITY",
+    "SEMANTIC_EXPECTATION_MATCH",
+    "AUTHORITATIVE_TRACE_AVAILABLE",
+    "AUTHORITATIVE_TRACE_VALID",
+    "TRACE_ORDER_REQUEST_PAYMENT_CONTINUITY",
+    "ACTION_ORIGIN_PROJECTABLE"
+  ],
+  "measurement_rule": {
+    "task_pass_requires_all_cases_measured": true,
+    "task_pass_requires_all_cases_deterministic": true,
+    "task_pass_requires_semantic_expectations_match": false,
+    "task_pass_requires_all_branch_continuity_pass": false,
+    "semantic_or_continuity_failures_are_project_findings_not_executor_failures": true,
+    "real_buy_now_payment_fulfillment_network_side_effects_must_be_zero": true
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "webshop-option-grounding-probe/v1",
+  "case_count": 5,
+  "passed_count": 1,
+  "failed_count": 4,
+  "all_passed": false,
+  "cases": [
+    {
+      "case_id": "OG-01-simple-exact-text-option",
+      "expected_action": "click[teal]",
+      "expected_stop": false,
+      "actual": {
+        "action": "click[teal]",
+        "reason_summary": "select an explicitly requested visible option",
+        "stop": false
+      },
+      "passed": true
+    },
+    {
+      "case_id": "OG-02-do-not-overwrite-completed-requested-option",
+      "expected_action": null,
+      "expected_stop": true,
+      "actual": {
+        "action": "click[original cashew]",
+        "reason_summary": "select an explicitly requested visible option",
+        "stop": false
+      },
+      "passed": false
+    },
+    {
+      "case_id": "OG-03-dimension-format-normalization",
+      "expected_action": "click[72x44x38cm]",
+      "expected_stop": false,
+      "actual": {
+        "action": null,
+        "reason_summary": "requested product state reached; stop before purchase",
+        "stop": true
+      },
+      "passed": false
+    },
+    {
+      "case_id": "OG-04-cardinality-word-to-visible-label",
+      "expected_action": "click[1pcs]",
+      "expected_stop": false,
+      "actual": {
+        "action": null,
+        "reason_summary": "requested product state reached; stop before purchase",
+        "stop": true
+      },
+      "passed": false
+    },
+    {
+      "case_id": "OG-05-multiple-independent-option-groups",
+      "expected_action": "click[2.4 ounce (pack of 1)]",
+      "expected_stop": false,
+      "actual": {
+        "action": null,
+        "reason_summary": "requested product state reached; stop before purchase",
+        "stop": true
+      },
+      "passed": false
+    }
+  ]
+}
