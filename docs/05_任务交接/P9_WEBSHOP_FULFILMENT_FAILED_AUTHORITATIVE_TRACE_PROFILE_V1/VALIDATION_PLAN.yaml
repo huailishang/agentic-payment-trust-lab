@@ -1,0 +1,78 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: P9-WEBSHOP-FULFILMENT-FAILED-AUTHORITATIVE-TRACE-PROFILE-V1
+
+checks:
+  - id: VP-01
+    ac: [AC-01, AC-02, AC-06]
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_WEBSHOP_FULFILMENT_FAILED_AUTHORITATIVE_TRACE_PROFILE_V1/evaluator_checks/source_profile_audit.py
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-02
+    ac: [AC-03, AC-04, AC-05]
+    cwd: .
+    command:
+      - python3
+      - scripts/validation/webshop/run_same_journey_lifecycle_branches.py
+      - --parent-result
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_SAME_JOURNEY_BASELINE_LIFECYCLE_REPAIR_V1/evidence/SAME_JOURNEY_RESULT.json
+      - --experiment-context
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_SAME_JOURNEY_BASELINE_LIFECYCLE_REPAIR_V1/evaluator_fixtures/SAME_JOURNEY_EXPERIMENT_CONTEXT.json
+      - --matrix
+      - docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_SAME_JOURNEY_PAYMENT_LIFECYCLE_BRANCH_MEASUREMENT_V1/evaluator_fixtures/LIFECYCLE_BRANCH_MATRIX.json
+      - --repeat
+      - "2"
+      - --output
+      - docs/05_任务交接/P9_WEBSHOP_FULFILMENT_FAILED_AUTHORITATIVE_TRACE_PROFILE_V1/evidence/H19_LIFECYCLE_BRANCH_RESULT.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-03
+    ac: [AC-03, AC-04, AC-05]
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_WEBSHOP_FULFILMENT_FAILED_AUTHORITATIVE_TRACE_PROFILE_V1/evaluator_checks/h19_result_audit.py
+      - docs/05_任务交接/P9_WEBSHOP_FULFILMENT_FAILED_AUTHORITATIVE_TRACE_PROFILE_V1/evidence/H19_LIFECYCLE_BRANCH_RESULT.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-04
+    ac: [AC-02, AC-05]
+    cwd: .
+    command:
+      - python3
+      - -m
+      - unittest
+      - tests.test_webshop_sidecar_trace_toolkit
+      - tests.test_webshop_payment_sidecar
+      - tests.test_lifecycle
+      - tests.test_action_origin
+      - tests.test_authoritative_trace
+      - -v
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-05
+    ac: [AC-05]
+    cwd: .
+    command: [python3, run_experiment.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-06
+    ac: [AC-05]
+    cwd: .
+    command: [python3, scripts/validation/run_project_impact_baseline.py, --repeat, "3"]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-07
+    ac: [AC-05, AC-06]
+    cwd: .
+    command: [python3, -m, unittest, discover, -s, tests, -v]
+    expected_exit_code: 0
+    mandatory: true

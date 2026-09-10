@@ -1,7 +1,7 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-09-06-r28
-Last reviewed: 2026-09-06
+Map revision: 2026-09-10-r30
+Last reviewed: 2026-09-10
 Map owner: Evaluator / Human Task Owner  
 Status: ACTIVE  
 > 当前新任务统一使用 `evaluator-executor-workflow/v2.2`，按“瓶颈—假设—同基线实验—保留或回滚”闭环推进。
@@ -161,7 +161,7 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 | B-07 | 副作用前重复付款保护 | 同 request 已成功付款时，Runtime Gate 已在 callback 前 DENY；无关异常记录不误阻断 | 1/12 固定任务；零容忍支付副作用已消除 | P9 Capability Revalidation REVIEW：duplicate side effect 1/12 → 0/12，callback match 11/12 → 12/12 | high | RESOLVED / MEASURED_IMPROVED |
 | B-04 | 外部 Agent 行为 | 已形成真实多步骤 autonomous behavior、H-12 `5/5` 开发/回归证据、Blind Holdout `3/8` 泛化边界、H-14 通用修复与 Systematic Discovery `19/24`；已证明 Agent 可产生真实行为，也证明意图/规格存在难穷举长尾 | 当前价值已从“继续提高购物理解准确率”转为向信任链提供真实 Agent 行为与已知限制；H-15 `2/5` probe 保留为回归资产，不再阻塞主线 | H-14 `PASS / IMPROVED`；Systematic Discovery `PASS / NOT_APPLICABLE`、L3 `4/4 PASS`、48 observations all reproducible、safety hits 0；H-15 在 Executor 开始前 superseded | high | WATCH / BEHAVIOR_BASELINE_ESTABLISHED |
 | B-11 | Action Origin / Responsibility Trace | H-13 已完成 Action Origin `0/5→5/5`；H-17 修正跨 policy 版本基线后，同一 autonomous journey 的 Agent→Order/Request→Runtime→offline Payment/Fulfillment→Trace 连续关联 `8/8`，五类 origin 可投影 | 代表性 happy-path responsibility chain 已闭合；不再继续扩 Action Origin 字段 | H-17 Evaluator REVIEW：Task `PASS`、Project impact `NOT_APPLICABLE`、L3 `8/8 PASS`、same-journey `8/8`、657/657 全量、真实副作用 0 | high | RESOLVED / STAGE_CLOSED |
-| B-12 | Same-Journey Payment Lifecycle / Recovery Continuity | H-17 只证明成功支付+成功履约 happy path；UNKNOWN/PENDING、trusted query recovery、payment/fulfillment 分离失败、query/async status conflict 尚未在同一 autonomous journey 上统一测量 | L5-L9 支付执行、状态、履约、补救与归档主线；直接影响 Payment Finality / Recovery / Accountability 是否能承接真实 Agent 行为 | 现有组件单测已分别覆盖 UNKNOWN→query SUCCEEDED、PENDING 不盲重试、支付成功但履约失败、query/async CONFLICT；但 same-journey branch coverage 当前未建立 | high | ACTIVE / LIFECYCLE_BRANCH_MEASUREMENT |
+| B-12 | Same-Journey Payment Lifecycle / Recovery Continuity | H-18 已测得生命周期语义 `4/4`，但责任证据链连续性仅 `1/4`：J03 缺 Authoritative Trace；J02/J04 的恢复/冲突扩展事件无法进入 Action Origin 投影 | L5-L9 支付执行、状态、履约、补救与归档主线；当前失败已从支付语义下移到统一 Lifecycle Evidence Registry（生命周期证据登记）覆盖 | H-18 Evaluator L3 `7/7 PASS`：semantic `4/4`、continuity `1/4`、J03=`AUTHORITATIVE_TRACE_AVAILABLE`、J02/J04=`ACTION_ORIGIN_PROJECTABLE`、657/657 全量、真实副作用 0；H-19 在执行前因粒度过细被 H-20 取代 | high | ACTIVE / EVIDENCE_REGISTRY_CLOSURE |
 | B-05 | 数据最小化 | PayBench D1 两题不可执行，缺少数据披露事实与必要性判断 | PayBench 2/10，后续收货和身份任务 | measured：PayBench 8/10 可执行 | high | WATCH |
 | B-06 | 真实身份与外部协议 | 当前最高身份保证为 BOUND，未覆盖真实签名、SDK、facilitator 和网络故障 | 测试网、生产接入；当前主线影响有限 | measured boundary：P3 / P8 文档 | high | DEFERRED |
 
@@ -171,26 +171,23 @@ Active bottleneck ID: B-12
 
 ### 当前判断
 
-H-17 已由 Executor L2 与 Evaluator L3 独立复核通过：
+H-18 已由 Executor L2 与 Evaluator L3 独立复核通过：
 
 ```text
 Task verdict: PASS
 Project impact: NOT_APPLICABLE
-L3: 8/8 PASS
-same-journey correlations: 8/8
-Action Origin: 5/5
-Trace: VALID
+L3: 7/7 PASS
+semantic matches: 4/4
+branch continuity: 1/4
+J03 first breakpoint: AUTHORITATIVE_TRACE_AVAILABLE
+J02/J04 first breakpoint: ACTION_ORIGIN_PROJECTABLE
 full unittest: 657/657
 real side effects: 0
 ```
 
-因此 B-11 可以阶段性关闭。当前项目已经能在一条代表性 autonomous WebShop happy path 中机械回答：用户授权了什么、Agent 做了什么、Runtime 如何裁决、同一个 Order/Request 如何进入支付/履约，以及最终 Trace 如何回指。
+因此 B-12 不再是“生命周期分支有没有组合问题”的未知测量，而是已经定位到 Evidence / Accountability（证据 / 问责）连续性：支付状态、恢复、冲突、履约和补救语义本身 `4/4` 正确，同一 Order / Request / Payment 引用也连续；真正断开的是异常生命周期如何进入 Authoritative Trace / Action Origin。
 
-下一第一未知量不再是“责任字段还缺什么”，而是：
-
-> **同一条 autonomous journey 进入 UNKNOWN/PENDING、支付状态恢复、履约失败和状态冲突后，Order / Request / Payment / Trace / Action Origin 的连续性还能不能保持？**
-
-现有 Sidecar / Recovery / Payment Query Finality / Status Conflict / Lifecycle / Remediation 已分别有组件证据，所以当前先测组合，不预设产品修复。
+进一步复核后，J02/J03/J04 不再按“一个断点一个包”拆分：三者都属于同一个 Lifecycle Evidence Registry Coverage（生命周期证据登记覆盖）问题。J03 缺 failed-fulfilment Trace Profile；J02/J04 的 Trace 已 VALID，但现有 recovery / status-conflict 扩展事件还没有进入 Action Origin 闭集。原 H-19 在 Executor 开始前撤下，避免形成连续微修。
 
 ### 当前主线
 
@@ -199,18 +196,20 @@ B-04 Autonomous Agent Behavior【WATCH】
         ↓
 B-11 Action Origin + Same-Journey Responsibility【STAGE CLOSED】
         ↓
-B-12 / H-18 Same-Journey Payment Lifecycle Branch Measurement【CURRENT】
+B-12 / H-18 Lifecycle Branch Measurement【PASS】
         ↓
-J01 success + fulfilled
-J02 UNKNOWN → trusted query SUCCEEDED
-J03 payment SUCCEEDED + fulfillment FAILED
-J04 query SUCCEEDED / async FAILED conflict
+semantic 4/4 + refs continuous
         ↓
-根据 semantic X/4 + continuity Y/4 + first breakpoints 决定：
-    existing lifecycle components already sufficient
-    或仅修第一个真实主线断点
+Lifecycle Evidence Registry Coverage【CURRENT BOTTLENECK】
+        ├─ J02 recovery event → Action Origin missing
+        ├─ J03 failed fulfilment → Trace Profile missing
+        └─ J04 status conflict → Action Origin missing
         ↓
-Payment / Finality / Fulfillment / Recovery
+H-20 Lifecycle Evidence Continuity Closure【CURRENT】
+        ↓
+target: semantic 4/4 保持 + continuity 1/4 → 4/4
+        ↓
+Payment / Finality / Fulfillment / Recovery Closure
         ↓
 Evidence / Replay / Accountability / Closure
 ```
@@ -219,74 +218,64 @@ H-15 / Fresh Unseen 继续作为 B-04 WATCH；不因为自然语言长尾重新�
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: H-18
-Hypothesis status: `ACTIVE / LIFECYCLE_BRANCH_MEASUREMENT`
+Hypothesis ID: H-20
+Hypothesis status: `ACTIVE / LIFECYCLE_EVIDENCE_CONTINUITY_CLOSURE`
 
 ### 假设
 
-> 现有 Payment Sidecar、Recovery、Payment Query Finality、Status Conflict、Lifecycle、Remediation、Authoritative Trace 与 Action Origin 已分别具备代表性分支能力；把它们放到 H-17 已验收的同一 pre-payment journey 上做四个互斥 counterfactual branch（反事实分支）后，可以测出真实的 branch continuity，而无需预先增加产品能力。
+> H-18 的三个失败分支并不是三个独立产品缺陷，而是同一个 Lifecycle Evidence Registry Coverage（生命周期证据登记覆盖）问题：J03 缺一个既有 FULFILMENT 结构可消费的 failed-fulfilment Profile；J02/J04 的 Recovery / Status Conflict 扩展事件已经存在于 VALID Trace 中，只是尚未登记到 Action Origin 闭集。只补齐这两个既有 registry surface（登记面），无需修改支付生命周期业务语义或 Trace Toolkit，即可把 same-journey continuity 从 `1/4 → 4/4`。
 
-H-18 是 measurement-only `one_off`：Task 是否通过看测量完整性、确定性、证据真实性和零真实副作用，**不要求 branch continuity 必须 4/4**。任何 `semantic_match=false` 或 `continuity_pass=false` 都作为项目 finding 交给 Evaluator，不允许 Executor 现场修产品。
+原 H-19 在 Executor 开始前标记 `SUPERSEDED_BEFORE_EXECUTION`，不进入产品实现。
 
-### 四个冻结分支
+### 冻结主要变化
 
-```text
-J01_SUCCESS_FULFILLED
-  payment SUCCEEDED
-  fulfillment SUCCEEDED
-
-J02_UNKNOWN_QUERY_SUCCEEDED
-  initial UNKNOWN
-  trusted query SUCCEEDED
-  recovery / payment-status finality
-
-J03_PAYMENT_SUCCEEDED_FULFILLMENT_FAILED
-  payment SUCCEEDED
-  fulfillment FAILED
-  remediation REQUIRED
-
-J04_QUERY_ASYNC_TERMINAL_CONFLICT
-  query SUCCEEDED
-  async FAILED
-  effective UNKNOWN / no blind retry
-```
-
-四个 Case 共用 H-17 的 parent session/order/request/payment 身份，但它们是互斥的离线反事实分支，不得表述为四笔真实交易，也不得执行真实支付/履约。
-
-### 核心测量
-
-每个 Case `repeat=2`，输出：
+统一 principal change：补齐**现有生命周期扩展事件的 Evidence Registry 声明式覆盖**。
 
 ```text
-observed semantics
-semantic_match
-actual refs
-trace availability / validity / refs
-Action Origin projectability
-8 continuity checks
-continuity_pass
-first_breakpoint
+Trace Profile Registry
+  + generic failed-fulfilment profile
+
+Action Origin Event-Role Registry
+  + RECOVERY_OUTCOME_RECORDED / RECOVERY_OUTCOME
+      → EXECUTION_RESULT
+  + STATUS_CONFLICT_RECORDED / STATUS_CONFLICT_FACT
+      → EXTERNAL_FACT
 ```
 
-项目层关注：
+不修改：
 
 ```text
-semantic matches X/4
-branch continuity Y/4
-每个失败的 first breakpoint
+Sidecar Trace Toolkit
+Payment Sidecar
+Recovery / Finality / Conflict / Lifecycle / Remediation
+Authoritative Trace schema / validator / consumer / player
+H-17 / H-18 measurement runner / matrix / evaluator checks
 ```
 
-成功的测量任务不等于所有分支都 PASS；真正重复、主线相关的产品断点由下一轮单一 capability package 处理。
+### 成功信号
+
+同一个 H-18 冻结测量重新执行后：
+
+```text
+semantic = 4/4 保持
+J01 continuity = PASS 保持
+J02 Trace VALID + Action Origin PASS
+J03 Trace AVAILABLE + VALID + Action Origin PASS
+J04 Trace VALID + Action Origin PASS
+branch continuity: 1/4 → 4/4
+real side effects = 0
+```
+
+如果需要增加新的业务状态、Trace schema、ActionOrigin 类型、wildcard mapping 或 Case 专用逻辑，H-20 当前假设失败，Executor 停止并交回 Evaluator。
 
 ## Candidate experiments / 候选实验与设计任务
 
 | 优先级 | 假设 / 任务 | 主要变化 | 同基线比较 | 预期收益 | 成本 / 风险 |
 |---:|---|---|---|---:|---|
-| 1 | H-18 Same-Journey Payment Lifecycle Branch Measurement【当前】 | 新增 measurement-only runner；4 个 lifecycle branches ×2；不改产品 | H-17 happy-path only → semantic `X/4` + continuity `Y/4` | 找到支付状态/恢复/履约/冲突在真实 Agent journey 上的第一个断点 | 低到中；全离线、零真实交易 |
-| 2 | Lifecycle first-breakpoint repair【条件任务】 | 仅 H-18 出现重复/高影响真实断点时，按第一个断点冻结单一产品修复 | H-18 finding | 避免把 Recovery / Finality / Trace 一起大改 | unknown |
-| 3 | Payment / Finality / Fulfillment / Recovery closure | H-18 或后续 repair 后扩到剩余关键 lifecycle branch / closure evidence | branch continuity + recovery evidence | 完成高风险交易生命周期闭环 | 中 |
-| 4 | Accountability / Replay / Closure consumer | 生命周期证据稳定后消费 responsibility breakpoint / recovery evidence | consumer-visible closure | 让责任链进入审计回放与结束状态 | 中 |
-| 5 | H-15 / Fresh unseen WATCH | policy/model 大改或真实阻塞信任链时重跑 | regression only | 保存 Agent 长尾边界 | 低 |
+| 1 | H-20 Lifecycle Evidence Continuity Closure【当前】 | 一个统一 Evidence Registry 变化：补 failed-fulfilment Trace Profile + recovery/conflict Action Origin event-role mapping；业务语义与 Toolkit 冻结 | H-18 semantic `4/4`、continuity `1/4` → 目标 semantic `4/4`、continuity `4/4` | 一次闭合当前三个同类证据链断点，避免 J02/J03/J04 分成多个小修包 | 低到中；两个 registry surface、全离线、零真实交易 |
+| 2 | Payment / Finality / Fulfillment / Recovery closure | H-20 通过后扩到剩余关键 lifecycle branch / closure evidence | branch continuity `4/4` + recovery evidence | 完成高风险交易生命周期闭环 | 中 |
+| 3 | Accountability / Replay / Closure consumer | 生命周期证据稳定后消费 responsibility / recovery / conflict evidence | consumer-visible closure | 让异常生命周期责任链进入审计回放与结束状态 | 中 |
+| 4 | H-15 / Fresh unseen WATCH | policy/model 大改或真实阻塞信任链时重跑 | regression only | 保存 Agent 长尾边界 | 低 |
 
 ## Reassessment triggers / 重新排序触发器
 
@@ -333,3 +322,5 @@ branch continuity Y/4
 | `2026-09-06-r26` | 2026-09-06 | H-13 Evaluator REVIEW：Task `PASS`、Project impact `IMPROVED`、L3 `8/8 PASS`；Action Origin `0/5→5/5`，657/657 全量回归；同时确认 autonomous behavior fixture 与 T01 payment trace 仍是独立证据，不能声称 same-journey responsibility chain | B-11 继续 ACTIVE，但瓶颈从“无机器可读 Action Origin”下移为“无同一 journey 连续责任关联” | H-13 `SUPPORTED`；激活 H-16 one-off Same-Journey Responsibility Correlation，先测现有组件能否自然串联，不预设产品修复 |
 | `2026-09-06-r27` | 2026-09-06 | H-16 Executor L2 + Evaluator L3 均在 C01 复现 stale cross-policy trace baseline：历史 policy `af2a...` / trace `8c0a...`，当前 policy `6133...` / trace `b99e...`；最终商品/规格/价格与零副作用仍一致；Evaluator fresh current-policy replay 3/3 deterministic | B-11 继续 ACTIVE，但断点从“same-journey 未串通”进一步收敛为“baseline lifecycle 测量合同错误”，尚无证据表明下游产品链失败 | H-16 `REJECTED / INCONCLUSIVE / SWITCH`；激活 H-17，只修测量合同并直接重跑 C01..C08，不改任何产品/runner |
 | `2026-09-06-r28` | 2026-09-06 | H-17 Evaluator REVIEW：Task `PASS`、Project impact `NOT_APPLICABLE`、L3 `8/8 PASS`；baseline lifecycle 修正后现有 same-journey responsibility `C01..C08=8/8`、Action Origin 5/5、Trace VALID、657/657、真实副作用 0 | B-11 `RESOLVED / STAGE_CLOSED`；新增 B-12 Same-Journey Payment Lifecycle / Recovery Continuity 并升为第一瓶颈 | H-17 证明 H-16 主要是测量合同问题；激活 H-18 measurement-only 四分支测量，先测现有 Recovery/Finality/Lifecycle/Trace 组合，不预设产品修复 |
+| `2026-09-10-r29` | 2026-09-10 | H-18 Evaluator REVIEW：Task `PASS`、Project impact `NOT_APPLICABLE`、L3 `7/7 PASS`；同一 H-17 journey 四分支 semantic=`4/4`、continuity=`1/4`、J03 首断点=`AUTHORITATIVE_TRACE_AVAILABLE`、J02/J04 首断点=`ACTION_ORIGIN_PROJECTABLE`、657/657、真实副作用 0 | B-12 保持第一瓶颈，但从“生命周期组合未测量”下移为 Evidence / Accountability 连续性；先处理更上游的 J03 Trace 缺失 | H-18 完成测量并支持“现有生命周期语义正确但证据链不完整”；激活 H-19，只补失败履约声明式 Sidecar Trace Profile，目标 continuity `1/4→2/4`，不改 Toolkit / Action Origin |
+| `2026-09-10-r30` | 2026-09-10 | 执行前重新评估任务粒度：H-18 的 J02/J03/J04 三个失败均属于 Lifecycle Evidence Registry Coverage；J03 缺通用 failed-fulfilment Profile，J02/J04 的既有 VALID Trace 扩展事件缺 Action Origin mapping | B-12 不变，但把三个同类证据链断点合并为一个中等大小的 registry closure，避免连续微修；Payment / Lifecycle / Trace Toolkit 继续冻结 | H-19 `SUPERSEDED_BEFORE_EXECUTION`；激活 H-20 Lifecycle Evidence Continuity Closure，统一目标 semantic `4/4` 保持、continuity `1/4→4/4` |
