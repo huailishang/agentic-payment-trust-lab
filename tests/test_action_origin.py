@@ -115,6 +115,7 @@ class ActionOriginTests(unittest.TestCase):
         for event_type, role in [
             ("PAYMENT_OUTCOME_RECORDED", "PAYMENT_EXECUTION_OUTCOME"),
             ("FULFILMENT_OUTCOME_RECORDED", "FULFILMENT_OUTCOME"),
+            ("RECOVERY_OUTCOME_RECORDED", "RECOVERY_OUTCOME"),
             ("RESULT_RECORDED", "FINAL_OUTCOME"),
         ]:
             with self.subTest(event_type=event_type):
@@ -122,6 +123,14 @@ class ActionOriginTests(unittest.TestCase):
                     classify_trace_event_origin(self._event(9, event_type, role)),
                     ActionOrigin.EXECUTION_RESULT,
                 )
+
+    def test_status_conflict_outcome_maps_to_external_fact(self) -> None:
+        self.assertEqual(
+            classify_trace_event_origin(
+                self._event(10, "STATUS_CONFLICT_RECORDED", "STATUS_CONFLICT_FACT")
+            ),
+            ActionOrigin.EXTERNAL_FACT,
+        )
 
     def test_unknown_event_or_role_fails_closed(self) -> None:
         with self.assertRaises(ActionOriginError):

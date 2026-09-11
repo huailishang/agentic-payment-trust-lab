@@ -618,17 +618,6 @@ class WebShopPaymentSidecarTest(unittest.TestCase):
                 (),
             ),
             (
-                "fulfillment_failed",
-                gate,
-                payment,
-                replace(
-                    fulfillment,
-                    status=FulfillmentStatus.FAILED,
-                    failure_code="merchant_did_not_fulfil",
-                ),
-                (),
-            ),
-            (
                 "duplicate_attempt_present",
                 gate,
                 payment,

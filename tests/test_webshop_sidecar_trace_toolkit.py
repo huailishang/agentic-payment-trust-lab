@@ -26,6 +26,7 @@ from agentic_payment_experiment.payment_status_conflict import (
     PaymentStatusConflictResolution,
 )
 from agentic_payment_experiment.webshop_sidecar_trace_profiles import (
+    FAILED_FULFILMENT_PROFILE,
     SIDECAR_TRACE_PROFILES,
     SidecarExtensionKind,
     T01_PROFILE,
@@ -61,6 +62,25 @@ def _valid_t01():
         fulfillment=fulfillment,
     )
     return case, gate, candidate, payment, fulfillment, outcome
+
+
+def _valid_failed_fulfilment():
+    case = sidecar_tests.WebShopPaymentSidecarTest(methodName="runTest")
+    case.setUp()
+    gate, candidate, payment, fulfillment = case.happy_path_inputs()
+    failed_fulfillment = replace(
+        fulfillment,
+        status=FulfillmentStatus.FAILED,
+        failure_code="merchant_did_not_fulfil",
+    )
+    outcome = assess_webshop_payment_fulfilment(
+        gate_outcome=gate,
+        adaptation=case.adaptation,
+        mandate=case.mandate,
+        payment=payment,
+        fulfillment=failed_fulfillment,
+    )
+    return case, gate, candidate, payment, failed_fulfillment, outcome
 
 
 def _valid_t12():
@@ -115,13 +135,14 @@ def _valid_t12():
 
 
 class WebShopSidecarTraceToolkitTest(unittest.TestCase):
-    def test_fixed_registry_contains_exactly_three_declarative_profiles(self) -> None:
-        self.assertEqual(3, len(SIDECAR_TRACE_PROFILES))
+    def test_fixed_registry_contains_exactly_four_declarative_profiles(self) -> None:
+        self.assertEqual(4, len(SIDECAR_TRACE_PROFILES))
         self.assertEqual(
             (
                 "WEBSHOP_NORMAL_PURCHASE_V2",
                 "WEBSHOP_UNKNOWN_PAYMENT_RECOVERY_V2",
                 "WEBSHOP_PAYMENT_STATUS_CONFLICT_V2",
+                "WEBSHOP_NORMAL_PURCHASE_V2",
             ),
             tuple(profile.profile_name for profile in SIDECAR_TRACE_PROFILES),
         )
@@ -130,18 +151,26 @@ class WebShopSidecarTraceToolkitTest(unittest.TestCase):
                 SidecarExtensionKind.FULFILMENT,
                 SidecarExtensionKind.RECOVERY,
                 SidecarExtensionKind.STATUS_CONFLICT,
+                SidecarExtensionKind.FULFILMENT,
             ),
             tuple(profile.extension_kind for profile in SIDECAR_TRACE_PROFILES),
         )
 
-    def test_exactly_one_profile_selection_for_t01_t09_and_t12(self) -> None:
+    def test_exactly_one_profile_selection_for_existing_and_failed_fulfilment(self) -> None:
         _, _, _, _, t01_fulfillment, t01_outcome = _valid_t01()
         _, _, _, _, _, t09_fulfillment, t09_outcome = _valid_t09()
         *_, t12_fulfillment, t12_outcome = _valid_t12()
+        _, _, _, _, failed_fulfillment, failed_outcome = _valid_failed_fulfilment()
         cases = (
             ("T01", t01_fulfillment, t01_outcome, T01_PROFILE),
             ("T09", t09_fulfillment, t09_outcome, T09_PROFILE),
             ("T12", t12_fulfillment, t12_outcome, T12_PROFILE),
+            (
+                "FAILED_FULFILMENT",
+                failed_fulfillment,
+                failed_outcome,
+                FAILED_FULFILMENT_PROFILE,
+            ),
         )
         for name, fulfillment, outcome, expected in cases:
             with self.subTest(name=name):

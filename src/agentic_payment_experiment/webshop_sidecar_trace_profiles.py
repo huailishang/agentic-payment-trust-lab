@@ -114,10 +114,39 @@ T12_PROFILE = SidecarTraceProfile(
     remediation_status=RemediationStatus.REQUIRED,
 )
 
-SIDECAR_TRACE_PROFILES = (T01_PROFILE, T09_PROFILE, T12_PROFILE)
+FAILED_FULFILMENT_PROFILE = SidecarTraceProfile(
+    profile_name=T01_PROFILE.profile_name,
+    extension_kind=SidecarExtensionKind.FULFILMENT,
+    initial_payment_status=PaymentStatus.SUCCEEDED,
+    effective_payment_status=PaymentStatus.SUCCEEDED,
+    recovery_initial_status=None,
+    recovery_observed_status=None,
+    recovery_effective_status=None,
+    recovery_status=None,
+    recovery_retry_allowed=None,
+    conflict_resolution=None,
+    conflict_initial_status=None,
+    conflict_query_status=None,
+    conflict_async_status=None,
+    conflict_effective_status=None,
+    conflict_effective_status_terminal=None,
+    required_conflict_reason_codes=(),
+    lifecycle_payment_status=PaymentStatus.SUCCEEDED,
+    lifecycle_fulfilment_status=FulfillmentStatus.FAILED,
+    lifecycle_task_status=TaskStatus.FAILED,
+    remediation_status=RemediationStatus.REQUIRED,
+)
+
+SIDECAR_TRACE_PROFILES = (
+    T01_PROFILE,
+    T09_PROFILE,
+    T12_PROFILE,
+    FAILED_FULFILMENT_PROFILE,
+)
 
 
 __all__ = [
+    "FAILED_FULFILMENT_PROFILE",
     "SIDECAR_TRACE_PROFILES",
     "SidecarExtensionKind",
     "SidecarTraceProfile",

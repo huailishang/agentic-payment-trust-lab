@@ -1,0 +1,110 @@
+{
+  "schema": "same-journey-remediation-closure-matrix/v1",
+  "parent_branch_id": "J03_PAYMENT_SUCCEEDED_FULFILLMENT_FAILED",
+  "repeat_per_case": 2,
+  "continuity_check_order": [
+    "PARENT_JOURNEY_IDENTITY",
+    "ORDER_REQUEST_PAYMENT_CONTINUITY",
+    "REMEDIATION_SEMANTIC_EXPECTATION_MATCH",
+    "ORIGINAL_TRANSACTION_BINDING_EXPECTATION_MATCH",
+    "REMEDIATION_EVIDENCE_PRESENT",
+    "AUTHORITATIVE_TRACE_AVAILABLE",
+    "AUTHORITATIVE_TRACE_VALID",
+    "TRACE_REMEDIATION_EVIDENCE_PRESENT",
+    "ACTION_ORIGIN_PROJECTABLE",
+    "CLOSURE_STATE_EXPLICIT"
+  ],
+  "cases": [
+    {
+      "case_id": "R01_FULL_REFUND",
+      "remediation_kind": "REFUND",
+      "refund_status": "SUCCEEDED",
+      "refund_amount_mode": "FULL_PAYMENT_AMOUNT",
+      "payment_ref_mode": "PARENT_PAYMENT",
+      "order_ref_mode": "PARENT_ORDER",
+      "expected": {
+        "task_status": "FAILED",
+        "remediation_status": "RESOLVED",
+        "next_action": "economic_remediation_completed_by_full_refund",
+        "refund_status": "SUCCEEDED",
+        "dispute_status": null,
+        "original_transaction_binding": "VALID",
+        "required_issue_codes": []
+      }
+    },
+    {
+      "case_id": "R02_PARTIAL_REFUND",
+      "remediation_kind": "REFUND",
+      "refund_status": "SUCCEEDED",
+      "refund_amount_mode": "HALF_PAYMENT_AMOUNT",
+      "payment_ref_mode": "PARENT_PAYMENT",
+      "order_ref_mode": "PARENT_ORDER",
+      "expected": {
+        "task_status": "FAILED",
+        "remediation_status": "IN_PROGRESS",
+        "next_action": "continue_remediation_for_remaining_amount",
+        "refund_status": "SUCCEEDED",
+        "dispute_status": null,
+        "original_transaction_binding": "VALID",
+        "required_issue_codes": [
+          "partial_refund_requires_further_remediation"
+        ]
+      }
+    },
+    {
+      "case_id": "R03_DISPUTE_OPEN",
+      "remediation_kind": "DISPUTE",
+      "dispute_status": "OPEN",
+      "payment_ref_mode": "PARENT_PAYMENT",
+      "order_ref_mode": "PARENT_ORDER",
+      "expected": {
+        "task_status": "FAILED",
+        "remediation_status": "IN_PROGRESS",
+        "next_action": "continue_dispute_review",
+        "refund_status": null,
+        "dispute_status": "OPEN",
+        "original_transaction_binding": "VALID",
+        "required_issue_codes": [
+          "dispute_requires_review"
+        ]
+      }
+    },
+    {
+      "case_id": "R04_DISPUTE_RESOLVED_OUTCOME_UNVERIFIED",
+      "remediation_kind": "DISPUTE",
+      "dispute_status": "RESOLVED",
+      "payment_ref_mode": "PARENT_PAYMENT",
+      "order_ref_mode": "PARENT_ORDER",
+      "expected": {
+        "task_status": "FAILED",
+        "remediation_status": "REQUIRED",
+        "next_action": "verify_dispute_resolution_outcome",
+        "refund_status": null,
+        "dispute_status": "RESOLVED",
+        "original_transaction_binding": "VALID",
+        "required_issue_codes": [
+          "dispute_resolution_outcome_unverified"
+        ]
+      }
+    },
+    {
+      "case_id": "R05_REFUND_PAYMENT_BINDING_MISMATCH",
+      "remediation_kind": "REFUND",
+      "refund_status": "SUCCEEDED",
+      "refund_amount_mode": "FULL_PAYMENT_AMOUNT",
+      "payment_ref_mode": "MISMATCH",
+      "order_ref_mode": "PARENT_ORDER",
+      "expected": {
+        "task_status": "FAILED",
+        "remediation_status": "REQUIRED",
+        "next_action": "preserve_evidence_and_investigate_remediation_binding",
+        "refund_status": "SUCCEEDED",
+        "dispute_status": null,
+        "original_transaction_binding": "INVALID",
+        "required_issue_codes": [
+          "refund_payment_binding_mismatch"
+        ]
+      }
+    }
+  ]
+}
