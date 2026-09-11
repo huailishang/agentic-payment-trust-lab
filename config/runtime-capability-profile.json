@@ -21,7 +21,7 @@
       "plugin_id": "payment.validation",
       "implementation_id": "governed-action-validator",
       "enabled": true,
-      "config": {"runtime_wired": false, "status": "active_domain_implementation"}
+      "config": {"runtime_wired": true, "status": "platform_validation_wired"}
     },
     {
       "capability_id": "observability.trace-sink",
@@ -47,6 +47,6 @@
     "owner_project": "agentic-payment-trust-lab",
     "source_of_truth": "docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md",
     "domain_extensions": ["payment binding model", "payment fact lineage", "payment finality", "merchant and mandate rules"],
-    "note": "Slot-to-implementation inventory only; not yet loaded by agent-runtime-platform."
+    "note": "validation.validator is wired through agent-runtime-platform capability loader; other slots remain declaration-only."
   }
 }
