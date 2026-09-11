@@ -30,7 +30,7 @@ Active bottleneck after review: `B-04 / ACTIVE`
 Evaluator 将已接受的 unchanged submitted snapshot（未改变提交快照）路由到 `READY_FOR_REVIEW / Evaluator` 后，使用冻结 `VALIDATION_PLAN.yaml` 原样独立运行：
 
 ```text
-python3 /mnt/d/SoftWare/VScode/install/Project/localagent-common/skills/evaluator-executor-workflow/scripts/run_validation.py \
+python3 ${VALIDATION_RUNNER} \
   --repo . \
   --plan docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_GENERALIZATION_V1/VALIDATION_PLAN.yaml \
   --out docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_GENERALIZATION_V1/evidence \

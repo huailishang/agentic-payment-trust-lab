@@ -43,7 +43,7 @@ There was one infrastructure-only routing event during review: the first runner 
 The Evaluator then reran the **unchanged frozen Validation Plan** with process-local PATH shims only:
 
 - `python` → existing `/usr/bin/python3`;
-- frozen WebShop interpreter token → existing `D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\python.exe` (Python 3.8.13).
+- frozen WebShop interpreter token → existing `python3` (Python 3.8.13).
 
 No repository product file, dependency, Conda environment, network setting or validation semantics was changed. The resolved L3 run produced the final `L3-GATE.json/.md` and `RV-EV-01..06` evidence.
 

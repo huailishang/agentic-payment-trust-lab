@@ -77,7 +77,7 @@ Implementation commit: `NONE`
 ## EV-02 — Frozen five-goal WebShop runtime audit
 
 - AC: `AC-02, AC-03, AC-04, AC-07`
-- Command: `/mnt/d/SoftWare/Anaconda/workspace/.conda/envs/webshop38/python.exe docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_MULTIGOAL_GENERALIZATION_V1/evaluator_checks/multigoal_runtime_audit.py`
+- Command: `python3 docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_MULTIGOAL_GENERALIZATION_V1/evaluator_checks/multigoal_runtime_audit.py`
 - Meta: `docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_MULTIGOAL_GENERALIZATION_V1/evidence/EV-02.meta.json`
 - Stdout: `docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_MULTIGOAL_GENERALIZATION_V1/evidence/EV-02.stdout.log`
 - Stderr: `docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_MULTIGOAL_GENERALIZATION_V1/evidence/EV-02.stderr.log`

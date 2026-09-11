@@ -24,7 +24,7 @@ checks:
     ac: [AC-03, AC-04, AC-05, AC-06]
     cwd: .
     command:
-      - /mnt/d/SoftWare/Anaconda/workspace/.conda/envs/webshop38/python.exe
+      - python3
       - scripts/validation/webshop/run_same_journey_responsibility.py
       - --checkout
       - local_sources/third_party/webshop

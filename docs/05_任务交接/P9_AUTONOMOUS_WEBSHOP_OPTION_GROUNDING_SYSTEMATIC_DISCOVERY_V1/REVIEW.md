@@ -30,7 +30,7 @@ Project routing observation: `CONTINUE_B04_WITH_NEW_HYPOTHESIS`
 Evaluator 接受 unchanged submitted snapshot（未改变提交快照）后，将路由切到 `READY_FOR_REVIEW / Evaluator`，原样运行冻结 Validation Plan：
 
 ```text
-python3 /mnt/d/SoftWare/VScode/install/Project/localagent-common/skills/evaluator-executor-workflow/scripts/run_validation.py \
+python3 ${VALIDATION_RUNNER} \
   --repo . \
   --plan docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_SYSTEMATIC_DISCOVERY_V1/VALIDATION_PLAN.yaml \
   --out docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_SYSTEMATIC_DISCOVERY_V1/evidence \

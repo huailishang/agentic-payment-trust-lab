@@ -103,7 +103,7 @@ Implementation commit: `NONE`
 ## EV-04 — H-12 five-goal real WebShop regression
 
 - AC: `AC-06, AC-07`
-- Command: `/mnt/d/SoftWare/Anaconda/workspace/.conda/envs/webshop38/python.exe docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_MULTIGOAL_GENERALIZATION_V1/evaluator_checks/multigoal_runtime_audit.py`
+- Command: `python3 docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_MULTIGOAL_GENERALIZATION_V1/evaluator_checks/multigoal_runtime_audit.py`
 - Meta: `docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_GENERALIZATION_V1/evidence/EV-04.meta.json`
 - Stdout: `docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_GENERALIZATION_V1/evidence/EV-04.stdout.log`
 - Stderr: `docs/05_任务交接/P9_AUTONOMOUS_WEBSHOP_OPTION_GROUNDING_GENERALIZATION_V1/evidence/EV-04.stderr.log`

@@ -62,7 +62,7 @@ and stop before Buy Now.
 ## Frozen environment and evaluator truth boundary
 
 - Checkout: `local_sources/third_party/webshop`; tracked upstream files are immutable.
-- Runtime: existing `D:\SoftWare\Anaconda\workspace\.conda\envs\webshop38\python.exe` / Python 3.8.13.
+- Runtime: existing `python3` / Python 3.8.13.
 - Environment: `WebAgentTextEnv-v0`, text observation, `num_products=1000`, human goals.
 - Seed: `20260823`.
 - Five frozen goal indices: `0 / 2 / 7 / 9 / 10`.
