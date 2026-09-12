@@ -1,0 +1,69 @@
+{
+  "schema": "acp-webhook-signature-capability-matrix/v1",
+  "protocol_profile": "ACP-2026-04-17-WEBHOOK",
+  "fixture": {
+    "signer_ref": "merchant-fixture-001",
+    "key_ref": "merchant-webhook-test-key-v1",
+    "test_secret_utf8": "test-only-acp-webhook-secret-v1",
+    "raw_body_utf8": "{\"type\":\"order_update\",\"data\":{\"type\":\"order\",\"id\":\"ord_123\",\"status\":\"shipped\"}}",
+    "signed_at_epoch": 1709123456,
+    "observed_at_epoch": 1709123500,
+    "timestamp_tolerance_seconds": 300
+  },
+  "cases": [
+    {
+      "case_id": "V01_VALID_SIGNATURE",
+      "mutation": "NONE",
+      "expected": {
+        "status": "VALID",
+        "reason_codes": ["signed_instruction_signature_valid"],
+        "cryptographic_signature_verified": true
+      }
+    },
+    {
+      "case_id": "N01_TAMPERED_BODY",
+      "mutation": "TAMPER_BODY_AFTER_SIGNING",
+      "expected": {
+        "status": "INVALID",
+        "reason_codes": ["signed_instruction_signature_mismatch"],
+        "cryptographic_signature_verified": false
+      }
+    },
+    {
+      "case_id": "N02_WRONG_SECRET",
+      "mutation": "VERIFY_WITH_WRONG_SECRET",
+      "expected": {
+        "status": "INVALID",
+        "reason_codes": ["signed_instruction_signature_mismatch"],
+        "cryptographic_signature_verified": false
+      }
+    },
+    {
+      "case_id": "N03_STALE_TIMESTAMP",
+      "mutation": "SIGN_STALE_TIMESTAMP",
+      "expected": {
+        "status": "INVALID",
+        "reason_codes": ["signed_instruction_timestamp_outside_window"],
+        "cryptographic_signature_verified": false
+      }
+    },
+    {
+      "case_id": "N04_MISSING_SIGNATURE_HEADER",
+      "mutation": "REMOVE_MERCHANT_SIGNATURE",
+      "expected": {
+        "status": "MISSING_EVIDENCE",
+        "reason_codes": ["signed_instruction_signature_missing"],
+        "cryptographic_signature_verified": false
+      }
+    },
+    {
+      "case_id": "N05_MALFORMED_SIGNATURE_HEADER",
+      "mutation": "MALFORM_MERCHANT_SIGNATURE",
+      "expected": {
+        "status": "INVALID",
+        "reason_codes": ["signed_instruction_signature_format_invalid"],
+        "cryptographic_signature_verified": false
+      }
+    }
+  ]
+}

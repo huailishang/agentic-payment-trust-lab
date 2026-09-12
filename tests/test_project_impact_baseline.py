@@ -122,7 +122,11 @@ class ProjectImpactBaselineTest(unittest.TestCase):
             task["task_id"]: {event["event_type"] for event in task["events"]}
             for task in contract["tasks"]
         }
-        self.assertEqual(set(ALL_TASK_IDS), set(registry_events))
+        self.assertTrue(set(ALL_TASK_IDS) <= set(registry_events))
+        self.assertEqual(
+            set(ALL_TASK_IDS),
+            {task_id for task_id in ALL_TASK_IDS if task_id in registry_events},
+        )
         for task in self.spec["tasks"]:
             task_id = task["task_id"]
             expected_events = set(task["expected_product_observed_trace_events"])

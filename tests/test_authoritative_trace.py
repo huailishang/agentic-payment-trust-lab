@@ -17,10 +17,14 @@ from agentic_payment_experiment.authoritative_trace import (
     ACCEPTED_PROFILES_SHA256,
     ACCEPTED_PROJECTION_REGISTRY_SHA256,
     ACCEPTED_RUNTIME_CONTRACT_SHA256,
+    PROFILE_REGISTRY,
+    PROJECTION_REGISTRY,
     ProductAuthoritativeTrace,
     TraceContractError,
     TraceSourceBinding,
     TraceValidationStatus,
+    accepted_base_registry_hashes,
+    accepted_base_runtime_contract_primitive,
     canonical_primitive,
     compute_binding_ref,
     compute_projection_source_ref,
@@ -99,16 +103,20 @@ class AuthoritativeTraceContractTest(unittest.TestCase):
         cls.trace = trace_from_mapping(cls.t10_data)
 
     def test_embedded_registry_hashes_match_accepted_contract(self) -> None:
-        hashes = dict(runtime_registry_hashes())
-        self.assertEqual(ACCEPTED_FORMULA_REGISTRY_SHA256, hashes["formula_registry"])
+        base_hashes = dict(accepted_base_registry_hashes())
+        self.assertEqual(
+            ACCEPTED_FORMULA_REGISTRY_SHA256, base_hashes["formula_registry"]
+        )
         self.assertEqual(
             ACCEPTED_PROJECTION_REGISTRY_SHA256,
-            hashes["projection_registry"],
+            base_hashes["projection_registry"],
         )
-        self.assertEqual(ACCEPTED_PROFILES_SHA256, hashes["profiles"])
-        self.assertEqual(ACCEPTED_RUNTIME_CONTRACT_SHA256, hashes["runtime_contract"])
+        self.assertEqual(ACCEPTED_PROFILES_SHA256, base_hashes["profiles"])
+        self.assertEqual(
+            ACCEPTED_RUNTIME_CONTRACT_SHA256, base_hashes["runtime_contract"]
+        )
 
-        embedded = runtime_contract_primitive()
+        embedded = accepted_base_runtime_contract_primitive()
         expected = {
             key: self.coverage[key]
             for key in (
@@ -124,6 +132,26 @@ class AuthoritativeTraceContractTest(unittest.TestCase):
         self.assertEqual(
             ACCEPTED_RUNTIME_CONTRACT_SHA256,
             _canonical_hash(embedded),
+        )
+
+        effective = runtime_contract_primitive()
+        effective_hashes = dict(runtime_registry_hashes())
+        self.assertEqual(
+            _canonical_hash(canonical_primitive(PROJECTION_REGISTRY)),
+            effective_hashes["projection_registry"],
+        )
+        self.assertEqual(
+            _canonical_hash(effective["tasks"]), effective_hashes["profiles"]
+        )
+        self.assertEqual(
+            _canonical_hash(effective), effective_hashes["runtime_contract"]
+        )
+        self.assertEqual(
+            set(PROJECTION_REGISTRY), set(effective["projection_registry"])
+        )
+        self.assertEqual(
+            set(PROFILE_REGISTRY),
+            {str(item["profile"]) for item in effective["tasks"]},
         )
 
     def test_runtime_module_has_no_docs_or_evidence_file_dependency(self) -> None:

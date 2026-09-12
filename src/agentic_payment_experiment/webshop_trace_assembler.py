@@ -24,11 +24,14 @@ from .authoritative_trace import (
     render_entity_ref,
 )
 from .models import (
+    DisputeRecord,
     FulfillmentRecord,
     IntentMandate,
+    LifecycleResult,
     Order,
     PaymentExecutionRecord,
     PaymentRecoveryResult,
+    RefundRecord,
     TransactionRequest,
     ValidationResult,
 )
@@ -36,6 +39,7 @@ from .payment_status_conflict import PaymentStatusConflictFact
 from .trusted_execution import (
     GovernedActionBindingFact,
     GovernedPaymentAction,
+    OriginalTransactionBindingFact,
     RuntimeGateRecord,
 )
 
@@ -223,6 +227,65 @@ def project_fulfillment(record: FulfillmentRecord) -> dict[str, Any]:
     }
 
 
+def project_refund_record(record: RefundRecord) -> dict[str, Any]:
+    return {
+        "refund_id": record.refund_id,
+        "payment_id": record.payment_id,
+        "order_id": record.order_id,
+        "status": record.status,
+        "amount": record.amount,
+        "currency": record.currency,
+        "occurred_at": record.occurred_at,
+        "receipt_ref": record.receipt_ref,
+        "reason_code": record.reason_code,
+        "reason_codes": (() if record.reason_code is None else (record.reason_code,)),
+    }
+
+
+def project_dispute_record(record: DisputeRecord) -> dict[str, Any]:
+    return {
+        "dispute_id": record.dispute_id,
+        "payment_id": record.payment_id,
+        "order_id": record.order_id,
+        "status": record.status,
+        "opened_at": record.opened_at,
+        "reason_code": record.reason_code,
+        "evidence_ref": record.evidence_ref,
+        "reason_codes": (() if record.reason_code is None else (record.reason_code,)),
+    }
+
+
+def project_original_transaction_binding_fact(
+    fact: OriginalTransactionBindingFact,
+) -> dict[str, Any]:
+    return {
+        "action": fact.action,
+        "status": fact.status,
+        "reason_codes": fact.reason_codes,
+        "original_payment_ref": fact.original_payment_ref,
+        "original_order_ref": fact.original_order_ref,
+        "follow_up_payment_ref": fact.follow_up_payment_ref,
+        "follow_up_order_ref": fact.follow_up_order_ref,
+    }
+
+
+def project_remediation_closure(result: LifecycleResult) -> dict[str, Any]:
+    return {
+        "payment_status": result.payment_status,
+        "fulfillment_status": result.fulfillment_status,
+        "task_status": result.task_status,
+        "remediation_status": result.remediation.status,
+        "next_action": result.remediation.next_action,
+        "case_ref": result.remediation.case_ref,
+        "refund_status": result.refund_status,
+        "dispute_status": result.dispute_status,
+        "issue_codes": tuple(item.code for item in result.issues),
+        "evidence_paths": tuple(item.field_path for item in result.evidence),
+        "rule_version": result.rule_version,
+        "limitations": result.limitations,
+    }
+
+
 def project_payment_recovery(record: PaymentRecoveryResult) -> dict[str, Any]:
     return {
         "initial_status": record.initial_status,
@@ -374,12 +437,16 @@ __all__ = [
     "create_relation",
     "create_source_binding",
     "project_action_binding_fact",
+    "project_dispute_record",
     "project_fulfillment",
     "project_governed_action",
     "project_mandate",
     "project_order",
+    "project_original_transaction_binding_fact",
     "project_payment",
     "project_payment_recovery",
+    "project_refund_record",
+    "project_remediation_closure",
     "project_payment_sidecar_outcome",
     "project_payment_status_conflict",
     "project_request",

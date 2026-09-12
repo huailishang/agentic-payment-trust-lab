@@ -1,0 +1,81 @@
+{
+  "schema": "actor-authenticity-gap-matrix/v1",
+  "probes": [
+    {
+      "probe_id": "P01_P3_BOUND_NO_CREDENTIAL",
+      "surface": "P3_IDENTITY_GATE",
+      "expected": {
+        "identity_status": "VALID",
+        "assurance_level": "BOUND",
+        "credential_expected": false,
+        "credential_observed": false,
+        "credential_available": false,
+        "gate_decision": "ALLOW",
+        "callback_count": 1,
+        "verified_emitted": false
+      }
+    },
+    {
+      "probe_id": "P02_P3_EXPECTED_CREDENTIAL_CURRENT_MISSING",
+      "surface": "P3_IDENTITY_GATE",
+      "expected": {
+        "identity_status": "VALID",
+        "assurance_level": "BOUND",
+        "credential_expected": true,
+        "credential_observed": false,
+        "credential_available": false,
+        "gate_decision": "ALLOW",
+        "callback_count": 1,
+        "verified_emitted": false
+      }
+    },
+    {
+      "probe_id": "P03_P3_MATCHING_CREDENTIAL_REF_ONLY",
+      "surface": "P3_IDENTITY_GATE",
+      "expected": {
+        "identity_status": "VALID",
+        "assurance_level": "BOUND",
+        "credential_expected": true,
+        "credential_observed": true,
+        "credential_available": true,
+        "gate_decision": "ALLOW",
+        "callback_count": 1,
+        "verified_emitted": false
+      }
+    },
+    {
+      "probe_id": "P04_AP2_HP_USER_AUTH_SIGNATURE_UNVERIFIED",
+      "surface": "AP2_HUMAN_PRESENT",
+      "expected": {
+        "adapted_ready": true,
+        "decision": "ALLOW",
+        "required_limitation_codes": [
+          "ap2_user_authorization_signature_not_verified"
+        ]
+      }
+    },
+    {
+      "probe_id": "P05_AP2_HNP_INTENT_AUTH_SIGNATURE_UNVERIFIED",
+      "surface": "AP2_HUMAN_NOT_PRESENT",
+      "expected": {
+        "adapted_ready": true,
+        "decision": "ALLOW",
+        "required_limitation_codes": [
+          "ap2_intent_authorization_signature_not_verified"
+        ]
+      }
+    },
+    {
+      "probe_id": "P06_ACP_WEBHOOK_PAYEE_AUTHENTICITY_UNVERIFIED",
+      "surface": "ACP_CHECKOUT",
+      "expected": {
+        "adapted_ready": true,
+        "required_limitation_codes": [
+          "seller_identity_from_endpoint_context_not_verified",
+          "payee_identity_not_verified",
+          "order_webhook_signature_not_verified"
+        ]
+      }
+    }
+  ]
+}

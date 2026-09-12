@@ -1,7 +1,7 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-09-11-r31
-Last reviewed: 2026-09-11
+Map revision: 2026-09-12-r36
+Last reviewed: 2026-09-12
 Map owner: Evaluator / Human Task Owner  
 Status: ACTIVE  
 > 当前新任务统一使用 `evaluator-executor-workflow/v2.2`，按“瓶颈—假设—同基线实验—保留或回滚”闭环推进。
@@ -51,7 +51,8 @@ Status: ACTIVE
 - P1—P6 Trust Control Plane；
 - x402 离线一致性；
 - WebShop 上游预检、small smoke、Commerce Adapter、Buy Now Gate、Payment / Fulfilment Sidecar；
-- 当前正在建设的 Governed Action 与 Fact Lineage。
+- 已验收的 Governed Action、Fact Lineage、Payment Lifecycle / Recovery、Remediation / Closure、Authoritative Trace Consumer / Player；
+- 当前 B-15A Signed Instruction Verification（签署指令验证）的第一个有界能力实验：协议中立验证事实 + ACP 2026-04-17 Webhook HMAC consumer（消费者）。
 
 明确不包含：
 
@@ -60,6 +61,80 @@ Status: ACTIVE
 - 完整 Agent PKI 或生产身份认证；
 - 未授权的外部 API、测试网、钱包和网络调用；
 - 对生产安全、监管合规或业务合法性的证明。
+
+## Global capability roadmap / 全局能力路线
+
+评估者以后先从这 6 个大阶段定位项目，再看具体 `B-* / H-*`。任务编号不是路线，能力阶段才是路线。
+
+```text
+A. 评测与治理底座                  [已完成]
+→ B. 授权、绑定、来源、执行前治理   [已完成]
+→ C. 支付生命周期、恢复、补救证据链 [已完成]
+→ D. 责任归因与可消费审计链         [已完成]
+→ E. 主体真实性 / 凭证 / 签署指令   [当前]
+→ F. 外部真实协议 / SDK / 网络接入   [未来，受授权与环境约束]
+```
+
+| 阶段 | 要解决的核心问题 | 当前代表能力 / 证据 | 状态 |
+|---|---|---|---|
+| A 评测与治理底座 | 怎么知道一次修改真的让项目变好，而不是测试数量变多 | 12 项项目基线、GESR、零副作用守护线、Evaluator / Executor、L2/L3 独立复核 | `CLOSED` |
+| B 授权、绑定、来源、执行前治理 | Agent 能不能在明确授权、正确对象、可信来源下安全触发副作用 | P1 Delegated Authority、P2 Payment Binding、P3 BOUND Identity、P4 Context Policy、Governed Action、Fact Lineage、重复付款保护 | `CLOSED` |
+| C 生命周期、恢复、补救证据链 | 支付后 UNKNOWN、履约失败、退款、争议、原交易错绑时能不能安全恢复并留下连续证据 | Payment Lifecycle / Recovery、Finality、Remediation / Closure、Product Authoritative Trace `10/12`，B-12/B-13 阶段关闭 | `CLOSED` |
+| D 责任归因与可消费审计链 | 事后能不能回答“谁做的、依据什么、发生了什么”，并让 UI / 审计消费者稳定读取 | Action Origin、Same-Journey Responsibility、Consumer、Read Model、Player；H-23 五分支消费 `5/5` | `CLOSED` |
+| E 主体真实性 / 凭证 / 签署指令 | ID 对得上之后，能否证明执行者真的持有对应凭证/密钥，授权/指令真的由对应主体签署 | H-24 已证明 P3 凭证/持有证明与 AP2/ACP 签名验证是两类真实缺口；B-15A 先做 Signed Instruction Verification，B-15B 凭证/持有证明后置 | `CURRENT` |
+| F 外部真实协议 / 网络接入 | 本地机制在真实 SDK、钱包、测试网、身份提供方、facilitator 下是否仍成立 | x402 仅离线一致性；真实 AP2/ACP/x402 网络、真实凭证/签名、银行沙箱尚未进入 | `DEFERRED` |
+
+### 已完成的能力，不再默认继续扩
+
+- 项目级同基线评测与独立复核；
+- Delegated Authority（委托授权）、Confirmation Binding（确认绑定）；
+- Order / Request / Payment 连续 Binding（绑定）；
+- Agent / Executor `DECLARED / BOUND` 身份保证边界；
+- Context / Tool Integrity（上下文 / 工具完整性）与来源策略；
+- Idempotency / Replay（幂等 / 重放防护）、UNKNOWN 查询恢复、支付最终性 / 状态冲突；
+- Governed Action（受治理动作）与 Fact Lineage（事实血缘）；
+- Same-Journey Responsibility（同旅程责任链）；
+- Payment Lifecycle / Recovery（支付生命周期 / 恢复）；
+- Refund / Dispute / Closure（退款 / 争议 / 结束状态）证据连续性；
+- Product Authoritative Trace（产品权威轨迹）的代表性覆盖；
+- Consumer / Read Model / Player（消费器 / 读取模型 / 播放器）只读审计消费链。
+
+### 当前与后续能力
+
+H-24 已回答阶段 E 的第一层问题：真实性缺口真实存在，但不是一个大而全机制，应拆为：
+
+```text
+B-15A Signed Instruction Verification（签署指令验证）【当前】
+  → AP2 HP / AP2 HNP / ACP 三个独立入口重复出现
+
+B-15B Credential / Possession Verification（凭证 / 持有证明验证）【后续】
+  → P3 当前最高 BOUND，尚无 credential validity / possession verifier
+```
+
+当前先进入 B-15A 的最小 capability package（能力建设包）：建立协议中立 `SignedInstructionVerificationFact`，用 ACP 2026-04-17 `Merchant-Signature` HMAC Webhook 作为第一个真实消费者和负例。AP2 SD-JWT、P3 `VERIFIED`、完整 PKI / 钱包 / Passkey / 区块链仍不进入本包。
+
+阶段 F 只有在出现明确外部消费者、测试环境和授权后才进入：真实 SDK / 身份提供方 / 钱包 / 测试网 / facilitator / 银行沙箱。它不是当前 B-15A 本地能力实验的默认下一步。
+
+### 第一瓶颈选择公式 / 决策顺序
+
+```text
+项目最终目标与零容忍风险
+→ 哪个大阶段还没有代表性闭环
+→ 该缺口影响范围 / 风险严重度
+→ measured / estimated / unknown 的证据强度
+→ 是否有重复共同失败，而不是单一 Case
+→ 修复成本、复杂度、外部授权依赖
+→ 与 WATCH / DEFERRED 备选项比较 expected project value（预期项目价值）
+→ 选第一瓶颈
+```
+
+当前 B-15 优先于几个主要备选项的原因：
+
+- B-03 Product Trace 剩余 T05/T06 只是 `2/12` 未覆盖，已有 `10/12` 代表性覆盖且不是当前零容忍失败，保持 `WATCH（观察）`；
+- B-04 Fresh Unseen Agent 行为仍有长尾，但当前已能提供真实行为给 Trust 链，不再是支付信任链的第一断点，保持 `WATCH（观察）`；
+- B-05 Data Minimization（数据最小化）仍有 PayBench 缺口，但当前影响范围小于“执行主体/签署指令真实性”，保持 `WATCH（观察）`；
+- B-06 真实 SDK / testnet / network 依赖额外授权与环境，保持 `DEFERRED（延期）`；
+- B-15 同时出现在 P3、AP2、ACP 多个独立入口，直接关系“谁在代表用户行动”和“授权是否真实”，因此先测量其是否为共性高风险安全缺口。
 
 ## End-to-end capability chain / 端到端能力链
 
@@ -134,7 +209,7 @@ python run_experiment.py
 PYTHONPATH=src python3 -m unittest discover -s tests -v
 ```
 
-项目级端到端基线已冻结为 12 项固定任务和 `run_project_impact_baseline.py`，可用于同 target 的 capability experiment 前后比较；当前 Product Trace 已达 `10/12`，剩余 T05/T06 轨迹缺口降为 WATCH。主线未知量已经下移到 L8-L9 Remediation / Closure（补救 / 结束）在同一 autonomous journey 中的组合连续性。
+项目级端到端基线已冻结为 12 项固定任务和 `run_project_impact_baseline.py`，可用于同 target 的 capability experiment（能力实验）前后比较；当前 Product Trace 已达 `10/12`，剩余 T05/T06 轨迹缺口降为 `WATCH（观察）`。B-11—B-14 已把责任归因、支付生命周期 / 恢复、补救 / 结束状态以及 Consumer / Player（消费器 / 播放器）代表性链路阶段关闭；当前主线已经切换到 B-15 Actor Authenticity / Signed Instruction Verification（主体真实性 / 签署指令验证），先用 H-24 做跨 P3 + AP2 + ACP 的 measurement-only（只测量）验证。
 
 ### 已知盲区
 
@@ -162,125 +237,116 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 | B-04 | 外部 Agent 行为 | 已形成真实多步骤 autonomous behavior、H-12 `5/5` 开发/回归证据、Blind Holdout `3/8` 泛化边界、H-14 通用修复与 Systematic Discovery `19/24`；已证明 Agent 可产生真实行为，也证明意图/规格存在难穷举长尾 | 当前价值已从“继续提高购物理解准确率”转为向信任链提供真实 Agent 行为与已知限制；H-15 `2/5` probe 保留为回归资产，不再阻塞主线 | H-14 `PASS / IMPROVED`；Systematic Discovery `PASS / NOT_APPLICABLE`、L3 `4/4 PASS`、48 observations all reproducible、safety hits 0；H-15 在 Executor 开始前 superseded | high | WATCH / BEHAVIOR_BASELINE_ESTABLISHED |
 | B-11 | Action Origin / Responsibility Trace | H-13 已完成 Action Origin `0/5→5/5`；H-17 修正跨 policy 版本基线后，同一 autonomous journey 的 Agent→Order/Request→Runtime→offline Payment/Fulfillment→Trace 连续关联 `8/8`，五类 origin 可投影 | 代表性 happy-path responsibility chain 已闭合；不再继续扩 Action Origin 字段 | H-17 Evaluator REVIEW：Task `PASS`、Project impact `NOT_APPLICABLE`、L3 `8/8 PASS`、same-journey `8/8`、657/657 全量、真实副作用 0 | high | RESOLVED / STAGE_CLOSED |
 | B-12 | Same-Journey Payment Lifecycle / Recovery Continuity | H-20 已将 H-18 三个同类证据链断点统一闭合：semantic `4/4` 保持，continuity `1/4→4/4`，四条 Trace 均 VALID 且 Action Origin 可投影 | L5-L7 支付执行、状态、恢复、冲突与履约的代表性同旅程证据连续性已闭合 | H-20 Evaluator REVIEW：Task `PASS`、Project impact `IMPROVED`、L3 `7/7 PASS`、Product Trace `9/12→10/12`、GESR `8/12→9/12`、658/658 全量、真实副作用 0 | high | RESOLVED / STAGE_CLOSED |
-| B-13 | Same-Journey Remediation / Closure Continuity | `assess_remediation` 已有全额退款、部分退款、争议处理中、争议结案未确认、原交易错绑等组件语义，但这些 L8-L9 能力尚未接到 H-20 已闭合的同一 autonomous journey 上统一测量 | 支付成功后履约失败进入退款/争议/人工补救，再到最终经济结果与责任证据归档；当前组合连续性 unknown | 现有 `remediation.py` + `tests/test_remediation.py` 证明组件语义存在；尚无 same-journey Remediation/Closure measurement | high | ACTIVE / MEASUREMENT_REQUIRED |
+| B-13 | Same-Journey Remediation / Closure Continuity | H-21 定位 5/5 共同补救证据断点；H-22 以一个通用 extension 将 remediation evidence `0/5→5/5`、continuity `0/5→5/5`；H-22R 又使 public runtime fingerprint 与 live validator contract 完全一致，R05 全程保持 `INVALID` | 支付后退款/争议/原交易绑定/Closure 的代表性同旅程证据生产与合同身份已闭合，不再继续扩 R01-R05 或补救产品字段 | H-22R Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `8/8 PASS`；effective projection/profile/runtime hash 全部与 live contract 一致；H-22 复验 SHA-256 完全相同；662/662、真实副作用 0 | high | RESOLVED / STAGE_CLOSED |
+| B-14 | Remediation Accountability / Closure Consumption | H-23 已对冻结 5 个补救分支完成现有 Product Trace → Consumer → Read Model → Action Origin → Player 系统测量；Consumer/Player/continuity 均 `5/5`，R05 `INVALID` 原样可见且无虚假 payment relation | 代表性退款/争议/原交易错绑证据已经可被现有通用只读消费链稳定消费，无需新增 Consumer/Player 特判 | H-23 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `7/7 PASS`，first breakpoint=`NONE:5`，51/51 专项、662/662 全量、真实副作用 0 | high | RESOLVED / STAGE_CLOSED |
+| B-15 | Actor Authenticity / Signed Instruction Verification | H-24 已系统测量 6 个探针：P3 三条路径均只到 `BOUND`；AP2 HP/HNP 与 ACP 三个独立入口均显式保留签名/真实性 `not_verified`。结论不是一个大而全模块，而是 B-15A Signed Instruction 与 B-15B Credential/Possession 两类机制族 | B-15A 直接影响授权/订单/Webhook 指令的真实性与完整性，已跨 3 个独立入口重复；B-15B 影响执行主体凭证/持有证明，目前主要证据集中在 P3 | H-24 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / CONTINUE`，L3 `7/7 PASS`，6/6 deterministic，product `VERIFIED=0/6`，AP2/ACP 三入口 signature gap 重复；34/34 专项、662/662 全量、真实副作用 0 | high | ACTIVE / B-15A CAPABILITY_EXPERIMENT |
 | B-05 | 数据最小化 | PayBench D1 两题不可执行，缺少数据披露事实与必要性判断 | PayBench 2/10，后续收货和身份任务 | measured：PayBench 8/10 可执行 | high | WATCH |
 | B-06 | 真实身份与外部协议 | 当前最高身份保证为 BOUND，未覆盖真实签名、SDK、facilitator 和网络故障 | 测试网、生产接入；当前主线影响有限 | measured boundary：P3 / P8 文档 | high | DEFERRED |
 
 ## Active bottleneck / 当前第一瓶颈
 
-Active bottleneck ID: B-13
+Active bottleneck ID: B-15
 
 ### 当前判断
 
-H-20 已由 Executor L2 与 Evaluator L3 独立复核通过：
+H-24 已由 Executor L2 与 Evaluator L3 独立复核通过：
 
 ```text
 Task verdict: PASS
-Project impact: IMPROVED
+Project impact: NOT_APPLICABLE
+Continuation: CONTINUE
 L3: 7/7 PASS
-semantic matches: 4/4
-branch continuity: 4/4
-Product Trace: 10/12
-GESR: 9/12
-full unittest: 658/658
-real side effects: 0
+six probes: 6/6
+repeat=2 deterministic: 6/6
+product VERIFIED authenticity: 0/6
+P3 P01-P03: VALID / BOUND / ALLOW
+explicit signature/authenticity not_verified: P04 / P05 / P06
+cross-surface repeated signature mechanism: true
+focused regression: 34/34
+full unittest: 662/662
+real payment / credential / key / signature / network: 0
 ```
 
-因此 B-12 的 Lifecycle Evidence Registry（生命周期证据登记）方向已经闭合，不再继续增加 Action Origin 字段或按 J02/J03/J04 做微修。当前失败位置继续下移到 L8-L9：仓库已有 `assess_remediation` 的退款、部分退款、争议、错绑等组件语义，但尚未证明它们能在 H-20 已闭合的同一 autonomous journey（自主旅程）中保持原交易绑定、补救状态、责任证据与最终归档连续。
+H-24 证明 B-15 是真实高风险边界，但也证明不能把它做成一个“万能身份模块”。当前分成：
 
-所以新第一瓶颈不是“缺退款代码”，而是 **Same-Journey Remediation / Closure Continuity（同旅程补救 / 结束连续性）尚未测量**。先测量现有能力，再决定是否需要产品修复。
+- **B-15A Signed Instruction Verification（签署指令验证）**：AP2 HP、AP2 HNP、ACP 三个独立入口重复出现，升为当前第一子瓶颈；
+- **B-15B Credential / Possession Verification（凭证 / 持有证明验证）**：P3 仍最高 `BOUND`，是真实缺口，但当前独立消费者证据更少，后置。
+
+ACP 2026-04-17 官方 Webhook 合同已经给出明确 signer / signed payload / key relation（签署者 / 被签内容 / 密钥关系）：`Merchant-Signature: t=<unix>,v1=<64_hex>`，HMAC-SHA256 签 `timestamp + "." + raw_body`，并要求时间窗验证。因此当前不再继续 measurement-only，而进入第一个有界 capability experiment（能力实验）。
 
 ### 当前主线
 
 ```text
-B-04 Autonomous Agent Behavior【WATCH】
+A-D【STAGE CLOSED】
         ↓
-B-11 Action Origin + Same-Journey Responsibility【STAGE CLOSED】
+E. B-15 Actor Authenticity / Signed Instruction Verification【CURRENT】
         ↓
-B-12 Same-Journey Payment Lifecycle / Recovery Continuity【STAGE CLOSED】
+H-24 cross-surface measurement【PASS】
+        ├─ B-15A Signed Instruction：AP2 HP + AP2 HNP + ACP【PRIMARY】
+        └─ B-15B Credential / Possession：P3【SECONDARY】
         ↓
-H-20 Evidence Registry Closure【PASS / IMPROVED】
+H-25 Signed Instruction Verification Fact + ACP Webhook HMAC【NEXT】
+        ├─ protocol-neutral verification fact
+        ├─ generic HMAC-SHA256 verifier
+        ├─ ACP Merchant-Signature parser / consumer
+        ├─ valid + tamper + wrong-key + stale + malformed/missing negatives
+        └─ signature VALID != business ALLOW / identity VERIFIED
         ↓
-semantic 4/4 + continuity 4/4
-        ↓
-B-13 Same-Journey Remediation / Closure Continuity【CURRENT BOTTLENECK】
-        ↓
-H-21 measurement-only
-        ├─ full refund
-        ├─ partial refund
-        ├─ dispute open
-        ├─ dispute resolved / outcome unverified
-        └─ original-transaction binding mismatch
-        ↓
-根据 first breakpoint 再决定 capability package
-        ↓
-Evidence / Replay / Accountability / Closure Consumer
+根据真实 consumer 复用价值决定：接 AP2 / STOP / SWITCH
 ```
 
-H-15 / Fresh Unseen 继续作为 B-04 WATCH；T05/T06 Product Trace 继续属于 B-03 WATCH；都不因为“容易修”重新打断当前生命周期主线。
+B-03 T05/T06 Product Trace、B-04 Fresh Unseen、B-05 Data Minimization 继续 `WATCH（观察）`；B-06 真实 SDK/testnet/network 继续 `DEFERRED（延期）`。H-25 仍完全本地离线，不恢复 B-06 网络授权。
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: H-21
-Hypothesis status: `ACTIVE / REMEDIATION_CLOSURE_MEASUREMENT`
+Hypothesis ID: H-25
+Hypothesis status: `ACTIVE / SIGNED_INSTRUCTION_FACT_ACP_FIRST_CONSUMER`
 
 ### 假设
 
-> 当前并不知道 L8-L9 需要新的产品机制。现有 `assess_remediation` 已分别实现 full refund（全额退款）、partial refund（部分退款）、dispute（争议）和 original-transaction binding（原交易绑定）语义；真正未知的是这些组件放到 H-20 已闭合的 same-journey payment / fulfilment chain（同旅程支付 / 履约链）后，补救状态、原交易绑定、Trace、Action Origin 和最终 Closure（结束归档）是否仍连续。
+> H-24 已证明跨协议重复的 Signed Instruction（签署指令）验证缺口。当前最小有价值 principal change（主要变化）不是建设完整身份/密钥平台，而是建立一个协议中立、可回放、不会泄露 secret/payload 的签署指令验证事实，并让 ACP 2026-04-17 Webhook HMAC 成为第一个真实协议消费者。如果同一事实模型能表达合法签名、篡改、错误密钥、过期时间戳和缺失/畸形证据，同时保持“signature VALID 不等于业务 ALLOW / actor VERIFIED”，则 B-15A 获得第一个可复用能力锚点。
 
-因此 H-21 先做 measurement-only one_off（只测量一次性任务），不预设产品修改。
+H-25 是 `capability_experiment（能力实验）`，只建设本地离线 verification fact（验证事实）与 ACP HMAC consumer（消费者）；不实现 AP2 SD-JWT，不升级 P3 `VERIFIED`，不引入网络、生产密钥、钱包或 PKI。
 
 ### 冻结主要变化
 
-唯一主要变化是增加**测量与审计工件**，不得修改产品：
+唯一主要变化：新增协议中立 `SignedInstructionVerificationFact` + HMAC-SHA256 verifier，并由新 ACP Webhook adapter 解析官方 `Merchant-Signature` 后真实消费该 verifier。
 
 ```text
-H-20 accepted same-journey parent
-        +
-5 个 frozen remediation branches
+raw_body + Merchant-Signature + test-only secret + observed_at
         ↓
-现有 assess_remediation / original transaction binding
+ACP parser：t=<unix>,v1=<64_hex>
         ↓
-测量 semantics / binding / trace / origin / closure continuity
+signed message = timestamp + "." + raw_body
         ↓
-记录 first breakpoint
-```
-
-冻结产品包括：
-
-```text
-Payment / Recovery / Finality / Conflict / Lifecycle
-Remediation
-Sidecar Trace Toolkit / profiles
-Authoritative Trace schema / validator / consumer / player
-Action Origin
+protocol-neutral HMAC-SHA256 verifier
+        ↓
+SignedInstructionVerificationFact
+        ↓
+VALID / INVALID / MISSING_EVIDENCE
 ```
 
 ### 成功信号
 
-H-21 的 Task PASS 不要求 5 个 branch 全部 continuity PASS，而要求：
-
 ```text
-5/5 branch 都真实测量
-repeat=2 deterministic
-现有 remediation semantics 如实记录
-原交易 binding 如实记录
-Trace / Action Origin / Closure continuity 如实记录
-first breakpoint 可机械重算
-real side effects = 0
-项目 guardrails 不退化
+ACP signed-webhook executable coverage: 0/6 → 6/6 frozen cases
+valid signature → VALID
+body tamper / wrong key / stale timestamp → INVALID
+missing or malformed evidence → MISSING_EVIDENCE or INVALID per frozen contract
+raw secret / full raw body never persisted in verification fact
+signature VALID does not emit Payment ALLOW or Identity VERIFIED
+AP2/P3 product behavior unchanged
+H-24 result remains byte-stable when revalidated
+project guardrails unchanged
 ```
-
-如果测量发现重复的同类断点，再由 Evaluator 归并成一个 capability hypothesis；不得在 H-21 中现场补产品。
 
 ## Candidate experiments / 候选实验与设计任务
 
 | 优先级 | 假设 / 任务 | 主要变化 | 同基线比较 | 预期收益 | 成本 / 风险 |
 |---:|---|---|---|---:|---|
-| 1 | H-21 Same-Journey Remediation / Closure Measurement【当前】 | measurement-only：把 full refund、partial refund、dispute open、resolved-but-unverified、original-transaction mismatch 接到 H-20 parent；产品冻结 | 组件级 remediation 已知 → same-journey L8-L9 continuity 真实测量 | 先定位共同 first breakpoint，避免直接写退款/争议补丁 | 低到中；仅本地 runner/fixture/audit，零真实退款/争议 |
-| 2 | Remediation / Closure capability package【条件触发】 | 仅当 H-21 出现可重复共同断点时，按失败机制冻结一个 principal change | H-21 measured breakpoint → bounded before/after | 闭合 L8-L9 高风险交易后处理链 | 中；具体范围由 H-21 决定 |
-| 3 | Accountability / Replay / Closure consumer | 生命周期与补救证据稳定后消费 responsibility / recovery / remediation / conflict evidence | consumer-visible closure | 让异常生命周期责任链进入审计回放与结束状态 | 中 |
-| 4 | B-03 T05/T06 Product Trace + H-15 Fresh unseen WATCH | 只有主线阻塞或新证据改变排序时再激活 | regression / secondary gap | 保留剩余轨迹与 Agent 长尾边界 | 低到中 |
+| 1 | H-25 Signed Instruction Verification Fact + ACP Webhook HMAC【当前】 | 一个 principal change：协议中立验证事实 + 通用 HMAC-SHA256 verifier + ACP 2026-04-17 consumer | H-24 ACP `order_webhook_signature_not_verified` / 可执行签名验证 `0/6` → 冻结六案例语义 `6/6` | 让 B-15A 第一次从 limitation 进入真实可执行、可负测的能力 | 中；只用测试 secret，本地离线，不接 AP2 SD-JWT |
+| 2 | AP2 Signed Mandate consumer【条件触发】 | 只有 H-25 证明通用 fact 有复用价值，且能冻结真实 AP2 cryptographic fixture / verifier 语义后才进入 | ACP first consumer → second protocol consumer | 验证协议中立层是否真正跨协议复用 | 中到高；SD-JWT / credential 复杂，禁止凭占位 fixture 假验证 |
+| 3 | B-15B Credential / Possession + B-03/B-04/B-05 | H-25 后根据影响和证据重排 | secondary gaps | 保留执行主体凭证、剩余轨迹、Agent 长尾、数据最小化问题 | 低到中 |
 
 ## Reassessment triggers / 重新排序触发器
 
@@ -330,3 +396,8 @@ real side effects = 0
 | `2026-09-10-r29` | 2026-09-10 | H-18 Evaluator REVIEW：Task `PASS`、Project impact `NOT_APPLICABLE`、L3 `7/7 PASS`；同一 H-17 journey 四分支 semantic=`4/4`、continuity=`1/4`、J03 首断点=`AUTHORITATIVE_TRACE_AVAILABLE`、J02/J04 首断点=`ACTION_ORIGIN_PROJECTABLE`、657/657、真实副作用 0 | B-12 保持第一瓶颈，但从“生命周期组合未测量”下移为 Evidence / Accountability 连续性；先处理更上游的 J03 Trace 缺失 | H-18 完成测量并支持“现有生命周期语义正确但证据链不完整”；激活 H-19，只补失败履约声明式 Sidecar Trace Profile，目标 continuity `1/4→2/4`，不改 Toolkit / Action Origin |
 | `2026-09-10-r30` | 2026-09-10 | 执行前重新评估任务粒度：H-18 的 J02/J03/J04 三个失败均属于 Lifecycle Evidence Registry Coverage；J03 缺通用 failed-fulfilment Profile，J02/J04 的既有 VALID Trace 扩展事件缺 Action Origin mapping | B-12 不变，但把三个同类证据链断点合并为一个中等大小的 registry closure，避免连续微修；Payment / Lifecycle / Trace Toolkit 继续冻结 | H-19 `SUPERSEDED_BEFORE_EXECUTION`；激活 H-20 Lifecycle Evidence Continuity Closure，统一目标 semantic `4/4` 保持、continuity `1/4→4/4` |
 | `2026-09-11-r31` | 2026-09-11 | H-20 Evaluator REVIEW：Attempt 1 因 T11 旧基线期望 `6/7` 阻断，A1 仅修 regression expectation；Attempt 2 L2 `7/7`、Evaluator L3 `7/7 PASS`，semantic=`4/4`、continuity=`4/4`、Product Trace=`10/12`、GESR=`9/12`、658/658 全量、真实副作用 0 | B-12 `RESOLVED / STAGE_CLOSED`；新增 B-13 Same-Journey Remediation / Closure Continuity 并升为第一瓶颈；B-03 缩小为仅 T05/T06 WATCH | H-20 `SUPPORTED / STOP_THIS_DIRECTION`；激活 H-21 measurement-only，先测 full/partial refund、dispute 与原交易错绑在同一 journey 的 L8-L9 continuity，不预设产品修复 |
+| `2026-09-12-r32` | 2026-09-12 | H-21 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE`，L3 `7/7 PASS`；5/5 semantics、5/5 original-transaction binding expectation、5/5 closure explicit、5/5 existing Product Trace VALID，但 remediation evidence in trace=`0/5`，共同 first breakpoint=`TRACE_REMEDIATION_EVIDENCE_PRESENT`；658/658、真实副作用 0 | B-13 保持第一瓶颈，但从“L8-L9 未测量”收敛为“post-payment remediation evidence registration 缺失”；不是退款/争议规则错误 | H-21 完成测量；激活 H-22，一个通用 remediation trace extension，把 Refund/Dispute + OriginalTransactionBindingFact + Closure outcome source-bound 接回同一 Product Authoritative Trace，不做逐 Case 修补 |
+| `2026-09-12-r33` | 2026-09-12 | H-22 Evaluator REVIEW：Task `PASS`、Project impact `IMPROVED`、L3 `7/7 PASS`；remediation evidence `0/5→5/5`、continuity `0/5→5/5`、R05 保持 `INVALID`、662/662、真实副作用 0；Evaluator 独立 probe 发现 live projection hash=`71a4...3966`，但 public runtime hash 仍为 base `45ae...b4` | B-13 的核心补救证据链能力已闭合，但进入 Replay / Accountability 前仍有 contract identity / auditability 缺口；不再增加补救业务场景 | 激活 H-22R bounded repair：只修 historical base 与 effective runtime contract/hash 的分层和公开指纹一致性；修复后重新评估 B-13 是否 STAGE_CLOSED |
+| `2026-09-12-r34` | 2026-09-12 | H-22R Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `8/8 PASS`；public effective projection/profile/runtime fingerprint 与 live validator contract 机械一致；historical base identity 保持；H-22 五分支复验 SHA-256 完全相同、662/662、真实副作用 0 | B-13 `RESOLVED / STAGE_CLOSED`；新增 B-14 Remediation Accountability / Closure Consumption 为第一瓶颈。Consumer 底座已有部分真实使用证据，但 5 个补救分支经 Consumer + Player 的完整消费仍未系统测量 | 激活 H-23 measurement-only：产品冻结，测现有 Consumer / Read Model / Action Origin / Player 对 5 个补救分支的完整性、确定性和 R05 负例保留；仅在共同断点出现后再考虑 capability package |
+| `2026-09-12-r35` | 2026-09-12 | H-23 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `7/7 PASS`；冻结 5 个补救分支 Consumer/Player/continuity 全部 `5/5`、first breakpoint=`NONE:5`，R05 `INVALID` 原样可见，662/662、真实副作用 0 | B-14 `RESOLVED / STAGE_CLOSED`；不再开发 Consumer/Player。新增 B-15 Actor Authenticity / Signed Instruction Verification：P3 最高 BOUND，AP2/ACP 多个签名/身份边界明确 not_verified，但共同机制尚未系统测量 | 激活 H-24 cross-surface measurement-only：冻结产品，跨 P3 + AP2 HP/HNP + ACP 测 6 个真实性边界；只有出现重复共同 verifier gap 后才考虑最小通用真实性验证能力 |
+| `2026-09-12-r36` | 2026-09-12 | H-24 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / CONTINUE`，L3 `7/7 PASS`；6/6 探针 deterministic，P3 三路径最高 `BOUND`，product `VERIFIED=0/6`；AP2 HP/HNP + ACP 三个独立入口重复出现 cryptographic signature `not_verified`，34/34 专项、662/662 全量、真实副作用 0 | B-15 继续 ACTIVE，但拆为 B-15A Signed Instruction【当前第一子瓶颈】与 B-15B Credential/Possession【后续】；不建设万能身份模块 | 激活 H-25 capability experiment：协议中立 SignedInstructionVerificationFact + HMAC-SHA256 verifier + ACP 2026-04-17 Merchant-Signature 首个消费者；AP2 SD-JWT、P3 VERIFIED、PKI/钱包/网络继续排除 |

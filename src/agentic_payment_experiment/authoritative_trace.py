@@ -249,11 +249,87 @@ if not isinstance(_RUNTIME_CONTRACT, FrozenDict):
     raise RuntimeError("embedded runtime contract must be a mapping")
 
 FORMULA_REGISTRY = _RUNTIME_CONTRACT["projection_identity_formula_registry"]
-PROJECTION_REGISTRY = _RUNTIME_CONTRACT["projection_registry"]
+_BASE_PROJECTION_REGISTRY = _RUNTIME_CONTRACT["projection_registry"]
 PROFILE_TASKS = _RUNTIME_CONTRACT["tasks"]
 FORBIDDEN_PROJECTION_FIELDS = _RUNTIME_CONTRACT["forbidden_projection_fields"]
 REFERENCE_MODEL = _RUNTIME_CONTRACT["reference_model"]
 CANONICAL_DECIMAL_CONTRACT = _RUNTIME_CONTRACT["canonical_decimal"]
+
+_PROJECTION_HASH_IDENTITY = {
+    "mode": "PROJECTION_HASH_IDENTITY",
+    "formula_id": "PROJECTION_HASH_IDENTITY_V1",
+    "hash_algorithm": "SHA-256",
+    "digest_encoding": "lowercase-hex-64",
+    "payload_fields": ["projection_schema", "projection"],
+    "prefix_template": "{source_object_type}:projection-sha256:",
+}
+
+_H22_PROJECTION_EXTENSIONS = {
+    "refund-record-remediation-trace/v1": {
+        "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+        "entity_ref_template": "RefundRecord:{projection.refund_id}",
+        "excluded_fields": [],
+        "field_extractions": {},
+        "projection_fields": [
+            "refund_id", "payment_id", "order_id", "status", "amount", "currency",
+            "occurred_at", "receipt_ref", "reason_code", "reason_codes",
+        ],
+        "source_class": "RefundRecord",
+        "source_identity": {"mode": "NATIVE_TEMPLATE", "template": "RefundRecord:{refund_id}"},
+        "source_module": "agentic_payment_experiment.models",
+        "source_object_type": "RefundRecord",
+    },
+    "dispute-record-remediation-trace/v1": {
+        "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+        "entity_ref_template": "DisputeRecord:{projection.dispute_id}",
+        "excluded_fields": [],
+        "field_extractions": {},
+        "projection_fields": [
+            "dispute_id", "payment_id", "order_id", "status", "opened_at",
+            "reason_code", "evidence_ref", "reason_codes",
+        ],
+        "source_class": "DisputeRecord",
+        "source_identity": {"mode": "NATIVE_TEMPLATE", "template": "DisputeRecord:{dispute_id}"},
+        "source_module": "agentic_payment_experiment.models",
+        "source_object_type": "DisputeRecord",
+    },
+    "original-transaction-binding-fact-remediation-trace/v1": {
+        "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+        "entity_ref_template": "OriginalTransactionBindingFact:binding:{binding_digest}",
+        "excluded_fields": [],
+        "field_extractions": {},
+        "projection_fields": [
+            "action", "status", "reason_codes", "original_payment_ref",
+            "original_order_ref", "follow_up_payment_ref", "follow_up_order_ref",
+        ],
+        "source_class": "OriginalTransactionBindingFact",
+        "source_identity": _PROJECTION_HASH_IDENTITY,
+        "source_module": "agentic_payment_experiment.trusted_execution.original_transaction",
+        "source_object_type": "OriginalTransactionBindingFact",
+    },
+    "lifecycle-remediation-closure-trace/v1": {
+        "binding_ref_mode": "EXACT_PROJECTION_DIGEST",
+        "entity_ref_template": "LifecycleResult:remediation-closure:{binding_digest}",
+        "excluded_fields": [],
+        "field_extractions": {},
+        "projection_fields": [
+            "payment_status", "fulfillment_status", "task_status", "remediation_status",
+            "next_action", "case_ref", "refund_status", "dispute_status", "issue_codes",
+            "evidence_paths", "rule_version", "limitations",
+        ],
+        "source_class": "LifecycleResult",
+        "source_identity": _PROJECTION_HASH_IDENTITY,
+        "source_module": "agentic_payment_experiment.models",
+        "source_object_type": "LifecycleResult",
+    },
+}
+
+PROJECTION_REGISTRY = FrozenDict(
+    {
+        **_thaw(_BASE_PROJECTION_REGISTRY),
+        **_H22_PROJECTION_EXTENSIONS,
+    }
+)
 
 ACCEPTED_FORMULA_REGISTRY_SHA256 = "2d8f06ba7c5ca9e35c4957412c0b92da5171c95e135e0bb14b5a61d1bf3309fd"
 ACCEPTED_PROJECTION_REGISTRY_SHA256 = "45aeaa0abb46fbf66573be1ee417bafb41c99802061bc5b3cb63549313c049b4"
@@ -261,28 +337,169 @@ ACCEPTED_PROFILES_SHA256 = "6b53b88d5413ae9dd6d536089a22efe3f32563b950f61604c79f
 ACCEPTED_RUNTIME_CONTRACT_SHA256 = "4062944a6b3dfa5ca8042bc4f6a0ed429a75f00b8875c71c844e7eb0eb304f0e"
 
 
-def runtime_registry_hashes() -> FrozenDict:
+def accepted_base_registry_hashes() -> FrozenDict:
+    """Return fingerprints for the historical accepted pre-H-22 contract."""
+
     return FrozenDict(
         {
             "formula_registry": canonical_sha256(_thaw(FORMULA_REGISTRY)),
-            "projection_registry": canonical_sha256(_thaw(PROJECTION_REGISTRY)),
+            "projection_registry": canonical_sha256(_thaw(_BASE_PROJECTION_REGISTRY)),
             "profiles": canonical_sha256(_thaw(PROFILE_TASKS)),
             "runtime_contract": canonical_sha256(_thaw(_RUNTIME_CONTRACT)),
         }
     )
 
 
-def runtime_contract_primitive() -> dict[str, Any]:
-    """Return a detached primitive copy for parity tests."""
+def accepted_base_runtime_contract_primitive() -> dict[str, Any]:
+    """Return the detached historical accepted pre-H-22 runtime contract."""
 
     return _thaw(_RUNTIME_CONTRACT)
+
+
+def runtime_contract_primitive() -> dict[str, Any]:
+    """Return the detached effective contract consumed by live validation."""
+
+    effective = _thaw(_RUNTIME_CONTRACT)
+    effective["projection_registry"] = _thaw(PROJECTION_REGISTRY)
+    effective["tasks"] = [_thaw(PROFILE_REGISTRY[key]) for key in PROFILE_REGISTRY]
+    return effective
+
+
+def runtime_registry_hashes() -> FrozenDict:
+    """Return fingerprints for the effective contract consumed by validation."""
+
+    effective = runtime_contract_primitive()
+    return FrozenDict(
+        {
+            "formula_registry": canonical_sha256(_thaw(FORMULA_REGISTRY)),
+            "projection_registry": canonical_sha256(_thaw(PROJECTION_REGISTRY)),
+            "profiles": canonical_sha256(effective["tasks"]),
+            "runtime_contract": canonical_sha256(effective),
+        }
+    )
 
 
 def _profile_map() -> dict[str, Mapping[str, Any]]:
     return {str(item["profile"]): item for item in PROFILE_TASKS}  # type: ignore[index]
 
 
-PROFILE_REGISTRY = FrozenDict({key: value for key, value in _profile_map().items()})
+def _build_h22_remediation_profile(
+    *,
+    profile: str,
+    observation_type: str,
+    observation_schema: str,
+    observation_entity_ref_template: str,
+) -> Mapping[str, Any]:
+    """Extend the accepted purchase profile with three closed remediation facts."""
+
+    base = _thaw(_profile_map()["WEBSHOP_NORMAL_PURCHASE_V2"])
+    events = list(base["events"])
+    start = len(events) + 1
+    events.extend(
+        [
+            {
+                "binding_alias_group": None,
+                "entity_ref_template": observation_entity_ref_template,
+                "entity_role": "REMEDIATION_OBSERVATION",
+                "entity_type": observation_type,
+                "event_type": "REMEDIATION_OBSERVATION_RECORDED",
+                "projection_schema": observation_schema,
+                "relations": [
+                    {
+                        "relation_type": "BOUND_TO",
+                        "source_assertion_path": "projection.order_id",
+                        "target_binding_assertions": [],
+                        "target_entity_ref_template": "Order:{value}",
+                        "target_entity_role": "CURRENT_ORDER_SNAPSHOT",
+                        "target_entity_type": "Order",
+                        "value_mode": "SCALAR",
+                    }
+                ],
+                "sequence_no": start,
+                "source_binding_ref_required": True,
+                "source_class": observation_type,
+                "source_module": "agentic_payment_experiment.models",
+                "source_object_ref_mode": "NATIVE_TEMPLATE",
+                "source_object_type": observation_type,
+                "value_paths": {
+                    "decision_path": None,
+                    "reason_codes_path": "projection.reason_codes",
+                    "status_path": "projection.status",
+                },
+            },
+            {
+                "binding_alias_group": None,
+                "entity_ref_template": "OriginalTransactionBindingFact:binding:{binding_digest}",
+                "entity_role": "ORIGINAL_TRANSACTION_BINDING_FACT",
+                "entity_type": "OriginalTransactionBindingFact",
+                "event_type": "ORIGINAL_TRANSACTION_BINDING_RECORDED",
+                "projection_schema": "original-transaction-binding-fact-remediation-trace/v1",
+                "relations": [],
+                "sequence_no": start + 1,
+                "source_binding_ref_required": True,
+                "source_class": "OriginalTransactionBindingFact",
+                "source_module": "agentic_payment_experiment.trusted_execution.original_transaction",
+                "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+                "source_object_type": "OriginalTransactionBindingFact",
+                "value_paths": {
+                    "decision_path": None,
+                    "reason_codes_path": "projection.reason_codes",
+                    "status_path": "projection.status",
+                },
+            },
+            {
+                "binding_alias_group": None,
+                "entity_ref_template": "LifecycleResult:remediation-closure:{binding_digest}",
+                "entity_role": "REMEDIATION_CLOSURE_OUTCOME",
+                "entity_type": "LifecycleResult",
+                "event_type": "REMEDIATION_CLOSURE_RECORDED",
+                "projection_schema": "lifecycle-remediation-closure-trace/v1",
+                "relations": [],
+                "sequence_no": start + 2,
+                "source_binding_ref_required": True,
+                "source_class": "LifecycleResult",
+                "source_module": "agentic_payment_experiment.models",
+                "source_object_ref_mode": "PROJECTION_HASH_IDENTITY",
+                "source_object_type": "LifecycleResult",
+                "value_paths": {
+                    "decision_path": None,
+                    "reason_codes_path": "projection.issue_codes",
+                    "status_path": "projection.remediation_status",
+                },
+            },
+        ]
+    )
+    base["profile"] = profile
+    base["task_id"] = "H22_POST_PAYMENT_REMEDIATION"
+    base["title"] = "Generic post-payment remediation evidence extension"
+    base["entity_roles"] = list(base["entity_roles"]) + [
+        "REMEDIATION_OBSERVATION",
+        "ORIGINAL_TRANSACTION_BINDING_FACT",
+        "REMEDIATION_CLOSURE_OUTCOME",
+    ]
+    base["events"] = events
+    base["new_business_rule_required"] = False
+    return _freeze(base)
+
+
+_BASE_PROFILE_REGISTRY = FrozenDict({key: value for key, value in _profile_map().items()})
+PROFILE_REGISTRY = FrozenDict(
+    {
+        **dict(_BASE_PROFILE_REGISTRY),
+        "WEBSHOP_POST_PAYMENT_REFUND_REMEDIATION_V1": _build_h22_remediation_profile(
+            profile="WEBSHOP_POST_PAYMENT_REFUND_REMEDIATION_V1",
+            observation_type="RefundRecord",
+            observation_schema="refund-record-remediation-trace/v1",
+            observation_entity_ref_template="RefundRecord:{projection.refund_id}",
+        ),
+        "WEBSHOP_POST_PAYMENT_DISPUTE_REMEDIATION_V1": _build_h22_remediation_profile(
+            profile="WEBSHOP_POST_PAYMENT_DISPUTE_REMEDIATION_V1",
+            observation_type="DisputeRecord",
+            observation_schema="dispute-record-remediation-trace/v1",
+            observation_entity_ref_template="DisputeRecord:{projection.dispute_id}",
+        ),
+    }
+)
 _TEMPLATE_PATTERN = re.compile(r"\{([^{}]+)\}")
 _BINDING_PREFIX = "TraceSourceBinding:sha256:"
 
@@ -1048,6 +1265,8 @@ __all__ = [
     "TraceSourceBinding",
     "TraceValidationResult",
     "TraceValidationStatus",
+    "accepted_base_registry_hashes",
+    "accepted_base_runtime_contract_primitive",
     "canonical_json_bytes",
     "canonical_primitive",
     "canonical_sha256",
