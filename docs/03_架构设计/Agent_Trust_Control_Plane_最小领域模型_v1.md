@@ -229,6 +229,38 @@ VERIFIED
 
 当前项目只能到 `DECLARED / BOUND`，不能自称 `VERIFIED`。
 
+### 5.4 Continuous Trust（持续信任）不是第 7 个核心对象
+
+APASS / KYA 的外部行业信号说明，Agent 身份不能理解成“注册时验一次以后一直可信”。但 v1 不因此新增 `KYA`、`Trust Session` 或 `APASS Identity` 之类领域对象。当前更合适的做法，是把持续信任表达成现有对象之间的**可重新验证关系和事件**：
+
+```text
+Declared / Bound Identity
+    ↓ credential / signature / attestation evidence
+Verified Executor Fact
+    ↓ runtime instance / environment continuity
+Current Actor Trust State
+    ↓ authority still active / not revoked / not narrowed
+Runtime Authorization Gate
+    ↓ action still bound to User Intent + Transaction Object
+Side Effect
+    ↓
+Evidence / Replay Event
+```
+
+后续最小关注点分成五类：
+
+```text
+Signed Instruction Verification   指令是否由对应主体真实签署
+Credential / Possession           当前执行者是否持有有效凭证 / 密钥控制证明
+Runtime Identity Continuity       当前运行实例 / 环境是否仍是被信任实例
+Continuous Authorization         委托是否仍有效、是否撤销 / 缩小 / 换主体
+Intent Continuity                当前动作是否仍服务于原始用户任务，而非仅形式上未越权
+```
+
+只有当 `credential / attestation / risk signal` 出现独立生命周期、多个真实消费者和独立治理需求时，才考虑把它们升级成新的核心对象。当前 `B-15A / H-25` 只验证 Signed Instruction（签署指令）这一最小切片，不把阶段 E 一次性做成完整身份平台。
+
+参考：[APASS / KYA 智能体持续信任：项目影响分析](../reference/03_身份与治理/APASS_KYA_智能体持续信任_项目影响分析_20260912.md)。
+
 ## 6. 对象 4：Transaction Object
 
 ### 6.1 它回答什么
