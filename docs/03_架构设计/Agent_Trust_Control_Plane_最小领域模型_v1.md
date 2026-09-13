@@ -229,6 +229,8 @@ VERIFIED
 
 当前项目只能到 `DECLARED / BOUND`，不能自称 `VERIFIED`。
 
+IETF `draft-sharif-openid-agent-identity-01` 对当前模型的主要价值是**标准字段映射与未来 Provider Adapter（提供方适配）**，不是新增身份模块：`agent_id` 可映射现有 Agent Identity，`agent_owner` 对应 Principal / Delegation，`agent_capabilities / agent_spend_limit` 对应委托范围与额度，`agent_attestation_method` 对应未来 `VERIFIED` 所需保证证据。现有 S13 已覆盖“授权给 Agent A，却由 Agent B 冒用”的 Identity Confusion（身份混淆）负向场景，P3 已覆盖 Agent / Executor 绑定，因此不重复新增测试编号；后续只有真实 OIDC Provider / Token 消费者出现时才补 Adapter。草案中的 `trust_score` 与 `L0-L4` 不直接替换本项目 `DECLARED / BOUND / VERIFIED`，也不作为当前 Runtime Authorization Gate 的直接放行依据。
+
 ### 5.4 Continuous Trust（持续信任）不是第 7 个核心对象
 
 APASS / KYA 的外部行业信号说明，Agent 身份不能理解成“注册时验一次以后一直可信”。但 v1 不因此新增 `KYA`、`Trust Session` 或 `APASS Identity` 之类领域对象。当前更合适的做法，是把持续信任表达成现有对象之间的**可重新验证关系和事件**：
