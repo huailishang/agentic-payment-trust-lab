@@ -48,6 +48,12 @@ P03 matching credential_ref only  → VALID / BOUND
 
 本任务先比较机制，不预设实现：
 
+### W3C VC / DID + BSN DID / VC
+
+W3C Verifiable Credentials Data Model v2.0 提供 issuer / holder / verifier 与可机器验证 credential 的标准语义，可用于冻结“谁签发、凭证声明谁、验证方验证什么”的数据边界。BSN DID / VC 在本项目中只作为中国区实名 / 组织身份 Provider 候选，用于检验 Principal / Agent credential 与 issuer / verifier 的映射方式；它不是支付授权本身，也不是当前第一实现的默认依赖。
+
+Candidate relevance（候选相关性）：补 Principal Identity / Agent Identity 与 credential issuer / verifier 语义，帮助避免把 `credential_ref` 或某个 DID 字符串误写成已认证身份。
+
 ### SPIFFE / SVID
 
 官方 SPIFFE 文档定义 SVID 为 workload（工作负载）向资源/调用方证明身份的可验证身份文档；当前主要格式包括 X.509 与 JWT。X.509-SVID 可通过 trust bundle（信任包）验证，并配套与 SPIFFE ID 绑定的私钥；官方文档也明确 JWT token 更容易受到 replay（重放），能使用 X.509-SVID 时优先使用 X.509-SVID。
