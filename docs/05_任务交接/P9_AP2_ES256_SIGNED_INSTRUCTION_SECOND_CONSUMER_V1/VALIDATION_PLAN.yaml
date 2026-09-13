@@ -1,0 +1,96 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: P9_AP2_ES256_SIGNED_INSTRUCTION_SECOND_CONSUMER_V1
+
+checks:
+  - id: VP-01
+    ac: [AC-01, AC-03, AC-07, AC-08, AC-10, AC-12]
+    cwd: .
+    command: [python3, docs/05_任务交接/P9_AP2_ES256_SIGNED_INSTRUCTION_SECOND_CONSUMER_V1/evaluator_checks/source_snapshot_audit.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-02
+    ac: [AC-03, AC-04, AC-06, AC-07]
+    cwd: .
+    command:
+      - python3
+      - scripts/validation/run_ap2_es256_signed_instruction_capability.py
+      - --matrix
+      - docs/05_任务交接/P9_AP2_ES256_SIGNED_INSTRUCTION_SECOND_CONSUMER_V1/evaluator_fixtures/AP2_ES256_JWS_MATRIX.json
+      - --repeat
+      - "2"
+      - --output
+      - docs/05_任务交接/P9_AP2_ES256_SIGNED_INSTRUCTION_SECOND_CONSUMER_V1/evidence/H27_AP2_ES256_RESULT.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-03
+    ac: [AC-01, AC-04, AC-06, AC-07, AC-11]
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_AP2_ES256_SIGNED_INSTRUCTION_SECOND_CONSUMER_V1/evaluator_checks/h27_result_audit.py
+      - docs/05_任务交接/P9_AP2_ES256_SIGNED_INSTRUCTION_SECOND_CONSUMER_V1/evidence/H27_AP2_ES256_RESULT.json
+      - docs/05_任务交接/P9_AP2_ES256_SIGNED_INSTRUCTION_SECOND_CONSUMER_V1/evaluator_fixtures/AP2_ES256_JWS_MATRIX.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-04
+    ac: [AC-01, AC-02, AC-03, AC-06, AC-10]
+    cwd: .
+    command: [python3, docs/05_任务交接/P9_AP2_ES256_SIGNED_INSTRUCTION_SECOND_CONSUMER_V1/evaluator_checks/architecture_boundary_audit.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-05
+    ac: [AC-01, AC-02, AC-03, AC-04, AC-05, AC-07]
+    cwd: .
+    command: [python3, -m, unittest, tests.trusted_execution.test_signed_instruction_es256, tests.test_ap2_signed_instruction, -v]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-06
+    ac: [AC-01, AC-08]
+    cwd: .
+    command:
+      - python3
+      - scripts/validation/run_signed_instruction_verification_capability.py
+      - --matrix
+      - docs/05_任务交接/P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1/evaluator_fixtures/ACP_WEBHOOK_SIGNATURE_MATRIX.json
+      - --repeat
+      - "2"
+      - --output
+      - docs/05_任务交接/P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1/evidence/H25_SIGNED_INSTRUCTION_RESULT.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-07
+    ac: [AC-08]
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_AP2_ES256_SIGNED_INSTRUCTION_SECOND_CONSUMER_V1/evaluator_checks/h25_regression_audit.py
+      - docs/05_任务交接/P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1/evidence/H25_SIGNED_INSTRUCTION_RESULT.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-08
+    ac: [AC-09]
+    cwd: .
+    command: [python3, scripts/validation/run_project_impact_baseline.py, --repeat, "3"]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-09
+    ac: [AC-09]
+    cwd: .
+    command: [python3, run_experiment.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-10
+    ac: [AC-09, AC-12]
+    cwd: .
+    command: [python3, -m, unittest, discover, -s, tests, -v]
+    expected_exit_code: 0
+    mandatory: true

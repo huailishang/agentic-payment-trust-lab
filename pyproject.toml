@@ -3,7 +3,7 @@ name = "agentic-payment-trust-lab"
 version = "0.1.0"
 description = "Offline lab for agentic payment authorization, safety, trusted execution, and evaluation"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = ["cryptography>=41"]
 
 [build-system]
 requires = ["setuptools>=68"]

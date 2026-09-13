@@ -4,19 +4,19 @@
 
 ```yaml
 workflow: evaluator-executor-workflow/v2.2
-task_id: P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1
-task_kind: capability_experiment
-state: CONTRACT_FROZEN
-current_role: Executor
-baseline_commit: d26fa658b970f84ca25859d7c3739994cae10a61
+task_id: P9_P3_CREDENTIAL_POSSESSION_VERIFIER_EVIDENCE_GATE_V1
+task_kind: evaluator_design
+state: DRAFT_CONTRACT
+current_role: Evaluator
+baseline_commit: 8b9d5b46516cad330c89acf7822598a33dc9007c
 project_map_path: docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md
-project_map_revision: 2026-09-12-r36
+project_map_revision: 2026-09-13-r39
 active_bottleneck_id: B-15
-hypothesis_id: H-25
-contract_path: docs/05_任务交接/P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1/CONTRACT.md
+hypothesis_id: H-28
+contract_path: docs/05_任务交接/P9_P3_CREDENTIAL_POSSESSION_VERIFIER_EVIDENCE_GATE_V1/CONTRACT.md
 executor_report_path: NONE
 evaluator_review_path: NONE
-next_artifact_path: docs/05_任务交接/P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1/REPORT.md
+next_artifact_path: docs/05_任务交接/P9_P3_CREDENTIAL_POSSESSION_VERIFIER_EVIDENCE_GATE_V1/CONTRACT.md
 authorization_commit: false
 authorization_push: false
 authorization_history_rewrite: false
@@ -34,69 +34,74 @@ A. 评测与治理底座                  [完成]
 → F. 外部真实协议 / SDK / 网络接入   [未来，受授权约束]
 ```
 
-当前阶段 E 已由 H-24 拆成两类：
+当前阶段 E：
 
-- B-15A Signed Instruction Verification（签署指令验证）【当前第一子瓶颈】；
-- B-15B Credential / Possession Verification（凭证 / 持有证明验证）【后续】。
+- B-15A Signed Instruction Verification（签署指令验证）【已代表性闭合 / STAGE_CLOSED】；
+- B-15B Credential / Possession Verification（凭证 / 持有证明验证）【当前第一子瓶颈】。
 
-## Current action
+## Previous accepted result / 上一能力结果
+
+H-27 已由 Evaluator 独立复核：
 
 ```text
-Executor owns frozen H-25 Signed Instruction Verification Fact + ACP Webhook HMAC First Consumer.
+Task verdict: PASS
+Project impact: IMPROVED
+Continuation: SWITCH
+L3: 10/10 PASS
+AP2 ES256: 0/6 → 6/6
+real Signed Instruction consumers: 1 → 2
+negative cases fail closed: 5/5
+focused tests: 17/17
+full unittest: 692/692
+H-25 accepted result SHA-256: unchanged
+real payment / production credential-key / network: 0
+```
+
+因此 B-15A 不再继续增加第三协议；ACP/HMAC + AP2/ES256 已足以证明 `SignedInstructionVerificationFact` 的跨协议 / 跨算法复用。
+
+## Current action / 当前动作
+
+H-28 是 `evaluator_design（评估设计）`，不是 Executor 编码包。
+
+当前只回答：**P3 从 `BOUND` 合法升级到 `VERIFIED`，到底必须具备哪些真实 credential / possession（凭证 / 持有证明）证据，以及第一种值得实现的 verifier mechanism（验证机制）是什么。**
 
 Read first:
-- docs/05_任务交接/P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1/CONTRACT.md
-- docs/05_任务交接/P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1/VALIDATION_PLAN.yaml
-- docs/05_任务交接/P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1/evaluator_fixtures/ACP_WEBHOOK_SIGNATURE_MATRIX.json
-- docs/05_任务交接/P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1/evaluator_checks/source_snapshot_audit.py
-- docs/05_任务交接/P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1/evaluator_checks/architecture_boundary_audit.py
-- docs/05_任务交接/P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1/evaluator_checks/h25_result_audit.py
-- docs/05_任务交接/P9_SIGNED_INSTRUCTION_VERIFICATION_FACT_ACP_WEBHOOK_V1/evaluator_checks/h24_revalidation_audit.py
-- docs/05_任务交接/P9_ACTOR_AUTHENTICITY_SIGNED_INSTRUCTION_GAP_MEASUREMENT_V1/REVIEW.md
 
-Strategic facts:
-- H-24 final verdict = PASS / NOT_APPLICABLE / CONTINUE; Evaluator L3 = 7/7 PASS.
-- H-24 proves the B-15 boundary is real but splits it into B-15A Signed Instruction and B-15B Credential/Possession; do not build a universal identity/security module.
-- AP2 HP + AP2 HNP + ACP are three independent signature-not-verified surfaces. B-15A is primary because the mechanism repeats across more independent consumers.
-- ACP 2026-04-17 official webhook contract is explicit: Merchant-Signature `t=<unix>,v1=<64_hex>`, HMAC-SHA256 over `timestamp + "." + raw_body`, with a 300-second recommended freshness window.
-- H-25 is the first capability experiment in stage E, not another measurement-only task.
+- `docs/05_任务交接/P9_P3_CREDENTIAL_POSSESSION_VERIFIER_EVIDENCE_GATE_V1/CONTRACT.md`
+- `docs/05_任务交接/P9_AP2_ES256_SIGNED_INSTRUCTION_SECOND_CONSUMER_V1/REVIEW.md`
+- `docs/05_任务交接/P9_ACTOR_AUTHENTICITY_SIGNED_INSTRUCTION_GAP_MEASUREMENT_V1/CONTRACT.md`
+- `src/agentic_payment_experiment/trusted_execution/execution_facts.py`
 
-One principal change:
-- add one protocol-neutral SignedInstructionVerificationFact + generic HMAC-SHA256 verifier + one ACP Webhook consumer that parses the official Merchant-Signature format and delegates cryptographic verification to the generic layer.
+必须冻结：
 
-Do:
-- add `src/agentic_payment_experiment/trusted_execution/signed_instruction.py`;
-- export only the new generic fact/verifier through trusted_execution `__init__.py`;
-- add `src/agentic_payment_experiment/adapters/acp_webhook.py` and export its bounded API;
-- keep existing `adapters/acp.py`, AP2 adapter and P3 identity/payment gate byte-frozen;
-- use Python stdlib hmac/hashlib only; no dependency install;
-- use `hmac.compare_digest`;
-- parse exactly `t=<unix_seconds>,v1=<64_hex>` and sign exact `timestamp + "." + raw_body` bytes;
-- execute exactly six frozen cases, repeat=2, and produce H25_SIGNED_INSTRUCTION_RESULT.json without raw secret/body/signature material;
-- test inclusive freshness boundary and future out-of-window in focused unit tests;
-- keep signature VALID separate from Payment ALLOW and Identity VERIFIED;
-- rerun H-24 and require exact accepted SHA-256 unchanged;
-- run frozen L2 10/10 and write REPORT.md with AC-01..11, targeted `0/6→6/6`, PCAC-06 ADAPTER impact, residual risks, guardrails and scope evidence;
-- submit only after workflow validator is OK.
+```text
+1. credential format + trust semantics
+2. subject identity → agent/provider/executor mapping
+3. proof-of-possession semantics
+4. freshness / nonce / replay boundary
+5. deterministic positive vector
+6. wrong trust / wrong subject / no possession / replay-or-stale negatives
+7. exact BOUND → VERIFIED promotion rule
+8. no production credential / real payment / live network dependency
+```
 
-Stop and return BLOCKED if:
-- any frozen P3/AP2/ACP checkout/H-24 file must change;
-- implementation needs AP2 SD-JWT, P3 VERIFIED, PKI/wallet/OIDC, live network or production secret;
-- generic verifier must know ACP header/business fields;
-- ACP adapter duplicates HMAC comparison instead of consuming generic verifier;
-- signature VALID must be coupled to business ALLOW;
-- secret/raw body must be persisted to pass validation;
-- new dependency/install is required;
-- more than two complete implementation→L2 cycles are required.
+必须保持：
+
+```text
+credential validity
+≠ proof of possession
+≠ identity / authorization decision
+```
 
 Do not:
-- modify T05/T06 Product Trace, Consumer/Player, remediation, Fresh Unseen or unrelated modules;
-- claim ACP conformance, production authentication/security, legal authorization or regulatory compliance;
-- commit, push, call external APIs, use network, install dependencies, or use real payment/credential/key/merchant secret material.
-```
+
+- 修改 `src/**`、tests 或 runner；
+- 把 `credential_ref` 相等、signed token 或单次签名成功直接写成 `VERIFIED`；
+- 建设万能 IAM / PKI / OAuth / OIDC / Passkey / biometrics 平台；
+- 接 live SPIRE / Workload API / JWKS / DID / bank sandbox / wallet / testnet；
+- 使用生产 credential、certificate、private key、trust bundle 或真实资金；
+- commit、push、history rewrite。
 
 ## Routing rule
 
-H-25 is a `capability_experiment` linked to project-map revision `2026-09-12-r36`, active bottleneck `B-15` / B-15A, hypothesis `H-25`.
-
-Task PASS requires correct implementation and L2/L3 evidence. Project impact is judged separately: `IMPROVED` requires a real ACP consumer and frozen `0/6→6/6` targeted capability gain with existing project guardrails unchanged. Even if improved, Evaluator must still decide whether AP2 is worth a second consumer round or whether marginal value now favors STOP/SWITCH.
+H-28 当前保持 `DRAFT_CONTRACT / Evaluator`。证据充分时，Evaluator 应直接冻结新的 P3 Credential / Possession capability package（能力执行包）；证据不足时保持 P3 `BOUND`，不得制造假的 `VERIFIED`。

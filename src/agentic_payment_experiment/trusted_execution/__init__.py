@@ -76,6 +76,11 @@ from .replay import (
     RuntimeGateRecord,
     replay_events,
 )
+from .signed_instruction import (
+    SignedInstructionVerificationFact,
+    verify_es256_compact_jws_signed_instruction,
+    verify_hmac_sha256_signed_instruction,
+)
 
 __all__ = [
     "ResolvedFactLineage",
@@ -115,6 +120,7 @@ __all__ = [
     "SourceType",
     "SourceCoverage",
     "POLICY_VERSION",
+    "SignedInstructionVerificationFact",
     "VerificationResult",
     "VerificationStatus",
     "canonicalize",
@@ -133,6 +139,8 @@ __all__ = [
     "verify_declared_identity_binding",
     "verify_execution_identity",
     "verify_hash",
+    "verify_es256_compact_jws_signed_instruction",
+    "verify_hmac_sha256_signed_instruction",
     "verify_governed_payment_action",
     "infer_fact_domain",
     "missing_context_policy_fact",

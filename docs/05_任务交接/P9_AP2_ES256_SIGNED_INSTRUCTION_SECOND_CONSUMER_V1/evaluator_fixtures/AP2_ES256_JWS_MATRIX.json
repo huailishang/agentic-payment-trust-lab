@@ -1,0 +1,92 @@
+{
+  "schema": "ap2-es256-signed-instruction-matrix/v1",
+  "protocol_profile": "AP2-v0.2-ES256-MERCHANT-AUTH",
+  "source_anchor": {
+    "repository": "google-agentic-commerce/AP2",
+    "release": "v0.2.0",
+    "release_commit": "b4587ac",
+    "license": "Apache-2.0",
+    "scope_note": "Synthetic evaluator-owned cryptographic vector shaped to the official AP2 merchant-signed JWT contract; not an official AP2 conformance vector."
+  },
+  "fixture": {
+    "expected_signer_ref": "merchant-test",
+    "expected_key_ref": "ap2-merchant-test-key-v1",
+    "observed_at_epoch": 1760000300,
+    "valid_compact_jws": "eyJhbGciOiJFUzI1NiIsImtpZCI6ImFwMi1tZXJjaGFudC10ZXN0LWtleS12MSIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJwYXltZW50LXByb2Nlc3Nvci10ZXN0IiwiY2FydF9oYXNoIjoiUVZCUUxUSXRkR1Z6ZEMxallYSjBMV2hoYzJnIiwiZXhwIjoxNzYwMDAwOTAwLCJpYXQiOjE3NjAwMDAwMDAsImlzcyI6Im1lcmNoYW50LXRlc3QiLCJqdGkiOiJhcDItY2FydC1hdXRoLXRlc3QtMDAxIiwic3ViIjoibWVyY2hhbnQtdGVzdCJ9.YCK3Q8F1IEsKr2fRAWQgTZhYqPmEglttKeOiKIUV-kBxa41GniQHSU9BuZvWFbvKa26IGf1ukMu5QzGQOdK9JA",
+    "valid_public_jwk": {
+      "alg": "ES256",
+      "crv": "P-256",
+      "kid": "ap2-merchant-test-key-v1",
+      "kty": "EC",
+      "use": "sig",
+      "x": "v_kaCn6eiTWhtuBHRqUL_P5LAFtf1fDkKUdZnqzYd30",
+      "y": "K8JGDxn1DyblvweWgSBEXfb3iU4BiH-dAFfd_6hJX74"
+    },
+    "wrong_public_jwk": {
+      "alg": "ES256",
+      "crv": "P-256",
+      "kid": "ap2-merchant-test-key-v1",
+      "kty": "EC",
+      "use": "sig",
+      "x": "sojXwCRKyWwi4UtfEX4Y6oN6lK9UVP3tdgRKP_GKiM4",
+      "y": "_OmcOJ1lTAn3g5VXpQJSrSKLwyFfL-vz9QylFJf3i7E"
+    },
+    "expected_signing_input_sha256": "186718f3fa5651c8db3bab04967846075c79c29a4cbdf4589da18226158c6469"
+  },
+  "cases": [
+    {
+      "case_id": "V01_VALID_ES256_JWS",
+      "mutation": "NONE",
+      "expected": {
+        "status": "VALID",
+        "reason_codes": ["signed_instruction_signature_valid"],
+        "cryptographic_signature_verified": true
+      }
+    },
+    {
+      "case_id": "N01_TAMPERED_PAYLOAD",
+      "mutation": "TAMPER_PAYLOAD_KEEP_SIGNATURE",
+      "expected": {
+        "status": "INVALID",
+        "reason_codes": ["signed_instruction_signature_mismatch"],
+        "cryptographic_signature_verified": false
+      }
+    },
+    {
+      "case_id": "N02_WRONG_PUBLIC_KEY",
+      "mutation": "USE_WRONG_PUBLIC_JWK",
+      "expected": {
+        "status": "INVALID",
+        "reason_codes": ["signed_instruction_signature_mismatch"],
+        "cryptographic_signature_verified": false
+      }
+    },
+    {
+      "case_id": "N03_WRONG_SIGNER_BINDING",
+      "mutation": "EXPECTED_SIGNER_OTHER_MERCHANT",
+      "expected": {
+        "status": "INVALID",
+        "reason_codes": ["signed_instruction_signer_mismatch"],
+        "cryptographic_signature_verified": false
+      }
+    },
+    {
+      "case_id": "N04_MISSING_AUTHORIZATION",
+      "mutation": "REMOVE_COMPACT_JWS",
+      "expected": {
+        "status": "MISSING_EVIDENCE",
+        "reason_codes": ["signed_instruction_signature_missing"],
+        "cryptographic_signature_verified": false
+      }
+    },
+    {
+      "case_id": "N05_MALFORMED_COMPACT_JWS",
+      "mutation": "MALFORMED_COMPACT_JWS",
+      "expected": {
+        "status": "INVALID",
+        "reason_codes": ["signed_instruction_compact_jws_format_invalid"],
+        "cryptographic_signature_verified": false
+      }
+    }
+  ]
+}
