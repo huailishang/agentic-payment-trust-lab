@@ -28,6 +28,10 @@ from .context_policy import (
     infer_fact_domain,
     missing_context_policy_fact,
 )
+from .credential_possession import (
+    CredentialPossessionVerificationFact,
+    verify_x509_svid_credential_possession,
+)
 from .execution_facts import (
     ExecutionAttemptFact,
     IdempotencyFact,
@@ -99,6 +103,7 @@ __all__ = [
     "ConfirmationBindingFact",
     "ConfirmationRecord",
     "ConfirmationStatus",
+    "CredentialPossessionVerificationFact",
     "PaymentGateOutcome",
     "PaymentExecutionBindingFact",
     "FollowUpAction",
@@ -145,6 +150,7 @@ __all__ = [
     "infer_fact_domain",
     "missing_context_policy_fact",
     "verify_payment_execution_binding",
+    "verify_x509_svid_credential_possession",
     "verify_original_transaction",
     "replay_events",
     "resolve_fact_lineage",

@@ -1,7 +1,7 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-09-13-r39
-Last reviewed: 2026-09-13
+Map revision: 2026-09-15-r41
+Last reviewed: 2026-09-15
 Map owner: Evaluator / Human Task Owner  
 Status: ACTIVE  
 > 当前新任务统一使用 `evaluator-executor-workflow/v2.2`，按“瓶颈—假设—同基线实验—保留或回滚”闭环推进。
@@ -290,50 +290,55 @@ B-15A Signed Instruction
         ↓
 B-15B Credential / Possession【CURRENT】
         ↓
-H-28 evidence gate【DRAFT / evaluator-design】
-        ├─ credential validity
-        ├─ subject identity binding
-        ├─ proof of possession
-        ├─ freshness / replay protection
-        └─ exact BOUND → VERIFIED promotion rule
+H-28 evidence gate【READY / evaluator-design】
+        ├─ credential validity【FROZEN】
+        ├─ subject identity binding【FROZEN】
+        ├─ proof of possession【FROZEN】
+        ├─ freshness / replay protection【FROZEN】
+        └─ exact BOUND → VERIFIED promotion rule【FROZEN】
         ↓
-证据充分 → 冻结最小 credential-possession capability experiment
-证据不足 → 保持 BOUND，不造假 VERIFIED，并重新排序真实性方向
+H-29 X.509-SVID Credential / Possession capability【REJECTED / REGRESSED】
+        ↓
+Evaluator counterexample：旧 signed challenge 可重贴 fresh nonce/time 后错误 VERIFIED
+        ↓
+H-29R Signed Challenge Binding Repair【CURRENT】
+        ↓
+canonical signed challenge 绑定 nonce / agent / provider / executor / issued_at
+        ↓
+修复后重新证明 BOUND → VERIFIED
 ```
 
-B-03 T05/T06 Product Trace、B-04 Fresh Unseen、B-05 Data Minimization 继续 `WATCH（观察）`；B-06 live SDK/testnet/network 继续 `DEFERRED（延期）`。H-28 只做公开标准与本地产品边界的 evaluator-design（评估设计），不恢复外部写入、生产凭据或真实支付授权。
+B-03 T05/T06 Product Trace、B-04 Fresh Unseen、B-05 Data Minimization 继续 `WATCH（观察）`；B-06 live SDK/testnet/network 继续 `DEFERRED（延期）`。H-29 冻结七案例虽 `7/7`，但 Evaluator 独立发现 metadata relabel replay（元数据重贴重放）可产生 false VERIFIED（错误高保证），因此先执行 H-29R 有界 challenge-binding repair（挑战绑定修复）；不恢复外部写入、生产凭据、live SPIRE 或真实支付授权。
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: H-28
-Hypothesis status: `DRAFT / P3_CREDENTIAL_POSSESSION_VERIFIER_EVIDENCE_GATE`
+Hypothesis ID: H-29R
+Hypothesis status: `CONTRACT_FROZEN / X509_SVID_CHALLENGE_BINDING_REPAIR`
 
 ### 假设
 
-> P3 当前 `credential_ref` matching（凭证引用匹配）只能证明引用一致，不足以合法输出 `IdentityAssuranceLevel.VERIFIED`。若能冻结 credential validity（凭证有效性）+ subject identity binding（主体身份绑定）+ proof-of-possession（持有证明）+ freshness/replay protection（新鲜度/重放保护）的最小可机械验证合同，并形成离线正负向量，则 B-15B 可以进入有界 capability experiment；否则应保持 `BOUND`。
+> H-29 的 X.509-SVID credential / possession（凭证 / 持有证明）方向仍成立，但当前 proof-of-possession（持有证明）的 signed challenge（签名挑战）没有把 verifier 使用的 `nonce / agent / provider / executor / issued_at` 元数据锁进同一签名对象。若只增加 canonical challenge binding（规范挑战绑定），要求被签名 payload 与受信任输入重建出的 exact bytes 完全一致，则可关闭 metadata relabel replay（元数据重贴重放）导致的 false VERIFIED，同时保持原 7/7、legacy BOUND 和 Payment policy 不变。
 
-H-28 是 `evaluator_design（评估设计）`：先比较 SPIFFE/SVID、DPoP 等机制与 P3 executor identity 的真实适配性，不修改产品代码，不把 signed token 或 reference equality（引用相等）自动升级为 `VERIFIED`。
+H-29R 是一个 bounded repair（有界修复），不重新设计身份模型，不修改 P3 promotion rule（晋级规则），不接 live SPIRE / PKI / OIDC / DID / VC。
 
-### 需要冻结的证据条件
+### 本轮成功信号
 
 ```text
-1. credential format + trust semantics
-2. subject identity → agent/provider/executor mapping
-3. proof-of-possession semantics
-4. freshness / nonce / replay boundary
-5. deterministic positive vector
-6. wrong trust / wrong subject / no possession / replay-or-stale negatives
-7. exact BOUND → VERIFIED promotion rule
-8. no production credential / real payment / live network dependency
+1. 旧 signed payload + 旧 signature + 新 nonce/time 标签 → fail closed
+2. nonce / issued_at / agent / provider / executor 任一重贴 → challenge_binding_mismatch
+3. 原 H-29 frozen matrix 仍 7/7，exactly one VERIFIED
+4. credential_ref only → still BOUND
+5. execution_facts.py / payment_execution.py hash 不变
+6. Product Trace / GESR / callback / zero-side-effect guardrails 不退化
 ```
 
 ## Candidate experiments / 候选实验与设计任务
 
 | 优先级 | 假设 / 任务 | 主要变化 | 同基线比较 | 预期收益 | 成本 / 风险 |
 |---:|---|---|---|---:|---|
-| 1 | H-28 P3 Credential / Possession Verifier Evidence Gate【当前】 | evaluator-design：冻结 `VERIFIED` 的真实证据语义与第一 verifier mechanism | P3 highest assurance=`BOUND`；credential reference only | 防止把引用一致/签名 token 误写成强认证；决定真正值得实现的 credential/PoP 机制 | 低到中；主要成本是标准与本地合同核验 |
-| 2 | P3 Credential / Possession capability【条件触发】 | 只有 H-28 冻结 trust + subject + possession + replay 证据后进入 | `BOUND` → bounded `VERIFIED` only on full evidence | 建立真实执行主体真实性锚点 | 中；必须防止把 credential validity、PoP、授权混为一谈 |
-| 3 | B-03/B-04/B-05 | H-28 不满足证据门或 B-15B 边际价值不足时重排 | secondary gaps | 保留轨迹、Agent 长尾、数据最小化缺口 | 低到中 |
+| 1 | H-29R Signed Challenge Binding Repair【当前】 | 只在 credential verifier 内增加 canonical signed challenge binding；冻结 P3 promotion / Payment policy | metadata relabel false VERIFIED → fail closed；原 H-29 7/7 保持 | 修复当前唯一已知的高保证误判路径 | 低；局部修复，范围明确 |
+| 2 | B-15B second provider / live identity【条件触发】 | 只有 H-29R 复核通过且真实外部 Provider/授权出现后再进入 | local bounded VERIFIED → external/provider-backed evidence | 验证可迁移性 | 高；依赖外部环境与授权 |
+| 3 | B-03/B-04/B-05 | H-29R 仍无法关闭 false VERIFIED 或 B-15B 边际价值不足时重排 | secondary gaps | 保留轨迹、Agent 长尾、数据最小化缺口 | 低到中 |
 
 ## Reassessment triggers / 重新排序触发器
 
@@ -391,3 +396,5 @@ H-28 是 `evaluator_design（评估设计）`：先比较 SPIFFE/SVID、DPoP 等
 | `2026-09-13-r37` | 2026-09-13 | H-25 Evaluator REVIEW：Task `PASS / IMPROVED / CONTINUE`，L3 `10/10 PASS`；ACP signed-webhook `0/6→6/6`、5/5 negative fail-closed、13/13 focused、675/675 full unittest，H-24 accepted hash 不变，真实网络/支付/生产凭据密钥 0 | B-15A 明显缩小：已获得 ACP 第一个真实 Signed Instruction consumer，但跨协议/跨算法复用尚未由第二消费者证明；B-15B 继续后置 | 激活 H-26 evaluator-design：先冻结 AP2 第二消费者的 pinned source、exact signed object、key relation 与正负验证样例；证据不足则不进入 AP2 verifier 编码并重排方向 |
 | `2026-09-13-r38` | 2026-09-13 | H-26 evidence gate：官方 AP2 `v0.2.0` release / merchant-signed JWT / deterministic verification 提供稳定协议依据；冻结 evaluator-owned ES256/P-256 synthetic fixture、六案例正负矩阵；本机已有 `cryptography 41.0.7`，无需网络或安装 | B-15A 从“第二消费者证据是否存在”前移为“第二消费者能否真实复用同一 Fact”；完整 SD-JWT / Credential / AP2 conformance 继续排除 | 激活 H-27 capability experiment：generic ES256 compact-JWS verifier + AP2 merchant-authorization adapter；目标 AP2 `0/6→6/6`、real consumers `1→2`、H-25 accepted hash 不变 |
 | `2026-09-13-r39` | 2026-09-13 | H-27 Evaluator REVIEW：Task `PASS / IMPROVED / SWITCH`，L3 `10/10 PASS`；AP2 ES256 `0/6→6/6`、real consumers `1→2`、5/5 negative fail-closed、17/17 focused、692/692 full unittest，H-25 accepted hash 不变，真实网络/支付/生产凭据密钥 0 | B-15A `RESOLVED / STAGE_CLOSED`：ACP/HMAC + AP2/ES256 已提供跨协议/跨算法第二消费者证据；第一子瓶颈切换为 B-15B Credential/Possession，P3 仍最高 `BOUND` | 激活 H-28 evaluator-design：冻结 credential validity、subject binding、proof-of-possession、freshness/replay 与 `BOUND→VERIFIED` promotion rule；证据不足则保持 `BOUND` |
+| `2026-09-15-r40` | 2026-09-15 | H-28 evidence gate 完成：SPIFFE X.509-SVID / Trust Bundle / Workload API 与 RFC 9449 PoP 语义足以冻结四条件升级门；Evaluator 生成不含私钥的 synthetic X.509-SVID 正例与 wrong-trust/wrong-subject/no-proof/bad-proof/replay/stale 六类负例；本机 `cryptography 41.0.7` 可离线执行 | B-15B 保持第一瓶颈，但从“真实 verifier 语义未定义”前移为“有界 X.509-SVID credential/PoP 能否第一次合法产生 VERIFIED”；B-06 live identity/network 继续 DEFERRED | 激活 H-29 capability experiment：protocol-neutral CredentialPossessionVerificationFact + bounded X.509-SVID verifier + P3 promotion wiring；目标 product VERIFIED `0→1` 且 legacy credential_ref-only 保持 BOUND |
+| `2026-09-15-r41` | 2026-09-15 | H-29 Executor L2 `8/8`、冻结七案例 `7/7`、698/698 与项目 guardrails 均通过，但 Evaluator 独立 `RV-EV-09` 复现 metadata relabel replay：旧 signed payload/signature 保持不变，仅重贴 fresh nonce/issued_at 即错误返回 `VALID / credential_possession_verified` | B-15B 保持第一瓶颈；H-29 `REJECTED / REGRESSED`，失败位置收敛到 signed challenge 与 freshness/replay 元数据未密码学绑定；不是 X.509-SVID 方向整体失败 | 激活 H-29R bounded repair：只增加 canonical signed challenge binding，冻结 P3 promotion / Payment policy / Signed Instruction；先关闭 false VERIFIED 再决定是否继续 B-15B |

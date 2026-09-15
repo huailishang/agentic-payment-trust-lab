@@ -1,0 +1,72 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: P9_P3_X509_SVID_CREDENTIAL_POSSESSION_VERIFIER_V1
+
+checks:
+  - id: VP-01
+    ac: [AC-01, AC-10, AC-11, AC-14]
+    cwd: .
+    command: [python3, docs/05_任务交接/P9_P3_X509_SVID_CREDENTIAL_POSSESSION_VERIFIER_V1/evaluator_checks/source_snapshot_audit.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-02
+    ac: [AC-02, AC-07, AC-09, AC-10]
+    cwd: .
+    command: [python3, docs/05_任务交接/P9_P3_X509_SVID_CREDENTIAL_POSSESSION_VERIFIER_V1/evaluator_checks/architecture_boundary_audit.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-03
+    ac: [AC-03, AC-04, AC-05, AC-06, AC-07, AC-08, AC-11, AC-13]
+    cwd: .
+    command:
+      - python3
+      - scripts/validation/run_p3_x509_svid_credential_possession_capability.py
+      - --vector
+      - docs/05_任务交接/P9_P3_X509_SVID_CREDENTIAL_POSSESSION_VERIFIER_V1/evaluator_fixtures/X509_SVID_POSSESSION_VECTOR.json
+      - --matrix
+      - docs/05_任务交接/P9_P3_X509_SVID_CREDENTIAL_POSSESSION_VERIFIER_V1/evaluator_fixtures/X509_SVID_POSSESSION_MATRIX.json
+      - --repeat
+      - "2"
+      - --output
+      - docs/05_任务交接/P9_P3_X509_SVID_CREDENTIAL_POSSESSION_VERIFIER_V1/evidence/H29_P3_X509_SVID_RESULT.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-04
+    ac: [AC-03, AC-04, AC-05, AC-06, AC-07, AC-08, AC-11, AC-13]
+    cwd: .
+    command:
+      - python3
+      - docs/05_任务交接/P9_P3_X509_SVID_CREDENTIAL_POSSESSION_VERIFIER_V1/evaluator_checks/h29_result_audit.py
+      - docs/05_任务交接/P9_P3_X509_SVID_CREDENTIAL_POSSESSION_VERIFIER_V1/evidence/H29_P3_X509_SVID_RESULT.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-05
+    ac: [AC-01, AC-02, AC-03, AC-04, AC-05, AC-06, AC-07, AC-09]
+    cwd: .
+    command: [python3, -m, unittest, tests.trusted_execution.test_credential_possession, tests.trusted_execution.test_identity_assurance, tests.trusted_execution.test_payment_binding, -v]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-06
+    ac: [AC-12]
+    cwd: .
+    command: [python3, scripts/validation/run_project_impact_baseline.py, --repeat, "3"]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-07
+    ac: [AC-12]
+    cwd: .
+    command: [python3, run_experiment.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-08
+    ac: [AC-12, AC-14]
+    cwd: .
+    command: [python3, -m, unittest, discover, -s, tests, -v]
+    expected_exit_code: 0
+    mandatory: true

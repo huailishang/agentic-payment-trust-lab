@@ -19,6 +19,7 @@ from .models import (
 from .trusted_execution import (
     POLICY_VERSION,
     ContextPolicyFact,
+    CredentialPossessionVerificationFact,
     IdentityAssuranceFact,
     IdentityAssuranceLevel,
     PaymentExecutionBindingFact,
@@ -69,6 +70,7 @@ def execute_with_payment_binding_gate(
     current_provider_ref: str | None = None,
     current_executor_instance_ref: str | None = None,
     current_credential_ref: str | None = None,
+    credential_possession_fact: CredentialPossessionVerificationFact | None = None,
     context_policy_fact: ContextPolicyFact | None = None,
 ) -> PaymentExecutionGateOutcome:
     """Invoke the callback only after upstream and P2-P4 checks all pass."""
@@ -84,6 +86,7 @@ def execute_with_payment_binding_gate(
         current_provider_ref=current_provider_ref,
         current_executor_instance_ref=current_executor_instance_ref,
         current_credential_ref=current_credential_ref,
+        credential_possession_fact=credential_possession_fact,
     )
     policy_fact = context_policy_fact or missing_context_policy_fact()
 

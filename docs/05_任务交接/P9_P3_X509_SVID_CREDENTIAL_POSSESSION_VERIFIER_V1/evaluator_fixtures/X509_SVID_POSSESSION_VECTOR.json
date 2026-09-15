@@ -1,0 +1,23 @@
+{
+  "schema": "p3-x509-svid-possession-vector/v1",
+  "fixture_origin": "evaluator-owned synthetic test-only material; no private key persisted",
+  "credential_format": "X509-SVID",
+  "trust_domain": "agentic-payment.test",
+  "spiffe_id": "spiffe://agentic-payment.test/agent/agent-1/executor/executor-1",
+  "expected_agent_ref": "agent-1",
+  "expected_provider_ref": "offline-provider-1",
+  "expected_executor_instance_ref": "executor-1",
+  "credential_ref": "synthetic-x509-svid-executor-1",
+  "challenge": {
+    "nonce_ref": "nonce-h29-v1-001",
+    "issued_at_epoch": 1789473600,
+    "observed_at_epoch": 1789473660,
+    "max_age_seconds": 300,
+    "payload_b64": "YWdlbnRpYy1wYXltZW50LXBvc3Nlc3Npb24vdjEKbm9uY2U9bm9uY2UtaDI5LXYxLTAwMQphZ2VudD1hZ2VudC0xCnByb3ZpZGVyPW9mZmxpbmUtcHJvdmlkZXItMQpleGVjdXRvcj1leGVjdXRvci0xCmlzc3VlZF9hdD0xNzg5NDczNjAwCg==",
+    "signature_b64": "MEYCIQCGG6NqX6detwfs6R0MrfPVBqbwqrEcLLn99AGMrNxzVAIhAPvPVnIdAUEaCU8T6q20E5h1TozxAkMY0vLW7uuWsld7"
+  },
+  "trusted_ca_pem": "-----BEGIN CERTIFICATE-----\nMIIBbTCCARKgAwIBAgICA+kwCgYIKoZIzj0EAwIwKzEpMCcGA1UEAwwgQWdlbnRp\nYyBQYXltZW50IFRlc3QgU1BJRkZFIFJvb3QwHhcNMjYwOTAxMDAwMDAwWhcNMjcw\nOTAxMDAwMDAwWjArMSkwJwYDVQQDDCBBZ2VudGljIFBheW1lbnQgVGVzdCBTUElG\nRkUgUm9vdDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABA8xkg09Dx58HC4gtYhe\nTo0ae7Y7l+Aim9lDeloF4KOej+lYnAaix30TXFzcdGAr/nq5FsodiNLe6+STjTxz\nPuejJjAkMBIGA1UdEwEB/wQIMAYBAf8CAQAwDgYDVR0PAQH/BAQDAgEGMAoGCCqG\nSM49BAMCA0kAMEYCIQC5bEVX8+TxjNcgpywB370fGT7X2NI8EgPSCWfTCFRp1QIh\nAO1VOSzv9Y18+Lzd75fjAYM/PDRQ54BaFBhHJECg02Ux\n-----END CERTIFICATE-----\n",
+  "untrusted_ca_pem": "-----BEGIN CERTIFICATE-----\nMIIBUjCB+KADAgECAgIH0TAKBggqhkjOPQQDAjAeMRwwGgYDVQQDDBNVbnRydXN0\nZWQgVGVzdCBSb290MB4XDTI2MDkwMTAwMDAwMFoXDTI3MDkwMTAwMDAwMFowHjEc\nMBoGA1UEAwwTVW50cnVzdGVkIFRlc3QgUm9vdDBZMBMGByqGSM49AgEGCCqGSM49\nAwEHA0IABG+KjGIHB+zN08V+xJc93sEYjy+PzrdMFawHPwXx6VGQ2MvoTIxugRvC\no3wFE5euKDehHZUTYkxjH3wxRsJJEiCjJjAkMBIGA1UdEwEB/wQIMAYBAf8CAQAw\nDgYDVR0PAQH/BAQDAgEGMAoGCCqGSM49BAMCA0kAMEYCIQDQv7a07M8rFk0pCeg0\nO0i5LWFXx5VejRfo842xaNI92wIhAMyx1ESvdAw3TAGeisHkxXtkXE+9CKFlU6dd\nL5orhosY\n-----END CERTIFICATE-----\n",
+  "leaf_svid_pem": "-----BEGIN CERTIFICATE-----\nMIIByDCCAW2gAwIBAgICBE0wCgYIKoZIzj0EAwIwKzEpMCcGA1UEAwwgQWdlbnRp\nYyBQYXltZW50IFRlc3QgU1BJRkZFIFJvb3QwHhcNMjYwOTAxMDAwMDAwWhcNMjcw\nOTAxMDAwMDAwWjAfMR0wGwYDVQQDDBRTeW50aGV0aWMgRXhlY3V0b3IgMTBZMBMG\nByqGSM49AgEGCCqGSM49AwEHA0IABHmrKa9KOinBSwLg/Ay6I2HFh+znsGpQczMY\nsCi+3gwLa1AbcfFtFzxhRo+qNQi5Vy3f6sH6FJpig5r1QSEJldujgYwwgYkwSgYD\nVR0RBEMwQYY/c3BpZmZlOi8vYWdlbnRpYy1wYXltZW50LnRlc3QvYWdlbnQvYWdl\nbnQtMS9leGVjdXRvci9leGVjdXRvci0xMAwGA1UdEwEB/wQCMAAwDgYDVR0PAQH/\nBAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAKBggqhkjOPQQD\nAgNJADBGAiEAgc2UQZ6jnK9WYvSsUtHwfUVpYOHOac1Afn/rtIjR/DICIQDBcQBb\nGECU+kVyDgzmcmXExajECbF7tVM2puTI3MysMA==\n-----END CERTIFICATE-----\n",
+  "leaf_sha256": "1adaf5099cd8c34909b200497d2d247dc235ba1e0dea52fad192134724f3d830"
+}

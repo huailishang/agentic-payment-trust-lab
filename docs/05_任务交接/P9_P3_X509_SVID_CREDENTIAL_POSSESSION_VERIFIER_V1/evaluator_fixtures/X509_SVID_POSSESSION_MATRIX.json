@@ -1,0 +1,64 @@
+{
+  "schema": "p3-x509-svid-possession-matrix/v1",
+  "vector": "X509_SVID_POSSESSION_VECTOR.json",
+  "repeat": 2,
+  "cases": [
+    {
+      "case_id": "V01_VALID_BOUND_TO_VERIFIED",
+      "mutation": "NONE",
+      "expected_status": "VALID",
+      "expected_assurance": "VERIFIED",
+      "expected_reason": "credential_possession_verified"
+    },
+    {
+      "case_id": "N01_WRONG_TRUST_BUNDLE",
+      "mutation": "USE_UNTRUSTED_CA",
+      "expected_status": "INVALID",
+      "expected_assurance": "BOUND",
+      "expected_reason": "credential_trust_invalid"
+    },
+    {
+      "case_id": "N02_WRONG_SPIFFE_SUBJECT",
+      "mutation": "EXPECTED_EXECUTOR_OTHER",
+      "expected_status": "INVALID",
+      "expected_assurance": "BOUND",
+      "expected_reason": "credential_subject_binding_mismatch"
+    },
+    {
+      "case_id": "N03_NO_POSSESSION_PROOF",
+      "mutation": "REMOVE_SIGNATURE",
+      "expected_status": "MISSING_EVIDENCE",
+      "expected_assurance": "BOUND",
+      "expected_reason": "credential_possession_proof_missing"
+    },
+    {
+      "case_id": "N04_BAD_POSSESSION_PROOF",
+      "mutation": "TAMPER_SIGNATURE",
+      "expected_status": "INVALID",
+      "expected_assurance": "BOUND",
+      "expected_reason": "credential_possession_signature_invalid"
+    },
+    {
+      "case_id": "N05_REPLAYED_NONCE",
+      "mutation": "MARK_NONCE_CONSUMED",
+      "expected_status": "INVALID",
+      "expected_assurance": "BOUND",
+      "expected_reason": "credential_possession_replay_detected"
+    },
+    {
+      "case_id": "N06_STALE_CHALLENGE",
+      "mutation": "OBSERVED_AFTER_TTL",
+      "expected_status": "INVALID",
+      "expected_assurance": "BOUND",
+      "expected_reason": "credential_possession_challenge_stale"
+    }
+  ],
+  "guardrails": {
+    "credential_ref_alone_never_verified": true,
+    "signed_instruction_validity_not_identity_verification": true,
+    "payment_allow_not_implied": true,
+    "network_calls": 0,
+    "real_payment": 0,
+    "production_credentials": 0
+  }
+}

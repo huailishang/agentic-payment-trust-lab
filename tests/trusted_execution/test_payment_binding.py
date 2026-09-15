@@ -27,6 +27,7 @@ from agentic_payment_experiment.payment_execution import (
 from agentic_payment_experiment.trusted_execution import (
     POLICY_VERSION,
     CandidateFactUpdate,
+    CredentialPossessionVerificationFact,
     FactDomain,
     IdentityAssuranceLevel,
     SourceType,
@@ -129,6 +130,7 @@ class PaymentExecutionBindingTests(unittest.TestCase):
         provider_ref="offline-provider-1",
         executor_ref="executor-1",
         credential_ref=None,
+        credential_possession_fact=None,
         context_policy_fact=None,
     ):
         calls: list[str] = []
@@ -169,6 +171,7 @@ class PaymentExecutionBindingTests(unittest.TestCase):
             current_provider_ref=provider_ref,
             current_executor_instance_ref=executor_ref,
             current_credential_ref=credential_ref,
+            credential_possession_fact=credential_possession_fact,
             context_policy_fact=context_policy_fact,
         )
         return outcome, calls
@@ -231,6 +234,37 @@ class PaymentExecutionBindingTests(unittest.TestCase):
         )
         self.assertTrue(outcome.executed)
         self.assertEqual("provider-payment-1", outcome.execution_result)
+        self.assertEqual(["paid"], calls)
+
+    def test_verified_identity_uses_same_payment_policy_as_bound_identity(self) -> None:
+        credential_fact = CredentialPossessionVerificationFact(
+            status=VerificationStatus.VALID,
+            reason_codes=("credential_possession_verified",),
+            credential_format="X509-SVID",
+            credential_ref="credential-1",
+            subject_ref="spiffe://agentic-payment.test/agent/agent-1/executor/executor-1",
+            trust_domain_ref="agentic-payment.test",
+            leaf_certificate_sha256="leaf-fingerprint",
+            credential_valid=True,
+            subject_binding_valid=True,
+            proof_of_possession_valid=True,
+            freshness_valid=True,
+            replay_detected=False,
+            nonce_ref="nonce-1",
+            challenge_payload_sha256="challenge-digest",
+            issued_at_epoch=1,
+            observed_at_epoch=2,
+            max_age_seconds=300,
+        )
+        outcome, calls = self.execute(
+            identity=replace(self.identity, credential_ref="credential-1"),
+            credential_ref="credential-1",
+            credential_possession_fact=credential_fact,
+        )
+
+        self.assertEqual(Decision.ALLOW, outcome.decision)
+        self.assertEqual(IdentityAssuranceLevel.VERIFIED, outcome.identity_fact.assurance_level)
+        self.assertTrue(outcome.executed)
         self.assertEqual(["paid"], calls)
 
     def test_observation_is_captured_once_at_gate_without_replay_callback(self) -> None:

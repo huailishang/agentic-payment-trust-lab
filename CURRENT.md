@@ -4,19 +4,19 @@
 
 ```yaml
 workflow: evaluator-executor-workflow/v2.2
-task_id: P9_P3_CREDENTIAL_POSSESSION_VERIFIER_EVIDENCE_GATE_V1
-task_kind: evaluator_design
-state: DRAFT_CONTRACT
-current_role: Evaluator
-baseline_commit: 8b9d5b46516cad330c89acf7822598a33dc9007c
+task_id: P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1
+task_kind: repair
+state: CONTRACT_FROZEN
+current_role: Executor
+baseline_commit: fca87c2d987b3d71c1156e50747cb8eeec1c84c7
 project_map_path: docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md
-project_map_revision: 2026-09-13-r39
+project_map_revision: 2026-09-15-r41
 active_bottleneck_id: B-15
-hypothesis_id: H-28
-contract_path: docs/05_任务交接/P9_P3_CREDENTIAL_POSSESSION_VERIFIER_EVIDENCE_GATE_V1/CONTRACT.md
-executor_report_path: NONE
-evaluator_review_path: NONE
-next_artifact_path: docs/05_任务交接/P9_P3_CREDENTIAL_POSSESSION_VERIFIER_EVIDENCE_GATE_V1/CONTRACT.md
+hypothesis_id: H-29R
+contract_path: docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/CONTRACT.md
+executor_report_path: docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/REPORT.md
+evaluator_review_path: docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/REVIEW.md
+next_artifact_path: docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/REPORT.md
 authorization_commit: false
 authorization_push: false
 authorization_history_rewrite: false
@@ -34,74 +34,110 @@ A. 评测与治理底座                  [完成]
 → F. 外部真实协议 / SDK / 网络接入   [未来，受授权约束]
 ```
 
-当前阶段 E：
+阶段 E：
 
-- B-15A Signed Instruction Verification（签署指令验证）【已代表性闭合 / STAGE_CLOSED】；
-- B-15B Credential / Possession Verification（凭证 / 持有证明验证）【当前第一子瓶颈】。
+- B-15A Signed Instruction Verification（签署指令验证）：`STAGE_CLOSED`；
+- B-15B Credential / Possession Verification（凭证 / 持有证明验证）：当前第一子瓶颈；
+- H-29：`REJECTED / REGRESSED`；
+- H-29R：当前有界修复包。
 
-## Previous accepted result / 上一能力结果
+## Previous evaluator verdict / 上一评估结论
 
-H-27 已由 Evaluator 独立复核：
+H-29 的 Executor L2 与 Evaluator 对冻结 VP-01..08 的独立复跑均通过：
 
 ```text
-Task verdict: PASS
-Project impact: IMPROVED
-Continuation: SWITCH
-L3: 10/10 PASS
-AP2 ES256: 0/6 → 6/6
-real Signed Instruction consumers: 1 → 2
-negative cases fail closed: 5/5
-focused tests: 17/17
-full unittest: 692/692
-H-25 accepted result SHA-256: unchanged
-real payment / production credential-key / network: 0
+frozen matrix = 7/7
+focused tests = 29/29
+formal scenarios = 13/13
+full unittest = 698/698
+protected Signed Instruction / AP2 / ACP / dependency hashes = unchanged
 ```
 
-因此 B-15A 不再继续增加第三协议；ACP/HMAC + AP2/ES256 已足以证明 `SignedInstructionVerificationFact` 的跨协议 / 跨算法复用。
-
-## Current action / 当前动作
-
-H-28 是 `evaluator_design（评估设计）`，不是 Executor 编码包。
-
-当前只回答：**P3 从 `BOUND` 合法升级到 `VERIFIED`，到底必须具备哪些真实 credential / possession（凭证 / 持有证明）证据，以及第一种值得实现的 verifier mechanism（验证机制）是什么。**
-
-Read first:
-
-- `docs/05_任务交接/P9_P3_CREDENTIAL_POSSESSION_VERIFIER_EVIDENCE_GATE_V1/CONTRACT.md`
-- `docs/05_任务交接/P9_AP2_ES256_SIGNED_INSTRUCTION_SECOND_CONSUMER_V1/REVIEW.md`
-- `docs/05_任务交接/P9_ACTOR_AUTHENTICITY_SIGNED_INSTRUCTION_GAP_MEASUREMENT_V1/CONTRACT.md`
-- `src/agentic_payment_experiment/trusted_execution/execution_facts.py`
-
-必须冻结：
+但 Evaluator 独立反例 `RV-EV-09` 证明：
 
 ```text
-1. credential format + trust semantics
-2. subject identity → agent/provider/executor mapping
-3. proof-of-possession semantics
-4. freshness / nonce / replay boundary
-5. deterministic positive vector
-6. wrong trust / wrong subject / no possession / replay-or-stale negatives
-7. exact BOUND → VERIFIED promotion rule
-8. no production credential / real payment / live network dependency
+old signed challenge payload
++ old valid signature
++ relabelled fresh nonce_ref / issued_at / observed_at
+→ current verifier incorrectly returns VALID / credential_possession_verified
+```
+
+根因：签名覆盖 `challenge_payload`，但 freshness/replay（新鲜度 / 防重放）使用的 nonce / issued_at 由外部参数单独传入，未证明这些值就是被签名 payload 中的值。
+
+因此：
+
+```text
+Task verdict: REJECTED
+Project impact: REGRESSED
+Continuation: CONTINUE with bounded repair
+```
+
+Review：
+`docs/05_任务交接/P9_P3_X509_SVID_CREDENTIAL_POSSESSION_VERIFIER_V1/REVIEW.md`
+
+## Current repair / 当前修复
+
+Executor 读取：
+
+1. `docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/CONTRACT.md`
+2. `docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/VALIDATION_PLAN.yaml`
+3. `docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/evaluator_checks/challenge_binding_counterexample.py`
+4. Parent H-29 `REVIEW.md`
+
+只允许一个 principal change（主要变化）：
+
+```text
+在 credential_possession verifier 内
+重建 canonical challenge bytes：
+nonce + agent + provider + executor + issued_at
+        ↓
+要求 challenge_payload exact match
+        ↓
+再验 signature
+```
+
+必须实现：
+
+```text
+old signed payload/signature + fresh metadata label
+→ INVALID / credential_possession_challenge_binding_mismatch
+→ never VERIFIED
 ```
 
 必须保持：
 
 ```text
-credential validity
-≠ proof of possession
-≠ identity / authorization decision
+parent H-29 frozen matrix = 7/7
+credential_ref-only = BOUND
+execution_facts.py = frozen
+payment_execution.py = frozen
+Payment policy = unchanged
+Signed Instruction / AP2 / ACP = frozen
 ```
 
 Do not:
 
-- 修改 `src/**`、tests 或 runner；
-- 把 `credential_ref` 相等、signed token 或单次签名成功直接写成 `VERIFIED`；
-- 建设万能 IAM / PKI / OAuth / OIDC / Passkey / biometrics 平台；
-- 接 live SPIRE / Workload API / JWKS / DID / bank sandbox / wallet / testnet；
-- 使用生产 credential、certificate、private key、trust bundle 或真实资金；
+- 修改 `execution_facts.py` / `payment_execution.py`；
+- 改 BOUND→VERIFIED 四条件；
+- 改 Payment policy；
+- 接 live SPIRE / PKI / OIDC / DID / VC；
+- 新增依赖 / 网络调用；
+- 使用生产 credential / private key / trust bundle；
 - commit、push、history rewrite。
 
-## Routing rule
+## Executor completion rule
 
-H-28 当前保持 `DRAFT_CONTRACT / Evaluator`。证据充分时，Evaluator 应直接冻结新的 P3 Credential / Possession capability package（能力执行包）；证据不足时保持 P3 `BOUND`，不得制造假的 `VERIFIED`。
+最多 `2` 个完整 implementation → L2 cycle（实现→L2 验证循环）。
+
+提交前必须：
+
+```text
+challenge-binding counterexample PASS
+parent H-29 7/7 remains PASS
+focused regressions PASS
+project guardrails no regression
+S01-S13 = 13/13
+full unittest zero failures
+L2 Validation Plan PASS
+REPORT maps AC-R01..08
+```

@@ -37,11 +37,12 @@ class VerificationResult:
 
 @dataclass(frozen=True)
 class IdentityAssuranceFact:
-    """Replayable P3 identity fact, not an authentication assertion.
+    """Replayable P3 identity fact with explicit assurance boundaries.
 
-    ``VERIFIED`` is reserved for a future explicit credential verifier or
-    provider attestation. The deterministic offline verifier in this module can
-    produce at most ``BOUND``.
+    Reference consistency alone can establish at most ``BOUND``. ``VERIFIED``
+    requires a separate credential-possession fact whose credential, subject,
+    possession, freshness, and replay checks all satisfy the frozen promotion
+    rule. Neither level is itself a payment authorization decision.
     """
 
     status: VerificationStatus
@@ -66,6 +67,17 @@ class _AgentIdentityLike(Protocol):
     executor_instance_id: str | None
     status: str
     credential_ref: str | None
+
+
+class _CredentialPossessionFactLike(Protocol):
+    status: VerificationStatus
+    reason_codes: tuple[str, ...]
+    credential_ref: str | None
+    credential_valid: bool
+    subject_binding_valid: bool
+    proof_of_possession_valid: bool
+    freshness_valid: bool
+    replay_detected: bool
 
 
 @dataclass(frozen=True)
@@ -104,14 +116,16 @@ def verify_agent_executor_identity(
     current_provider_ref: str | None,
     current_executor_instance_ref: str | None,
     current_credential_ref: str | None = None,
+    credential_possession_fact: _CredentialPossessionFactLike | None = None,
 ) -> IdentityAssuranceFact:
-    """Verify deterministic Agent/executor binding without authenticating it.
+    """Verify deterministic Agent/executor binding and optional stronger evidence.
 
     The supplied identity object is the expected offline binding record. Current
     provider, executor, and optional credential references are observations made
-    at the payment gate. Matching references can establish ``BOUND`` only; this
-    function has no credential-validity, possession, attestation, PKI, or
-    federation verifier and therefore never emits ``VERIFIED``.
+    at the execution gate. Matching references establish ``BOUND``. A separate
+    credential-possession fact may promote an already-valid ``BOUND`` result to
+    ``VERIFIED`` only when all frozen credential, subject, possession, freshness,
+    and replay conditions are satisfied.
     """
 
     identity_agent_ref = identity.agent_id if identity is not None else None
@@ -213,9 +227,66 @@ def verify_agent_executor_identity(
             current_credential_ref=current_credential_ref,
         )
 
-    return _identity_fact(
+    base_fact = _identity_fact(
         status=VerificationStatus.VALID,
         reason_codes=("identity_executor_binding_match",),
+        assurance_level=IdentityAssuranceLevel.BOUND,
+        authorized_agent_ref=authorized_agent_ref,
+        request_agent_ref=request_agent_ref,
+        execution_agent_ref=execution_agent_ref,
+        identity=identity,
+        current_provider_ref=current_provider_ref,
+        current_executor_instance_ref=current_executor_instance_ref,
+        current_credential_ref=current_credential_ref,
+    )
+    if credential_possession_fact is None:
+        return base_fact
+
+    credential_reasons = tuple(credential_possession_fact.reason_codes)
+    credential_ref_matches = bool(
+        _normalized_ref(current_credential_ref)
+        and _normalized_ref(credential_possession_fact.credential_ref)
+        and current_credential_ref == credential_possession_fact.credential_ref
+    )
+    if not credential_ref_matches:
+        return _identity_fact(
+            status=VerificationStatus.VALID,
+            reason_codes=base_fact.reason_codes + ("credential_possession_ref_mismatch",),
+            assurance_level=IdentityAssuranceLevel.BOUND,
+            authorized_agent_ref=authorized_agent_ref,
+            request_agent_ref=request_agent_ref,
+            execution_agent_ref=execution_agent_ref,
+            identity=identity,
+            current_provider_ref=current_provider_ref,
+            current_executor_instance_ref=current_executor_instance_ref,
+            current_credential_ref=current_credential_ref,
+        )
+
+    promotion_ready = (
+        credential_possession_fact.status is VerificationStatus.VALID
+        and credential_possession_fact.credential_valid
+        and credential_possession_fact.subject_binding_valid
+        and credential_possession_fact.proof_of_possession_valid
+        and credential_possession_fact.freshness_valid
+        and not credential_possession_fact.replay_detected
+    )
+    if promotion_ready:
+        return _identity_fact(
+            status=VerificationStatus.VALID,
+            reason_codes=base_fact.reason_codes + credential_reasons,
+            assurance_level=IdentityAssuranceLevel.VERIFIED,
+            authorized_agent_ref=authorized_agent_ref,
+            request_agent_ref=request_agent_ref,
+            execution_agent_ref=execution_agent_ref,
+            identity=identity,
+            current_provider_ref=current_provider_ref,
+            current_executor_instance_ref=current_executor_instance_ref,
+            current_credential_ref=current_credential_ref,
+        )
+
+    return _identity_fact(
+        status=VerificationStatus.VALID,
+        reason_codes=base_fact.reason_codes + credential_reasons,
         assurance_level=IdentityAssuranceLevel.BOUND,
         authorized_agent_ref=authorized_agent_ref,
         request_agent_ref=request_agent_ref,
