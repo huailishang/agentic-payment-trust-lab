@@ -14,14 +14,30 @@ Repair hypothesis: `H-29R`
 Parent task: `P9_P3_X509_SVID_CREDENTIAL_POSSESSION_VERIFIER_V1`  
 Validation plan file: `docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/VALIDATION_PLAN.yaml`
 
-## Failed AC / 失败验收项
+## Strategic basis
+
+Project map: `docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md`  
+Map revision: `2026-09-15-r41`  
+Active bottleneck: `B-15` / `B-15B Credential / Possession Verification`  
+Hypothesis: `H-29R`  
+Measurement status: measured  
+Metric baseline: `parent frozen matrix=7/7; parent full unittest=698/698; metadata-relabel counterexample=FAIL (false VERIFIED); legacy credential_ref-only=BOUND; Product Trace=10/12; GESR=9/12; S01-S13=13/13`  
+Estimated affected scope: one reproducible metadata-relabel false-VERIFIED path in the bounded local X.509-SVID possession verifier.  
+Expected project impact: close that false-VERIFIED path while preserving parent H-29 capability and project guardrails.  
+Rollback condition: parent frozen matrix, legacy BOUND behavior, protected hashes, or project guardrails regress.  
+Dispatch mode: `SINGLE`  
+Expected material cost: low; local CPU only, no network/API, at most two implementation→L2 cycles.  
+Bounded retry / iteration budget: `2` complete implementation→L2 cycles.  
+Expected value of another round if successful: restore a sound local bounded `BOUND→VERIFIED` proof before any external/provider-backed identity work.
+
+## Failed parent criteria / 父任务失败项
 
 Parent Evaluator REVIEW：`REJECTED / REGRESSED / CONTINUE`。
 
 失败项：
 
-- `AC-06 Freshness / replay`
-- `AC-07 Exact promotion rule`
+- Parent criterion 06 — Freshness / replay
+- Parent criterion 07 — Exact promotion rule
 
 Evaluator counterexample：`parent/evidence/RV-EV-09.*`。
 
@@ -151,29 +167,37 @@ Parent evaluator vector / matrix also remain byte-identical.
 
 ## Acceptance criteria / 验收标准
 
-### AC-R01 — Metadata relabel attack closed
+### AC-01 — Metadata relabel attack closed
 Evaluator checker 六类 relabel attack 全部返回非 VERIFIED，并包含 `credential_possession_challenge_binding_mismatch`。
 
-### AC-R02 — Canonical challenge exact binding
+### AC-02 — Canonical challenge exact binding
 Verifier 重建 canonical UTF-8 bytes 并要求 exact equality；nonce/agent/provider/executor/issued_at 任一变化都不能复用旧 signature。
 
-### AC-R03 — Parent capability preserved
+### AC-03 — Parent capability preserved
 原 H-29 frozen matrix 仍 `7/7`、repeat=2、exactly one VERIFIED；H29 result audit 通过。
 
-### AC-R04 — Legacy P3 / payment policy preserved
+### AC-04 — Legacy P3 / payment policy preserved
 `credential_ref` only 仍为 BOUND；`execution_facts.py` 与 `payment_execution.py` hash 不变。
 
-### AC-R05 — Focused boundary tests
+### AC-05 — Focused boundary tests
 至少新增 nonce / issued_at / provider challenge binding tests；既有 credential possession focused tests 全部通过。
 
-### AC-R06 — Protected stages unchanged
+### AC-06 — Protected stages unchanged
 Signed Instruction / AP2 / ACP / dependencies hashes 不变；不接网络、生产凭证、live SPIRE。
 
-### AC-R07 — Project guardrails
+### AC-07 — Project guardrails
 Product Trace >=10/12；GESR >=9/12；callback=12/12；unsafe allow=0/5；S01-S13=13/13；full unittest zero failures。
 
-### AC-R08 — v2.2 handoff
-L2 frozen validation PASS；REPORT 映射 AC-R01..08，并明确本包只修 challenge binding，不扩大身份系统。
+### AC-08 — v2.2 handoff
+L2 frozen validation PASS；REPORT 映射 AC-01..08，并明确本包只修 challenge binding，不扩大身份系统。
+
+## Exclusions and forbidden side effects
+
+- Must not modify `execution_facts.py` / `payment_execution.py` or the frozen P3 promotion rule.
+- Must not change Payment policy, Signed Instruction, AP2, ACP, or dependency semantics.
+- Must not add dependencies, network/API calls, live SPIRE/PKI/OIDC/DID/VC, production credentials/private keys/trust bundles, or real payment side effects.
+- Must not replace the evaluator-owned vector/matrix signatures or generate new private-key fixtures.
+- Must not commit, push, or rewrite history under the current authorization.
 
 ## Stop conditions / 停止条件
 

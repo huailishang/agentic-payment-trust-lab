@@ -6,7 +6,7 @@
 workflow: evaluator-executor-workflow/v2.2
 task_id: P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1
 task_kind: repair
-state: CONTRACT_FROZEN
+state: EXECUTING
 current_role: Executor
 baseline_commit: fca87c2d987b3d71c1156e50747cb8eeec1c84c7
 project_map_path: docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md

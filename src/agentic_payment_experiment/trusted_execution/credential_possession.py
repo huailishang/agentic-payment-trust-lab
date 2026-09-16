@@ -54,6 +54,7 @@ def verify_x509_svid_credential_possession(
     trusted_ca_pem: str | bytes | None,
     expected_trust_domain: str,
     expected_agent_ref: str,
+    expected_provider_ref: str,
     expected_executor_instance_ref: str,
     credential_ref: str | None,
     challenge_payload: bytes | None,
@@ -214,22 +215,52 @@ def verify_x509_svid_credential_possession(
             **common,
         )
 
+    expected_challenge_payload = _canonical_possession_challenge(
+        nonce_ref=nonce_ref,
+        expected_agent_ref=expected_agent_ref,
+        expected_provider_ref=expected_provider_ref,
+        expected_executor_instance_ref=expected_executor_instance_ref,
+        issued_at_epoch=issued_at_epoch,
+    )
+    challenge_binding_valid = challenge_payload == expected_challenge_payload
+
     expected_spiffe_id = (
         f"spiffe://{expected_trust_domain}/agent/{expected_agent_ref}"
         f"/executor/{expected_executor_instance_ref}"
     )
     subject_binding_valid = spiffe_id == expected_spiffe_id
     if not subject_binding_valid:
+        reason_codes = ["credential_subject_binding_mismatch"]
+        if not challenge_binding_valid:
+            reason_codes.append("credential_possession_challenge_binding_mismatch")
         return _fact(
             status=VerificationStatus.INVALID,
-            reason_codes=("credential_subject_binding_mismatch",),
+            reason_codes=tuple(reason_codes),
             subject_ref=spiffe_id,
             trust_domain_ref=trust_domain,
             credential_valid=True,
             subject_binding_valid=False,
             proof_of_possession_valid=False,
-            freshness_valid=_freshness_valid(issued_at_epoch, observed_at_epoch, max_age_seconds),
-            replay_detected=_normalized_ref(nonce_ref) in set(consumed_nonce_refs),
+            freshness_valid=False if not challenge_binding_valid else _freshness_valid(
+                issued_at_epoch, observed_at_epoch, max_age_seconds
+            ),
+            replay_detected=False if not challenge_binding_valid else (
+                _normalized_ref(nonce_ref) in set(consumed_nonce_refs)
+            ),
+            **common,
+        )
+
+    if not challenge_binding_valid:
+        return _fact(
+            status=VerificationStatus.INVALID,
+            reason_codes=("credential_possession_challenge_binding_mismatch",),
+            subject_ref=spiffe_id,
+            trust_domain_ref=trust_domain,
+            credential_valid=True,
+            subject_binding_valid=True,
+            proof_of_possession_valid=False,
+            freshness_valid=False,
+            replay_detected=False,
             **common,
         )
 
@@ -461,6 +492,24 @@ def _single_spiffe_uri(leaf: x509.Certificate) -> tuple[str | None, str | None]:
     if uri != canonical:
         return uri, parsed.netloc
     return uri, parsed.netloc
+
+
+def _canonical_possession_challenge(
+    *,
+    nonce_ref: str,
+    expected_agent_ref: str,
+    expected_provider_ref: str,
+    expected_executor_instance_ref: str,
+    issued_at_epoch: int,
+) -> bytes:
+    return (
+        "agentic-payment-possession/v1\n"
+        f"nonce={nonce_ref}\n"
+        f"agent={expected_agent_ref}\n"
+        f"provider={expected_provider_ref}\n"
+        f"executor={expected_executor_instance_ref}\n"
+        f"issued_at={issued_at_epoch}\n"
+    ).encode("utf-8")
 
 
 def _possession_signature_valid(

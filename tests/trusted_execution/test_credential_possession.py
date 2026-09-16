@@ -38,6 +38,7 @@ class CredentialPossessionTests(unittest.TestCase):
             "trusted_ca_pem": vector["trusted_ca_pem"],
             "expected_trust_domain": vector["trust_domain"],
             "expected_agent_ref": vector["expected_agent_ref"],
+            "expected_provider_ref": vector["expected_provider_ref"],
             "expected_executor_instance_ref": vector["expected_executor_instance_ref"],
             "credential_ref": vector["credential_ref"],
             "challenge_payload": base64.b64decode(challenge["payload_b64"]),
@@ -120,6 +121,25 @@ class CredentialPossessionTests(unittest.TestCase):
                 self.assertEqual(expected_status, fact.status)
                 self.assertIn(expected_reason, fact.reason_codes)
 
+    def test_signed_challenge_binds_nonce_issued_at_and_provider_context(self) -> None:
+        challenge = self.vector["challenge"]
+        cases = (
+            ("nonce", {"nonce_ref": "nonce-other"}),
+            ("issued_at", {"issued_at_epoch": challenge["issued_at_epoch"] + 1}),
+            ("provider", {"expected_provider_ref": "provider-other"}),
+        )
+        for label, overrides in cases:
+            with self.subTest(label=label):
+                fact = self.frozen_verify(**overrides)
+                self.assertEqual(VerificationStatus.INVALID, fact.status)
+                self.assertEqual(
+                    ("credential_possession_challenge_binding_mismatch",),
+                    fact.reason_codes,
+                )
+                self.assertFalse(fact.proof_of_possession_valid)
+                self.assertFalse(fact.freshness_valid)
+                self.assertFalse(fact.replay_detected)
+
     def test_malformed_certificate_fails_closed(self) -> None:
         fact = self.frozen_verify(leaf_svid_pem="not a certificate")
         self.assertEqual(VerificationStatus.INVALID, fact.status)
@@ -185,6 +205,7 @@ class CredentialPossessionTests(unittest.TestCase):
                     trusted_ca_pem=material["root_pem"],
                     expected_trust_domain="agentic-payment.test",
                     expected_agent_ref="agent-1",
+                    expected_provider_ref="offline-provider-1",
                     expected_executor_instance_ref="executor-1",
                     credential_ref="credential-1",
                     challenge_payload=material["payload"],

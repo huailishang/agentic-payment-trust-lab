@@ -60,6 +60,7 @@ def _run_case(vector: dict, case: dict) -> dict:
         trusted_ca_pem=trusted_ca_pem,
         expected_trust_domain=vector["trust_domain"],
         expected_agent_ref=vector["expected_agent_ref"],
+        expected_provider_ref=vector["expected_provider_ref"],
         expected_executor_instance_ref=expected_executor,
         credential_ref=vector["credential_ref"],
         challenge_payload=base64.b64decode(challenge["payload_b64"]),

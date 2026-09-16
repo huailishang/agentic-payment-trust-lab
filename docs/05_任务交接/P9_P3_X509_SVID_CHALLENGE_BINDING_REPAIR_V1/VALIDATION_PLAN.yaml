@@ -2,22 +2,22 @@ schema: evaluator-executor-validation-plan/v1
 task_id: P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1
 
 checks:
-  - id: VP-R01
-    ac: [AC-R04, AC-R06, AC-R08]
+  - id: VP-01
+    ac: [AC-04, AC-06, AC-08]
     cwd: .
     command: [python3, docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/evaluator_checks/source_snapshot_audit.py]
     expected_exit_code: 0
     mandatory: true
 
-  - id: VP-R02
-    ac: [AC-R01, AC-R02]
+  - id: VP-02
+    ac: [AC-01, AC-02]
     cwd: .
     command: [python3, docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/evaluator_checks/challenge_binding_counterexample.py]
     expected_exit_code: 0
     mandatory: true
 
-  - id: VP-R03
-    ac: [AC-R03, AC-R04, AC-R06]
+  - id: VP-03
+    ac: [AC-03, AC-04, AC-06]
     cwd: .
     command:
       - python3
@@ -33,8 +33,8 @@ checks:
     expected_exit_code: 0
     mandatory: true
 
-  - id: VP-R04
-    ac: [AC-R03]
+  - id: VP-04
+    ac: [AC-03]
     cwd: .
     command:
       - python3
@@ -43,29 +43,29 @@ checks:
     expected_exit_code: 0
     mandatory: true
 
-  - id: VP-R05
-    ac: [AC-R01, AC-R02, AC-R03, AC-R04, AC-R05]
+  - id: VP-05
+    ac: [AC-01, AC-02, AC-03, AC-04, AC-05]
     cwd: .
     command: [python3, -m, unittest, tests.trusted_execution.test_credential_possession, tests.trusted_execution.test_identity_assurance, tests.trusted_execution.test_payment_binding, -v]
     expected_exit_code: 0
     mandatory: true
 
-  - id: VP-R06
-    ac: [AC-R07]
+  - id: VP-06
+    ac: [AC-07]
     cwd: .
     command: [python3, scripts/validation/run_project_impact_baseline.py, --repeat, "3"]
     expected_exit_code: 0
     mandatory: true
 
-  - id: VP-R07
-    ac: [AC-R07]
+  - id: VP-07
+    ac: [AC-07]
     cwd: .
     command: [python3, run_experiment.py]
     expected_exit_code: 0
     mandatory: true
 
-  - id: VP-R08
-    ac: [AC-R07, AC-R08]
+  - id: VP-08
+    ac: [AC-07, AC-08]
     cwd: .
     command: [python3, -m, unittest, discover, -s, tests, -v]
     expected_exit_code: 0
