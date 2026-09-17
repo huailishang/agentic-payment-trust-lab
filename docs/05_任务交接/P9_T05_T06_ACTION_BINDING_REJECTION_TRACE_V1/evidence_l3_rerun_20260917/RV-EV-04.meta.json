@@ -1,0 +1,23 @@
+{
+  "schema": "evaluator-executor-evidence/v1",
+  "label": "RV-EV-04",
+  "command_argv": [
+    "python3",
+    "scripts/validation/run_project_impact_baseline.py",
+    "--repeat",
+    "3",
+    "--output",
+    "docs/05_任务交接/P9_T05_T06_ACTION_BINDING_REJECTION_TRACE_V1/evidence/H31_PROJECT_BASELINE.json"
+  ],
+  "command_display": "python3 scripts/validation/run_project_impact_baseline.py --repeat 3 --output 'docs/05_任务交接/P9_T05_T06_ACTION_BINDING_REJECTION_TRACE_V1/evidence/H31_PROJECT_BASELINE.json'",
+  "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+  "started_at_utc": "2026-09-17T08:50:26.265305+00:00",
+  "finished_at_utc": "2026-09-17T08:50:27.361761+00:00",
+  "exit_code": 0,
+  "stdout_path": "RV-EV-04.stdout.log",
+  "stderr_path": "RV-EV-04.stderr.log",
+  "stdout_bytes": 82686,
+  "stderr_bytes": 0,
+  "stdout_sha256": "4efa4922d397d01ed45bdfa425c8dc54941f1d0737c9fc7058bf94e12639e6e3",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

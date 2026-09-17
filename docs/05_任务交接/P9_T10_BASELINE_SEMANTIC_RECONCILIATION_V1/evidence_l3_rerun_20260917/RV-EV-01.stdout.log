@@ -1,0 +1,1 @@
+PASS: protected product/runner/accepted-target hashes unchanged; only the five authorized T10 expected fields are reconciled to the accepted target

@@ -1,7 +1,7 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-09-15-r41
-Last reviewed: 2026-09-15
+Map revision: 2026-09-17-r45
+Last reviewed: 2026-09-17
 Map owner: Evaluator / Human Task Owner  
 Status: ACTIVE  
 > 当前新任务统一使用 `evaluator-executor-workflow/v2.2`，按“瓶颈—假设—同基线实验—保留或回滚”闭环推进。
@@ -52,7 +52,7 @@ Status: ACTIVE
 - x402 离线一致性；
 - WebShop 上游预检、small smoke、Commerce Adapter、Buy Now Gate、Payment / Fulfilment Sidecar；
 - 已验收的 Governed Action、Fact Lineage、Payment Lifecycle / Recovery、Remediation / Closure、Authoritative Trace Consumer / Player；
-- 当前 B-15A Signed Instruction Verification（签署指令验证）的第一个有界能力实验：协议中立验证事实 + ACP 2026-04-17 Webhook HMAC consumer（消费者）。
+- B-15 Actor Authenticity（主体真实性）已在本地离线边界形成代表性闭环；H-30 又把 PayBench Data Minimization（数据最小化）从 `8/10` 补到 `10/10` 可执行；当前剩余第一本地缺口回到 B-03 T05/T06 Action Binding Rejection Trace（动作绑定拒绝轨迹）。
 
 明确不包含：
 
@@ -71,8 +71,12 @@ A. 评测与治理底座                  [已完成]
 → B. 授权、绑定、来源、执行前治理   [已完成]
 → C. 支付生命周期、恢复、补救证据链 [已完成]
 → D. 责任归因与可消费审计链         [已完成]
-→ E. 主体真实性 / 凭证 / 签署指令   [当前]
+→ E. 主体真实性 / 凭证 / 签署指令   [本地代表性闭环已完成]
 → F. 外部真实协议 / SDK / 网络接入   [未来，受授权与环境约束]
+
+横切补强：B-05 Data Minimization（数据最小化）【本地阶段关闭】
+B-03 Product Authoritative Trace（产品权威轨迹）【固定 12 项覆盖已闭合】
+当前本地主线：本地代表性基线阶段收口【12/12；等待新证据或外部环境触发】
 ```
 
 | 阶段 | 要解决的核心问题 | 当前代表能力 / 证据 | 状态 |
@@ -81,7 +85,7 @@ A. 评测与治理底座                  [已完成]
 | B 授权、绑定、来源、执行前治理 | Agent 能不能在明确授权、正确对象、可信来源下安全触发副作用 | P1 Delegated Authority、P2 Payment Binding、P3 BOUND Identity、P4 Context Policy、Governed Action、Fact Lineage、重复付款保护 | `CLOSED` |
 | C 生命周期、恢复、补救证据链 | 支付后 UNKNOWN、履约失败、退款、争议、原交易错绑时能不能安全恢复并留下连续证据 | Payment Lifecycle / Recovery、Finality、Remediation / Closure、Product Authoritative Trace `10/12`，B-12/B-13 阶段关闭 | `CLOSED` |
 | D 责任归因与可消费审计链 | 事后能不能回答“谁做的、依据什么、发生了什么”，并让 UI / 审计消费者稳定读取 | Action Origin、Same-Journey Responsibility、Consumer、Read Model、Player；H-23 五分支消费 `5/5` | `CLOSED` |
-| E 主体真实性 / 凭证 / 签署指令 | ID 对得上之后，能否证明执行者真的持有对应凭证/密钥，授权/指令真的由对应主体签署 | H-24 已证明 P3 凭证/持有证明与 AP2/ACP 签名验证是两类真实缺口；B-15A 先做 Signed Instruction Verification，B-15B 凭证/持有证明后置 | `CURRENT` |
+| E 主体真实性 / 凭证 / 签署指令 | ID 对得上之后，能否证明执行者真的持有对应凭证/密钥，授权/指令真的由对应主体签署 | B-15A 已由 ACP/HMAC + AP2/ES256 两个消费者闭合；B-15B 已由 bounded X.509-SVID + proof-of-possession + challenge binding 形成首个受控 `BOUND→VERIFIED` 路径 | `CLOSED_WITH_LOCAL_BOUNDARY` |
 | F 外部真实协议 / 网络接入 | 本地机制在真实 SDK、钱包、测试网、身份提供方、facilitator 下是否仍成立 | x402 仅离线一致性；真实 AP2/ACP/x402 网络、真实凭证/签名、银行沙箱尚未进入 | `DEFERRED` |
 
 ### 已完成的能力，不再默认继续扩
@@ -101,19 +105,21 @@ A. 评测与治理底座                  [已完成]
 
 ### 当前与后续能力
 
-H-24 已回答阶段 E 的第一层问题：真实性缺口真实存在，但不是一个大而全机制，应拆为：
+阶段 E 已在本地、离线边界形成代表性闭环：
 
 ```text
-B-15A Signed Instruction Verification（签署指令验证）【当前】
-  → AP2 HP / AP2 HNP / ACP 三个独立入口重复出现
+B-15A Signed Instruction Verification（签署指令验证）【STAGE CLOSED】
+  → ACP/HMAC + AP2/ES256 两个独立消费者复用同一通用验证事实
 
-B-15B Credential / Possession Verification（凭证 / 持有证明验证）【后续】
-  → P3 当前最高 BOUND，尚无 credential validity / possession verifier
+B-15B Credential / Possession Verification（凭证 / 持有证明验证）【LOCAL STAGE CLOSED】
+  → credential_ref-only 仍为 BOUND
+  → bounded X.509-SVID + subject binding + proof-of-possession + freshness/replay 可产生受控 VERIFIED
+  → H-29R 已关闭 signed challenge metadata relabel replay
 ```
 
-当前先进入 B-15A 的最小 capability package（能力建设包）：建立协议中立 `SignedInstructionVerificationFact`，用 ACP 2026-04-17 `Merchant-Signature` HMAC Webhook 作为第一个真实消费者和负例。AP2 SD-JWT、P3 `VERIFIED`、完整 PKI / 钱包 / Passkey / 区块链仍不进入本包。
+阶段 E 的剩余真实 Provider、生产 credential/key、live SPIRE / PKI / OIDC / DID / VC 统一归入 B-06 / 阶段 F，只有出现明确外部环境与授权后再进入；不为了增加 Provider 数量继续扩本地 synthetic verifier。
 
-阶段 F 只有在出现明确外部消费者、测试环境和授权后才进入：真实 SDK / 身份提供方 / 钱包 / 测试网 / facilitator / 银行沙箱。它不是当前 B-15A 本地能力实验的默认下一步。
+H-30 已把 B-05 Data Minimization（数据最小化）的本地字段名级代表性缺口关闭：PayBench current rules 从 `8/10 executable` 提升为 `10/10 executable + 10/10 PASS`，非 D1 八题保持不变。完整 Privacy Governance、真实 PII 与监管合规仍明确不在当前能力声明内。
 
 ### 第一瓶颈选择公式 / 决策顺序
 
@@ -128,13 +134,13 @@ B-15B Credential / Possession Verification（凭证 / 持有证明验证）【�
 → 选第一瓶颈
 ```
 
-当前 B-15 优先于几个主要备选项的原因：
+当前 B-03 T05/T06 优先于剩余备选项的原因：
 
-- B-03 Product Trace 剩余 T05/T06 只是 `2/12` 未覆盖，已有 `10/12` 代表性覆盖且不是当前零容忍失败，保持 `WATCH（观察）`；
-- B-04 Fresh Unseen Agent 行为仍有长尾，但当前已能提供真实行为给 Trust 链，不再是支付信任链的第一断点，保持 `WATCH（观察）`；
-- B-05 Data Minimization（数据最小化）仍有 PayBench 缺口，但当前影响范围小于“执行主体/签署指令真实性”，保持 `WATCH（观察）`；
+- B-05 已由 H-30 `PASS / IMPROVED` 达成本地阶段关闭，不继续扩完整隐私治理；
+- B-04 Fresh Unseen Agent 行为已有真实长尾基线，但项目已明确不沿逐 Case 意图/规格优化继续主线，保持 `WATCH（观察）`；
 - B-06 真实 SDK / testnet / network 依赖额外授权与环境，保持 `DEFERRED（延期）`；
-- B-15 同时出现在 P3、AP2、ACP 多个独立入口，直接关系“谁在代表用户行动”和“授权是否真实”，因此先测量其是否为共性高风险安全缺口。
+- B-03 是当前唯一明确且无需外部授权即可闭合的固定项目缺口：T05/T06 的 decision、binding 与 callback 已正确，共同只缺 action-binding rejection 的产品权威轨迹，Product Trace=`10/12`、GESR=`9/12`。
+- 下一包严格只补证据连续性，不修改 T05/T06 业务决策，也不把独立的 T10 lifecycle/duplicate semantic gap 混进来。
 
 ## End-to-end capability chain / 端到端能力链
 
@@ -161,9 +167,9 @@ B-15B Credential / Possession Verification（凭证 / 持有证明验证）【�
 |---|---:|---|---|
 | S01—S13 正式入口 | 13/13 PASS | measured | `python run_experiment.py` 与历次独立复核证据 |
 | Governed Payment Action 类型边界 | 18/18 动作矩阵，13/13 专项，31/31 Runtime Gate | measured | `docs/05_任务交接/P9_GOVERNED_PAYMENT_ACTION_OBJECT_TYPE_BOUNDARY_REPAIR_V1/REVIEW.md` |
-| 全量 unittest | 658/658 PASS | measured | `P9_WEBSHOP_LIFECYCLE_EVIDENCE_CONTINUITY_CLOSURE_V1/REVIEW.md` |
+| 全量 unittest | 703/703 PASS | measured | `P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/REVIEW.md` |
 | Attack Overlay 第一轮 | 6/6 PASS | measured | 项目中控与验证体系文档 |
-| PayBench | 8/10 可执行 | measured | `docs/02_未来规划/验证体系与后续环境统一路线_20260801.md` |
+| PayBench | 10/10 可执行且 10/10 PASS | measured | `P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/REVIEW.md` |
 | x402 离线一致性 | 第一轮已完成 | measured but bounded | P8-A 任务合同、报告与复核 |
 | 多步骤自主购物项目级指标 | 12 项固定任务；GESR 9/12；重复/禁止副作用 0/12；callback 匹配 12/12；产品权威轨迹 10/12；三次结果一致 | measured | `P9_WEBSHOP_LIFECYCLE_EVIDENCE_CONTINUITY_CLOSURE_V1/REVIEW.md` |
 
@@ -209,7 +215,7 @@ python run_experiment.py
 PYTHONPATH=src python3 -m unittest discover -s tests -v
 ```
 
-项目级端到端基线已冻结为 12 项固定任务和 `run_project_impact_baseline.py`，可用于同 target 的 capability experiment（能力实验）前后比较；当前 Product Trace 已达 `10/12`，剩余 T05/T06 轨迹缺口降为 `WATCH（观察）`。B-11—B-14 已把责任归因、支付生命周期 / 恢复、补救 / 结束状态以及 Consumer / Player（消费器 / 播放器）代表性链路阶段关闭；当前主线已经切换到 B-15 Actor Authenticity / Signed Instruction Verification（主体真实性 / 签署指令验证），先用 H-24 做跨 P3 + AP2 + ACP 的 measurement-only（只测量）验证。
+项目级端到端基线已冻结为 12 项固定任务和 `run_project_impact_baseline.py`，可用于同 target 的 capability experiment（能力实验）前后比较。B-11—B-15 与 B-05 已分别完成责任链、生命周期 / 恢复、补救 / 结束状态、Consumer / Player、本地主体真实性和字段名级数据最小化的代表性闭环；当前 Product Trace=`10/12`、GESR=`9/12`，剩余 T05/T06 业务决策正确但缺 action-binding rejection 产品权威轨迹，因此 B-03 重新成为第一本地瓶颈。
 
 ### 已知盲区
 
@@ -219,7 +225,7 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 - 已揭晓 Blind Holdout 只能作为回归证据；任何新的“泛化成立”结论都必须来自下一轮产品修改前冻结的 fresh unseen evidence（新鲜未见证据）；
 - WebShop 已形成多个离线切片，但还没有冻结统一的多步骤 Agent 任务集；
 - 当前没有生产网络、真实支付、真实身份和真实 LLM 行为；
-- PayBench D1 数据最小化仍未覆盖；
+- PayBench D1 字段名级数据最小化已由 H-30 覆盖，但真实 PII、retention、日志脱敏、跨 Provider 传播、监管分类与 DLP 仍未覆盖；
 - 当前多数结果是组件或局部纵向切片结果，不是统一项目指标；
 - 冻结 runner 的 `trace_provenance_separated` 诊断只在“产品轨迹不存在”时返回真；T10 同时存在产品轨迹与评估器 Replay 后产生误报。原始来源字段已明确分离，下一包先修复该测量诊断，再扩展第二个产品轨迹场景。
 
@@ -227,9 +233,9 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 
 | ID | 阶段 | 可观察失败 | 估计影响范围 | 证据 | 信心 | 状态 |
 |---|---|---|---:|---|---|---|
-| B-01 | 项目级评测 / V3 环境 | 固定 12 项任务、统一命令、独立副作用护栏和轨迹来源分类已经建立并独立复核 | 所有未来 capability experiment 的 100% | P9 Measurement Integrity Repair REVIEW：三次一致、15/15 专项、428/428 全量 | high | RESOLVED / BASELINE_ESTABLISHED |
+| B-01 | 项目级评测 / V3 环境 | 固定 12 项任务、统一 runner、独立副作用护栏和轨迹来源分类已建立；H-32 已将 T10 主 fixture 对齐到此前独立验收的 preflight 安全语义 | 固定 12 项当前全部匹配；GESR / evidence completeness / Product Trace 均 12/12 | H-32 Evaluator REVIEW：L3 `6/6 PASS`、708/708；T10 保持 `DENY/callback0/BLOCKED`，仅修 5 个 stale expected 字段；repeat=3/3 | high | RESOLVED / BASELINE_RECONCILED |
 | B-02 | Fact Lineage | 组件级来源传播已通过，但尚未测量它在固定端到端任务中减少了多少来源丢失、错误放行或证据缺口 | 所有包含派生事实的外部环境任务；具体比例 unknown | P9 Fact Lineage REVIEW：16/16 矩阵、12/12 专项、Overlay 投影不变 | medium | WATCH / IMPLEMENTED_UNMEASURED |
-| B-03 | Authoritative Trace | T01/T02/T03/T04/T07/T08/T09/T10/T11/T12 已形成 `VALID` 产品权威轨迹；仅 T05/T06 尚未公开产品轨迹 | 剩余 2/12 固定任务 | H-20 Evaluator REVIEW：通用 failed-fulfilment Profile 使 T11 Product Trace 真实进入 `VALID`，Product Trace `9/12→10/12`、GESR `8/12→9/12`，L3 `7/7 PASS`、658/658 全量 | high | WATCH / REPRESENTATIVE_COVERAGE_SUFFICIENT |
+| B-03 | Authoritative Trace | H-31 已补齐 T05/T06 action-binding rejection trace，固定 T01-T12 均有 `VALID` 产品权威轨迹；T05/T06 决策/binding/callback 原样保持 | 固定 12 项 Product Trace `12/12`；当前无剩余 trace coverage gap | H-31 Evaluator REVIEW：L3 `8/8 PASS`、708/708、PayBench 10/10、S01-S13 13/13；Product Trace `10/12→12/12`、GESR `9/12→11/12` | high | RESOLVED / FIXED_12_TASK_TRACE_COVERAGE |
 | B-08 | Trace Consumer / UI Read Model | 通用只读 Consumer 与 Trace Player 已贯通：T01/T02/T07/T10 四类代表轨迹均可由同一 Read Model 进入同一只读 UI，事件、relation、source binding 可机械回指 | 当前 4 个已验证结构族；UI-ready 4/4 | P9 Authoritative Trace Player REVIEW：21/21 Player、19/19 Consumer、21/21 project-impact、578/578 全量、13/13 正式入口、repeat=3；UI-ready 0/4→4/4 且旧轨迹/UI/Consumer hash 不变 | high | RESOLVED / TRACE_PLAYER_READY |
 | B-09 | WebShop Journey 多事实源合同 | WebShop runtime、experiment context、Commerce Adaptation、payment authoritative trace 四类证据已能在一个 deterministic Journey Read Model 中分层保存并机械关联；错绑 fail closed | 第一轮 1 条固定 WebShop smoke/T01 正常购买路径，Journey source-classified 1/1 | P9 Journey Fact Source Read Model REVIEW：27/27 专项、21/21 Player、19/19 Consumer、21/21 project-impact、605/605 全量、13/13 正式入口、repeat=3；17 条 correlation 全 true，来源边界不变 | high | RESOLVED / SOURCE_CLASSIFIED_JOURNEY_READY |
 | B-10 | WebShop Journey UI composition | 固定脚本 Journey 已能按来源安全进入一个 deterministic Player；accepted-input schema/source-classification 两个反例已全部 fail closed | 第一轮固定脚本 Journey UI-ready 1/1 | Journey Player 父任务合法路径 1/1；accepted-input repair L2/L3 4/4、Player 27/27、两个反例 4 个入口组合全拒绝 | high | RESOLVED / SAFE_JOURNEY_PLAYER_READY |
@@ -239,106 +245,82 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 | B-12 | Same-Journey Payment Lifecycle / Recovery Continuity | H-20 已将 H-18 三个同类证据链断点统一闭合：semantic `4/4` 保持，continuity `1/4→4/4`，四条 Trace 均 VALID 且 Action Origin 可投影 | L5-L7 支付执行、状态、恢复、冲突与履约的代表性同旅程证据连续性已闭合 | H-20 Evaluator REVIEW：Task `PASS`、Project impact `IMPROVED`、L3 `7/7 PASS`、Product Trace `9/12→10/12`、GESR `8/12→9/12`、658/658 全量、真实副作用 0 | high | RESOLVED / STAGE_CLOSED |
 | B-13 | Same-Journey Remediation / Closure Continuity | H-21 定位 5/5 共同补救证据断点；H-22 以一个通用 extension 将 remediation evidence `0/5→5/5`、continuity `0/5→5/5`；H-22R 又使 public runtime fingerprint 与 live validator contract 完全一致，R05 全程保持 `INVALID` | 支付后退款/争议/原交易绑定/Closure 的代表性同旅程证据生产与合同身份已闭合，不再继续扩 R01-R05 或补救产品字段 | H-22R Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `8/8 PASS`；effective projection/profile/runtime hash 全部与 live contract 一致；H-22 复验 SHA-256 完全相同；662/662、真实副作用 0 | high | RESOLVED / STAGE_CLOSED |
 | B-14 | Remediation Accountability / Closure Consumption | H-23 已对冻结 5 个补救分支完成现有 Product Trace → Consumer → Read Model → Action Origin → Player 系统测量；Consumer/Player/continuity 均 `5/5`，R05 `INVALID` 原样可见且无虚假 payment relation | 代表性退款/争议/原交易错绑证据已经可被现有通用只读消费链稳定消费，无需新增 Consumer/Player 特判 | H-23 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `7/7 PASS`，first breakpoint=`NONE:5`，51/51 专项、662/662 全量、真实副作用 0 | high | RESOLVED / STAGE_CLOSED |
-| B-15 | Actor Authenticity / Credential / Signed Instruction Verification | H-24 将真实性缺口拆成 B-15A Signed Instruction 与 B-15B Credential/Possession；H-25 建立 ACP/HMAC 第一消费者；H-27 又以 AP2/ES256 第二消费者完成跨协议/跨算法复用 | B-15A 已达到代表性闭合并停止增加第三协议；当前剩余第一子瓶颈是 B-15B：P3 credential 仍只做 reference match，最高 `BOUND`，没有 credential validity / proof-of-possession 证据 | H-27 Evaluator REVIEW：Task `PASS / IMPROVED / SWITCH`，L3 `10/10 PASS`，AP2 `0/6→6/6`、consumers `1→2`、5/5 negatives fail closed、692/692 full unittest、H-25 hash 不变 | high | ACTIVE / B-15B CREDENTIAL_POSSESSION_EVIDENCE_GATE |
-| B-05 | 数据最小化 | PayBench D1 两题不可执行，缺少数据披露事实与必要性判断 | PayBench 2/10，后续收货和身份任务 | measured：PayBench 8/10 可执行 | high | WATCH |
-| B-06 | 真实身份与外部协议 | 当前最高身份保证为 BOUND，未覆盖真实签名、SDK、facilitator 和网络故障 | 测试网、生产接入；当前主线影响有限 | measured boundary：P3 / P8 文档 | high | DEFERRED |
+| B-15 | Actor Authenticity / Credential / Signed Instruction Verification | B-15A 已由 ACP/HMAC + AP2/ES256 形成跨协议/跨算法两个 Signed Instruction 消费者；B-15B 已由 bounded X.509-SVID + subject binding + proof-of-possession + freshness/replay 形成首个受控 `BOUND→VERIFIED` 路径，H-29R 关闭 metadata relabel replay | 当前本地、离线真实性边界已具代表性闭环；真实 Provider / 生产凭证 / live identity 迁入 B-06 | H-29R Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `8/8 PASS`；relabel counterexample fail closed；H-29 `7/7` 保持；30/30 focused、699/699 full unittest、项目 guardrails 不退化 | high | RESOLVED / LOCAL_REPRESENTATIVE_CLOSURE |
+| B-05 | 数据最小化 | H-30 已建立协议中立 `DataDisclosureFact`，机械比较 required / allowed / requested；D1 Trap 阻断非必要字段但保持购买可执行，Lookalike 必要字段正常 | PayBench 字段名级隐私挑战 `8/10→10/10` 可执行；完整 Privacy Governance 仍不在当前范围 | H-30 Evaluator REVIEW：Task `PASS / IMPROVED / SWITCH`，L3 `8/8 PASS`；PayBench `10/10 PASS`，703/703，全项目守护线不退化 | high | RESOLVED / LOCAL_STAGE_CLOSED |
+| B-06 | 真实身份与外部协议 | 本地已有 bounded synthetic `VERIFIED` 路径，但未覆盖真实 Provider、生产 credential/key、SDK、facilitator、网络故障与真实信任根更新 | 测试网、生产接入；需要外部环境与明确授权 | measured local boundary：H-29R；external evidence unknown | high | DEFERRED |
 
 ## Active bottleneck / 当前第一瓶颈
 
-Active bottleneck ID: B-15
+Active bottleneck ID: NONE
 
 ### 当前判断
 
-H-27 已由 Executor L2 与 Evaluator L3 独立复核通过：
+H-32 已由 Evaluator 独立 L3 复核通过：
 
 ```text
 Task verdict: PASS
-Project impact: IMPROVED
-Continuation: SWITCH
-L3: 10/10 PASS
-AP2 ES256 semantics: 0/6 → 6/6
-real Signed Instruction consumers: 1 → 2
-negative cases fail closed: 5/5
-focused tests: 17/17
-H-25 accepted result SHA-256: unchanged
-Product Trace: 10/12
-GESR: 9/12
-full unittest: 692/692
-real payment / production credential / key / network: 0
+Project impact: NOT_APPLICABLE
+L3: 6/6 PASS
+full unittest: 708/708
+PayBench: 10/10 PASS
+S01-S13: 13/13 PASS
+matched: 12/12
+GESR: 12/12
+evidence completeness: 12/12
+Product Trace: 12/12
+gap: []
 ```
 
-B-15A Signed Instruction Verification（签署指令验证）已经达到 representative closure（代表性闭合）：ACP/HMAC 与 AP2/ES256 两个独立消费者在协议格式、密钥模型和算法上不同，但复用同一 `SignedInstructionVerificationFact` 与通用验证边界。继续补第三个协议的边际信息增益不足，因此 B-15A `RESOLVED / STAGE_CLOSED`。
+T10 产品行为没有被修改，仍是 `DENY / callback0 / preflight BLOCKED / trace VALID`。H-32 只把主项目 baseline 的 5 个旧 expected 字段对齐到此前已经独立验收的 B-07 target，因此 `GESR 11/12→12/12` 属于 corrected measurement，不是新增产品能力。
 
-当前 B-15 的第一子瓶颈切换为 **B-15B Credential / Possession Verification（凭证 / 持有证明验证）**。H-24 已证明 P3 的 `credential_ref` 目前只是引用匹配，`IdentityAssuranceLevel` 最高仍为 `BOUND`；现有 `verify_agent_executor_identity()` 明确没有 credential validity（凭证有效性）、proof-of-possession（持有证明）、attestation（证明）或 PKI/federation verifier（公钥基础设施/联邦验证器）。
+当前没有证据支持继续制造新的本地 capability package：
 
-因此下一步不直接写 `VERIFIED`，而先做 H-28 evaluator-design（评估设计）证据门，冻结 credential validity / possession / subject binding / freshness-replay 的真实机制边界。
+- B-01 已重新关闭；
+- B-03 固定 12 项 Product Trace 已 12/12；
+- B-05 Data Minimization 已本地阶段关闭；
+- B-02 继续 WATCH，目前没有项目级失败证明它阻塞主线；
+- B-04 继续 WATCH，避免退回逐 Case 优化购物理解；
+- B-06 继续 DEFERRED，需要真实 Provider / SDK / testnet / network 与明确授权。
 
 ### 当前主线
 
 ```text
 A-D【STAGE CLOSED】
         ↓
-E. B-15 Actor Authenticity / Credential / Signed Instruction【CURRENT】
+E. Actor Authenticity【LOCAL REPRESENTATIVE CLOSURE】
         ↓
-H-24 cross-surface measurement【PASS】
+B-05 Data Minimization【LOCAL STAGE CLOSED】
         ↓
-B-15A Signed Instruction
-        ├─ H-25 ACP / HMAC first consumer【PASS】
-        ├─ H-26 AP2 second-consumer evidence gate【READY】
-        ├─ H-27 AP2 / ES256 second consumer【PASS / IMPROVED】
-        └─ consumers 1 → 2，B-15A【STAGE CLOSED】
+B-03 Product Authoritative Trace【12/12 CLOSED】
         ↓
-B-15B Credential / Possession【CURRENT】
+B-01 Measurement Integrity【RECONCILED / CLOSED】
         ↓
-H-28 evidence gate【READY / evaluator-design】
-        ├─ credential validity【FROZEN】
-        ├─ subject identity binding【FROZEN】
-        ├─ proof of possession【FROZEN】
-        ├─ freshness / replay protection【FROZEN】
-        └─ exact BOUND → VERIFIED promotion rule【FROZEN】
+LOCAL REPRESENTATIVE BASELINE【STAGE CLOSED】
         ↓
-H-29 X.509-SVID Credential / Possession capability【REJECTED / REGRESSED】
-        ↓
-Evaluator counterexample：旧 signed challenge 可重贴 fresh nonce/time 后错误 VERIFIED
-        ↓
-H-29R Signed Challenge Binding Repair【CURRENT】
-        ↓
-canonical signed challenge 绑定 nonce / agent / provider / executor / issued_at
-        ↓
-修复后重新证明 BOUND → VERIFIED
+等待：新的项目级失败 / 新外部评测 / 真实环境授权
 ```
-
-B-03 T05/T06 Product Trace、B-04 Fresh Unseen、B-05 Data Minimization 继续 `WATCH（观察）`；B-06 live SDK/testnet/network 继续 `DEFERRED（延期）`。H-29 冻结七案例虽 `7/7`，但 Evaluator 独立发现 metadata relabel replay（元数据重贴重放）可产生 false VERIFIED（错误高保证），因此先执行 H-29R 有界 challenge-binding repair（挑战绑定修复）；不恢复外部写入、生产凭据、live SPIRE 或真实支付授权。
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: H-29R
-Hypothesis status: `CONTRACT_FROZEN / X509_SVID_CHALLENGE_BINDING_REPAIR`
+Hypothesis ID: NONE
+Hypothesis status: `NO_ACTIVE_LOCAL_HYPOTHESIS / LOCAL_REPRESENTATIVE_BASELINE_CLOSED`
 
-### 假设
+当前不激活新假设。下一假设只能由以下证据之一触发：
 
-> H-29 的 X.509-SVID credential / possession（凭证 / 持有证明）方向仍成立，但当前 proof-of-possession（持有证明）的 signed challenge（签名挑战）没有把 verifier 使用的 `nonce / agent / provider / executor / issued_at` 元数据锁进同一签名对象。若只增加 canonical challenge binding（规范挑战绑定），要求被签名 payload 与受信任输入重建出的 exact bytes 完全一致，则可关闭 metadata relabel replay（元数据重贴重放）导致的 false VERIFIED，同时保持原 7/7、legacy BOUND 和 Payment policy 不变。
-
-H-29R 是一个 bounded repair（有界修复），不重新设计身份模型，不修改 P3 promotion rule（晋级规则），不接 live SPIRE / PKI / OIDC / DID / VC。
-
-### 本轮成功信号
-
-```text
-1. 旧 signed payload + 旧 signature + 新 nonce/time 标签 → fail closed
-2. nonce / issued_at / agent / provider / executor 任一重贴 → challenge_binding_mismatch
-3. 原 H-29 frozen matrix 仍 7/7，exactly one VERIFIED
-4. credential_ref only → still BOUND
-5. execution_facts.py / payment_execution.py hash 不变
-6. Product Trace / GESR / callback / zero-side-effect guardrails 不退化
-```
+1. 固定项目基线出现新的重复失败或安全守护线退化；
+2. 新外部评测暴露当前 Trust / Payment 能力的共同断点；
+3. 获得真实 Provider / SDK / testnet / network / credential 的明确环境与授权；
+4. B-04 的行为长尾开始真实阻断支付可信主链，而不是单纯购物理解准确率不足。
 
 ## Candidate experiments / 候选实验与设计任务
 
-| 优先级 | 假设 / 任务 | 主要变化 | 同基线比较 | 预期收益 | 成本 / 风险 |
-|---:|---|---|---|---:|---|
-| 1 | H-29R Signed Challenge Binding Repair【当前】 | 只在 credential verifier 内增加 canonical signed challenge binding；冻结 P3 promotion / Payment policy | metadata relabel false VERIFIED → fail closed；原 H-29 7/7 保持 | 修复当前唯一已知的高保证误判路径 | 低；局部修复，范围明确 |
-| 2 | B-15B second provider / live identity【条件触发】 | 只有 H-29R 复核通过且真实外部 Provider/授权出现后再进入 | local bounded VERIFIED → external/provider-backed evidence | 验证可迁移性 | 高；依赖外部环境与授权 |
-| 3 | B-03/B-04/B-05 | H-29R 仍无法关闭 false VERIFIED 或 B-15B 边际价值不足时重排 | secondary gaps | 保留轨迹、Agent 长尾、数据最小化缺口 | 低到中 |
+| 优先级 | 方向 | 当前状态 | 触发条件 | 当前动作 |
+|---:|---|---|---|---|
+| 1 | 新项目级失败 / 新外部评测 | 等待证据 | 出现可重复共同失败 | 再冻结新瓶颈与同基线实验 |
+| 2 | B-06 live identity / external network | DEFERRED | 有真实 Provider / SDK / testnet 与明确授权 | 再进入阶段 F |
+| 3 | B-04 Fresh Unseen / option long tail | WATCH | 行为失败真实阻断 Trust / Payment 主链 | 才重新激活；不逐 Case 调购物理解 |
+| 4 | B-02 Fact Lineage project impact | WATCH | 来源问题再次导致错误放行或证据缺口 | 再做项目级影响测量 |
+
 
 ## Reassessment triggers / 重新排序触发器
 
@@ -398,3 +380,7 @@ H-29R 是一个 bounded repair（有界修复），不重新设计身份模型�
 | `2026-09-13-r39` | 2026-09-13 | H-27 Evaluator REVIEW：Task `PASS / IMPROVED / SWITCH`，L3 `10/10 PASS`；AP2 ES256 `0/6→6/6`、real consumers `1→2`、5/5 negative fail-closed、17/17 focused、692/692 full unittest，H-25 accepted hash 不变，真实网络/支付/生产凭据密钥 0 | B-15A `RESOLVED / STAGE_CLOSED`：ACP/HMAC + AP2/ES256 已提供跨协议/跨算法第二消费者证据；第一子瓶颈切换为 B-15B Credential/Possession，P3 仍最高 `BOUND` | 激活 H-28 evaluator-design：冻结 credential validity、subject binding、proof-of-possession、freshness/replay 与 `BOUND→VERIFIED` promotion rule；证据不足则保持 `BOUND` |
 | `2026-09-15-r40` | 2026-09-15 | H-28 evidence gate 完成：SPIFFE X.509-SVID / Trust Bundle / Workload API 与 RFC 9449 PoP 语义足以冻结四条件升级门；Evaluator 生成不含私钥的 synthetic X.509-SVID 正例与 wrong-trust/wrong-subject/no-proof/bad-proof/replay/stale 六类负例；本机 `cryptography 41.0.7` 可离线执行 | B-15B 保持第一瓶颈，但从“真实 verifier 语义未定义”前移为“有界 X.509-SVID credential/PoP 能否第一次合法产生 VERIFIED”；B-06 live identity/network 继续 DEFERRED | 激活 H-29 capability experiment：protocol-neutral CredentialPossessionVerificationFact + bounded X.509-SVID verifier + P3 promotion wiring；目标 product VERIFIED `0→1` 且 legacy credential_ref-only 保持 BOUND |
 | `2026-09-15-r41` | 2026-09-15 | H-29 Executor L2 `8/8`、冻结七案例 `7/7`、698/698 与项目 guardrails 均通过，但 Evaluator 独立 `RV-EV-09` 复现 metadata relabel replay：旧 signed payload/signature 保持不变，仅重贴 fresh nonce/issued_at 即错误返回 `VALID / credential_possession_verified` | B-15B 保持第一瓶颈；H-29 `REJECTED / REGRESSED`，失败位置收敛到 signed challenge 与 freshness/replay 元数据未密码学绑定；不是 X.509-SVID 方向整体失败 | 激活 H-29R bounded repair：只增加 canonical signed challenge binding，冻结 P3 promotion / Payment policy / Signed Instruction；先关闭 false VERIFIED 再决定是否继续 B-15B |
+| `2026-09-17-r42` | 2026-09-17 | H-29R Evaluator L3 `8/8 PASS`：六类 metadata relabel attack 全部 fail closed，父 H-29 `7/7` 与 `VERIFIED 0→1` 保持；30/30 focused、13/13 正式场景、699/699 全量、Product Trace 10/12、GESR 9/12。同期复跑 PayBench current rules=`8/10`，唯一 unsupported 为 D1 Trap/Lookalike | B-15 在本地离线边界达到代表性闭合并转 `RESOLVED`；真实 identity 归 B-06 `DEFERRED`。B-05 从 WATCH 升为第一瓶颈，因为 D1 两个独立外部挑战共同缺 data disclosure fact | 激活 H-30 capability experiment：一个最小协议中立 DataDisclosureFact + PayBench D1 首个消费者；目标 executable `8/10→10/10`，不扩完整隐私治理 |
+| `2026-09-17-r43` | 2026-09-17 | H-30 Evaluator REVIEW：Task `PASS / IMPROVED / SWITCH`，修正 evaluator plan 的 `PYTHONPATH=src` 可复现性后 L3 `8/8 PASS`；PayBench `8/10→10/10` 可执行且 `10/10 PASS`，703/703 全量，守护线不退化。重新测量 T05/T06：decision/binding/callback 均正确，共同只缺产品权威轨迹 | B-05 `RESOLVED / LOCAL_STAGE_CLOSED`；B-03 从 WATCH 升为第一本地瓶颈，范围严格限定 T05/T06 action-binding rejection trace；B-04 WATCH，B-06 DEFERRED | 激活 H-31：复用现有 Trace Assembler / frozen profile contract，为 T05/T06 拒绝分支附加一个通用产品权威轨迹族；目标 Product Trace `10/12→12/12`、GESR `9/12→11/12`，不修改决策语义 |
+| `2026-09-17-r44` | 2026-09-17 | H-31 Evaluator REVIEW：Task `PASS / IMPROVED / SWITCH`，独立 L3 `8/8 PASS`、708/708、PayBench 10/10、S01-S13 13/13；Product Trace `10/12→12/12`、GESR `9/12→11/12`，仅剩 T10。历史回查确认 B-07 已独立验收 T10 `DENY/callback0/BLOCKED`，而主 fixture 仍保留更早 `ALLOW + lifecycle` 期望；临时机械对齐 accepted target 后 GESR/evidence/Product Trace 均 `12/12`、gap=0、repeat=3 | B-03 `RESOLVED / FIXED_12_TASK_TRACE_COVERAGE`；B-01 因 T10 主 baseline expectation drift 重新激活为第一瓶颈；B-04 WATCH，B-06 DEFERRED | 激活 H-32 measurement repair：只允许主 fixture T10 五个 stale expected 字段与 accepted B-07 target 对齐，并同步直接依赖测试；零产品/runner 修改，Project impact 固定 `NOT_APPLICABLE` |
+| `2026-09-17-r45` | 2026-09-17 | H-32 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE`，独立 L3 `6/6 PASS`、708/708、PayBench 10/10、S01-S13 13/13；protected product/runner/accepted target 不变，仅 T10 五个 stale expected 字段与 B-07 target 对齐；fresh repeat=3 得到 matched/GESR/evidence/Product Trace 全部 `12/12`、gap=0 | B-01 `RESOLVED / BASELINE_RECONCILED`；当前固定本地代表性项目基线无 active gap。B-02/B-04 保持 WATCH，B-06 保持 DEFERRED | H-32 `PASS / CLOSED`；不自动激活新本地假设，等待新项目级失败、新外部评测或真实环境授权再重排 |

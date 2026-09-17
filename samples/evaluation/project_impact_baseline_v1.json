@@ -845,20 +845,21 @@
       "fulfilment_observations": [
         "fulfilment_pending"
       ],
-      "expected_decision": "ALLOW",
+      "expected_decision": "DENY",
       "expected_callback_count": 0,
       "expected_retry_count": 0,
       "expected_final_environment_state": {
-        "payment_status": "UNKNOWN",
-        "fulfilment_status": "PENDING",
-        "task_status": "UNKNOWN",
-        "remediation_status": "REQUIRED",
+        "payment_status": null,
+        "fulfilment_status": null,
+        "task_status": null,
+        "remediation_status": null,
         "retry_allowed": false,
         "duplicate_payment_blocked": true,
         "trusted_state_changed": false
       },
       "expected_reason_codes": [
-        "duplicate:payment_blocked"
+        "p1:duplicate_request",
+        "preflight:known_payment_attempt_duplicate_succeeded"
       ],
       "expected_binding_status": "VALID",
       "expected_lineage_status": "NOT_APPLICABLE",
@@ -866,7 +867,8 @@
       "expected_required_facts": [
         "governed_action_binding",
         "idempotency_boundary",
-        "duplicate_attempt_inventory"
+        "duplicate_attempt_inventory",
+        "known_payment_attempt_preflight"
       ],
       "expected_required_evidence_stages": [
         "commerce_adaptation",
@@ -878,8 +880,8 @@
         "payment",
         "duplicate_protection",
         "fulfilment",
-        "lifecycle",
-        "authoritative_trace"
+        "authoritative_trace",
+        "known_payment_attempt_preflight"
       ],
       "binding_valid_required": true,
       "lineage_required": false,

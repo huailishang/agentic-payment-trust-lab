@@ -83,13 +83,13 @@ class PayBenchEntrypointTest(unittest.TestCase):
             report = json.loads(output_path.read_text(encoding="utf-8"))
 
         self.assertEqual(0, completed.returncode, completed.stderr)
-        self.assertIn("supported=8 unsupported=2", completed.stdout)
-        self.assertIn("supported_passed=8 supported_failed=0", completed.stdout)
-        self.assertEqual("PARTIAL", report["status"])
-        self.assertEqual(8, report["summary"]["supported"])
-        self.assertEqual(2, report["summary"]["unsupported"])
+        self.assertIn("supported=10 unsupported=0", completed.stdout)
+        self.assertIn("supported_passed=10 supported_failed=0", completed.stdout)
+        self.assertEqual("PASS", report["status"])
+        self.assertEqual(10, report["summary"]["supported"])
+        self.assertEqual(0, report["summary"]["unsupported"])
         self.assertEqual(
-            2,
+            0,
             len(report["unsupported_scenario_ids"]),
         )
 

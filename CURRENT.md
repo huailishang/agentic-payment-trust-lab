@@ -4,19 +4,19 @@
 
 ```yaml
 workflow: evaluator-executor-workflow/v2.2
-task_id: P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1
+task_id: P9_T10_BASELINE_SEMANTIC_RECONCILIATION_V1
 task_kind: repair
-state: EXECUTING
-current_role: Executor
-baseline_commit: fca87c2d987b3d71c1156e50747cb8eeec1c84c7
+state: PASS
+current_role: Evaluator
+baseline_commit: 04047308519a0ea69b7d7c0173f74e2b1fe30fc7
 project_map_path: docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md
-project_map_revision: 2026-09-15-r41
-active_bottleneck_id: B-15
-hypothesis_id: H-29R
-contract_path: docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/CONTRACT.md
-executor_report_path: docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/REPORT.md
-evaluator_review_path: docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/REVIEW.md
-next_artifact_path: docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/REPORT.md
+project_map_revision: 2026-09-17-r45
+active_bottleneck_id: B-01
+hypothesis_id: H-32
+contract_path: docs/05_任务交接/P9_T10_BASELINE_SEMANTIC_RECONCILIATION_V1/CONTRACT.md
+executor_report_path: docs/05_任务交接/P9_T10_BASELINE_SEMANTIC_RECONCILIATION_V1/REPORT.md
+evaluator_review_path: docs/05_任务交接/P9_T10_BASELINE_SEMANTIC_RECONCILIATION_V1/REVIEW.md
+next_artifact_path: docs/05_任务交接/P9_T10_BASELINE_SEMANTIC_RECONCILIATION_V1/REVIEW.md
 authorization_commit: false
 authorization_push: false
 authorization_history_rewrite: false
@@ -26,118 +26,86 @@ authorization_api_call: false
 ## Global position / 全局位置
 
 ```text
-A. 评测与治理底座                  [完成]
+A. 评测与治理底座                  [CLOSED / RECONCILED]
 → B. 授权、绑定、来源、执行前治理   [完成]
 → C. 支付生命周期、恢复、补救证据链 [完成]
 → D. 责任归因与可消费审计链         [完成]
-→ E. 主体真实性 / 凭证 / 签署指令   [当前]
-→ F. 外部真实协议 / SDK / 网络接入   [未来，受授权约束]
+→ E. 主体真实性 / 凭证 / 签署指令   [本地代表性闭环完成]
+→ F. 外部真实协议 / SDK / 网络接入   [DEFERRED]
+
+B-05 Data Minimization               [LOCAL_STAGE_CLOSED]
+B-03 Product Authoritative Trace     [12/12 CLOSED]
+B-01 Measurement Integrity           [RECONCILED / CLOSED]
 ```
 
-阶段 E：
+## Latest evaluator verdict / 最新评估结论
 
-- B-15A Signed Instruction Verification（签署指令验证）：`STAGE_CLOSED`；
-- B-15B Credential / Possession Verification（凭证 / 持有证明验证）：当前第一子瓶颈；
-- H-29：`REJECTED / REGRESSED`；
-- H-29R：当前有界修复包。
-
-## Previous evaluator verdict / 上一评估结论
-
-H-29 的 Executor L2 与 Evaluator 对冻结 VP-01..08 的独立复跑均通过：
+`P9_T10_BASELINE_SEMANTIC_RECONCILIATION_V1 / H-32`：
 
 ```text
-frozen matrix = 7/7
-focused tests = 29/29
-formal scenarios = 13/13
-full unittest = 698/698
-protected Signed Instruction / AP2 / ACP / dependency hashes = unchanged
+Task verdict: PASS
+Project impact: NOT_APPLICABLE
+Evaluator L3: 6/6 PASS
+mandatory failures: 0
+full unittest: 708/708 PASS
+PayBench: 10/10 PASS
+S01-S13: 13/13 PASS
+matched: 12/12
+GESR: 12/12
+evidence completeness: 12/12
+Product Trace: 12/12
+gap: []
+repeat: 3/3 identical
 ```
 
-但 Evaluator 独立反例 `RV-EV-09` 证明：
+H-32 没有新增产品能力。它只把 T10 主 baseline fixture 的 5 个 stale `expected_*` 字段对齐到此前已经独立验收的 B-07 target；产品仍保持：
 
 ```text
-old signed challenge payload
-+ old valid signature
-+ relabelled fresh nonce_ref / issued_at / observed_at
-→ current verifier incorrectly returns VALID / credential_possession_verified
+DENY / callback=0 / preflight BLOCKED / trace VALID
 ```
 
-根因：签名覆盖 `challenge_payload`，但 freshness/replay（新鲜度 / 防重放）使用的 nonce / issued_at 由外部参数单独传入，未证明这些值就是被签名 payload 中的值。
+所以 GESR `11/12→12/12` 是 corrected measurement，不是 capability gain。
 
-因此：
+正式 REVIEW：
+
+`docs/05_任务交接/P9_T10_BASELINE_SEMANTIC_RECONCILIATION_V1/REVIEW.md`
+
+独立 L3：
+
+`docs/05_任务交接/P9_T10_BASELINE_SEMANTIC_RECONCILIATION_V1/evidence_l3_rerun_20260917/`
+
+## Post-review project routing / 复核后的项目路由
+
+项目地图已更新到 `2026-09-17-r45`。任务路由中的 `B-01 / H-32` 表示本次已关闭任务的归属；**项目地图当前没有 active local bottleneck / active local hypothesis**。
+
+当前固定本地代表性基线：
 
 ```text
-Task verdict: REJECTED
-Project impact: REGRESSED
-Continuation: CONTINUE with bounded repair
+12/12 tasks matched
+12/12 evidence completeness
+12/12 Product Authoritative Trace
+0 unsafe allow
+0 duplicate/forbidden side effect
+13/13 S01-S13
+10/10 PayBench
+708/708 unittest
 ```
 
-Review：
-`docs/05_任务交接/P9_P3_X509_SVID_CREDENTIAL_POSSESSION_VERIFIER_V1/REVIEW.md`
+当前剩余方向：
 
-## Current repair / 当前修复
+- B-02 Fact Lineage：`WATCH / IMPLEMENTED_UNMEASURED`；无新项目级失败，不主动扩；
+- B-04 Agent 行为：`WATCH / BEHAVIOR_BASELINE_ESTABLISHED`；不回到逐 Case 购物理解优化；
+- B-06 live identity / external protocol：`DEFERRED`；需要真实 Provider / SDK / testnet / network 和明确授权。
 
-Executor 读取：
+因此当前**不自动创建新的 Executor capability package**。下一任务由新的项目级失败、新外部评测或真实环境授权触发，再由 Evaluator 重新排序瓶颈。
 
-1. `docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/CONTRACT.md`
-2. `docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/VALIDATION_PLAN.yaml`
-3. `docs/05_任务交接/P9_P3_X509_SVID_CHALLENGE_BINDING_REPAIR_V1/evaluator_checks/challenge_binding_counterexample.py`
-4. Parent H-29 `REVIEW.md`
-
-只允许一个 principal change（主要变化）：
+## Authorization / 授权状态
 
 ```text
-在 credential_possession verifier 内
-重建 canonical challenge bytes：
-nonce + agent + provider + executor + issued_at
-        ↓
-要求 challenge_payload exact match
-        ↓
-再验 signature
+commit = false
+push = false
+history rewrite = false
+network/API = false
 ```
 
-必须实现：
-
-```text
-old signed payload/signature + fresh metadata label
-→ INVALID / credential_possession_challenge_binding_mismatch
-→ never VERIFIED
-```
-
-必须保持：
-
-```text
-parent H-29 frozen matrix = 7/7
-credential_ref-only = BOUND
-execution_facts.py = frozen
-payment_execution.py = frozen
-Payment policy = unchanged
-Signed Instruction / AP2 / ACP = frozen
-```
-
-Do not:
-
-- 修改 `execution_facts.py` / `payment_execution.py`；
-- 改 BOUND→VERIFIED 四条件；
-- 改 Payment policy；
-- 接 live SPIRE / PKI / OIDC / DID / VC；
-- 新增依赖 / 网络调用；
-- 使用生产 credential / private key / trust bundle；
-- commit、push、history rewrite。
-
-## Executor completion rule
-
-最多 `2` 个完整 implementation → L2 cycle（实现→L2 验证循环）。
-
-提交前必须：
-
-```text
-challenge-binding counterexample PASS
-parent H-29 7/7 remains PASS
-focused regressions PASS
-project guardrails no regression
-S01-S13 = 13/13
-full unittest zero failures
-L2 Validation Plan PASS
-REPORT maps AC-R01..08
-```
+H-30/H-31/H-32 及相关评估治理文档仍处于未提交 working tree；未获得 commit/push 授权前保持现状。

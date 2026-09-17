@@ -1,0 +1,70 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: P9_T05_T06_ACTION_BINDING_REJECTION_TRACE_V1
+
+checks:
+  - id: VP-01
+    ac: [AC-01, AC-07, AC-08]
+    cwd: .
+    command: [python3, docs/05_任务交接/P9_T05_T06_ACTION_BINDING_REJECTION_TRACE_V1/evaluator_checks/source_snapshot_audit.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-02
+    ac: [AC-02, AC-03, AC-04, AC-05, AC-06]
+    cwd: .
+    command: [env, PYTHONPATH=src, python3, docs/05_任务交接/P9_T05_T06_ACTION_BINDING_REJECTION_TRACE_V1/evaluator_checks/t05_t06_trace_target.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-03
+    ac: [AC-01, AC-02, AC-03, AC-04]
+    cwd: .
+    command: [env, PYTHONPATH=src, python3, -m, unittest, tests.test_webshop_action_binding_trace_toolkit, tests.test_webshop_runtime_gate, -v]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-04
+    ac: [AC-05, AC-06]
+    cwd: .
+    command:
+      - python3
+      - scripts/validation/run_project_impact_baseline.py
+      - --repeat
+      - "3"
+      - --output
+      - docs/05_任务交接/P9_T05_T06_ACTION_BINDING_REJECTION_TRACE_V1/evidence/H31_PROJECT_BASELINE.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-05
+    ac: [AC-07]
+    cwd: .
+    command:
+      - python3
+      - scripts/validation/run_paybench_challenges.py
+      - --current-rules
+      - --output
+      - docs/05_任务交接/P9_T05_T06_ACTION_BINDING_REJECTION_TRACE_V1/evidence/H31_PAYBENCH_CURRENT_RULES.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-06
+    ac: [AC-07]
+    cwd: .
+    command: [python3, run_experiment.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-07
+    ac: [AC-06, AC-07]
+    cwd: .
+    command: [env, PYTHONPATH=src, python3, -m, unittest, tests.test_project_impact_baseline, -v]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-08
+    ac: [AC-07, AC-08]
+    cwd: .
+    command: [env, PYTHONPATH=src, python3, -m, unittest, discover, -s, tests, -v]
+    expected_exit_code: 0
+    mandatory: true

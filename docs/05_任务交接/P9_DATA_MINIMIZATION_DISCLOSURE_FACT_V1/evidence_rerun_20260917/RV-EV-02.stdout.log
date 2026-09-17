@@ -1,0 +1,1 @@
+PASS: protocol-neutral data disclosure properties hold for synthetic field names; nonessential fields are blocked and required-field failures fail closed

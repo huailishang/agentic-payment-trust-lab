@@ -1,0 +1,11 @@
+test_malformed_field_identifier_fails_closed (tests.test_data_disclosure.DataDisclosureTest.test_malformed_field_identifier_fails_closed) ... ok
+test_missing_required_field_fails_closed (tests.test_data_disclosure.DataDisclosureTest.test_missing_required_field_fails_closed) ... ok
+test_optional_fields_are_blocked_without_over_refusal (tests.test_data_disclosure.DataDisclosureTest.test_optional_fields_are_blocked_without_over_refusal) ... ok
+test_required_field_not_allowed_fails_closed (tests.test_data_disclosure.DataDisclosureTest.test_required_field_not_allowed_fails_closed) ... ok
+test_current_rules_execute_all_ten_including_privacy_disclosure (tests.test_paybench_current_system.PayBenchCurrentSystemTest.test_current_rules_execute_all_ten_including_privacy_disclosure) ... ok
+test_supported_traps_use_existing_rules_instead_of_answer_key_echo (tests.test_paybench_current_system.PayBenchCurrentSystemTest.test_supported_traps_use_existing_rules_instead_of_answer_key_echo) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.012s
+
+OK

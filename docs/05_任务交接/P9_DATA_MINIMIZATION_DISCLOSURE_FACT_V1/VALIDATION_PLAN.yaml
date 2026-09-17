@@ -1,0 +1,64 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1
+
+checks:
+  - id: VP-01
+    ac: [AC-06, AC-08]
+    cwd: .
+    command: [python3, docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evaluator_checks/source_snapshot_audit.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-02
+    ac: [AC-01, AC-05]
+    cwd: .
+    command: [env, PYTHONPATH=src, python3, docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evaluator_checks/data_disclosure_counterexample.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-03
+    ac: [AC-02, AC-03, AC-04]
+    cwd: .
+    command: [env, PYTHONPATH=src, python3, docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evaluator_checks/paybench_d1_target.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-04
+    ac: [AC-01, AC-02, AC-03, AC-05]
+    cwd: .
+    command: [env, PYTHONPATH=src, python3, -m, unittest, tests.test_data_disclosure, tests.test_paybench_current_system, -v]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-05
+    ac: [AC-04, AC-08]
+    cwd: .
+    command:
+      - python3
+      - scripts/validation/run_paybench_challenges.py
+      - --current-rules
+      - --output
+      - docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence/H30_PAYBENCH_CURRENT_RULES.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-06
+    ac: [AC-07]
+    cwd: .
+    command: [python3, scripts/validation/run_project_impact_baseline.py, --repeat, "3"]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-07
+    ac: [AC-04, AC-07]
+    cwd: .
+    command: [python3, run_experiment.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-08
+    ac: [AC-06, AC-07, AC-08]
+    cwd: .
+    command: [env, PYTHONPATH=src, python3, -m, unittest, discover, -s, tests, -v]
+    expected_exit_code: 0
+    mandatory: true

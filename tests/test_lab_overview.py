@@ -20,7 +20,7 @@ class LabOverviewTest(unittest.TestCase):
             )
             overview = build_lab_overview(card, root=self.root)
 
-        self.assertEqual("PARTIAL", overview["status"])
+        self.assertEqual("PASS", overview["status"])
         self.assertEqual(
             ["M2_INTERNAL", "M3_PAYBENCH", "M4_AP2", "ATTACK_OVERLAY"],
             [item["id"] for item in overview["modules"]],
@@ -32,11 +32,11 @@ class LabOverviewTest(unittest.TestCase):
         self.assertEqual(13, by_id["M2_INTERNAL"]["passed"])
         self.assertEqual(0, by_id["M2_INTERNAL"]["failed"])
 
-        self.assertEqual("PARTIAL", by_id["M3_PAYBENCH"]["status"])
+        self.assertEqual("PASS", by_id["M3_PAYBENCH"]["status"])
         self.assertEqual(10, by_id["M3_PAYBENCH"]["total"])
-        self.assertEqual(8, by_id["M3_PAYBENCH"]["supported"])
-        self.assertEqual(2, by_id["M3_PAYBENCH"]["unsupported"])
-        self.assertEqual(8, by_id["M3_PAYBENCH"]["passed"])
+        self.assertEqual(10, by_id["M3_PAYBENCH"]["supported"])
+        self.assertEqual(0, by_id["M3_PAYBENCH"]["unsupported"])
+        self.assertEqual(10, by_id["M3_PAYBENCH"]["passed"])
         self.assertEqual(0, by_id["M3_PAYBENCH"]["failed"])
 
         self.assertEqual("PASS", by_id["M4_AP2"]["status"])
@@ -135,7 +135,7 @@ class LabOverviewTest(unittest.TestCase):
             html = (artifacts / "scenario_report.html").read_text(encoding="utf-8")
 
         self.assertIn("lab_overview", card)
-        self.assertEqual("PARTIAL", card["lab_overview"]["status"])
+        self.assertEqual("PASS", card["lab_overview"]["status"])
         self.assertIn('id="module-select"', html)
         self.assertIn('id="module-item-select"', html)
         self.assertIn('id="module-result"', html)

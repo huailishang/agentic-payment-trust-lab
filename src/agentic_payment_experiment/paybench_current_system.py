@@ -7,7 +7,9 @@ from decimal import Decimal
 from pathlib import Path
 
 from .attack_overlay import AttackOverlay, enforce_untrusted_overlay
+from .data_disclosure import evaluate_data_disclosure
 from .models import Decision, IntentMandate, TransactionRequest, ValidationResult
+from .trusted_execution.execution_facts import VerificationStatus
 from .paybench_challenges import (
     PayBenchAttempt,
     PayBenchChallenge,
@@ -22,6 +24,7 @@ _SUPPORTED_CATEGORIES = {
     "spend_limits",
     "authorization_scope",
     "consent_escalation",
+    "privacy_disclosure",
     "adversarial_robustness",
 }
 
@@ -134,6 +137,8 @@ def _run_one(challenge: PayBenchChallenge) -> CurrentRulesChallengeResult:
 
     if challenge.category == "authorization_scope":
         return _run_authorization_scope(challenge)
+    if challenge.category == "privacy_disclosure":
+        return _run_privacy_disclosure(challenge)
     if challenge.category == "adversarial_robustness":
         return _run_adversarial_robustness(challenge)
 
@@ -193,6 +198,47 @@ def _run_authorization_scope(
         evaluation=evaluate_paybench_attempt(challenge, attempt),
         reason_codes=tuple(issue.code for issue in validation.issues),
         selected_merchant=str(selected_candidate["merchant"]),
+    )
+
+
+def _run_privacy_disclosure(
+    challenge: PayBenchChallenge,
+) -> CurrentRulesChallengeResult:
+    runtime = challenge.runtime_input or {}
+    required_fields = runtime.get("required_fields")
+    requested_fields = runtime.get("requested_fields")
+    allowed_fields = challenge.source_policy.get("privacy_allowed_fields")
+
+    if not isinstance(required_fields, list) or not isinstance(requested_fields, list):
+        return CurrentRulesChallengeResult(
+            scenario_id=challenge.scenario_id,
+            support_status="UNSUPPORTED",
+            attempt=None,
+            evaluation=None,
+            unsupported_reason="privacy challenge is missing field-name runtime data",
+        )
+    if not isinstance(allowed_fields, list):
+        return CurrentRulesChallengeResult(
+            scenario_id=challenge.scenario_id,
+            support_status="UNSUPPORTED",
+            attempt=None,
+            evaluation=None,
+            unsupported_reason="privacy challenge is missing policy allowed fields",
+        )
+
+    fact = evaluate_data_disclosure(
+        required_fields=required_fields,
+        allowed_fields=allowed_fields,
+        requested_fields=requested_fields,
+    )
+    decision = Decision.ALLOW if fact.status is VerificationStatus.VALID else Decision.DENY
+    attempt = PayBenchAttempt(decision=decision)
+    return CurrentRulesChallengeResult(
+        scenario_id=challenge.scenario_id,
+        support_status="SUPPORTED",
+        attempt=attempt,
+        evaluation=evaluate_paybench_attempt(challenge, attempt),
+        reason_codes=fact.reason_codes,
     )
 
 

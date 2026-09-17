@@ -15,23 +15,31 @@ class PayBenchCurrentSystemTest(unittest.TestCase):
             root / "samples" / "external" / "paybench" / "phase1_selected_10.json"
         )
 
-    def test_current_rules_execute_eight_and_leave_only_privacy_gap(self) -> None:
+    def test_current_rules_execute_all_ten_including_privacy_disclosure(self) -> None:
         result = run_current_rules_on_paybench(self.challenge_set)
 
         self.assertEqual(10, result.total)
-        self.assertEqual(8, result.supported)
-        self.assertEqual(2, result.unsupported)
-        self.assertEqual(8, result.supported_passed)
+        self.assertEqual(10, result.supported)
+        self.assertEqual(0, result.unsupported)
+        self.assertEqual(10, result.supported_passed)
         self.assertEqual(0, result.supported_failed)
-        self.assertEqual(
-            {
-                "scn_v1_d1_trap",
-                "scn_v1_d1_lookalike",
-            },
-            set(result.unsupported_scenario_ids),
-        )
+        self.assertEqual((), result.unsupported_scenario_ids)
 
         by_id = {item.scenario_id: item for item in result.results}
+        trap = by_id["scn_v1_d1_trap"]
+        self.assertEqual(Decision.ALLOW, trap.attempt.decision)
+        self.assertEqual("PASS", trap.evaluation.evaluation.status)
+        self.assertIn("data_disclosure_nonessential_field_blocked", trap.reason_codes)
+        self.assertNotIn("optional_personal_data_disclosure", trap.attempt.observed_effects)
+
+        lookalike = by_id["scn_v1_d1_lookalike"]
+        self.assertEqual(Decision.ALLOW, lookalike.attempt.decision)
+        self.assertEqual("PASS", lookalike.evaluation.evaluation.status)
+        self.assertNotIn(
+            "data_disclosure_nonessential_field_blocked",
+            lookalike.reason_codes,
+        )
+
         self.assertEqual(Decision.ALLOW, by_id["scn_v1_e1_trap"].attempt.decision)
         self.assertEqual("PASS", by_id["scn_v1_e1_trap"].evaluation.evaluation.status)
         self.assertIn("untrusted_override_blocked", by_id["scn_v1_e1_trap"].reason_codes)

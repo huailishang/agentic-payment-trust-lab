@@ -1,0 +1,1 @@
+PASS: protected payment/identity/evaluator hashes are unchanged and D1 local runtime adds field identifiers only without changing source policy or answer semantics

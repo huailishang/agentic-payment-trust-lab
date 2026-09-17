@@ -114,7 +114,7 @@ class WebShopAuthoritativeTraceTest(unittest.TestCase):
         with self.assertRaises(FrozenInstanceError):
             outcome.authoritative_trace = None  # type: ignore[misc]
 
-    def test_non_t10_paths_never_emit_trace(self) -> None:
+    def test_non_t10_paths_emit_only_action_binding_rejection_trace(self) -> None:
         case = _case()
         historical = replace(
             case.execution,
@@ -156,7 +156,14 @@ class WebShopAuthoritativeTraceTest(unittest.TestCase):
         for name, overrides in scenarios:
             with self.subTest(name=name):
                 outcome, _ = case.invoke(**overrides)
-                self.assertIsNone(outcome.authoritative_trace)
+                if name == "action_invalid":
+                    validation = validate_product_authoritative_trace(
+                        outcome.authoritative_trace
+                    )
+                    self.assertEqual(TraceValidationStatus.VALID, validation.status)
+                    self.assertEqual("WEBSHOP_ACTION_BINDING_T05_V2", validation.profile)
+                else:
+                    self.assertIsNone(outcome.authoritative_trace)
 
     def test_duplicate_block_without_governed_action_fails_closed_for_trace(self) -> None:
         case = _case()

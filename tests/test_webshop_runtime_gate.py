@@ -34,6 +34,10 @@ from agentic_payment_experiment import (
     gate_webshop_buy_now,
 )
 from agentic_payment_experiment.adapters.webshop import adapt_webshop_purchase_candidate
+from agentic_payment_experiment.authoritative_trace import (
+    TraceValidationStatus,
+    validate_product_authoritative_trace,
+)
 from agentic_payment_experiment.payment_execution import (
     PAYMENT_CONTEXT_ACTION,
     PAYMENT_REQUIRED_SOURCE_PATHS,
@@ -277,6 +281,37 @@ class WebShopRuntimeGateTest(unittest.TestCase):
         )
         self.assertIsNone(outcome.runtime_gate_record)
         self.assert_blocked(outcome, calls, Decision.INDETERMINATE)
+        validation = validate_product_authoritative_trace(outcome.authoritative_trace)
+        self.assertEqual(TraceValidationStatus.VALID, validation.status)
+        self.assertEqual("WEBSHOP_ACTION_BINDING_T06_V2", validation.profile)
+        self.assertIn("ACTION_BINDING_DECISION_RECORDED", validation.event_types)
+        self.assertIn("RESULT_RECORDED", validation.event_types)
+
+    def test_agent_mismatch_keeps_denial_and_records_authoritative_trace(self) -> None:
+        mismatched = replace(self.governed_action, agent_ref="agent-evil")
+        outcome, calls = self.invoke(governed_action=mismatched)
+
+        self.assertEqual(Decision.DENY, outcome.decision)
+        self.assertEqual(
+            (
+                "action:agent_ref_request_mismatch",
+                "action:agent_ref_mandate_mismatch",
+                "action:agent_ref_identity_mismatch",
+            ),
+            outcome.reason_codes,
+        )
+        self.assertIsNotNone(outcome.governed_action_fact)
+        self.assertEqual(VerificationStatus.INVALID, outcome.governed_action_fact.status)
+        self.assertIsNone(outcome.runtime_gate_record)
+        self.assert_blocked(outcome, calls, Decision.DENY)
+        validation = validate_product_authoritative_trace(outcome.authoritative_trace)
+        self.assertEqual(TraceValidationStatus.VALID, validation.status)
+        self.assertEqual("WEBSHOP_ACTION_BINDING_T05_V2", validation.profile)
+        self.assertIn("AUTHORITY_RECORDED", validation.event_types)
+        self.assertIn("ORDER_RECORDED", validation.event_types)
+        self.assertIn("REQUEST_RECORDED", validation.event_types)
+        self.assertIn("ACTION_BINDING_DECISION_RECORDED", validation.event_types)
+        self.assertIn("RESULT_RECORDED", validation.event_types)
 
     def test_invalid_governed_action_outer_types_are_denied_without_exception(self) -> None:
         class ActionSubclass(GovernedPaymentAction):

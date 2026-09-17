@@ -1,0 +1,197 @@
+{
+  "schema": "evaluator-executor-gate-summary/v1",
+  "task_id": "P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1",
+  "mode": "evaluator",
+  "gate_level": "L3",
+  "result": "PASS",
+  "plan": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/VALIDATION_PLAN.yaml",
+  "checks_total": 8,
+  "mandatory_failures": 0,
+  "checks": [
+    {
+      "check_id": "VP-01",
+      "ac": [
+        "AC-06",
+        "AC-08"
+      ],
+      "evidence_id": "RV-EV-01",
+      "mandatory": true,
+      "command": [
+        "python3",
+        "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evaluator_checks/source_snapshot_audit.py"
+      ],
+      "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "expected_exit_code": 0,
+      "observed_exit_code": 0,
+      "result": "PASS",
+      "meta": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-01.meta.json",
+      "stdout": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-01.stdout.log",
+      "stderr": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-01.stderr.log"
+    },
+    {
+      "check_id": "VP-02",
+      "ac": [
+        "AC-01",
+        "AC-05"
+      ],
+      "evidence_id": "RV-EV-02",
+      "mandatory": true,
+      "command": [
+        "env",
+        "PYTHONPATH=src",
+        "python3",
+        "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evaluator_checks/data_disclosure_counterexample.py"
+      ],
+      "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "expected_exit_code": 0,
+      "observed_exit_code": 0,
+      "result": "PASS",
+      "meta": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-02.meta.json",
+      "stdout": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-02.stdout.log",
+      "stderr": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-02.stderr.log"
+    },
+    {
+      "check_id": "VP-03",
+      "ac": [
+        "AC-02",
+        "AC-03",
+        "AC-04"
+      ],
+      "evidence_id": "RV-EV-03",
+      "mandatory": true,
+      "command": [
+        "env",
+        "PYTHONPATH=src",
+        "python3",
+        "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evaluator_checks/paybench_d1_target.py"
+      ],
+      "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "expected_exit_code": 0,
+      "observed_exit_code": 0,
+      "result": "PASS",
+      "meta": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-03.meta.json",
+      "stdout": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-03.stdout.log",
+      "stderr": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-03.stderr.log"
+    },
+    {
+      "check_id": "VP-04",
+      "ac": [
+        "AC-01",
+        "AC-02",
+        "AC-03",
+        "AC-05"
+      ],
+      "evidence_id": "RV-EV-04",
+      "mandatory": true,
+      "command": [
+        "env",
+        "PYTHONPATH=src",
+        "python3",
+        "-m",
+        "unittest",
+        "tests.test_data_disclosure",
+        "tests.test_paybench_current_system",
+        "-v"
+      ],
+      "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "expected_exit_code": 0,
+      "observed_exit_code": 0,
+      "result": "PASS",
+      "meta": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-04.meta.json",
+      "stdout": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-04.stdout.log",
+      "stderr": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-04.stderr.log"
+    },
+    {
+      "check_id": "VP-05",
+      "ac": [
+        "AC-04",
+        "AC-08"
+      ],
+      "evidence_id": "RV-EV-05",
+      "mandatory": true,
+      "command": [
+        "python3",
+        "scripts/validation/run_paybench_challenges.py",
+        "--current-rules",
+        "--output",
+        "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence/H30_PAYBENCH_CURRENT_RULES.json"
+      ],
+      "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "expected_exit_code": 0,
+      "observed_exit_code": 0,
+      "result": "PASS",
+      "meta": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-05.meta.json",
+      "stdout": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-05.stdout.log",
+      "stderr": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-05.stderr.log"
+    },
+    {
+      "check_id": "VP-06",
+      "ac": [
+        "AC-07"
+      ],
+      "evidence_id": "RV-EV-06",
+      "mandatory": true,
+      "command": [
+        "python3",
+        "scripts/validation/run_project_impact_baseline.py",
+        "--repeat",
+        "3"
+      ],
+      "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "expected_exit_code": 0,
+      "observed_exit_code": 0,
+      "result": "PASS",
+      "meta": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-06.meta.json",
+      "stdout": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-06.stdout.log",
+      "stderr": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-06.stderr.log"
+    },
+    {
+      "check_id": "VP-07",
+      "ac": [
+        "AC-04",
+        "AC-07"
+      ],
+      "evidence_id": "RV-EV-07",
+      "mandatory": true,
+      "command": [
+        "python3",
+        "run_experiment.py"
+      ],
+      "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "expected_exit_code": 0,
+      "observed_exit_code": 0,
+      "result": "PASS",
+      "meta": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-07.meta.json",
+      "stdout": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-07.stdout.log",
+      "stderr": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-07.stderr.log"
+    },
+    {
+      "check_id": "VP-08",
+      "ac": [
+        "AC-06",
+        "AC-07",
+        "AC-08"
+      ],
+      "evidence_id": "RV-EV-08",
+      "mandatory": true,
+      "command": [
+        "env",
+        "PYTHONPATH=src",
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "working_directory": "/mnt/d/SoftWare/VScode/install/Project/agentic-payment-trust-lab",
+      "expected_exit_code": 0,
+      "observed_exit_code": 0,
+      "result": "PASS",
+      "meta": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-08.meta.json",
+      "stdout": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-08.stdout.log",
+      "stderr": "docs/05_任务交接/P9_DATA_MINIMIZATION_DISCLOSURE_FACT_V1/evidence_rerun_20260917/RV-EV-08.stderr.log"
+    }
+  ]
+}

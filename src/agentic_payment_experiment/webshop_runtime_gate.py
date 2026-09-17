@@ -31,6 +31,9 @@ from .trusted_execution import (
     verify_governed_payment_action,
 )
 from .validator import validate_request
+from .webshop_action_binding_trace_toolkit import (
+    build_action_binding_rejection_trace,
+)
 from .webshop_authoritative_trace import build_t10_duplicate_preflight_trace
 from .webshop_prepayment_trace_toolkit import build_prepayment_product_trace
 
@@ -174,7 +177,7 @@ def gate_webshop_buy_now(
             context_policy_fact=context_policy_fact,
         )
         if governed_action_fact.status is not VerificationStatus.VALID:
-            return WebShopBuyNowGateOutcome(
+            base_outcome = WebShopBuyNowGateOutcome(
                 decision=(
                     Decision.INDETERMINATE
                     if governed_action_fact.status
@@ -193,6 +196,18 @@ def gate_webshop_buy_now(
                 ),
                 governed_action_fact=governed_action_fact,
             )
+            authoritative_trace = build_action_binding_rejection_trace(
+                mandate=mandate,
+                authorized_order=authorized_snapshot.order,
+                current_order=adaptation.order,
+                bound_request=bound_request,
+                prepayment_result=prepayment_result,
+                governed_action=governed_action,
+                execution_candidate=execution_candidate,
+                governed_action_fact=governed_action_fact,
+                base_outcome=base_outcome,
+            )
+            return replace(base_outcome, authoritative_trace=authoritative_trace)
 
     callback_failure: list[str] = []
 
