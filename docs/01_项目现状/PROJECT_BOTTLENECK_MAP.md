@@ -1,6 +1,6 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-09-17-r45
+Map revision: 2026-09-17-r46
 Last reviewed: 2026-09-17
 Map owner: Evaluator / Human Task Owner  
 Status: ACTIVE  
@@ -247,11 +247,11 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 | B-14 | Remediation Accountability / Closure Consumption | H-23 已对冻结 5 个补救分支完成现有 Product Trace → Consumer → Read Model → Action Origin → Player 系统测量；Consumer/Player/continuity 均 `5/5`，R05 `INVALID` 原样可见且无虚假 payment relation | 代表性退款/争议/原交易错绑证据已经可被现有通用只读消费链稳定消费，无需新增 Consumer/Player 特判 | H-23 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `7/7 PASS`，first breakpoint=`NONE:5`，51/51 专项、662/662 全量、真实副作用 0 | high | RESOLVED / STAGE_CLOSED |
 | B-15 | Actor Authenticity / Credential / Signed Instruction Verification | B-15A 已由 ACP/HMAC + AP2/ES256 形成跨协议/跨算法两个 Signed Instruction 消费者；B-15B 已由 bounded X.509-SVID + subject binding + proof-of-possession + freshness/replay 形成首个受控 `BOUND→VERIFIED` 路径，H-29R 关闭 metadata relabel replay | 当前本地、离线真实性边界已具代表性闭环；真实 Provider / 生产凭证 / live identity 迁入 B-06 | H-29R Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `8/8 PASS`；relabel counterexample fail closed；H-29 `7/7` 保持；30/30 focused、699/699 full unittest、项目 guardrails 不退化 | high | RESOLVED / LOCAL_REPRESENTATIVE_CLOSURE |
 | B-05 | 数据最小化 | H-30 已建立协议中立 `DataDisclosureFact`，机械比较 required / allowed / requested；D1 Trap 阻断非必要字段但保持购买可执行，Lookalike 必要字段正常 | PayBench 字段名级隐私挑战 `8/10→10/10` 可执行；完整 Privacy Governance 仍不在当前范围 | H-30 Evaluator REVIEW：Task `PASS / IMPROVED / SWITCH`，L3 `8/8 PASS`；PayBench `10/10 PASS`，703/703，全项目守护线不退化 | high | RESOLVED / LOCAL_STAGE_CLOSED |
-| B-06 | 真实身份与外部协议 | 本地已有 bounded synthetic `VERIFIED` 路径，但未覆盖真实 Provider、生产 credential/key、SDK、facilitator、网络故障与真实信任根更新 | 测试网、生产接入；需要外部环境与明确授权 | measured local boundary：H-29R；external evidence unknown | high | DEFERRED |
+| B-06 | 真实身份与外部协议 | A-E 已完成本地代表性闭环，但尚未证明官方协议对象、SDK、真实 Provider、网络与后续真实支付环境可以无语义漂移进入现有 Canonical Facts + Trust Core | 当前先从 AP2 v0.2.0 官方 release 做 source/schema/HNP compatibility measurement；真实 SDK、Sandbox、testnet、production 逐级后置 | H-33 / F0：官方 AP2 v0.2.0 `b4587ac` 已由公开资料确认，第一包只测 12 维兼容矩阵，不改产品、不装依赖、不碰资金 | high | ACTIVE / OFFICIAL_PROTOCOL_COMPATIBILITY_MEASUREMENT |
 
 ## Active bottleneck / 当前第一瓶颈
 
-Active bottleneck ID: NONE
+Active bottleneck ID: B-06
 
 ### 当前判断
 
@@ -273,14 +273,17 @@ gap: []
 
 T10 产品行为没有被修改，仍是 `DENY / callback0 / preflight BLOCKED / trace VALID`。H-32 只把主项目 baseline 的 5 个旧 expected 字段对齐到此前已经独立验收的 B-07 target，因此 `GESR 11/12→12/12` 属于 corrected measurement，不是新增产品能力。
 
-当前没有证据支持继续制造新的本地 capability package：
+用户已明确授权项目进入 F 阶段的第一层公开外部验证。当前第一瓶颈切换为 B-06，但不是直接接真钱，而是先回答一个更基础的问题：**官方 AP2 v0.2.0 的真实协议对象、schema 与 Human Not Present 语义，能否无语义漂移进入现有 Canonical Facts + Trust Core。**
 
-- B-01 已重新关闭；
-- B-03 固定 12 项 Product Trace 已 12/12；
-- B-05 Data Minimization 已本地阶段关闭；
-- B-02 继续 WATCH，目前没有项目级失败证明它阻塞主线；
-- B-04 继续 WATCH，避免退回逐 Case 优化购物理解；
-- B-06 继续 DEFERRED，需要真实 Provider / SDK / testnet / network 与明确授权。
+因此 H-33 / F0 只做 measurement-first：
+
+- 固定 AP2 v0.2.0 官方 release `b4587ac`；
+- 只读获取官方 source/schema/HNP samples；
+- 对照当前 AP2 Adapter、Signed Instruction 与 Canonical Core；
+- 形成 12 维 compatibility matrix；
+- 不修改 `src/` / `tests/`，不安装 SDK，不调用 Gemini/Vertex，不接支付、不碰钱包和真实资金。
+
+如果测量显示只是 Adapter 层有界差距，再进入 F1 official SDK executable slice；如果出现 Core 语义缺口，先回 Evaluator 重新判断，不允许为了 AP2 改写核心支付规则。
 
 ### 当前主线
 
@@ -289,37 +292,36 @@ A-D【STAGE CLOSED】
         ↓
 E. Actor Authenticity【LOCAL REPRESENTATIVE CLOSURE】
         ↓
-B-05 Data Minimization【LOCAL STAGE CLOSED】
+LOCAL REPRESENTATIVE BASELINE【12/12 CLOSED】
         ↓
-B-03 Product Authoritative Trace【12/12 CLOSED】
+F. External Protocol / SDK / Provider【CURRENT】
         ↓
-B-01 Measurement Integrity【RECONCILED / CLOSED】
+F0 AP2 v0.2.0 Official Contract Compatibility Measurement
         ↓
-LOCAL REPRESENTATIVE BASELINE【STAGE CLOSED】
-        ↓
-等待：新的项目级失败 / 新外部评测 / 真实环境授权
+先证明外部协议能无语义漂移进入 Canonical Core，再决定 F1
 ```
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: NONE
-Hypothesis status: `NO_ACTIVE_LOCAL_HYPOTHESIS / LOCAL_REPRESENTATIVE_BASELINE_CLOSED`
+Hypothesis ID: H-33
+Hypothesis status: `CONTRACT_FROZEN / AP2_V020_OFFICIAL_COMPATIBILITY_MEASUREMENT`
 
-当前不激活新假设。下一假设只能由以下证据之一触发：
+### 假设
 
-1. 固定项目基线出现新的重复失败或安全守护线退化；
-2. 新外部评测暴露当前 Trust / Payment 能力的共同断点；
-3. 获得真实 Provider / SDK / testnet / network / credential 的明确环境与授权；
-4. B-04 的行为长尾开始真实阻断支付可信主链，而不是单纯购物理解准确率不足。
+> 如果现有 Canonical Facts + Trust Core 的协议中立边界成立，那么 AP2 v0.2.0 官方 Mandate、Checkout/Payment Binding、Receipt、HNP 与验证责任，应能被逐项映射并明确归类；即使存在差距，也应主要暴露在 Adapter / external integration boundary，而不是迫使核心授权和支付规则按 AP2 特判。
+
+本轮不以“12 项全 SUPPORTED”为成功标准。成功标准是：官方来源固定、12 维测量可复核、未知诚实暴露、首个真实断点分类正确，而且 `src/tests` 完全冻结。
 
 ## Candidate experiments / 候选实验与设计任务
 
 | 优先级 | 方向 | 当前状态 | 触发条件 | 当前动作 |
 |---:|---|---|---|---|
-| 1 | 新项目级失败 / 新外部评测 | 等待证据 | 出现可重复共同失败 | 再冻结新瓶颈与同基线实验 |
-| 2 | B-06 live identity / external network | DEFERRED | 有真实 Provider / SDK / testnet 与明确授权 | 再进入阶段 F |
-| 3 | B-04 Fresh Unseen / option long tail | WATCH | 行为失败真实阻断 Trust / Payment 主链 | 才重新激活；不逐 Case 调购物理解 |
-| 4 | B-02 Fact Lineage project impact | WATCH | 来源问题再次导致错误放行或证据缺口 | 再做项目级影响测量 |
+| 1 | H-33 / F0 AP2 v0.2.0 官方合同兼容测量 | CURRENT | 用户已授权公开外部验证；官方 release 可固定 | 只读获取 source/schema/HNP samples，形成 12 维兼容矩阵 |
+| 2 | F1 AP2 official SDK executable slice | GATED | F0=`NO_PRODUCT_GAP` | 再授权必要依赖，接真实 AP2 types，不碰真钱 |
+| 3 | F0R bounded AP2 Adapter capability package | GATED | F0=`BOUNDED_ADAPTER_GAP` | 只修 Adapter 共同断点，复核通过后再进入 F1 |
+| 4 | F2 Alipay Agent Pay Sandbox | GATED | F1 稳定进入 A-E | 接官方 Sandbox 验证 callback/query/finality/recovery |
+| 5 | F3/F4 Identity Provider + 极小额线上证据 | DEFERRED | Sandbox 稳定且 Human 明确资金授权 | 再进入真实 credential / production-like payment |
+| 6 | B-04/B-02 | WATCH | 新证据显示其真实阻断 Trust / Payment 主链 | 才重新激活，不抢占 F0 |
 
 
 ## Reassessment triggers / 重新排序触发器
@@ -384,3 +386,4 @@ Hypothesis status: `NO_ACTIVE_LOCAL_HYPOTHESIS / LOCAL_REPRESENTATIVE_BASELINE_C
 | `2026-09-17-r43` | 2026-09-17 | H-30 Evaluator REVIEW：Task `PASS / IMPROVED / SWITCH`，修正 evaluator plan 的 `PYTHONPATH=src` 可复现性后 L3 `8/8 PASS`；PayBench `8/10→10/10` 可执行且 `10/10 PASS`，703/703 全量，守护线不退化。重新测量 T05/T06：decision/binding/callback 均正确，共同只缺产品权威轨迹 | B-05 `RESOLVED / LOCAL_STAGE_CLOSED`；B-03 从 WATCH 升为第一本地瓶颈，范围严格限定 T05/T06 action-binding rejection trace；B-04 WATCH，B-06 DEFERRED | 激活 H-31：复用现有 Trace Assembler / frozen profile contract，为 T05/T06 拒绝分支附加一个通用产品权威轨迹族；目标 Product Trace `10/12→12/12`、GESR `9/12→11/12`，不修改决策语义 |
 | `2026-09-17-r44` | 2026-09-17 | H-31 Evaluator REVIEW：Task `PASS / IMPROVED / SWITCH`，独立 L3 `8/8 PASS`、708/708、PayBench 10/10、S01-S13 13/13；Product Trace `10/12→12/12`、GESR `9/12→11/12`，仅剩 T10。历史回查确认 B-07 已独立验收 T10 `DENY/callback0/BLOCKED`，而主 fixture 仍保留更早 `ALLOW + lifecycle` 期望；临时机械对齐 accepted target 后 GESR/evidence/Product Trace 均 `12/12`、gap=0、repeat=3 | B-03 `RESOLVED / FIXED_12_TASK_TRACE_COVERAGE`；B-01 因 T10 主 baseline expectation drift 重新激活为第一瓶颈；B-04 WATCH，B-06 DEFERRED | 激活 H-32 measurement repair：只允许主 fixture T10 五个 stale expected 字段与 accepted B-07 target 对齐，并同步直接依赖测试；零产品/runner 修改，Project impact 固定 `NOT_APPLICABLE` |
 | `2026-09-17-r45` | 2026-09-17 | H-32 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE`，独立 L3 `6/6 PASS`、708/708、PayBench 10/10、S01-S13 13/13；protected product/runner/accepted target 不变，仅 T10 五个 stale expected 字段与 B-07 target 对齐；fresh repeat=3 得到 matched/GESR/evidence/Product Trace 全部 `12/12`、gap=0 | B-01 `RESOLVED / BASELINE_RECONCILED`；当前固定本地代表性项目基线无 active gap。B-02/B-04 保持 WATCH，B-06 保持 DEFERRED | H-32 `PASS / CLOSED`；不自动激活新本地假设，等待新项目级失败、新外部评测或真实环境授权再重排 |
+| `2026-09-17-r46` | 2026-09-17 | Human 明确授权进入 F 阶段公开外部验证；公开资料复核确认 AP2 `v0.2.0` release=`b4587ac`，重点覆盖 Human Not Present，官方规范/SDK/source/schema 可作为独立外部合同来源 | B-06 从 DEFERRED 激活为第一瓶颈，但先做 `OFFICIAL_PROTOCOL_COMPATIBILITY_MEASUREMENT`，不直接接 SDK 依赖、Sandbox 或真实资金 | 激活 H-33 / F0：冻结 AP2 v0.2.0 只读 source，做 12 维兼容矩阵；`src/tests` 冻结，结果只允许导向 NO_PRODUCT_GAP / BOUNDED_ADAPTER_GAP / CORE_SEMANTIC_GAP / SOURCE_ENV_BLOCKED |
