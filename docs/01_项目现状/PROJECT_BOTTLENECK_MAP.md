@@ -1,7 +1,7 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-09-17-r46
-Last reviewed: 2026-09-17
+Map revision: 2026-09-18-r49
+Last reviewed: 2026-09-18
 Map owner: Evaluator / Human Task Owner  
 Status: ACTIVE  
 > 当前新任务统一使用 `evaluator-executor-workflow/v2.2`，按“瓶颈—假设—同基线实验—保留或回滚”闭环推进。
@@ -247,7 +247,7 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 | B-14 | Remediation Accountability / Closure Consumption | H-23 已对冻结 5 个补救分支完成现有 Product Trace → Consumer → Read Model → Action Origin → Player 系统测量；Consumer/Player/continuity 均 `5/5`，R05 `INVALID` 原样可见且无虚假 payment relation | 代表性退款/争议/原交易错绑证据已经可被现有通用只读消费链稳定消费，无需新增 Consumer/Player 特判 | H-23 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `7/7 PASS`，first breakpoint=`NONE:5`，51/51 专项、662/662 全量、真实副作用 0 | high | RESOLVED / STAGE_CLOSED |
 | B-15 | Actor Authenticity / Credential / Signed Instruction Verification | B-15A 已由 ACP/HMAC + AP2/ES256 形成跨协议/跨算法两个 Signed Instruction 消费者；B-15B 已由 bounded X.509-SVID + subject binding + proof-of-possession + freshness/replay 形成首个受控 `BOUND→VERIFIED` 路径，H-29R 关闭 metadata relabel replay | 当前本地、离线真实性边界已具代表性闭环；真实 Provider / 生产凭证 / live identity 迁入 B-06 | H-29R Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `8/8 PASS`；relabel counterexample fail closed；H-29 `7/7` 保持；30/30 focused、699/699 full unittest、项目 guardrails 不退化 | high | RESOLVED / LOCAL_REPRESENTATIVE_CLOSURE |
 | B-05 | 数据最小化 | H-30 已建立协议中立 `DataDisclosureFact`，机械比较 required / allowed / requested；D1 Trap 阻断非必要字段但保持购买可执行，Lookalike 必要字段正常 | PayBench 字段名级隐私挑战 `8/10→10/10` 可执行；完整 Privacy Governance 仍不在当前范围 | H-30 Evaluator REVIEW：Task `PASS / IMPROVED / SWITCH`，L3 `8/8 PASS`；PayBench `10/10 PASS`，703/703，全项目守护线不退化 | high | RESOLVED / LOCAL_STAGE_CLOSED |
-| B-06 | 真实身份与外部协议 | A-E 已完成本地代表性闭环，但尚未证明官方协议对象、SDK、真实 Provider、网络与后续真实支付环境可以无语义漂移进入现有 Canonical Facts + Trust Core | 当前先从 AP2 v0.2.0 官方 release 做 source/schema/HNP compatibility measurement；真实 SDK、Sandbox、testnet、production 逐级后置 | H-33 / F0：官方 AP2 v0.2.0 `b4587ac` 已由公开资料确认，第一包只测 12 维兼容矩阵，不改产品、不装依赖、不碰资金 | high | ACTIVE / OFFICIAL_PROTOCOL_COMPATIBILITY_MEASUREMENT |
+| B-06 | 真实身份与外部协议 | F1 已证明 AP2 v0.2.0 官方 generated types 可通过极薄 SDK Bridge 复用 H-34 boundary gate 并进入 Canonical Facts，Canonical Core/Trust Core 保持不变；当前首断点继续前移到 official cryptographic/delegation verification | 下一步先做 bounded evaluator-design / measurement，定位 official SDK verifier/helper 的第一可执行密码学/委托边界、最小 pinned dependencies 与现有 ES256 verifier 可复用部分；Sandbox/Provider/真实支付继续后置 | H-35/F1 Evaluator REVIEW：`PASS / IMPROVED / CONTINUE`，L3 `9/9 PASS`，official SDK cases `9/9`、focused `10/10`、H-34 `10/10`、731 tests OK、11 个 protected Core hashes 不变 | high | ACTIVE / OFFICIAL_CRYPTO_DELEGATION_BOUNDARY |
 
 ## Active bottleneck / 当前第一瓶颈
 
@@ -273,17 +273,27 @@ gap: []
 
 T10 产品行为没有被修改，仍是 `DENY / callback0 / preflight BLOCKED / trace VALID`。H-32 只把主项目 baseline 的 5 个旧 expected 字段对齐到此前已经独立验收的 B-07 target，因此 `GESR 11/12→12/12` 属于 corrected measurement，不是新增产品能力。
 
-用户已明确授权项目进入 F 阶段的第一层公开外部验证。当前第一瓶颈切换为 B-06，但不是直接接真钱，而是先回答一个更基础的问题：**官方 AP2 v0.2.0 的真实协议对象、schema 与 Human Not Present 语义，能否无语义漂移进入现有 Canonical Facts + Trust Core。**
+F0R 已由 Evaluator 独立 L3 复核通过，并由 F1 继续向 official SDK/types 前移。
 
-因此 H-33 / F0 只做 measurement-first：
+F1 最新正式结果：
 
-- 固定 AP2 v0.2.0 官方 release `b4587ac`；
-- 只读获取官方 source/schema/HNP samples；
-- 对照当前 AP2 Adapter、Signed Instruction 与 Canonical Core；
-- 形成 12 维 compatibility matrix；
-- 不修改 `src/` / `tests/`，不安装 SDK，不调用 Gemini/Vertex，不接支付、不碰钱包和真实资金。
+```text
+Task verdict: PASS
+Project impact: IMPROVED
+Continuation: CONTINUE
+L3: 9/9 PASS
+Official SDK cases: 9/9 PASS
+F1 focused: 10/10 PASS
+H-34 boundary: 10/10 PASS
+existing AP2: 17/17 PASS
+project baseline: 12/12 repeat=3
+full unittest: 731 OK (10 expected SDK skips)
+protected Core: 11/11 unchanged
+```
 
-如果测量显示只是 Adapter 层有界差距，再进入 F1 official SDK executable slice；如果出现 Core 语义缺口，先回 Evaluator 重新判断，不允许为了 AP2 改写核心支付规则。
+H-35 证明官方 AP2 v0.2.0 generated model objects 可以通过极薄 SDK Bridge 复用 H-34 gate 并进入现有 Canonical Facts，不需要 AP2-specific Core branch，也不需要让产品模块直接依赖 `pydantic/ap2`。
+
+因此 B-06 仍未关闭，但第一瓶颈继续前移：现在不再是“官方类型能不能接进来”，而是 **official cryptographic/delegation verification 是否能复用现有真实性能力并形成第一条官方验证切片**。issuer signature、open delegation、`cnf`/KB-SD-JWT、Receipt 是当前上游；Sandbox、Provider 与真实资金继续后置。
 
 ### 当前主线
 
@@ -296,32 +306,33 @@ LOCAL REPRESENTATIVE BASELINE【12/12 CLOSED】
         ↓
 F. External Protocol / SDK / Provider【CURRENT】
         ↓
-F0 AP2 v0.2.0 Official Contract Compatibility Measurement
+F0 AP2 v0.2.0 Compatibility Measurement【PASS】
         ↓
-先证明外部协议能无语义漂移进入 Canonical Core，再决定 F1
+F0R Bounded AP2 Adapter Protocol Boundary Gate【PASS / IMPROVED】
+        ↓
+F1 AP2 Official SDK Executable Slice【PASS / IMPROVED】
 ```
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: H-33
-Hypothesis status: `CONTRACT_FROZEN / AP2_V020_OFFICIAL_COMPATIBILITY_MEASUREMENT`
+Hypothesis ID: H-35
+Hypothesis status: `SUPPORTED / CLOSED`
 
-### 假设
+### 已验证结论
 
-> 如果现有 Canonical Facts + Trust Core 的协议中立边界成立，那么 AP2 v0.2.0 官方 Mandate、Checkout/Payment Binding、Receipt、HNP 与验证责任，应能被逐项映射并明确归类；即使存在差距，也应主要暴露在 Adapter / external integration boundary，而不是迫使核心授权和支付规则按 AP2 特判。
+> H-35 已证明：AP2 v0.2.0 官方 `OpenPaymentMandate / PaymentMandate / CheckoutMandate` 可通过极薄 SDK Bridge(SDK 桥)的 exact loaded-class identity + `model_dump(...)` 进入 H-34 protocol-boundary gate，并继续复用现有 `adapt_ap2_snapshot` 生成 Canonical Facts；无需修改 Canonical Core / Trust Core，也无需在产品模块 import `pydantic` 或 `ap2`。
 
-本轮不以“12 项全 SUPPORTED”为成功标准。成功标准是：官方来源固定、12 维测量可复核、未知诚实暴露、首个真实断点分类正确，而且 `src/tests` 完全冻结。
+Evaluator 独立结果：L3 `9/9 PASS`、official SDK cases `9/9`、F1 focused `10/10`、H-34 B01-B10 `10/10`、existing AP2 `17/17`、project baseline `12/12 repeat=3`、731 tests OK（10 个 SDK tests 在系统 Python 中按 optional dependency 设计 skip，并在隔离环境 `10/10 PASS`）、11 个 protected Core hashes 不变。
 
 ## Candidate experiments / 候选实验与设计任务
 
 | 优先级 | 方向 | 当前状态 | 触发条件 | 当前动作 |
 |---:|---|---|---|---|
-| 1 | H-33 / F0 AP2 v0.2.0 官方合同兼容测量 | CURRENT | 用户已授权公开外部验证；官方 release 可固定 | 只读获取 source/schema/HNP samples，形成 12 维兼容矩阵 |
-| 2 | F1 AP2 official SDK executable slice | GATED | F0=`NO_PRODUCT_GAP` | 再授权必要依赖，接真实 AP2 types，不碰真钱 |
-| 3 | F0R bounded AP2 Adapter capability package | GATED | F0=`BOUNDED_ADAPTER_GAP` | 只修 Adapter 共同断点，复核通过后再进入 F1 |
-| 4 | F2 Alipay Agent Pay Sandbox | GATED | F1 稳定进入 A-E | 接官方 Sandbox 验证 callback/query/finality/recovery |
-| 5 | F3/F4 Identity Provider + 极小额线上证据 | DEFERRED | Sandbox 稳定且 Human 明确资金授权 | 再进入真实 credential / production-like payment |
-| 6 | B-04/B-02 | WATCH | 新证据显示其真实阻断 Trust / Payment 主链 | 才重新激活，不抢占 F0 |
+| 1 | H-36 / AP2 official cryptographic-delegation boundary measurement | READY_FOR_DESIGN | F1=`PASS / IMPROVED`；generated types 已真实进入 H-34→Canonical，条件已满足 | evaluator-design：定位 official verifier/helper 第一可执行边界、最小 pinned dependencies、与现有 generic ES256 verifier 的复用关系；先测量后决定是否编码 |
+| 2 | F2 Alipay Agent Pay Sandbox | GATED | AP2 第一条 official cryptographic verification slice 被测清、或 Evaluator 证实继续 AP2 信息增益不足 | 再切到第二协议/公开 Sandbox，验证 callback/query/finality/recovery |
+| 3 | additional AP2 boundary evidence | WATCH | H-36 发现新的、重复共同断点且无需扩大协议层即可独立证实 | 只针对共同断点开包，不回滚 H-34/H-35 |
+| 4 | F3/F4 Identity Provider + 极小额线上证据 | DEFERRED | Sandbox 稳定且 Human 明确资金授权 | 再进入真实 credential / production-like payment |
+| 5 | B-04/B-02 | WATCH | 新证据显示其真实阻断 Trust / Payment 主链 | 才重新激活，不抢占 B-06 |
 
 
 ## Reassessment triggers / 重新排序触发器
@@ -387,3 +398,7 @@ Hypothesis status: `CONTRACT_FROZEN / AP2_V020_OFFICIAL_COMPATIBILITY_MEASUREMEN
 | `2026-09-17-r44` | 2026-09-17 | H-31 Evaluator REVIEW：Task `PASS / IMPROVED / SWITCH`，独立 L3 `8/8 PASS`、708/708、PayBench 10/10、S01-S13 13/13；Product Trace `10/12→12/12`、GESR `9/12→11/12`，仅剩 T10。历史回查确认 B-07 已独立验收 T10 `DENY/callback0/BLOCKED`，而主 fixture 仍保留更早 `ALLOW + lifecycle` 期望；临时机械对齐 accepted target 后 GESR/evidence/Product Trace 均 `12/12`、gap=0、repeat=3 | B-03 `RESOLVED / FIXED_12_TASK_TRACE_COVERAGE`；B-01 因 T10 主 baseline expectation drift 重新激活为第一瓶颈；B-04 WATCH，B-06 DEFERRED | 激活 H-32 measurement repair：只允许主 fixture T10 五个 stale expected 字段与 accepted B-07 target 对齐，并同步直接依赖测试；零产品/runner 修改，Project impact 固定 `NOT_APPLICABLE` |
 | `2026-09-17-r45` | 2026-09-17 | H-32 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE`，独立 L3 `6/6 PASS`、708/708、PayBench 10/10、S01-S13 13/13；protected product/runner/accepted target 不变，仅 T10 五个 stale expected 字段与 B-07 target 对齐；fresh repeat=3 得到 matched/GESR/evidence/Product Trace 全部 `12/12`、gap=0 | B-01 `RESOLVED / BASELINE_RECONCILED`；当前固定本地代表性项目基线无 active gap。B-02/B-04 保持 WATCH，B-06 保持 DEFERRED | H-32 `PASS / CLOSED`；不自动激活新本地假设，等待新项目级失败、新外部评测或真实环境授权再重排 |
 | `2026-09-17-r46` | 2026-09-17 | Human 明确授权进入 F 阶段公开外部验证；公开资料复核确认 AP2 `v0.2.0` release=`b4587ac`，重点覆盖 Human Not Present，官方规范/SDK/source/schema 可作为独立外部合同来源 | B-06 从 DEFERRED 激活为第一瓶颈，但先做 `OFFICIAL_PROTOCOL_COMPATIBILITY_MEASUREMENT`，不直接接 SDK 依赖、Sandbox 或真实资金 | 激活 H-33 / F0：冻结 AP2 v0.2.0 只读 source，做 12 维兼容矩阵；`src/tests` 冻结，结果只允许导向 NO_PRODUCT_GAP / BOUNDED_ADAPTER_GAP / CORE_SEMANTIC_GAP / SOURCE_ENV_BLOCKED |
+| `2026-09-18-r47` | 2026-09-18 | H-33/F0 Evaluator REVIEW：`PASS / NOT_APPLICABLE / CONTINUE`；独立 L3 `6/6 PASS`，AP2 focused `17/17`、项目 baseline `12/12 repeat=3`、708/708；12 维矩阵=`3 SUPPORTED / 6 PARTIAL / 3 UNSUPPORTED`，gap=`BOUNDED_ADAPTER_GAP` | B-06 保持第一瓶颈，但从“官方协议兼容性未知”下移为“AP2 Adapter 最上游 object identity / checkout hash / payment→checkout binding 未验证”；Core 无已证实语义缺口 | H-33 `SUPPORTED / CLOSED`；激活 H-34 / F0R capability experiment：一个 bounded AP2 protocol-boundary gate，B01-B07 `7/7` 为目标，Canonical Core / SDK / Receipt / cnf / Sandbox 全部冻结或后置 |
+| `2026-09-18-r48` | 2026-09-18 | H-34/F0R Evaluator REVIEW：`PASS / IMPROVED / CONTINUE`；独立 L3 `7/7 PASS`，B01-B10 `10/10`、targeted `13/13`、AP2 `17/17`、项目 baseline `12/12 repeat=3`、721/721；11 个 protected Core hashes 不变 | B-06 保持第一瓶颈但继续前移：exact vct / checkout hash / payment→checkout verified binding 已关闭；当前首断点转为 official SDK/types / executable integration | H-34 `SUPPORTED / CLOSED`；F1 AP2 official SDK executable slice 进入 `READY_FOR_DESIGN`，需单独冻结依赖/SDK/网络权限，Sandbox/Provider/真实资金继续后置 |
+| `2026-09-18-r49` | 2026-09-18 | F1 设计复核：本地已固定 AP2 `v0.2.0 / b4587ac1...`，generated model slice 只需 `pydantic`；当前系统 Python 实测 `pydantic MISSING`，不需要先引入 jwcrypto/sd-jwt/完整 AP2 安装 | B-06 首断点进一步收敛为“官方 generated types 是否可经极薄 SDK Bridge 复用 H-34 boundary gate”；环境依赖成为执行前置而非产品 Core 缺口 | 激活 H-35 / F1 `DRAFT_CONTRACT`：只允许 task-local `pydantic==2.12.5`，未获 Human 授权前禁止联网自动安装；产品 principal change 限定 SDK Bridge，Core 与 H-34 boundary 冻结 |
+| `2026-09-18-r50` | 2026-09-18 | H-35/F1 Evaluator REVIEW：`PASS / IMPROVED / CONTINUE`；独立 L3 `9/9 PASS`，official SDK cases `9/9`、focused `10/10`、H-34 `10/10`、AP2 `17/17`、baseline `12/12 repeat=3`、731 tests OK（10 个 SDK tests 在系统环境按 optional dependency 设计 skip，并在隔离环境 `10/10 PASS`）；11 个 protected Core hashes 不变 | B-06 保持第一瓶颈但继续前移：official generated types → Bridge → H-34 → Canonical 已闭合；当前首断点转为 official cryptographic/delegation verification，Sandbox/Provider/真实资金继续后置 | H-35 `SUPPORTED / CLOSED`；下一方向 H-36 evaluator-design/measurement：先定位 official verifier/helper 第一可执行边界、最小 pinned dependencies 与现有 generic ES256 verifier 复用关系，再决定是否编码 |
