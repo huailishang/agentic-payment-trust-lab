@@ -176,6 +176,27 @@ def matches_allowlist(policy: dict, repo: str, path: str) -> bool:
     return any(fnmatch.fnmatch(normalized, pat) or normalized == pat for pat in patterns)
 
 
+def matches_rule_allowlist(policy: dict, repo: str, path: str, rule_id: str) -> bool:
+    """Allow one scanner rule on one reviewed path without disabling other checks."""
+    entries: list[object] = []
+    rule_allow = policy.get("rule_allowlist", {}).get(rule_id, {})
+    entries.extend(rule_allow.get("*", []))
+    entries.extend(rule_allow.get(repo, []))
+    normalized = path.replace("\\", "/")
+    for entry in entries:
+        if isinstance(entry, str):
+            pattern = entry
+        elif isinstance(entry, dict):
+            pattern = str(entry.get("path", ""))
+            if not entry.get("reason"):
+                continue
+        else:
+            continue
+        if pattern and (fnmatch.fnmatch(normalized, pattern) or normalized == pattern):
+            return True
+    return False
+
+
 def line_number(text: str, start: int) -> int:
     return text.count("\n", 0, start) + 1
 
@@ -290,6 +311,8 @@ def scan_text(policy: dict, repo: str, path: str, text: str, public: bool, commi
     findings: list[Finding] = []
 
     for rule_id, regex, message in CREDENTIAL_RULES:
+        if matches_rule_allowlist(policy, repo, path, rule_id):
+            continue
         for match in regex.finditer(text):
             findings.append(Finding(rule_id, path, line_number(text, match.start()), message, commit))
 

@@ -83,6 +83,16 @@
       "**/.env.example"
     ]
   },
+  "rule_allowlist": {
+    "SECRET_JWT": {
+      "agentic-payment-trust-lab": [
+        {
+          "path": "docs/05_任务交接/P9_AP2_ES256_SIGNED_INSTRUCTION_SECOND_CONSUMER_V1/evaluator_fixtures/AP2_ES256_JWS_MATRIX.json",
+          "reason": "Synthetic evaluator-owned AP2 ES256 JWS test vector using public test material only; keep all non-JWT security rules active for this file."
+        }
+      ]
+    }
+  },
   "local_denylist": "~/.config/localagent-security/company-denylist.txt",
   "max_text_bytes": 2000000
 }
