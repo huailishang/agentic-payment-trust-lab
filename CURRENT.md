@@ -6,7 +6,7 @@
 workflow: evaluator-executor-workflow/v2.2
 task_id: H38_ALIPAY_AGENT_PAY_SANDBOX_FIRST_EXTERNAL_SLICE_V1
 task_kind: capability_experiment
-state: CONTRACT_FROZEN
+state: EXECUTING
 current_role: Executor
 baseline_commit: 2b57248af464623402a71d65a2098244819519e3
 project_map_path: docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md
@@ -17,8 +17,8 @@ contract_path: docs/05_任务交接/H38_ALIPAY_AGENT_PAY_SANDBOX_FIRST_EXTERNAL_
 executor_report_path: docs/05_任务交接/H38_ALIPAY_AGENT_PAY_SANDBOX_FIRST_EXTERNAL_SLICE_V1/REPORT.md
 evaluator_review_path: docs/05_任务交接/H38_ALIPAY_AGENT_PAY_SANDBOX_FIRST_EXTERNAL_SLICE_V1/REVIEW.md
 next_artifact_path: docs/05_任务交接/H38_ALIPAY_AGENT_PAY_SANDBOX_FIRST_EXTERNAL_SLICE_V1/REPORT.md
-authorization_commit: false
-authorization_push: false
+authorization_commit: true
+authorization_push: true
 authorization_history_rewrite: false
 authorization_api_call: true
 ```
@@ -34,7 +34,7 @@ F external protocol / SDK / provider        [CURRENT]
   F1 AP2 official SDK slice                 [PASS / IMPROVED]
   H-36 AP2 crypto boundary measurement      [PASS]
   H-37 AP2 official two-hop runtime         [PASS / IMPROVED]
-  H-38 Alipay Agent Pay sandbox first slice [CONTRACT_FROZEN / EXECUTOR]
+  H-38 Alipay Agent Pay sandbox first slice [EXECUTING / BLOCKED ON SANDBOX INPUTS]
 ```
 
 横向安全轨已建立：`docs/01_项目现状/横向攻击验证轨.md`。当前保持 WATCH，不抢占 H-38；H-38 取得第一条第二 Provider live slice 后，再优先开 X1 Agent-facing adversarial fixtures(面向智能体的攻击夹具)。
@@ -54,8 +54,10 @@ Human 于 2026-09-19 明确要求把支付宝相关任务布置好交给 Executo
 - production credential / PII(生产凭据 / 个人敏感信息)；
 - real funds(真实资金)；
 - 安装新依赖；
-- commit / push / history rewrite；
+- history rewrite；
 - callback receiver，除非 Evaluator 另行冻结。
+
+Human 于 2026-09-19 明确授权：将当前 H-38 执行暂停点 commit + push 到远程。该授权只用于保存当前项目状态，不扩大 Sandbox / production / funds 权限。
 
 ## Executor stop condition / 执行者停止条件
 
