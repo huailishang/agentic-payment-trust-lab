@@ -235,6 +235,17 @@ Continuation: `CONTINUE`
 
 F2 Alipay Agent Pay Sandbox 继续后置，等 AP2 的第一条官方 cryptographic verification slice(密码学验证切片)被测清或明确不值得继续，再决定是否切协议。
 
+下一任务已冻结：
+
+```text
+Task ID: H36_AP2_OFFICIAL_CRYPTO_DELEGATION_BOUNDARY_MEASUREMENT_V1
+Task kind: evaluator_design
+State: CONTRACT_FROZEN / Executor
+Path: docs/05_任务交接/H36_AP2_OFFICIAL_CRYPTO_DELEGATION_BOUNDARY_MEASUREMENT_V1/
+```
+
+H-36 只做 official verifier/helper、最小依赖与 generic ES256 复用边界测量；不修改产品、不安装依赖、不进入 Sandbox/Provider/真实资金。
+
 ## Final verdict
 
 PASS
