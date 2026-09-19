@@ -1,0 +1,100 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: H37_AP2_OFFICIAL_TWO_HOP_VERIFICATION_SLICE_V1
+
+checks:
+  - id: VP-01
+    ac: [AC-02, AC-07, AC-08]
+    cwd: .
+    command: [python3, docs/05_任务交接/H37_AP2_OFFICIAL_TWO_HOP_VERIFICATION_SLICE_V1/evaluator_checks/source_scope_audit.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-02
+    ac: [AC-01, AC-02, AC-08]
+    cwd: .
+    command:
+      - env
+      - PYTHONPATH=local_sources/third_party/ap2-v0.2.0/code/sdk/python
+      - .task_envs/h37_ap2_crypto/bin/python
+      - docs/05_任务交接/H37_AP2_OFFICIAL_TWO_HOP_VERIFICATION_SLICE_V1/evaluator_checks/dependency_preflight.py
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-03
+    ac: [AC-03, AC-04, AC-05, AC-06, AC-07, AC-10]
+    cwd: .
+    command:
+      - env
+      - PYTHONPATH=src:local_sources/third_party/ap2-v0.2.0/code/sdk/python
+      - .task_envs/h37_ap2_crypto/bin/python
+      - docs/05_任务交接/H37_AP2_OFFICIAL_TWO_HOP_VERIFICATION_SLICE_V1/evaluator_checks/official_two_hop_cases.py
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-04
+    ac: [AC-03, AC-04, AC-05, AC-06, AC-07, AC-08]
+    cwd: .
+    command:
+      - env
+      - PYTHONPATH=src:local_sources/third_party/ap2-v0.2.0/code/sdk/python
+      - .task_envs/h37_ap2_crypto/bin/python
+      - -m
+      - unittest
+      - tests.test_ap2_official_verification
+      - -v
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-05
+    ac: [AC-08, AC-09]
+    cwd: .
+    command:
+      - env
+      - PYTHONPATH=src
+      - python3
+      - -m
+      - unittest
+      - tests.test_ap2_adapter
+      - tests.test_ap2_flow_adapter
+      - tests.test_ap2_flow_entrypoint
+      - tests.test_ap2_signed_instruction
+      - tests.trusted_execution.test_signed_instruction_es256
+      - -v
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-06
+    ac: [AC-09]
+    cwd: .
+    command:
+      - python3
+      - scripts/validation/run_project_impact_baseline.py
+      - --repeat
+      - "3"
+      - --output
+      - docs/05_任务交接/H37_AP2_OFFICIAL_TWO_HOP_VERIFICATION_SLICE_V1/evidence/H37_PROJECT_BASELINE.json
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-07
+    ac: [AC-09, AC-10]
+    cwd: .
+    command: [python3, run_experiment.py]
+    expected_exit_code: 0
+    mandatory: true
+
+  - id: VP-08
+    ac: [AC-08, AC-09]
+    cwd: .
+    command:
+      - env
+      - PYTHONPATH=src
+      - python3
+      - -m
+      - unittest
+      - discover
+      - -s
+      - tests
+      - -v
+    expected_exit_code: 0
+    mandatory: true

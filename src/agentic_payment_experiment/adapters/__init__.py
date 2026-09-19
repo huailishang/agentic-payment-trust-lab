@@ -15,6 +15,10 @@ from .ap2 import (
 )
 from .ap2_protocol_boundary import AP2VerifiedAdaptation, adapt_verified_ap2_v020_snapshot
 from .ap2_sdk_bridge import adapt_verified_ap2_v020_sdk_objects
+from .ap2_official_verification import (
+    AP2OfficialDelegationVerificationFact,
+    verify_ap2_v020_official_two_hop_chain,
+)
 from .ap2_signed_instruction import verify_ap2_merchant_authorization_signature
 from .webshop import WebShopCommerceAdaptation, adapt_webshop_purchase_candidate
 from .x402 import (
@@ -32,6 +36,7 @@ __all__ = [
     "AP2Adaptation",
     "AP2FlowAdaptation",
     "AP2FlowMode",
+    "AP2OfficialDelegationVerificationFact",
     "AP2VerifiedAdaptation",
     "adapt_acp_checkout_pair",
     "verify_acp_webhook_signature",
@@ -41,6 +46,7 @@ __all__ = [
     "adapt_verified_ap2_v020_sdk_objects",
     "evaluate_ap2_flow",
     "verify_ap2_merchant_authorization_signature",
+    "verify_ap2_v020_official_two_hop_chain",
     "WebShopCommerceAdaptation",
     "adapt_webshop_purchase_candidate",
     "X402Adaptation",

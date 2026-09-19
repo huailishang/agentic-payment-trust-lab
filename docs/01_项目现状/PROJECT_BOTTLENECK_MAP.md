@@ -1,6 +1,6 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-09-19-r51
+Map revision: 2026-09-19-r55
 Last reviewed: 2026-09-19
 Map owner: Evaluator / Human Task Owner  
 Status: ACTIVE  
@@ -72,11 +72,12 @@ A. 评测与治理底座                  [已完成]
 → C. 支付生命周期、恢复、补救证据链 [已完成]
 → D. 责任归因与可消费审计链         [已完成]
 → E. 主体真实性 / 凭证 / 签署指令   [本地代表性闭环已完成]
-→ F. 外部真实协议 / SDK / 网络接入   [未来，受授权与环境约束]
+→ F. 外部真实协议 / SDK / 网络接入   [CURRENT：AP2 已闭合首条官方链，转支付宝 Sandbox]
 
 横切补强：B-05 Data Minimization（数据最小化）【本地阶段关闭】
 B-03 Product Authoritative Trace（产品权威轨迹）【固定 12 项覆盖已闭合】
-当前本地主线：本地代表性基线阶段收口【12/12；等待新证据或外部环境触发】
+当前纵向主线：H-38 / F2 支付宝 Agent Pay Sandbox 第一条外部验证切片【CONTRACT_FROZEN / EXECUTOR】
+横向安全轨：固定负例 → Agent-facing attacks → Adaptive Model Red Team → Cross-Provider Adversarial Eval【WATCH；不抢占 H-38】
 ```
 
 | 阶段 | 要解决的核心问题 | 当前代表能力 / 证据 | 状态 |
@@ -86,7 +87,7 @@ B-03 Product Authoritative Trace（产品权威轨迹）【固定 12 项覆盖�
 | C 生命周期、恢复、补救证据链 | 支付后 UNKNOWN、履约失败、退款、争议、原交易错绑时能不能安全恢复并留下连续证据 | Payment Lifecycle / Recovery、Finality、Remediation / Closure、Product Authoritative Trace `10/12`，B-12/B-13 阶段关闭 | `CLOSED` |
 | D 责任归因与可消费审计链 | 事后能不能回答“谁做的、依据什么、发生了什么”，并让 UI / 审计消费者稳定读取 | Action Origin、Same-Journey Responsibility、Consumer、Read Model、Player；H-23 五分支消费 `5/5` | `CLOSED` |
 | E 主体真实性 / 凭证 / 签署指令 | ID 对得上之后，能否证明执行者真的持有对应凭证/密钥，授权/指令真的由对应主体签署 | B-15A 已由 ACP/HMAC + AP2/ES256 两个消费者闭合；B-15B 已由 bounded X.509-SVID + proof-of-possession + challenge binding 形成首个受控 `BOUND→VERIFIED` 路径 | `CLOSED_WITH_LOCAL_BOUNDARY` |
-| F 外部真实协议 / 网络接入 | 本地机制在真实 SDK、钱包、测试网、身份提供方、facilitator 下是否仍成立 | x402 仅离线一致性；真实 AP2/ACP/x402 网络、真实凭证/签名、银行沙箱尚未进入 | `DEFERRED` |
+| F 外部真实协议 / 网络接入 | 本地机制在真实 SDK、Sandbox、Provider 下是否仍成立 | AP2 v0.2.0 已完成 compatibility → boundary → official SDK → official two-hop crypto/delegation；H-38 转支付宝 Agent Pay Sandbox，验证第一条 provider-observed payment-proof evidence | `ACTIVE` |
 
 ### 已完成的能力，不再默认继续扩
 
@@ -247,7 +248,8 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 | B-14 | Remediation Accountability / Closure Consumption | H-23 已对冻结 5 个补救分支完成现有 Product Trace → Consumer → Read Model → Action Origin → Player 系统测量；Consumer/Player/continuity 均 `5/5`，R05 `INVALID` 原样可见且无虚假 payment relation | 代表性退款/争议/原交易错绑证据已经可被现有通用只读消费链稳定消费，无需新增 Consumer/Player 特判 | H-23 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `7/7 PASS`，first breakpoint=`NONE:5`，51/51 专项、662/662 全量、真实副作用 0 | high | RESOLVED / STAGE_CLOSED |
 | B-15 | Actor Authenticity / Credential / Signed Instruction Verification | B-15A 已由 ACP/HMAC + AP2/ES256 形成跨协议/跨算法两个 Signed Instruction 消费者；B-15B 已由 bounded X.509-SVID + subject binding + proof-of-possession + freshness/replay 形成首个受控 `BOUND→VERIFIED` 路径，H-29R 关闭 metadata relabel replay | 当前本地、离线真实性边界已具代表性闭环；真实 Provider / 生产凭证 / live identity 迁入 B-06 | H-29R Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / SWITCH`，L3 `8/8 PASS`；relabel counterexample fail closed；H-29 `7/7` 保持；30/30 focused、699/699 full unittest、项目 guardrails 不退化 | high | RESOLVED / LOCAL_REPRESENTATIVE_CLOSURE |
 | B-05 | 数据最小化 | H-30 已建立协议中立 `DataDisclosureFact`，机械比较 required / allowed / requested；D1 Trap 阻断非必要字段但保持购买可执行，Lookalike 必要字段正常 | PayBench 字段名级隐私挑战 `8/10→10/10` 可执行；完整 Privacy Governance 仍不在当前范围 | H-30 Evaluator REVIEW：Task `PASS / IMPROVED / SWITCH`，L3 `8/8 PASS`；PayBench `10/10 PASS`，703/703，全项目守护线不退化 | high | RESOLVED / LOCAL_STAGE_CLOSED |
-| B-06 | 真实身份与外部协议 | F1 已证明 AP2 v0.2.0 官方 generated types 可通过极薄 SDK Bridge 复用 H-34 boundary gate 并进入 Canonical Facts，Canonical Core/Trust Core 保持不变；当前首断点继续前移到 official cryptographic/delegation verification | 下一步先做 bounded evaluator-design / measurement，定位 official SDK verifier/helper 的第一可执行密码学/委托边界、最小 pinned dependencies 与现有 ES256 verifier 可复用部分；Sandbox/Provider/真实支付继续后置 | H-35/F1 Evaluator REVIEW：`PASS / IMPROVED / CONTINUE`，L3 `9/9 PASS`，official SDK cases `9/9`、focused `10/10`、H-34 `10/10`、731 tests OK、11 个 protected Core hashes 不变 | high | ACTIVE / OFFICIAL_CRYPTO_DELEGATION_BOUNDARY |
+| B-16 | 横向攻击验证 / Adversarial Security Evaluation | 已有 Attack Overlay `6/6`、AP2 negative cases、replay/binding/source-integrity 等确定性攻击基线；尚未形成强模型自适应攻击者对 Trust Control Plane 的系统评测 | 横切 B-02/B-04/B-06/B-15；目标是验证 Prompt/Tool/Context 攻击、授权越权、错绑、重放、伪造 provider result 等情况下未授权副作用率仍为 0 | `docs/01_项目现状/横向攻击验证轨.md`；当前先保持 WATCH，待 H-38 获得第一条第二 Provider live slice 后优先开 X1，再考虑 X2 model-driven red team | high | WATCH / CROSS_CUTTING |
+| B-06 | 真实身份与外部协议 | H-37 已用 pinned AP2 v0.2.0 official verifier 跑通 root SD-JWT + terminal KB-SD-JWT 两跳 cryptographic/delegation verification；合法链 VALID，wrong root key、真实签名字节篡改、broken cnf、wrong aud/nonce、previous-token binding tamper 均 fail closed | AP2 本地 official SDK + crypto 代表性 slice 已闭合；Human 已授权 H-38 仅在支付宝 Agent Pay Sandbox / sandbox-only credential / 零真实资金边界执行；当前断点转为能否取得 provider-observed payment-proof verification evidence | H-37 Evaluator REVIEW：`PASS / IMPROVED / HUMAN_REQUIRED`；H-38 `CONTRACT_FROZEN / EXECUTOR` | high | ACTIVE / ALIPAY_SANDBOX_FIRST_SLICE |
 
 ## Active bottleneck / 当前第一瓶颈
 
@@ -293,7 +295,7 @@ protected Core: 11/11 unchanged
 
 H-35 证明官方 AP2 v0.2.0 generated model objects 可以通过极薄 SDK Bridge 复用 H-34 gate 并进入现有 Canonical Facts，不需要 AP2-specific Core branch，也不需要让产品模块直接依赖 `pydantic/ap2`。
 
-因此 B-06 仍未关闭，但第一瓶颈继续前移：现在不再是“官方类型能不能接进来”，而是 **official cryptographic/delegation verification 是否能复用现有真实性能力并形成第一条官方验证切片**。issuer signature、open delegation、`cnf`/KB-SD-JWT、Receipt 是当前上游；Sandbox、Provider 与真实资金继续后置。
+H-37 已由 Evaluator 独立 L3 `8/8 PASS`，因此 B-06 的 official two-hop runtime 断点已清除：AP2 pinned SDK/crypto 在本地隔离环境中已有正向与七类负向运行证据。B-06 仍未关闭，但第一断点已前移到 **第二个真实外部 Sandbox/Provider 能否在不使用真实资金的前提下产生 provider-observed request / payment-proof verification / callback-state evidence，并进入现有 Trust / Trace 边界**。继续补 AP2 Checkout/Payment typed semantics 或 Receipt 保持 WATCH，不作为当前第一优先。
 
 ### 当前主线
 
@@ -311,35 +313,44 @@ F0 AP2 v0.2.0 Compatibility Measurement【PASS】
 F0R Bounded AP2 Adapter Protocol Boundary Gate【PASS / IMPROVED】
         ↓
 F1 AP2 Official SDK Executable Slice【PASS / IMPROVED】
+        ↓
+H-36 Official Crypto/Delegation Boundary Measurement【PASS / DEPENDENCY_BLOCKED】
+        ↓
+H-37 Two-hop Official Verification Slice【PASS / IMPROVED】
+        ↓
+H-38 / F2 Alipay Agent Pay Sandbox First External Slice【CONTRACT_FROZEN / EXECUTOR】
 ```
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: H-36
-Hypothesis status: `CONTRACT_FROZEN / MEASUREMENT`
+Hypothesis ID: H-38
+Hypothesis status: `CONTRACT_FROZEN / EXECUTOR`
 
 ### 已验证前提
 
 H-35/F1 已证明：AP2 v0.2.0 官方 generated model objects 可以通过极薄 SDK Bridge 进入 H-34 protocol-boundary gate，再进入现有 Canonical Facts；不需要 AP2-specific Core branch。
 
-H-36 不重复 F1，而是把 B-06 前移后的第一断点拆开测量：
+H-36 已独立 L3 `5/5 PASS`，把 B-06 的下一假设收敛为 H-37：
 
 ```text
-MandateClient.verify
-→ sdjwt.chain.verify_chain
-→ root signature / key provider / cnf / KB aud+nonce
-→ CheckoutMandateChain / PaymentMandateChain constraint semantics
+root SD-JWT
+→ root key provider + issuer signature + disclosure
+→ verified root cnf.jwk
+→ terminal KB-SD-JWT holder signature
+→ previous-token binding
+→ expected aud / nonce
+→ STOP before Checkout/Payment semantics and Receipt
 ```
 
-同时独立测量 `ReceiptClient.verify_receipt`，并与当前 protocol-neutral generic ES256 verifier 做源码级复用对照。当前不预设“能直接复用”，也不预设必须新造 AP2 verifier。
+H-37 已独立 L3 `8/8 PASS`，official AP2 two-hop crypto/delegation slice 从 `ABSENT → BOUNDED_EXECUTABLE_SLICE`。当前继续 AP2 本地扩展的边际收益低于切换第二个真实外部 Sandbox。Human 已于 2026-09-19 明确要求把支付宝任务布置好交给 Executor，Evaluator 将授权严格限定为 Sandbox network/API、sandbox-only credential 与模拟交易，继续禁止生产环境、真实 PII/资金和新增依赖。
 
 ## Candidate experiments / 候选实验与设计任务
 
 | 优先级 | 方向 | 当前状态 | 触发条件 | 当前动作 |
 |---:|---|---|---|---|
-| 1 | H-36 / AP2 official cryptographic-delegation boundary measurement | CONTRACT_FROZEN / EXECUTOR | F1=`PASS / IMPROVED`；generated types 已真实进入 H-34→Canonical | measurement-only：定位 `MandateClient.verify / verify_chain` 第一可执行密码学边界、委托/约束分层、最小 pinned dependencies、与现有 generic ES256 verifier 的真实复用级别；产品代码冻结 |
-| 2 | H-37 bounded official crypto/delegation capability slice | GATED | H-36 给出单一 `BOUNDED_REUSE_SLICE` 或 `AP2_SPECIFIC_CRYPTO_ADAPTER` 且依赖/权限边界可冻结 | 只实现 H-36 证明最有信息增益的一条 slice，不扩完整 AP2 conformance |
-| 3 | F2 Alipay Agent Pay Sandbox | GATED | H-36/H-37 测清 AP2 第一条 official crypto slice，或 Evaluator 证实继续 AP2 信息增益不足 | 再切第二协议/公开 Sandbox，验证 callback/query/finality/recovery |
+| 1 | H-36 / AP2 official cryptographic-delegation boundary measurement | PASS / CLOSED | 独立 L3 `5/5 PASS`；classification=`DEPENDENCY_BLOCKED` | 已完成：两跳 slice、最小依赖、crypto/semantics/receipt 分层和 ES256 复用边界均已定位 |
+| 2 | H-37 bounded official crypto/delegation capability slice | PASS / CLOSED | Evaluator 独立 L3 `8/8 PASS` | 已完成：root SD-JWT + terminal KB-SD-JWT official verification，C01-C08 `8/8 PASS`，不再机械扩 AP2 本地 Case |
+| 3 | H-38 / F2 Alipay Agent Pay Sandbox first external slice | CONTRACT_FROZEN / EXECUTOR | Human 已授权仅 Sandbox network/API + sandbox-only credential + simulated transaction；禁止生产环境/真实资金；本机缺 fixture/secret 时必须 BLOCKED，不得编造 | 第一条 live slice 只验证 sandbox Payment-Proof → `alipay.aipay.agent.payment.verify` → provider response signature → minimal external verification fact；L3 审计持久证据，不重复 live 支付验证 |
 | 4 | additional AP2 boundary evidence | WATCH | H-36 发现新的共同断点且无需扩大协议层即可独立证实 | 只针对共同断点开包，不回滚 H-34/H-35 |
 | 5 | F3/F4 Identity Provider + 极小额线上证据 | DEFERRED | Sandbox 稳定且 Human 明确资金授权 | 再进入真实 credential / production-like payment |
 
@@ -412,3 +423,7 @@ MandateClient.verify
 | `2026-09-18-r49` | 2026-09-18 | F1 设计复核：本地已固定 AP2 `v0.2.0 / b4587ac1...`，generated model slice 只需 `pydantic`；当前系统 Python 实测 `pydantic MISSING`，不需要先引入 jwcrypto/sd-jwt/完整 AP2 安装 | B-06 首断点进一步收敛为“官方 generated types 是否可经极薄 SDK Bridge 复用 H-34 boundary gate”；环境依赖成为执行前置而非产品 Core 缺口 | 激活 H-35 / F1 `DRAFT_CONTRACT`：只允许 task-local `pydantic==2.12.5`，未获 Human 授权前禁止联网自动安装；产品 principal change 限定 SDK Bridge，Core 与 H-34 boundary 冻结 |
 | `2026-09-18-r50` | 2026-09-18 | H-35/F1 Evaluator REVIEW：`PASS / IMPROVED / CONTINUE`；独立 L3 `9/9 PASS`，official SDK cases `9/9`、focused `10/10`、H-34 `10/10`、AP2 `17/17`、baseline `12/12 repeat=3`、731 tests OK（10 个 SDK tests 在系统环境按 optional dependency 设计 skip，并在隔离环境 `10/10 PASS`）；11 个 protected Core hashes 不变 | B-06 保持第一瓶颈但继续前移：official generated types → Bridge → H-34 → Canonical 已闭合；当前首断点转为 official cryptographic/delegation verification，Sandbox/Provider/真实资金继续后置 | H-35 `SUPPORTED / CLOSED`；下一方向 H-36 evaluator-design/measurement：先定位 official verifier/helper 第一可执行边界、最小 pinned dependencies 与现有 generic ES256 verifier 复用关系，再决定是否编码 |
 | `2026-09-19-r51` | 2026-09-19 | Human 批准继续第 2/3 步：F1 commit `e693127` 已推送远程；Evaluator 基于 pinned AP2 v0.2.0 source 将下一断点拆为 `MandateClient.verify → sdjwt.chain.verify_chain` 的密码学/委托链验证、Checkout/Payment chain 约束语义、Receipt 独立验证路径，并冻结 H-36 measurement 包 | B-06 保持第一瓶颈；H-36 只测量 official verifier/helper、最小依赖与 generic ES256 复用边界，不修改产品、不安装依赖、不进入 Sandbox/Provider/真实资金 | H-36 `CONTRACT_FROZEN / EXECUTOR`；只有形成单一 next-slice decision 并通过 L2/L3 后才允许开 H-37；F2 继续 GATED |
+| `2026-09-19-r52` | 2026-09-19 | H-36 Evaluator REVIEW：Task `PASS / NOT_APPLICABLE / HUMAN_REQUIRED`；独立 L3 `5/5 PASS`，10 surfaces、4 dependency rows、classification=`DEPENDENCY_BLOCKED`；generic ES256 仅 `REUSE_PRIMITIVE_ONLY`；project baseline 12/12、S01-S13 13/13、PayBench 10/10、AP2 minimal 2/2、Attack Overlay 6/6 | B-06 继续 ACTIVE，但首断点从“official crypto/delegation 边界未知”收敛为“已明确 root SD-JWT + terminal KB-SD-JWT 两跳 slice，缺 faithful pinned isolated runtime environment”；Receipt 与 Checkout/Payment semantics 独立后置 | H-37 暂不冻结：等待 Human 明确授权 task-local isolated environment 安装/对齐 `jwcrypto==1.5.6`、`sd-jwt==0.10.4`、`cryptography==46.0.5`，保留 `pydantic==2.12.5`；F2 继续 GATED |
+| `2026-09-19-r53` | 2026-09-19 | Human 明确批准 H-37 任务级隔离环境安装四个 direct pins：`pydantic==2.12.5`、`jwcrypto==1.5.6`、`sd-jwt==0.10.4`、`cryptography==46.0.5`，并仅允许 resolver 必要传递依赖；Evaluator 冻结 H-37 capability contract 与 8-case 独立验证矩阵 | B-06 第一断点保持为 official two-hop runtime verification；依赖授权阻塞已解除，但能力尚未执行，不能提前写成已验证 | H-37 `CONTRACT_FROZEN / EXECUTOR`；唯一 principal change 为 thin AP2 official-verifier adapter，直接调用 pinned `MandateClient.verify`；系统 Python、Sandbox/provider/wallet、真实凭证/PII/资金、commit/push 继续禁止 |
+| `2026-09-19-r54` | 2026-09-19 | H-37 Evaluator REVIEW：`PASS / IMPROVED / HUMAN_REQUIRED`；独立 L3 `8/8 PASS`，C01-C08 `8/8`、existing AP2+ES256 `25/25`、project baseline `12/12 repeat=3`、S01-S13 `13/13`、PayBench `10/10`、AP2 minimal `2/2`、Attack Overlay `6/6`、full unittest `733 OK / 10 skips` | B-06 official two-hop runtime 断点关闭；AP2 本地 official SDK+crypto 代表性链路已形成。第一断点前移到第二个真实外部 Sandbox/Provider 能否产生 provider-observed payment-proof / callback-state evidence，并进入 Trust / Trace；继续 AP2 typed semantics/Receipt 降为 WATCH | 下一方向 H-38/F2 Alipay Agent Pay Sandbox first external slice；官方资料确认 Sandbox 不使用真实资金，Machine Pay 链路包含 402、Payment-Proof、`alipay.aipay.agent.payment.verify` 与异步履约回执；执行前仍需 Human 新授权 sandbox network/API + sandbox-only credential/test account |
+| `2026-09-19-r55` | 2026-09-19 | Human 授权 H-38 仅在支付宝 Agent Pay Sandbox / sandbox-only credential / 模拟交易 / 零真实资金边界执行；Evaluator 冻结 Sandbox first external slice，同时新增 `横向攻击验证轨.md` 与 B-16 cross-cutting adversarial track | B-06 从 `LIVE_SANDBOX_AUTH_REQUIRED` 前移为 `ALIPAY_SANDBOX_FIRST_SLICE`；B-16 作为 WATCH 横向轨，不抢占纵向 H-38 | H-38 `CONTRACT_FROZEN / EXECUTOR`；第一 slice 只做 `Payment-Proof → alipay.aipay.agent.payment.verify → provider response signature → minimal neutral fact`；若缺 Sandbox secret/fixture 则 BLOCKED，不得转生产、不安装新依赖 |
