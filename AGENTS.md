@@ -71,6 +71,12 @@ A. 评测与治理底座
 
 然后再展开 L2/L3、AC、hash、测试数等局部证据。禁止让任务编号和验证细节淹没项目全局位置。
 
+### Skill 辅助的下一轮决策澄清
+
+冻结下一能力包前，只有当它能消除真实不确定性时才引入 Skill（技能）：仅当存在多个重要、跨 session（会话）的方向分支，且现有 Evidence（证据）不足以让 Evaluator 负责任地冻结下一 bounded task（有界任务）时，才向 Human 说明原因并建议显式调用 `/wayfinder`；它不是每次 Review（复核）后的固定步骤，也不替代项目瓶颈地图。如果卡在 Trust / Payment 领域术语、对象、状态或关系边界，按需加载 `domain-modeling`；如果卡在 Adapter / Module / Interface / Seam（适配器/模块/接口/接缝）形态，按需加载 `codebase-design`。讨论已经收敛时，由 Evaluator 直接形成 Frozen Contract（冻结合同）与 Validation Plan（验证计划），不再增加第二套 Spec / issue-ready 交接层。
+
+`CONTRACT_FROZEN` 后，Executor 只能把 `domain-modeling` / `codebase-design` 当作合同内实现辅助；一旦会改变 hypothesis（假设）、scope（范围）、AC、预算、授权或架构义务，必须停止扩张并交回 Evaluator。普通 repair（修复）和已明确的小任务不机械增加 Skill 环节。
+
 <!-- BEGIN localagent-common:codexpro-shell-safety -->
 ## CodexPro Shell 与文件落盘安全
 
