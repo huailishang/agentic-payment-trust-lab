@@ -1,7 +1,7 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-09-19-r55
-Last reviewed: 2026-09-19
+Map revision: 2026-09-24-r64
+Last reviewed: 2026-09-24
 Map owner: Evaluator / Human Task Owner  
 Status: ACTIVE  
 > 当前新任务统一使用 `evaluator-executor-workflow/v2.2`，按“瓶颈—假设—同基线实验—保留或回滚”闭环推进。
@@ -52,7 +52,7 @@ Status: ACTIVE
 - x402 离线一致性；
 - WebShop 上游预检、small smoke、Commerce Adapter、Buy Now Gate、Payment / Fulfilment Sidecar；
 - 已验收的 Governed Action、Fact Lineage、Payment Lifecycle / Recovery、Remediation / Closure、Authoritative Trace Consumer / Player；
-- B-15 Actor Authenticity（主体真实性）已在本地离线边界形成代表性闭环；H-30 又把 PayBench Data Minimization（数据最小化）从 `8/10` 补到 `10/10` 可执行；当前剩余第一本地缺口回到 B-03 T05/T06 Action Binding Rejection Trace（动作绑定拒绝轨迹）。
+- B-15 Actor Authenticity（主体真实性）已在本地离线边界形成代表性闭环；H-30 已把 PayBench Data Minimization（数据最小化）从 `8/10` 补到 `10/10` 可执行；H-31/H-32 又已关闭 B-03 T05/T06 Trace 与 T10 baseline drift。当前第一瓶颈是 B-06：缺支付宝第二 Provider 的实际证据。
 
 明确不包含：
 
@@ -76,9 +76,11 @@ A. 评测与治理底座                  [已完成]
 
 横切补强：B-05 Data Minimization（数据最小化）【本地阶段关闭】
 B-03 Product Authoritative Trace（产品权威轨迹）【固定 12 项覆盖已闭合】
-当前纵向主线：H-38 / F2 支付宝 Agent Pay Sandbox 第一条外部验证切片【CONTRACT_FROZEN / EXECUTOR】
+当前纵向主线：H-41 / F2 支付宝 HTTPS signed-error 边界测量【P0 PASS / P1 RELEASED ONCE】。2026-09-24 正式 L3 `7/7 PASS`、mandatory failures=`0`；H41 28/28、H38 授权 12/12、Alipay adapter 16/16、observer 14/14、独立检查 7/7，保护 hash 全部一致。HTTPError 响应丢失 R1 与 v2.2 治理结构 R2 均关闭。固定官方 Route A 继续暂停；当前只允许合同固定的一次合成 Sandbox HTTPS 请求，任何结果都停止回交 Evaluator。H40【PASS / REPAIR_ACCEPTED】，H39【PASS / CONTRACT_CHANGE_REQUIRED】，H38【PARTIAL / LIVE_BLOCKED】，成功支付/四维绑定标准不变。
 横向安全轨：固定负例 → Agent-facing attacks → Adaptive Model Red Team → Cross-Provider Adversarial Eval【WATCH；不抢占 H-38】
 ```
+
+2026-09-22 r61 决策依据见 `docs/05_任务交接/H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1/EVALUATOR_DECISION.md`。当前第一瓶颈仍为 B-06：缺第二 Provider 的实际证据；H41 先分离传输/响应签名问题与交易 fixture 问题。P1 错误响应验签成立只关闭该窄层；无签名、网络不确定或意外成功则 STOP 并按证据选择路线，不追加请求。AP2 扩展与横向攻击继续 WATCH；不把 H41 包装成 H38 通过。
 
 | 阶段 | 要解决的核心问题 | 当前代表能力 / 证据 | 状态 |
 |---|---|---|---|
@@ -255,6 +257,10 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 
 Active bottleneck ID: B-06
 
+最新检查点（r57）：2026-09-21 核对 CURRENT、H39 REVIEW 与实际 probe，R1–R3 已 PASS，R4 仍未实现；四个继承 H38 文件 hash 仍与 H39 BASELINE 一致。冻结 H40 bounded repair，仅补在线入口的当前任务/显式授权检查及 fake-transport 验证，不运行网络、读取真实密钥或创建交易。H40 验收后必须处理 Route A 的精确 transport、proof 来源、内存交接和绑定字段限制，才能冻结上游执行合同。Human 目前无需补信息；不是重复索要密钥。AP2/VI/横向攻击不抢占本前置缺陷；支付宝阶段验收后按既定顺序进入 VI measurement。
+
+历史检查点（r56）：H-38 adapter 16 项与 evaluator 14 项离线测试通过，主场景 13/13 和项目基线通过；全量 749 项中 738 passed、10 skipped、1 Windows WebShop 路径断言失败。已取得用户授权的沙箱密钥并完成本地配对/签验，仍无 live Provider 证据。第一断点细化为交易 fixture 获取路径、Agent Pay 可用性及 proof/四维绑定语义。冻结 H-39 measurement-only，先确定官方路径、最小输入和合同差异；不新增产品、不创建交易、不调用验付。AP2 typed semantics / Receipt 与 B-16 继续 WATCH。READY 路径交 Evaluator 冻结上游操作后恢复 H-38；缺字段或不支持则 STOP/SWITCH，不降低验收。
+
 ### 当前判断
 
 H-32 已由 Evaluator 独立 L3 复核通过：
@@ -427,3 +433,4 @@ H-37 已独立 L3 `8/8 PASS`，official AP2 two-hop crypto/delegation slice 从 
 | `2026-09-19-r53` | 2026-09-19 | Human 明确批准 H-37 任务级隔离环境安装四个 direct pins：`pydantic==2.12.5`、`jwcrypto==1.5.6`、`sd-jwt==0.10.4`、`cryptography==46.0.5`，并仅允许 resolver 必要传递依赖；Evaluator 冻结 H-37 capability contract 与 8-case 独立验证矩阵 | B-06 第一断点保持为 official two-hop runtime verification；依赖授权阻塞已解除，但能力尚未执行，不能提前写成已验证 | H-37 `CONTRACT_FROZEN / EXECUTOR`；唯一 principal change 为 thin AP2 official-verifier adapter，直接调用 pinned `MandateClient.verify`；系统 Python、Sandbox/provider/wallet、真实凭证/PII/资金、commit/push 继续禁止 |
 | `2026-09-19-r54` | 2026-09-19 | H-37 Evaluator REVIEW：`PASS / IMPROVED / HUMAN_REQUIRED`；独立 L3 `8/8 PASS`，C01-C08 `8/8`、existing AP2+ES256 `25/25`、project baseline `12/12 repeat=3`、S01-S13 `13/13`、PayBench `10/10`、AP2 minimal `2/2`、Attack Overlay `6/6`、full unittest `733 OK / 10 skips` | B-06 official two-hop runtime 断点关闭；AP2 本地 official SDK+crypto 代表性链路已形成。第一断点前移到第二个真实外部 Sandbox/Provider 能否产生 provider-observed payment-proof / callback-state evidence，并进入 Trust / Trace；继续 AP2 typed semantics/Receipt 降为 WATCH | 下一方向 H-38/F2 Alipay Agent Pay Sandbox first external slice；官方资料确认 Sandbox 不使用真实资金，Machine Pay 链路包含 402、Payment-Proof、`alipay.aipay.agent.payment.verify` 与异步履约回执；执行前仍需 Human 新授权 sandbox network/API + sandbox-only credential/test account |
 | `2026-09-19-r55` | 2026-09-19 | Human 授权 H-38 仅在支付宝 Agent Pay Sandbox / sandbox-only credential / 模拟交易 / 零真实资金边界执行；Evaluator 冻结 Sandbox first external slice，同时新增 `横向攻击验证轨.md` 与 B-16 cross-cutting adversarial track | B-06 从 `LIVE_SANDBOX_AUTH_REQUIRED` 前移为 `ALIPAY_SANDBOX_FIRST_SLICE`；B-16 作为 WATCH 横向轨，不抢占纵向 H-38 | H-38 `CONTRACT_FROZEN / EXECUTOR`；第一 slice 只做 `Payment-Proof → alipay.aipay.agent.payment.verify → provider response signature → minimal neutral fact`；若缺 Sandbox secret/fixture 则 BLOCKED，不得转生产、不安装新依赖 |
+| `2026-09-24-r64` | 2026-09-24 | H-41 P0 最终 Evaluator REVIEW：中央结构校验 OK，正式 L3 `7/7 PASS`、mandatory failures=`0`；H41 28/28、H38 gate 12/12、Alipay adapter 16/16、observer 14/14、独立反例 7/7，保护 hash 全一致；R1/R2 关闭，复核期间真实网络与真实密钥读取均为 0 | B-06 仍是第一瓶颈；离线探针已可安全承担一次 signed-error 测量，但尚无 Provider 实证、有效 Payment-Proof、付款或四维绑定证据 | H-41 `P0 PASS / RELEASE_P1`；CURRENT 仅授权一次固定合成 Sandbox HTTPS 请求，任何结果均 STOP 并回交 Evaluator，不自动改变 H38 `PARTIAL / LIVE_BLOCKED` |

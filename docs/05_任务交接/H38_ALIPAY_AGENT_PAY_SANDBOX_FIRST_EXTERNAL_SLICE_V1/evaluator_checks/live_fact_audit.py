@@ -3,6 +3,7 @@ import argparse
 import json
 import re
 from pathlib import Path
+from fact_schema import validate, reject_duplicates
 
 REQUIRED = {
     "status",
@@ -33,7 +34,16 @@ def main() -> int:
     ap.add_argument("--input", required=True)
     args = ap.parse_args()
 
-    data = json.loads(Path(args.input).read_text(encoding="utf-8"))
+    try:
+        data = json.loads(Path(args.input).read_text(encoding="utf-8"),
+                          object_pairs_hook=reject_duplicates)
+    except (OSError, ValueError, UnicodeError):
+        print("FAIL unreadable or malformed fact")
+        return 1
+    error = validate(data, args.case)
+    if error:
+        print("FAIL " + error)
+        return 1
     missing = sorted(REQUIRED - set(data))
     if missing:
         print("FAIL missing fields: " + ",".join(missing))
@@ -75,8 +85,8 @@ def main() -> int:
             print("FAIL tampered proof was not INVALID")
             return 1
 
-    print(f"PASS live fact audit case={args.case}")
-    print("secret/raw fields present=false")
+    print(f"PASS sanitized fact audit case={args.case}")
+    print("Live origin and cryptographic execution require separate evaluator evidence.")
     return 0
 
 if __name__ == "__main__":

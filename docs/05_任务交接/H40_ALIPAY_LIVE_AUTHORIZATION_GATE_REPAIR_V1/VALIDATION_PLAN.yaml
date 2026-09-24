@@ -1,0 +1,41 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: H40_ALIPAY_LIVE_AUTHORIZATION_GATE_REPAIR_V1
+checks:
+  - id: VP-01
+    ac: [AC-05]
+    kind: baseline_hash_audit
+    expected: All baseline hashes match initially; only probe may change afterwards; reservations unchanged
+    mandatory: true
+  - id: VP-02
+    ac: [AC-01, AC-02, AC-03, AC-04]
+    command: [python, -m, unittest, discover, -s, tests, -p, test_h38_authorization_gate.py, -v]
+    environment: {PYTHONPATH: src}
+    expected_exit_code: 0
+    expected: Real probe entry with fake counters proves denial before keys/signing/reservation/network; allowed fake path once; dry-run zero
+    mandatory: true
+  - id: VP-03
+    ac: [AC-05]
+    command: [python, -m, unittest, discover, -s, tests, -p, test_alipay_agent_pay_sandbox.py, -v]
+    environment: {PYTHONPATH: src}
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-04
+    ac: [AC-05]
+    command: [python, -m, unittest, discover, -s, docs/05_任务交接/H38_ALIPAY_AGENT_PAY_SANDBOX_FIRST_EXTERNAL_SLICE_V1/evaluator_checks, -p, test_*.py, -v]
+    environment: {PYTHONPATH: src}
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-05
+    ac: [AC-05, AC-06]
+    kind: scope_secret_and_diff_audit
+    expected: No live call, secrets, new dependency, authorization enablement or reservation deletion; inspect diff/untracked files and git diff --check
+    mandatory: true
+  - id: VP-06
+    ac: [AC-01, AC-03, AC-04, AC-06]
+    kind: evaluator_independent_L3
+    expected: Independently construct wrong-task, quoted-true, prose-spoof and mid-run authorization-change cases; protected hashes unchanged; no live replay
+    mandatory: true
+notes:
+  - Use existing Python and cryptography; report runtime version; do not install dependencies.
+  - Temporary directories only; intercept all network in exercised paths; never use real secrets.
+  - L2 does not substitute L3; H38 stays LIVE_BLOCKED after repair.

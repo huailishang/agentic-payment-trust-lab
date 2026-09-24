@@ -1,7 +1,16 @@
 schema: evaluator-executor-validation-plan/v1
 task_id: H38_ALIPAY_AGENT_PAY_SANDBOX_FIRST_EXTERNAL_SLICE_V1
+runtime_note: Use the existing Python runtime with cryptography and PYTHONPATH=src, PYTHONUTF8=1; install no dependencies.
+live_execution_note: VP-04/05 are safe preflights by default. After fixture readiness, append --key-file with the Human-authorized local path and --execute exactly once per case. Do not store that path in evidence. A preflight exit zero is not live acceptance; fact and observation files plus evaluator review are required.
 
 checks:
+  - id: VP-00
+    ac: [AC-01, AC-04, AC-05, AC-10]
+    cwd: .
+    command: [python, -m, unittest, discover, -s, docs/05_任务交接/H38_ALIPAY_AGENT_PAY_SANDBOX_FIRST_EXTERNAL_SLICE_V1/evaluator_checks, -p, "test_*.py", -v]
+    expected_exit_code: 0
+    mandatory: true
+
   - id: VP-01
     ac: [AC-07, AC-08]
     cwd: .

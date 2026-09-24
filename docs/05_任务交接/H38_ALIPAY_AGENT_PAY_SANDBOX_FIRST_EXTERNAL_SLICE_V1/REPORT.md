@@ -1,5 +1,22 @@
 # Executor Report
 
+## Implementation checkpoint — 2026-09-20 (supersedes earlier implementation status)
+
+Overall: PARTIAL / LIVE_BLOCKED. No live payment-provider verdict.
+
+- Implemented sandbox-only request signer, raw-response RSA2 verifier, exact trade/order/resource/amount binding and neutral fact output. Missing fields remain MISSING_EVIDENCE; unsigned/tampered data never becomes trusted.
+- Added one-shot probe with explicit execution switch, no redirects/retries, fixed per-case exclusive reservations and sanitized output. Local key file access was explicitly authorized by Human; values and local path are not stored here.
+- Added evaluator-owned same-process response signature observation. It shares envelope parsing with the adapter; does not independently prove network provenance.
+- Local sandbox keys: RSA-2048 parsed, application pair matched, local sign/verify passed. Provider public-key provenance remains unverified by live response.
+- Adapter tests: 16/16 PASS. Evaluator tests: 14/14 PASS. Source/scope audit: PASS including untracked task files. Formal entrypoint: 13/13 PASS. Project impact baseline repeat=3: MEASURED_ALL_MATCHED, evidence/H38_PROJECT_BASELINE.json.
+- Full suite with PYTHONUTF8=1: 749 run, 738 passed, 10 skipped, 1 failed. Remaining failure: test_missing_text_environment_registration_fails expects POSIX path text, but Windows returns backslashes. This unrelated WebShop test/code was not modified. Initial run without UTF-8 also had three entrypoint encoding failures; UTF-8 rerun resolved those. Full regression is NOT declared PASS.
+- Probe preflight correctly stopped without network: runtime app ID and trade/proof/expected binding inputs absent. Human already supplied app ID in prior material; no need to ask again. Transaction fixture is genuinely still missing.
+- Browser inventory returned no controllable tabs, despite ambient UI indicating the sandbox page. No assumption that the user is logged out. No API call, transaction or synthetic live evidence was generated.
+- Remaining: obtain official supported sandbox fixture within frozen API/transport boundary; reconcile missing fixture fields or proof semantics if encountered; run bounded live checks and independent review. Do not execute the broader HTTP cashier script under current contract.
+- PCAC-AGENTPAY [06,07,09,12,20]: bounded offline implementation/test evidence added; external slice maturity remains M1 pending live evidence. No compliance claim.
+
+Earlier checkpoint follows for history:
+
 Task ID: `H38_ALIPAY_AGENT_PAY_SANDBOX_FIRST_EXTERNAL_SLICE_V1`
 Executor status: BLOCKED
 Task kind: `capability_experiment`

@@ -1,0 +1,20 @@
+{
+  "schema": "h40-inherited-working-tree/v1",
+  "head": "5e7c0c0b78aeec9c241078a37858cf3f2d8a14b3",
+  "working_tree_is_dirty": true,
+  "allowed_change": "scripts/h38_alipay_sandbox_probe.py",
+  "files": {
+    "scripts/h38_alipay_sandbox_probe.py": "afc04541a7768b911666547e6c5f4632c47e7ae3ba12d0c51ab7deff881b6eb6",
+    "scripts/h38_inspect_local_keys.py": "6921d64be698739b1307fba1204a0012541264134d6207dccce446b9e0be2f17",
+    "src/agentic_payment_experiment/adapters/alipay_agent_pay_sandbox.py": "f6e9be1ef64d5ed04f925eb6f1e8c4193996527bf27efc1317bb0db29a517098",
+    "tests/test_alipay_agent_pay_sandbox.py": "4cc37632dabf716e40f0e9b96a4a78640e82c79163349d3498d4faacd2bfc404",
+    "docs/05_任务交接/H38_ALIPAY_AGENT_PAY_SANDBOX_FIRST_EXTERNAL_SLICE_V1/evaluator_checks/authorization_preflight.py": "b63349f5cf0d0cc04ceb7ac2d433b7f97ac07dd2720a64e2014f15313c345f98"
+  },
+  "inherited_results_not_rerun": {
+    "adapter_tests": "16 PASS",
+    "evaluator_tests": "14 PASS",
+    "full_suite": "749 run; 738 passed; 10 skipped; 1 Windows WebShop path failure",
+    "h39": "PASS / CONTRACT_CHANGE_REQUIRED",
+    "h38": "PARTIAL / LIVE_BLOCKED"
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "schema": "h39-alipay-sandbox-fixture-readiness/v1",
+  "task_id": "H39_ALIPAY_SANDBOX_FIXTURE_READINESS_V1",
+  "measured_at": "2026-09-20",
+  "revision": "R1-R3_REPAIRED",
+  "decision": "CONTRACT_CHANGE_REQUIRED",
+  "side_effect_budget": {
+    "transaction_create_used": 0,
+    "payment_verify_used": 0,
+    "product_activation_used": 0,
+    "service_registration_used": 0
+  },
+  "baseline_integrity": {
+    "status": "CONFIRMED",
+    "evidence": "LOCAL-01",
+    "detail": "All four inherited H-38 file SHA256 values match BASELINE.json."
+  },
+  "browser_observations": {
+    "BROWSER-OBS-01": {
+      "classification": "EXECUTOR_REPORTED_BROWSER_OBSERVATION",
+      "method": "OpenCLI Browser Bridge, new owned tab, read-only state inspection",
+      "visible_evidence": "Official AIPay product/account surface and onboarding UI were reachable.",
+      "scope": "page/session reachability only",
+      "limitations": "Does not establish Agent Pay eligibility, product activation, buyer-account retrieval or fixture readiness; no identity or secret values retained."
+    },
+    "BROWSER-OBS-02": {
+      "classification": "EXECUTOR_REPORTED_BROWSER_OBSERVATION",
+      "method": "OpenCLI read-only navigation to official AIPay workbench",
+      "visible_evidence": "Product-selection/onboarding/workbench UI was reachable; no state-changing control was used.",
+      "scope": "UI reachability only",
+      "limitations": "Does not establish the exact sandbox product/service prerequisite is enabled."
+    },
+    "BROWSER-OBS-03": {
+      "classification": "EXECUTOR_REPORTED_BROWSER_OBSERVATION",
+      "method": "OpenCLI read-only navigation to Open Platform sandbox application page",
+      "visible_evidence": "A visible '沙箱账号' navigation entry was observed.",
+      "scope": "navigation-entry presence only",
+      "limitations": "Does not prove a buyer test account, UID or password was actually obtained; no buyer identifier or password retained."
+    }
+  },
+  "source_constraints": {
+    "OFF-03": {
+      "observed_at": "2026-09-20",
+      "page_updated_at": "2026-09-17 16:23:08",
+      "payment_proof_required": true,
+      "payment_proof_max_length": 64,
+      "exact_64_shape": "H38_LOCAL_TEST_CONSTRAINT",
+      "documented_response_fields": [
+        "trade_no",
+        "amount",
+        "resource_id",
+        "active",
+        "out_trade_no"
+      ],
+      "limitation": "Field-table documentation does not prove non-empty sandbox live returns."
+    },
+    "OFF-04": {
+      "revision": "f3183325f3e4777e53c3483e39954bae000c4778",
+      "machine_pay_auto_complete": "DOCUMENTED",
+      "manual_payment_experience": "OPTIONAL_AFTER_AUTOMATED_INTEGRATION",
+      "proof_provenance_limitation": "A proof constructed by the sample/integration flow must not be labelled Provider-signed."
+    }
+  },
+  "dimensions": {
+    "account_access": {
+      "status": "CONFIRMED",
+      "evidence": ["BROWSER-OBS-01", "BROWSER-OBS-02", "BROWSER-OBS-03"],
+      "qualification": "Executor-reported read-only page reachability only",
+      "next_action": "Do not promote this status to Agent Pay eligibility."
+    },
+    "agent_pay_eligibility": {
+      "status": "UNKNOWN",
+      "evidence": ["BROWSER-OBS-02", "OFF-01"],
+      "next_action": "Confirm only inside a future frozen execution/measurement step that has a source-supported prerequisite check."
+    },
+    "buyer_account": {
+      "status": "UNKNOWN",
+      "evidence": ["OFF-01", "BROWSER-OBS-03"],
+      "observed_entry": true,
+      "actual_test_account_obtained": false,
+      "next_action": "Treat the observed sandbox-account navigation as route evidence only; obtain actual buyer-account material only if a future frozen route requires it, without persisting identifiers/passwords."
+    },
+    "fixture_route": {
+      "status": "UNKNOWN",
+      "evidence": ["OFF-01", "OFF-04"],
+      "route_a_machine_pay_auto_complete": {
+        "status": "DOCUMENTED_CANDIDATE",
+        "proof_production": "sample/integration server-side flow via --auto-complete",
+        "proof_capture_for_h38": "UNKNOWN",
+        "provider_provenance": "UNKNOWN"
+      },
+      "route_b_manual_sandbox_app": {
+        "status": "OPTIONAL_CANDIDATE",
+        "proof_production": "UNKNOWN",
+        "proof_capture_for_h38": "UNKNOWN",
+        "provider_provenance": "UNKNOWN"
+      },
+      "next_action": "Evaluator must freeze one route with exact method/transport and proof provenance/capture rules before any transaction."
+    },
+    "proof_provenance": {
+      "status": "UNKNOWN",
+      "evidence": ["OFF-02", "OFF-04"],
+      "next_action": "Keep locally constructed/sample proof distinct from Provider-origin evidence; do not merge both as 'official-flow observed'."
+    },
+    "binding_fields": {
+      "status": "UNKNOWN",
+      "evidence": ["OFF-03", "OFF-04"],
+      "documented_schema": "CONFIRMED",
+      "live_returned_fields": "UNKNOWN",
+      "next_action": "Keep H-38 strict comparisons; a live sandbox run must prove non-empty fields rather than backfill missing Provider evidence."
+    },
+    "transport_and_budget": {
+      "status": "UNKNOWN",
+      "evidence": ["OFF-04", "H39-CONTRACT"],
+      "known_budget": {
+        "transaction_create_used": 0,
+        "payment_verify_used": 0
+      },
+      "next_action": "Freeze exact upstream method/transport before execution; do not infer or rewrite a transport endpoint."
+    }
+  },
+  "route_separation": {
+    "machine_pay_auto_complete": {
+      "human_payment_required": false,
+      "proof_location": "sample/integration server-side flow",
+      "proof_mechanism": "--auto-complete constructs proof",
+      "h38_provenance": "UNKNOWN"
+    },
+    "manual_sandbox_app_payment": {
+      "human_payment_required_if_route_selected": true,
+      "proof_location": "UNKNOWN",
+      "proof_mechanism": "UNKNOWN",
+      "h38_provenance": "UNKNOWN"
+    }
+  },
+  "h38_handoff_rules": {
+    "trusted_before_verification": ["out_trade_no", "amount", "resource_id"],
+    "returned_fixture_candidates": ["trade_no", "payment_proof", "client_session_optional"],
+    "must_not_infer": [
+      "buyer_uid_from_merchant_pid",
+      "provider_proof_from_local_or_sample_constructed_proof",
+      "expected_binding_values_from_payment_verify_response",
+      "machine_pay_proof_from_manual_sandbox_payment"
+    ]
+  },
+  "residual_risk": [
+    "No live sandbox transaction was created.",
+    "No payment.verify call was made.",
+    "Machine Pay automated route method/transport and safe proof capture are not frozen.",
+    "Manual Sandbox APP payment is not proven to yield the H-38 Machine Pay proof.",
+    "Actual buyer sandbox account material was not obtained.",
+    "Sandbox live binding fields and Provider proof provenance remain unmeasured.",
+    "No production security, strong-authentication or compliance claim."
+  ]
+}

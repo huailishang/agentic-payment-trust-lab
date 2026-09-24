@@ -1,0 +1,31 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: H39_ALIPAY_SANDBOX_FIXTURE_READINESS_V1
+checks:
+  - id: VP-01
+    ac: [AC-01]
+    kind: manual_hash_verification
+    expected: SHA256 of each file in BASELINE.json matches; inspect git diff and untracked paths for scope drift
+    mandatory: true
+  - id: VP-02
+    ac: [AC-02, AC-03]
+    kind: source_audit
+    expected: Every readiness dimension has status, evidence classification, source URL or redacted observation reference, and next action; routes specify method and endpoint
+    mandatory: true
+  - id: VP-03
+    ac: [AC-04, AC-05, AC-06]
+    kind: evaluator_review
+    expected: No substitution of app ID for readiness, synthetic proof for provider proof, or schema PASS for live signature evidence; one decision and bounded next action
+    mandatory: true
+  - id: VP-04
+    ac: [AC-01, AC-06]
+    kind: secret_and_side_effect_audit
+    expected: No credential values, local secret paths, buyer identifiers or raw payment material in deliverables; transaction_create=0 and payment_verify=0 with truthful observation basis
+    mandatory: true
+  - id: VP-05
+    ac: [AC-01]
+    command: [git, diff, --check]
+    expected_exit_code: 0
+    mandatory: true
+notes:
+  - Measurement-only; do not rerun full product suite or live checks without changed code or evidence requiring it.
+  - Manual checks require named evidence in REPORT; no self-reported PASS without traceable support.

@@ -1,0 +1,19 @@
+{
+  "schema": "h39-inherited-working-tree/v1",
+  "head": "5e7c0c0b78aeec9c241078a37858cf3f2d8a14b3",
+  "working_tree_is_dirty": true,
+  "files": {
+    "src/agentic_payment_experiment/adapters/alipay_agent_pay_sandbox.py": "f6e9be1ef64d5ed04f925eb6f1e8c4193996527bf27efc1317bb0db29a517098",
+    "scripts/h38_alipay_sandbox_probe.py": "afc04541a7768b911666547e6c5f4632c47e7ae3ba12d0c51ab7deff881b6eb6",
+    "scripts/h38_inspect_local_keys.py": "6921d64be698739b1307fba1204a0012541264134d6207dccce446b9e0be2f17",
+    "tests/test_alipay_agent_pay_sandbox.py": "4cc37632dabf716e40f0e9b96a4a78640e82c79163349d3498d4faacd2bfc404"
+  },
+  "inherited_results": {
+    "adapter_tests": "16 PASS",
+    "evaluator_tests": "14 PASS",
+    "formal_scenarios": "13 PASS",
+    "project_baseline": "MEASURED_ALL_MATCHED repeat=3",
+    "full_suite": "749 run; 738 passed; 10 skipped; 1 Windows WebShop path assertion failure",
+    "live_provider": "NOT_RUN"
+  }
+}

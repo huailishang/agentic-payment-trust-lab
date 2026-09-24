@@ -1,0 +1,63 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1
+phase: P0_OFFLINE_ONLY
+amendment: 2026-09-23-a2
+checks:
+  - id: VP-01
+    ac: [AC-01]
+    kind: baseline_scope_audit
+    command: [python, docs/05_任务交接/H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1/GOVERNANCE_CHECK.py, baseline]
+    expected_exit_code: 0
+    expected: All BASELINE hashes unchanged; only allowed files written; no real keys or network
+    mandatory: true
+  - id: VP-02
+    ac: [AC-02, AC-03, AC-04, AC-05]
+    command: [python, docs/05_任务交接/H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1/GOVERNANCE_CHECK.py, h41]
+    expected_exit_code: 0
+    expected: Actual main entry with fake transport; real synthetic RSA; all contract negative classes
+    mandatory: true
+  - id: VP-03
+    ac: [AC-01, AC-04]
+    command: [python, docs/05_任务交接/H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1/GOVERNANCE_CHECK.py, gate]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-04
+    ac: [AC-03]
+    command: [python, docs/05_任务交接/H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1/GOVERNANCE_CHECK.py, adapter]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-05
+    ac: [AC-03]
+    command: [python, docs/05_任务交接/H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1/GOVERNANCE_CHECK.py, observer]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-06
+    ac: [AC-05, AC-06]
+    kind: secret_schema_diff_and_report_audit
+    command: [python, docs/05_任务交接/H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1/GOVERNANCE_CHECK.py, report]
+    expected_exit_code: 0
+    expected: Fixed allowlist, synthetic sentinel absence, git diff --check, accurate phase and counters
+    mandatory: true
+  - id: VP-07
+    ac: [AC-02, AC-03, AC-04, AC-05, AC-06]
+    kind: evaluator_independent_L3_before_P1
+    command: [python, docs/05_任务交接/H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1/GOVERNANCE_CHECK.py, independent]
+    expected_exit_code: 0
+    expected: Independent gate mutation, cryptographic negative and secret sentinel; approve exact implementation hashes
+    mandatory: true
+live_release:
+  current_budget: 0
+  maximum_after_evaluator_release: 1
+  prerequisites: [P0_ACCEPTED_BY_EVALUATOR, EXACT_CURRENT_LIVE_TUPLE, MATCHING_APPROVED_CODE_HASHES, NO_EXISTING_RESERVATION]
+  retries: 0
+  transaction_create: 0
+notes:
+  - Amendment a2 supplies commands without changing original AC or authorization.
+  - Existing system Python runs the central runner and entry; H41_TEST_PYTHON identifies existing Python with cryptography for offline checks.
+  - Entry explicitly sets child PYTHONPATH; the central runner does not implement plan environment fields.
+  - Executor VP-07 is a replay only; independent L3 review and exact hash approval remain Evaluator duties.
+  - VP-01 verifies frozen hashes; allowed-scope review remains an explicit Evaluator check.
+  - Use existing runtime and cryptography; no installation.
+  - No full-suite rerun unless new scope or regression justifies it.
+  - P0 success does not automatically enable P1; Evaluator controls CURRENT.
+  - Do not rerun H38 live or overwrite prior evaluator evidence.

@@ -1,5 +1,7 @@
 """Protocol adapters that translate external snapshots into neutral models."""
 
+from .alipay_agent_pay_sandbox import verify_response as verify_alipay_sandbox_response
+
 from .acp import ACPOrderAdaptation, adapt_acp_checkout_pair
 from .acp_webhook import (
     ACP_WEBHOOK_DEFAULT_TOLERANCE_SECONDS,
@@ -31,6 +33,7 @@ from .x402 import (
 )
 
 __all__ = [
+    "verify_alipay_sandbox_response",
     "ACPOrderAdaptation",
     "ACP_WEBHOOK_DEFAULT_TOLERANCE_SECONDS",
     "AP2Adaptation",

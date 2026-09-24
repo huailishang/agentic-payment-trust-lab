@@ -1,0 +1,20 @@
+{
+  "schema": "h41-inherited-working-tree/v1",
+  "head": "0b99f3d1f3db180a37bcb8e6512fb7849711ea72",
+  "working_tree_is_dirty": true,
+  "protected_files": {
+    "scripts/h38_authorization_gate.py": "19147a6f3a82ca29c13c79079ddf74a779630bf7f75a5700e3e1ebc2095cb511",
+    "scripts/h38_alipay_sandbox_probe.py": "9de063f46f541b92248e2a1f1bf7af535cce39cf7298e14b0f24420493d1d6a9",
+    "scripts/h38_inspect_local_keys.py": "6921d64be698739b1307fba1204a0012541264134d6207dccce446b9e0be2f17",
+    "src/agentic_payment_experiment/adapters/alipay_agent_pay_sandbox.py": "f6e9be1ef64d5ed04f925eb6f1e8c4193996527bf27efc1317bb0db29a517098",
+    "tests/test_h38_authorization_gate.py": "41888959f05204220208ea59c964975432e694a6f9708a43159c5db3b7b793f9",
+    "docs/05_任务交接/H40_ALIPAY_LIVE_AUTHORIZATION_GATE_REPAIR_V1/evaluator_checks/independent_gate_audit.py": "cda090fd883765556b6a381dec2393be31a6cf9eb2b697cafbb95f0a8af7eb24",
+    "docs/05_任务交接/H40_ALIPAY_LIVE_AUTHORIZATION_GATE_REPAIR_V1/evaluator_checks/independent_gate_recheck.py": "17b5be2394495895e11b7da61f5e1243fe62513483047363d572ca7d0a47a32d"
+  },
+  "inherited_evidence": {
+    "h40": "PASS / REPAIR_ACCEPTED; 42 targeted tests and 10+6 independent checks",
+    "h39": "PASS / CONTRACT_CHANGE_REQUIRED",
+    "h38": "PARTIAL / LIVE_BLOCKED",
+    "full_suite": "not rerun; inherited Windows WebShop path failure remains"
+  }
+}

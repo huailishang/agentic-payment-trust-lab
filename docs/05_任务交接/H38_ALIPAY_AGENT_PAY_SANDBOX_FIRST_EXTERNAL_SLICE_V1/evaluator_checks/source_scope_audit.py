@@ -14,6 +14,7 @@ ALLOWED = {
     "src/agentic_payment_experiment/adapters/alipay_agent_pay_sandbox.py",
     "tests/test_alipay_agent_pay_sandbox.py",
     "scripts/h38_alipay_sandbox_probe.py",
+    "scripts/h38_inspect_local_keys.py",
 }
 FROZEN_HASHES = {
     "src/agentic_payment_experiment/adapters/ap2_official_verification.py":
@@ -28,6 +29,10 @@ def sha256(path: Path) -> str:
 def main() -> int:
     changed = subprocess.check_output(
         ["git", "diff", "--name-only", BASELINE, "--", "src", "tests", "scripts"],
+        cwd=ROOT, text=True
+    ).splitlines()
+    changed += subprocess.check_output(
+        ["git", "ls-files", "--others", "--exclude-standard", "--", "src", "tests", "scripts"],
         cwd=ROOT, text=True
     ).splitlines()
     unexpected = sorted(set(changed) - ALLOWED)
