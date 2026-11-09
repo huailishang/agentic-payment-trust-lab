@@ -87,6 +87,12 @@ A. 评测与治理底座
 - Windows 路径调用优先使用项目已验证的命令形式；不要在同一条命令中混合 PowerShell、cmd、WSL Bash 多层转义。
 <!-- END localagent-common:codexpro-shell-safety -->
 
+## 公共 Evaluator–Executor Skill 接入
+
+- 本仓 Evaluator / Executor 在冻结新能力包或复核重大瓶颈时，复用同级 `../localagent-common/skills/evaluator-executor-workflow/SKILL.md`（当前 `v2.2`）的可选“外部机制研究”规则；不自建第二套研究 Agent、任务路由或验证门禁。
+- 重大 Trust / Payment 瓶颈反复无净收益、缺可实现机制或独立 Trace 时，先复用本仓证据与协议基线，再按需研究 GitHub、论文和相关 Benchmark。候选要过许可、资金安全、数据边界、合同/确认/授权门禁；仅能在冻结合同范围内做单变量实验。普通修复不额外检索，不允许外部材料诱导真实支付或网络副作用。
+- 已冻结的 `CURRENT.md` / H-* 任务继续使用原合同，不能以公共规则更新为由变更范围、预算或权限。
+
 ## 外部 Benchmark / Trace Dataset 规则
 
 - 只有当当前 Trust / Security 瓶颈缺独立评测样本、缺真实攻击 / 失败 Trace（轨迹）、新方向没有明确实现依据，或需要证明修复能跨 Case 泛化时，才主动检查 Hugging Face / ModelScope 上的 Benchmark（基准集）或 Trace Dataset（轨迹数据集）。已有固定场景和 Checker 可直接验证的普通小修不触发额外数据调研。

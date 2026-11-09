@@ -15,6 +15,7 @@ from cryptography.hazmat.primitives.asymmetric import padding, rsa
 GATEWAY = "https://openapi-sandbox.dl.alipaydev.com/gateway.do"
 METHOD = "alipay.aipay.agent.payment.verify"
 RESPONSE = "alipay_aipay_agent_payment_verify_response"
+GATEWAY_ERROR = "error_response"
 BINDINGS = ("trade_no", "out_trade_no", "resource_id", "amount")
 
 
@@ -27,19 +28,19 @@ def _unique(pairs):
     return result
 
 
-def signed_response_parts(raw: bytes):
-    """Return parsed payload plus the exact signed JSON substring (not reserialized)."""
+def _signed_response_parts(raw: bytes, response_key: str):
+    """Extract a single envelope's exact signed JSON substring."""
     if len(raw) > 1_000_000:
         raise ValueError("response too large")
     text = raw.decode("utf-8")
     decoder = json.JSONDecoder(object_pairs_hook=_unique,
                                parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite")))
     envelope = decoder.decode(text)
-    if type(envelope) is not dict or set(envelope) - {RESPONSE, "sign", "sign_type"}:
+    if type(envelope) is not dict or set(envelope) - {response_key, "sign", "sign_type"}:
         raise ValueError("unexpected envelope")
     if envelope.get("sign_type", "RSA2") != "RSA2":
         raise ValueError("unexpected algorithm")
-    if type(envelope.get(RESPONSE)) is not dict or type(envelope.get("sign")) is not str:
+    if type(envelope.get(response_key)) is not dict or type(envelope.get("sign")) is not str:
         raise ValueError("missing signed response")
     # Walk top-level JSON tokens so a key embedded in a string cannot select the payload.
     cursor = text.index("{") + 1
@@ -56,13 +57,18 @@ def signed_response_parts(raw: bytes):
             cursor += 1
         start = cursor
         _, cursor = decoder.raw_decode(text, cursor)
-        if key == RESPONSE:
-            return envelope[RESPONSE], text[start:cursor].encode("utf-8"), base64.b64decode(envelope["sign"], validate=True)
+        if key == response_key:
+            return envelope[response_key], text[start:cursor].encode("utf-8"), base64.b64decode(envelope["sign"], validate=True)
         while text[cursor].isspace():
             cursor += 1
         if text[cursor] != ",":
             raise ValueError("missing response")
         cursor += 1
+
+
+def signed_response_parts(raw: bytes):
+    """Keep the H41 method-specific parser narrow."""
+    return _signed_response_parts(raw, RESPONSE)
 
 
 def sign_request(*, app_id, private_key, trade_no, payment_proof, timestamp,
@@ -111,12 +117,24 @@ def verify_response(raw: bytes, public_key, *, expected: dict):
     try:
         if not isinstance(public_key, rsa.RSAPublicKey) or public_key.key_size < 2048:
             raise ValueError("invalid public key")
-        payload, signed, signature = signed_response_parts(raw)
+        try:
+            payload, signed, signature = signed_response_parts(raw)
+            generic_error = False
+        except ValueError:
+            payload, signed, signature = _signed_response_parts(raw, GATEWAY_ERROR)
+            generic_error = True
         public_key.verify(signature, signed, padding.PKCS1v15(), hashes.SHA256())
     except Exception:
         fact.update(status="INVALID", reason_codes=["SIGNATURE_INVALID"])
         return fact
     fact["provider_response_signature_verified"] = True
+    if generic_error:
+        # A signed gateway error is not a payment-proof result, even with code 10000.
+        if type(payload.get("code")) is not str or not payload["code"] or payload["code"] == "10000":
+            fact.update(status="INVALID", reason_codes=["INVALID_GATEWAY_ERROR"])
+        else:
+            fact.update(status="PROVIDER_ERROR", reason_codes=["SIGNED_GATEWAY_ERROR"])
+        return fact
     if payload.get("code") != "10000":
         # Unknown provider errors never masquerade as proof-specific rejection.
         fact.update(status="PROVIDER_ERROR", reason_codes=["PROVIDER_ERROR"])

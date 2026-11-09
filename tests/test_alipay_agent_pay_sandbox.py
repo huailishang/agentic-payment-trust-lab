@@ -4,7 +4,7 @@ import unittest
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from agentic_payment_experiment.adapters.alipay_agent_pay_sandbox import (
-    RESPONSE, sign_request, verify_response,
+    RESPONSE, GATEWAY_ERROR, sign_request, signed_response_parts, verify_response,
 )
 
 
@@ -25,6 +25,45 @@ class AlipayTests(unittest.TestCase):
 
     def verify(self, raw=None, key=None):
         return verify_response(self.envelope() if raw is None else raw, key or self.key.public_key(), expected=self.expected)
+
+    def gateway_error(self, body='{"code":"40002","msg":"synthetic-sensitive-content"}', *, signed=True):
+        signature = base64.b64encode(self.key.sign(body.encode(), padding.PKCS1v15(), hashes.SHA256())).decode()
+        suffix = ',"sign":' + json.dumps(signature) if signed else ""
+        return ('{"' + GATEWAY_ERROR + '":' + body + suffix + '}').encode()
+
+    def test_signed_gateway_error_only_proves_provider_error(self):
+        raw = self.gateway_error()
+        fact = self.verify(raw)
+        self.assertEqual(fact["status"], "PROVIDER_ERROR")
+        self.assertEqual(fact["reason_codes"], ["SIGNED_GATEWAY_ERROR"])
+        self.assertTrue(fact["provider_response_signature_verified"])
+        self.assertIsNone(fact["active"])
+        self.assertEqual(fact["binding_checks_passed"], [])
+        self.assertNotIn("synthetic-sensitive-content", json.dumps(fact))
+        with self.assertRaises(ValueError):
+            signed_response_parts(raw)
+
+    def test_gateway_error_bad_envelopes_fail_closed(self):
+        raw = self.gateway_error()
+        for bad, key in (
+            (raw, self.wrong.public_key()),
+            (raw.replace(b"40002", b"40003"), self.key.public_key()),
+            (self.gateway_error(signed=False), self.key.public_key()),
+            (self.gateway_error('{"code":"40002","code":"40003"}'), self.key.public_key()),
+            (raw.replace(b',"sign":', b',"' + RESPONSE.encode() + b'":{},"sign":'), self.key.public_key()),
+        ):
+            with self.subTest(raw=bad[:60]):
+                fact = self.verify(bad, key)
+                self.assertEqual(fact["status"], "INVALID")
+                self.assertFalse(fact["provider_response_signature_verified"])
+                self.assertEqual(fact["binding_checks_passed"], [])
+
+    def test_gateway_success_code_is_not_payment_proof(self):
+        fact = self.verify(self.gateway_error('{"code":"10000"}'))
+        self.assertEqual(fact["status"], "INVALID")
+        self.assertEqual(fact["reason_codes"], ["INVALID_GATEWAY_ERROR"])
+        self.assertTrue(fact["provider_response_signature_verified"])
+        self.assertEqual(fact["binding_checks_passed"], [])
 
     def test_valid_exact_signed_bytes(self):
         self.assertEqual(self.verify()["status"], "VALID")
