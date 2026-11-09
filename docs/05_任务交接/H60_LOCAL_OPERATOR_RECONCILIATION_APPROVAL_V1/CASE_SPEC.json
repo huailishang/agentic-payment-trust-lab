@@ -1,0 +1,87 @@
+{
+  "schema": "h60-cases/v1",
+  "baseline": "H57R accepted evaluator/run_0002 M06 closed SQLite",
+  "cases": [
+    {
+      "id": "C01_APPROVE_AND_CLI_SHOW",
+      "expected": "实际M06+可信本地上下文可批准；CLI新对象读取同一持久批准"
+    },
+    {
+      "id": "C02_IDEMPOTENT_REPLAY",
+      "expected": "同请求返回同ID/1事件，不延寿"
+    },
+    {
+      "id": "C03_KEY_CONFLICT",
+      "expected": "同key改reason拒绝，原批准不变"
+    },
+    {
+      "id": "C04_REQUEST_ACTOR_SPOOF",
+      "expected": "请求插入operator_id拒绝且0记录"
+    },
+    {
+      "id": "C05_INACTIVE_CONTEXT",
+      "expected": "启动上下文失效拒绝且0记录"
+    },
+    {
+      "id": "C06_MISSING_ROLE",
+      "expected": "缺审批角色拒绝且0记录"
+    },
+    {
+      "id": "C07_STALE_EXPECTED_DIGEST",
+      "expected": "过时预期证据摘要拒绝"
+    },
+    {
+      "id": "C08_WRONG_TRANSACTION",
+      "expected": "错checkout/付款引用分别拒绝"
+    },
+    {
+      "id": "C09_RECEIPT_BINDING_MISMATCH",
+      "expected": "PSP收据快照与交易不符拒绝"
+    },
+    {
+      "id": "C10_RECEIPT_MISSING",
+      "expected": "缺付款收据拒绝"
+    },
+    {
+      "id": "C11_EXISTING_ORDER",
+      "expected": "已有订单行拒绝，原源无候选写入"
+    },
+    {
+      "id": "C12_SOURCE_CHANGED_AFTER_APPROVAL",
+      "expected": "批准后库存证据变化导致STALE_SOURCE"
+    },
+    {
+      "id": "C13_APPROVAL_EXPIRED",
+      "expected": "到期边界current=false"
+    },
+    {
+      "id": "C14_REVOKE_AND_REPLAY",
+      "expected": "撤销持久/重放不增事件/旧批准不能复活"
+    },
+    {
+      "id": "C15_SECOND_ACTIVE_APPROVAL",
+      "expected": "同交易第二活跃批准拒绝"
+    },
+    {
+      "id": "C16_CONTEXT_CHANGED",
+      "expected": "策略版本变化或角色active失效导致STALE_CONTEXT"
+    },
+    {
+      "id": "C17_PROCESS_RESTART",
+      "expected": "首批准进程退出后新进程读取同记录，原始流和真实PID保留"
+    },
+    {
+      "id": "C18_TWO_CONNECTION_CONTEND",
+      "expected": "两实例两线程争同交易，最多且恰一活跃批准/一事件"
+    },
+    {
+      "id": "C19_OLD_CONFIRMATION_EXPIRED",
+      "expected": "旧付款确认过期不冒充新批准；新的明确人工批准自身有新时限"
+    },
+    {
+      "id": "C20_UNSUPPORTED_REFUND",
+      "expected": "REFUND不支持、拒绝且0记录"
+    }
+  ],
+  "candidate_business_execution": false
+}

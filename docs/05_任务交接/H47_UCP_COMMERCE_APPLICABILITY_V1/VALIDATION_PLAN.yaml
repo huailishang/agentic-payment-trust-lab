@@ -1,0 +1,35 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: H47_UCP_COMMERCE_APPLICABILITY_V1
+checks:
+  - id: VP-01
+    ac: [AC-01]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/EVALUATOR_CHECK.py, baseline]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-02
+    ac: [AC-02, AC-03]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/EVALUATOR_CHECK.py, measurement, --out, docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/evidence/measurements_l2.json]
+    evaluator_command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/EVALUATOR_CHECK.py, measurement, --out, docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/evidence/measurements_l3.json]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-03
+    ac: [AC-04, AC-05, AC-06]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/EVALUATOR_CHECK.py, artifacts, --measurements, docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/evidence/measurements_l2.json]
+    evaluator_command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/EVALUATOR_CHECK.py, artifacts, --measurements, docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/evidence/measurements_l3.json]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-04
+    ac: [AC-03]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/EVALUATOR_CHECK.py, selftest]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-05
+    ac: [AC-01, AC-06]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/EVALUATOR_CHECK.py, regressions]
+    expected_exit_code: 0
+    mandatory: true

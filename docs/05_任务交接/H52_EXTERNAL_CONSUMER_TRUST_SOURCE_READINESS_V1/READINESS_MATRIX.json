@@ -1,0 +1,338 @@
+{
+  "schema": "h52-readiness-matrix/v1",
+  "baseline": "H51 local HTTP 8/8 and 23 method preserved; H37 official 8/8",
+  "assessment_boundary": "OFFLINE_SYNTHETIC_SIGNED_ARTIFACTS_NO_MERCHANT_EXECUTION",
+  "rows": [
+    {
+      "id": "VERSION_SCHEMA",
+      "claim": "固定花店的UCP profile为2026-04-08，而AP2扩展文档与参考示例按2026-08-25；目前无自动升级或兼容证明。",
+      "owner": "merchant integration owner",
+      "evidence_origin": "MERCHANT_SOURCE",
+      "status": "GAP",
+      "next_action": "MERCHANT_CHANGE",
+      "references": [
+        {
+          "path": "docs/05_任务交接/H51_UCP_LOCAL_HTTP_GUARD_SLICE_V1/merchant/routes/discovery_profile.json",
+          "start": 2,
+          "end": 12,
+          "anchor": "\"version\": \"2026-04-08\""
+        },
+        {
+          "path": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-extension-20260825.txt",
+          "start": 183,
+          "end": 204,
+          "anchor": "2026-08-25"
+        }
+      ],
+      "linked_probes": [
+        "Q01_NORMAL"
+      ],
+      "explanation": "先锁定商家实际支持的目标版本及完整schema，再另签合同修改。"
+    },
+    {
+      "id": "CAPABILITY_NEGOTIATION",
+      "claim": "商家当前仅宣告Shopping各能力，未宣告dev.ucp.common.payment.ap2_mandate，因此不具备扩展协商和会话降级锁定运行证据。",
+      "owner": "merchant discovery owner",
+      "evidence_origin": "MIXED",
+      "status": "GAP",
+      "next_action": "MERCHANT_CHANGE",
+      "references": [
+        {
+          "path": "docs/05_任务交接/H51_UCP_LOCAL_HTTP_GUARD_SLICE_V1/merchant/routes/discovery_profile.json",
+          "start": 15,
+          "end": 23,
+          "anchor": "\"capabilities\":"
+        },
+        {
+          "path": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-extension-20260825.txt",
+          "start": 179,
+          "end": 185,
+          "anchor": "dev.ucp.common.payment.ap2_mandate"
+        },
+        {
+          "path": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-extension-20260825.txt",
+          "start": 220,
+          "end": 229,
+          "anchor": "MUST NOT accept"
+        }
+      ],
+      "linked_probes": [
+        "Q01_NORMAL"
+      ],
+      "explanation": "必须由商家profile与会话状态机实现协商并强制拒绝无凭据complete。"
+    },
+    {
+      "id": "MERCHANT_SIGNATURE",
+      "claim": "H52合成商家ES256紧凑JWS局部验签可测，但H51商家未证明对完整checkout签发detached merchant_authorization。",
+      "owner": "merchant checkout owner",
+      "evidence_origin": "MIXED",
+      "status": "GAP",
+      "next_action": "MERCHANT_CHANGE",
+      "references": [
+        {
+          "path": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-extension-20260825.txt",
+          "start": 260,
+          "end": 263,
+          "anchor": "ap2.merchant_authorization"
+        },
+        {
+          "path": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-extension-20260825.txt",
+          "start": 293,
+          "end": 309,
+          "anchor": "canonical_bytes = jcs_canonicalize"
+        }
+      ],
+      "linked_probes": [
+        "Q01_NORMAL",
+        "Q02_CHECKOUT_TAMPERED"
+      ],
+      "explanation": "局部JWS验证可复用机制，不能声称商家生产签署流程已存在。"
+    },
+    {
+      "id": "FULL_CHECKOUT_JCS",
+      "claim": "本轮ASCII整数签名仅覆盖四字段简化对象，未验证完整UCP checkout JSON/JCS规范、ap2排除及未知字段保持。",
+      "owner": "merchant canonicalization owner",
+      "evidence_origin": "SPECIFICATION",
+      "status": "GAP",
+      "next_action": "MERCHANT_CHANGE",
+      "references": [
+        {
+          "path": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-extension-20260825.txt",
+          "start": 330,
+          "end": 348,
+          "anchor": "complete checkout JSON"
+        },
+        {
+          "path": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-extension-20260825.txt",
+          "start": 297,
+          "end": 309,
+          "anchor": "without \"ap2\" field"
+        }
+      ],
+      "linked_probes": [
+        "Q02_CHECKOUT_TAMPERED",
+        "Q03_CHECKOUT_REBOUND_PAYMENT_STALE"
+      ],
+      "explanation": "使用固定完整checkout样本与独立JCS实现/负例，不能把sorted JSON冒充通用JCS。"
+    },
+    {
+      "id": "TRUSTED_CONSENT_ISSUER",
+      "claim": "Q07证明攻击者自带root可单独形成数学有效签名；Q08未确认的链仍可经局部API验签，真实独立同意签发来源未测。",
+      "owner": "trusted identity and consent owner",
+      "evidence_origin": "MIXED",
+      "status": "GAP",
+      "next_action": "BRIDGE",
+      "references": [
+        {
+          "path": "src/agentic_payment_experiment/adapters/ap2_official_verification.py",
+          "start": 29,
+          "end": 36,
+          "anchor": "root_public_jwk"
+        },
+        {
+          "path": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-extension-20260825.txt",
+          "start": 216,
+          "end": 236,
+          "anchor": "Signing Key Requirements"
+        }
+      ],
+      "linked_probes": [
+        "Q07_SELF_ROOT_SUBSTITUTION",
+        "Q08_CONSENT_ABSENT"
+      ],
+      "explanation": "独立预置信任的key注册/确认事件要与本次checkout绑定，不能相信请求自填root。"
+    },
+    {
+      "id": "DELEGATION_KEY_BINDING",
+      "claim": "官方AP2 v0.2.0两跳MandateClient验签在Q01等离线合成样本局部测得VALID，但不代表现实签发者身份。",
+      "owner": "agent credential verifier owner",
+      "evidence_origin": "SDK_RUNTIME",
+      "status": "MEASURED_LOCAL",
+      "next_action": "REUSE",
+      "references": [
+        {
+          "path": "src/agentic_payment_experiment/adapters/ap2_official_verification.py",
+          "start": 94,
+          "end": 135,
+          "anchor": "MandateClient().verify"
+        },
+        {
+          "path": "src/agentic_payment_experiment/adapters/ap2_official_verification.py",
+          "start": 154,
+          "end": 162,
+          "anchor": "VerificationStatus.VALID"
+        }
+      ],
+      "linked_probes": [
+        "Q01_NORMAL",
+        "Q07_SELF_ROOT_SUBSTITUTION",
+        "Q09_EXPIRED_TOKEN",
+        "Q10_WRONG_AUDIENCE"
+      ],
+      "explanation": "保留SDK签验，交给上层已预置信任根与真实身份上下文选择；不重写密码学验证。"
+    },
+    {
+      "id": "AMOUNT_CURRENCY_PAYEE",
+      "claim": "当前中立适配和validate_request可局部校验金额上限、商户范围和币种，但解码投影可与已验签真实载荷背离。",
+      "owner": "payment intent policy owner",
+      "evidence_origin": "PRODUCT_RUNTIME",
+      "status": "MEASURED_LOCAL",
+      "next_action": "REUSE",
+      "references": [
+        {
+          "path": "src/agentic_payment_experiment/adapters/ap2.py",
+          "start": 388,
+          "end": 415,
+          "anchor": "request_minor"
+        },
+        {
+          "path": "src/agentic_payment_experiment/validator.py",
+          "start": 57,
+          "end": 95,
+          "anchor": "merchant_out_of_scope"
+        }
+      ],
+      "linked_probes": [
+        "Q01_NORMAL",
+        "Q04_PROJECTED_AMOUNT_CHANGED",
+        "Q05_PROJECTED_PAYEE_CHANGED",
+        "Q06_PROJECTED_CURRENCY_CHANGED"
+      ],
+      "explanation": "复用规则前先要求投影来自同一被验签载荷，不把ALLOW解释为可靠放行。"
+    },
+    {
+      "id": "VERIFIED_PAYLOAD_LINEAGE",
+      "claim": "Q04–Q06证明仅验签通过不足以证明投影字段来自所验签内容；现有两层函数之间没有统一的强制血缘门禁。",
+      "owner": "authorization-to-payment bridge owner",
+      "evidence_origin": "PRODUCT_RUNTIME",
+      "status": "GAP",
+      "next_action": "BRIDGE",
+      "references": [
+        {
+          "path": "src/agentic_payment_experiment/adapters/ap2_protocol_boundary.py",
+          "start": 41,
+          "end": 47,
+          "anchor": "does not verify JWT signatures"
+        },
+        {
+          "path": "src/agentic_payment_experiment/adapters/ap2_protocol_boundary.py",
+          "start": 146,
+          "end": 162,
+          "anchor": "adapt_ap2_snapshot"
+        }
+      ],
+      "linked_probes": [
+        "Q04_PROJECTED_AMOUNT_CHANGED",
+        "Q05_PROJECTED_PAYEE_CHANGED",
+        "Q06_PROJECTED_CURRENCY_CHANGED"
+      ],
+      "explanation": "要求同一原始凭据验签后生成不可变已验证字段，并用一致性检查约束未来商家执行。"
+    },
+    {
+      "id": "REPLAY_REVOCATION_ORDER",
+      "claim": "validate_request可按已见request_id报告duplicate_request，H51任务商家有持久执行占用；跨系统撤销、换键复用和检查与执行并发顺序未测。",
+      "owner": "merchant execution coordinator owner",
+      "evidence_origin": "MIXED",
+      "status": "GAP",
+      "next_action": "MERCHANT_CHANGE",
+      "references": [
+        {
+          "path": "src/agentic_payment_experiment/validator.py",
+          "start": 73,
+          "end": 75,
+          "anchor": "duplicate_request"
+        },
+        {
+          "path": "docs/05_任务交接/H51_UCP_LOCAL_HTTP_GUARD_SLICE_V1/merchant/services/checkout_service.py",
+          "start": 772,
+          "end": 784,
+          "anchor": "execution_control.claim("
+        }
+      ],
+      "linked_probes": [
+        "Q11_REPLAY_WITH_SEEN_ID"
+      ],
+      "explanation": "定义撤销与claim/付款排序及持久索引，保留现有本地claim，未来需独立并发负例。"
+    },
+    {
+      "id": "EXECUTION_SNAPSHOT_CLAIM",
+      "claim": "H51任务商家complete入口在模拟付款前有execution_control.claim，但未接收UCP/AP2验签材料与被授权checkout不变快照。",
+      "owner": "merchant checkout execution owner",
+      "evidence_origin": "MERCHANT_SOURCE",
+      "status": "GAP",
+      "next_action": "MERCHANT_CHANGE",
+      "references": [
+        {
+          "path": "docs/05_任务交接/H51_UCP_LOCAL_HTTP_GUARD_SLICE_V1/merchant/services/checkout_service.py",
+          "start": 735,
+          "end": 747,
+          "anchor": "Execution guard required for complete"
+        },
+        {
+          "path": "docs/05_任务交接/H51_UCP_LOCAL_HTTP_GUARD_SLICE_V1/merchant/services/checkout_service.py",
+          "start": 778,
+          "end": 800,
+          "anchor": "_process_payment"
+        }
+      ],
+      "linked_probes": [
+        "Q01_NORMAL",
+        "Q03_CHECKOUT_REBOUND_PAYMENT_STALE"
+      ],
+      "explanation": "未来唯一接线点放在同一个商家complete写入口claim之前，不重做已验收的锁。"
+    },
+    {
+      "id": "PROVIDER_REFERENCE_QUERY",
+      "claim": "本次零Provider调用，未观察到真实支付服务方稳定引用、未知状态查询或异步回调对授权事实的绑定。",
+      "owner": "payment provider and recovery owner",
+      "evidence_origin": "MIXED",
+      "status": "NOT_OBSERVABLE",
+      "next_action": "DEFER",
+      "references": [
+        {
+          "path": "docs/05_任务交接/H51_UCP_LOCAL_HTTP_GUARD_SLICE_V1/merchant/services/checkout_service.py",
+          "start": 798,
+          "end": 800,
+          "anchor": "_process_payment"
+        },
+        {
+          "path": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-relation.txt",
+          "start": 61,
+          "end": 67,
+          "anchor": "Payment Processor"
+        }
+      ],
+      "linked_probes": [
+        "Q01_NORMAL"
+      ],
+      "explanation": "待服务方沙箱有独立授权后单变量接入，不因此提前扩大H52。"
+    },
+    {
+      "id": "TRACE_CONSUMPTION",
+      "claim": "已存在产品Trace与Read Model独立能力，但本轮签名材料从未进入真正商家执行或其审计回传，缺统一外部消费链。",
+      "owner": "trace and auditing owner",
+      "evidence_origin": "PRODUCT_RUNTIME",
+      "status": "NOT_OBSERVABLE",
+      "next_action": "BRIDGE",
+      "references": [
+        {
+          "path": "src/agentic_payment_experiment/validator.py",
+          "start": 34,
+          "end": 38,
+          "anchor": "offline, deterministic experiment"
+        },
+        {
+          "path": "docs/05_任务交接/H51_UCP_LOCAL_HTTP_GUARD_SLICE_V1/merchant/services/checkout_service.py",
+          "start": 786,
+          "end": 793,
+          "anchor": "db.log_request"
+        }
+      ],
+      "linked_probes": [
+        "Q01_NORMAL",
+        "Q08_CONSENT_ABSENT"
+      ],
+      "explanation": "后续商家需关联授权哈希、执行claim及Provider引用回流现有审计，不将现有报告当真实消费者证据。"
+    }
+  ]
+}

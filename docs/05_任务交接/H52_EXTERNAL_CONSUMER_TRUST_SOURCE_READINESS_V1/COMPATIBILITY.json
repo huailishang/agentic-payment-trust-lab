@@ -1,0 +1,49 @@
+{
+  "schema": "h52-compatibility/v1",
+  "merchant_ucp_version": "2026-04-08",
+  "reference_ucp_version": "2026-08-25",
+  "merchant_ap2_advertised": false,
+  "auto_upgrade_performed": false,
+  "sources": [
+    "SOURCE_MANIFEST.json",
+    "docs/05_任务交接/H51_UCP_LOCAL_HTTP_GUARD_SLICE_V1/merchant/routes/discovery_profile.json",
+    "local_sources/third_party/ap2-v0.2.0"
+  ],
+  "ap2_sdk_version": "v0.2.0",
+  "ap2_pinned_commit": "b4587ac1d055888a73b4b21750973cffba961793",
+  "implementation_boundary": "OFFLINE_SYNTHETIC_SIGNED_ARTIFACTS_NO_MERCHANT_EXECUTION",
+  "differences": [
+    {
+      "item": "version_capability",
+      "observed": "商家UCP 2026-04-08 checkout/cart/order等能力，没有AP2 mandate扩展",
+      "reference": "2026-08-25 AP2能力协商要求宣告dev.ucp.common.payment.ap2_mandate",
+      "action": "MERCHANT_CHANGE: 升级前独立版本/schema验证，明确能力协商；不能自动广告"
+    },
+    {
+      "item": "checkout_signature",
+      "observed": "H52本地普通compact JWS/ASCII整数小对象；H51商家尚无AP2 checkout完整签名能力",
+      "reference": "detached JWS ap2.merchant_authorization，完整checkout除ap2外JCS RFC8785",
+      "action": "MERCHANT_CHANGE: 新合同中实现并固定原文完整性与验签"
+    },
+    {
+      "item": "mandate_placement",
+      "observed": "H52单独调用AP2 v0.2.0 SDK两跳签验与既有投影适配，不是UCP商家真实complete输入",
+      "reference": "checkout_mandate和payment credential在UCP对应位置传递、商家强制检查",
+      "action": "BRIDGE: 真实complete前拼接可信验证事实，不更改现有SDK"
+    },
+    {
+      "item": "authentication_consent",
+      "observed": "仅本地四个合成签发者，预置信任根；确认事件未由产品消费",
+      "reference": "可信用户/平台签名及独立确认",
+      "action": "MERCHANT_CHANGE: 定义用户同意签发与信任根责任"
+    },
+    {
+      "item": "execution_recovery",
+      "observed": "H51方法/HTTP副本具本地占用与模拟付款，但不消费此AP2授权",
+      "reference": "扩展激活后的签名强制门禁和执行/查询可追溯",
+      "action": "MERCHANT_CHANGE: 在现有claim之前强制绑定，不重复造第二支付模块"
+    }
+  ],
+  "packages_installed": 0,
+  "merchant_payment_provider_verified": false
+}

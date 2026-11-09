@@ -1,0 +1,15 @@
+{
+  "task_id": "H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1",
+  "classification": "LOCAL_OPERATOR_APPROVAL_ONLY",
+  "business_execution_enabled": false,
+  "human_authentication_verified": false,
+  "production_ready": false,
+  "provider_verified": false,
+  "customer_value_proven": false,
+  "remaining_gaps": [
+    "真实身份认证、真实PSP及实际商户/客户尚未验证",
+    "仅记录人工批准，不执行补单、退款或其他业务动作",
+    "未覆盖动态文件替换及跨库原子性"
+  ],
+  "status": "SUBMITTED_FOR_REVIEW"
+}

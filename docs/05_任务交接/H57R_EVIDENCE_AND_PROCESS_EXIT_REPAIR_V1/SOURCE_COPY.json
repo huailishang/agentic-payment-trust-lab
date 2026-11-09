@@ -1,0 +1,214 @@
+{
+  "files": {
+    "merchant/cart_test.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/cart_test.py",
+      "sha256": "99f8d0e27cfdba3b4eede4473b7c05f5c12891f3a1f24b194b897a7c47736a9c"
+    },
+    "merchant/config.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/config.py",
+      "sha256": "fca3e799db7bce6d8ae94b054f07699cc1bf1b545a0ec56047411bfebaf778e2"
+    },
+    "merchant/db.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/db.py",
+      "sha256": "f8b141269b1cc2b0dfc958041935260d4b0957fb7543bc84d570816bfa7d9baf"
+    },
+    "merchant/dependencies.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/dependencies.py",
+      "sha256": "13d35777f170d37be11845645523282b0b3f7aa6e3892c9691762d4197536349"
+    },
+    "merchant/dump_inventory.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/dump_inventory.py",
+      "sha256": "4b79281041a7dd57b42f97c4eb2e7f2c6888a73e185f3fdea07319893cbe1614"
+    },
+    "merchant/dump_log.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/dump_log.py",
+      "sha256": "c256763cb0916bb6d95c1f9ea5bff556c3609f32947214b9426658125e1c6500"
+    },
+    "merchant/dump_transactions.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/dump_transactions.py",
+      "sha256": "5e67210c498a4a5653fd793b66d06eb169edaaf0e86b800fa8951e2413b2336a"
+    },
+    "merchant/enums.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/enums.py",
+      "sha256": "79d284808d15fe8e7b2238c941949ed4a857865a41b435fb1347d27cb868f66a"
+    },
+    "merchant/exceptions.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/exceptions.py",
+      "sha256": "2dd6c9cbb8b11fd6ac0aa790386d5d354e03840fed913161e7820e7425010b1b"
+    },
+    "merchant/guarded_app.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/guarded_app.py",
+      "sha256": "06a061dbc26c6340a3c2cfd375ae0dcde33472f7beab853b388c162e25f4af55"
+    },
+    "merchant/import_csv.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/import_csv.py",
+      "sha256": "e90f55ce8d6cbedd6351bcacf508d0d4d42fe4728f9cd8a40388aacff96e933c"
+    },
+    "merchant/integration_test.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/integration_test.py",
+      "sha256": "dcc17b253fb7aafb5f5a78e7f113c6eef75d6f5578a2cf70dc1eccd068d4a937"
+    },
+    "merchant/models.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/models.py",
+      "sha256": "fc10b79889623394eb286d70d3dc1cf14e4d8b4f04971d9222dfafad6fd44536"
+    },
+    "merchant/pyproject.toml": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/pyproject.toml",
+      "sha256": "7e1a8f2ca80f2341288226f37288b14a161932412fa10273900be321cc7470ca"
+    },
+    "merchant/README.md": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/README.md",
+      "sha256": "4b8ccc0d36f0d2dcd670fc66919a7865831b71764ee89f6d0be9ff07f85051bf"
+    },
+    "merchant/server.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/server.py",
+      "sha256": "bb845fb3fda10dbaec43b7980ffe06e8f0046da7343f8152f5a4aa9aef805764"
+    },
+    "merchant/signature_integration_test.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/signature_integration_test.py",
+      "sha256": "d570022fc9336ff4e85da77731d10b0d52c104731a0a4076808ab787bd9d7bdb"
+    },
+    "merchant/ucp_signing.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/ucp_signing.py",
+      "sha256": "ef0039bd192bc08fd176410731757d97cadb016f7626281c5634b120ea7bc5f7"
+    },
+    "merchant/ucp_signing_test.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/ucp_signing_test.py",
+      "sha256": "570f285adf34ebbeb1e333f21f73b716dd763124de951a94e4e224a3e176ce98"
+    },
+    "merchant/ucp_version.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/ucp_version.py",
+      "sha256": "acca2d958e1d9b741d4d1110aab212731824e627f46c651928c2329124a472fb"
+    },
+    "merchant/ucp_version_test.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/ucp_version_test.py",
+      "sha256": "c058326a7bb1d41171126b8c5d5d8489fdb47e8e77fdf4fc49d2544e3f6c3a96"
+    },
+    "merchant/webhook_signer.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/webhook_signer.py",
+      "sha256": "a5bff41e3f6984002568c47dc3dc3403b5b0ee880fc366380d110b5bdb6f915f"
+    },
+    "merchant/webhook_signer_test.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/webhook_signer_test.py",
+      "sha256": "6a970ab302f119fa750c5d303d20cce0532ae8b4f7e18307196a67e7798e4be8"
+    },
+    "merchant/__init__.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/__init__.py",
+      "sha256": "b3ac2bad5ac70f1748227dc818d6b3cfb5f76efe26fc2f9699b0d15e8eeca4e0"
+    },
+    "merchant/generated_routes/ucp_routes.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/generated_routes/ucp_routes.py",
+      "sha256": "35b34f65e0edd5599cb0126986f9b63d672bec525b2f54eb36d02fb5daa207a2"
+    },
+    "merchant/generated_routes/__init__.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/generated_routes/__init__.py",
+      "sha256": "3246c8ee405f74198f40ebee776363d1f49db9f9c1c8f79d057657698e899edc"
+    },
+    "merchant/routes/discovery.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/routes/discovery.py",
+      "sha256": "26e3f84c21012d59d2ad7578e047d205ed809b273a629a37bf6e6b356fcce8de"
+    },
+    "merchant/routes/discovery_profile.json": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/routes/discovery_profile.json",
+      "sha256": "53fbbe583e35fcec567e545c7d6decbc5af3eb9daa703d4fa130b8b7648a3b4b"
+    },
+    "merchant/routes/mcp.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/routes/mcp.py",
+      "sha256": "f549a1fac8b87e6cc077e5800529d229ed7b8108159b96576a0589973d398f87"
+    },
+    "merchant/routes/order.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/routes/order.py",
+      "sha256": "99adae432cba8427cbd79c7052b2a31793406a162ba0120352653f489629a2e0"
+    },
+    "merchant/routes/ucp_implementation.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/routes/ucp_implementation.py",
+      "sha256": "3ab761c8e89782574a3fdb07edfab58b69200e6d354650bf6405d718daa35f36"
+    },
+    "merchant/routes/__init__.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/routes/__init__.py",
+      "sha256": "a063871933b94547bc885e1f47ec65a2fb9c29cece609a5c076c7361661ad237"
+    },
+    "merchant/services/ap2_authorization.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/services/ap2_authorization.py",
+      "sha256": "33d6bfb5034f55c70285fef8683cbf3a7746152c7f041b4cd6dd87b15dbe4d7d"
+    },
+    "merchant/services/cart_service.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/services/cart_service.py",
+      "sha256": "5f4755b9734897b0828ca56a02db23ad56bae249661c54d184c4bc0a6abb3d83"
+    },
+    "merchant/services/checkout_service.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/services/checkout_service.py",
+      "sha256": "84db74ee5824cdeeafbe8717706d2d294a079da5a6e6fd11e1f78051f0b67bfd"
+    },
+    "merchant/services/execution_control.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/services/execution_control.py",
+      "sha256": "5d7fcd863cb5d3271f2d99b0b84bb85eab2e705ee553b35c93550bb9c23fe4f9"
+    },
+    "merchant/services/fulfillment_service.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/services/fulfillment_service.py",
+      "sha256": "e6de941ec74b814bab5ba97e4517b72db0e86bf2f7a9e753140d5c24e53c77c0"
+    },
+    "merchant/services/__init__.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/merchant/services/__init__.py",
+      "sha256": "92c87abf0cd16e2ba78c3671d1cccfee25ea3a47cd8274c929a15e385e621024"
+    },
+    "references/DEFAULT_FACTORY_BASELINE.json": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/references/DEFAULT_FACTORY_BASELINE.json",
+      "sha256": "184caf6b6e1e193cdfb52eeb64e63160b89cbb01c3a0171fafb6a597c13fcbf9"
+    },
+    "references/H51_HTTP_CHECKER.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/references/H51_HTTP_CHECKER.py",
+      "sha256": "b010e832224663a54ed3e31ada4abbe1fde1531dd1958f948717762ea1105a2e"
+    },
+    "references/H51_HTTP_RUNTIME.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/references/H51_HTTP_RUNTIME.py",
+      "sha256": "07c843f23267a1e9f5f995f03ec9b2297d0eada381e9534c9be0741b1e7e8e3f"
+    },
+    "references/H51_METHOD_FIXTURES.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/references/H51_METHOD_FIXTURES.py",
+      "sha256": "fb96e1b20c8072cdab6e6eb8147ad8e8841d33eeee037d7c131cbb889dbe7269"
+    },
+    "references/H53R_FIXTURES.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/references/H53R_FIXTURES.py",
+      "sha256": "13abe4116b5cd67217f21d09a3b42ae606fcba8bdcb8855fb1c0c0685b79ec86"
+    },
+    "HTTP_RUNTIME.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/HTTP_RUNTIME.py",
+      "sha256": "e8a6cf38f340e71c547f67339d35a0b658fb26c7e85f05d3cc7980c960057d21"
+    },
+    "RUN_JOURNEY.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/RUN_JOURNEY.py",
+      "sha256": "c746df29041dd541243f6622014f9e5b6fb6a670f788e5364c48f5abc4099993"
+    },
+    "RUNTIME.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/RUNTIME.py",
+      "sha256": "8598e97a5ec58632d44bf44409bf67b3ee24e076e742bc658f7b92ad268d455f"
+    },
+    "CASE_SPEC.json": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/CASE_SPEC.json",
+      "sha256": "4c2fb4f0fab898b4e9ac5744e4e8ffd30d69878df678fa99342f9ed8446ecb83"
+    },
+    "UPSTREAM_LICENSE": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/UPSTREAM_LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    "references/H57_CHECK.py": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/CHECK.py",
+      "sha256": "89e84379c4b2c1abc527b40064d81fec4b50cbfe9aaf9dd64679ab67ed349743"
+    },
+    "references/LEGACY_HTTP_ATTEMPTS.raw": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/evidence/executor/HTTP_ATTEMPTS.jsonl",
+      "sha256": "e0950438ff219c16ee539de623405951b6efb21c837bf2e244b679f2a8f9208f"
+    },
+    "references/H57_LATER_HTTP_ATTEMPTS.jsonl": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/evidence/executor/HTTP_ATTEMPTS_AFTER_L1.jsonl",
+      "sha256": "1a9d75bfa983daeacd34587728ec6050b83add1a7a0755021d5a53f231fb2984"
+    },
+    "references/H57_PREACCEPTANCE_AUDIT.json": {
+      "source": "docs/05_任务交接/H57_DEFAULT_FACTORY_MERCHANT_E2E_V1/evidence/preacceptance/AUDIT.json",
+      "sha256": "5a231d75d12adcc8acccbd2c4a517e3cb409adcb6e85dae1f3ad745a6e7e7233"
+    }
+  },
+  "candidate_accepted": false,
+  "merchant_files": 38
+}

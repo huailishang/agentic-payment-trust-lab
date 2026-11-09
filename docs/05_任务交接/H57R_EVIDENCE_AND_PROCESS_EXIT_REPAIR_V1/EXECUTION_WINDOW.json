@@ -1,0 +1,13 @@
+{
+  "schema": "h57r-observed-executor-window/v1",
+  "source": "read_thread execution chat 6ae69a3b-e680-83e8-8b94-abc9757a5ecf turn metadata",
+  "first_executor_turn_utc": "2026-11-01T01:48:17.019+00:00",
+  "last_executor_turn_completed_utc": "2026-11-01T02:48:30.990224+00:00",
+  "observed_wall_minutes_upper_bound": 61,
+  "precise_historical_active_minutes": "UNKNOWN",
+  "inherited_time_charge_minutes": 120,
+  "new_active_minutes_ceiling": 90,
+  "new_http_reservations_ceiling": 103,
+  "historical_http_reservations": 57,
+  "limitation": "Observed execution chat window only. Disclose and stop for any earlier or additional uncounted executor activity; evaluator preparation and idle waiting are not executor active work."
+}

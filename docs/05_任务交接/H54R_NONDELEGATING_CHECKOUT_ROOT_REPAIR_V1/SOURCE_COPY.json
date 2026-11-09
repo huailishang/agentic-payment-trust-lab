@@ -1,0 +1,181 @@
+{
+  "schema": "h54r-source-copy/v1",
+  "files": {
+    "consumer.py": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/consumer.py",
+      "source_sha256": "0c81444ae3ee78e9195b62e57df8b5e801474fc1fa7f408fee8e146764937e2a",
+      "copy_sha256": "0c81444ae3ee78e9195b62e57df8b5e801474fc1fa7f408fee8e146764937e2a",
+      "scaffold_changes": false
+    },
+    "RUNTIME.py": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/RUNTIME.py",
+      "source_sha256": "bd14eb04a787507d14a59c38dd8177f4dc257516d7251087e8d0f75e1487b675",
+      "copy_sha256": "7147fbe6624115f3193561aef37e8e07790f54a94e29608615c935675b30114a",
+      "scaffold_changes": true
+    },
+    "FIXTURES.py": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/FIXTURES.py",
+      "source_sha256": "a82f3914fff648dbc665765a11d3e5e99a5a7f6a24e182c8d036a7f8a482a74c",
+      "copy_sha256": "a82f3914fff648dbc665765a11d3e5e99a5a7f6a24e182c8d036a7f8a482a74c",
+      "scaffold_changes": false
+    },
+    "FROZEN_TESTS.py": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/FROZEN_TESTS.py",
+      "source_sha256": "e032e6a1af165ace4b5f2802140038342b61ce89acc1494eef2c46faba9f8d3c",
+      "copy_sha256": "7ef43b41bc6e6c0998f690bac14fe6d12ed7949f731cf4fb5f4f0d50b81b0b81",
+      "scaffold_changes": true
+    },
+    "CHECK.py": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/CHECK.py",
+      "source_sha256": "0c934318825fc1876187afb3ce68c0dd2a7b88ab73f422bfec38ccb3e60d5af7",
+      "copy_sha256": "5f036f61f3c3aee0f5d56e6af215b12093f2868d5506801a84511a8cb24331c6",
+      "scaffold_changes": true
+    },
+    "JCS_CHECK.py": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/JCS_CHECK.py",
+      "source_sha256": "30f974d08fb91a6cdbb4bc0d68af439f618969a4847dc065cd9ababed66a6fde",
+      "copy_sha256": "30f974d08fb91a6cdbb4bc0d68af439f618969a4847dc065cd9ababed66a6fde",
+      "scaffold_changes": false
+    },
+    "NODE_ORACLE.js": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/NODE_ORACLE.js",
+      "source_sha256": "77f5487830da544acb47339133578aba2fdfa73ed6ad13c6889516e6f8031525",
+      "copy_sha256": "77f5487830da544acb47339133578aba2fdfa73ed6ad13c6889516e6f8031525",
+      "scaffold_changes": false
+    },
+    "SOURCE_BUNDLE.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/SOURCE_BUNDLE.json",
+      "source_sha256": "f5bfaa571b3587fd558c8cd817a7cfc300ff6d91a38c6fad3ab730fb87aa9070",
+      "copy_sha256": "f5bfaa571b3587fd558c8cd817a7cfc300ff6d91a38c6fad3ab730fb87aa9070",
+      "scaffold_changes": false
+    },
+    "SOURCE_MANIFEST.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/SOURCE_MANIFEST.json",
+      "source_sha256": "1da0aa48b04932bb5240c33c80571c513ce35298640e39995e714d9dbafab6a2",
+      "copy_sha256": "1da0aa48b04932bb5240c33c80571c513ce35298640e39995e714d9dbafab6a2",
+      "scaffold_changes": false
+    },
+    "sources/python/LICENSE": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/python/LICENSE",
+      "source_sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "copy_sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "scaffold_changes": false
+    },
+    "sources/python/pyproject.toml": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/python/pyproject.toml",
+      "source_sha256": "77545caabe257cb2a7b3c9bbfea4d03b72b67a680ff3db2831d3b977610bc646",
+      "copy_sha256": "77545caabe257cb2a7b3c9bbfea4d03b72b67a680ff3db2831d3b977610bc646",
+      "scaffold_changes": false
+    },
+    "sources/reference/canonicalize.js": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/canonicalize.js",
+      "source_sha256": "f9f498b55c99eefe348c99018ddcfe08efa6f7ff96b9ba9dce4b7090b33c4438",
+      "copy_sha256": "f9f498b55c99eefe348c99018ddcfe08efa6f7ff96b9ba9dce4b7090b33c4438",
+      "scaffold_changes": false
+    },
+    "sources/reference/LICENSE": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/LICENSE",
+      "source_sha256": "6821faaddedf2d78c95bb6d98b127e9e616097afd2f6bcc34389f000d13ab12d",
+      "copy_sha256": "6821faaddedf2d78c95bb6d98b127e9e616097afd2f6bcc34389f000d13ab12d",
+      "scaffold_changes": false
+    },
+    "sources/reference/README.md": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/README.md",
+      "source_sha256": "d580b04eafeb74973b6cc3e2b2b572a21a992078846652bd3153e7a624dd6b97",
+      "copy_sha256": "d580b04eafeb74973b6cc3e2b2b572a21a992078846652bd3153e7a624dd6b97",
+      "scaffold_changes": false
+    },
+    "sources/python/src/rfc8785/_impl.py": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/python/src/rfc8785/_impl.py",
+      "source_sha256": "d841b6d81ceefff296b528f54836b4d7612fab69fe7a48ebef8590eeb512637b",
+      "copy_sha256": "d841b6d81ceefff296b528f54836b4d7612fab69fe7a48ebef8590eeb512637b",
+      "scaffold_changes": false
+    },
+    "sources/python/src/rfc8785/__init__.py": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/python/src/rfc8785/__init__.py",
+      "source_sha256": "fa44927afd547caf7547247078bcf28863d1e69caf116d258c532b3f20ffd154",
+      "copy_sha256": "fa44927afd547caf7547247078bcf28863d1e69caf116d258c532b3f20ffd154",
+      "scaffold_changes": false
+    },
+    "sources/reference/input/arrays.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/input/arrays.json",
+      "source_sha256": "e503b6d71d1afa595b1c74b1016445c944cd89f90418066b23de1aeda7d17563",
+      "copy_sha256": "e503b6d71d1afa595b1c74b1016445c944cd89f90418066b23de1aeda7d17563",
+      "scaffold_changes": false
+    },
+    "sources/reference/input/french.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/input/french.json",
+      "source_sha256": "03676a951cd8753ac62589f72eb2105cc782c33425418cfe1d517c111f6e5d5a",
+      "copy_sha256": "03676a951cd8753ac62589f72eb2105cc782c33425418cfe1d517c111f6e5d5a",
+      "scaffold_changes": false
+    },
+    "sources/reference/input/structures.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/input/structures.json",
+      "source_sha256": "d66893805be1784116af50af3110d08766c70a6b4aad93374723f72346e7aaa6",
+      "copy_sha256": "d66893805be1784116af50af3110d08766c70a6b4aad93374723f72346e7aaa6",
+      "scaffold_changes": false
+    },
+    "sources/reference/input/unicode.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/input/unicode.json",
+      "source_sha256": "4621864e014d4a805a563f55b9ea20aba4a2d2dc09c7394f625496998c00702c",
+      "copy_sha256": "4621864e014d4a805a563f55b9ea20aba4a2d2dc09c7394f625496998c00702c",
+      "scaffold_changes": false
+    },
+    "sources/reference/input/values.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/input/values.json",
+      "source_sha256": "c4a041b503d6bc236036ef44db4dac499272f60fc22c40dc3b7a54870ba6f1c3",
+      "copy_sha256": "c4a041b503d6bc236036ef44db4dac499272f60fc22c40dc3b7a54870ba6f1c3",
+      "scaffold_changes": false
+    },
+    "sources/reference/input/weird.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/input/weird.json",
+      "source_sha256": "a3a905266bd4a49a969274ea69baa14ee0c4af0ead926d6fa2b7612b4af75387",
+      "copy_sha256": "a3a905266bd4a49a969274ea69baa14ee0c4af0ead926d6fa2b7612b4af75387",
+      "scaffold_changes": false
+    },
+    "sources/reference/output/arrays.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/output/arrays.json",
+      "source_sha256": "099601b171cafed97c333f8878d68e7f8c8f795412adb34b2fdcf0e7c7beac42",
+      "copy_sha256": "099601b171cafed97c333f8878d68e7f8c8f795412adb34b2fdcf0e7c7beac42",
+      "scaffold_changes": false
+    },
+    "sources/reference/output/french.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/output/french.json",
+      "source_sha256": "d99d0ebdcb0033cb858cfa830ae46bc0fb3309413b271f1da828c89901a27ed5",
+      "copy_sha256": "d99d0ebdcb0033cb858cfa830ae46bc0fb3309413b271f1da828c89901a27ed5",
+      "scaffold_changes": false
+    },
+    "sources/reference/output/structures.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/output/structures.json",
+      "source_sha256": "605f65004ec2db7692522a0852c22f1c989e036d547e88963d1a3143cf3195d5",
+      "copy_sha256": "605f65004ec2db7692522a0852c22f1c989e036d547e88963d1a3143cf3195d5",
+      "scaffold_changes": false
+    },
+    "sources/reference/output/unicode.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/output/unicode.json",
+      "source_sha256": "0d99aad92a125196ff887876643fd3206786a84ddce2cee52ba4ad256d2381d3",
+      "copy_sha256": "0d99aad92a125196ff887876643fd3206786a84ddce2cee52ba4ad256d2381d3",
+      "scaffold_changes": false
+    },
+    "sources/reference/output/values.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/output/values.json",
+      "source_sha256": "2d5e01a318d0f0879ab568c4be289c8b1f64ef8921a53c6277d5e069978baacb",
+      "copy_sha256": "2d5e01a318d0f0879ab568c4be289c8b1f64ef8921a53c6277d5e069978baacb",
+      "scaffold_changes": false
+    },
+    "sources/reference/output/weird.json": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/sources/reference/output/weird.json",
+      "source_sha256": "6af595a9aa80110b964b4de3f82a05fa6ae7423005019bacfa2620dddc4e94d1",
+      "copy_sha256": "6af595a9aa80110b964b4de3f82a05fa6ae7423005019bacfa2620dddc4e94d1",
+      "scaffold_changes": false
+    },
+    "sources/evaluator/H54_HOLDOUT.py": {
+      "source": "docs/05_任务交接/H54_STANDARD_CHECKOUT_MANDATE_CONSUMER_V1/evidence/review_20261031/HOLDOUT.py",
+      "source_sha256": "b85377557a9b752f06bdcbe3ba723add6e5ee738d17b62764613e9a0d1e960e4",
+      "copy_sha256": "b85377557a9b752f06bdcbe3ba723add6e5ee738d17b62764613e9a0d1e960e4",
+      "scaffold_changes": false
+    }
+  },
+  "candidate_repaired": false,
+  "changes": "runtime scratch; repair routing/result/budget metadata only; original36 semantics unchanged"
+}

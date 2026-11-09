@@ -1,0 +1,20 @@
+{
+  "schema": "h58-result/v1",
+  "task_id": "H58_MERCHANT_PAID_ORDER_GAP_MEASUREMENT_V1",
+  "classification": "MISSING_DURABLE_INPUT",
+  "next_decision": "MISSING_DURABLE_INPUT",
+  "measurement_only": true,
+  "business_recovery_executed": false,
+  "customer_demand": "UNKNOWN",
+  "automatic_recovery_proven": false,
+  "production_ready": false,
+  "real_identity_verified": false,
+  "provider_verified": false,
+  "customer_value_proven": false,
+  "remaining_gaps": [
+    "Full persisted and independently verifiable authorization and trusted identity source",
+    "Deterministic original order identity and stock/fulfillment recovery semantics",
+    "Merchant/PSP policy, approval and audit for compensation/refund or safe order completion",
+    "Real customer need, deployment authority and provider settlement evidence"
+  ]
+}

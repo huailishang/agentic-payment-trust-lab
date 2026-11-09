@@ -1,0 +1,37 @@
+{
+  "mechanisms": [
+    {
+      "id": "NO_CHANGE",
+      "classification": "REJECT",
+      "evidence": "D01/D02同签名仅移除根cnf披露，SDK仍VALID而消费者由DENY变VERIFIED；D03/D04正常可选披露删去不影响VERIFIED。",
+      "privacy_tradeoff": "保留选择披露隐私，但安全条件能被隐藏。",
+      "compatibility": "现有实现与标准输入不变。",
+      "risk": "未披露不等于未签承诺，错误授予授权事实。",
+      "estimated_cost": "实现零成本，但安全风险不可接受。",
+      "unknowns": "现实发行方是否允许移除安全必需披露尚无约束。"
+    },
+    {
+      "id": "ALL_RELEVANT_DIGESTS_RESOLVED",
+      "classification": "DEFER",
+      "evidence": "D02保留已签摘要但丢失cnf披露，SDK还原视图没有cnf；D04显示无害optional_note合法缺省。",
+      "privacy_tradeoff": "强制全部摘要披露会泄露无害可选资料；应仅针对签名声明的授权安全容器。",
+      "compatibility": "当前JWT摘要承诺无法仅靠摘要值反推出字段名；须配置安全字段范围与未知摘要处理规则。",
+      "risk": "过度拒绝合法隐私保护交易，或因字段名不可知仍漏安全条件。",
+      "estimated_cost": "中等偏高，需要issuer结构规范、摘要解析状态判据及多issuer回归。",
+      "unknowns": "哪些摘要必需解析、decoy摘要和无害可选披露如何区别，需要可信发行配置。"
+    },
+    {
+      "id": "EXPLICIT_SIGNED_PROFILE",
+      "classification": "ABSORB",
+      "evidence": "D01/D02对比显示光验签无法证明授权条件完整；D03/D04证明全披露不必要。需明确标注安全条件与可选条件的签名配置。",
+      "privacy_tradeoff": "只要求披露授权安全必需的部分，保留无害可选披露的隐私。",
+      "compatibility": "需要发行者和消费者共同认可受签名绑定的声明或预置可信profile；不是现有SDK自动保证。",
+      "risk": "配置漂移、发行方虚报或请求自声明profile可导致误授予；必须外部信任锚、协议版本绑定和负例。",
+      "estimated_cost": "中等；先冻结最小发行方/商家有界配置与兼容性测试，不触及钱包/PSP。",
+      "unknowns": "发行者签名能绑定的必需字段集合、可信根分发、SD-JWT安全容器/decoy的判定依据仍待合同确认。"
+    }
+  ],
+  "next_decision": "BOUNDED_PROFILE_CONTRACT_REQUIRED",
+  "why_not_execution": "D02证明已有消费者可把安全必需根条件的隐藏披露误作无条件授权；将其接入执行会把误判变成真实资金风险，不能直接加HTTP或支付。",
+  "remaining_exact_input": "需要发行方受信任配置：协议版本/issuer key、被签名绑定的安全必需披露容器或字段集合、未解析摘要拒绝语义、optional及decoy例外、商家session关联规则；这些必须先具备可复算签名材料及独立负例。"
+}

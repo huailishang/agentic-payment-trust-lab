@@ -1,0 +1,12 @@
+{
+  "schema": "h48-synthetic-trust/v1",
+  "source": "EVALUATOR_EXPLICIT_TEST_CONFIGURATION_NOT_MERCHANT_IDENTITY_PROOF",
+  "merchant": "h48-synthetic-merchant",
+  "payee": "h48-synthetic-payee",
+  "authority_id": "h48-synthetic-authority",
+  "authority_version": "v1",
+  "category_by_item": {"rose": "synthetic-flower"},
+  "quote_expires_at": "2026-10-15T00:20:00+00:00",
+  "fulfilment_terms": "H48 synthetic fixture only; no real delivery",
+  "service_id": "h48-fixture-merchant-service"
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "h47-decision/v1",
+  "classification": "CORE_SEMANTIC_GAP",
+  "reason": "C02 两轮均在保留确认数量1的同时合法更新数量2并完成；MAPPING 的 user_authority/payee/request_payment_binding/payment_result/order_version 缺失且 execution_seam 未闭合，不能忠实构造完整可信支付执行输入。此为当前候选到产品合同的语义缺口，不证明产品核心必须修改或UCP官方漏洞。",
+  "strongest_alternative": "继续原生商家：C03/C04/C05 已提供幂等及终态保护，C06 查询可恢复客户端未知结果；若只需演示交易，原生成本更低。只读快照适配可保留字段，但无可信外部输入和原子绑定前不能升为安全执行候选。建议评估者先冻结缺字段失败关闭/快照绑定的最小可证伪测量，非立即实现适配器。",
+  "source_expectation_differences": [],
+  "product_improved": false,
+  "third_party_verified": false,
+  "provider_proof_verified": false,
+  "model_attack_measured": false,
+  "customer_demand_validated": false,
+  "production_authentication_proven": false,
+  "full_product_gate_comparison": "NOT_MEASURED"
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "evaluator-executor-validation-plan/v1",
+  "task_id": "H55_DISCLOSURE_COMPLETENESS_MEASUREMENT_V1",
+  "checks": [
+    {
+      "id": "VP-01",
+      "ac": [
+        "AC-01"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H55_DISCLOSURE_COMPLETENESS_MEASUREMENT_V1/CHECK.py",
+        "baseline"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-02",
+      "ac": [
+        "AC-01",
+        "AC-02"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H55_DISCLOSURE_COMPLETENESS_MEASUREMENT_V1/CHECK.py",
+        "sources"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-03",
+      "ac": [
+        "AC-02"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H55_DISCLOSURE_COMPLETENESS_MEASUREMENT_V1/PROBES.py",
+        "--role",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H55_DISCLOSURE_COMPLETENESS_MEASUREMENT_V1/PROBES.py",
+        "--role",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-04",
+      "ac": [
+        "AC-02",
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H55_DISCLOSURE_COMPLETENESS_MEASUREMENT_V1/CHECK.py",
+        "observations",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H55_DISCLOSURE_COMPLETENESS_MEASUREMENT_V1/CHECK.py",
+        "observations",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-05",
+      "ac": [
+        "AC-03",
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H55_DISCLOSURE_COMPLETENESS_MEASUREMENT_V1/CHECK.py",
+        "materials"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-06",
+      "ac": [
+        "AC-01",
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H55_DISCLOSURE_COMPLETENESS_MEASUREMENT_V1/CHECK.py",
+        "baseline"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    }
+  ]
+}

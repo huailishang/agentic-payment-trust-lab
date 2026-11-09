@@ -1,0 +1,11 @@
+{
+  "task_id": "H63R_CONTRACT_MAPPING_REPAIR_V1",
+  "contracts": {
+    "P1": {"name": "Confirmation-to-order binding", "ref": "src/agentic_payment_experiment/trusted_execution/confirmation.py", "missing": ["confirmation_record", "authority_version", "confirmed_order_digest", "confirmation_expiry"]},
+    "P2": {"name": "Authority-order-request-execution binding", "ref": "src/agentic_payment_experiment/trusted_execution/payment_binding.py", "missing": ["mandate_ref", "authority_version", "authorized_agent_ref", "authorized_payee_binding"]},
+    "P3": {"name": "Agent-executor identity assurance", "ref": "src/agentic_payment_experiment/trusted_execution/execution_facts.py", "missing": ["authorized_agent_ref", "executor_instance_ref", "credential_possession"]},
+    "P4": {"name": "Trust-source-context-policy integrity", "ref": "src/agentic_payment_experiment/trusted_execution/context_policy.py", "missing": ["trusted_source_policy", "authenticated_source_provenance", "context_write_history"]},
+    "P5": {"name": "Evidence receipts and governance replay", "ref": "src/agentic_payment_experiment/trusted_execution/replay.py", "missing": ["runtime_gate_record", "governed_receipt_chain", "independent_payment_outcome"]}
+  },
+  "limits": ["preview_only", "not_unseen_holdout", "no_independent_backend_state", "no_verified_actor_identity", "no_product_control_measurement", "no_customer_value_evidence"]
+}

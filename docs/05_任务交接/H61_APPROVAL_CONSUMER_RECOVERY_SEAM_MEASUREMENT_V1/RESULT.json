@@ -1,0 +1,18 @@
+{
+  "task_id": "H61_APPROVAL_CONSUMER_RECOVERY_SEAM_MEASUREMENT_V1",
+  "classification": "CONTRACT_CHANGE_REQUIRED",
+  "selected_option": "ORDER_ONLY_RECOVERY",
+  "business_execution_enabled": false,
+  "human_authentication_verified": false,
+  "provider_verified": false,
+  "production_ready": false,
+  "customer_value_proven": false,
+  "remaining_gaps": [
+    "需新合同授权订单侧恢复新副本与交易库消费收据，当前不可直接接线",
+    "批准撤销与订单提交串行及跨库崩溃恢复未实现/运行验证",
+    "商品目录未在固定源内，未来须冻结目录夹具或缺商品失败关闭",
+    "历史批准不授予当前执行权；通知最终交付、真实身份/PSP/商户/客户仍unknown"
+  ],
+  "measurement_evidence": "evidence/executor/run_0001/EXTRACTION.json",
+  "future_cases_executed": 0
+}

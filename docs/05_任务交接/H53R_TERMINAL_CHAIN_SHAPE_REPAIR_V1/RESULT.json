@@ -1,0 +1,57 @@
+{
+  "schema": "h53r-result/v1",
+  "classification": "LOCAL_TERMINAL_CHAIN_REPAIR_OBSERVED",
+  "customer_demand": "UNKNOWN",
+  "parent_task": "H53_MERCHANT_AUTHORIZATION_CONSUMER_CONTRACT_V1",
+  "parent_verdict": "REJECTED",
+  "boundary": "LOCAL_METHOD_EXACT_BYTES_SYNTHETIC_TRUST_FAKE_PSP",
+  "change": "Only H53R merchant/services/ap2_authorization.py: require exactly two wire segments, final SDK-recognized terminal KB-SD-JWT type, official MandateClient verification with expected audience/nonce and zero clock skew, direct verified payload order OpenPaymentMandate→PaymentMandate, trusted root delegate JWK, terminal with no cnf. Any unsupported chain rejected before transaction writes.",
+  "measurements": {
+    "before": "H53 evaluator independent S04 reversed, S05 intermediate final wrong aud, S06 intermediate final wrong nonce each caused 1 fake PSP charge and 1 order; SDK returned VALID chain prefix",
+    "after": "H53R six independent signed cases all match contract, including S04-S06 rejected with zero attempts/authorization rows/fake charges/orders; original 28 cases still pass",
+    "case_sources": [
+      "evidence/observations_probe01.json",
+      "evidence/tail_probe01.json",
+      "evidence/observations_l2.json",
+      "evidence/tail_l2.json"
+    ],
+    "expected_original_cases": 28,
+    "expected_independent_cases": 6,
+    "expected_negative_fail_closed": 3,
+    "network_calls": 0,
+    "asgi_requests": 0,
+    "real_payment_calls": 0
+  },
+  "remaining_gaps": [
+    "仅本地单消费者任务副本/SQLite/合成身份公钥与确认，未部署真实服务",
+    "本地UCP 2026-04-08和AP2 v0.2.0普通compact签名切片不是完整协议符合性、JCS或标准CheckoutMandate验证",
+    "真实用户身份/可信确认来源、密钥治理、跨系统撤销、HTTP/Provider接口、真实资金和商业需求仍未知",
+    "全局并发与系统间竞争未被本单文件修复闭合"
+  ],
+  "external_requirement_impact": {
+    "profile": "PCAC-AGENTPAY",
+    "ids": [
+      "PCAC-07",
+      "PCAC-08",
+      "PCAC-09",
+      "PCAC-10",
+      "PCAC-12",
+      "PCAC-18",
+      "PCAC-20"
+    ],
+    "before": "H53 initial sample rejected by independent terminal-chain checks",
+    "after": "Task-local consumer rejects signed nonterminal/reversed chains; product and production maturity unchanged",
+    "test": "VP-01..09 and independent L3 pending",
+    "evidence": "signed synthetic chain, original and tail method observations, SQLite and fake PSP, gate logs",
+    "regulatory_compliance_claim": false
+  },
+  "product_core_changed": false,
+  "full_ucp_ap2_conformance": false,
+  "jcs_conformance": false,
+  "http_integration_verified": false,
+  "real_identity_verified": false,
+  "provider_verified": false,
+  "production_ready": false,
+  "customer_validated": false,
+  "global_race_closed": false
+}

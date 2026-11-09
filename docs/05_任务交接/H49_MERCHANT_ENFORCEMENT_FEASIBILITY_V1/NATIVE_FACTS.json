@@ -1,0 +1,35 @@
+{
+  "schema": "h49-native-facts/v1",
+  "source": "docs/05_\u4efb\u52a1\u4ea4\u63a5/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/checkout_service.py",
+  "sha256": "da1e31981254f4264e5502752db9d257fec1b327c38a50988983568cfe3344a0",
+  "symbol": "CheckoutService.complete_checkout",
+  "start_line": 713,
+  "end_line": 937,
+  "ordered_call_sites": [
+    {
+      "call": "get_idempotency_record",
+      "line": 737
+    },
+    {
+      "call": "_get_and_validate_checkout",
+      "line": 756
+    },
+    {
+      "call": "_process_payment",
+      "line": 760
+    },
+    {
+      "call": "reserve_stock",
+      "line": 787
+    },
+    {
+      "call": "commit",
+      "line": 928
+    }
+  ],
+  "checkout_complete_reference_lines": [
+    729,
+    730
+  ],
+  "evidence_kind": "STATIC_SOURCE_NOT_RUNTIME_OR_CONCURRENCY_TEST"
+}

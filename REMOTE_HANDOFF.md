@@ -1,0 +1,13 @@
+# 远端统一交接入口
+
+当前任务和权限以仓库根CURRENT.md为准。本轮H64R已独立复核PASS，下一任务H65_SOURCE_UNIT_CONSENT_BINDING_MEASUREMENT_V1已冻结，尚未执行。
+
+执行者从docs/05_任务交接/H65_SOURCE_UNIT_CONSENT_BINDING_MEASUREMENT_V1/EXECUTOR_START.md开始；合同、计划、检查器、公开输入摘要和准备说明均在Git中。不要继续根据旧版r104或被忽略目录里的入口修改H64R门禁。
+
+可在只有标准Python的远端克隆中运行H65 CHECK.py package，核对公开任务文件。完整执行必须在具备INPUTS.readonly所列本地输入的环境运行source；缺输入明确INPUT_LIMIT，不重取源文件、不改判别器或授权。package通过不是L2/L3或数据齐备证明。
+
+同步范围为可公开的代码、治理合同、计划、历史报告脱敏展示和摘要。原始日志、完整源数据、解码环境、工作目录快照及安全扫描标出的测试材料保留本地；它们不会因统一推送变成公开附件。H64R原REPORT含工作站路径，原件保持在本地，远端使用该任务PUBLIC_REPORT.md。
+
+本地和远端版本化内容的核验：正常fetch后比较HEAD与origin/main，并检查git diff origin/main及git status。忽略目录属于执行输入边界，不代表提交内容不同。历史冻结门禁在对应原快照复现；不要在新治理路由下把历史HEAD/工作区差异当成产品回归。
+
+Human本轮已授权Evaluator按localagent-common/security-hooks正常提交推送；pre-commit与pre-push均必须执行。Executor仍受CURRENT中的false权限约束，未获得网络获取、真实支付、资金或凭据变更授权。

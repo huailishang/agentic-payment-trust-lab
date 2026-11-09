@@ -1,0 +1,59 @@
+# H49 S3 — 商家服务端最小信任执行边界（未实现）
+
+
+
+## 付款执行之前必须有一次独立提交
+
+在可信用户授权源可验证的前提下，商家执行分为两个独立数据库事务与中间一个不可逆外部动作：
+
+1. **事务 A（付款前）**：checkout 行级 revision/CAS、授权 claim、快照摘要和唯一 attempt=IN_FLIGHT，以及预先生成的稳定 payment_request_ref，必须成功提交后才允许调用 mock/PSP。A 失败则无付款。
+
+2. **外部付款**：只能使用 A 已提交的同一快照/稳定引用调用付款。固定源码 `_process_payment(payment)` 不含金额、payee 或 snapshot 参数，未来样机必须增加可观察的参数传递/适配证据，否则不能声称实际付款绑定。
+
+3. **事务 B（付款后）**：库存、订单、checkout、幂等最终结果一起本地提交；B 失败不能回滚 PSP。即使进程崩溃无法及时记下 UNKNOWN，恢复器也能从 A 已提交的 IN_FLIGHT/ref 查询支付事实，禁止贸然再次付款。
+
+
+
+## 撤销必须有可定义的竞争先后
+
+严格阻断“撤销在先、付款申请在后”要求撤销和执行 claim 使用可线性化的共享授权状态或跨系统受认可的 claim/revoke 协议。单纯先远程查一次 authority_version 再本地 CAS 仍有时间窗口；没有真实协调语义就必须把该能力列为未满足合同，授权状态不可查时拒绝新 claim。撤销发生在 A 成功之后，不假设可取消已经发送的外部付款，转 WAIT/QUERY/补救。返回旧缓存结果不是新的付款。
+
+
+
+## 真实源码与模拟事实区别
+
+原生 `CheckoutService.complete_checkout` 在 737 查幂等、756 读 checkout、760 调 `_process_payment`、787 预留库存、928 commit；它没有上述事务 A，也没有真实签名用户确认。H49 不修改商家源码。支付模拟没有 PSP receipt，更不提供分布式 exactly-once。
+
+
+
+## 完整字段与设计约束
+
+**mechanism**：MERCHANT_ATOMIC_GUARD 是下一个固定商家样机候选主变量，可信授权事实来源可复用外部供应商，但不把外部 API 误当本地事务锁。
+
+**entrypoint**：CheckoutService.complete_checkout 的原生入口：在 idempotency lookup 后、_process_payment 前，验证可信确认和执行快照并持久化唯一 attempt；update_checkout/cancel_checkout 的共享写路径必须执行同一版本协调。
+
+**trusted_inputs**：可信用户确认机构负责签发并存储/撤销 confirmation_id、user identity、mandate_id、authority_version、scope、expires_at；绑定 merchant/payee、checkout_id、完整 line_items(id/quantity/price)、total in minor units、currency、checkout revision、request_hash 和签名/密钥来源。原生 merchant 有 checkout/totals/currency，但 user authority/payee/PSP payment proof 不存在，H48 模拟信任事实不可提升为真实凭证。
+
+**assumptions**：需要商家对 CheckoutService、数据库及全部 checkout 修改入口具有受权控制；确认提供者可独立验签并查询单调撤销版本；模拟付款测试不能证明真实 Provider 行为。外部服务与本地用户/agent 身份映射、密钥轮换、管理 DB 直写权限尚未得到验证。
+
+**write_coordination**：执行序列必须有两次独立持久化边界。DB事务 A：在 CheckoutService.complete_checkout 的商家端，使用同一 checkout 行 CAS/行锁校验用户确认、checkout revision、完整商品/金额/币种/payee、授权版本与允许状态，原子把 checkout 标记为执行占用/冻结，并写入唯一 attempt=PREPARED/IN_FLIGHT、frozen_snapshot_digest 和预生成稳定 payment_request_ref（作为 Provider 幂等与恢复查询关联）。事务 A 必须成功 COMMIT 后才准调用 _process_payment/future fake PSP；提交失败绝不能付款。update_checkout/cancel_checkout 在 A 提交后不得覆盖被锁定的付款快照；完成写入应作为独立 DB 事务 B（库存、订单、checkout 终态、幂等结果）。B 回滚绝不回滚已发外部付款。跨进程必须使用数据库原子条件写，进程 mutex/先 GET 后 POST/库存 CAS 都不等价。原固定 _process_payment(payment) 没有快照/金额形参，所以仅设计待改的商家服务接口，不宣称它已经支持金额绑定。
+
+**idempotency_ordering**：付款前先查同 checkout、operation、idempotency_key、规范化正文 hash 关联的已持久 attempt；同键同正文历史已完成只返回原结果（外部新支付调用=0），同键不同正文 DENY/409，IN_FLIGHT 或 UNKNOWN 按事务 A 预生成稳定引用 QUERY/WAIT（新扣款=0）。新 key 必须经当前版本/撤销/完整快照核验，通过事务 A 一次写入唯一执行占用；同一 checkout completed 后拒绝全新 key。事务 A 的 checkout state/attempt 唯一约束必须承受两个独立会话竞争，不能因普通 request cache 重复返回而掩盖新增付款。
+
+**revocation_ordering**：可信确认服务签发/撤销授权并维护单调 authority_version。撤销与新付款 attempt 的线性化界点必须是事务 A 的原子 EXECUTION_CLAIM（申请执行占用）成功提交之前；只有当撤销状态与 claim 共用一个可线性化的授权/商家存储，或可信授权服务提供可序列化的 claim-and-revoke 协议，才能严格声明先撤销后 claim 必拒绝。无跨系统原子协调时，单纯查询最新版本再单独写 attempt 存在竞态，不能宣称解决；授权查询不可达/版本不可证明时 fail closed，禁止新的 claim。本地 claim 成功而撤销后来到，已有在途付款不得被当成可无条件回滚，必须走 WAIT/QUERY/补救；撤销后同键查历史已完成结果可返回，但不发新款。此必要上游合同尚未具备，因此整体判断 SERVICE_CONTRACT_CHANGE_REQUIRED。
+
+**unknown_recovery**：DB 事务 A 未提交：没有外部付款，DENY/RETRY 只能表示在重新授权后的全新尝试。A 已提交 PREPARED/IN_FLIGHT 并持久化 payment_request_ref，才允许把这一引用作为 Provider 幂等 key（未来 PSP 必须支持相同引用查询/去重）发起付款；即使 PSP 接受之后、事务 B 提交之前进程崩溃，恢复器仍能读取事务 A 的稳定引用，在不发新款情况下先 QUERY Provider 再完成订单或退款/人工对账。崩溃时未必来得及写 UNKNOWN，必须从过期 IN_FLIGHT 与付款前已提交的引用推断需要查询，而不是假定先保存 UNKNOWN。若 Provider 无按稳定引用查询或可信 receipt、无法区分付款是否发生，保持不可再次执行的 UNKNOWN/人工核对，不能自动再调用 PSP，也不能凭 DB rollback 认为退款。B 提交成功后丢失响应，同键查唯一持久结果；旧结果查询不等于新授权。
+
+**trace_requirements**：两次分离 DB 提交边界：记录事务 A checkout revision、confirmation/authority claim 来源、execution_claim 线性化序号、预生成 payment_request_ref、frozen snapshot hash、attempt=IN_FLIGHT 提交成功；记录外部 PSP 调用时携带的同一 request ref、amount/payee/currency（需未来商家适配器真实提供，不得从原 _process_payment(payment) 推断）；记录事务 B 的订单/库存/checkout/idempotency 结果与 commit/rollback。append-only 链还记录 timeout、崩溃恢复后从旧 IN_FLIGHT 查询、PSP receipt、退款/人工对账、撤销与 claim 顺序、错误码。敏感密钥不落盘。
+
+**minimal_changes**：下一样机唯一主改变为商家受控 complete 的持久化执行前快照/授权 CAS，并要求 update_checkout/cancel_checkout 共同遵守同一行版本协议；为证明安全而必要的 attempt/outbox、独立 oracle 与查询接口属于最小支持，不借此扩张通用 runtime。order/webhook 需要单独限制付款后核心字段的改写与事实留痕，不能声称已覆盖。
+
+**rollback**：不能拿到商家修改全部相关路径的权限、可靠外部确认来源或双会话竞态/付款后失败可判定器时，禁止升级为安全样机；保持拒绝新付款及 UNKNOWN 对账，转 SERVICE_CONTRACT_CHANGE_REQUIRED 或 NO_SAFE_SEAM，不扩大核心。
+
+**unresolved**：商家既有 _process_payment(payment) 不接受 checkout 金额/版本，也无外部支付回执；未来必须在新样机的观察接缝中将冻结 attempt 映射为可独立观察的 fake PSP 金额/payee/currency/稳定引用，否则只能测门禁而不能宣称付款绑定。跨数据库的撤销线性化、管理 DB 直写、真实 Provider 按引用查询/去重、SDK/商家部署权限、可靠补偿和客户 ROI 均未知；若缺可信撤销 claim 协调，仍属于 SERVICE_CONTRACT_CHANGE_REQUIRED，不能声称 race_closed。
+
+
+
+## 结论
+
+`server_guard_implemented=false`；`race_closed=false`；未来 14 个测试均未执行。若无法建立可信授权与执行占用的线性化边界、稳定 PSP 查询引用或全写路径覆盖，下一工程样机必须停在 SERVICE_CONTRACT_CHANGE_REQUIRED，不能直接上线或宣传成功。

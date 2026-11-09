@@ -1,0 +1,16 @@
+{
+  "schema": "h57-merchant-journeys/v1",
+  "cases": [
+    {"id":"M01_NORMAL_REPLAY_QUERY","purpose":"HTTP创建、独立确认/授权、完成、同键重放、查询checkout及order","payment_calls":1,"orders":1,"inventory":4},
+    {"id":"M02_CHANGED_AFTER_CONFIRM","purpose":"批准1件后HTTP合法更新到2件，原确认完成须409","payment_calls":0,"orders":0,"inventory":5},
+    {"id":"M03_MISSING_CONFIRMATION","purpose":"带已签授权但省略独立确认引用，须403","payment_calls":0,"orders":0,"inventory":5},
+    {"id":"M04_INVALID_AUTHORIZATION","purpose":"HTTP签名有效、支付授权被篡改，须403","payment_calls":0,"orders":0,"inventory":5},
+    {"id":"M05_UNCONFIGURED_APP","purpose":"正常工厂未配置控制，完成须409/H50_EXECUTION_DENIED","payment_calls":0,"orders":0,"inventory":5},
+    {"id":"M06_ORDER_FAILURE_RESTART_QUERY","purpose":"模拟已扣款后订单提交失败；真正新进程查询/新键重试不得再扣，恢复诊断QUERY/SUCCEEDED","payment_calls":1,"orders":0,"inventory":5}
+  ],
+  "max_requests_per_complete_run": 28,
+  "executor_total_asgi_requests": 160,
+  "evaluator_total_asgi_requests": 80,
+  "merchant_api_version": "2026-04-08",
+  "authorization_contract": "H53R accepted local envelope; not standard CheckoutMandate integration"
+}

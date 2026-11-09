@@ -1,0 +1,520 @@
+{
+  "schema": "h61-consumer-assessment/v1",
+  "task_id": "H61_APPROVAL_CONSUMER_RECOVERY_SEAM_MEASUREMENT_V1",
+  "business_execution_enabled": false,
+  "classification": "CONTRACT_CHANGE_REQUIRED",
+  "selected_option": "ORDER_ONLY_RECOVERY",
+  "rationale": "只读事实支持一个明确的订单侧恢复方向，但不存在可直接安全调用的消费者入口。需另冻本地副本的订单事务复用、交易库一次性消费收据、批准撤销与订单提交的串行协议及失败恢复语义。独立批准库与WAL交易库不能因先show再complete就获得原子性；本轮不实现，不把这些设计推断写成已验证能力。",
+  "topics": [
+    {
+      "id": "approval_currentness",
+      "observed": "事实：固定批准库一条批准、一条APPROVED事件、无REVOKED事件，record_json.expires_at=1800000060、policy_version=h60-local-v1；事件at=1800000000是历史夹具时钟。源码读取时检查受信上下文摘要、到期、源摘要和撤销，并始终返回execution_enabled=false。",
+      "impact": "设计推断：保存的APPROVED不等于当前可执行权限。未调用show，不用本机时间判定批准当前有效或过期；当前操作员配置与时钟unknown。未来消费必须在提交所需锁内重新核验受信配置/期限/处置类型，旧付款确认到期不能机械代替新的补救批准。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/APPROVAL_INBOX.py",
+          "start": 227,
+          "end": 261,
+          "excerpt": "    def _read_result(self, conn, row):\n        if row is None:\n            _deny(\"APPROVAL_NOT_FOUND\")\n        record = json.loads(row[\"record_json\"])\n        events = [{\n            \"seq\": e[\"seq\"], \"kind\": e[\"kind\"], \"approval_id\": e[\"approval_id\"],\n            \"operator_id\": e[\"operator_id\"], \"source_digest\": e[\"source_digest\"],\n            \"at\": e[\"at\"], \"request\": json.loads(e[\"request_json\"]),\n        } for e in conn.execute(\n            \"SELECT * FROM approval_events WHERE approval_id=? ORDER BY seq\",\n            (row[\"approval_id\"],)\n        )]\n        if any(e[\"kind\"] == \"REVOKED\" for e in events):\n            state = \"APPROVAL_REVOKED\"\n        else:\n            try:\n                _, _, current_digest = self._trusted()\n                if current_digest != record[\"context_digest\"]:\n                    state = \"APPROVAL_STALE_CONTEXT\"\n                elif self._clock() >= record[\"expires_at\"]:\n                    state = \"APPROVAL_EXPIRED\"\n                else:\n                    try:\n                        source = self._source(record[\"checkout_id\"])\n                        good = (self._eligible(source, record[\"checkout_id\"],\n                                               record[\"payment_ref\"]) and\n                                _digest(source) == record[\"source_digest\"])\n                    except (ApprovalDenied, ValueError, TypeError):\n                        good = False\n                    state = \"APPROVAL_CURRENT\" if good else \"APPROVAL_STALE_SOURCE\"\n            except ApprovalDenied:\n                state = \"APPROVAL_STALE_CONTEXT\"\n        return {\"record\": record, \"events\": events,\n                \"current\": state == \"APPROVAL_CURRENT\",\n                \"effective_state\": state, \"execution_enabled\": False}"
+        },
+        {
+          "path": "docs/05_任务交接/H59_LOCAL_REMEDIATION_DISPOSITION_DECISION_V1/DECISION.md",
+          "start": 8,
+          "end": 18,
+          "excerpt": "Human针对“已付款、无订单下一本地研究以何种结束状态为目标”的明确答复原文：\n\n> 先建立人工批准的对账处置入口（推荐）\n\n这解除本地权限模式选择，不是一次真实订单或退款授权。Evaluator将首包收窄为：原交易证据绑定的本地操作员批准登记/撤销/读取入口，持久批准及有效事件；执行连接关闭，不改变订单、库存、原支付占用或资金。采用本地可信进程配置模拟操作员，现实人身份未验证，不索要真实客户/密钥/PSP。\n\n未选择条件自动补单或直接退款。原“需要Human选择”的旧记录自本答复起已解决，不再重复询问。H59未进行Executor实验，因此没有L2/L3或任务PASS，不伪造这些状态。\n\n下一唯一执行包：H60_LOCAL_OPERATOR_RECONCILIATION_APPROVAL_V1，capability_experiment / SINGLE。一个标准库产品模块；20保护场景；240主动分钟/2L2/160case，Evaluator另60；严格本地、零HTTP/Provider/业务付款/订单执行/外部联系/Git。只有H60合同/计划与准备检查完成后才路由CONTRACT_FROZEN / Executor。\n\n本收窄是对“先建立入口”的有界实现选择；后续任何批准消费、自动补单/退款或真实身份/部署均需另立合同，不能把登记成功当交易处置闭环。"
+        }
+      ],
+      "database_evidence": [
+        "approvals.approvals[0].record_json",
+        "approvals.approval_events[0]"
+      ]
+    },
+    {
+      "id": "source_snapshot",
+      "observed": "事实：源视图含checkout/attempt/authorization/confirmation/receipt和全库inventory/orders；合法性比较付款、确认、占用快照与当前currency/line_items/totals/fulfillment。固定三库为关闭快照，无WAL/SHM；提取精确保留JSON列字符串。两种摘要不同：库文件sha256与批准source_digest不可混用。",
+      "impact": "设计推断：immutable只读方式只适用于本轮静止快照，不能直接用于实时WAL商城。未来在交易库写锁内按原规范重算完整源视图，模拟PSP保持合同内不可变来源；全库订单/库存变化会保守失效，不能静默缩窄摘要。提交自身会改变源，重放须先查耐久消费收据再决定是否执行，不能要求已完成交易仍满足未消费源。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/APPROVAL_INBOX.py",
+          "start": 129,
+          "end": 164,
+          "excerpt": "    def _read_source(path, table):\n        if (not path.is_file() or Path(str(path) + \"-wal\").exists()\n                or Path(str(path) + \"-shm\").exists()):\n            _deny(\"SOURCE_UNAVAILABLE\")\n        try:\n            with sqlite3.connect(path.as_uri() + \"?mode=ro&immutable=1\", uri=True) as conn:\n                conn.row_factory = sqlite3.Row\n                quoted = '\"' + table.replace('\"', '\"\"') + '\"'\n                return [dict(row) for row in conn.execute(\"SELECT * FROM \" + quoted)]\n        except (sqlite3.Error, OSError, ValueError):\n            _deny(\"SOURCE_UNAVAILABLE\")\n\n    def _source(self, checkout_id):\n        if not _text(checkout_id):\n            _deny(\"INVALID_CHECKOUT_ID\")\n\n        def single(table, key, value):\n            return next((row for row in self._read_source(self.tx, table)\n                         if row[key] == value), None)\n\n        checkout = single(\"checkouts\", \"id\", checkout_id)\n        attempt = single(\"h50_attempts\", \"checkout_id\", checkout_id)\n        authorization = single(\"h53_authorizations\", \"checkout_id\", checkout_id)\n        confirmation = (single(\"h50_confirmations\", \"confirmation_ref\",\n                        authorization[\"confirmation_ref\"]) if authorization else None)\n        receipt = (next((r for r in self._read_source(self.psp, \"receipts\")\n                         if r[\"payment_ref\"] == attempt[\"payment_ref\"]), None)\n                   if attempt else None)\n        inventory = sorted(self._read_source(self.tx, \"inventory\"),\n                           key=lambda r: r[\"product_id\"])\n        orders = sorted(self._read_source(self.tx, \"orders\"), key=lambda r: r[\"id\"])\n        return {\n            \"checkout\": checkout, \"attempt\": attempt,\n            \"authorization\": authorization, \"confirmation\": confirmation,\n            \"receipt\": receipt, \"inventory\": inventory, \"orders\": orders,\n        }"
+        },
+        {
+          "path": "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/APPROVAL_INBOX.py",
+          "start": 177,
+          "end": 208,
+          "excerpt": "            if view[\"orders\"]:\n                return False\n            if checkout[\"id\"] != checkout_id or checkout[\"status\"] != \"ready_for_complete\":\n                return False\n            if attempt[\"checkout_id\"] != checkout_id or attempt[\"state\"] != \"IN_FLIGHT\":\n                return False\n            if payment_ref is not None and attempt[\"payment_ref\"] != payment_ref:\n                return False\n            if receipt[\"payment_ref\"] != attempt[\"payment_ref\"]:\n                return False\n            if (authorization[\"checkout_id\"] != checkout_id or\n                    authorization[\"decision\"] != \"ALLOW\" or\n                    confirmation[\"confirmation_ref\"] != authorization[\"confirmation_ref\"] or\n                    confirmation[\"checkout_id\"] != checkout_id or\n                    confirmation[\"revoked\"] != 0):\n                return False\n            snapshot = json.loads(attempt[\"snapshot_json\"])\n            confirmed = json.loads(confirmation[\"snapshot_json\"])\n            paid = json.loads(receipt[\"snapshot_json\"])\n            current = json.loads(checkout[\"data\"])\n            if snapshot != confirmed or snapshot != paid:\n                return False\n            if (snapshot.get(\"checkout_id\") != checkout_id or\n                    not _text(snapshot.get(\"merchant\")) or\n                    not _text(snapshot.get(\"payee\"))):\n                return False\n            for name in (\"currency\", \"line_items\", \"totals\", \"fulfillment\"):\n                if current.get(name) != snapshot.get(name):\n                    return False\n            if current.get(\"id\") != checkout_id:\n                return False\n            return True"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/db.py",
+          "start": 89,
+          "end": 102,
+          "excerpt": "    # Transactions DB Setup (includes Inventory)\n    trans_url = f\"sqlite+aiosqlite:///{transactions_path}\"\n    self.transactions_engine = create_async_engine(trans_url, echo=False)\n\n    # Enable WAL mode for Transactions DB\n    async with self.transactions_engine.connect() as conn:\n      await conn.execute(text(\"PRAGMA journal_mode=WAL\"))\n\n    self.transactions_session_factory = sessionmaker(\n      self.transactions_engine, expire_on_commit=False, class_=AsyncSession\n    )\n\n    async with self.transactions_engine.begin() as conn:\n      await conn.run_sync(TransactionBase.metadata.create_all)"
+        }
+      ],
+      "database_evidence": [
+        "transactions.checkouts[0]",
+        "transactions.h50_attempts[0]",
+        "transactions.h50_confirmations[0]",
+        "transactions.h53_authorizations[0]",
+        "psp.receipts[0]"
+      ]
+    },
+    {
+      "id": "payment_no_recharge",
+      "observed": "事实：固定假PSP calls=1、receipts=1、queries=1；同一payment_ref绑定同一snapshot_json。交易占用仍IN_FLIGHT，recover只查询并返回QUERY或WAIT，不将占用状态写成支付成功。旧complete在订单事务之前调用_process_payment。",
+      "impact": "设计推断：未来订单恢复只能消费现有已付款证据，不接收新付款工具、不调用charge/_process_payment、不新建/删除/重置旧claim。receipt是本地合成付款证据，没有真实PSP状态列或最终性保证；本轮未调用recover或query。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/execution_control.py",
+          "start": 132,
+          "end": 142,
+          "excerpt": "    async def recovered_attempt(self, checkout_id):\n        return self.active_attempt(checkout_id)\n\n    async def recover(self, checkout_id):\n        record = self.active_attempt(checkout_id)\n        if record is None:\n            return {\"decision\": \"QUERY\", \"reason\": \"NO_DURABLE_ATTEMPT\"}\n        result = await self.payment_port.query(record[\"payment_ref\"])\n        return {\"decision\": \"QUERY\" if result.get(\"state\") == \"SUCCEEDED\" else \"WAIT\",\n                \"payment_ref\": record[\"payment_ref\"], \"payment_state\": result.get(\"state\"),\n                \"reason\": \"RECONCILIATION_REQUIRED_NO_AUTOMATIC_RETRY\"}"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 772,
+          "end": 801,
+          "excerpt": "    if self.execution_control.active_attempt(checkout_id):\n      # Preserve scheduling evidence while refusing new work without a write lock.\n      await self.execution_control.hook(\"before_claim\", checkout_id)\n      from services.execution_control import reject\n      reject(\"Checkout already has a durable payment attempt\")\n\n    # The claim must commit in its own transaction before any payment or order writes.\n    await self.transactions_session.rollback()\n    # Retain the local method's connection throughout the claim/payment gap.\n    await self.transactions_session.connection()\n    execution = await self.execution_control.claim(\n      checkout_id, risk_signals.get(\"h50_confirmation_ref\"), idempotency_key, request_hash,\n      authorization=risk_signals.get(\"h53_authorization\")\n    )\n\n    # Log the request\n    await db.log_request(\n      self.transactions_session,\n      method=\"POST\",\n      url=f\"/checkout-sessions/{checkout_id}/complete\",\n      checkout_id=checkout_id,\n      payload=combined_data,\n    )\n\n    checkout = await self._get_and_validate_checkout(checkout_id)\n    self._ensure_modifiable(checkout, \"complete\")\n\n    # Process Payment\n    await self._process_payment(payment, execution=execution)\n    await self.execution_control.hook(\"after_payment\", checkout_id)"
+        }
+      ],
+      "database_evidence": [
+        "psp.calls[0].payment_ref",
+        "psp.receipts[0].snapshot_json",
+        "psp.queries[0]",
+        "transactions.h50_attempts[0].state"
+      ]
+    },
+    {
+      "id": "old_claim_semantics",
+      "observed": "事实：h50_attempts以checkout_id为主键、payment_ref唯一，claim独立BEGIN IMMEDIATE提交；已存在占用会拒绝。complete先查成功幂等响应，再拒绝已有占用。本固定库只有create成功幂等记录，没有complete响应。",
+      "impact": "设计推断：重用旧complete无法跨过原M06占用；更换幂等键也无用。解除占用会丢失不重扣屏障并重走付款，不是恢复接口。保留旧占用，新的订单消费收据单独定义，不能把IN_FLIGHT误作付款未发生。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/execution_control.py",
+          "start": 33,
+          "end": 45,
+          "excerpt": "    async def initialize(self):\n        with closing(self._connect()) as conn:\n            conn.execute(\"\"\"CREATE TABLE IF NOT EXISTS h50_confirmations (\n                confirmation_ref TEXT PRIMARY KEY, checkout_id TEXT NOT NULL,\n                snapshot_json TEXT NOT NULL, expires_at INTEGER NOT NULL,\n                revoked INTEGER NOT NULL DEFAULT 0)\"\"\")\n            conn.execute(\"\"\"CREATE TABLE IF NOT EXISTS h50_attempts (\n                checkout_id TEXT PRIMARY KEY, payment_ref TEXT NOT NULL UNIQUE,\n                snapshot_json TEXT NOT NULL, state TEXT NOT NULL,\n                request_key TEXT NOT NULL, request_hash TEXT NOT NULL)\"\"\")\n            conn.execute(\"\"\"CREATE TABLE IF NOT EXISTS h53_authorizations (\n                checkout_id TEXT PRIMARY KEY, token_sha256 TEXT NOT NULL,\n                checkout_sha256 TEXT NOT NULL, confirmation_ref TEXT NOT NULL,"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/execution_control.py",
+          "start": 77,
+          "end": 97,
+          "excerpt": "    async def claim(self, checkout_id, confirmation_ref, request_key, request_hash, *, authorization=None):\n        if not isinstance(confirmation_ref, str) or not confirmation_ref:\n            reject(\"Missing trusted confirmation reference\", \"H50_CONFIRMATION_MISSING\", 403)\n        # Hook precedes any write lock so a legal update can win the race.\n        await self.hook(\"before_claim\", checkout_id)\n        # Acquire the actual shared DB write lock without blocking the event loop.\n        # A busy SQLite writer yields a typed retryable denial, never raw 500.\n        with closing(sqlite3.connect(self.path, timeout=0)) as conn:\n            conn.row_factory = sqlite3.Row\n            try:\n                conn.execute(\"BEGIN IMMEDIATE\")\n                if conn.execute(\"SELECT 1 FROM h50_attempts WHERE checkout_id=?\", (checkout_id,)).fetchone():\n                    reject(\"Checkout has an existing payment attempt\")\n                record = conn.execute(\"SELECT * FROM h50_confirmations WHERE confirmation_ref=?\", (confirmation_ref,)).fetchone()\n                if record is None or record[\"checkout_id\"] != checkout_id:\n                    reject(\"Unknown trusted confirmation\", \"H50_CONFIRMATION_INVALID\", 403)\n                if record[\"revoked\"] or record[\"expires_at\"] <= self.now():\n                    reject(\"Confirmation revoked or expired\", \"H50_CONFIRMATION_INACTIVE\", 403)\n                row = conn.execute(\"SELECT data,status FROM checkouts WHERE id=?\", (checkout_id,)).fetchone()\n                if row is None or row[\"status\"] in (\"completed\", \"canceled\"):\n                    reject(\"Checkout missing or terminal\")"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/execution_control.py",
+          "start": 114,
+          "end": 130,
+          "excerpt": "                conn.execute(\"INSERT INTO h50_attempts VALUES (?,?,?,?,?,?)\",\n                             (checkout_id, payment_ref, canonical(snapshot), \"IN_FLIGHT\", request_key, request_hash))\n                conn.execute(\"INSERT INTO h53_authorizations VALUES (?,?,?,?,?)\",\n                             (checkout_id, validated[\"token_sha256\"], validated[\"checkout_sha256\"],\n                              validated[\"confirmation_ref\"], validated[\"decision\"]))\n                await self.hook(\"before_claim_commit\", checkout_id)\n                conn.commit()\n            except sqlite3.OperationalError as exc:\n                conn.rollback()\n                if \"locked\" in str(exc).lower() or \"busy\" in str(exc).lower():\n                    reject(\"Checkout write lock busy; retry after reconciliation\", \"H50_CLAIM_BUSY\")\n                raise\n            except BaseException:\n                conn.rollback()\n                raise\n        await self.hook(\"after_claim_commit\", checkout_id)\n        return {\"payment_ref\": payment_ref, \"snapshot\": snapshot}"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 762,
+          "end": 785,
+          "excerpt": "    existing_record = await db.get_idempotency_record(\n      self.transactions_session, idempotency_key\n    )\n    if existing_record:\n      if existing_record.request_hash != request_hash:\n        raise IdempotencyConflictError(\n          \"Idempotency key reused with different parameters\"\n        )\n      return Checkout(**existing_record.response_body)\n\n    if self.execution_control.active_attempt(checkout_id):\n      # Preserve scheduling evidence while refusing new work without a write lock.\n      await self.execution_control.hook(\"before_claim\", checkout_id)\n      from services.execution_control import reject\n      reject(\"Checkout already has a durable payment attempt\")\n\n    # The claim must commit in its own transaction before any payment or order writes.\n    await self.transactions_session.rollback()\n    # Retain the local method's connection throughout the claim/payment gap.\n    await self.transactions_session.connection()\n    execution = await self.execution_control.claim(\n      checkout_id, risk_signals.get(\"h50_confirmation_ref\"), idempotency_key, request_hash,\n      authorization=risk_signals.get(\"h53_authorization\")\n    )"
+        }
+      ],
+      "database_evidence": [
+        "transactions.h50_attempts[0]",
+        "transactions.idempotency_records[0].key"
+      ]
+    },
+    {
+      "id": "order_transaction",
+      "observed": "事实：旧方法822–970行包含库存预留、checkout完成、随机订单身份、履约构造、订单/checkout/成功幂等记录保存和清购物车，同一transactions_session提交。db.save_order按order_id更新/插入；orders只有id主键和data，无checkout/payment唯一列。models.UnifiedOrder没有恢复状态。",
+      "impact": "设计推断：未来只能把原订单侧代码抽成同一可复用方法，原complete和专用恢复共用，禁止复制业务或调用付款段。交易库新增消费收据须唯一约束approval_id、checkout_id、payment_ref并保存order_id/响应/批准与源摘要，和库存、订单、checkout、幂等一起提交；需要db.py及checkout_service.py新副本明确授权。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 822,
+          "end": 844,
+          "excerpt": "    # Atomic Inventory Reservation + Order Completion\n    try:\n      for line in checkout.line_items:\n        product_id = line.item.id\n        # We verify product existence again (optional but good practice)\n        if await db.get_product(self.products_session, product_id):\n          success = await db.reserve_stock(\n            self.transactions_session, product_id, line.quantity\n          )\n          if not success:\n            # This rollback applies to the transaction_session\n            await self.transactions_session.rollback()\n            raise OutOfStockError(\n              f\"Item {product_id} is out of stock\", status_code=409\n            )\n\n      checkout.status = CheckoutStatus.COMPLETED\n      order_id = f\"{uuid.uuid4()}\"\n      order_permalink_url = AnyUrl(f\"{self.base_url}/orders/{order_id}\")\n\n      checkout.order = OrderConfirmation(\n        id=order_id, permalink_url=order_permalink_url\n      )"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 938,
+          "end": 977,
+          "excerpt": "      await db.save_order(\n        self.transactions_session,\n        order.id,\n        order.model_dump(mode=\"json\", by_alias=True, exclude_none=True),\n      )\n\n      await db.save_checkout(\n        self.transactions_session,\n        checkout_id,\n        checkout.status,\n        response_body,\n      )\n\n      # Save Idempotency Record\n      await db.save_idempotency_record(\n        self.transactions_session,\n        idempotency_key,\n        request_hash,\n        200,\n        response_body,\n      )\n\n      if checkout.cart_id:\n        logger.info(\n          \"Clearing cart %s after checkout completion\", checkout.cart_id\n        )\n        await db.delete_cart_session(\n          self.transactions_session, checkout.cart_id\n        )\n\n      # A is already durable; only the native order/inventory state belongs to B.\n      await self.execution_control.hook(\"before_order_commit\", checkout_id)\n      await self.transactions_session.commit()\n\n      # Notify webhook of order placement\n      await self._notify_webhook(checkout, \"order_placed\")\n\n    except Exception as e:\n      await self.transactions_session.rollback()\n      raise e"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/db.py",
+          "start": 196,
+          "end": 202,
+          "excerpt": "class Order(TransactionBase):\n  \"\"\"Order database model.\"\"\"\n\n  __tablename__ = \"orders\"\n\n  id = Column(String, primary_key=True)\n  data = Column(JSON)"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/db.py",
+          "start": 515,
+          "end": 524,
+          "excerpt": "async def save_order(\n  session: AsyncSession, order_id: str, order_obj: dict[str, Any]\n) -> None:\n  \"\"\"Save or update an order.\"\"\"\n  existing = await session.get(Order, order_id)\n  if existing:\n    existing.data = order_obj\n  else:\n    new_order = Order(id=order_id, data=order_obj)\n    session.add(new_order)"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/models.py",
+          "start": 61,
+          "end": 68,
+          "excerpt": "class UnifiedOrder(Order):\n  \"\"\"Order model supporting extensions.\"\"\"\n\n\nclass UnifiedCart(DiscountCart):\n  \"\"\"Cart model supporting Discount extension.\"\"\"\n\n  pass"
+        }
+      ],
+      "database_evidence": [
+        "transactions.orders=[]",
+        "transactions.checkouts[0].data:order成员省略"
+      ]
+    },
+    {
+      "id": "inventory_revalidation",
+      "observed": "事实：源库存rose=5，商品数量1。db.reserve_stock在同一交易库执行quantity>=请求量的条件扣减；complete只在get_product返回真时预留。此前_validate_inventory的读检查不等于恢复时的条件写入。",
+      "impact": "设计推断：未来锁内重新核验库存和批准源，不得因旧批准跳过扣减，也不得在缺商品时静默略过。固定products库不在本轮三库中，当前商品存在性unknown；未来合同须冻结既有目录副本或明确缺商品失败关闭。库存不足全部回滚且不消费，不自动退款。为独立检验库存分支，应对库存不足的合成新源取得新批准，避免仅测得源漂移。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/db.py",
+          "start": 431,
+          "end": 442,
+          "excerpt": "async def reserve_stock(\n  session: AsyncSession, product_id: str, quantity: int\n) -> bool:\n  \"\"\"Atomically decrements inventory if sufficient stock exists.\"\"\"\n  stmt = (\n    update(Inventory)\n    .where(Inventory.product_id == product_id)\n    .where(Inventory.quantity >= quantity)\n    .values(quantity=Inventory.quantity - quantity)\n  )\n  result = await session.execute(stmt)\n  return result.rowcount > 0"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 824,
+          "end": 836,
+          "excerpt": "      for line in checkout.line_items:\n        product_id = line.item.id\n        # We verify product existence again (optional but good practice)\n        if await db.get_product(self.products_session, product_id):\n          success = await db.reserve_stock(\n            self.transactions_session, product_id, line.quantity\n          )\n          if not success:\n            # This rollback applies to the transaction_session\n            await self.transactions_session.rollback()\n            raise OutOfStockError(\n              f\"Item {product_id} is out of stock\", status_code=409\n            )"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 1251,
+          "end": 1260,
+          "excerpt": "  async def _validate_inventory(\n    self,\n    checkout: Checkout,\n  ) -> None:\n    \"\"\"Validate that all items in the checkout have sufficient stock.\"\"\"\n    for line in checkout.line_items:\n      product_id = line.item.id\n      qty_avail = await db.get_inventory(self.transactions_session, product_id)\n      if qty_avail is None or qty_avail < line.quantity:\n        raise OutOfStockError(f\"Insufficient stock for item {product_id}\")"
+        }
+      ],
+      "database_evidence": [
+        "transactions.inventory[0]",
+        "transactions.checkouts[0].data.line_items[0].quantity"
+      ]
+    },
+    {
+      "id": "approval_consumption",
+      "observed": "事实：批准库仅approvals与approval_events，批准事件序号1、撤销事件固定序号2；批准/读取均execution_enabled=false，现有实现没有消费标记。批准唯一性防重复登记，不等于订单唯一执行。父合同仅允许独立账本且禁止消费。",
+      "impact": "设计推断：不能把旧approve/show当执行锁，也不能往批准库先写CONSUMED再独立提交订单。唯一主方向是交易库耐久消费收据作为已执行权威，订单原子提交；批准库在核验至交易提交期间持锁，提交前崩溃无收据、全回滚，提交后崩溃以收据返回既有订单。不需要假装两库可原子提交，也不新增与固定seq=2冲突的消费事件。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/APPROVAL_INBOX.py",
+          "start": 75,
+          "end": 96,
+          "excerpt": "                conn.execute(\"\"\"CREATE TABLE IF NOT EXISTS approvals (\n                    approval_id TEXT PRIMARY KEY,\n                    operator_id TEXT NOT NULL,\n                    request_key TEXT NOT NULL,\n                    checkout_id TEXT NOT NULL,\n                    payment_ref TEXT NOT NULL,\n                    record_json TEXT NOT NULL,\n                    approve_request_json TEXT NOT NULL,\n                    revoke_request_json TEXT,\n                    UNIQUE(operator_id,request_key),\n                    UNIQUE(checkout_id,payment_ref)\n                )\"\"\")\n                conn.execute(\"\"\"CREATE TABLE IF NOT EXISTS approval_events (\n                    approval_id TEXT NOT NULL,\n                    seq INTEGER NOT NULL,\n                    kind TEXT NOT NULL,\n                    operator_id TEXT NOT NULL,\n                    source_digest TEXT NOT NULL,\n                    at INTEGER NOT NULL,\n                    request_json TEXT NOT NULL,\n                    PRIMARY KEY(approval_id,seq)\n                )\"\"\")"
+        },
+        {
+          "path": "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/APPROVAL_INBOX.py",
+          "start": 318,
+          "end": 338,
+          "excerpt": "                record = {\n                    \"approval_id\": approval_id, \"request_key\": request[\"request_key\"],\n                    \"checkout_id\": request[\"checkout_id\"],\n                    \"payment_ref\": request[\"payment_ref\"],\n                    \"source_digest\": source_digest, \"context_digest\": context_digest,\n                    \"operator_id\": operator, \"policy_version\": policy,\n                    \"disposition\": request[\"disposition\"], \"reason\": request[\"reason\"],\n                    \"expires_at\": request[\"expires_at\"],\n                }\n                conn.execute(\"\"\"INSERT INTO approvals\n                    (approval_id, operator_id, request_key, checkout_id, payment_ref,\n                     record_json, approve_request_json) VALUES (?,?,?,?,?,?,?)\"\"\",\n                    (approval_id, operator, request[\"request_key\"],\n                     request[\"checkout_id\"], request[\"payment_ref\"],\n                     _canonical(record), _canonical(request)))\n                conn.execute(\"\"\"INSERT INTO approval_events\n                    (approval_id,seq,kind,operator_id,source_digest,at,request_json)\n                    VALUES (?,?,?,?,?,?,?)\"\"\",\n                    (approval_id, 1, \"APPROVED\", operator, source_digest,\n                     now, _canonical(request)))\n                conn.commit()"
+        },
+        {
+          "path": "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/APPROVAL_INBOX.py",
+          "start": 348,
+          "end": 379,
+          "excerpt": "    def revoke(self, request):\n        _fields(request, (\"approval_id\", \"request_key\", \"reason\"))\n        if not all(_text(request[k]) for k in (\"approval_id\", \"request_key\", \"reason\")):\n            _deny(\"INVALID_REVOKE_REQUEST\")\n        if len(request[\"reason\"]) > 500:\n            _deny(\"INVALID_REVOKE_REASON\")\n        operator, _, _ = self._trusted()\n        try:\n            with self._ledger_connection() as conn:\n                conn.execute(\"BEGIN IMMEDIATE\")\n                row = conn.execute(\"SELECT * FROM approvals WHERE approval_id=?\",\n                                   (request[\"approval_id\"],)).fetchone()\n                if row is None:\n                    _deny(\"APPROVAL_NOT_FOUND\")\n                if row[\"operator_id\"] != operator:\n                    _deny(\"REVOKE_NOT_OWNER\")\n                if row[\"revoke_request_json\"]:\n                    if json.loads(row[\"revoke_request_json\"]) != request:\n                        _deny(\"REVOKE_CONFLICT\")\n                    return self._read_result(conn, row)\n                conn.execute(\"UPDATE approvals SET revoke_request_json=? WHERE approval_id=?\",\n                             (_canonical(request), request[\"approval_id\"]))\n                source_digest = json.loads(row[\"record_json\"])[\"source_digest\"]\n                conn.execute(\"\"\"INSERT INTO approval_events\n                    (approval_id,seq,kind,operator_id,source_digest,at,request_json)\n                    VALUES (?,?,?,?,?,?,?)\"\"\",\n                    (request[\"approval_id\"], 2, \"REVOKED\", operator,\n                     source_digest, self._clock(), _canonical(request)))\n                conn.commit()\n                return self._read_result(\n                    conn, conn.execute(\"SELECT * FROM approvals WHERE approval_id=?\",\n                                       (request[\"approval_id\"],)).fetchone()"
+        },
+        {
+          "path": "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/CONTRACT.md",
+          "start": 27,
+          "end": 33,
+          "excerpt": "## Allowed scope / 允许范围\n\n仅可改本包 APPROVAL_INBOX.py 的 ApprovalInbox.__init__ 函数体；除该方法外 AST 必须与父候选完全相同，包括导入。已有 os/Path 足够；不得改方法签名。必须在任何可能触及来源的写连接之前进行隔离检查，不能写后检查或只比较解析路径。不存在的新独立账本必须仍能创建；无法可靠确认已存在文件隔离时按失败关闭，业务拒绝用 ApprovalDenied.code。\n\n可写本包 REPORT.md、RESULT.json、ATTEMPT_LEDGER.json、evidence/ 及 .task_envs/H60R/runs 下临时夹具/账本。父 H60 全部只读（含 REVIEW、全部失败、测试、报告、自重放和本轮独立证据），原商家/SDK/src/tests/其他任务不改。CURRENT 仅同任务 state/phase 可变，不能改权限或全局历史。合同、计划、INPUTS、CHECK、HARNESS、RUN_AND_ACCOUNT、PREPARATION、入口均冻结。\n\n受信本地静止文件/配置边界保持；不引入动态文件替换/恶意管理员/生产文件系统竞争的新架构义务。不得据此声称已解决生产 TOCTOU 或跨库原子性。"
+        }
+      ],
+      "database_evidence": [
+        "approvals:tables=approval_events,approvals",
+        "approvals.approval_events[0].seq"
+      ]
+    },
+    {
+      "id": "restart_idempotency",
+      "observed": "事实：当前订单为0、checkout仍ready_for_complete；旧完成成功响应只有订单事务成功后才持久。旧recover只返回对账状态，既不补单也不写成功响应。普通订单id是随机生成，并无按checkout的数据库唯一约束。",
+      "impact": "设计推断：未来新进程在锁内先找唯一消费收据，校验请求与批准绑定后返回同一order_id和成功响应；不能依赖进程内标志、批准current读值或新UUID防重。若收据与订单不一致则失败关闭并报人工对账，不能重新付款/生成第二单。提交后即使批准已到期或源因自身写入变化，查既有结果不等于再次授予执行权。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 762,
+          "end": 776,
+          "excerpt": "    existing_record = await db.get_idempotency_record(\n      self.transactions_session, idempotency_key\n    )\n    if existing_record:\n      if existing_record.request_hash != request_hash:\n        raise IdempotencyConflictError(\n          \"Idempotency key reused with different parameters\"\n        )\n      return Checkout(**existing_record.response_body)\n\n    if self.execution_control.active_attempt(checkout_id):\n      # Preserve scheduling evidence while refusing new work without a write lock.\n      await self.execution_control.hook(\"before_claim\", checkout_id)\n      from services.execution_control import reject\n      reject(\"Checkout already has a durable payment attempt\")"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 838,
+          "end": 844,
+          "excerpt": "      checkout.status = CheckoutStatus.COMPLETED\n      order_id = f\"{uuid.uuid4()}\"\n      order_permalink_url = AnyUrl(f\"{self.base_url}/orders/{order_id}\")\n\n      checkout.order = OrderConfirmation(\n        id=order_id, permalink_url=order_permalink_url\n      )"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 951,
+          "end": 977,
+          "excerpt": "      # Save Idempotency Record\n      await db.save_idempotency_record(\n        self.transactions_session,\n        idempotency_key,\n        request_hash,\n        200,\n        response_body,\n      )\n\n      if checkout.cart_id:\n        logger.info(\n          \"Clearing cart %s after checkout completion\", checkout.cart_id\n        )\n        await db.delete_cart_session(\n          self.transactions_session, checkout.cart_id\n        )\n\n      # A is already durable; only the native order/inventory state belongs to B.\n      await self.execution_control.hook(\"before_order_commit\", checkout_id)\n      await self.transactions_session.commit()\n\n      # Notify webhook of order placement\n      await self._notify_webhook(checkout, \"order_placed\")\n\n    except Exception as e:\n      await self.transactions_session.rollback()\n      raise e"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/execution_control.py",
+          "start": 132,
+          "end": 142,
+          "excerpt": "    async def recovered_attempt(self, checkout_id):\n        return self.active_attempt(checkout_id)\n\n    async def recover(self, checkout_id):\n        record = self.active_attempt(checkout_id)\n        if record is None:\n            return {\"decision\": \"QUERY\", \"reason\": \"NO_DURABLE_ATTEMPT\"}\n        result = await self.payment_port.query(record[\"payment_ref\"])\n        return {\"decision\": \"QUERY\" if result.get(\"state\") == \"SUCCEEDED\" else \"WAIT\",\n                \"payment_ref\": record[\"payment_ref\"], \"payment_state\": result.get(\"state\"),\n                \"reason\": \"RECONCILIATION_REQUIRED_NO_AUTOMATIC_RETRY\"}"
+        }
+      ],
+      "database_evidence": [
+        "transactions.orders=[]",
+        "transactions.idempotency_records:key=create",
+        "transactions.h50_attempts[0]"
+      ]
+    },
+    {
+      "id": "revocation_serialization",
+      "observed": "事实：批准revoke只对独立批准库BEGIN IMMEDIATE，再写REVOKED；旧付款确认revoke只锁交易库，锁忙返回409。两者是不同撤销对象。批准show只读返回current，不维持到订单提交的保护。",
+      "impact": "设计推断：未来所有订单消费者与批准撤销入口须按批准库→交易库同序获取锁，持批准锁至交易提交结束。撤销先提交则订单零写；消费先提交则后到撤销须识别交易收据，返回已完成/不可追溯撤销，禁止伪报已阻止订单。旧revoke不查交易收据，不能原样充当此入口。锁忙有界返回、无静默成功；旧确认撤销的合同需另冻为提交前仍未撤销，不能把新批准与旧确认混为一物。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/APPROVAL_INBOX.py",
+          "start": 263,
+          "end": 271,
+          "excerpt": "    def show(self, approval_id):\n        if not _text(approval_id):\n            _deny(\"INVALID_APPROVAL_ID\")\n        try:\n            with self._ledger_connection() as conn:\n                row = conn.execute(\"SELECT * FROM approvals WHERE approval_id=?\",\n                                   (approval_id,)).fetchone()\n                return self._read_result(conn, row)\n        except sqlite3.Error:"
+        },
+        {
+          "path": "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/APPROVAL_INBOX.py",
+          "start": 348,
+          "end": 379,
+          "excerpt": "    def revoke(self, request):\n        _fields(request, (\"approval_id\", \"request_key\", \"reason\"))\n        if not all(_text(request[k]) for k in (\"approval_id\", \"request_key\", \"reason\")):\n            _deny(\"INVALID_REVOKE_REQUEST\")\n        if len(request[\"reason\"]) > 500:\n            _deny(\"INVALID_REVOKE_REASON\")\n        operator, _, _ = self._trusted()\n        try:\n            with self._ledger_connection() as conn:\n                conn.execute(\"BEGIN IMMEDIATE\")\n                row = conn.execute(\"SELECT * FROM approvals WHERE approval_id=?\",\n                                   (request[\"approval_id\"],)).fetchone()\n                if row is None:\n                    _deny(\"APPROVAL_NOT_FOUND\")\n                if row[\"operator_id\"] != operator:\n                    _deny(\"REVOKE_NOT_OWNER\")\n                if row[\"revoke_request_json\"]:\n                    if json.loads(row[\"revoke_request_json\"]) != request:\n                        _deny(\"REVOKE_CONFLICT\")\n                    return self._read_result(conn, row)\n                conn.execute(\"UPDATE approvals SET revoke_request_json=? WHERE approval_id=?\",\n                             (_canonical(request), request[\"approval_id\"]))\n                source_digest = json.loads(row[\"record_json\"])[\"source_digest\"]\n                conn.execute(\"\"\"INSERT INTO approval_events\n                    (approval_id,seq,kind,operator_id,source_digest,at,request_json)\n                    VALUES (?,?,?,?,?,?,?)\"\"\",\n                    (request[\"approval_id\"], 2, \"REVOKED\", operator,\n                     source_digest, self._clock(), _canonical(request)))\n                conn.commit()\n                return self._read_result(\n                    conn, conn.execute(\"SELECT * FROM approvals WHERE approval_id=?\",\n                                       (request[\"approval_id\"],)).fetchone()"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/execution_control.py",
+          "start": 59,
+          "end": 71,
+          "excerpt": "    async def revoke(self, confirmation_ref):\n        # Nonblocking acquisition: an open order transaction cannot stall the loop.\n        # Revocation that loses the lock is not applied; caller receives 409.\n        with closing(sqlite3.connect(self.path, timeout=0)) as conn:\n            try:\n                conn.execute(\"BEGIN IMMEDIATE\")\n                conn.execute(\"UPDATE h50_confirmations SET revoked=1 WHERE confirmation_ref=?\", (confirmation_ref,))\n                conn.commit()\n            except sqlite3.OperationalError as exc:\n                conn.rollback()\n                if \"locked\" in str(exc).lower() or \"busy\" in str(exc).lower():\n                    reject(\"Revocation write busy; retry after reconciliation\", \"H50_REVOCATION_BUSY\")\n                raise"
+        }
+      ],
+      "database_evidence": [
+        "approvals.approvals[0].revoke_request_json=null",
+        "transactions.h50_confirmations[0].revoked=0"
+      ]
+    },
+    {
+      "id": "notification_boundary",
+      "observed": "事实：通知在970行订单提交后调用；未配platform.webhook_url或无订单则返回。通知生成随机Webhook-Id并作幂等键，失败重试仅在当前调用内。默认工厂仅注入execution_control，没有批准消费者。",
+      "impact": "设计推断：提交后进程退出可能遗漏通知；重新调用通知还会生成新事件身份。首个本地订单恢复候选必须明确不发HTTP、报告通知待处理，不能把通知失败解释成订单未提交而重扣/补单。耐久通知发件箱若成为验收目标需单独授权；本轮未证明完整交付可靠性。未来显式本地入口采用受信配置，不能把请求risk_signals当批准配置。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 968,
+          "end": 979,
+          "excerpt": "      # A is already durable; only the native order/inventory state belongs to B.\n      await self.execution_control.hook(\"before_order_commit\", checkout_id)\n      await self.transactions_session.commit()\n\n      # Notify webhook of order placement\n      await self._notify_webhook(checkout, \"order_placed\")\n\n    except Exception as e:\n      await self.transactions_session.rollback()\n      raise e\n\n    return checkout"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 981,
+          "end": 1014,
+          "excerpt": "  async def _notify_webhook(self, checkout: Checkout, event_type: str) -> None:\n    \"\"\"Notifies the configured webhook of an order event.\n\n    Per the UCP REST OpenAPI (``webhooks.orderEvent``), the request body is the\n    order object itself (``#/components/schemas/order``). This sample also sends\n    an ``X-Event-Type`` extension header, but it is not part of the UCP webhook\n    contract and conforming receivers cannot require it. The body must always be\n    a valid order, so no notification is sent when there is no order to deliver.\n\n    Every delivery is RFC 9421-signed as this business (order.md, Webhook\n    Signature Verification): ``UCP-Agent`` names our profile, and\n    ``Content-Digest``/``Signature-Input``/``Signature`` cover the exact raw\n    body bytes sent on the wire. Failed deliveries (transport errors or a\n    5xx from the receiver) are retried with bounded exponential backoff\n    (order.md: businesses MUST retry failed webhook deliveries); a 4xx is a\n    permanent rejection and is not retried. Delivery failures are logged and\n    never propagate into the order flow.\n    \"\"\"\n    if not checkout.platform or not checkout.platform.webhook_url:\n      return\n\n    order_data = None\n    if checkout.order and checkout.order.id:\n      order_data = await db.get_order(\n        self.transactions_session, checkout.order.id\n      )\n\n    if not order_data:\n      logger.warning(\n        \"Skipping %s webhook for checkout %s: no order to deliver\",\n        event_type,\n        checkout.id,\n      )\n      return"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 1016,
+          "end": 1032,
+          "excerpt": "    webhook_url = str(checkout.platform.webhook_url)\n    # Serialize exactly once: the signed Content-Digest and the wire body\n    # must be the same bytes.\n    body = json.dumps(order_data).encode(\"utf-8\")\n    webhook_id = str(uuid.uuid4())\n    headers = {\n      \"Content-Type\": \"application/json\",\n      \"X-Event-Type\": event_type,\n      \"Webhook-Id\": webhook_id,\n      \"Webhook-Timestamp\": str(\n        int(datetime.datetime.now(datetime.timezone.utc).timestamp())\n      ),\n      # A webhook POST is a state-changing request, so the signed-component\n      # table requires idempotency-key (signatures.md). The event id doubles\n      # as the key: retries carry the same value, letting the platform\n      # deduplicate redelivered events.\n      \"Idempotency-Key\": webhook_id,"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/dependencies.py",
+          "start": 254,
+          "end": 269,
+          "excerpt": "def get_checkout_service(\n  request: Request,\n  fulfillment_service: Annotated[\n    FulfillmentService, Depends(get_fulfillment_service)\n  ],\n  products_session: Annotated[AsyncSession, Depends(get_products_db)],\n  transactions_session: Annotated[AsyncSession, Depends(get_transactions_db)],\n) -> CheckoutService:\n  \"\"\"Dependency provider for CheckoutService.\"\"\"\n  return CheckoutService(\n    fulfillment_service,\n    products_session,\n    transactions_session,\n    str(request.base_url),\n    execution_control=getattr(request.app.state, \"execution_control\", None),\n  )"
+        }
+      ],
+      "database_evidence": [
+        "transactions.checkouts[0].data:platform成员省略"
+      ]
+    }
+  ],
+  "options": [
+    {
+      "id": "KEEP_QUERY_ONLY",
+      "classification": "REFERENCE_ONLY",
+      "reason": "已接受的最小安全基线，保留付款可查询与旧claim；不能结束付款1/订单0。无新业务成本，作为未来失败关闭回退，不作为新增能力。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/execution_control.py",
+          "start": 132,
+          "end": 142,
+          "excerpt": "    async def recovered_attempt(self, checkout_id):\n        return self.active_attempt(checkout_id)\n\n    async def recover(self, checkout_id):\n        record = self.active_attempt(checkout_id)\n        if record is None:\n            return {\"decision\": \"QUERY\", \"reason\": \"NO_DURABLE_ATTEMPT\"}\n        result = await self.payment_port.query(record[\"payment_ref\"])\n        return {\"decision\": \"QUERY\" if result.get(\"state\") == \"SUCCEEDED\" else \"WAIT\",\n                \"payment_ref\": record[\"payment_ref\"], \"payment_state\": result.get(\"state\"),\n                \"reason\": \"RECONCILIATION_REQUIRED_NO_AUTOMATIC_RETRY\"}"
+        },
+        {
+          "path": "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/REVIEW.md",
+          "start": 53,
+          "end": 65,
+          "excerpt": "Evaluator 继承26（父自行重放20加独立6）+本次正式24+补充3=53/60；本新包使用27/34。没有清零父失败/诊断费用，剩余额度不用于继续堆登记器测试。来源原库未变，无新付款/订单/库存业务写入、HTTP、网络、Provider、模型、安装或 Git 写操作。父在一次性来源副本建表的失败事实仍保留。\n\n## Project impact verdict\n\nImpact verdict: NOT_APPLICABLE\n\n本包为 repair，不另包装成新能力实验的量化提升。已测得父文件别名隔离缺陷关闭，并在合法重冻结下首次完整接受这个本地批准登记切片；不倒改父 H60，不把它称为全项目安全或真实人身份保证。原 M06 仍付款1/订单0，批准执行消费没有实现，B-17 整体未关闭。\n\n## Iteration value and continuation decision\n\nContinuation decision: STOP\n\nSTOP 此构造器/登记器方向：代表性链路已闭合，继续加字段或别名用例的预期收益低于确认批准的实际消费者。下一有界任务 H61_APPROVAL_CONSUMER_RECOVERY_SEAM_MEASUREMENT_V1 / one_off / measurement-only / CONTRACT_FROZEN / Executor；合同路径 docs/05_任务交接/H61_APPROVAL_CONSUMER_RECOVERY_SEAM_MEASUREMENT_V1/CONTRACT.md。"
+        }
+      ],
+      "proposed_files": [],
+      "safety_obligations": [
+        "不解除claim、不重扣、不把QUERY叫作完成",
+        "保留原付款与订单缺口，超范围或未知仍等待人工"
+      ]
+    },
+    {
+      "id": "REUSE_COMPLETE",
+      "classification": "REJECT",
+      "reason": "固定M06无complete幂等结果且已有claim；按代码会拒绝。若为继续执行而删claim/绕过分支，旧入口仍会调用付款并重新申请占用。批准记录未被该入口消费。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 762,
+          "end": 801,
+          "excerpt": "    existing_record = await db.get_idempotency_record(\n      self.transactions_session, idempotency_key\n    )\n    if existing_record:\n      if existing_record.request_hash != request_hash:\n        raise IdempotencyConflictError(\n          \"Idempotency key reused with different parameters\"\n        )\n      return Checkout(**existing_record.response_body)\n\n    if self.execution_control.active_attempt(checkout_id):\n      # Preserve scheduling evidence while refusing new work without a write lock.\n      await self.execution_control.hook(\"before_claim\", checkout_id)\n      from services.execution_control import reject\n      reject(\"Checkout already has a durable payment attempt\")\n\n    # The claim must commit in its own transaction before any payment or order writes.\n    await self.transactions_session.rollback()\n    # Retain the local method's connection throughout the claim/payment gap.\n    await self.transactions_session.connection()\n    execution = await self.execution_control.claim(\n      checkout_id, risk_signals.get(\"h50_confirmation_ref\"), idempotency_key, request_hash,\n      authorization=risk_signals.get(\"h53_authorization\")\n    )\n\n    # Log the request\n    await db.log_request(\n      self.transactions_session,\n      method=\"POST\",\n      url=f\"/checkout-sessions/{checkout_id}/complete\",\n      checkout_id=checkout_id,\n      payload=combined_data,\n    )\n\n    checkout = await self._get_and_validate_checkout(checkout_id)\n    self._ensure_modifiable(checkout, \"complete\")\n\n    # Process Payment\n    await self._process_payment(payment, execution=execution)\n    await self.execution_control.hook(\"after_payment\", checkout_id)"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/execution_control.py",
+          "start": 87,
+          "end": 97,
+          "excerpt": "                conn.execute(\"BEGIN IMMEDIATE\")\n                if conn.execute(\"SELECT 1 FROM h50_attempts WHERE checkout_id=?\", (checkout_id,)).fetchone():\n                    reject(\"Checkout has an existing payment attempt\")\n                record = conn.execute(\"SELECT * FROM h50_confirmations WHERE confirmation_ref=?\", (confirmation_ref,)).fetchone()\n                if record is None or record[\"checkout_id\"] != checkout_id:\n                    reject(\"Unknown trusted confirmation\", \"H50_CONFIRMATION_INVALID\", 403)\n                if record[\"revoked\"] or record[\"expires_at\"] <= self.now():\n                    reject(\"Confirmation revoked or expired\", \"H50_CONFIRMATION_INACTIVE\", 403)\n                row = conn.execute(\"SELECT data,status FROM checkouts WHERE id=?\", (checkout_id,)).fetchone()\n                if row is None or row[\"status\"] in (\"completed\", \"canceled\"):\n                    reject(\"Checkout missing or terminal\")"
+        }
+      ],
+      "proposed_files": [],
+      "safety_obligations": [
+        "禁止删除或重置旧付款占用",
+        "禁止直接重调旧complete作为订单恢复",
+        "不通过改key或伪造成功响应绕过防重"
+      ]
+    },
+    {
+      "id": "ORDER_ONLY_RECOVERY",
+      "classification": "ABSORB",
+      "reason": "仅吸收为下一合同的唯一设计方向；复用原生订单事务而不复制商城。当前跨库消费/撤销、耐久一次性收据和入口均缺，不能称已可直接接线。",
+      "refs": [
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 822,
+          "end": 844,
+          "excerpt": "    # Atomic Inventory Reservation + Order Completion\n    try:\n      for line in checkout.line_items:\n        product_id = line.item.id\n        # We verify product existence again (optional but good practice)\n        if await db.get_product(self.products_session, product_id):\n          success = await db.reserve_stock(\n            self.transactions_session, product_id, line.quantity\n          )\n          if not success:\n            # This rollback applies to the transaction_session\n            await self.transactions_session.rollback()\n            raise OutOfStockError(\n              f\"Item {product_id} is out of stock\", status_code=409\n            )\n\n      checkout.status = CheckoutStatus.COMPLETED\n      order_id = f\"{uuid.uuid4()}\"\n      order_permalink_url = AnyUrl(f\"{self.base_url}/orders/{order_id}\")\n\n      checkout.order = OrderConfirmation(\n        id=order_id, permalink_url=order_permalink_url\n      )"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "start": 938,
+          "end": 977,
+          "excerpt": "      await db.save_order(\n        self.transactions_session,\n        order.id,\n        order.model_dump(mode=\"json\", by_alias=True, exclude_none=True),\n      )\n\n      await db.save_checkout(\n        self.transactions_session,\n        checkout_id,\n        checkout.status,\n        response_body,\n      )\n\n      # Save Idempotency Record\n      await db.save_idempotency_record(\n        self.transactions_session,\n        idempotency_key,\n        request_hash,\n        200,\n        response_body,\n      )\n\n      if checkout.cart_id:\n        logger.info(\n          \"Clearing cart %s after checkout completion\", checkout.cart_id\n        )\n        await db.delete_cart_session(\n          self.transactions_session, checkout.cart_id\n        )\n\n      # A is already durable; only the native order/inventory state belongs to B.\n      await self.execution_control.hook(\"before_order_commit\", checkout_id)\n      await self.transactions_session.commit()\n\n      # Notify webhook of order placement\n      await self._notify_webhook(checkout, \"order_placed\")\n\n    except Exception as e:\n      await self.transactions_session.rollback()\n      raise e"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/db.py",
+          "start": 431,
+          "end": 442,
+          "excerpt": "async def reserve_stock(\n  session: AsyncSession, product_id: str, quantity: int\n) -> bool:\n  \"\"\"Atomically decrements inventory if sufficient stock exists.\"\"\"\n  stmt = (\n    update(Inventory)\n    .where(Inventory.product_id == product_id)\n    .where(Inventory.quantity >= quantity)\n    .values(quantity=Inventory.quantity - quantity)\n  )\n  result = await session.execute(stmt)\n  return result.rowcount > 0"
+        },
+        {
+          "path": "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/APPROVAL_INBOX.py",
+          "start": 348,
+          "end": 379,
+          "excerpt": "    def revoke(self, request):\n        _fields(request, (\"approval_id\", \"request_key\", \"reason\"))\n        if not all(_text(request[k]) for k in (\"approval_id\", \"request_key\", \"reason\")):\n            _deny(\"INVALID_REVOKE_REQUEST\")\n        if len(request[\"reason\"]) > 500:\n            _deny(\"INVALID_REVOKE_REASON\")\n        operator, _, _ = self._trusted()\n        try:\n            with self._ledger_connection() as conn:\n                conn.execute(\"BEGIN IMMEDIATE\")\n                row = conn.execute(\"SELECT * FROM approvals WHERE approval_id=?\",\n                                   (request[\"approval_id\"],)).fetchone()\n                if row is None:\n                    _deny(\"APPROVAL_NOT_FOUND\")\n                if row[\"operator_id\"] != operator:\n                    _deny(\"REVOKE_NOT_OWNER\")\n                if row[\"revoke_request_json\"]:\n                    if json.loads(row[\"revoke_request_json\"]) != request:\n                        _deny(\"REVOKE_CONFLICT\")\n                    return self._read_result(conn, row)\n                conn.execute(\"UPDATE approvals SET revoke_request_json=? WHERE approval_id=?\",\n                             (_canonical(request), request[\"approval_id\"]))\n                source_digest = json.loads(row[\"record_json\"])[\"source_digest\"]\n                conn.execute(\"\"\"INSERT INTO approval_events\n                    (approval_id,seq,kind,operator_id,source_digest,at,request_json)\n                    VALUES (?,?,?,?,?,?,?)\"\"\",\n                    (request[\"approval_id\"], 2, \"REVOKED\", operator,\n                     source_digest, self._clock(), _canonical(request)))\n                conn.commit()\n                return self._read_result(\n                    conn, conn.execute(\"SELECT * FROM approvals WHERE approval_id=?\",\n                                       (request[\"approval_id\"],)).fetchone()"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/dependencies.py",
+          "start": 254,
+          "end": 269,
+          "excerpt": "def get_checkout_service(\n  request: Request,\n  fulfillment_service: Annotated[\n    FulfillmentService, Depends(get_fulfillment_service)\n  ],\n  products_session: Annotated[AsyncSession, Depends(get_products_db)],\n  transactions_session: Annotated[AsyncSession, Depends(get_transactions_db)],\n) -> CheckoutService:\n  \"\"\"Dependency provider for CheckoutService.\"\"\"\n  return CheckoutService(\n    fulfillment_service,\n    products_session,\n    transactions_session,\n    str(request.base_url),\n    execution_control=getattr(request.app.state, \"execution_control\", None),\n  )"
+        }
+      ],
+      "proposed_files": [
+        "<NEXT_TASK>/merchant/services/checkout_service.py",
+        "<NEXT_TASK>/merchant/db.py",
+        "<NEXT_TASK>/APPROVAL_INBOX.py",
+        "<NEXT_TASK>/ORDER_RECOVERY.py"
+      ],
+      "safety_obligations": [
+        "仅新任务本地副本，旧H60/H60R/商城/SDK不变；唯一主变更为受批准的订单侧恢复，不扩HTTP工厂或付款协议",
+        "抽出原订单逻辑并让旧complete复用；保留正常完成行为、商品/库存/履约校验、订单/checkout/幂等及购物车一致性，不拷贝整段另写业务",
+        "订单、库存与交易库唯一消费收据同事务；approval_id/checkout_id/payment_ref唯一，收据持久order_id、绑定摘要与响应",
+        "受信时钟/配置与独立假PSP静止源合同，源摘要不静默改范围；实时生产PSP和库存目录需另证",
+        "批准库→交易库同序加锁，消费核验后持批准锁至交易commit；所有批准撤销入口同协议并查收据，晚撤销不伪报成功阻止",
+        "交易库为已执行权威，不宣称批准库与交易库双提交原子；崩溃后优先收据、提交前回滚、锁忙有界失败关闭",
+        "保留旧claim，无charge/payment/recover业务调用，无删除占用；原付款/确认/授权绑定不得被新批准覆盖",
+        "本地通知禁发网络，明确待处理；真实通知最终交付/强认证/真实PSP/生产部署不列已覆盖",
+        "实现前由Evaluator冻结新范围、目录夹具、撤销/到期顺序、正常路径回归与8项失败判定；此清单不是执行授权"
+      ]
+    }
+  ],
+  "future_cases": [
+    {
+      "id": "G01_NORMAL_ORDER_ONLY",
+      "status": "DESIGN_ONLY",
+      "input": "未来新任务静止合成M06副本、受信新批准和时钟、既有商品目录、足够库存；非复用历史批准为当前权限。",
+      "expected": "仅订单侧执行一次，订单1、checkout完成、库存5→4；消费收据/订单/响应同事务持久；假PSP原付款仍1。",
+      "forbidden": "charge、新claim、退款、真实网络、伪造历史批准当前有效"
+    },
+    {
+      "id": "G02_NO_RECHARGE",
+      "status": "DESIGN_ONLY",
+      "input": "同一已付款引用；将所有付款/claim/recover调用替换为一调用即失败的测试哨兵，恢复走专用入口。",
+      "expected": "无哨兵调用，原payment_ref与付款库逐字节不变，订单完成或安全拒绝均不重扣。",
+      "forbidden": "仅以PSP幂等压掉第二次charge并称无调用；删旧claim"
+    },
+    {
+      "id": "G03_REPLAY_SINGLE_ORDER",
+      "status": "DESIGN_ONLY",
+      "input": "G01已提交后同进程/新进程重放同批准和相同绑定；另给冲突请求key/checkout。",
+      "expected": "返回同order_id/原成功响应，订单1、库存仅扣一次；冲突拒绝；到期后读取既有收据不触发新执行。",
+      "forbidden": "先按失效源重建订单或以新UUID规避唯一性；新增charge"
+    },
+    {
+      "id": "G04_REVOKED_APPROVAL",
+      "status": "DESIGN_ONLY",
+      "input": "受控两进程调度：撤销先提交、消费先提交、争锁忙三子情形；检查所有批准撤销入口。",
+      "expected": "先撤销订单0且不消费；先消费订单1、后撤销明确已完成不可追溯阻止；争锁有界拒绝/重试且新进程可读真实状态。",
+      "forbidden": "show→订单写的无锁窗口；晚撤销伪报成功阻止；撤销旧付款代替批准"
+    },
+    {
+      "id": "G05_CHANGED_SOURCE",
+      "status": "DESIGN_ONLY",
+      "input": "批准后改变snapshot/付款引用/源库存或无关订单之一，或受信角色/策略变化；各为未来独立负向子情形。",
+      "expected": "首次消费前重算原完整源和配置，失配零订单/库存/消费写入；不静默更新批准。",
+      "forbidden": "缩窄摘要、补字段、从请求接收受信配置或照旧执行"
+    },
+    {
+      "id": "G06_INVENTORY_SHORTAGE",
+      "status": "DESIGN_ONLY",
+      "input": "库存已不足但其余付款绑定仍合法的新合成源上取得新批准，保证摘要一致以到达库存分支；另测商品缺失。",
+      "expected": "同事务条件库存写失败、全部订单/checkout/消费回滚；付款仍1、保留人工对账，不自动退款。",
+      "forbidden": "只复现源漂移便称库存分支已测；缺商品跳过；负库存或先消费后失败"
+    },
+    {
+      "id": "G07_CRASH_AFTER_COMMIT",
+      "status": "DESIGN_ONLY",
+      "input": "未来监督者等首OS进程实际退出：分别在交易commit前、commit后但响应/通知前崩溃；再开新进程。",
+      "expected": "commit前无订单/消费/扣库，可在批准仍有效时重试；commit后返回耐久同一订单且不重扣；通知未发明确待处理。",
+      "forbidden": "只关lifespan冒充进程退出；以通知失败回滚已提交订单；跨库双commit原子性虚报"
+    },
+    {
+      "id": "G08_CONCURRENT_CONSUMERS",
+      "status": "DESIGN_ONLY",
+      "input": "两个独立进程/连接竞争同批准，另测不同批准/请求指向同checkout/payment，真实数据库锁和唯一约束。",
+      "expected": "至多一次订单/库存扣减，败者返回同一已提交结果或有界忙拒绝；锁序一致、无事件循环长阻塞；原付款不变。",
+      "forbidden": "仅顺序调用或进程内锁冒充竞争；重复订单、重复库存扣减、绕开唯一键"
+    }
+  ],
+  "external_requirement_impact": {
+    "profile": "PCAC-AGENTPAY",
+    "requirement_ids": [
+      "PCAC-07",
+      "PCAC-09",
+      "PCAC-10",
+      "PCAC-12",
+      "PCAC-18",
+      "PCAC-20"
+    ],
+    "applicability": "CORE/ADAPTER",
+    "maturity_before": "批准登记本地M3/M4；消费者unknown",
+    "maturity_after": "仅静态测量/设计证据；产品成熟度不升级",
+    "test_evidence": [
+      "VALIDATION_PLAN.yaml:VP-01..06",
+      "ASSESSMENT.json:refs",
+      "future_cases:DESIGN_ONLY"
+    ],
+    "trace_evidence": [
+      "evidence/executor/run_0001/EXTRACTION.json",
+      "ANALYSIS.md",
+      "evidence/l2_executor_01"
+    ],
+    "residual_risk": [
+      "无订单执行/撤销竞争/进程崩溃运行成绩",
+      "现实身份、真实PSP、完整标准互通、生产和客户价值unknown"
+    ]
+  }
+}

@@ -1,0 +1,278 @@
+{
+  "schema": "h49-seam-map/v1",
+  "source_lock": "H47 sources/ucp @ 99724a32da48bd0f4962c83e25f17c8345ce055e",
+  "measurement": "STATIC_SOURCE_ONLY",
+  "units": [
+    {
+      "operation": "create_checkout",
+      "source_refs": [
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/checkout_service.py",
+          "symbol": "CheckoutService.create_checkout",
+          "start_line": 160,
+          "end_line": 171
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/routes/ucp_implementation.py",
+          "symbol": "create_checkout",
+          "start_line": 142,
+          "end_line": 165
+        }
+      ],
+      "read_set": "读 idempotency_records、可选 cart、product/catalog；检查重复 key。",
+      "write_set": "写 checkout 会话、请求日志及 idempotency_records；可能复用未完成的 cart checkout。",
+      "effect": "建立可修改的结算快照；无付款执行。",
+      "payment_relevance": "支付准备入口，价格/商品确认应针对随后实际可执行的 checkout 版本。",
+      "bypass_reason": "直接请求服务端创建新 checkout 不经过 H48 客户端确认门禁，不能据此推定付款被放行。",
+      "proposed_treatment": "创建流程无需最终支付确认；服务端生成稳定 checkout 引用并对随后完成核验提供可信版本基线，禁止伪造授权。"
+    },
+    {
+      "operation": "get_checkout",
+      "source_refs": [
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/checkout_service.py",
+          "symbol": "CheckoutService.get_checkout",
+          "start_line": 462,
+          "end_line": 470
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/routes/ucp_implementation.py",
+          "symbol": "get_checkout",
+          "start_line": 169,
+          "end_line": 180
+        }
+      ],
+      "read_set": "读 checkout 当前持久化记录。",
+      "write_set": "写 GET 请求日志、提交日志事务；不改 checkout 交易内容。",
+      "effect": "查询 checkout，可能用于 UNKNOWN 查询恢复，非付款调用。",
+      "payment_relevance": "状态查询可作为商家事实来源，但不等于支付服务商终局确认。",
+      "bypass_reason": "查询接口自身不是绕过付款；误把其副作用称为结算风险会掩盖真实 write seam。",
+      "proposed_treatment": "保留有权限的状态查询和不可变轨迹，区分商家状态与 Provider 事实；不要对纯 GET 加不相关新付款闸门。"
+    },
+    {
+      "operation": "update_checkout",
+      "source_refs": [
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/checkout_service.py",
+          "symbol": "CheckoutService.update_checkout",
+          "start_line": 483,
+          "end_line": 508
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/checkout_service.py",
+          "symbol": "CheckoutService.update_checkout",
+          "start_line": 686,
+          "end_line": 710
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/routes/ucp_implementation.py",
+          "symbol": "update_checkout",
+          "start_line": 183,
+          "end_line": 205
+        }
+      ],
+      "read_set": "读 idempotency、checkout 当前值、商品/库存及价格。",
+      "write_set": "写 line_items/quantity/payment/fulfillment 的商家 checkout 快照、请求日志、幂等缓存。",
+      "effect": "合法改变已生成结算快照，未发起付款。",
+      "payment_relevance": "正是 H48 检查后改变订单内容的可穿插更新入口。",
+      "bypass_reason": "签名有效的更新可在客户端授权核验之后、服务端 complete 之前穿插；不能用本进程锁代替共享版本约束。",
+      "proposed_treatment": "必须与 complete 共用持久化 checkout_version/CAS 或同一数据库行锁；每次实质变更使旧确认失效。"
+    },
+    {
+      "operation": "complete_checkout",
+      "source_refs": [
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/routes/ucp_implementation.py",
+          "symbol": "complete_checkout",
+          "start_line": 208,
+          "end_line": 233
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/checkout_service.py",
+          "symbol": "CheckoutService.complete_checkout",
+          "start_line": 725,
+          "end_line": 760
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/checkout_service.py",
+          "symbol": "CheckoutService.complete_checkout",
+          "start_line": 781,
+          "end_line": 792
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/checkout_service.py",
+          "symbol": "CheckoutService.complete_checkout",
+          "start_line": 897,
+          "end_line": 934
+        }
+      ],
+      "read_set": "先读 idempotency_records；未命中再读 checkout、状态、支付输入和商品库存。",
+      "write_set": "先 _process_payment 模拟支付；后修改库存、订单、checkout 终态、幂等记录并 commit。",
+      "effect": "唯一明确的模拟付款核心执行入口。",
+      "payment_relevance": "必须实现确认来源/授权撤销/快照一致性到付款调用前的商家侧安全门禁。",
+      "bypass_reason": "checkout_complete 只进入请求哈希未见验签和真实授权绑定；原生签名验证不等于用户确认；付款早于事务提交。",
+      "proposed_treatment": "服务端入口检查用户确认凭证/版本/有效期并绑定不可变执行快照；多实例共享写锁/CAS；付款前持久化 attempt，付款后查证与补偿。"
+    },
+    {
+      "operation": "cancel_checkout",
+      "source_refs": [
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/checkout_service.py",
+          "symbol": "CheckoutService.cancel_checkout",
+          "start_line": 1104,
+          "end_line": 1161
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/routes/ucp_implementation.py",
+          "symbol": "cancel_checkout",
+          "start_line": 236,
+          "end_line": 247
+        }
+      ],
+      "read_set": "读 checkout/idempotency 与现有状态。",
+      "write_set": "写 canceled checkout、请求日志、幂等记录；不触发退款。",
+      "effect": "取消未完成 checkout，不是支付退款操作。",
+      "payment_relevance": "必须避免 cancel 与 complete 同时竞争造成已付款而会话取消的分裂事实。",
+      "bypass_reason": "外部客户端只保护 complete 不会协调并发 cancel；但取消本身不能冒充真实冲正。",
+      "proposed_treatment": "与执行占用同一商家行状态协调；付款已启动时标记取消待处理与查询/退款人工责任，不假设自动退款。"
+    },
+    {
+      "operation": "create_cart",
+      "source_refs": [
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/cart_service.py",
+          "symbol": "CartService.create_cart",
+          "start_line": 91,
+          "end_line": 110
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/routes/ucp_implementation.py",
+          "symbol": "create_cart",
+          "start_line": 250,
+          "end_line": 263
+        }
+      ],
+      "read_set": "读 idempotency 和商品信息。",
+      "write_set": "写 cart_session 和 idempotency_records。",
+      "effect": "购物车准备，不触发付款。",
+      "payment_relevance": "cart 可作为后续 checkout 的内容来源，转 checkout 时要保存准确快照。",
+      "bypass_reason": "仅建购物车不是支付旁路；控制若只盯 checkout 不应误判 cart 写操作为付款。",
+      "proposed_treatment": "cart→checkout 血缘需记录，进入付款前以 checkout 的商家当前值重新计算确认摘要。"
+    },
+    {
+      "operation": "update_cart",
+      "source_refs": [
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/cart_service.py",
+          "symbol": "CartService.update_cart",
+          "start_line": 203,
+          "end_line": 232
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/routes/ucp_implementation.py",
+          "symbol": "update_cart",
+          "start_line": 278,
+          "end_line": 292
+        }
+      ],
+      "read_set": "读 cart_session 和 idempotency。",
+      "write_set": "写购物车商品数量和明细、幂等记录。",
+      "effect": "购物车编辑，不直接付款。",
+      "payment_relevance": "若 checkout 由 cart 创建，内容一致性必须以最终 checkout 版本核实。",
+      "bypass_reason": "修改购物车可能影响后续来源，但现有 source 不证明它会自动更新已生成 checkout。",
+      "proposed_treatment": "在创建 checkout 时记录实际复制快照，禁止从单独 cart 变更推断已经改变现存 checkout。"
+    },
+    {
+      "operation": "cancel_cart",
+      "source_refs": [
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/cart_service.py",
+          "symbol": "CartService.cancel_cart",
+          "start_line": 283,
+          "end_line": 327
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/routes/ucp_implementation.py",
+          "symbol": "cancel_cart",
+          "start_line": 295,
+          "end_line": 305
+        }
+      ],
+      "read_set": "读 cart_session 和 idempotency。",
+      "write_set": "删除 cart_session 并写幂等记录。",
+      "effect": "删除独立购物车会话，不会发起任何模拟付款动作。",
+      "payment_relevance": "未完成 checkout 可能仍引用原 cart_id；取消不是付款撤销。",
+      "bypass_reason": "cart 删除不是消费付款旁路，不得把它当退款或关闭既有订单。",
+      "proposed_treatment": "记录 checkout↔cart 来源，独立保证 complete 的 checkout 快照与确认一致。"
+    },
+    {
+      "operation": "update_order",
+      "source_refs": [
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/routes/order.py",
+          "symbol": "update_order",
+          "start_line": 75,
+          "end_line": 90
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/checkout_service.py",
+          "symbol": "CheckoutService.update_order",
+          "start_line": 1173,
+          "end_line": 1188
+        }
+      ],
+      "read_set": "读既有 order 是否存在并解析请求正文。",
+      "write_set": "直接覆盖 order JSON 并 commit；服务端方法未见与 checkout 确认状态联动。",
+      "effect": "付款后订单记录变更，不发起新付款。",
+      "payment_relevance": "会影响履约和最终审计事实可信度，应与支付时订单绑定分清。",
+      "bypass_reason": "订单写接口能篡改付款后事实展示，但源码不表明可以调用付款；不能标为直接付款旁路。",
+      "proposed_treatment": "按权限限制 post-payment order mutation；建立版本及事件记录，金额/付款核心字段只读或强审批。"
+    },
+    {
+      "operation": "ship_order",
+      "source_refs": [
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/routes/order.py",
+          "symbol": "ship_order",
+          "start_line": 55,
+          "end_line": 67
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/checkout_service.py",
+          "symbol": "CheckoutService.ship_order",
+          "start_line": 1061,
+          "end_line": 1102
+        }
+      ],
+      "read_set": "读 order、关联 checkout 与模拟测试密钥。",
+      "write_set": "写 fulfillment.shipped 事件/订单；模拟发送 webhook。",
+      "effect": "测试用履约动作，无新付款。",
+      "payment_relevance": "与完成后补救/履约审计相关，但不应视为可直接付款。",
+      "bypass_reason": "已知路由有 Simulation-Secret 校验，不代表正式第三方履约授权；不是支付入口。",
+      "proposed_treatment": "保留测试入口独立隔离，履约修改事件要关联可信订单 ID，不能回写覆盖已确认金额。"
+    },
+    {
+      "operation": "order_event_webhook",
+      "source_refs": [
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/routes/ucp_implementation.py",
+          "symbol": "order_event_webhook",
+          "start_line": 308,
+          "end_line": 325
+        },
+        {
+          "path": "docs/05_任务交接/H47_UCP_COMMERCE_APPLICABILITY_V1/sources/ucp/rest/python/server/services/checkout_service.py",
+          "symbol": "CheckoutService.update_order",
+          "start_line": 1173,
+          "end_line": 1188
+        }
+      ],
+      "read_set": "验签依赖读取签名材料，按 payload.id 读取既有订单。",
+      "write_set": "将传入 Order 对象覆盖写入本地订单并 commit。",
+      "effect": "入站订单事件改变商家订单视图，不调用 _process_payment。",
+      "payment_relevance": "可能改变消费后订单解释与事实连续性，属服务端权限及订单写边界。",
+      "bypass_reason": "存在签名依赖但未在本包验证身份/重放/字段授权；不能推定 webhook 足以覆写结算权威事实。",
+      "proposed_treatment": "独立校验事件来源、订单标识、状态迁移与签名上下文；仅准修改授权字段且 append-only 留证。"
+    }
+  ]
+}

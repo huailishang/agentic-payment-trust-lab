@@ -1,0 +1,143 @@
+{
+  "files": [
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/consumer.py",
+      "source_sha256": "50ecaa00fa7d5654024c2fe6ddd2cff4f4c2417bac564acb0de1ffb266210ae7",
+      "copy": "consumer_snapshot.py",
+      "copy_sha256": "50ecaa00fa7d5654024c2fe6ddd2cff4f4c2417bac564acb0de1ffb266210ae7"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/RUNTIME.py",
+      "source_sha256": "7147fbe6624115f3193561aef37e8e07790f54a94e29608615c935675b30114a",
+      "copy": "RUNTIME.py",
+      "copy_sha256": "f2c8f30d9be642e44eec71b412ee5c6f66079f203804d85ddf318b7f8aaea6da"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/SOURCE_MANIFEST.json",
+      "source_sha256": "1da0aa48b04932bb5240c33c80571c513ce35298640e39995e714d9dbafab6a2",
+      "copy": "SOURCE_MANIFEST.json",
+      "copy_sha256": "1da0aa48b04932bb5240c33c80571c513ce35298640e39995e714d9dbafab6a2"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/python/LICENSE",
+      "source_sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "copy": "sources/python/LICENSE",
+      "copy_sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/python/pyproject.toml",
+      "source_sha256": "77545caabe257cb2a7b3c9bbfea4d03b72b67a680ff3db2831d3b977610bc646",
+      "copy": "sources/python/pyproject.toml",
+      "copy_sha256": "77545caabe257cb2a7b3c9bbfea4d03b72b67a680ff3db2831d3b977610bc646"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/canonicalize.js",
+      "source_sha256": "f9f498b55c99eefe348c99018ddcfe08efa6f7ff96b9ba9dce4b7090b33c4438",
+      "copy": "sources/reference/canonicalize.js",
+      "copy_sha256": "f9f498b55c99eefe348c99018ddcfe08efa6f7ff96b9ba9dce4b7090b33c4438"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/LICENSE",
+      "source_sha256": "6821faaddedf2d78c95bb6d98b127e9e616097afd2f6bcc34389f000d13ab12d",
+      "copy": "sources/reference/LICENSE",
+      "copy_sha256": "6821faaddedf2d78c95bb6d98b127e9e616097afd2f6bcc34389f000d13ab12d"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/README.md",
+      "source_sha256": "d580b04eafeb74973b6cc3e2b2b572a21a992078846652bd3153e7a624dd6b97",
+      "copy": "sources/reference/README.md",
+      "copy_sha256": "d580b04eafeb74973b6cc3e2b2b572a21a992078846652bd3153e7a624dd6b97"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/python/src/rfc8785/_impl.py",
+      "source_sha256": "d841b6d81ceefff296b528f54836b4d7612fab69fe7a48ebef8590eeb512637b",
+      "copy": "sources/python/src/rfc8785/_impl.py",
+      "copy_sha256": "d841b6d81ceefff296b528f54836b4d7612fab69fe7a48ebef8590eeb512637b"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/python/src/rfc8785/__init__.py",
+      "source_sha256": "fa44927afd547caf7547247078bcf28863d1e69caf116d258c532b3f20ffd154",
+      "copy": "sources/python/src/rfc8785/__init__.py",
+      "copy_sha256": "fa44927afd547caf7547247078bcf28863d1e69caf116d258c532b3f20ffd154"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/input/arrays.json",
+      "source_sha256": "e503b6d71d1afa595b1c74b1016445c944cd89f90418066b23de1aeda7d17563",
+      "copy": "sources/reference/input/arrays.json",
+      "copy_sha256": "e503b6d71d1afa595b1c74b1016445c944cd89f90418066b23de1aeda7d17563"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/input/french.json",
+      "source_sha256": "03676a951cd8753ac62589f72eb2105cc782c33425418cfe1d517c111f6e5d5a",
+      "copy": "sources/reference/input/french.json",
+      "copy_sha256": "03676a951cd8753ac62589f72eb2105cc782c33425418cfe1d517c111f6e5d5a"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/input/structures.json",
+      "source_sha256": "d66893805be1784116af50af3110d08766c70a6b4aad93374723f72346e7aaa6",
+      "copy": "sources/reference/input/structures.json",
+      "copy_sha256": "d66893805be1784116af50af3110d08766c70a6b4aad93374723f72346e7aaa6"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/input/unicode.json",
+      "source_sha256": "4621864e014d4a805a563f55b9ea20aba4a2d2dc09c7394f625496998c00702c",
+      "copy": "sources/reference/input/unicode.json",
+      "copy_sha256": "4621864e014d4a805a563f55b9ea20aba4a2d2dc09c7394f625496998c00702c"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/input/values.json",
+      "source_sha256": "c4a041b503d6bc236036ef44db4dac499272f60fc22c40dc3b7a54870ba6f1c3",
+      "copy": "sources/reference/input/values.json",
+      "copy_sha256": "c4a041b503d6bc236036ef44db4dac499272f60fc22c40dc3b7a54870ba6f1c3"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/input/weird.json",
+      "source_sha256": "a3a905266bd4a49a969274ea69baa14ee0c4af0ead926d6fa2b7612b4af75387",
+      "copy": "sources/reference/input/weird.json",
+      "copy_sha256": "a3a905266bd4a49a969274ea69baa14ee0c4af0ead926d6fa2b7612b4af75387"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/output/arrays.json",
+      "source_sha256": "099601b171cafed97c333f8878d68e7f8c8f795412adb34b2fdcf0e7c7beac42",
+      "copy": "sources/reference/output/arrays.json",
+      "copy_sha256": "099601b171cafed97c333f8878d68e7f8c8f795412adb34b2fdcf0e7c7beac42"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/output/french.json",
+      "source_sha256": "d99d0ebdcb0033cb858cfa830ae46bc0fb3309413b271f1da828c89901a27ed5",
+      "copy": "sources/reference/output/french.json",
+      "copy_sha256": "d99d0ebdcb0033cb858cfa830ae46bc0fb3309413b271f1da828c89901a27ed5"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/output/structures.json",
+      "source_sha256": "605f65004ec2db7692522a0852c22f1c989e036d547e88963d1a3143cf3195d5",
+      "copy": "sources/reference/output/structures.json",
+      "copy_sha256": "605f65004ec2db7692522a0852c22f1c989e036d547e88963d1a3143cf3195d5"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/output/unicode.json",
+      "source_sha256": "0d99aad92a125196ff887876643fd3206786a84ddce2cee52ba4ad256d2381d3",
+      "copy": "sources/reference/output/unicode.json",
+      "copy_sha256": "0d99aad92a125196ff887876643fd3206786a84ddce2cee52ba4ad256d2381d3"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/output/values.json",
+      "source_sha256": "2d5e01a318d0f0879ab568c4be289c8b1f64ef8921a53c6277d5e069978baacb",
+      "copy": "sources/reference/output/values.json",
+      "copy_sha256": "2d5e01a318d0f0879ab568c4be289c8b1f64ef8921a53c6277d5e069978baacb"
+    },
+    {
+      "source": "docs/05_任务交接/H54R_NONDELEGATING_CHECKOUT_ROOT_REPAIR_V1/sources/reference/output/weird.json",
+      "source_sha256": "6af595a9aa80110b964b4de3f82a05fa6ae7423005019bacfa2620dddc4e94d1",
+      "copy": "sources/reference/output/weird.json",
+      "copy_sha256": "6af595a9aa80110b964b4de3f82a05fa6ae7423005019bacfa2620dddc4e94d1"
+    }
+  ],
+  "consumer_snapshot_unchanged": true,
+  "fixture_sources": [
+    "H54R GENERALIZATION_OBSERVATIONS V02/V07",
+    "H54R independent C01"
+  ],
+  "preparation_consumer_calls": 0,
+  "D04_status": "predicted from unchanged code; not preparation measured"
+}

@@ -1,0 +1,36 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1
+checks:
+  - id: VP-01
+    ac: [AC-01]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/EVALUATOR_CHECK.py, baseline]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-02
+    ac: [AC-02]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/FROZEN_TESTS.py, native, --out, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/evidence/native_l2.json]
+    evaluator_command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/FROZEN_TESTS.py, native, --out, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/evidence/native_l3.json]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-03
+    ac: [AC-02, AC-03, AC-04]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/FROZEN_TESTS.py, guarded, --out, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/evidence/guarded_l2.json]
+    evaluator_command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/FROZEN_TESTS.py, guarded, --out, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/evidence/guarded_l3.json]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-04
+    ac: [AC-01, AC-02, AC-03, AC-04, AC-05]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/EVALUATOR_CHECK.py, materials, --native, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/evidence/native_l2.json, --guarded, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/evidence/guarded_l2.json]
+    evaluator_command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/EVALUATOR_CHECK.py, materials, --native, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/evidence/native_l3.json, --guarded, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/evidence/guarded_l3.json]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-05
+    ac: [AC-05]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H50_UCP_LOCAL_MERCHANT_GUARD_PROTOTYPE_V1/EVALUATOR_CHECK.py, selftest]
+    expected_exit_code: 0
+    mandatory: true

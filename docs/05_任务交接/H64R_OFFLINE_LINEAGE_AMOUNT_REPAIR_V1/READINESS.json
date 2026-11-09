@@ -1,12 +1,16 @@
 {
   "task_id": "H64R_OFFLINE_LINEAGE_AMOUNT_REPAIR_V1",
   "state": "CONTRACT_FROZEN",
-  "protected": 3816,
-  "frozen": 7,
+  "protected": 3817,
+  "frozen": 11,
   "repair_executed": false,
   "formal_l2": 0,
   "formal_l3": 0,
   "new_network": 0,
   "new_installations": 0,
-  "parent_snapshot_unchanged": true
+  "parent_snapshot_unchanged": true,
+  "baseline_amendment": "AMENDMENT_20261109.md",
+  "baseline_head": "211151e6c3ae53997b5a2da419c27db497d7eb48",
+  "format_only_prior_drift_files": 4,
+  "sample_reads": 0
 }

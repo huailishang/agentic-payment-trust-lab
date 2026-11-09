@@ -1,0 +1,40 @@
+{
+  "schema": "h52-public-source-snapshot/v1",
+  "retrieved_at_utc": "2026-10-30T13:55:10.160983+00:00",
+  "boundary": "PUBLIC_DOCUMENT_DOWNLOAD_ONLY_NO_RUNTIME",
+  "sources": [
+    {
+      "id": "ucp-ap2-extension-20260825",
+      "url": "https://ucp.dev/2026-08-25/specification/payment/extensions/ap2-mandates/",
+      "resolved_url": "https://ucp.dev/2026-08-25/specification/payment/extensions/ap2-mandates/",
+      "license": "Apache-2.0",
+      "classification": "REFERENCE_ONLY",
+      "html": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-extension-20260825.html",
+      "text": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-extension-20260825.txt",
+      "html_sha256": "f882f13bb5461cf280ffa782f80b8ea9c801a9ee0f078b238afd973688b2dbf3",
+      "text_sha256": "b57143afe8e16c26a899efb01b1ce024d7baaa729551053a6144ae28bd01f5cf"
+    },
+    {
+      "id": "ucp-ap2-relation",
+      "url": "https://ucp.dev/documentation/ucp-and-ap2/",
+      "resolved_url": "https://ucp.dev/documentation/ucp-and-ap2/",
+      "license": "Apache-2.0",
+      "classification": "REFERENCE_ONLY",
+      "html": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-relation.html",
+      "text": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/ucp-ap2-relation.txt",
+      "html_sha256": "47981b234f700003efb6225a1b2c4fa9b46c908af9449609a1a8f1261b7a9a5d",
+      "text_sha256": "8851563dabfc8ba253514e487b3076bbad11c59e88fb620fb4769a0ef6bf289a"
+    },
+    {
+      "id": "google-codelab",
+      "url": "https://codelabs.developers.google.com/next26/adk-agent-commerce",
+      "resolved_url": "https://codelabs.developers.google.com/next26/adk-agent-commerce",
+      "license": "CC-BY-4.0 text; Apache-2.0 code",
+      "classification": "REFERENCE_ONLY",
+      "html": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/google-codelab.html",
+      "text": "docs/05_任务交接/H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1/sources/google-codelab.txt",
+      "html_sha256": "cd4efbde461c0a2206cd9fd20bb3616f6bef76e284e29f654d8689c996d29a0a",
+      "text_sha256": "dd8aa624f07368f15d534cdc10d2fc22eb20d419435f134059716981a4a1781b"
+    }
+  ]
+}

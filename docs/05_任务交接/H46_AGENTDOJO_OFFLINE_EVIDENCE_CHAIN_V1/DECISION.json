@@ -1,0 +1,36 @@
+{
+  "schema": "h46-decision/v1",
+  "task_id": "H46_AGENTDOJO_OFFLINE_EVIDENCE_CHAIN_V1",
+  "measurement_level": "SOURCE_SLICE_WITH_SYNTHETIC_STATE_AND_SCRIPTED_ACTIONS",
+  "decision": "SEMANTIC_GAP",
+  "source_slice": "MEASURED_SCRIPTED_SOURCE_CALLS",
+  "product_applicability": "INDETERMINATE_P2_BINDING_MISSING",
+  "full_gate_comparison": "NOT_MEASURED",
+  "model_calls": 0,
+  "provider_calls": 0,
+  "third_party_verified": false,
+  "upstream_runtime_observed": false,
+  "per_state": {
+    "initial": [
+      false,
+      false,
+      false
+    ],
+    "correct": [
+      true,
+      false,
+      false
+    ],
+    "wrong": [
+      false,
+      true,
+      true
+    ],
+    "correct_plus_wrong": [
+      true,
+      true,
+      true
+    ]
+  },
+  "recommended_next": "EVALUATOR_COMPARE_MINIMAL_TRANSFER_ADAPTER_VS_BETTER_FIT_EXTERNAL_SOURCE"
+}

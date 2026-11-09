@@ -1,5 +1,66 @@
 # H41 Executor P0 Report
 
+## 2026-09-29 P1 单次 Sandbox 诊断（最新执行结果）
+
+Task ID: H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1
+Executor status: SUBMITTED_FOR_REVIEW
+Baseline HEAD: 7831d232530c91825bb507a2a6d95b1de6a02c3b
+Implementation commit: NONE
+Result: **UNVERIFIED_RESPONSE / STOP**
+Hypothesis: NOT_CONFIRMED
+HTTP attempt_count: **1（本包预算已消耗）**
+
+在 Evaluator 已恢复的精确 P1 授权下，使用 Human 提供的既有 Sandbox APPID 与指定的本地密钥文件，执行了合同固定的一次合成 HTTPS `payment.verify` 请求。请求前 HEAD 与冻结基线一致，7/7 保护 hash、受审探针/测试/独立检查器 hash 均一致；默认 dry-run 为 `key_reads=0; attempts=0`。密钥检查仅输出元数据：应用 RSA-2048 密钥配对、本地 RSA2 签验通过；支付宝公钥来源仍 `NOT_VERIFIED`。固定输出和 reservation 执行前均不存在。
+
+实际命令使用既有 Anaconda Python，`--execute` 固定输入与本包 evidence 输出，退出码 1；stdout 仅为 `UNVERIFIED_RESPONSE attempts=1; STOP; evaluator review required`。脱敏证据：`evidence/H41_P1_20260929.json`；固定预留 `evidence/H41_DIAGNOSTIC.reserved` 已创建并保留。观测时间 `2026-09-29T08:12:47.042174+00:00`，HTTP status `200`，响应 SHA-256 `e33d76604d9d1d9a32fddd71f8d9e79c911c7192d3812ae87cb4551979b28e17`，`signature_verified=false`，`reason=INVALID_RESPONSE`，业务 code/sub_code 均未作为可信事实读取。原始响应、签名和密钥未写入报告或 evidence。
+
+本次只证明固定请求收到 HTTP 响应，不能据此判定是缺签名、验签失败、envelope 不符或其他响应结构问题；allowlist 证据没有保留更细的原因。也不能证明支付宝已接受接口资格、占位 Payment-Proof 有效、支付成功、买家真实性或四维绑定。H38 继续 `PARTIAL / LIVE_BLOCKED`，PCAC-06/09/12/20 成熟度不升级。按合同，任何结果均停止：不得换输出名、删除预留、重试、补参数、造单或付款。下一步由 Evaluator 依据本次有限证据决定 STOP 或 SWITCH；Executor 不自行释放第二次请求。
+
+---
+
+## 2026-09-29 P1 输入缺失时的执行结果（历史结果）
+
+Task ID: H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1
+Executor status: SUBMITTED_FOR_REVIEW
+Baseline HEAD: 7831d232530c91825bb507a2a6d95b1de6a02c3b
+Implementation commit: NONE
+Result: LOCAL_BLOCKED / LIVE_INPUT_CONTEXT_MISSING
+Hypothesis: NOT_MEASURED
+HTTP attempt_count: 0
+
+Evaluator 已恢复 `authorization_api_call=true`，但当前受控执行进程仍未继承 `AIPAY_APP_ID`，且没有可供本次命令直接引用的既有授权 `--key-file` 路径。按冻结合同不得猜测 APPID、不得扫描磁盘寻找私钥、不得把密钥正文写入命令或仓库，因此本轮在 Provider 网络调用前 fail closed(失败即关闭)。
+
+执行前核对：当前 HEAD 为冻结 baseline `7831d232530c91825bb507a2a6d95b1de6a02c3b`；H41 dry-run 输出 `key_reads=0; attempts=0`；随后真实入口在缺少必需输入时返回 `LOCAL_BLOCKED_OR_EVIDENCE_INCOMPLETE; STOP; no retry`。固定 `H41_DIAGNOSTIC.reserved` 仍不存在，真实密钥读取=0、签名=0、HTTP attempt=0，原一次网络预算未消耗。
+
+该结果只说明本次 Executor 运行上下文没有获得执行所需输入，不是支付宝 Provider、TLS、接口参数或签名验证失败。Provider 响应继续 `NOT_MEASURED`，H38 继续 `PARTIAL / LIVE_BLOCKED`；支付成功、Payment-Proof 有效性、买家真实性与四维绑定均未证明。按 stop condition(停止条件) 本轮不重试、不扩大输入获取范围，交 Evaluator 决定恢复输入后是否继续原一次预算或切换瓶颈。
+
+## 2026-09-29 P1 治理修复交回（历史结果）
+
+Task ID: H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1
+Executor status: SUBMITTED_FOR_REVIEW
+Baseline HEAD: 7831d232530c91825bb507a2a6d95b1de6a02c3b
+Implementation commit: NONE
+Result: GOVERNANCE_REPAIR_COMPLETE / NO_LIVE_CALL
+Hypothesis: NOT_MEASURED
+
+本轮只修复 REPORT 当前快照标识：把当前 Task ID 与已由 Evaluator amendment `2026-09-27-a3` 接受的 baseline HEAD 放到历史记录之前，保留 2026-09-23 的旧 baseline 作为当时证据，不追溯改写历史。当前 `CURRENT.md` 为 `EXECUTING / Executor / H41_SINGLE_DIAGNOSTIC / authorization_api_call=false`；因此本轮不读取真实密钥、不创建 reservation、不发 HTTP 请求，也不消耗原一次 P1 请求预算。
+
+治理修复后已运行中央 workflow validator(工作流结构校验)：`python3 ../localagent-common/skills/evaluator-executor-workflow/scripts/validate_workflow.py --repo . --current CURRENT.md`，exit 0，输出 `OK: v2.2 routing and required artifacts are structurally valid`。因此本报告按 Executor 规则提交给 Evaluator 复核；是否恢复精确 P1 授权 tuple 仍由 Evaluator 决定。真实 Provider 响应仍为 `NOT_MEASURED`，H38 继续 `PARTIAL / LIVE_BLOCKED`，本轮不声明任何支付、Payment-Proof 或四维绑定能力新增。
+
+## 2026-09-27 P1 执行前检查（历史结果）
+
+Executor status: BLOCKED
+Result: LOCAL_BLOCKED / LIVE_INPUT_CONTEXT_MISSING
+Hypothesis: NOT_MEASURED
+
+Evaluator 已通过 amendment `2026-09-27-a3` 将 baseline 重新锚定到 `7831d232530c91825bb507a2a6d95b1de6a02c3b`，CURRENT 仍处于 `EXECUTING / Executor / H41_SINGLE_DIAGNOSTIC / authorization_api_call=true`，原一次 P1 请求预算继续有效且尚未消耗。
+
+本轮重新执行冻结 baseline gate，使用既有含 `cryptography` 的 Anaconda Python，结果 exit 0；BASELINE 中全部保护文件以及 H41 探针、测试、独立检查器 hash 均一致。随后执行 H41 dry-run，结果 exit 0：`DRY_RUN synthetic diagnostic plan; key_reads=0; attempts=0`。未安装依赖、未改产品、未读取真实密钥、未联网。
+
+继续检查 live 输入上下文时，仅核对变量是否存在、不输出值：当前执行会话未继承 `AIPAY_APP_ID`，也未继承 H38 的私钥/支付宝公钥环境变量；H41 `--execute` 同时要求一个由 Human 先前明确指定的本地密钥文件路径。该路径按既有安全约束没有写入仓库或 REPORT，本轮也未在磁盘广泛扫描私钥位置。因此未创建 `H41_DIAGNOSTIC.reserved`，真实 HTTP attempt=0、真实密钥读取=0，唯一网络预算仍未消耗。
+
+当前阻塞已经不是 baseline drift，而是 live credential context(实测凭据上下文)没有进入本次执行会话。Provider 响应仍未测量，H38 继续 `PARTIAL / LIVE_BLOCKED`；支付成功、买家真实性、Payment-Proof 有效性与四维绑定均未证明。恢复执行只需要把**既有 Sandbox APPID**和**此前明确授权的本地密钥文件路径**重新提供给执行环境；不得把私钥正文贴入 REPORT/证据，不得为寻找路径扩大磁盘秘密扫描。获得这两个既有输入后仍只能执行原合同固定的一次请求，任何分类结果都 STOP 并交 Evaluator。
+
 ## 2026-09-23 R2 交接附注（Executor 补证，非 Evaluator 裁决）
 
 Task ID: H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1

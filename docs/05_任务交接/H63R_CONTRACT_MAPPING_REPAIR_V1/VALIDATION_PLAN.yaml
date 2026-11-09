@@ -1,0 +1,21 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: H63R_CONTRACT_MAPPING_REPAIR_V1
+checks:
+  - id: VP-01
+    ac: [AC-01]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H63R_CONTRACT_MAPPING_REPAIR_V1/CHECK.py, source]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-02
+    ac: [AC-02, AC-03]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H63R_CONTRACT_MAPPING_REPAIR_V1/CHECK.py, mapping]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-03
+    ac: [AC-03, AC-04]
+    cwd: .
+    command: [.task_envs/H47/.venv/Scripts/python.exe, -B, docs/05_任务交接/H63R_CONTRACT_MAPPING_REPAIR_V1/CHECK.py, selftest]
+    expected_exit_code: 0
+    mandatory: true

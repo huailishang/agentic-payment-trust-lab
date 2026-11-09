@@ -1,0 +1,130 @@
+{
+  "schema": "evaluator-executor-validation-plan/v1",
+  "task_id": "H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1",
+  "checks": [
+    {
+      "id": "VP-01",
+      "ac": [
+        "AC-01"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "-B",
+        "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/CHECK.py",
+        "baseline"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-02",
+      "ac": [
+        "AC-01"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "-B",
+        "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/CHECK.py",
+        "scope"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-03",
+      "ac": [
+        "AC-02",
+        "AC-03",
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "-B",
+        "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/RUN_AND_ACCOUNT.py",
+        "--role",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        "python",
+        "-B",
+        "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/RUN_AND_ACCOUNT.py",
+        "--role",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-04",
+      "ac": [
+        "AC-03",
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "-B",
+        "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/CHECK.py",
+        "materials",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        "python",
+        "-B",
+        "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/CHECK.py",
+        "materials",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-05",
+      "ac": [
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "-B",
+        "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/CHECK.py",
+        "selftest"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-06",
+      "ac": [
+        "AC-01"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "-B",
+        "-c",
+        "from pathlib import Path; p=Path('docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/APPROVAL_INBOX.py'); compile(p.read_text(encoding='utf-8'),str(p),'exec')"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-07",
+      "ac": [
+        "AC-01"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "-B",
+        "docs/05_任务交接/H60R_SOURCE_LEDGER_ISOLATION_REPAIR_V1/CHECK.py",
+        "baseline"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    }
+  ]
+}

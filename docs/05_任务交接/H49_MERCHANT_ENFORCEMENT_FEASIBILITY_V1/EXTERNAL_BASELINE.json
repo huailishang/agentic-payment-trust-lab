@@ -1,0 +1,16 @@
+{
+  "schema": "h49-external-baseline/v1",
+  "reviewed_on": "2026-10-18",
+  "source": "https://newsroom.servicenow.com/press-releases/details/2026/ServiceNow-advances-its-operational-harness-for-enterprise-AI-with-AI-Passport-and-expanded-governance-capabilities/default.aspx",
+  "published_on": "2026-10-15",
+  "source_kind": "OFFICIAL_PRODUCT_ANNOUNCEMENT_NOT_INDEPENDENT_TEST",
+  "capability_summary": "AI Passport 宣布签名权限凭证、运行时授权、逐级收窄委托、撤销和审计，与企业上下文及执行基础设施结合。",
+  "availability_statement": "AI Passport expected availability Q4 2026; announcement does not establish this project's integration readiness.",
+  "classification": "REFERENCE_ONLY",
+  "transaction_snapshot_binding_verified": false,
+  "sdk_or_test_credentials_prepared": false,
+  "independent_customer_roi_verified": false,
+  "reuse_condition": "取得有来源的协议/SDK、许可、授权与测试路径，并以同一组交易绑定/撤销/重复执行/恢复反例验证；不能用产品发布代替运行证据。",
+  "competition_implication": "通用身份、授权与审计面临平台内置竞争；跨平台和支付垂直本身不是已验证壁垒。",
+  "license_boundary": "官方发布仅作事实引用和自有摘要，不导入厂商代码/软件包；不将同名第三方仓库当官方实现。"
+}

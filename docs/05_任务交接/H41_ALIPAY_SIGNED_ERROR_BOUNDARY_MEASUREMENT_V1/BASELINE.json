@@ -1,6 +1,6 @@
 {
   "schema": "h41-inherited-working-tree/v1",
-  "head": "0b99f3d1f3db180a37bcb8e6512fb7849711ea72",
+  "head": "7831d232530c91825bb507a2a6d95b1de6a02c3b",
   "working_tree_is_dirty": true,
   "protected_files": {
     "scripts/h38_authorization_gate.py": "19147a6f3a82ca29c13c79079ddf74a779630bf7f75a5700e3e1ebc2095cb511",

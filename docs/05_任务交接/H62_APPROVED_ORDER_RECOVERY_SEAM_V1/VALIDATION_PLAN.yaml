@@ -1,0 +1,173 @@
+{
+  "schema": "evaluator-executor-validation-plan/v1",
+  "task_id": "H62_APPROVED_ORDER_RECOVERY_SEAM_V1",
+  "checks": [
+    {
+      "id": "VP-01",
+      "ac": [
+        "AC-01"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/CHECK.py",
+        "baseline"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-02",
+      "ac": [
+        "AC-01"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/CHECK.py",
+        "scope"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-03",
+      "ac": [
+        "AC-02",
+        "AC-03",
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/RECOVERY_CASES.py",
+        "--role",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/RECOVERY_CASES.py",
+        "--role",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-04",
+      "ac": [
+        "AC-02",
+        "AC-03",
+        "AC-04",
+        "AC-06"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/CHECK.py",
+        "recovery",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/CHECK.py",
+        "recovery",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-05",
+      "ac": [
+        "AC-05"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/VALIDATE.py",
+        "original",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/VALIDATE.py",
+        "original",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-06",
+      "ac": [
+        "AC-01",
+        "AC-03",
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/VALIDATE.py",
+        "approval",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/VALIDATE.py",
+        "approval",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-07",
+      "ac": [
+        "AC-06"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/VALIDATE.py",
+        "accounting",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/VALIDATE.py",
+        "accounting",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-08",
+      "ac": [
+        "AC-01"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H62_APPROVED_ORDER_RECOVERY_SEAM_V1/CHECK.py",
+        "baseline"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    }
+  ]
+}

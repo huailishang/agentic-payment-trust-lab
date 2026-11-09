@@ -1,0 +1,13 @@
+{
+  "task_id": "H63_EXTERNAL_TRACE_QUALIFICATION_V1",
+  "sample_ids": ["S01", "S02", "S03", "S04", "S05", "S06"],
+  "fact_keys": ["user_request", "explicit_confirmation", "checkout_snapshot", "payment_request", "payment_tool_result", "order_tool_result", "correlation"],
+  "fact_status": ["PRESENT", "ABSENT", "AMBIGUOUS"],
+  "contract_keys": ["P1", "P2", "P3", "P4", "P5"],
+  "input_status": ["OBSERVABLE", "PARTIAL", "MISSING"],
+  "candidate_classification": "REFERENCE_ONLY",
+  "evidence_level": "TRANSCRIPT_ONLY",
+  "view_decision": ["BOUNDED_READONLY_COMPARISON_CANDIDATE", "STOP_PREVIEW_VIEW"],
+  "citation_schema": {"line": "one-based original JSONL line", "pointer": "RFC6901 pointer from that original line object", "value_sha256": "sha256 of UTF-8 json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':'))"},
+  "required_limits": ["preview_only", "not_unseen_holdout", "no_independent_backend_state", "no_verified_actor_identity", "no_product_control_measurement", "no_customer_value_evidence"]
+}

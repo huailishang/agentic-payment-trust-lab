@@ -1,0 +1,55 @@
+{
+  "schema": "h53-result/v1",
+  "classification": "LOCAL_AUTHORIZATION_CONSUMER_OBSERVED",
+  "customer_demand": "UNKNOWN",
+  "boundary": "LOCAL_METHOD_EXACT_BYTES_SYNTHETIC_TRUST_FAKE_PSP",
+  "baseline_head": "7831d232530c91825bb507a2a6d95b1de6a02c3b",
+  "measurement": {
+    "cases": 28,
+    "positive_lifecycle_scenarios": 4,
+    "negative_scenarios": 24,
+    "negative_payment_calls": 0,
+    "positive_fake_payment_invocations": 4,
+    "real_payment_calls": 0,
+    "test_scope": "task-local copied UCP 2026-04-08 merchant methods; SQLite; synthetic signed checkout and AP2 v0.2.0 two-hop; in-memory signer keys",
+    "verification": "Frozen CHECK observations recomputes each result and SDK material for all positive scenarios",
+    "source_of_truth": "H53 evidence/observations_l2.json and 9-step formal L2 gate"
+  },
+  "implemented_contract": "One merchant complete_checkout→ExecutionControl.claim transaction checks trusted root and merchant JWS, official SDK two-hop payloads, full checkout JSON including unknown fields, trusted SQLite confirmation, currency/amount/payee, neutral rules, before durable claim+authorization record; native payment and recovery unchanged.",
+  "observed_after_scope": "local merchant-method authorization consumer only",
+  "one_next_action": "Submit to Evaluator for independent L3 and source review; if accepted STOP this local slice and reassess external real consumer/version/identity evidence before any other implementation.",
+  "remaining_gaps": [
+    "本地普通compact checkout JWS签名不是完整detached JWS/JCS/RFC8785 UCP/AP2协议符合性",
+    "花店仍是UCP 2026-04-08；AP2能力协商及2026-08-25完整扩展尚未接入",
+    "受信key与确认均为内存/SQLite合成值，不等于真实用户独立同意/生产凭据治理",
+    "只在任务副本商家方法上验证，默认部署、ASGI/HTTP及外部消费方不可观察",
+    "PSP为假付款端口，无真实授权、异步事件、结算及跨系统撤销证明",
+    "真实客户需求、跨系统竞争与可部署安全控制未知"
+  ],
+  "external_requirement_impact": {
+    "profile": "PCAC-AGENTPAY",
+    "requirement_ids": [
+      "PCAC-07",
+      "PCAC-08",
+      "PCAC-09",
+      "PCAC-10",
+      "PCAC-12",
+      "PCAC-18",
+      "PCAC-20"
+    ],
+    "before": "Existing local partial M3–M5 evidence; H53 consumer not implemented",
+    "after": "Task-local repeatable signed authority-to-claim test evidence, product/production maturity unchanged",
+    "test": "VP-01..09",
+    "residual": "real identity and consent source, full protocol/JCS, Provider, deployment and cross-system revocation unknown",
+    "regulatory_compliance_claim": false
+  },
+  "product_core_changed": false,
+  "full_ucp_ap2_conformance": false,
+  "jcs_conformance": false,
+  "http_integration_verified": false,
+  "real_identity_verified": false,
+  "provider_verified": false,
+  "production_ready": false,
+  "customer_validated": false,
+  "global_race_closed": false
+}

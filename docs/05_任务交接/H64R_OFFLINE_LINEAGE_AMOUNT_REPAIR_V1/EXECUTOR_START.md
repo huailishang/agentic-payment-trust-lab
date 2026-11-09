@@ -1,6 +1,6 @@
 # H64R执行入口
 
-状态CONTRACT_FROZEN（合同已冻结），尚未执行。先读CONTRACT、CHECK、父H64 REVIEW和RV-EV-06反例。只复用原SELECTED六例、已获四Parquet/11个world以及现有解码器，禁止对缺失文件重新GET。
+状态CONTRACT_FROZEN（合同已冻结），尚未执行。执行基线已由评估者按AMENDMENT_20261109.md迁移至211151e6c3ae53997b5a2da419c27db497d7eb48，地图r105；先读本修订、CONTRACT、CHECK、父H64 REVIEW和RV-EV-06反例。四个文档仅行尾空格变化，原字节/摘要及旧合同完整保留于evidence/governance_refreeze_20261109/；执行者不可修改或重建该审计、BASELINE及准备证据。只复用原SELECTED六例、已获四Parquet/11个world以及现有解码器，禁止对缺失文件重新GET。
 
 1. 初始CHECK.py source通过后，把CURRENT本任务改EXECUTING/Executor。建立本任务新账本；每个sample读取、版本和L2前预留，失败保留，最多90分钟/12样本读取/2版本/2L2。
 2. 新写EXTRACT.py；不要import/执行H64 MEASURE/ACQUIRE/CHECK。按call_id分组，同一结果用tool_call_id，wire用source_call_id；每个父子调用分别列出，不从池中分别取第一个元素。原source里出现的四类支付工具都清点，不能省略坏链。
@@ -20,6 +20,12 @@
 - ATTEMPT_LEDGER：task_id、active_minutes、measurement_versions、formal_l2_attempts；network_calls/installation_calls/model_calls/payment_calls/product_calls/upstream_replay_calls全部0；attempts各项id/kind/started_at/finished_at/status（SUCCEEDED/FAILED），其中sample条目6–12条。先持久预留再读样本，正式L2也须预留。
 
 ## 正式命令
+
+开工前（本检查通过后才变更CURRENT状态）：
+
+```text
+.task_envs/H47/.venv/Scripts/python.exe -B docs/05_任务交接/H64R_OFFLINE_LINEAGE_AMOUNT_REPAIR_V1/CHECK.py source
+```
 
 在仓库根目录用以下入口，每次out唯一；先记L2预算：
 

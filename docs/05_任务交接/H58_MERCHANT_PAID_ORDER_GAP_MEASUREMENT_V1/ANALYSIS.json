@@ -1,0 +1,369 @@
+{
+  "schema": "h58-analysis/v1",
+  "analysis_boundary": "H57R accepted evaluator run_0002 and immutable M06 SQLite only",
+  "topics": [
+    {
+      "id": "checkout_identity",
+      "availability": "PERSISTED",
+      "basis": "measured",
+      "sufficient_for_automatic_action": false,
+      "finding": "checkouts.id与h50_attempts.checkout_id同为b8cabe74-f41b-4645-ac4f-bc61f7f128a3；可定位原结账，不能据此推定已创建订单。",
+      "residual_risk": "结账身份不等于最终订单身份，付款后的重建不能创建任意新订单ID。",
+      "evidence": [
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=checkouts;pk=id:b8cabe74-f41b-4645-ac4f-bc61f7f128a3;column=status",
+          "observed": "ready_for_complete"
+        },
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=h50_attempts;pk=checkout_id:b8cabe74-f41b-4645-ac4f-bc61f7f128a3;column=checkout_id",
+          "observed": "同一checkout_id"
+        }
+      ]
+    },
+    {
+      "id": "payment_reference_and_status",
+      "availability": "MIXED",
+      "basis": "measured",
+      "sufficient_for_automatic_action": false,
+      "finding": "交易库h50_attempts保留payment_ref与IN_FLIGHT，PSP库同payment_ref有1条calls及1条receipts；重启实验recovery=QUERY、payment_state=SUCCEEDED（模拟PSP）。",
+      "residual_risk": "IN_FLIGHT是交易控制持久状态，不是支付失败；模拟PSP的SUCCEEDED不是生产清算证明，也没有授权后续补救副作用。",
+      "evidence": [
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=h50_attempts;pk=checkout_id:b8cabe74-f41b-4645-ac4f-bc61f7f128a3;columns=payment_ref,state",
+          "observed": {
+            "payment_ref": "h50-payment-910108fcc733467d9a4336b6908fb042",
+            "state": "IN_FLIGHT"
+          }
+        },
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/psp.db",
+          "locator": "table=receipts;pk=payment_ref:h50-payment-910108fcc733467d9a4336b6908fb042;column=payment_ref",
+          "observed": "1条模拟付款收据"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/evidence/evaluator/run_0002/observations.json",
+          "locator": "$.cases[5].recovery.payment_state",
+          "observed": "SUCCEEDED"
+        }
+      ]
+    },
+    {
+      "id": "amount_currency_payee",
+      "availability": "PERSISTED",
+      "basis": "measured",
+      "sufficient_for_automatic_action": false,
+      "finding": "持久快照包含USD、总金额1000、merchant=h50-synthetic-merchant、payee=h50-synthetic-payee；模拟PSP收据含相同付款快照。",
+      "residual_risk": "仅为合成机构/收款方，未见真实PSP付款确认、结算、费率、退款金额计算和受托资金控制。",
+      "evidence": [
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=h50_attempts;pk=checkout_id:b8cabe74-f41b-4645-ac4f-bc61f7f128a3;column=snapshot_json;JSON=$.currency,$.totals[1].amount,$.merchant,$.payee",
+          "observed": {
+            "currency": "USD",
+            "total": 1000,
+            "merchant": "h50-synthetic-merchant",
+            "payee": "h50-synthetic-payee"
+          }
+        },
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/psp.db",
+          "locator": "table=receipts;pk=payment_ref:h50-payment-910108fcc733467d9a4336b6908fb042;column=snapshot_json",
+          "observed": "同一个合成交易快照"
+        }
+      ]
+    },
+    {
+      "id": "line_items_and_fulfillment",
+      "availability": "MIXED",
+      "basis": "measured",
+      "sufficient_for_automatic_action": false,
+      "finding": "h50_attempts.snapshot_json保留rose商品、数量1、单价1000与配送选项；orders表没有记录，业务履约事实和可安全续单承诺未持久证明。",
+      "residual_risk": "当前库存可变、配送/权益/订单号与履约约束不能只从旧确认快照推断。",
+      "evidence": [
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=h50_attempts;pk=checkout_id:b8cabe74-f41b-4645-ac4f-bc61f7f128a3;column=snapshot_json;JSON=$.line_items[0].item.id,$.line_items[0].quantity,$.fulfillment",
+          "observed": {
+            "item_id": "rose",
+            "quantity": 1,
+            "fulfillment": "记录了选择快照"
+          }
+        },
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=orders;SELECT COUNT(*)",
+          "observed": 0
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/checkout_service.py",
+          "locator": "lines 922-970; save_order/save_checkout then commit after before_order_commit hook",
+          "observed": "订单/结账/库存业务事务在故障hook处回滚"
+        }
+      ]
+    },
+    {
+      "id": "inventory_after_rollback",
+      "availability": "PERSISTED",
+      "basis": "measured",
+      "sufficient_for_automatic_action": false,
+      "finding": "M06的inventory.rose.quantity=5，M01正常对照库存=4；本次没有留存的订单扣减。",
+      "residual_risk": "库存5只是观测时点，不是未来补单仍可占用，必须重新评估并发库存与履约。",
+      "evidence": [
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=inventory;pk=product_id:rose;column=quantity",
+          "observed": 5
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/evidence/evaluator/run_0002/observations.json",
+          "locator": "$.cases[0].state.inventory[0].quantity",
+          "observed": 4
+        }
+      ]
+    },
+    {
+      "id": "confirmation_scope_and_revocation",
+      "availability": "MIXED",
+      "basis": "measured",
+      "sufficient_for_automatic_action": false,
+      "finding": "h50_confirmations保留confirmation_ref、snapshot_json、expires_at、revoked=0；但本地模拟的确认不能证明真实用户授权补单/退款，当前时间或撤销后的重新适用性也没有持久证明。",
+      "residual_risk": "原确认仅约束付款前快照；补救动作需独立授权/撤销策略，不能沿用过期授权。",
+      "evidence": [
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=h50_confirmations;pk=confirmation_ref:h50-43f067aac5f143e48e27c9892ebb7b3a;columns=checkout_id,revoked,expires_at",
+          "observed": {
+            "revoked": 0,
+            "expires_at": 1800000100
+          }
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/execution_control.py",
+          "locator": "lines 90-106; claim verifies checkout, expiry, revocation and snapshot",
+          "observed": "只在原付款claim前校验"
+        }
+      ]
+    },
+    {
+      "id": "authorization_evidence",
+      "availability": "MIXED",
+      "basis": "measured",
+      "sufficient_for_automatic_action": false,
+      "finding": "h53_authorizations仅持久化token_sha256、checkout_sha256、confirmation_ref、decision=ALLOW；完整授权token、可信验签根以及是否可再次委托的证明只出现在实验来源/跨进程交接中。",
+      "residual_risk": "不能将摘要/本地ALLOW等同于经真实身份重验的持久补单或退款授权。",
+      "evidence": [
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=h53_authorizations;pk=checkout_id:b8cabe74-f41b-4645-ac4f-bc61f7f128a3;columns=token_sha256,checkout_sha256,decision",
+          "observed": "两摘要+ALLOW（非完整凭证）"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/RUN_JOURNEY.py",
+          "locator": "lines 225-232; payload uses first_worker trusted_context and authorization",
+          "observed": "完整测试token/信任上下文以进程交接传递，非独立商家持久数据"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/execution_control.py",
+          "locator": "lines 107-118; verify_authorization and stored digests",
+          "observed": "验证过程与持久化摘要不同"
+        }
+      ]
+    },
+    {
+      "id": "original_request_and_idempotency",
+      "availability": "MIXED",
+      "basis": "measured",
+      "sufficient_for_automatic_action": false,
+      "finding": "h50_attempts保留complete请求键及request_hash，但idempotency_records只有create记录；完整完成请求及签名只能从测试HTTP证据读取，无法当作真实重启后可独立验证的生产授权材料。",
+      "residual_risk": "重新发送complete可能命中已占用claim并被拒；不能凭原请求哈希生成新的有副作用请求。",
+      "evidence": [
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=h50_attempts;pk=checkout_id:b8cabe74-f41b-4645-ac4f-bc61f7f128a3;columns=request_key,request_hash",
+          "observed": {
+            "request_key": "complete",
+            "request_hash": "77dbd3c0c53f104cff2e6029dc729fc280a44747a54fb1605d5946a8e41dfb33"
+          }
+        },
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=idempotency_records;rows keys",
+          "observed": [
+            "create"
+          ]
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/evidence/evaluator/run_0002/observations.json",
+          "locator": "$.cases[5].calls[1].request_body.risk_signals",
+          "observed": "冻结L3的原始合成HTTP请求材料，仅测试证据"
+        }
+      ]
+    },
+    {
+      "id": "order_id_and_end_state",
+      "availability": "MIXED",
+      "basis": "measured",
+      "sufficient_for_automatic_action": false,
+      "finding": "M06 orders为空，checkouts.status仍ready_for_complete且JSON中的order为null，GET 200只是可读checkout；对照M01有1个订单。",
+      "residual_risk": "缺已有持久最终order_id/关闭状态；单纯生成新ID不意味着安全、唯一和用户同意的原订单。",
+      "evidence": [
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=orders;SELECT COUNT(*)",
+          "observed": 0
+        },
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=checkouts;pk=id:b8cabe74-f41b-4645-ac4f-bc61f7f128a3;columns=status,data;JSON=$.order",
+          "observed": {
+            "status": "ready_for_complete",
+            "order": null
+          }
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/evidence/evaluator/run_0002/observations.json",
+          "locator": "$.cases[5].calls[2].response_status",
+          "observed": 200
+        }
+      ]
+    },
+    {
+      "id": "trust_configuration_after_restart",
+      "availability": "TEST_HANDOFF_ONLY",
+      "basis": "measured",
+      "sufficient_for_automatic_action": false,
+      "finding": "H57R恢复worker通过实验payload获得trusted_context、authorization、confirmation_ref，进程内重建临时验签key；DB只存摘要，未发现独立持久可信配置注册或动态撤销链。",
+      "residual_risk": "生产重启场景不能依赖测试监督者传入可信根、token或原授权快照；需要单独的凭证生命周期和权限来源。",
+      "evidence": [
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/RUN_JOURNEY.py",
+          "locator": "lines 221-234; second worker payload trusted_context, authorization and confirmation_ref",
+          "observed": "通过实验监督者交接"
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/execution_control.py",
+          "locator": "lines 18-26; authorization_context instance field",
+          "observed": "进程内配置，不是持久受信源"
+        },
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=h53_authorizations;columns=token_sha256,checkout_sha256,confirmation_ref,decision",
+          "observed": "无完整授权token/来源根字段"
+        }
+      ]
+    },
+    {
+      "id": "compensation_authority",
+      "availability": "MISSING",
+      "basis": "unknown",
+      "sufficient_for_automatic_action": false,
+      "finding": "固定假PSP PaymentPort只提供charge/query且持久PSP表仅calls/receipts/queries；该固定范围内未证明退款、撤销、赔付权限、资金调账政策或客户确认接口。",
+      "residual_risk": "缺商家/PSP可归责的退款/补偿权限和最终性策略；不能从没有观察直接推定现实系统没有此能力。",
+      "evidence": [
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/references/H51_METHOD_FIXTURES.py",
+          "locator": "lines 68-99; PaymentPort.charge/query/calls methods",
+          "observed": "固定假PSP接口范围未包含退款能力"
+        },
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/psp.db",
+          "locator": "sqlite_master table names",
+          "observed": [
+            "calls",
+            "receipts",
+            "queries"
+          ]
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/merchant/services/execution_control.py",
+          "locator": "lines 135-142; recover only query/wait",
+          "observed": "恢复路径不执行补偿"
+        }
+      ]
+    },
+    {
+      "id": "audit_responsibility",
+      "availability": "MIXED",
+      "basis": "measured",
+      "sufficient_for_automatic_action": false,
+      "finding": "持久库有h50_attempts/确认/授权摘要/模拟PSP收据与1条GET request_logs；正式测试原始HTTP与进程退出证据可独立核对，但真实交易责任主体、状态转移审计、补救审批与通知闭环缺证据。",
+      "residual_risk": "测试可追踪不等于具备实际商家/PSP/客户之间的责任分配、事件审计和合规留存。",
+      "evidence": [
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/transactions.db",
+          "locator": "table=request_logs;id=1;columns=method,url,checkout_id",
+          "observed": {
+            "method": "GET",
+            "checkout_id": "b8cabe74-f41b-4645-ac4f-bc61f7f128a3"
+          }
+        },
+        {
+          "path": "docs/05_任务交接/H57R_EVIDENCE_AND_PROCESS_EXIT_REPAIR_V1/evidence/evaluator/run_0002/observations.json",
+          "locator": "$.cases[5].calls[*].response_status",
+          "observed": [
+            201,
+            500,
+            200,
+            409
+          ]
+        },
+        {
+          "path": ".task_envs/H57/runs/h57-m06-izhxutq2/psp.db",
+          "locator": "tables=calls,receipts,queries;payment_ref=h50-payment-910108fcc733467d9a4336b6908fb042",
+          "observed": {
+            "calls": 1,
+            "receipts": 1,
+            "queries": 1
+          }
+        }
+      ]
+    }
+  ],
+  "mechanisms": [
+    {
+      "id": "KEEP_QUERY_ONLY",
+      "classification": "ABSORB",
+      "not_executed": true,
+      "prerequisites": "保留当前不可盲目再扣款/仅查询恢复的现状，需持续可读的checkout和PSP payment_ref",
+      "safety": "对同checkout禁止新增付款副作用；状态未知则WAIT或人工排查，不把GET200当订单已完成",
+      "authority": "原只读查询权限与对账责任；没有新增付款/补单/退款权限",
+      "complexity_cost": "新增工程复杂度低，但人工工单及未完成订单的营运成本会积累；损失按商户业务规模评估，当前无准确金额",
+      "failure_or_stop_condition": "付款状态无法核实、原PSP收据不可信、订单长期缺失或缺责任团队时必须报告，不自动进入补单"
+    },
+    {
+      "id": "ORDER_COMPLETION_CANDIDATE",
+      "classification": "REFERENCE_ONLY",
+      "not_executed": true,
+      "prerequisites": "需经授权的持久付款结果与原授权/交易绑定、确定性order identity、重新校验库存/履约、专门对账/恢复状态机和一次性提交",
+      "safety": "不重扣款；仅在独立重验原支付及授权、库存锁、幂等claim与状态原子迁移后才允许补单；含重启/并发/故障注入反例",
+      "authority": "需商户产品与支付责任人明确授权何时可补订单；不可挪用原合成确认的ALLOW",
+      "complexity_cost": "工程复杂度中高：订单状态机、持久信任上下文、事务/恢复、库存与并发、独立评测；一次性构建及长期运维均高于查询",
+      "failure_or_stop_condition": "缺原始受信授权、唯一订单身份、商家责任策略、库存/履约承诺或外部支付最终性时STOP，不实施"
+    },
+    {
+      "id": "COMPENSATION_OR_MANUAL_CANDIDATE",
+      "classification": "REFERENCE_ONLY",
+      "not_executed": true,
+      "prerequisites": "先定义商户/PSP资金权责、支付最终性/可退金额、退款审批/用户通知、账务冲正与工单闭环；允许仅人工核查",
+      "safety": "任何退款/冲正必须单独授权、独立幂等与结果对账；不得同时补单并退款；失败需人工升级",
+      "authority": "真实商户/PSP及授权代表明确签署退款及补偿处置策略；当前假PSP无这类权限接口",
+      "complexity_cost": "人工优先复杂度中，需客服和对账成本；自动退款复杂度高，新增资损与重复补偿风险",
+      "failure_or_stop_condition": "缺退款权限、原始清算证明或客户归属时只保留查询并上报，不模拟退款为成功"
+    }
+  ],
+  "next_decision": "MISSING_DURABLE_INPUT",
+  "next_decision_basis": "结账快照/模拟PSP付款收据/payment_ref与确认摘要存在，足以只读对账，但缺可独立重启验证的完整授权与可信配置、持久订单终结身份及补救权责；在这些缺项补证前不得冻结自动补单能力包。补偿/退款还缺商户/PSP明确政策。",
+  "missing_facts": [
+    "可从商家可信持久源重验的原始授权凭证、确认来源、撤销/过期状态、验签根及其版本/权限边界",
+    "恢复订单的唯一业务身份、原订单是否应当存在的状态机规则、当前库存/配送/履约再次确认及并发锁语义",
+    "支付成功的真实Provider最终性、金额/币种/收款方绑定与不重复支付/不重复退款的对账主键",
+    "商户和PSP对已付款无订单的责任、允许补单/退款/人工处置的具体策略、审批与客户告知机制",
+    "真实商业客户需求、部署操作者与预算；不因合成PSP已成功就推定现实补救可执行"
+  ],
+  "automatic_recovery_proven": false,
+  "production_ready": false,
+  "customer_value_proven": false
+}

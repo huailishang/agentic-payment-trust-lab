@@ -1,0 +1,15 @@
+{
+  "state": "CONTRACT_FROZEN",
+  "protected": 2944,
+  "frozen": 34,
+  "preparation_gets": 22,
+  "preparation_bytes": 769443,
+  "actual_samples": 0,
+  "installations": 0,
+  "model_calls": 0,
+  "product_calls": 0,
+  "replays": 0,
+  "payment_calls": 0,
+  "formal_l2": 0,
+  "formal_l3": 0
+}

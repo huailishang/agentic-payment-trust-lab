@@ -1,0 +1,29 @@
+{
+  "task_id": "H62_APPROVED_ORDER_RECOVERY_SEAM_V1",
+  "classification": "LOCAL_APPROVED_ORDER_RECOVERY_L2_PASS_L3_PENDING",
+  "executor_status": "SUBMITTED_FOR_REVIEW",
+  "production_ready": false,
+  "real_identity_verified": false,
+  "provider_verified": false,
+  "customer_value_proven": false,
+  "standard_checkout_mandate_integrated": false,
+  "business_execution_enabled": false,
+  "recovery_candidate_invocations": 23,
+  "formal_l2_attempts": 1,
+  "local_recovery_cases_passed": 16,
+  "local_orders_recovered_in_isolated_success_cases": 7,
+  "local_payment_calls_from_recovery": 0,
+  "source_database_changes": 0,
+  "mandatory_checks_passed": 8,
+  "mandatory_checks_total": 8,
+  "remaining_gaps": [
+    "Independent Evaluator L3 rerun and transaction/lock order/revocation semantic review remain required before final PASS.",
+    "Only synthetic merchant/fake PSP and LOCAL_OPERATOR_ASSUMED: real identity, real PSP settlement, deployed merchant integration, and customer value unverified.",
+    "Real notification outbox, provider delivery and operations integration are not covered; returned notification status is PENDING_NOT_SENT."
+  ],
+  "l2_evidence": "evidence/l2_executor_01/L2-GATE.json",
+  "recovery_evidence": "evidence/recovery_executor/run_0003/OBSERVATIONS.json",
+  "authorization_commit": false,
+  "authorization_push": false,
+  "authorization_api_call": false
+}

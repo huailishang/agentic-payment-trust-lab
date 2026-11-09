@@ -1,0 +1,33 @@
+{
+  "schema": "h60-result/v1",
+  "task_id": "H60_LOCAL_OPERATOR_RECONCILIATION_APPROVAL_V1",
+  "classification": "LOCAL_OPERATOR_APPROVAL_ONLY",
+  "validation_status": "VERSIONED_V3_7_OF_7_BOTH_MODES_PASS_ORIGINAL_FROZEN_GATE_NOT_RUN",
+  "accepted_as_original_frozen_h60": false,
+  "versioned_repair_validation": {
+    "plan": "evidence/versioned_fixture_v3/VALIDATION_PLAN.v3.yaml",
+    "manifest": "evidence/versioned_fixture_v3/MANIFEST.json",
+    "executor_gate": "evidence/l2_repair_v3_01/L2-GATE.json",
+    "self_run_replay_gate": "evidence/l3_replay_v3_01/L3-GATE.json",
+    "executor_cases": 20,
+    "replay_cases": 20,
+    "mandatory_failures": 0,
+    "independent_evaluator_signoff": false
+  },
+  "case_attempts_executor": 79,
+  "case_attempts_self_replay": 20,
+  "original_formal_l2_attempts": 0,
+  "business_execution_enabled": false,
+  "human_authentication_verified": false,
+  "production_ready": false,
+  "provider_verified": false,
+  "customer_value_proven": false,
+  "remaining_gaps": [
+    "Original frozen H60 HARNESS.py and VALIDATION_PLAN.yaml were preserved; original official L2/L3 have not been executed under a formally refrozen contract",
+    "Versioned v3 suite was invoked twice by the same executor; independent evaluator signoff does not exist",
+    "No approval consumer or merchant business execution, strong operator authentication, real PSP finality or production cross-database atomicity",
+    "No new order, refund, recovery payment, real customer result or production readiness evidence"
+  ],
+  "boundary": "LOCAL_OPERATOR_ASSUMED; execution_enabled always false",
+  "next_action": "If original formal H60 acceptance is required, adopt immutable v3 fixture/plan via a separately authorized refreeze with provenance and rerun the routed gate; do not overwrite old evidence or old frozen hashes"
+}

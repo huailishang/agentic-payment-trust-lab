@@ -1,0 +1,110 @@
+{
+  "schema": "h52-frozen-measurement-spec/v1",
+  "task_id": "H52_EXTERNAL_CONSUMER_TRUST_SOURCE_READINESS_V1",
+  "boundary": "OFFLINE_SYNTHETIC_SIGNED_ARTIFACTS_NO_MERCHANT_EXECUTION",
+  "encoding_scope": "FIXED_ASCII_INTEGER_FIXTURE_NOT_GENERAL_JCS",
+  "roles": [
+    "trusted_user",
+    "delegate_agent",
+    "merchant",
+    "attacker"
+  ],
+  "fixed_time": 1800000000,
+  "root_exp": 1800003600,
+  "aud": "h52-merchant",
+  "nonce": "h52-checkout-once",
+  "baseline": {
+    "amount_minor": 1000,
+    "currency": "USD",
+    "root_max_minor": 5000,
+    "payee": "h52-merchant",
+    "max_count": 1,
+    "synthetic_consent_present": true
+  },
+  "required_cases": [
+    [
+      "Q01_NORMAL",
+      "真实生成商家JWS、OpenPaymentMandate与PaymentMandate两跳；独立可信root，正常投影；当前函数的有效性/中立判断"
+    ],
+    [
+      "Q02_CHECKOUT_TAMPERED",
+      "只改投影的checkout_jwt正文，保留签名与旧hash；支付授权chain不变"
+    ],
+    [
+      "Q03_CHECKOUT_REBOUND_PAYMENT_STALE",
+      "商家重新签署不同checkout并更新checkout_hash；PM transaction_id保留原hash，chain不变"
+    ],
+    [
+      "Q04_PROJECTED_AMOUNT_CHANGED",
+      "只把已解码PM projection.payment_amount.amount改1000→1500（仍在5000限额内）；signed chain不变"
+    ],
+    [
+      "Q05_PROJECTED_PAYEE_CHANGED",
+      "只把投影PM payee.id改h52-other-merchant；signed chain不变"
+    ],
+    [
+      "Q06_PROJECTED_CURRENCY_CHANGED",
+      "只把投影PM payment_amount.currency改USD→EUR；signed chain不变"
+    ],
+    [
+      "Q07_SELF_ROOT_SUBSTITUTION",
+      "用attacker作为root issuer生成另一条有效chain；预置信任root拒绝与请求自带root可验签诊断分列"
+    ],
+    [
+      "Q08_CONSENT_ABSENT",
+      "保留全部已签材料和当前输入，只标记独立合成确认事件缺失；测函数责任边界，不新增闸门"
+    ],
+    [
+      "Q09_EXPIRED_TOKEN",
+      "同一chain，验证时钟1800007200；其余不变"
+    ],
+    [
+      "Q10_WRONG_AUDIENCE",
+      "同一chain，expected_aud=h52-wrong-merchant；其余不变"
+    ],
+    [
+      "Q11_REPLAY_WITH_SEEN_ID",
+      "同一chain和snapshot，显式seen_request_ids=[transaction_id]；测无状态验签与现有业务去重的区别"
+    ],
+    [
+      "Q12_MISSING_CONTEXT",
+      "仅删除experiment_context内容；同一chain；缺失输入不得自动造值"
+    ]
+  ],
+  "evidence_fields": {
+    "root": [
+      "schema",
+      "boundary",
+      "encoding_scope",
+      "network_calls",
+      "asgi_requests",
+      "payment_calls",
+      "public_key_registry",
+      "cases"
+    ],
+    "case": [
+      "case",
+      "crypto_inputs",
+      "boundary_input",
+      "consent_present",
+      "seen_request_ids",
+      "observed"
+    ],
+    "q07_extra": "self_root_diagnostic",
+    "observed": "REFERENCE.recompute返回结构；Executor需独立调用真实API记录，禁止调用该函数代做测量"
+  },
+  "requirements": [
+    "VERSION_SCHEMA",
+    "CAPABILITY_NEGOTIATION",
+    "MERCHANT_SIGNATURE",
+    "FULL_CHECKOUT_JCS",
+    "TRUSTED_CONSENT_ISSUER",
+    "DELEGATION_KEY_BINDING",
+    "AMOUNT_CURRENCY_PAYEE",
+    "VERIFIED_PAYLOAD_LINEAGE",
+    "REPLAY_REVOCATION_ORDER",
+    "EXECUTION_SNAPSHOT_CLAIM",
+    "PROVIDER_REFERENCE_QUERY",
+    "TRACE_CONSUMPTION"
+  ]
+}

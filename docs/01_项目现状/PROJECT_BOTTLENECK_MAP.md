@@ -1,11 +1,11 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-11-08-r104
-Last reviewed: 2026-11-08
+Map revision: 2026-11-09-r106
+Last reviewed: 2026-11-09
 Map owner: Evaluator / Human Task Owner
 Status: ACTIVE
 
-本版记录H64独立语义拒收并冻结H64R离线修复；下载访问限制属实，金额/关联测量尚未有效，不新增产品能力成绩。局部通过不等于真实商户、生产身份、资金网络或监管合规已获证明。
+本版记录H64R独立L3四VP及六源语义复核PASS：原混拼调用与漏记金额已修复，但六例仍不可判定，未新增产品安全成绩。下一H65只测现有源单位/确认绑定直接证据，缺环则停止此视图；公开任务入口随远端同步发布，原始输入保留本地。局部通过不等于真实身份、清算、外部控制效果或监管合规已获证明。
 
 ## Project outcome / 项目结果
 
@@ -42,7 +42,10 @@ H62使单个本地异常类型从“付款成功而订单缺失，只能查询�
 - measured（已测）：H64选定6新例、4 Parquet及11/12 world材料，18 GET/88,710,515字节、两次同envpack失败，1次解码安装；独立L3结构4/4、8纯函数例通过，但AC-02/03语义不通过，REJECTED/INCONCLUSIVE。第4例关联值32/32/34混拼；第6例协议total=4425、currency=usd、checkout可见而被统一payment=None丢弃。
 - measured（已测）：缺失envpack属于INPUT_LIMIT（输入获取受限），不是源文件不存在；5例world对完整。原始付款观察、单位/授权绑定、实际后端状态必须逐维清点，不能由通用空输入推断全部源不可用。
 - estimated（估计）：H64R仅复用原六例与现有材料，90主动分钟/2L2/至多12次sample读取，网络/安装/产品/回放/模型/付款0。先修离线关联/金额清点比重试下载更有直接信息收益。
+- measured（已测，仅开工准备）：评估者核对H64R原3816保护/7冻结文件；3812保护及7冻结一致，另4文档共10行各去除两个行尾ASCII空格，原Git blob字节均匹配旧摘要。已保留原BASELINE/合同/路由/地图及差异文件原字节，显式迁移至HEAD 211151e；CHECK/计划和测量范围/预算不变。未读取样本、未执行正式L2/L3，不增加产品能力成绩。
 - unknown（未知）：本仓控制效果、独立未见样本泛化及新来源可用性；真实商户/PSP/客户价值。不能由六预览缺本仓内部对象推断整个数据集不可用。
+- measured（已测）：H64R独立L3 4/4、四损坏变异及原八用例通过；独立读六源核对全部提交引用与12文件/14个L2文件摘要。5调用为4完整/1部分，6响应金额及4请求额度观察、4用户金额确认；call-32/34分开、call-68的4425/usd保留。修复PASS/NOT_APPLICABLE，六例NOT_JUDGEABLE不等于产品失败。
+- estimated（估计）：H65 75主动分钟/12源读取/1版/2L2；只测现有单位与确认桥，无新GET/安装/回放/模型/产品/付款。wallet有Consent/checkout/amount结构线索，但每例实际绑定及单位是否可证明仍unknown。
 - estimated（估计）：H63测量120主动分钟/2L2、中低维护成本，运行时/模型/支付/安装0。准备匿名公开读取10文件/727832字节；公开网页研究另计，不写成零网络。
 
 ## Bottleneck register / 瓶颈登记表
@@ -56,31 +59,31 @@ H62使单个本地异常类型从“付款成功而订单缺失，只能查询�
 | B-16 | 横向外部攻击 | H46源片段停止，不重测既知完整入口语义缺口 | WATCH / SOURCE_SLICE_STOPPED |
 | B-06 | 真实身份/外部支付服务方 | 支付宝有效Payment-Proof及绑定仍缺；Human后置，权限不恢复 | DEFERRED / HUMAN_DEFERRED |
 | B-17 | 商城批准与业务恢复 | H62本地代表性已付无单改善；真实采用/履约未知 | LOCAL_SLICE_CLOSED / REAL_ADOPTION_UNKNOWN |
-| B-18 | 独立外部轨迹可判定性 | 完整材料已部分取得，测量有混拼id/丢弃金额缺陷；独立可判定性未闭合 | ACTIVE / H64R_OFFLINE_MEASUREMENT_REPAIR |
+| B-18 | 独立外部轨迹可判定性 | 原测量缺陷已修复，单位/确认到checkout直接证据和独立控制效果仍缺 | ACTIVE / H65_BOUNDED_SOURCE_BRIDGE_MEASUREMENT |
 
 ## Active bottleneck / 当前第一瓶颈
 
 Active bottleneck ID: B-18
 
-当前第一证据缺口仍是外部轨迹能否支撑合同有效的独立判定。眼前阻塞是正确清点已经下载的事实：逐个call id关联、保留已报告金额，再独立判断单位/授权/后台状态。H64R不建设支付控制，也不要求最终必须可判定。固定旧六预览停止保持；不继续扩M06或提前声称泛化。
+当前第一证据缺口仍是外部轨迹能否支撑合同有效的独立判定。H64R已修复源事实清点；眼前只需辨别现有材料是否已有可回指的单位与确认桥，避免因未提取就断言源无证据，或因代码存在就假造绑定。该有界测量最后核查一次当前六例视图，不建设支付控制。固定旧六预览停止保持，不扩M06或提前声称泛化。
 
-离线修复预算优于先补缺失world：补齐下载不会修复已经存在的混合id及恒空金额输入。四Parquet和5组完整world已足以定位测量错误，无需网络。H62和B-16已知片段不重开，B-06真实支付仍Human后置。原H64 INPUT_LIMIT事实保留，不授权第三次GET；外部源不必包含本仓内部同名对象，原始观察和缺失维度分别记账。客户需求仍未知。
+有界静态测量优于补缺失world或直接回放：现有四Parquet、5组完整world和钱包静态片段已足够检验是否仅缺单位/确认桥提取，不应先消耗网络/运行时成本。H62和B-16已知片段不重开，B-06真实支付仍Human后置。原H64 INPUT_LIMIT保留，不授权第三次GET；源不必包含本仓同名内部对象，原始观察与缺失维度分别记账。客户需求仍未知。
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: H-64
-Hypothesis status: inherited measurement-only / H64 rejected / H64R CONTRACT_FROZEN / SINGLE / Executor
+Hypothesis ID: H-65
+Hypothesis status: measurement-only / H64R PASS / H65 CONTRACT_FROZEN / SINGLE / Executor
 
-继承命题不变，但先纠正测量：同六例逐call关联，分别保留请求/令牌额度/协议报告完成的金额，说明确认到checkout/单位/后台状态哪些可证、哪些仍未知。只修源测量，不运行上游或本仓；修复通过后再决定是否另冻回放基线，不能用八个合成纯函数例替代实际源输入清点。
+现有锁定材料可能已有单位定义或确认桥，但只有能回指到同episode事实才构成证明；静态代码意图、metadata、相邻或同额均不自动建立绑定。H65逐边清点并以直接证据决定继续/停止，不运行上游、本仓或回放，不新增签名要求。
 
-当前合同：`docs/05_任务交接/H64R_OFFLINE_LINEAGE_AMOUNT_REPAIR_V1/CONTRACT.md`；H64拒收证据见其REVIEW及RV-EV-06。H63R既有签收/停止、H63原拒收不改。原六例不是已证实未见留出集；确认文字不是强身份，协议成功不是独立PSP记录，缺签名也不等于源金额字段不存在。
+当前合同：`docs/05_任务交接/H65_SOURCE_UNIT_CONSENT_BINDING_MEASUREMENT_V1/CONTRACT.md`；H64R签收见其REVIEW、公开脱敏报告及本地独立L3。H64/H63原拒收与H63R签收保持。原六例不是未见留出集；确认文字不是强身份，协议成功不是独立PSP记录。
 
 ## Candidate experiments / 候选与比较
 
 | 方向 | 分类与动作 |
 | --- | --- |
 | CartTrace固定六预览 | REFERENCE_ONLY（只参考）；来源资格测量完成，STOP_PREVIEW_VIEW，不升级ABSORB（吸收）或导入产品；不外推整个源 |
-| CartTrace完整表/world/静态回放实现 | REFERENCE_ONLY（只参考）；H64测量拒收，H64R只离线修源事实关联/金额，不启动回放/产品对照或新下载 |
+| CartTrace完整表/world/静态回放实现 | REFERENCE_ONLY（只参考）；H64原拒收保留，H64R修复已签收；H65最后核现有单位/确认桥，不启动回放/产品对照或新下载 |
 | APort Vault | REFERENCE_ONLY（只参考）；文件访问需申请且分享账号信息，不申请/下载 |
 | Gordon AgentCommerceBench | REFERENCE_ONLY（只参考）；受限且含生产来源，不申请、不接链/服务 |
 | ModelScope ACEBench线索 | REFERENCE_ONLY（只参考）；工具能力资料不足替代授权/支付状态证据，不展开 |
@@ -88,15 +91,15 @@ Hypothesis status: inherited measurement-only / H64 rejected / H64R CONTRACT_FRO
 
 ## Reassessment triggers / 继续、停止与切换
 
-- CONTINUE（继续）：先通过H64R的逐源语义复核，恢复测量有效性；再按各例关联/单位/后台证据决定是否另冻回放基线，不自动进入对照或付款。
+- CONTINUE（继续）：H65至少一例单位/确认绑定有完整直接源链，才可另冻回放基线；仍不执行回放或付款。
 - INPUT_LIMIT（输入受限）：下载/解码/预算不足与数据本身无证据区分；保留失败和限额记录，后续授权/资源取舍再评估，不无限重试。
-- STOP（停止）：仅有评分/助手陈述，缺明确绑定或新增信息；停止该预览视图，不无限下载/适配。
+- STOP（停止）：H65仍只有代码意图、评分或顺序线索，缺直接桥接证据，停止此六例静态源视图，不再派第三轮同类修补或无限下载。
 - SWITCH（切换）：独立反例显示另一个零容忍边界更优先，或取得经许可、脱敏且可判定的新消费者轨迹。
 - 真实身份/网络/资金/凭证/数据分享仍需相应授权；本轮不改变四项Git/API旗标。
 
 ## Historical preservation / 历史保护与新基线
 
-r100原字节保存于 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_20261106_r100.md`，SHA-256=`ec6bb8f8895a6e8dfb9c284ba37c5fb5c530c6966f030378280f38bc19633328`。H62合同、报告、计划、判别器、INPUTS与全部证据不回写。
+r100原SHA-256=`ec6bb8f8895a6e8dfb9c284ba37c5fb5c530c6966f030378280f38bc19633328`。当前展示归档 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_20261106_r100.md` 在第5/6行各去除两个行尾空格，当前SHA-256=`7960dd28efa9a7ec50d98171ff33254e380fbc06151f970267d892063abd6109`；2026-11-09已从本地Git blob a32aad586492a7feaa7d4b881cee177e295115bb找回旧字节并匹配原摘要，完整原字节编码保存在H64R `evidence/governance_refreeze_20261109/DRIFT_AUDIT.json`。历史字节复现用该旧快照，不声称当前展示文件仍有原摘要。H62合同、报告、计划、判别器、INPUTS与全部证据不回写。
 
 当前地图与CURRENT为H62签收后的显式治理变更。H63 BASELINE记录旧路径→归档路径及H62/其他工作区摘要。H62冻结checker要求原路径/工作区集合，不能在新增任务后的当前工作区直接重跑并把预期治理差异当产品回归；历史复现须在隔离原基线中进行。H63只核历史保持与新范围，不重跑H62业务。
 
@@ -106,10 +109,16 @@ r102原字节保存为 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_2026
 
 H64完成独立L3与拒收结构检查后，r103归档为 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_20261108_r103.md`，SHA-256=`0fd46544e823738b164210264a21c2e220e24c4324f06b0e187c55c2a311ad9d`；r104为新修复治理基线。H64R保护完整H64提交/原证据/已获材料、原三库及既有解码器，不回写旧预算或重跑旧全工作区checker。
 
+r104原字节保存为 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_20261108_r104.md`，SHA-256=`c22c10c5c6e89623d66cbfbfceef122b7aa3e1ba4c2ec3f7d0be3199420e2020`。r105仅修正执行基线和历史字节声明；B-18排序与H64R任务范围不变。旧CURRENT、合同、BASELINE及全部7冻结文件的字节另存H64R `evidence/governance_refreeze_20261109/ORIGINAL_SNAPSHOT.json`；不覆盖旧L2/L3或失败准备证据。
+
 ## Revision log / 修订记录
+
+r105原字节归档于 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_20261109_r105.md`，SHA-256=`48fd5abb2c59eb1f7e8c06dff166cdf993345376a8715adc44b51d948fd89c4a`。H64R原REPORT/测量/账本/接受快照及L2/L3不回写；公开展示副本与原件分别标记，发布不追认原始证据被修改。
 
 | Revision | 证据与决策 |
 | --- | --- |
+| 2026-11-09-r106 | H64R独立L3/六源审阅PASS，修复完成但六例仍不可判定；冻结H65单位/确认桥最后有界静态测量，缺环即停止此视图。r105归档；公开入口与安全控制文件统一推送，原始输入不公开。 |
+| 2026-11-09-r105 | 评估者核清HEAD漂移和四文档10行尾空格差异，找回全部旧字节并保存审计；同一H64R显式迁移执行基线，CHECK/计划/预算/授权不变。r104逐字节归档；仅恢复可开工条件，无新测量或产品通过结论。 |
 | 2026-11-08-r104 | H64独立L3结构4/4、语义AC-02/03不通过；原调用id混拼/已报告金额被丢弃，REJECTED/INCONCLUSIVE。冻结H64R离线最小修复，0网络/安装；下载限制保留，不能据此否定源或声称产品漏洞。归档r103。 |
 | 2026-11-08-r103 | Human要求制定新包；固定完整表/world与代码来源、规则/选择/预算/依赖，H64 CONTRACT_FROZEN，尚未执行。B-18测量主线，不恢复真实支付权限；归档r102，原H63/H63R不改。 |
 | 2026-11-08-r102 | H63R PASS，独立L3 3/3及30映射语义复核；原H63拒收保留；停止六预览资格研究。B-18独立控制效果证据仍缺，新来源未就绪，无下一执行包；E/F和支付权限不升级。归档r101。 |

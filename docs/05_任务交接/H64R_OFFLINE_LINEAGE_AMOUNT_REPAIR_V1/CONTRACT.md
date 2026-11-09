@@ -5,7 +5,8 @@ Workflow: evaluator-executor-workflow/v2.2
 Task kind: repair
 Risk: L1
 Contract state: CONTRACT_FROZEN
-Baseline HEAD: 7831d232530c91825bb507a2a6d95b1de6a02c3b
+Baseline HEAD: 211151e6c3ae53997b5a2da419c27db497d7eb48
+Baseline amendment: AMENDMENT_20261109.md（评估者开工前基线迁移；原合同字节已保存）
 Validation plan file: docs/05_任务交接/H64R_OFFLINE_LINEAGE_AMOUNT_REPAIR_V1/VALIDATION_PLAN.yaml
 Dispatch mode: SINGLE
 Attempt execution mode: SEQUENTIAL
@@ -13,7 +14,7 @@ Attempt execution mode: SEQUENTIAL
 ## Strategic basis / 战略依据
 
 Project map: docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md
-Map revision: 2026-11-08-r104
+Map revision: 2026-11-09-r105
 Active bottleneck: B-18
 Hypothesis: H-64（继承；只修正源事实测量）
 Metric baseline: H64 L3结构4/4，但AC-02混合call-32/34、AC-03统一清空payment而拒收；固定envpack两次失败属实。
@@ -34,7 +35,7 @@ Bounded retry / iteration budget: 每版六例，每例完整读取前记预留�
 
 ## Allowed scope / 允许范围
 
-仅写本任务EXTRACT.py、MEASUREMENT.json、ATTEMPT_LEDGER.json、REPORT.md、derived/及evidence/；CURRENT只改本任务state/phase至EXECUTING/Executor并保持该角色提交。冻结CHECK/CONTRACT/入口/计划/SETUP_BASELINE/READINESS/references/BASELINE不可改。
+仅写本任务EXTRACT.py、MEASUREMENT.json、ATTEMPT_LEDGER.json、REPORT.md、derived/及新执行证据；CURRENT只改本任务state/phase至EXECUTING/Executor并保持该角色提交。冻结CHECK/CONTRACT/入口/计划/SETUP_BASELINE/READINESS/references/BASELINE/AMENDMENT不可改；既有evidence/governance_refreeze_20261109/及原准备证据只读。
 
 H64全部原件和获取材料只读，包括拒收报告/证据/失败GET/预算；四Parquet、SELECTED名单和原先安装的 `.task_envs/H64/parquet_reader` 仅可读，不能重装/更改。只允许标准库和该固定PyArrow解码器。可以只读加载已审阅的H64 ORACLE.evaluate纯函数及冻结8用例；不得运行其ACQUIRE/MEASURE/CHECK或上游代码。不得改本仓src/tests/SDK、历史任务、三源库、地图或无关工作区。
 
@@ -42,7 +43,7 @@ H64全部原件和获取材料只读，包括拒收报告/证据/失败GET/预�
 
 ### AC-01 — 原件与零外部副作用
 
-Given新BASELINE；When VP01/04；Must observe旧完整H64/历史工作区/原三库/解码器和HEAD保持，新文件限本任务，网络/GET/安装/模型/产品/上游回放/付款均0。Mandatory: yes。
+Given经AMENDMENT_20261109审计的新BASELINE；When VP01/04；Must observe完整H64/历史工作区/原三库/解码器和HEAD保持，新文件限本任务，网络/GET/安装/模型/产品/上游回放/付款均0。开工前四个文档的纯行尾空格差异及地图治理更新已逐项记账；原摘要/字节保留，不把新快照冒充历史字节未变。Mandatory: yes。
 
 ### AC-02 — 逐个原生id的关联
 

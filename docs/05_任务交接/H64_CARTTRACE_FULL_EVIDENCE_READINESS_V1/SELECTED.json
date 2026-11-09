@@ -1,0 +1,42 @@
+{
+  "task_id": "H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1",
+  "selected_at_utc": "2026-11-08T13:14:58.655177+00:00",
+  "rule": "boundary=order,currency=USD,no webmcp,exclude H63 six,sort episode_id ascending",
+  "source_files": [
+    {
+      "file": "acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+      "sha256": "d3f046b717cb4d9ae3c59d58c9804c74b91cbd7d9c2420cb1d05d569583ee77c"
+    },
+    {
+      "file": "acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+      "sha256": "fbba9f84ca7d977b56b346534cc7d2d21f6aa25d7c574b8aa5873759f0e4cb3e"
+    }
+  ],
+  "sample_list_sha256": "4303abace12df202acf559e5f88dce1c75abee19858dab3ab67919dd3823c0fc",
+  "samples": [
+    {
+      "episode_id": "ep-03a80be98c66",
+      "world_id": "env-8476f088aa22"
+    },
+    {
+      "episode_id": "ep-0646e4cec480",
+      "world_id": "env-bd45a7e9be19"
+    },
+    {
+      "episode_id": "ep-08fb1a04f29a",
+      "world_id": "env-c6e5378dedbf"
+    },
+    {
+      "episode_id": "ep-09bafc6d1c7e",
+      "world_id": "env-082233373dc5"
+    },
+    {
+      "episode_id": "ep-1375d00dacdb",
+      "world_id": "env-abc882a13107"
+    },
+    {
+      "episode_id": "ep-172fbb8cce5b",
+      "world_id": "env-63bec673c3cf"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "h50-result/v1",
+  "classification": "LOCAL_SERVICE_PROTOTYPE_ONLY",
+  "measurement_boundary": "LOCAL_NATIVE_SERVICE_METHODS_SYNTHETIC_TRUST_FAKE_PSP_NO_HTTP",
+  "local_guard_implemented": true,
+  "product_core_changed": false,
+  "production_ready": false,
+  "real_identity_verified": false,
+  "cross_system_revocation_verified": false,
+  "provider_verified": false,
+  "customer_validated": false,
+  "global_race_closed": false,
+  "customer_demand": "UNKNOWN",
+  "native_amount_binding_baseline": "NOT_OBSERVABLE"
+}

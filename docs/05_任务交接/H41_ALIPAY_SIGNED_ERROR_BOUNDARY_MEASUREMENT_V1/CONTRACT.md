@@ -8,7 +8,7 @@ Contract state: `CONTRACT_FROZEN`
 Dispatch mode: `SINGLE`
 Date: 2026-09-22
 Map revision: `2026-09-22-r61`
-Baseline HEAD: `0b99f3d1f3db180a37bcb8e6512fb7849711ea72`
+Baseline HEAD: `7831d232530c91825bb507a2a6d95b1de6a02c3b`
 Active bottleneck: `B-06`
 
 ## Strategic basis / 全局位置、假设与结束点
@@ -99,6 +99,8 @@ P1 无签名、意外成功或网络不确定 → STOP 该次实测，按实证�
 Validation plan file: docs/05_任务交接/H41_ALIPAY_SIGNED_ERROR_BOUNDARY_MEASUREMENT_V1/VALIDATION_PLAN.yaml
 
 ## Amendments
+
+2026-09-27-a3：Executor 在 P1 前发现 HEAD 从 `0b99f3d` 漂移到已推送的 `7831d23` 并按合同零调用停止。Evaluator 审核该提交为此前已验收 H38–H41 工作区的固化快照：保护文件及 H41 受审实现 hash 不变，commit diff/security audit 通过，核心授权、适配器、观察器与独立反例无回归。仅将 CURRENT、合同与 BASELINE 的 HEAD 重新锚定到 `7831d23`；不改变假设、AC、请求形状、密钥/秘密边界、一次 HTTP attempt 上限或 stop conditions，也不补发/重置预算。H41 专项中 `test_actual_current_p0_blocked` 是 P0 阶段断言，在已批准 P1 的实际 CURRENT 上不适用；其余 27 项通过，不据此声称新状态 28/28。
 
 2026-09-23-a2：按 EVALUATOR_GOVERNANCE_REPAIR.md 与 Human 修复指令，规范化类型、标题、计划引用和原 VP 的执行命令。只修订治理文件和新增本包离线验证入口、证据及报告附注；不改变原假设、AC、产品、保护文件、P0 零预算或 P1 单次上限，不修改中央 workflow。测试入口通过 H41_TEST_PYTHON 指定已有测试运行时，显式设置子进程 PYTHONPATH；该变量不属于产品或 live 开关。本轮由原 Executor 补 L2，旧报告事实保留。Evaluator 仍须独立确认修订并运行 L3 后才能批准 P1，Executor 不代签。
 

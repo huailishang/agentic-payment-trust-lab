@@ -1,0 +1,17 @@
+{
+  "schema": "h47-cases/v1",
+  "boundary": "FULL_PINNED_ASGI_APP_OFFLINE_TRANSPORT",
+  "repeats": 2,
+  "confirmation_origin": "Explicit synthetic user fixture: rose quantity 1, USD, merchant fixture endpoint; initial returned checkout snapshot retained unchanged. Not inferred from the changed checkout.",
+  "cases": [
+    {"id":"C01_NORMAL","steps":[{"operation":"create","key":"create"},{"operation":"complete","key":"complete"}],"expected_statuses":[201,200],"expected_orders":1,"expected_stock":4,"expected_payment_calls":1},
+    {"id":"C02_CHANGED_AFTER_CONFIRMATION","steps":[{"operation":"create","key":"create"},{"operation":"update","key":"update","quantity":2},{"operation":"complete","key":"complete"}],"expected_statuses":[201,200,200],"expected_orders":1,"expected_stock":3,"expected_payment_calls":1},
+    {"id":"C03_SAME_KEY_REPEAT","steps":[{"operation":"create","key":"create"},{"operation":"complete","key":"complete"},{"operation":"complete","key":"complete"}],"expected_statuses":[201,200,200],"expected_orders":1,"expected_stock":4,"expected_payment_calls":1},
+    {"id":"C04_SAME_KEY_DIFFERENT_BODY","steps":[{"operation":"create","key":"create"},{"operation":"complete","key":"complete"},{"operation":"complete","key":"complete","token":"fail_token"}],"expected_statuses":[201,200,409],"expected_orders":1,"expected_stock":4,"expected_payment_calls":1},
+    {"id":"C05_NEW_KEY_AFTER_COMPLETE","steps":[{"operation":"create","key":"create"},{"operation":"complete","key":"complete"},{"operation":"complete","key":"another-complete"}],"expected_statuses":[201,200,409],"expected_orders":1,"expected_stock":4,"expected_payment_calls":1},
+    {"id":"C06_RESPONSE_WITHHELD_THEN_QUERY","steps":[{"operation":"create","key":"create"},{"operation":"complete_drop_response","key":"complete"},{"operation":"query"}],"expected_statuses":[201,200,200],"expected_orders":1,"expected_stock":4,"expected_payment_calls":1},
+    {"id":"C07_MOCK_PAYMENT_FAILURE","steps":[{"operation":"create","key":"create"},{"operation":"complete","key":"complete","token":"fail_token"}],"expected_statuses":[201,402],"expected_orders":0,"expected_stock":5,"expected_payment_calls":1},
+    {"id":"C08_BODY_TAMPER_AFTER_SIGNING","steps":[{"operation":"tampered_create","key":"create"}],"expected_statuses":[400],"expected_orders":0,"expected_stock":5,"expected_payment_calls":0},
+    {"id":"C09_UNSIGNED_REQUEST","steps":[{"operation":"unsigned_create","key":"create"}],"expected_statuses":[401],"expected_orders":0,"expected_stock":5,"expected_payment_calls":0}
+  ]
+}

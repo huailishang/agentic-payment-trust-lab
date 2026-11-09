@@ -1,0 +1,33 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: H46_AGENTDOJO_OFFLINE_EVIDENCE_CHAIN_V1
+checks:
+  - id: VP-01
+    ac: [AC-01]
+    cwd: .
+    command: [python, docs/05_任务交接/H46_AGENTDOJO_OFFLINE_EVIDENCE_CHAIN_V1/EVALUATOR_CHECK.py, baseline]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-02
+    ac: [AC-02, AC-03, AC-04]
+    cwd: .
+    command: [python, docs/05_任务交接/H46_AGENTDOJO_OFFLINE_EVIDENCE_CHAIN_V1/EVALUATOR_CHECK.py, measurement]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-03
+    ac: [AC-03, AC-04, AC-06]
+    cwd: .
+    command: [python, docs/05_任务交接/H46_AGENTDOJO_OFFLINE_EVIDENCE_CHAIN_V1/EVALUATOR_CHECK.py, documents]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-04
+    ac: [AC-05]
+    cwd: .
+    command: [python, docs/05_任务交接/H46_AGENTDOJO_OFFLINE_EVIDENCE_CHAIN_V1/EVALUATOR_CHECK.py, bundle]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-05
+    ac: [AC-01, AC-06]
+    cwd: .
+    command: [python, docs/05_任务交接/H46_AGENTDOJO_OFFLINE_EVIDENCE_CHAIN_V1/EVALUATOR_CHECK.py, regressions]
+    expected_exit_code: 0
+    mandatory: true

@@ -1,0 +1,191 @@
+{
+  "schema": "evaluator-executor-validation-plan/v1",
+  "task_id": "H56_TRUSTED_DISCLOSURE_PROFILE_V1",
+  "checks": [
+    {
+      "id": "VP-01",
+      "ac": [
+        "AC-01"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/CHECK.py",
+        "baseline"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-02",
+      "ac": [
+        "AC-01"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/CHECK.py",
+        "scope"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-03",
+      "ac": [
+        "AC-03"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/JCS_CHECK.py"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-04",
+      "ac": [
+        "AC-03"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/FROZEN_TESTS.py",
+        "--role",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/FROZEN_TESTS.py",
+        "--role",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-05",
+      "ac": [
+        "AC-03"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/ROOT_CASES.py",
+        "--role",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/ROOT_CASES.py",
+        "--role",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-06",
+      "ac": [
+        "AC-02",
+        "AC-03"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/PROFILE_CASES.py",
+        "--role",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/PROFILE_CASES.py",
+        "--role",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-07",
+      "ac": [
+        "AC-02",
+        "AC-03",
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/CHECK.py",
+        "materials",
+        "executor"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true,
+      "evaluator_command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/CHECK.py",
+        "materials",
+        "evaluator"
+      ]
+    },
+    {
+      "id": "VP-08",
+      "ac": [
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/RUNTIME.py",
+        "regression"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-09",
+      "ac": [
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/CHECK.py",
+        "selftest"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-10",
+      "ac": [
+        "AC-01",
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        ".task_envs/H47/.venv/Scripts/python.exe",
+        "-B",
+        "docs/05_任务交接/H56_TRUSTED_DISCLOSURE_PROFILE_V1/CHECK.py",
+        "baseline"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    }
+  ]
+}
