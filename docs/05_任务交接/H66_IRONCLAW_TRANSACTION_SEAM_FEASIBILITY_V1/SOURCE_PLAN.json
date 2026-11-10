@@ -1,0 +1,26 @@
+{
+  "task_id": "H66_IRONCLAW_TRANSACTION_SEAM_FEASIBILITY_V1",
+  "repository": "nearai/ironclaw",
+  "ref": "b0b999d96781516ee05e6ba961d6f3ead900da96",
+  "source_requests_max": 20,
+  "attempts_per_target_max": 2,
+  "archive_bytes_max": 8388608,
+  "single_archive_bytes_max": 1048576,
+  "elapsed_seconds_max": 5400,
+  "l2_attempts_max": 2,
+  "max_parallelism": 1,
+  "issues": [1712, 6532],
+  "prs": [3960, 3993],
+  "seed_paths": [
+    "Cargo.toml",
+    "README.md",
+    "crates/kernel/ironclaw_approvals/src/lib.rs",
+    "crates/kernel/ironclaw_capabilities/src/lib.rs",
+    "crates/kernel/ironclaw_host_runtime/src/lib.rs",
+    "crates/kernel/ironclaw_host_runtime/src/wasm_credentials.rs",
+    "crates/substrates/ironclaw_secrets/src/lib.rs"
+  ],
+  "follow_scope": "Only safe repository-relative text files and one pinned tree in nearai/ironclaw at ref; follow concrete imports/consumer references, not whole-repository download.",
+  "license_policy": "Read declared license and relevant license file when needed; no upstream execution or code absorption; stop restricted or unclear material.",
+  "classification": "REFERENCE_ONLY"
+}

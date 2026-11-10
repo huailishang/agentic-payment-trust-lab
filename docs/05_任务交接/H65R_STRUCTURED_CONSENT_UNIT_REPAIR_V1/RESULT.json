@@ -1,0 +1,926 @@
+{
+  "task_id": "H65R_STRUCTURED_CONSENT_UNIT_REPAIR_V1",
+  "classification": "REFERENCE_ONLY",
+  "source_scope": "published six CartTrace validation episodes",
+  "samples": [
+    {
+      "episode_id": "ep-03a80be98c66",
+      "consent_records": [
+        {
+          "seq": 40,
+          "actor": "shopper",
+          "kind": "message",
+          "given": true,
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "raw_amount": 2901,
+          "currency": "USD",
+          "source_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 1599,
+            "pointer": "/arguments",
+            "value_sha256": "c4b996742520f14443899b2560daab99c0c61ed0da2c80287328df523475122d",
+            "embedded_pointer": "/consent",
+            "decoded_value_sha256": "f86c5a3bcafe97b9765a7cdfc3464ab99bb72a424fbd5cca29bc0a0c28323aea"
+          },
+          "text_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 1599,
+            "pointer": "/text",
+            "value_sha256": "e7702893954de7943471ffaabbdcfc21ecf0c283eb0df46edb5994dc9bc48241"
+          },
+          "origin": "PUBLISHED_STRUCTURED_MESSAGE",
+          "semantic_limit": "published_shopper_record_not_identity_or_signature_proof"
+        }
+      ],
+      "native_checkout_citations": [
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+          "kind": "parquet",
+          "row_group": 0,
+          "row_index": 724,
+          "pointer": "/response_body",
+          "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+          "embedded_pointer": "/checkout/id",
+          "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+        }
+      ],
+      "field_units": [],
+      "binding": {
+        "scope": "published_episode_consent_record_to_checkout",
+        "status": "PROVEN",
+        "reason": "同一episode的shopper结构化arguments.consent明确给出given、checkout_id、amount和currency；原生checkout观察逐值相同。仅证实发布轨迹来源记录的绑定，不证明真实身份、签名或清算。"
+      },
+      "unit": {
+        "status": "PARTIAL",
+        "target_scope": "reported_payment_or_completion_amount",
+        "reason": "虽有该episode原生支付/完成报告的raw total、currency和checkout字段，但没有该具体response.total字段的直接单位契约；不得用final_cart或同额间接推定。"
+      },
+      "complete_chain": false,
+      "chain_citations": [],
+      "chain_edges": [],
+      "protocol_result_kind": "REPORTED_COMPLETION",
+      "source_payment_observations": [
+        {
+          "call_id": "call-45",
+          "raw_amount": 1298,
+          "currency_raw": "USD",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "UNKNOWN",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/totals/0/amount",
+            "decoded_value_sha256": "d59a23c3feff6c21bbd651244d14c5639d3aa704751d4ce7aaa481712a18456d"
+          },
+          "currency_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/currency",
+            "decoded_value_sha256": "82bb059ec10744f31e0406b8ef7a7a0f3c30c9b18435120fa859b2c0b9627888"
+          },
+          "checkout_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          }
+        },
+        {
+          "call_id": "call-45",
+          "raw_amount": 1499,
+          "currency_raw": "USD",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "UNKNOWN",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/totals/1/amount",
+            "decoded_value_sha256": "a3d0c75739a3c6a80dcb6f9d71f9da29b49b62995801bc52957e06acb87db33d"
+          },
+          "currency_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/currency",
+            "decoded_value_sha256": "82bb059ec10744f31e0406b8ef7a7a0f3c30c9b18435120fa859b2c0b9627888"
+          },
+          "checkout_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          }
+        },
+        {
+          "call_id": "call-45",
+          "raw_amount": 104,
+          "currency_raw": "USD",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "UNKNOWN",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/totals/2/amount",
+            "decoded_value_sha256": "5ef6fdf32513aa7cd11f72beccf132b9224d33f271471fff402742887a171edf"
+          },
+          "currency_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/currency",
+            "decoded_value_sha256": "82bb059ec10744f31e0406b8ef7a7a0f3c30c9b18435120fa859b2c0b9627888"
+          },
+          "checkout_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          }
+        },
+        {
+          "call_id": "call-45",
+          "raw_amount": 2901,
+          "currency_raw": "USD",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "UNKNOWN",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/totals/3/amount",
+            "decoded_value_sha256": "69be0182f4d8fa9f909126ba2ded763d076e10fc4999b9dee9cec1f596ea2cad"
+          },
+          "currency_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/currency",
+            "decoded_value_sha256": "82bb059ec10744f31e0406b8ef7a7a0f3c30c9b18435120fa859b2c0b9627888"
+          },
+          "checkout_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          }
+        }
+      ],
+      "source_request_allowances": [],
+      "native_call_statuses": [
+        {
+          "call_id": "call-45",
+          "status": "COMPLETE",
+          "tool": "send_payment_mandate"
+        }
+      ],
+      "missing_dimensions": [
+        "field_specific_protocol_result_unit"
+      ],
+      "independent_real_identity_verified": false,
+      "independent_backend_settlement_observed": false
+    },
+    {
+      "episode_id": "ep-0646e4cec480",
+      "consent_records": [
+        {
+          "seq": 79,
+          "actor": "shopper",
+          "kind": "message",
+          "given": true,
+          "checkout_id": "checkout-0c28f977df81",
+          "raw_amount": 976,
+          "currency": "USD",
+          "source_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 3059,
+            "pointer": "/arguments",
+            "value_sha256": "32f8cae387969f50708a50f41aaf0cc244160e84743ddde9dceaa2fed1e0f09f",
+            "embedded_pointer": "/consent",
+            "decoded_value_sha256": "a81ce921665c71da76d33fbc6e16f11a81530d15424f949927056b70246a8921"
+          },
+          "text_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 3059,
+            "pointer": "/text",
+            "value_sha256": "489c34aed50c6a98c38a5b2f12c0ca1188d658d6971a5b58094e2f3c9dde5f2f"
+          },
+          "origin": "PUBLISHED_STRUCTURED_MESSAGE",
+          "semantic_limit": "published_shopper_record_not_identity_or_signature_proof"
+        }
+      ],
+      "native_checkout_citations": [
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+          "kind": "parquet",
+          "row_group": 0,
+          "row_index": 1413,
+          "pointer": "/response_body",
+          "value_sha256": "d12f27ea6863b7412c15ec51a3d898ad6d4cf9d27427770cb08613e419080d86",
+          "embedded_pointer": "/checkout_id",
+          "decoded_value_sha256": "0e27e31a478c5d5cd90c76ddd2701a9f08042c0e2bb6fe85675538a38020bca9"
+        }
+      ],
+      "field_units": [],
+      "binding": {
+        "scope": "published_episode_consent_record_to_checkout",
+        "status": "PROVEN",
+        "reason": "同一episode的shopper结构化arguments.consent明确给出given、checkout_id、amount和currency；原生checkout观察逐值相同。仅证实发布轨迹来源记录的绑定，不证明真实身份、签名或清算。"
+      },
+      "unit": {
+        "status": "PARTIAL",
+        "target_scope": "reported_payment_or_completion_amount",
+        "reason": "虽有该episode原生支付/完成报告的raw total、currency和checkout字段，但没有该具体response.total字段的直接单位契约；不得用final_cart或同额间接推定。"
+      },
+      "complete_chain": false,
+      "chain_citations": [],
+      "chain_edges": [],
+      "protocol_result_kind": "REPORTED_COMPLETION",
+      "source_payment_observations": [
+        {
+          "call_id": "call-80",
+          "raw_amount": 976,
+          "currency_raw": "USD",
+          "checkout_id": "checkout-0c28f977df81",
+          "phase": "UNKNOWN",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 1413,
+            "pointer": "/response_body",
+            "value_sha256": "d12f27ea6863b7412c15ec51a3d898ad6d4cf9d27427770cb08613e419080d86",
+            "embedded_pointer": "/amount",
+            "decoded_value_sha256": "3cb65cad26f0a517866e06dcba59afa4a5eadf832404e0e17c707b928825c144"
+          },
+          "currency_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 1413,
+            "pointer": "/response_body",
+            "value_sha256": "d12f27ea6863b7412c15ec51a3d898ad6d4cf9d27427770cb08613e419080d86",
+            "embedded_pointer": "/currency",
+            "decoded_value_sha256": "82bb059ec10744f31e0406b8ef7a7a0f3c30c9b18435120fa859b2c0b9627888"
+          },
+          "checkout_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 1413,
+            "pointer": "/response_body",
+            "value_sha256": "d12f27ea6863b7412c15ec51a3d898ad6d4cf9d27427770cb08613e419080d86",
+            "embedded_pointer": "/checkout_id",
+            "decoded_value_sha256": "0e27e31a478c5d5cd90c76ddd2701a9f08042c0e2bb6fe85675538a38020bca9"
+          }
+        }
+      ],
+      "source_request_allowances": [
+        {
+          "call_id": "call-80",
+          "raw_amount": 976,
+          "currency_raw": "USD",
+          "checkout_id": "checkout-0c28f977df81",
+          "phase": "REQUEST",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 1413,
+            "pointer": "/request_body",
+            "value_sha256": "1f291deb0cb1786451410a552e5f5f7869ab604ca1415f02eb973b6fd1df39d9",
+            "embedded_pointer": "/amount",
+            "decoded_value_sha256": "3cb65cad26f0a517866e06dcba59afa4a5eadf832404e0e17c707b928825c144"
+          }
+        }
+      ],
+      "native_call_statuses": [
+        {
+          "call_id": "call-80",
+          "status": "COMPLETE",
+          "tool": "shop_pay_payment_request"
+        }
+      ],
+      "missing_dimensions": [
+        "field_specific_protocol_result_unit"
+      ],
+      "independent_real_identity_verified": false,
+      "independent_backend_settlement_observed": false
+    },
+    {
+      "episode_id": "ep-08fb1a04f29a",
+      "consent_records": [],
+      "native_checkout_citations": [],
+      "field_units": [],
+      "binding": {
+        "scope": "published_episode_consent_record_to_checkout",
+        "status": "UNKNOWN",
+        "reason": "已按原始turns对本episode逐条检查shopper.message.arguments.consent，未观察到已给定的结构化支付确认；不可从预算、金额相等或其他episode借用。"
+      },
+      "unit": {
+        "status": "UNKNOWN",
+        "target_scope": "payment_or_allowance",
+        "reason": "没有适用于该episode实际支付金额或额度字段的直接单位定义和足够原生支付结果，不能从静态final_cart规则推断已支付的币种单位。"
+      },
+      "complete_chain": false,
+      "chain_citations": [],
+      "chain_edges": [],
+      "protocol_result_kind": "NONE",
+      "source_payment_observations": [],
+      "source_request_allowances": [],
+      "native_call_statuses": [],
+      "missing_dimensions": [
+        "structured_consent_and_native_payment_chain"
+      ],
+      "independent_real_identity_verified": false,
+      "independent_backend_settlement_observed": false
+    },
+    {
+      "episode_id": "ep-09bafc6d1c7e",
+      "consent_records": [
+        {
+          "seq": 31,
+          "actor": "shopper",
+          "kind": "message",
+          "given": true,
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "raw_amount": 5818,
+          "currency": "USD",
+          "source_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 5197,
+            "pointer": "/arguments",
+            "value_sha256": "22ac559dccb55fc9f67931ea1b7a421b7fd4f0afca5dca291ff4bd6382f78538",
+            "embedded_pointer": "/consent",
+            "decoded_value_sha256": "483aabb02c21433d24969b8699f7a59f72f4ac46fae85b656438ba87f0222c59"
+          },
+          "text_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 5197,
+            "pointer": "/text",
+            "value_sha256": "d1432257773cad6ccba3ca5ccbd4f0544443bf55e9755941b1a02cc07fea00c9"
+          },
+          "origin": "PUBLISHED_STRUCTURED_MESSAGE",
+          "semantic_limit": "published_shopper_record_not_identity_or_signature_proof"
+        }
+      ],
+      "native_checkout_citations": [
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+          "row_group": 0,
+          "row_index": 5198,
+          "pointer": "/arguments",
+          "value_sha256": "18125c80461bd2bd0e1f8aed0ae82e08297c507f22e992087e9bee001f713bac",
+          "embedded_pointer": "/allowance/checkout_session_id",
+          "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+        },
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+          "row_group": 0,
+          "row_index": 5200,
+          "pointer": "/arguments",
+          "value_sha256": "ff4de737d67ec59be42dc3fcbba4f240a9bbbac99e1bec9bca564786d68a8c66",
+          "embedded_pointer": "/payload/allowance/checkout_session_id",
+          "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+        },
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+          "row_group": 0,
+          "row_index": 2348,
+          "pointer": "/request_body",
+          "value_sha256": "a77ecf2e4c6d4d81196962299fbc2368fe31568a07acb6ba6b32817de871f1cc",
+          "embedded_pointer": "/allowance/checkout_session_id",
+          "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+        }
+      ],
+      "field_units": [
+        {
+          "field": "allowance.max_amount",
+          "tool_name": "delegate_payment",
+          "scope": "delegate_payment.request.allowance.max_amount",
+          "status": "PROVEN",
+          "definition": "The checkout session's total, in minor units.",
+          "unit": "minor_units",
+          "applicable_call_ids": [
+            "call-32",
+            "call-34"
+          ],
+          "definition_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 2,
+            "pointer": "/tools/8",
+            "value_sha256": "8964be55d83efbf03beaa43b4d6d688728fff3eff140e146107a95b041eed505",
+            "embedded_pointer": "/function/parameters/properties/allowance/properties/max_amount/description",
+            "decoded_value_sha256": "5c4a61650e168ca81f21eb2879e8de0dde451ce532f58e3c7770a44d3d92beaa"
+          },
+          "application_citations": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 5198,
+              "pointer": "/arguments",
+              "value_sha256": "18125c80461bd2bd0e1f8aed0ae82e08297c507f22e992087e9bee001f713bac",
+              "embedded_pointer": "/allowance/max_amount",
+              "decoded_value_sha256": "0894112f558d4962ff0e74fc4a161ff087ee77a905c8e6b431521b3affc2ed09"
+            },
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 5200,
+              "pointer": "/arguments",
+              "value_sha256": "ff4de737d67ec59be42dc3fcbba4f240a9bbbac99e1bec9bca564786d68a8c66",
+              "embedded_pointer": "/payload/allowance/max_amount",
+              "decoded_value_sha256": "0894112f558d4962ff0e74fc4a161ff087ee77a905c8e6b431521b3affc2ed09"
+            },
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 2348,
+              "pointer": "/request_body",
+              "value_sha256": "a77ecf2e4c6d4d81196962299fbc2368fe31568a07acb6ba6b32817de871f1cc",
+              "embedded_pointer": "/allowance/max_amount",
+              "decoded_value_sha256": "0894112f558d4962ff0e74fc4a161ff087ee77a905c8e6b431521b3affc2ed09"
+            }
+          ],
+          "non_applicable": [
+            "wire.response_body.total",
+            "pay.response.total",
+            "final_cart amount by analogy",
+            "settled payment"
+          ],
+          "reason": "官方工具字段定义直接说明delegate_payment.allowance.max_amount为最小货币单位，仅约束对应请求额度；不外推到支付回执total或资金完成。"
+        }
+      ],
+      "binding": {
+        "scope": "published_episode_consent_record_to_checkout",
+        "status": "PROVEN",
+        "reason": "同一episode的shopper结构化arguments.consent明确给出given、checkout_id、amount和currency；原生checkout观察逐值相同。仅证实发布轨迹来源记录的绑定，不证明真实身份、签名或清算。"
+      },
+      "unit": {
+        "status": "PROVEN",
+        "target_scope": "delegate_payment.request.allowance.max_amount",
+        "reason": "原始工具定义直接写明allowance.max_amount以minor units表示，并和call-32、call-34逐项请求引用相连；只证明该额度字段单位，不证明付款响应total的单位。"
+      },
+      "complete_chain": true,
+      "chain_citations": [
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+          "row_group": 0,
+          "row_index": 5197,
+          "pointer": "/text",
+          "value_sha256": "d1432257773cad6ccba3ca5ccbd4f0544443bf55e9755941b1a02cc07fea00c9"
+        },
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+          "row_group": 0,
+          "row_index": 5197,
+          "pointer": "/arguments",
+          "value_sha256": "22ac559dccb55fc9f67931ea1b7a421b7fd4f0afca5dca291ff4bd6382f78538",
+          "embedded_pointer": "/consent",
+          "decoded_value_sha256": "483aabb02c21433d24969b8699f7a59f72f4ac46fae85b656438ba87f0222c59"
+        },
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+          "row_group": 0,
+          "row_index": 5198,
+          "pointer": "/arguments",
+          "value_sha256": "18125c80461bd2bd0e1f8aed0ae82e08297c507f22e992087e9bee001f713bac",
+          "embedded_pointer": "/allowance/checkout_session_id",
+          "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+        },
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+          "row_group": 0,
+          "row_index": 2,
+          "pointer": "/tools/8",
+          "value_sha256": "8964be55d83efbf03beaa43b4d6d688728fff3eff140e146107a95b041eed505",
+          "embedded_pointer": "/function/parameters/properties/allowance/properties/max_amount/description",
+          "decoded_value_sha256": "5c4a61650e168ca81f21eb2879e8de0dde451ce532f58e3c7770a44d3d92beaa"
+        },
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+          "kind": "parquet",
+          "row_group": 0,
+          "row_index": 2348,
+          "pointer": "/request_body",
+          "value_sha256": "a77ecf2e4c6d4d81196962299fbc2368fe31568a07acb6ba6b32817de871f1cc",
+          "embedded_pointer": "/allowance/max_amount",
+          "decoded_value_sha256": "0894112f558d4962ff0e74fc4a161ff087ee77a905c8e6b431521b3affc2ed09"
+        },
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+          "kind": "parquet",
+          "row_group": 0,
+          "row_index": 5200,
+          "pointer": "/call_id",
+          "value_sha256": "92509892cfa12124f0a0cfa8e7e82f383ff474878b7ecfc9ed73ed5b5729aa1a"
+        },
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+          "kind": "parquet",
+          "row_group": 0,
+          "row_index": 5202,
+          "pointer": "/tool_call_id",
+          "value_sha256": "92509892cfa12124f0a0cfa8e7e82f383ff474878b7ecfc9ed73ed5b5729aa1a"
+        },
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+          "kind": "parquet",
+          "row_group": 0,
+          "row_index": 2348,
+          "pointer": "/source_call_id",
+          "value_sha256": "92509892cfa12124f0a0cfa8e7e82f383ff474878b7ecfc9ed73ed5b5729aa1a"
+        },
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+          "row_group": 0,
+          "row_index": 2348,
+          "pointer": "/response_body",
+          "value_sha256": "53cca7ceb4a170a8b35c8c853bd3494332f5bc03ea3a99a3249743de1360a2e0",
+          "embedded_pointer": "/id",
+          "decoded_value_sha256": "6558fd3db2776243b094cb9d6f4d7ee9f496bbdd2ae60872ac3b684ea3cce52c"
+        }
+      ],
+      "chain_edges": [
+        {
+          "from": "shopper.arguments.consent",
+          "to": "native.checkout_session_id",
+          "status": "PROVEN",
+          "evidence": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "row_group": 0,
+              "row_index": 5197,
+              "pointer": "/arguments",
+              "value_sha256": "22ac559dccb55fc9f67931ea1b7a421b7fd4f0afca5dca291ff4bd6382f78538",
+              "embedded_pointer": "/consent",
+              "decoded_value_sha256": "483aabb02c21433d24969b8699f7a59f72f4ac46fae85b656438ba87f0222c59"
+            },
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "row_group": 0,
+              "row_index": 5198,
+              "pointer": "/arguments",
+              "value_sha256": "18125c80461bd2bd0e1f8aed0ae82e08297c507f22e992087e9bee001f713bac",
+              "embedded_pointer": "/allowance/checkout_session_id",
+              "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+            }
+          ]
+        },
+        {
+          "from": "native.checkout_session_id",
+          "to": "delegate_payment.call-34.allowance.max_amount",
+          "status": "PROVEN",
+          "evidence": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 2348,
+              "pointer": "/request_body",
+              "value_sha256": "a77ecf2e4c6d4d81196962299fbc2368fe31568a07acb6ba6b32817de871f1cc",
+              "embedded_pointer": "/allowance/max_amount",
+              "decoded_value_sha256": "0894112f558d4962ff0e74fc4a161ff087ee77a905c8e6b431521b3affc2ed09"
+            },
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+              "row_group": 0,
+              "row_index": 2,
+              "pointer": "/tools/8",
+              "value_sha256": "8964be55d83efbf03beaa43b4d6d688728fff3eff140e146107a95b041eed505",
+              "embedded_pointer": "/function/parameters/properties/allowance/properties/max_amount/description",
+              "decoded_value_sha256": "5c4a61650e168ca81f21eb2879e8de0dde451ce532f58e3c7770a44d3d92beaa"
+            }
+          ]
+        },
+        {
+          "from": "delegate_payment.call-34",
+          "to": "acp.response.token_id",
+          "status": "PROVEN",
+          "evidence": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 5200,
+              "pointer": "/call_id",
+              "value_sha256": "92509892cfa12124f0a0cfa8e7e82f383ff474878b7ecfc9ed73ed5b5729aa1a"
+            },
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 5202,
+              "pointer": "/tool_call_id",
+              "value_sha256": "92509892cfa12124f0a0cfa8e7e82f383ff474878b7ecfc9ed73ed5b5729aa1a"
+            },
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 2348,
+              "pointer": "/source_call_id",
+              "value_sha256": "92509892cfa12124f0a0cfa8e7e82f383ff474878b7ecfc9ed73ed5b5729aa1a"
+            }
+          ]
+        }
+      ],
+      "call_distinction": {
+        "call-32": "harness request + tool result, wire absent; not the ACP wire path",
+        "call-34": "ACP request, wire 201, tool result; token/allowance only"
+      },
+      "protocol_result_kind": "TOKEN_OR_ALLOWANCE",
+      "protocol_result_evidence": {
+        "protocol": "acp",
+        "http_status": 201,
+        "token_id_citation": {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+          "row_group": 0,
+          "row_index": 2348,
+          "pointer": "/response_body",
+          "value_sha256": "53cca7ceb4a170a8b35c8c853bd3494332f5bc03ea3a99a3249743de1360a2e0",
+          "embedded_pointer": "/id",
+          "decoded_value_sha256": "6558fd3db2776243b094cb9d6f4d7ee9f496bbdd2ae60872ac3b684ea3cce52c"
+        },
+        "not_evidence_of_payment": true
+      },
+      "source_payment_observations": [],
+      "source_request_allowances": [
+        {
+          "call_id": "call-32",
+          "raw_amount": 5818,
+          "currency_raw": "usd",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "TOKEN_ALLOWANCE",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 5198,
+            "pointer": "/arguments",
+            "value_sha256": "18125c80461bd2bd0e1f8aed0ae82e08297c507f22e992087e9bee001f713bac",
+            "embedded_pointer": "/allowance/max_amount",
+            "decoded_value_sha256": "0894112f558d4962ff0e74fc4a161ff087ee77a905c8e6b431521b3affc2ed09"
+          }
+        },
+        {
+          "call_id": "call-34",
+          "raw_amount": 5818,
+          "currency_raw": "usd",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "TOKEN_ALLOWANCE",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 5200,
+            "pointer": "/arguments",
+            "value_sha256": "ff4de737d67ec59be42dc3fcbba4f240a9bbbac99e1bec9bca564786d68a8c66",
+            "embedded_pointer": "/payload/allowance/max_amount",
+            "decoded_value_sha256": "0894112f558d4962ff0e74fc4a161ff087ee77a905c8e6b431521b3affc2ed09"
+          }
+        },
+        {
+          "call_id": "call-34",
+          "raw_amount": 5818,
+          "currency_raw": "usd",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "TOKEN_ALLOWANCE",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 2348,
+            "pointer": "/request_body",
+            "value_sha256": "a77ecf2e4c6d4d81196962299fbc2368fe31568a07acb6ba6b32817de871f1cc",
+            "embedded_pointer": "/allowance/max_amount",
+            "decoded_value_sha256": "0894112f558d4962ff0e74fc4a161ff087ee77a905c8e6b431521b3affc2ed09"
+          }
+        }
+      ],
+      "native_call_statuses": [
+        {
+          "call_id": "call-32",
+          "status": "PARTIAL",
+          "tool": "delegate_payment"
+        },
+        {
+          "call_id": "call-34",
+          "status": "COMPLETE",
+          "tool": "delegate_payment"
+        }
+      ],
+      "missing_dimensions": [],
+      "independent_real_identity_verified": false,
+      "independent_backend_settlement_observed": false
+    },
+    {
+      "episode_id": "ep-1375d00dacdb",
+      "consent_records": [],
+      "native_checkout_citations": [],
+      "field_units": [],
+      "binding": {
+        "scope": "published_episode_consent_record_to_checkout",
+        "status": "UNKNOWN",
+        "reason": "已按原始turns对本episode逐条检查shopper.message.arguments.consent，未观察到已给定的结构化支付确认；不可从预算、金额相等或其他episode借用。"
+      },
+      "unit": {
+        "status": "UNKNOWN",
+        "target_scope": "payment_or_allowance",
+        "reason": "没有适用于该episode实际支付金额或额度字段的直接单位定义和足够原生支付结果，不能从静态final_cart规则推断已支付的币种单位。"
+      },
+      "complete_chain": false,
+      "chain_citations": [],
+      "chain_edges": [],
+      "protocol_result_kind": "NONE",
+      "source_payment_observations": [],
+      "source_request_allowances": [],
+      "native_call_statuses": [],
+      "missing_dimensions": [
+        "structured_consent_and_native_payment_chain"
+      ],
+      "independent_real_identity_verified": false,
+      "independent_backend_settlement_observed": false
+    },
+    {
+      "episode_id": "ep-172fbb8cce5b",
+      "consent_records": [
+        {
+          "seq": 64,
+          "actor": "shopper",
+          "kind": "message",
+          "given": true,
+          "checkout_id": "checkout-3766021cd113",
+          "raw_amount": 4425,
+          "currency": "USD",
+          "source_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 12419,
+            "pointer": "/arguments",
+            "value_sha256": "b80282b44c396c8c5703cd3335b0d5bead6a1e9672bdb772a3d7d454b1b6b5dd",
+            "embedded_pointer": "/consent",
+            "decoded_value_sha256": "6fc56f27cf571d298f6aed20ecfcca975f84f92239d4bc2a09d539d6e9528b1e"
+          },
+          "text_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 12419,
+            "pointer": "/text",
+            "value_sha256": "748a932b17c3f3bd2033405c9c18009787b8b71eb3a3e420fb7e0f594ddf6df5"
+          },
+          "origin": "PUBLISHED_STRUCTURED_MESSAGE",
+          "semantic_limit": "published_shopper_record_not_identity_or_signature_proof"
+        }
+      ],
+      "native_checkout_citations": [
+        {
+          "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+          "kind": "parquet",
+          "row_group": 1,
+          "row_index": 2632,
+          "pointer": "/response_body",
+          "value_sha256": "94e3b8b1974553c2df51e6c16ae9e41b4982be721888236a952aadc7dfc12713",
+          "embedded_pointer": "/checkout_id",
+          "decoded_value_sha256": "eed3a5af0a8888eb1333d4eda800b8649ac921f52f8fcad70f15227ebdef4b31"
+        }
+      ],
+      "field_units": [],
+      "binding": {
+        "scope": "published_episode_consent_record_to_checkout",
+        "status": "PROVEN",
+        "reason": "同一episode的shopper结构化arguments.consent明确给出given、checkout_id、amount和currency；原生checkout观察逐值相同。仅证实发布轨迹来源记录的绑定，不证明真实身份、签名或清算。"
+      },
+      "unit": {
+        "status": "PARTIAL",
+        "target_scope": "reported_payment_or_completion_amount",
+        "reason": "虽有该episode原生支付/完成报告的raw total、currency和checkout字段，但没有该具体response.total字段的直接单位契约；不得用final_cart或同额间接推定。"
+      },
+      "complete_chain": false,
+      "chain_citations": [],
+      "chain_edges": [],
+      "protocol_result_kind": "REPORTED_COMPLETION",
+      "source_payment_observations": [
+        {
+          "call_id": "call-68",
+          "raw_amount": 4425,
+          "currency_raw": "usd",
+          "checkout_id": "checkout-3766021cd113",
+          "phase": "REPORTED_COMPLETION",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 1,
+            "row_index": 2632,
+            "pointer": "/response_body",
+            "value_sha256": "94e3b8b1974553c2df51e6c16ae9e41b4982be721888236a952aadc7dfc12713",
+            "embedded_pointer": "/total",
+            "decoded_value_sha256": "11b0147cac181f433e7f220d2b0cead50d61cf065a82b45b768428419d83433e"
+          },
+          "currency_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 1,
+            "row_index": 2632,
+            "pointer": "/response_body",
+            "value_sha256": "94e3b8b1974553c2df51e6c16ae9e41b4982be721888236a952aadc7dfc12713",
+            "embedded_pointer": "/currency",
+            "decoded_value_sha256": "af9bae0a5ac6c53278eba3acae06aece700043c23f5b6325509651a65480e36a"
+          },
+          "checkout_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 1,
+            "row_index": 2632,
+            "pointer": "/response_body",
+            "value_sha256": "94e3b8b1974553c2df51e6c16ae9e41b4982be721888236a952aadc7dfc12713",
+            "embedded_pointer": "/checkout_id",
+            "decoded_value_sha256": "eed3a5af0a8888eb1333d4eda800b8649ac921f52f8fcad70f15227ebdef4b31"
+          }
+        }
+      ],
+      "source_request_allowances": [],
+      "native_call_statuses": [
+        {
+          "call_id": "call-68",
+          "status": "COMPLETE",
+          "tool": "pay"
+        }
+      ],
+      "missing_dimensions": [
+        "field_specific_protocol_result_unit"
+      ],
+      "independent_real_identity_verified": false,
+      "independent_backend_settlement_observed": false
+    }
+  ],
+  "verdict": "CONTINUE_TO_REPLAY_BASELINE",
+  "reason": "第4例可逐源闭合结构化确认→同例checkout→call-34额度请求与字段单位→ACP 201令牌/授权额度结果，但不是实付或真实清算。只建议另冻回放基线。",
+  "complete_source_chain_episodes": [
+    "ep-09bafc6d1c7e"
+  ],
+  "consent_count_by_episode": {
+    "ep-03a80be98c66": 1,
+    "ep-0646e4cec480": 1,
+    "ep-08fb1a04f29a": 0,
+    "ep-09bafc6d1c7e": 1,
+    "ep-1375d00dacdb": 0,
+    "ep-172fbb8cce5b": 1
+  },
+  "replay_executed": false,
+  "product_effect_measured": false,
+  "real_payment_or_settlement_verified": false
+}

@@ -1,13 +1,13 @@
 # 远端统一交接入口
 
-当前任务和权限以仓库根CURRENT.md为准。H65结构检查通过但独立原源复核发现确认/单位漏读，已拒收；下一任务H65R_STRUCTURED_CONSENT_UNIT_REPAIR_V1已冻结，尚未执行。
+当前任务和权限以仓库根CURRENT.md为准。H65R四确认与一额度令牌链已独立核实，但累计读取预算无法复核，整包拒收；停止同六例静态重跑。下一任务H66_IRONCLAW_TRANSACTION_SEAM_FEASIBILITY_V1已冻结，尚未执行。
 
-执行者从docs/05_任务交接/H65R_STRUCTURED_CONSENT_UNIT_REPAIR_V1/EXECUTOR_START.md开始；合同、计划、检查器、公开输入摘要和已知反例均在Git中。不要继续根据旧路由或被忽略目录里的入口修改历史门禁。
+执行者从docs/05_任务交接/H66_IRONCLAW_TRANSACTION_SEAM_FEASIBILITY_V1/EXECUTOR_START.md开始；合同、计划、检查器、公开输入摘要和SOURCE_PLAN均在Git中。不要根据旧路由修改历史门禁。
 
-可在只有标准Python的远端克隆中运行H65R CHECK.py package，核对公开任务文件。完整执行必须在具备INPUTS.readonly所列本地输入的环境运行source；缺输入明确INPUT_LIMIT，不重取源文件、不改判别器或授权。package通过不是L2/L3或数据齐备证明。H65原REPORT保持本地，展示使用PUBLIC_REPORT.md；REVIEW明确拒收，不能把执行者停止建议当已验收结论。
+可用标准Python运行H66 CHECK.py package；source只核本仓公开历史/产品，无需CartTrace原始输入。研究来源仅可按合同从官方GitHub匿名公开读取，事前reserve、完成finish，失败照计。package通过不是研究或L2/L3通过。H65R REVIEW区分已验证来源事实和未通过的预算，不得只摘机器PASS。
 
 同步范围为可公开的代码、治理合同、计划、历史报告脱敏展示和摘要。原始日志、完整源数据、解码环境、工作目录快照及安全扫描标出的测试材料保留本地；它们不会因统一推送变成公开附件。H64R原REPORT含工作站路径，原件保持在本地，远端使用该任务PUBLIC_REPORT.md。
 
 本地和远端版本化内容的核验：正常fetch后比较HEAD与origin/main，并检查git diff origin/main及git status。忽略目录属于执行输入边界，不代表提交内容不同。历史冻结门禁在对应原快照复现；不要在新治理路由下把历史HEAD/工作区差异当成产品回归。
 
-Human本轮已授权Evaluator按localagent-common/security-hooks正常提交推送；pre-commit与pre-push均必须执行。Executor仍受CURRENT中的false权限约束，未获得网络获取、真实支付、资金或凭据变更授权。
+Human既有授权允许Evaluator按localagent-common/security-hooks正常提交推送；pre-commit与pre-push均必须执行。Executor四项Git/API旗标仍false，仅有H66限定的公开研究GET权限；无写服务、真实支付、资金或凭据变更授权。
