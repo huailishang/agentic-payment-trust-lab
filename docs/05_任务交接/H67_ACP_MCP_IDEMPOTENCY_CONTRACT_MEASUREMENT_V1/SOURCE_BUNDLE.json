@@ -1,0 +1,219 @@
+{
+  "task_id": "H67_ACP_MCP_IDEMPOTENCY_CONTRACT_MEASUREMENT_V1",
+  "repository": "agentic-commerce-protocol/agentic-commerce-protocol",
+  "ref": "7fdd78df677a94dce04c770644b0fbbb1401272b",
+  "upstream_status": "unreleased",
+  "license": "Apache-2.0",
+  "source_files": [
+    {
+      "path": "rfcs/rfc.agentic_checkout.md",
+      "git_blob_sha": "2cf252233c74025e73cb59604e1d3562eb2fcbea",
+      "url": "https://github.com/agentic-commerce-protocol/agentic-commerce-protocol/blob/7fdd78df677a94dce04c770644b0fbbb1401272b/rfcs/rfc.agentic_checkout.md",
+      "full_text_sha256": "6dd81e0f3e0767a3ca9a3c8b1770c475228707c9711d0c39abcfdb6ea4c00da2"
+    },
+    {
+      "path": "docs/mcp-binding.md",
+      "git_blob_sha": "4fe1dde68aa80a6a816695ac32e7447e25b68417",
+      "url": "https://github.com/agentic-commerce-protocol/agentic-commerce-protocol/blob/7fdd78df677a94dce04c770644b0fbbb1401272b/docs/mcp-binding.md",
+      "full_text_sha256": "d0923f212aa5136c17d8118a558e7147898d7446ee19e89edb8ba7829a6d9df1"
+    },
+    {
+      "path": "spec/unreleased/openrpc/openrpc.agentic_checkout.json",
+      "git_blob_sha": "eff08771336cf72c63f326b94c3048157d85b838",
+      "url": "https://github.com/agentic-commerce-protocol/agentic-commerce-protocol/blob/7fdd78df677a94dce04c770644b0fbbb1401272b/spec/unreleased/openrpc/openrpc.agentic_checkout.json",
+      "full_text_sha256": "3d45b08764acd7b9ad16d64950552f40202229f6eb57f0c13ad85dd560a45c4f"
+    },
+    {
+      "path": "examples/unreleased/examples.mcp.agentic_checkout.json",
+      "git_blob_sha": "7332f9a8a38f99d738fb5cb4b2c04b73c63ac598",
+      "url": "https://github.com/agentic-commerce-protocol/agentic-commerce-protocol/blob/7fdd78df677a94dce04c770644b0fbbb1401272b/examples/unreleased/examples.mcp.agentic_checkout.json",
+      "full_text_sha256": "17f32495c990a3a3cad51aef65de2708831456b47ec587ded5ce543c458b3d09"
+    },
+    {
+      "path": "LICENSE",
+      "git_blob_sha": "c61b66391a3c1545c8c274bc6d7d764bafb84993",
+      "url": "https://github.com/agentic-commerce-protocol/agentic-commerce-protocol/blob/7fdd78df677a94dce04c770644b0fbbb1401272b/LICENSE",
+      "full_text_sha256": "4458503dd48e88c4e0b945fb252a08b93c40ec757309b8ffa7c594dfa1e35104"
+    }
+  ],
+  "scope": "MCP metadata only; not domain payload, full RPC validation, server dispatch or payment effects",
+  "normative": {
+    "source_index": 0,
+    "line_start": 236,
+    "line_end": 253,
+    "text": "### 6.1 Idempotency-Key Requirement\n\n- Clients **MUST** include an `Idempotency-Key` header on **every POST** request (create, update, complete, cancel).\n- The key is an **opaque string**, max **255 characters**; UUID v4 is **RECOMMENDED**.\n- Servers **MUST** scope keys to the **authenticated identity + endpoint path**; the same key on different endpoints is treated independently.\n- A POST request **without** an `Idempotency-Key` header **MUST** be rejected with:\n  ```json\n  {\n    \"type\": \"invalid_request\",\n    \"code\": \"idempotency_key_required\",\n    \"message\": \"Idempotency-Key header is required on all POST requests\"\n  }\n  ```\n  HTTP status: **400 Bad Request**.\n\n### 6.2 Request Equivalence\n\n- Equivalence is determined by **semantic JSON equality of the request body only**; headers are excluded.\n",
+    "header": "Idempotency-Key",
+    "mcp_field": "idempotency_key",
+    "mutation_verb": "POST",
+    "read_verb": "GET"
+  },
+  "binding": {
+    "source_index": 1,
+    "mapping_line_start": 50,
+    "mapping_line_end": 56,
+    "mapping_text": "| MCP Tool                     | REST Operation                                  | Description                                             |\n| :--------------------------- | :---------------------------------------------- | :------------------------------------------------------ |\n| `create_checkout_session`    | `POST /checkout_sessions`                       | Create a checkout session                               |\n| `get_checkout_session`       | `GET /checkout_sessions/{id}`                   | Retrieve the current state of a checkout session        |\n| `update_checkout_session`    | `POST /checkout_sessions/{id}`                  | Update items, fulfillment details, or selected options  |\n| `complete_checkout_session`  | `POST /checkout_sessions/{id}/complete`         | Submit payment and finalize the order                   |\n| `cancel_checkout_session`    | `POST /checkout_sessions/{id}/cancel`           | Cancel a session, optionally with an intent trace       |\n",
+    "meta_line_start": 107,
+    "meta_line_end": 110,
+    "meta_text": "| HTTP Header        | MCP Field              | Required | Notes                                          |\n| :----------------- | :--------------------- | :------- | :--------------------------------------------- |\n| `API-Version`      | `meta.api_version`     | Yes      | Date string, e.g. `\"2026-01-30\"`              |\n| `Idempotency-Key`  | `meta.idempotency_key` | No       | Recommended for create and complete            |\n"
+  },
+  "mcp": {
+    "source_index": 2,
+    "meta_schema_pointer": "/components/schemas/meta",
+    "meta_schema": {
+      "type": "object",
+      "description": "Protocol metadata mapped from ACP HTTP headers. Authentication is handled at the MCP server level and is not included here.",
+      "required": [
+        "api_version"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "api_version": {
+          "type": "string",
+          "description": "ACP API version date (e.g. '2026-01-30'). Maps to the API-Version header."
+        },
+        "idempotency_key": {
+          "type": "string",
+          "description": "Unique key for retry safety. Maps to the Idempotency-Key header. Recommended for create and complete operations."
+        },
+        "request_id": {
+          "type": "string",
+          "description": "Correlation ID for request tracing. Maps to the Request-Id header."
+        },
+        "user_agent": {
+          "type": "string",
+          "description": "Agent identification string. Maps to the User-Agent header."
+        },
+        "accept_language": {
+          "type": "string",
+          "description": "Locale preference (e.g. 'en-US'). Maps to the Accept-Language header."
+        },
+        "signature": {
+          "type": "string",
+          "description": "Request signature for integrity verification. Maps to the Signature header."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Request signing timestamp (RFC 3339). Maps to the Timestamp header."
+        }
+      }
+    },
+    "parameters": [
+      {
+        "method": "create_checkout_session",
+        "rest_verb": "POST",
+        "source_pointer": "/methods/0/params/0",
+        "parameter": {
+          "name": "meta",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/meta"
+          }
+        }
+      },
+      {
+        "method": "get_checkout_session",
+        "rest_verb": "GET",
+        "source_pointer": "/methods/1/params/0",
+        "parameter": {
+          "name": "meta",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/meta"
+          }
+        }
+      },
+      {
+        "method": "update_checkout_session",
+        "rest_verb": "POST",
+        "source_pointer": "/methods/2/params/0",
+        "parameter": {
+          "name": "meta",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/meta"
+          }
+        }
+      },
+      {
+        "method": "complete_checkout_session",
+        "rest_verb": "POST",
+        "source_pointer": "/methods/3/params/0",
+        "parameter": {
+          "name": "meta",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/meta"
+          }
+        }
+      },
+      {
+        "method": "cancel_checkout_session",
+        "rest_verb": "POST",
+        "source_pointer": "/methods/4/params/0",
+        "parameter": {
+          "name": "meta",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/meta"
+          }
+        }
+      }
+    ]
+  },
+  "examples": [
+    {
+      "method": "create_checkout_session",
+      "source_index": 3,
+      "source_pointer": "/create_checkout_session_request/params/arguments/meta",
+      "transport": "tools/call",
+      "tool": "create_checkout_session",
+      "meta": {
+        "api_version": "2026-01-30",
+        "idempotency_key": "idem_550e8400-e29b-41d4-a716-446655440000",
+        "user_agent": "AgentShop/1.0"
+      }
+    },
+    {
+      "method": "get_checkout_session",
+      "source_index": 3,
+      "source_pointer": "/get_checkout_session_request/params/arguments/meta",
+      "transport": "tools/call",
+      "tool": "get_checkout_session",
+      "meta": {
+        "api_version": "2026-01-30"
+      }
+    },
+    {
+      "method": "update_checkout_session",
+      "source_index": 3,
+      "source_pointer": "/update_checkout_session_request/params/arguments/meta",
+      "transport": "tools/call",
+      "tool": "update_checkout_session",
+      "meta": {
+        "api_version": "2026-01-30"
+      }
+    },
+    {
+      "method": "complete_checkout_session",
+      "source_index": 3,
+      "source_pointer": "/complete_checkout_session_request/params/arguments/meta",
+      "transport": "tools/call",
+      "tool": "complete_checkout_session",
+      "meta": {
+        "api_version": "2026-01-30",
+        "idempotency_key": "idem_660e8400-e29b-41d4-a716-446655440001"
+      }
+    },
+    {
+      "method": "cancel_checkout_session",
+      "source_index": 3,
+      "source_pointer": "/cancel_checkout_session_request/params/arguments/meta",
+      "transport": "tools/call",
+      "tool": "cancel_checkout_session",
+      "meta": {
+        "api_version": "2026-01-30"
+      }
+    }
+  ]
+}

@@ -34,6 +34,7 @@ docs/05_任务交接/**/INPUTS.json
 !docs/05_任务交接/H65_SOURCE_UNIT_CONSENT_BINDING_MEASUREMENT_V1/INPUTS.json
 !docs/05_任务交接/H65R_STRUCTURED_CONSENT_UNIT_REPAIR_V1/INPUTS.json
 !docs/05_任务交接/H66_IRONCLAW_TRANSACTION_SEAM_FEASIBILITY_V1/INPUTS.json
+!docs/05_任务交接/H67_ACP_MCP_IDEMPOTENCY_CONTRACT_MEASUREMENT_V1/INPUTS.json
 # Preserve the rejected H65 original; publish its formatting-only display copy.
 docs/05_任务交接/H65_SOURCE_UNIT_CONSENT_BINDING_MEASUREMENT_V1/REPORT.md
 docs/05_任务交接/*/*.csv

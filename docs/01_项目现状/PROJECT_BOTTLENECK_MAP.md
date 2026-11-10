@@ -1,11 +1,11 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-11-10-r108
+Map revision: 2026-11-10-r109
 Last reviewed: 2026-11-10
 Map owner: Evaluator / Human Task Owner
 Status: ACTIVE
 
-本版记录H65R独立来源复核：4条确认、1项额度单位及1条额度/令牌链真实存在，57引用复算通过；但累计读取预算不可复核，AC-04不通过、整包拒收。已核事实保持，不继续重跑同六例以求通过。当前第一测量方向切为B-19：IronClaw固定版本是否存在值得验证的具体金融执行接缝；只做H66资格研究，不接入或运行。产品、真实身份、付款、客户价值和合规未新增证明。
+本版记录H66独立L3四项、9官方blob、11引用及15次含失败请求复核通过；资格研究PASS，但固定有界视图未找到具体金融消费者，IronClaw停留参考。第一测量方向切为B-20：ACP REST到MCP绑定的幂等键必填要求是否弱化；H67仅离线测五工具元数据，不运行服务或付款。H65R预算拒收与已核源事实保持，未新增产品安全/身份/清算/客户价值/合规证明。
 
 ## Project outcome / 项目结果
 
@@ -51,6 +51,9 @@ H62使单个本地异常类型从“付款成功而订单缺失，只能查询�
 - measured（已测）：H65R独立L3 4/4、六损坏通过，独立枚举确认1/1/0/1/0/1，57引用和12提交/14个L2摘要保持；第4例同例checkout/5818 USD/最小单位→call-34 ACP 201→同调用令牌返回可回指，call-32无wire。AC-01/02/03通过，AC-04因失败读取缺遥测且sample_reads改为不同样本数不通过，整包REJECTED（拒收）/NOT_APPLICABLE（不评产品增量）。不能声称已证明超预算，也不能把声明6当实际累计次数。
 - measured（已测，静态参考）：IronClaw固定提交b0b999d96781516ee05e6ba961d6f3ead900da96可定位审批服务、宿主和凭据注入入口；此前仅局部阅读，未验证金融消费者或运行效果。旧金融Issue、签名计划及抽查未合并PR不替代主分支接线证明。
 - estimated（估计）：H66 90分钟墙钟/20次来源请求/单目标2次/正文归档8MiB/并发1/1版/2L2；失败照计、事前预留，不安装或执行上游/模型服务/产品/钱包/付款。具体金融入口及可独立判定边界仍unknown。
+- measured（已测）：H66独立L3 4/4、七损坏通过；9固定文件blob向官方复核、11引用复算，10顶层/14个L2/15来源/4辅助快照保持。15请求=11成功+4失败、归档304999字节、请求/L2账本763.844秒、1L2；报告收尾约22分钟内。通用宿主/审批/凭据接线可参考，但金融消费者NOT_FOUND_IN_VIEW，PASS/NOT_APPLICABLE/SWITCH，停止本IronClaw接入视图，不作全仓不存在结论。
+- measured（已测，仅准备）：ACP官方Issue #295提出必填幂等键在MCP变可选；评估者固定官方HEAD 7fdd78df677a94dce04c770644b0fbbb1401272b，核5原文blob/许可并提取必要JSON/文本投影。REST规范限定所有POST，OpenRPC meta.required仅含api_version，工具绑定涵盖4变更/1读取；机器描述仍unreleased（未发布），尚未执行H67正式成对测量，不证明服务端重复扣款。
+- estimated（估计）：H67 45分钟墙钟/2分析尝试/2L2，固定10元数据探针+5示例观察；标准库、网络/安装/上游服务/产品/模型服务/钱包/付款0。只测绑定契约，不扩成完整RPC验证器。
 - estimated（估计）：H63测量120主动分钟/2L2、中低维护成本，运行时/模型/支付/安装0。准备匿名公开读取10文件/727832字节；公开网页研究另计，不写成零网络。
 
 ## Bottleneck register / 瓶颈登记表
@@ -65,24 +68,25 @@ H62使单个本地异常类型从“付款成功而订单缺失，只能查询�
 | B-06 | 真实身份/外部支付服务方 | 支付宝有效Payment-Proof及绑定仍缺；Human后置，权限不恢复 | DEFERRED / HUMAN_DEFERRED |
 | B-17 | 商城批准与业务恢复 | H62本地代表性已付无单改善；真实采用/履约未知 | LOCAL_SLICE_CLOSED / REAL_ADOPTION_UNKNOWN |
 | B-18 | 独立外部轨迹可判定性 | 4源确认与1额度/令牌链已核；整包预算不签收，独立产品控制效果未测；当前六例静态修补停止，非整个数据集无效 | WATCH / CURRENT_STATIC_VIEW_STOPPED |
-| B-19 | 外部具体金融执行消费者资格 | IronClaw只有局部宿主/审批/注入静态线索，金融实际入口与新可判定边界未知；先测资格，不假定漏洞或适配价值 | ACTIVE / H66_BOUNDED_FEASIBILITY |
+| B-19 | 外部具体金融执行消费者资格 | H66资格研究通过，通用机制可参考，固定有界视图未定位金融消费者；不继续追通用运行时，不否定全上游 | WATCH / IRONCLAW_VIEW_STOPPED |
+| B-20 | 协议到工具绑定的幂等契约保真 | 固定ACP REST要求与MCP meta必填定义存在具体差异线索；是否形成一致的元数据接受差异待10探针测量，服务器和实际资金影响未知 | ACTIVE / H67_BOUND_CONTRACT_MEASUREMENT |
 
 ## Active bottleneck / 当前第一瓶颈
 
-Active bottleneck ID: B-19
+Active bottleneck ID: B-20
 
-项目端到端第一证据缺口仍是本地代表控制能否在新的具体外部执行消费者上形成独立可观察结果。B-18的确认/单位假阴性已由独立原源纠正，但整包预算无法事后重建，不能继续用同六例静态修补恢复历史合格。现有仅一条额度/令牌链，不等于新的攻击族、产品控制效果或后端清算。
+项目端到端第一缺口仍是本地代表控制在外部接缝的有效性。H66没有金融消费者，继续扩通用宿主没有具体判据；现在出现更可证伪的前置缺口：规范必填的防重复交易键，转成工具元数据时是否丢失约束。这直接关联零容忍重扣风险，可在固定外部契约上独立判定，不需钱包、完整运行时或资金授权。
 
-下一最低成本问题是用户指定的IronClaw是否真有值得测量的金融入口；答案仍unknown，所以只派有界资格研究。优于直接上CartTrace完整回放栈：目前缺新增独立攻击/控制判据，需先证明投入价值；优于再扩UCP：H62本地切片关闭且无新商户反例。B-06真实支付仍后置；H66不引入运行时、链或资金。客户需求另记未知，不以热度、协议数、测试数替代。
+H67只测契约弱化，不预设服务端漏防护或实际扣款。相比IronClaw继续找入口，它有固定官方对象和单变量观测；相比UCP samples #277悬空履约引用/报价线索，它更直接对应副作用重复且成本更低。UCP问题未独立运行，H62不重开；B-06真实支付后置。CartTrace当前六例保持停止，商业需求仍未知，公开问题单不等于客户愿付费。
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: H-66
-Hypothesis status: feasibility-only / H65R REJECTED_WITH_VERIFIED_SOURCE_FACTS / H66 CONTRACT_FROZEN / SINGLE / Executor
+Hypothesis ID: H-67
+Hypothesis status: measurement-only / H66 PASS_STOP_REFERENCE_ONLY / H67 CONTRACT_FROZEN / SINGLE / Executor
 
-固定IronClaw版本可能存在一个具体金融消费者，其准备对象、批准权、执行权消费及凭据/恢复路径可逐边静态定位，并提供本仓已有代表覆盖之外的独立可判定问题。竞争解释是只有泛用运行时、旧设计或同义模块；此时停止在参考，不新增能力包。
+同一固定ACP来源的4个POST变更工具可能接受缺幂等键的meta，而REST规则不满足；GET读取作对照。竞争解释是容器/引用或规范范围被误读；十个成对探针及五个官方示例元数据观察将区分。服务器拒绝、稳定补键、实际重放与资金副作用全部保持未测。
 
-当前合同：`docs/05_任务交接/H66_IRONCLAW_TRANSACTION_SEAM_FEASIBILITY_V1/CONTRACT.md`。H65R原报告、格式补充、账本、拒收和L2/L3保持；已验证源事实可引用，不追认为全包PASS。H66无需CartTrace原始输入，不重新测旧六例。真实身份、签名、支付网络及凭据授权不扩张。
+当前合同：`docs/05_任务交接/H67_ACP_MCP_IDEMPOTENCY_CONTRACT_MEASUREMENT_V1/CONTRACT.md`。H66原报告/结果/来源/失败/L2/L3保持，r108逐字节归档；H65R不追认为PASS。新包只使用公开固定投影及许可证，无旧原始数据依赖、无新GET/安装/上游执行。真实身份、签名、支付网络及凭据授权不扩张。
 
 ## Candidate experiments / 候选与比较
 
@@ -90,7 +94,9 @@ Hypothesis status: feasibility-only / H65R REJECTED_WITH_VERIFIED_SOURCE_FACTS /
 | --- | --- |
 | CartTrace固定六预览 | REFERENCE_ONLY（只参考）；来源资格测量完成，STOP_PREVIEW_VIEW，不升级ABSORB（吸收）或导入产品；不外推整个源 |
 | CartTrace完整表/world/静态回放实现 | REFERENCE_ONLY（只参考）；保留4确认/1额度令牌链，当前六例静态视图停止；不因预算拒收而重复重跑，不启动完整回放栈 |
-| IronClaw执行权限与凭据接缝 | REFERENCE_ONLY（只参考）；H66只测固定版本具体消费者资格及新增可判定边界，不把旧设计当交付，不整体引入运行时 |
+| IronClaw执行权限与凭据接缝 | REFERENCE_ONLY（只参考）；H66研究通过但有界视图未找到金融消费者，停止当前接入研究，通用机制不当作资金安全证明 |
+| ACP REST→MCP幂等键要求 | REFERENCE_ONLY（只参考）官方固定契约；H67离线测元数据接受差异，不修上游/产品、不声称真实重扣 |
+| UCP samples #277履约引用/报价 | WATCH（观察）；公开复现线索未独立运行，不凭此重开H62或宣布授权漏洞 |
 | APort Vault | REFERENCE_ONLY（只参考）；文件访问需申请且分享账号信息，不申请/下载 |
 | Gordon AgentCommerceBench | REFERENCE_ONLY（只参考）；受限且含生产来源，不申请、不接链/服务 |
 | ModelScope ACEBench线索 | REFERENCE_ONLY（只参考）；工具能力资料不足替代授权/支付状态证据，不展开 |
@@ -98,9 +104,9 @@ Hypothesis status: feasibility-only / H65R REJECTED_WITH_VERIFIED_SOURCE_FACTS /
 
 ## Reassessment triggers / 继续、停止与切换
 
-- CONTINUE（继续）：H66定位固定主分支金融消费者、逐边代码证据和现有覆盖之外的独立判据，才另冻一个离线测量；不是直接适配或执行。
+- CONTINUE（继续）：H67独立矩阵确认共同契约弱化，且下一具体消费者/控制判据成立，才另冻有界控制测量；不能从schema接受直接推导付款可重放。
 - INPUT_LIMIT（输入受限）：下载/解码/预算不足与数据本身无证据区分；保留失败和限额记录，后续授权/资源取舍再评估，不无限重试。
-- STOP（停止）：当前六例静态修补已停止。H66若只有旧设计/泛用工具/同义控制，停止在参考；本次有界视图未找到不等于整个上游没有能力。
+- STOP（停止）：CartTrace六例静态修补和IronClaw本接入视图已停止。H67若未确认弱化或只能重复已知表述而无后续可测消费者，停止当前假设，不扩完整协议或通用运行时。
 - SWITCH（切换）：独立反例显示另一个零容忍边界更优先，或取得经许可、脱敏且可判定的新消费者轨迹。
 - 真实身份/网络/资金/凭证/数据分享仍需相应授权；本轮不改变四项Git/API旗标。
 
@@ -124,6 +130,7 @@ r105原字节归档于 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_2026
 
 | Revision | 证据与决策 |
 | --- | --- |
+| 2026-11-10-r109 | H66独立4VP/9官方blob/11引用/15请求预算通过，PASS但停止IronClaw接入视图；切换B-20/H67固定ACP幂等键绑定契约测量。r108原字节归档SHA-256=31fe04cc5a9f0905f71206415717673abbab46b958368882870441448e601686；无新产品成绩或实际重扣证明。 |
 | 2026-11-10-r108 | H65R四VP/57源引用通过，四确认及一额度令牌链已核，但AC-04真实读取预算无法复核而拒收；停止同六例重跑，切换B-19/H66固定IronClaw消费者资格研究。r107原字节归档SHA-256=c99c442c39cd638e854f3dd34ff15953790b3ee70e4bbfcedfe4038dad942762；无新产品成绩。 |
 | 2026-11-10-r107 | H65结构4/4但独立源审阅复现4条确认/1项单位漏读，AC-02/03/04不通过；拒收并冻结45分钟H65R最小修复。r106原字节归档SHA-256=4021661f48364b8c13127863872735a1285d9c56c5d5c2c1ba3adea671a6cb73；IronClaw保留参考，不以错误停止结论转向。 |
 | 2026-11-09-r106 | H64R独立L3/六源审阅PASS，修复完成但六例仍不可判定；冻结H65单位/确认桥最后有界静态测量，缺环即停止此视图。r105归档；公开入口与安全控制文件统一推送，原始输入不公开。 |
