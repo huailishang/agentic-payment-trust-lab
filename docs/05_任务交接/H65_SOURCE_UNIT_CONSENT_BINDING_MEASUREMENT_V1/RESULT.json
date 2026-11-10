@@ -1,0 +1,1460 @@
+{
+  "task_id": "H65_SOURCE_UNIT_CONSENT_BINDING_MEASUREMENT_V1",
+  "classification": "REFERENCE_ONLY",
+  "samples": [
+    {
+      "episode_id": "ep-03a80be98c66",
+      "unit": {
+        "status": "PARTIAL",
+        "citations": [
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/DATA_SCHEMA_md",
+            "line_start": 56,
+            "line_end": 59,
+            "text_sha256": "1032ad6c2a32d248e2eaaeab0c41f115454c194d283745c910998a0d85a3b8da"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 0,
+            "pointer": "/final_cart",
+            "value_sha256": "e9e528165bec33a3703ed6fd92a6d8bd25fa484f828a412903d67dfc014d6452"
+          }
+        ],
+        "reason": "已存在原生金额、币种、checkout原字段引用；DATA_SCHEMA仅声明final_cart的价格是最小货币单位，钱包Money转换见静态代码。但现有证据未直接把这一定义连接到本例每项协议付款/令牌额度字段，也未证明最终金额在执行路径上遵循同一单位契约，所以付款金额单位只能PARTIAL。",
+        "target_scope": "protocol_reported_payment_and_token_allowance",
+        "documented_scope": "final_cart prices, not auto-proven protocol totals"
+      },
+      "binding": {
+        "status": "PARTIAL",
+        "citations": [
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 1599,
+            "pointer": "/text",
+            "value_sha256": "e7702893954de7943471ffaabbdcfc21ecf0c283eb0df46edb5994dc9bc48241"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/CODE_src__carttrace__agents__wallet.py",
+            "line_start": 878,
+            "line_end": 935,
+            "text_sha256": "e7848c90ddaf3649a68c2179514d52f20c53c6cb71ecb3130516bfbaeba36319"
+          }
+        ],
+        "reason": "同一episode有用户原文金额确认及原生checkout/协议结果，可分别回指来源；钱包代码中也有Consent(checkout_id,amount,seq)的预期行为。但已发布source未呈现用户确认到该原生checkout的一条直接、共同标识的观察记录，metadata序号或金额相等都不能补足这一连接，故保持PARTIAL。",
+        "edges": [
+          {
+            "from": "shopper_explicit_spoken_total",
+            "to": "checkout_id",
+            "origin": "INFERENCE",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "row_group": 0,
+              "row_index": 1599,
+              "pointer": "/text",
+              "value_sha256": "e7702893954de7943471ffaabbdcfc21ecf0c283eb0df46edb5994dc9bc48241"
+            },
+            "status": "UNPROVEN",
+            "reason": "用户说出了金额，未在同一来源提供checkout id；金额相等和相邻时序不是直接桥接。"
+          },
+          {
+            "from": "native_call_or_protocol",
+            "to": "checkout_id",
+            "origin": "SOURCE_OBSERVATION",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 724,
+              "pointer": "/response_body",
+              "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+              "embedded_pointer": "/checkout/id",
+              "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+            },
+            "status": "OBSERVED",
+            "reason": "源数据显式记录原生checkout，但不能由此证明用户授权对应这一checkout。"
+          },
+          {
+            "from": "native_call_or_protocol",
+            "to": "checkout_id",
+            "origin": "SOURCE_OBSERVATION",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 724,
+              "pointer": "/response_body",
+              "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+              "embedded_pointer": "/checkout/id",
+              "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+            },
+            "status": "OBSERVED",
+            "reason": "源数据显式记录原生checkout，但不能由此证明用户授权对应这一checkout。"
+          },
+          {
+            "from": "native_call_or_protocol",
+            "to": "checkout_id",
+            "origin": "SOURCE_OBSERVATION",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 724,
+              "pointer": "/response_body",
+              "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+              "embedded_pointer": "/checkout/id",
+              "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+            },
+            "status": "OBSERVED",
+            "reason": "源数据显式记录原生checkout，但不能由此证明用户授权对应这一checkout。"
+          },
+          {
+            "from": "native_call_or_protocol",
+            "to": "checkout_id",
+            "origin": "SOURCE_OBSERVATION",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 724,
+              "pointer": "/response_body",
+              "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+              "embedded_pointer": "/checkout/id",
+              "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+            },
+            "status": "OBSERVED",
+            "reason": "源数据显式记录原生checkout，但不能由此证明用户授权对应这一checkout。"
+          },
+          {
+            "from": "wallet_approve_and_issue_model",
+            "to": "checkout_amount_matching_intent",
+            "origin": "CODE_INTENT",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/CODE_src__carttrace__agents__wallet.py",
+              "line_start": 878,
+              "line_end": 935,
+              "text_sha256": "e7848c90ddaf3649a68c2179514d52f20c53c6cb71ecb3130516bfbaeba36319"
+            },
+            "status": "DESIGN_ONLY",
+            "reason": "代码约束同一checkout和amount，不等于该episode实际运行时签发/消费Consent的可回指记录。"
+          }
+        ]
+      },
+      "confirmed_user_amounts": [
+        {
+          "seq": 40,
+          "amount_spoken": "29.01",
+          "currency_spoken": "USD",
+          "checkout_literal_in_message": false,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 1599,
+            "pointer": "/text",
+            "value_sha256": "e7702893954de7943471ffaabbdcfc21ecf0c283eb0df46edb5994dc9bc48241"
+          }
+        }
+      ],
+      "source_payment_observations": [
+        {
+          "call_id": "call-45",
+          "raw_amount": 1298,
+          "currency_raw": "USD",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "UNKNOWN",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/totals/0/amount",
+            "decoded_value_sha256": "d59a23c3feff6c21bbd651244d14c5639d3aa704751d4ce7aaa481712a18456d"
+          },
+          "currency_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/currency",
+            "decoded_value_sha256": "82bb059ec10744f31e0406b8ef7a7a0f3c30c9b18435120fa859b2c0b9627888"
+          },
+          "checkout_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          }
+        },
+        {
+          "call_id": "call-45",
+          "raw_amount": 1499,
+          "currency_raw": "USD",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "UNKNOWN",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/totals/1/amount",
+            "decoded_value_sha256": "a3d0c75739a3c6a80dcb6f9d71f9da29b49b62995801bc52957e06acb87db33d"
+          },
+          "currency_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/currency",
+            "decoded_value_sha256": "82bb059ec10744f31e0406b8ef7a7a0f3c30c9b18435120fa859b2c0b9627888"
+          },
+          "checkout_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          }
+        },
+        {
+          "call_id": "call-45",
+          "raw_amount": 104,
+          "currency_raw": "USD",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "UNKNOWN",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/totals/2/amount",
+            "decoded_value_sha256": "5ef6fdf32513aa7cd11f72beccf132b9224d33f271471fff402742887a171edf"
+          },
+          "currency_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/currency",
+            "decoded_value_sha256": "82bb059ec10744f31e0406b8ef7a7a0f3c30c9b18435120fa859b2c0b9627888"
+          },
+          "checkout_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          }
+        },
+        {
+          "call_id": "call-45",
+          "raw_amount": 2901,
+          "currency_raw": "USD",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "UNKNOWN",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/totals/3/amount",
+            "decoded_value_sha256": "69be0182f4d8fa9f909126ba2ded763d076e10fc4999b9dee9cec1f596ea2cad"
+          },
+          "currency_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/currency",
+            "decoded_value_sha256": "82bb059ec10744f31e0406b8ef7a7a0f3c30c9b18435120fa859b2c0b9627888"
+          },
+          "checkout_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 724,
+            "pointer": "/response_body",
+            "value_sha256": "42fd852b74cdf84bc08c4de4e65e416766fc6f56d854eca7250f2a5035c61be0",
+            "embedded_pointer": "/checkout/id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          }
+        }
+      ],
+      "source_request_allowances": [],
+      "native_call_chains": [
+        {
+          "call_id": "call-45",
+          "tool": "send_payment_mandate",
+          "call_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 1603,
+            "pointer": "/call_id",
+            "value_sha256": "b733fc807f3d43f5bafd4d4c935d350c7679dc85b5f6bc1ae1cceaed3e239e68"
+          },
+          "result_citations": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 1604,
+              "pointer": "/tool_call_id",
+              "value_sha256": "b733fc807f3d43f5bafd4d4c935d350c7679dc85b5f6bc1ae1cceaed3e239e68"
+            }
+          ],
+          "wire_citations": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 724,
+              "pointer": "/source_call_id",
+              "value_sha256": "b733fc807f3d43f5bafd4d4c935d350c7679dc85b5f6bc1ae1cceaed3e239e68"
+            }
+          ],
+          "status": "COMPLETE"
+        }
+      ],
+      "source_metadata": [
+        {
+          "field": "checkout_open_seq",
+          "value": 12,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 0,
+            "pointer": "/checkout_open_seq",
+            "value_sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "consent_seq",
+          "value": 40,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 0,
+            "pointer": "/consent_seq",
+            "value_sha256": "d59eced1ded07f84c145592f65bdf854358e009c5cd705f5215bf18697fed103"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "payment_seq",
+          "value": 41,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 0,
+            "pointer": "/payment_seq",
+            "value_sha256": "3d914f9348c9cc0ff8a79716700b9fcd4d2f3e711608004eb8f138bcba7f14d9"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "final_cart",
+          "value": "source_json_present",
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 0,
+            "pointer": "/final_cart",
+            "value_sha256": "e9e528165bec33a3703ed6fd92a6d8bd25fa484f828a412903d67dfc014d6452"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        }
+      ],
+      "notes": [
+        "原始用户确认带美元金额，但确认消息没有显式checkout标识；不能依据同额或相邻顺序认为其授权绑定已直接证明。",
+        "协议或工具的金额、币种与checkout已有逐字段源引用，但它们不是用户确认对象的显式连接。"
+      ],
+      "independent_backend_settlement_observed": false
+    },
+    {
+      "episode_id": "ep-0646e4cec480",
+      "unit": {
+        "status": "PARTIAL",
+        "citations": [
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/DATA_SCHEMA_md",
+            "line_start": 56,
+            "line_end": 59,
+            "text_sha256": "1032ad6c2a32d248e2eaaeab0c41f115454c194d283745c910998a0d85a3b8da"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 1,
+            "pointer": "/final_cart",
+            "value_sha256": "869942140aca2ba9d6f494b98c802869c9293e17fb23525ef04b121324d08aa8"
+          }
+        ],
+        "reason": "已存在原生金额、币种、checkout原字段引用；DATA_SCHEMA仅声明final_cart的价格是最小货币单位，钱包Money转换见静态代码。但现有证据未直接把这一定义连接到本例每项协议付款/令牌额度字段，也未证明最终金额在执行路径上遵循同一单位契约，所以付款金额单位只能PARTIAL。",
+        "target_scope": "protocol_reported_payment_and_token_allowance",
+        "documented_scope": "final_cart prices, not auto-proven protocol totals"
+      },
+      "binding": {
+        "status": "PARTIAL",
+        "citations": [
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 3059,
+            "pointer": "/text",
+            "value_sha256": "489c34aed50c6a98c38a5b2f12c0ca1188d658d6971a5b58094e2f3c9dde5f2f"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 1413,
+            "pointer": "/response_body",
+            "value_sha256": "d12f27ea6863b7412c15ec51a3d898ad6d4cf9d27427770cb08613e419080d86",
+            "embedded_pointer": "/checkout_id",
+            "decoded_value_sha256": "0e27e31a478c5d5cd90c76ddd2701a9f08042c0e2bb6fe85675538a38020bca9"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 1413,
+            "pointer": "/request_body",
+            "value_sha256": "1f291deb0cb1786451410a552e5f5f7869ab604ca1415f02eb973b6fd1df39d9",
+            "embedded_pointer": "/checkout_id",
+            "decoded_value_sha256": "0e27e31a478c5d5cd90c76ddd2701a9f08042c0e2bb6fe85675538a38020bca9"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/CODE_src__carttrace__agents__wallet.py",
+            "line_start": 878,
+            "line_end": 935,
+            "text_sha256": "e7848c90ddaf3649a68c2179514d52f20c53c6cb71ecb3130516bfbaeba36319"
+          }
+        ],
+        "reason": "同一episode有用户原文金额确认及原生checkout/协议结果，可分别回指来源；钱包代码中也有Consent(checkout_id,amount,seq)的预期行为。但已发布source未呈现用户确认到该原生checkout的一条直接、共同标识的观察记录，metadata序号或金额相等都不能补足这一连接，故保持PARTIAL。",
+        "edges": [
+          {
+            "from": "shopper_explicit_spoken_total",
+            "to": "checkout_id",
+            "origin": "INFERENCE",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "row_group": 0,
+              "row_index": 3059,
+              "pointer": "/text",
+              "value_sha256": "489c34aed50c6a98c38a5b2f12c0ca1188d658d6971a5b58094e2f3c9dde5f2f"
+            },
+            "status": "UNPROVEN",
+            "reason": "用户说出了金额，未在同一来源提供checkout id；金额相等和相邻时序不是直接桥接。"
+          },
+          {
+            "from": "native_call_or_protocol",
+            "to": "checkout_id",
+            "origin": "SOURCE_OBSERVATION",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 1413,
+              "pointer": "/response_body",
+              "value_sha256": "d12f27ea6863b7412c15ec51a3d898ad6d4cf9d27427770cb08613e419080d86",
+              "embedded_pointer": "/checkout_id",
+              "decoded_value_sha256": "0e27e31a478c5d5cd90c76ddd2701a9f08042c0e2bb6fe85675538a38020bca9"
+            },
+            "status": "OBSERVED",
+            "reason": "源数据显式记录原生checkout，但不能由此证明用户授权对应这一checkout。"
+          },
+          {
+            "from": "native_call_or_protocol",
+            "to": "checkout_id",
+            "origin": "SOURCE_OBSERVATION",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 1413,
+              "pointer": "/request_body",
+              "value_sha256": "1f291deb0cb1786451410a552e5f5f7869ab604ca1415f02eb973b6fd1df39d9",
+              "embedded_pointer": "/checkout_id",
+              "decoded_value_sha256": "0e27e31a478c5d5cd90c76ddd2701a9f08042c0e2bb6fe85675538a38020bca9"
+            },
+            "status": "OBSERVED",
+            "reason": "源数据显式记录原生checkout，但不能由此证明用户授权对应这一checkout。"
+          },
+          {
+            "from": "wallet_approve_and_issue_model",
+            "to": "checkout_amount_matching_intent",
+            "origin": "CODE_INTENT",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/CODE_src__carttrace__agents__wallet.py",
+              "line_start": 878,
+              "line_end": 935,
+              "text_sha256": "e7848c90ddaf3649a68c2179514d52f20c53c6cb71ecb3130516bfbaeba36319"
+            },
+            "status": "DESIGN_ONLY",
+            "reason": "代码约束同一checkout和amount，不等于该episode实际运行时签发/消费Consent的可回指记录。"
+          }
+        ]
+      },
+      "confirmed_user_amounts": [
+        {
+          "seq": 79,
+          "amount_spoken": "9.76",
+          "currency_spoken": "USD",
+          "checkout_literal_in_message": false,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 3059,
+            "pointer": "/text",
+            "value_sha256": "489c34aed50c6a98c38a5b2f12c0ca1188d658d6971a5b58094e2f3c9dde5f2f"
+          }
+        }
+      ],
+      "source_payment_observations": [
+        {
+          "call_id": "call-80",
+          "raw_amount": 976,
+          "currency_raw": "USD",
+          "checkout_id": "checkout-0c28f977df81",
+          "phase": "UNKNOWN",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 1413,
+            "pointer": "/response_body",
+            "value_sha256": "d12f27ea6863b7412c15ec51a3d898ad6d4cf9d27427770cb08613e419080d86",
+            "embedded_pointer": "/amount",
+            "decoded_value_sha256": "3cb65cad26f0a517866e06dcba59afa4a5eadf832404e0e17c707b928825c144"
+          },
+          "currency_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 1413,
+            "pointer": "/response_body",
+            "value_sha256": "d12f27ea6863b7412c15ec51a3d898ad6d4cf9d27427770cb08613e419080d86",
+            "embedded_pointer": "/currency",
+            "decoded_value_sha256": "82bb059ec10744f31e0406b8ef7a7a0f3c30c9b18435120fa859b2c0b9627888"
+          },
+          "checkout_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 1413,
+            "pointer": "/response_body",
+            "value_sha256": "d12f27ea6863b7412c15ec51a3d898ad6d4cf9d27427770cb08613e419080d86",
+            "embedded_pointer": "/checkout_id",
+            "decoded_value_sha256": "0e27e31a478c5d5cd90c76ddd2701a9f08042c0e2bb6fe85675538a38020bca9"
+          }
+        }
+      ],
+      "source_request_allowances": [
+        {
+          "call_id": "call-80",
+          "raw_amount": 976,
+          "currency_raw": "USD",
+          "checkout_id": "checkout-0c28f977df81",
+          "phase": "REQUEST",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 1413,
+            "pointer": "/request_body",
+            "value_sha256": "1f291deb0cb1786451410a552e5f5f7869ab604ca1415f02eb973b6fd1df39d9",
+            "embedded_pointer": "/amount",
+            "decoded_value_sha256": "3cb65cad26f0a517866e06dcba59afa4a5eadf832404e0e17c707b928825c144"
+          }
+        }
+      ],
+      "native_call_chains": [
+        {
+          "call_id": "call-80",
+          "tool": "shop_pay_payment_request",
+          "call_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 3060,
+            "pointer": "/call_id",
+            "value_sha256": "fee0414bc04d41520a8ba51876bfd183c5630b6f4f387c909247562f4495ca6c"
+          },
+          "result_citations": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 3061,
+              "pointer": "/tool_call_id",
+              "value_sha256": "fee0414bc04d41520a8ba51876bfd183c5630b6f4f387c909247562f4495ca6c"
+            }
+          ],
+          "wire_citations": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 1413,
+              "pointer": "/source_call_id",
+              "value_sha256": "fee0414bc04d41520a8ba51876bfd183c5630b6f4f387c909247562f4495ca6c"
+            }
+          ],
+          "status": "COMPLETE"
+        }
+      ],
+      "source_metadata": [
+        {
+          "field": "checkout_open_seq",
+          "value": 40,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 1,
+            "pointer": "/checkout_open_seq",
+            "value_sha256": "d59eced1ded07f84c145592f65bdf854358e009c5cd705f5215bf18697fed103"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "consent_seq",
+          "value": 79,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 1,
+            "pointer": "/consent_seq",
+            "value_sha256": "98a3ab7c340e8a033e7b37b6ef9428751581760af67bbab2b9e05d4964a8874a"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "payment_seq",
+          "value": 80,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 1,
+            "pointer": "/payment_seq",
+            "value_sha256": "48449a14a4ff7d79bb7a1b6f3d488eba397c36ef25634c111b49baf362511afc"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "completion_seq",
+          "value": 87,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 1,
+            "pointer": "/completion_seq",
+            "value_sha256": "bdd2d3af3a5a1213497d4f1f7bfcda898274fe9cb5401bbc0190885664708fc2"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "final_cart",
+          "value": "source_json_present",
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 1,
+            "pointer": "/final_cart",
+            "value_sha256": "869942140aca2ba9d6f494b98c802869c9293e17fb23525ef04b121324d08aa8"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        }
+      ],
+      "notes": [
+        "原始用户确认带美元金额，但确认消息没有显式checkout标识；不能依据同额或相邻顺序认为其授权绑定已直接证明。",
+        "协议或工具的金额、币种与checkout已有逐字段源引用，但它们不是用户确认对象的显式连接。"
+      ],
+      "independent_backend_settlement_observed": false
+    },
+    {
+      "episode_id": "ep-08fb1a04f29a",
+      "unit": {
+        "status": "UNKNOWN",
+        "citations": [
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/DATA_SCHEMA_md",
+            "line_start": 56,
+            "line_end": 59,
+            "text_sha256": "1032ad6c2a32d248e2eaaeab0c41f115454c194d283745c910998a0d85a3b8da"
+          }
+        ],
+        "reason": "本例没有可用于支付单位校验的原生付款/额度金额观察。静态schema对final_cart价格有最小单位说明，并不能无中生有成为本例付款协议total的单位证明；不以美元口语金额反算单位。",
+        "target_scope": "protocol_reported_payment_and_token_allowance",
+        "documented_scope": "final_cart prices, not auto-proven protocol totals"
+      },
+      "binding": {
+        "status": "UNKNOWN",
+        "citations": [
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/CODE_src__carttrace__agents__wallet.py",
+            "line_start": 878,
+            "line_end": 935,
+            "text_sha256": "e7848c90ddaf3649a68c2179514d52f20c53c6cb71ecb3130516bfbaeba36319"
+          }
+        ],
+        "reason": "至少缺少带金额的明确用户确认或原生checkout付款观察，无法形成用户到checkout的闭合链。钱包代码设计的同一checkout金额审批不能代替本episode真实来源观察，故保持UNKNOWN，不推测用户已授权或者商户付款已发生。",
+        "edges": [
+          {
+            "from": "wallet_approve_and_issue_model",
+            "to": "checkout_amount_matching_intent",
+            "origin": "CODE_INTENT",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/CODE_src__carttrace__agents__wallet.py",
+              "line_start": 878,
+              "line_end": 935,
+              "text_sha256": "e7848c90ddaf3649a68c2179514d52f20c53c6cb71ecb3130516bfbaeba36319"
+            },
+            "status": "DESIGN_ONLY",
+            "reason": "代码约束同一checkout和amount，不等于该episode实际运行时签发/消费Consent的可回指记录。"
+          }
+        ]
+      },
+      "confirmed_user_amounts": [],
+      "source_payment_observations": [],
+      "source_request_allowances": [],
+      "native_call_chains": [],
+      "source_metadata": [],
+      "notes": [
+        "该episode未观察到明确的带金额下单确认；不能把初始预算、选品或后续工具调用当作用户授权确认。"
+      ],
+      "independent_backend_settlement_observed": false
+    },
+    {
+      "episode_id": "ep-09bafc6d1c7e",
+      "unit": {
+        "status": "PARTIAL",
+        "citations": [
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/DATA_SCHEMA_md",
+            "line_start": 56,
+            "line_end": 59,
+            "text_sha256": "1032ad6c2a32d248e2eaaeab0c41f115454c194d283745c910998a0d85a3b8da"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 2,
+            "pointer": "/final_cart",
+            "value_sha256": "2c3d7b9d59cf337ad5b1c1ae7c9611cec6641ab4a8b39a5ec29881139b091b51"
+          }
+        ],
+        "reason": "已存在原生金额、币种、checkout原字段引用；DATA_SCHEMA仅声明final_cart的价格是最小货币单位，钱包Money转换见静态代码。但现有证据未直接把这一定义连接到本例每项协议付款/令牌额度字段，也未证明最终金额在执行路径上遵循同一单位契约，所以付款金额单位只能PARTIAL。",
+        "target_scope": "protocol_reported_payment_and_token_allowance",
+        "documented_scope": "final_cart prices, not auto-proven protocol totals"
+      },
+      "binding": {
+        "status": "PARTIAL",
+        "citations": [
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 5197,
+            "pointer": "/text",
+            "value_sha256": "d1432257773cad6ccba3ca5ccbd4f0544443bf55e9755941b1a02cc07fea00c9"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 5198,
+            "pointer": "/arguments",
+            "value_sha256": "18125c80461bd2bd0e1f8aed0ae82e08297c507f22e992087e9bee001f713bac",
+            "embedded_pointer": "/allowance/checkout_session_id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 5200,
+            "pointer": "/arguments",
+            "value_sha256": "ff4de737d67ec59be42dc3fcbba4f240a9bbbac99e1bec9bca564786d68a8c66",
+            "embedded_pointer": "/payload/allowance/checkout_session_id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 2348,
+            "pointer": "/request_body",
+            "value_sha256": "a77ecf2e4c6d4d81196962299fbc2368fe31568a07acb6ba6b32817de871f1cc",
+            "embedded_pointer": "/allowance/checkout_session_id",
+            "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/CODE_src__carttrace__agents__wallet.py",
+            "line_start": 878,
+            "line_end": 935,
+            "text_sha256": "e7848c90ddaf3649a68c2179514d52f20c53c6cb71ecb3130516bfbaeba36319"
+          }
+        ],
+        "reason": "同一episode有用户原文金额确认及原生checkout/协议结果，可分别回指来源；钱包代码中也有Consent(checkout_id,amount,seq)的预期行为。但已发布source未呈现用户确认到该原生checkout的一条直接、共同标识的观察记录，metadata序号或金额相等都不能补足这一连接，故保持PARTIAL。",
+        "edges": [
+          {
+            "from": "shopper_explicit_spoken_total",
+            "to": "checkout_id",
+            "origin": "INFERENCE",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "row_group": 0,
+              "row_index": 5197,
+              "pointer": "/text",
+              "value_sha256": "d1432257773cad6ccba3ca5ccbd4f0544443bf55e9755941b1a02cc07fea00c9"
+            },
+            "status": "UNPROVEN",
+            "reason": "用户说出了金额，未在同一来源提供checkout id；金额相等和相邻时序不是直接桥接。"
+          },
+          {
+            "from": "native_call_or_protocol",
+            "to": "checkout_id",
+            "origin": "SOURCE_OBSERVATION",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 5198,
+              "pointer": "/arguments",
+              "value_sha256": "18125c80461bd2bd0e1f8aed0ae82e08297c507f22e992087e9bee001f713bac",
+              "embedded_pointer": "/allowance/checkout_session_id",
+              "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+            },
+            "status": "OBSERVED",
+            "reason": "源数据显式记录原生checkout，但不能由此证明用户授权对应这一checkout。"
+          },
+          {
+            "from": "native_call_or_protocol",
+            "to": "checkout_id",
+            "origin": "SOURCE_OBSERVATION",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 5200,
+              "pointer": "/arguments",
+              "value_sha256": "ff4de737d67ec59be42dc3fcbba4f240a9bbbac99e1bec9bca564786d68a8c66",
+              "embedded_pointer": "/payload/allowance/checkout_session_id",
+              "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+            },
+            "status": "OBSERVED",
+            "reason": "源数据显式记录原生checkout，但不能由此证明用户授权对应这一checkout。"
+          },
+          {
+            "from": "native_call_or_protocol",
+            "to": "checkout_id",
+            "origin": "SOURCE_OBSERVATION",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 2348,
+              "pointer": "/request_body",
+              "value_sha256": "a77ecf2e4c6d4d81196962299fbc2368fe31568a07acb6ba6b32817de871f1cc",
+              "embedded_pointer": "/allowance/checkout_session_id",
+              "decoded_value_sha256": "df33ec8fe5a5ff2d3619d6dfd20099cd8898deb550828bcf486a0aeae52bb2de"
+            },
+            "status": "OBSERVED",
+            "reason": "源数据显式记录原生checkout，但不能由此证明用户授权对应这一checkout。"
+          },
+          {
+            "from": "wallet_approve_and_issue_model",
+            "to": "checkout_amount_matching_intent",
+            "origin": "CODE_INTENT",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/CODE_src__carttrace__agents__wallet.py",
+              "line_start": 878,
+              "line_end": 935,
+              "text_sha256": "e7848c90ddaf3649a68c2179514d52f20c53c6cb71ecb3130516bfbaeba36319"
+            },
+            "status": "DESIGN_ONLY",
+            "reason": "代码约束同一checkout和amount，不等于该episode实际运行时签发/消费Consent的可回指记录。"
+          }
+        ]
+      },
+      "confirmed_user_amounts": [
+        {
+          "seq": 31,
+          "amount_spoken": "58.18",
+          "currency_spoken": "USD",
+          "checkout_literal_in_message": false,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 5197,
+            "pointer": "/text",
+            "value_sha256": "d1432257773cad6ccba3ca5ccbd4f0544443bf55e9755941b1a02cc07fea00c9"
+          }
+        }
+      ],
+      "source_payment_observations": [],
+      "source_request_allowances": [
+        {
+          "call_id": "call-32",
+          "raw_amount": 5818,
+          "currency_raw": "usd",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "TOKEN_ALLOWANCE",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 5198,
+            "pointer": "/arguments",
+            "value_sha256": "18125c80461bd2bd0e1f8aed0ae82e08297c507f22e992087e9bee001f713bac",
+            "embedded_pointer": "/allowance/max_amount",
+            "decoded_value_sha256": "0894112f558d4962ff0e74fc4a161ff087ee77a905c8e6b431521b3affc2ed09"
+          }
+        },
+        {
+          "call_id": "call-34",
+          "raw_amount": 5818,
+          "currency_raw": "usd",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "TOKEN_ALLOWANCE",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 5200,
+            "pointer": "/arguments",
+            "value_sha256": "ff4de737d67ec59be42dc3fcbba4f240a9bbbac99e1bec9bca564786d68a8c66",
+            "embedded_pointer": "/payload/allowance/max_amount",
+            "decoded_value_sha256": "0894112f558d4962ff0e74fc4a161ff087ee77a905c8e6b431521b3affc2ed09"
+          }
+        },
+        {
+          "call_id": "call-34",
+          "raw_amount": 5818,
+          "currency_raw": "usd",
+          "checkout_id": "checkout-49e0e18c4b1b",
+          "phase": "TOKEN_ALLOWANCE",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 2348,
+            "pointer": "/request_body",
+            "value_sha256": "a77ecf2e4c6d4d81196962299fbc2368fe31568a07acb6ba6b32817de871f1cc",
+            "embedded_pointer": "/allowance/max_amount",
+            "decoded_value_sha256": "0894112f558d4962ff0e74fc4a161ff087ee77a905c8e6b431521b3affc2ed09"
+          }
+        }
+      ],
+      "native_call_chains": [
+        {
+          "call_id": "call-32",
+          "tool": "delegate_payment",
+          "call_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 5198,
+            "pointer": "/call_id",
+            "value_sha256": "721d7c43d6130bbaadb0c1ce48fa1cd3ab6b5b35f1721944f3e4922e9a4bd149"
+          },
+          "result_citations": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 5201,
+              "pointer": "/tool_call_id",
+              "value_sha256": "721d7c43d6130bbaadb0c1ce48fa1cd3ab6b5b35f1721944f3e4922e9a4bd149"
+            }
+          ],
+          "wire_citations": [],
+          "status": "PARTIAL"
+        },
+        {
+          "call_id": "call-34",
+          "tool": "delegate_payment",
+          "call_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 5200,
+            "pointer": "/call_id",
+            "value_sha256": "92509892cfa12124f0a0cfa8e7e82f383ff474878b7ecfc9ed73ed5b5729aa1a"
+          },
+          "result_citations": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 5202,
+              "pointer": "/tool_call_id",
+              "value_sha256": "92509892cfa12124f0a0cfa8e7e82f383ff474878b7ecfc9ed73ed5b5729aa1a"
+            }
+          ],
+          "wire_citations": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 2348,
+              "pointer": "/source_call_id",
+              "value_sha256": "92509892cfa12124f0a0cfa8e7e82f383ff474878b7ecfc9ed73ed5b5729aa1a"
+            }
+          ],
+          "status": "COMPLETE"
+        }
+      ],
+      "source_metadata": [
+        {
+          "field": "checkout_open_seq",
+          "value": 12,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 2,
+            "pointer": "/checkout_open_seq",
+            "value_sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "consent_seq",
+          "value": 31,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 2,
+            "pointer": "/consent_seq",
+            "value_sha256": "eb1e33e8a81b697b75855af6bfcdbcbf7cbbde9f94962ceaec1ed8af21f5a50f"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "payment_seq",
+          "value": 32,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 2,
+            "pointer": "/payment_seq",
+            "value_sha256": "e29c9c180c6279b0b02abd6a1801c7c04082cf486ec027aa13515e4f3884bb6b"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "completion_seq",
+          "value": 42,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 2,
+            "pointer": "/completion_seq",
+            "value_sha256": "73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17dc651b3a8049"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "final_cart",
+          "value": "source_json_present",
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 2,
+            "pointer": "/final_cart",
+            "value_sha256": "2c3d7b9d59cf337ad5b1c1ae7c9611cec6641ab4a8b39a5ec29881139b091b51"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        }
+      ],
+      "notes": [
+        "原始用户确认带美元金额，但确认消息没有显式checkout标识；不能依据同额或相邻顺序认为其授权绑定已直接证明。",
+        "至少一个原生call缺对应wire或结果，不能挪用同episode其他call来填补。"
+      ],
+      "independent_backend_settlement_observed": false
+    },
+    {
+      "episode_id": "ep-1375d00dacdb",
+      "unit": {
+        "status": "UNKNOWN",
+        "citations": [
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/DATA_SCHEMA_md",
+            "line_start": 56,
+            "line_end": 59,
+            "text_sha256": "1032ad6c2a32d248e2eaaeab0c41f115454c194d283745c910998a0d85a3b8da"
+          }
+        ],
+        "reason": "本例没有可用于支付单位校验的原生付款/额度金额观察。静态schema对final_cart价格有最小单位说明，并不能无中生有成为本例付款协议total的单位证明；不以美元口语金额反算单位。",
+        "target_scope": "protocol_reported_payment_and_token_allowance",
+        "documented_scope": "final_cart prices, not auto-proven protocol totals"
+      },
+      "binding": {
+        "status": "UNKNOWN",
+        "citations": [
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/CODE_src__carttrace__agents__wallet.py",
+            "line_start": 878,
+            "line_end": 935,
+            "text_sha256": "e7848c90ddaf3649a68c2179514d52f20c53c6cb71ecb3130516bfbaeba36319"
+          }
+        ],
+        "reason": "至少缺少带金额的明确用户确认或原生checkout付款观察，无法形成用户到checkout的闭合链。钱包代码设计的同一checkout金额审批不能代替本episode真实来源观察，故保持UNKNOWN，不推测用户已授权或者商户付款已发生。",
+        "edges": [
+          {
+            "from": "wallet_approve_and_issue_model",
+            "to": "checkout_amount_matching_intent",
+            "origin": "CODE_INTENT",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/CODE_src__carttrace__agents__wallet.py",
+              "line_start": 878,
+              "line_end": 935,
+              "text_sha256": "e7848c90ddaf3649a68c2179514d52f20c53c6cb71ecb3130516bfbaeba36319"
+            },
+            "status": "DESIGN_ONLY",
+            "reason": "代码约束同一checkout和amount，不等于该episode实际运行时签发/消费Consent的可回指记录。"
+          }
+        ]
+      },
+      "confirmed_user_amounts": [],
+      "source_payment_observations": [],
+      "source_request_allowances": [],
+      "native_call_chains": [],
+      "source_metadata": [],
+      "notes": [
+        "该episode未观察到明确的带金额下单确认；不能把初始预算、选品或后续工具调用当作用户授权确认。"
+      ],
+      "independent_backend_settlement_observed": false
+    },
+    {
+      "episode_id": "ep-172fbb8cce5b",
+      "unit": {
+        "status": "PARTIAL",
+        "citations": [
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/DATA_SCHEMA_md",
+            "line_start": 56,
+            "line_end": 59,
+            "text_sha256": "1032ad6c2a32d248e2eaaeab0c41f115454c194d283745c910998a0d85a3b8da"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 6,
+            "pointer": "/final_cart",
+            "value_sha256": "2698afb2f85a63103da1e9455fbe35ba93c1fc031727766cc057b7d9af36cb1c"
+          }
+        ],
+        "reason": "已存在原生金额、币种、checkout原字段引用；DATA_SCHEMA仅声明final_cart的价格是最小货币单位，钱包Money转换见静态代码。但现有证据未直接把这一定义连接到本例每项协议付款/令牌额度字段，也未证明最终金额在执行路径上遵循同一单位契约，所以付款金额单位只能PARTIAL。",
+        "target_scope": "protocol_reported_payment_and_token_allowance",
+        "documented_scope": "final_cart prices, not auto-proven protocol totals"
+      },
+      "binding": {
+        "status": "PARTIAL",
+        "citations": [
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 12419,
+            "pointer": "/text",
+            "value_sha256": "748a932b17c3f3bd2033405c9c18009787b8b71eb3a3e420fb7e0f594ddf6df5"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 1,
+            "row_index": 2632,
+            "pointer": "/response_body",
+            "value_sha256": "94e3b8b1974553c2df51e6c16ae9e41b4982be721888236a952aadc7dfc12713",
+            "embedded_pointer": "/checkout_id",
+            "decoded_value_sha256": "eed3a5af0a8888eb1333d4eda800b8649ac921f52f8fcad70f15227ebdef4b31"
+          },
+          {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/CODE_src__carttrace__agents__wallet.py",
+            "line_start": 878,
+            "line_end": 935,
+            "text_sha256": "e7848c90ddaf3649a68c2179514d52f20c53c6cb71ecb3130516bfbaeba36319"
+          }
+        ],
+        "reason": "同一episode有用户原文金额确认及原生checkout/协议结果，可分别回指来源；钱包代码中也有Consent(checkout_id,amount,seq)的预期行为。但已发布source未呈现用户确认到该原生checkout的一条直接、共同标识的观察记录，metadata序号或金额相等都不能补足这一连接，故保持PARTIAL。",
+        "edges": [
+          {
+            "from": "shopper_explicit_spoken_total",
+            "to": "checkout_id",
+            "origin": "INFERENCE",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "row_group": 0,
+              "row_index": 12419,
+              "pointer": "/text",
+              "value_sha256": "748a932b17c3f3bd2033405c9c18009787b8b71eb3a3e420fb7e0f594ddf6df5"
+            },
+            "status": "UNPROVEN",
+            "reason": "用户说出了金额，未在同一来源提供checkout id；金额相等和相邻时序不是直接桥接。"
+          },
+          {
+            "from": "native_call_or_protocol",
+            "to": "checkout_id",
+            "origin": "SOURCE_OBSERVATION",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 1,
+              "row_index": 2632,
+              "pointer": "/response_body",
+              "value_sha256": "94e3b8b1974553c2df51e6c16ae9e41b4982be721888236a952aadc7dfc12713",
+              "embedded_pointer": "/checkout_id",
+              "decoded_value_sha256": "eed3a5af0a8888eb1333d4eda800b8649ac921f52f8fcad70f15227ebdef4b31"
+            },
+            "status": "OBSERVED",
+            "reason": "源数据显式记录原生checkout，但不能由此证明用户授权对应这一checkout。"
+          },
+          {
+            "from": "wallet_approve_and_issue_model",
+            "to": "checkout_amount_matching_intent",
+            "origin": "CODE_INTENT",
+            "citation": {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/references/CODE_src__carttrace__agents__wallet.py",
+              "line_start": 878,
+              "line_end": 935,
+              "text_sha256": "e7848c90ddaf3649a68c2179514d52f20c53c6cb71ecb3130516bfbaeba36319"
+            },
+            "status": "DESIGN_ONLY",
+            "reason": "代码约束同一checkout和amount，不等于该episode实际运行时签发/消费Consent的可回指记录。"
+          }
+        ]
+      },
+      "confirmed_user_amounts": [
+        {
+          "seq": 64,
+          "amount_spoken": "44.25",
+          "currency_spoken": "USD",
+          "checkout_literal_in_message": false,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 12419,
+            "pointer": "/text",
+            "value_sha256": "748a932b17c3f3bd2033405c9c18009787b8b71eb3a3e420fb7e0f594ddf6df5"
+          }
+        }
+      ],
+      "source_payment_observations": [
+        {
+          "call_id": "call-68",
+          "raw_amount": 4425,
+          "currency_raw": "usd",
+          "checkout_id": "checkout-3766021cd113",
+          "phase": "REPORTED_COMPLETION",
+          "amount_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 1,
+            "row_index": 2632,
+            "pointer": "/response_body",
+            "value_sha256": "94e3b8b1974553c2df51e6c16ae9e41b4982be721888236a952aadc7dfc12713",
+            "embedded_pointer": "/total",
+            "decoded_value_sha256": "11b0147cac181f433e7f220d2b0cead50d61cf065a82b45b768428419d83433e"
+          },
+          "currency_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 1,
+            "row_index": 2632,
+            "pointer": "/response_body",
+            "value_sha256": "94e3b8b1974553c2df51e6c16ae9e41b4982be721888236a952aadc7dfc12713",
+            "embedded_pointer": "/currency",
+            "decoded_value_sha256": "af9bae0a5ac6c53278eba3acae06aece700043c23f5b6325509651a65480e36a"
+          },
+          "checkout_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 1,
+            "row_index": 2632,
+            "pointer": "/response_body",
+            "value_sha256": "94e3b8b1974553c2df51e6c16ae9e41b4982be721888236a952aadc7dfc12713",
+            "embedded_pointer": "/checkout_id",
+            "decoded_value_sha256": "eed3a5af0a8888eb1333d4eda800b8649ac921f52f8fcad70f15227ebdef4b31"
+          }
+        }
+      ],
+      "source_request_allowances": [],
+      "native_call_chains": [
+        {
+          "call_id": "call-68",
+          "tool": "pay",
+          "call_citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+            "kind": "parquet",
+            "row_group": 0,
+            "row_index": 12422,
+            "pointer": "/call_id",
+            "value_sha256": "0b1a74df326ce8050f92522a8854aec83cac3554d6e5ad5e7ccfe1de4e425fda"
+          },
+          "result_citations": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 0,
+              "row_index": 12423,
+              "pointer": "/tool_call_id",
+              "value_sha256": "0b1a74df326ce8050f92522a8854aec83cac3554d6e5ad5e7ccfe1de4e425fda"
+            }
+          ],
+          "wire_citations": [
+            {
+              "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/wire/validation-00000-of-00001.parquet",
+              "kind": "parquet",
+              "row_group": 1,
+              "row_index": 2632,
+              "pointer": "/source_call_id",
+              "value_sha256": "0b1a74df326ce8050f92522a8854aec83cac3554d6e5ad5e7ccfe1de4e425fda"
+            }
+          ],
+          "status": "COMPLETE"
+        }
+      ],
+      "source_metadata": [
+        {
+          "field": "checkout_open_seq",
+          "value": 37,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 6,
+            "pointer": "/checkout_open_seq",
+            "value_sha256": "7a61b53701befdae0eeeffaecc73f14e20b537bb0f8b91ad7c2936dc63562b25"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "consent_seq",
+          "value": 64,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 6,
+            "pointer": "/consent_seq",
+            "value_sha256": "a68b412c4282555f15546cf6e1fc42893b7e07f271557ceb021821098dd66c1b"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "payment_seq",
+          "value": 65,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 6,
+            "pointer": "/payment_seq",
+            "value_sha256": "108c995b953c8a35561103e2014cf828eb654a99e310f87fab94c2f4b7d2a04f"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "completion_seq",
+          "value": 68,
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 6,
+            "pointer": "/completion_seq",
+            "value_sha256": "a21855da08cb102d1d217c53dc5824a3a795c1c1a44e971bf01ab9da3a2acbbf"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        },
+        {
+          "field": "final_cart",
+          "value": "source_json_present",
+          "citation": {
+            "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/automotive-parts/validation-00000-of-00001.parquet",
+            "row_group": 0,
+            "row_index": 6,
+            "pointer": "/final_cart",
+            "value_sha256": "2698afb2f85a63103da1e9455fbe35ba93c1fc031727766cc057b7d9af36cb1c"
+          },
+          "semantic_limit": "publish_metadata_not_authority_proof"
+        }
+      ],
+      "notes": [
+        "原始用户确认带美元金额，但确认消息没有显式checkout标识；不能依据同额或相邻顺序认为其授权绑定已直接证明。",
+        "协议或工具的金额、币种与checkout已有逐字段源引用，但它们不是用户确认对象的显式连接。"
+      ],
+      "independent_backend_settlement_observed": false
+    }
+  ],
+  "verdict": "STOP_SOURCE_VIEW",
+  "reason": "固定的六例已经完成源字段、原生checkout、钱包代码意图、final_cart金额单位说明和用户口头确认逐边清点。没有一例同时在原生支付金额单位与用户确认到checkout的直接桥接上提供完整同episode来源证明，故本六例静态来源视图停止；这不构成产品安全或真实清算裁决。",
+  "replay_executed": false,
+  "product_effect_measured": false,
+  "missing_world_ids": [
+    "env-bd45a7e9be19"
+  ]
+}

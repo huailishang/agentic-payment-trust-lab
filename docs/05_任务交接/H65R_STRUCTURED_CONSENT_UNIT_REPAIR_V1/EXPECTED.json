@@ -1,0 +1,59 @@
+{
+  "task_id": "H65R_STRUCTURED_CONSENT_UNIT_REPAIR_V1",
+  "consents": [
+    {
+      "episode_id": "ep-03a80be98c66",
+      "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+      "row_group": 0,
+      "row_index": 1599,
+      "seq": 40,
+      "given": true,
+      "checkout_id": "checkout-49e0e18c4b1b",
+      "raw_amount": 2901,
+      "currency": "USD"
+    },
+    {
+      "episode_id": "ep-0646e4cec480",
+      "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+      "row_group": 0,
+      "row_index": 3059,
+      "seq": 79,
+      "given": true,
+      "checkout_id": "checkout-0c28f977df81",
+      "raw_amount": 976,
+      "currency": "USD"
+    },
+    {
+      "episode_id": "ep-09bafc6d1c7e",
+      "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+      "row_group": 0,
+      "row_index": 5197,
+      "seq": 31,
+      "given": true,
+      "checkout_id": "checkout-49e0e18c4b1b",
+      "raw_amount": 5818,
+      "currency": "USD"
+    },
+    {
+      "episode_id": "ep-172fbb8cce5b",
+      "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/turns/validation-00000-of-00001.parquet",
+      "row_group": 0,
+      "row_index": 12419,
+      "seq": 64,
+      "given": true,
+      "checkout_id": "checkout-3766021cd113",
+      "raw_amount": 4425,
+      "currency": "USD"
+    }
+  ],
+  "unit": {
+    "episode_id": "ep-09bafc6d1c7e",
+    "file": "docs/05_任务交接/H64_CARTTRACE_FULL_EVIDENCE_READINESS_V1/acquired/data/messages/arts-crafts-music/validation-00000-of-00001.parquet",
+    "row_group": 0,
+    "row_index": 2,
+    "pointer": "/tools/8",
+    "embedded_pointer": "/function/parameters/properties/allowance/properties/max_amount/description",
+    "tool_name": "delegate_payment",
+    "definition": "The checkout session's total, in minor units."
+  }
+}
