@@ -56,6 +56,7 @@ reference/
 
 ## 当前优先入口
 
+- [Robinhood Agentic Trading / Agentic Credit Card 金融 Agent 信任边界](05_产业与机构资料/robinhood/Robinhood_Agentic_Trading与信用卡_信任边界参考_20261115.md) —— **2026-11-15 独立研究，REFERENCE_ONLY**；基于官方公告、帮助中心与 CEO 访谈，区分证券交易与信用卡支付，关注专用账户/虚拟卡、资金限额、审批、工具读写权限及撤销竞态；不修改 H-* 合同或开启真实资金操作。
 - [IronClaw 金融执行边界评估与11月10日研究计划](03_身份与治理/IronClaw_金融执行边界参考评估与研究计划_20261109.md) —— **2026-11-10先研究，REFERENCE_ONLY**；区分设计/已合并/接线/运行证据，先映射本仓已有能力，不调整H65合同。
 - [Verifiable Intent 后续验证评估](03_身份与治理/VerifiableIntent_后续验证评估_20260921.md) —— **支付宝阶段验收后第三个外部对象，先 measurement**；执行顺序见 F 阶段路线。
 - [AgentEmulator 参考评估](04_商城与外部环境/AgentEmulator_参考评估_20260921.md) —— **低优先级 REFERENCE_ONLY**，不进入首批验证或当前实现。
