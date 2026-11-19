@@ -1,0 +1,82 @@
+{
+  "schema": "h72r-offline-executor-result/v1",
+  "task_id": "H72R_OFFLINE_REVIEW_GATE_CLOSURE_V1",
+  "task_kind": "repair",
+  "state": "SUBMITTED_FOR_REVIEW",
+  "executor_role": "Executor",
+  "parent_H72_verdict": "REJECTED",
+  "parent_h72_l3": "FAIL_NOT_REWRITTEN",
+  "baseline_head": "c6c617c9e20e227c7bfe967cc86ed9a102034036",
+  "four_existing_functional_facts": 4,
+  "new_external_requests": 0,
+  "new_payments": 0,
+  "new_services": 0,
+  "new_browsers": 0,
+  "new_installs": 0,
+  "source_attestation_sha256": "9dc6a744dba1ad6aa12d4ad65699c843141bfecffe5e6b04a2bbfcdf452ab916",
+  "measured_native": {
+    "lstat_tag": 2684354589,
+    "length": 20,
+    "row_count": 2,
+    "data_sha256": "005106ad2d95b593b17fae67256f711e1be28e8c9a23c330d6bb769fa302f940",
+    "english_chinese_raw_bytes_differ": true,
+    "strict_parser_adversarial_tests_passed": 12
+  },
+  "role_negative_tests": {
+    "executor": {
+      "passed": 16,
+      "total": 16
+    },
+    "evaluator": {
+      "passed": 16,
+      "total": 16
+    },
+    "test_02": "explicit READY_FOR_REVIEW+Evaluator PASS",
+    "test_06": "explicit READY_FOR_REVIEW+Executor REJECTED",
+    "fixture": "NON_ADMITTING"
+  },
+  "resource_accounting": {
+    "api_live": 35,
+    "api_executor_read": 5,
+    "api_evaluator_read": 13,
+    "controlled_api_total": 53,
+    "browser_actions": 66,
+    "checkout_sessions": 4,
+    "test_payment_submissions": 3,
+    "synthetic_amount_minor_usd": 300,
+    "unobserved_cli_browser_subrequests": "UNKNOWN"
+  },
+  "offline_original_evidence": {
+    "saved_evaluator_get_responses": 13,
+    "checkout_sessions": 4,
+    "payment_intents": 3,
+    "charges": 3,
+    "original_signed_notifications": 3,
+    "signature_rejected_negative_cases": 9,
+    "sqlite_opened_readonly": true,
+    "R01": "original payment recovered from UNKNOWN; no retry",
+    "D01": "delivery receipt bookkeeping FAILED then SUCCEEDED; transport interruption/retry NOT_MEASURED"
+  },
+  "original_regression_counts": {
+    "safety": 9,
+    "regressions": 74,
+    "legacy": 11,
+    "lifecycle": 9,
+    "hosted_url": 6
+  },
+  "formal_L2": "PASS",
+  "independent_L3": "NOT_RUN_AWAIT_EVALUATOR",
+  "no_git_commit": true,
+  "no_git_push": true,
+  "executor_status": "SUBMITTED_FOR_REVIEW",
+  "formal_L2_attempts_consumed": 1,
+  "L2_checks_total": 11,
+  "L2_mandatory_failures": 0,
+  "L2_gate_sha256": "7114b42cde26efa074b68f8823def2f3c6b1dc555f1ce7a4354c582d35f32a5a",
+  "L2_gate_path": "docs/05_任务交接/H72R_OFFLINE_REVIEW_GATE_CLOSURE_V1/evidence/l2_attempt_001/L2-GATE.json",
+  "pre_l2_report_sha256": "92d49012bf2cc9d1ffe0ecc6717c3fa6ea0a4b0a4c7e7b264813b2676ae336e7",
+  "pre_l2_result_sha256": "bb5524568ffcc0f43d519c37e578120620435552ca5486897e4eb1d709ce7cac",
+  "submitted_at_utc": "2026-11-15T10:41:05.415428+00:00",
+  "repair_active_minutes_upper_bound": 23.223,
+  "cumulative_H72_minutes_upper_bound": 145.764
+}

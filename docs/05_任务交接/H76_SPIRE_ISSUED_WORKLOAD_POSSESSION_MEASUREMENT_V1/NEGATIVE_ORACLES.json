@@ -1,0 +1,19 @@
+{
+  "schema": "h76-negative-oracles/v1",
+  "positive_status": "VALID",
+  "cases": {
+    "wrong_root": "credential_trust_invalid",
+    "wrong_trust_domain": "credential_trust_domain_mismatch",
+    "wrong_agent": "credential_subject_binding_mismatch",
+    "wrong_executor": "credential_subject_binding_mismatch",
+    "wrong_provider": "credential_possession_challenge_binding_mismatch",
+    "wrong_nonce_binding": "credential_possession_challenge_binding_mismatch",
+    "damaged_signature": "credential_possession_signature_invalid",
+    "nonce_replay": "credential_possession_replay_detected",
+    "stale_challenge": "credential_possession_challenge_stale",
+    "expired_leaf_observation": "credential_certificate_time_invalid"
+  },
+  "wrong_root_source": "Existing public frozen X509_SVID_POSSESSION_VECTOR.json trust root; no local synthetic positive",
+  "time_mutations": "stale: observed_at=issued_at+301 while inside certificate interval; expired: observed_at=leaf.not_valid_after+1; synthetic observation only",
+  "zero_tolerance": "Any negative VALID; UID1002 obtains target identity; private key exported; verifier widened"
+}

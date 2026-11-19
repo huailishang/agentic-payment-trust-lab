@@ -78,6 +78,9 @@ class _CredentialPossessionFactLike(Protocol):
     proof_of_possession_valid: bool
     freshness_valid: bool
     replay_detected: bool
+    verified_agent_ref: str | None
+    verified_provider_ref: str | None
+    verified_executor_instance_ref: str | None
 
 
 @dataclass(frozen=True)
@@ -270,23 +273,41 @@ def verify_agent_executor_identity(
         and credential_possession_fact.freshness_valid
         and not credential_possession_fact.replay_detected
     )
+    context_reason: str | None = None
     if promotion_ready:
-        return _identity_fact(
-            status=VerificationStatus.VALID,
-            reason_codes=base_fact.reason_codes + credential_reasons,
-            assurance_level=IdentityAssuranceLevel.VERIFIED,
-            authorized_agent_ref=authorized_agent_ref,
-            request_agent_ref=request_agent_ref,
-            execution_agent_ref=execution_agent_ref,
-            identity=identity,
-            current_provider_ref=current_provider_ref,
-            current_executor_instance_ref=current_executor_instance_ref,
-            current_credential_ref=current_credential_ref,
+        # Only a context carried by the successful verifier can grant assurance.
+        # getattr retains compatibility with legacy duck-typed possession facts.
+        verified_context = (
+            getattr(credential_possession_fact, "verified_agent_ref", None),
+            getattr(credential_possession_fact, "verified_provider_ref", None),
+            getattr(credential_possession_fact, "verified_executor_instance_ref", None),
         )
+        if any(not _normalized_ref(value) for value in verified_context):
+            context_reason = "credential_possession_context_missing"
+        elif verified_context != (
+            authorized_agent_ref,
+            current_provider_ref,
+            current_executor_instance_ref,
+        ):
+            context_reason = "credential_possession_context_mismatch"
+        else:
+            return _identity_fact(
+                status=VerificationStatus.VALID,
+                reason_codes=base_fact.reason_codes + credential_reasons,
+                assurance_level=IdentityAssuranceLevel.VERIFIED,
+                authorized_agent_ref=authorized_agent_ref,
+                request_agent_ref=request_agent_ref,
+                execution_agent_ref=execution_agent_ref,
+                identity=identity,
+                current_provider_ref=current_provider_ref,
+                current_executor_instance_ref=current_executor_instance_ref,
+                current_credential_ref=current_credential_ref,
+            )
 
     return _identity_fact(
         status=VerificationStatus.VALID,
-        reason_codes=base_fact.reason_codes + credential_reasons,
+        reason_codes=base_fact.reason_codes + credential_reasons
+        + ((context_reason,) if context_reason is not None else ()),
         assurance_level=IdentityAssuranceLevel.BOUND,
         authorized_agent_ref=authorized_agent_ref,
         request_agent_ref=request_agent_ref,

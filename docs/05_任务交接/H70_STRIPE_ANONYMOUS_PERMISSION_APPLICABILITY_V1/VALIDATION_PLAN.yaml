@@ -1,0 +1,9 @@
+{
+  "schema": "evaluator-executor-validation-plan/v1",
+  "task_id": "H70_STRIPE_ANONYMOUS_PERMISSION_APPLICABILITY_V1",
+  "checks": [
+    {"id":"VP-01","ac":["AC-01","AC-04"],"cwd":".","command":["python","docs/05_任务交接/H70_STRIPE_ANONYMOUS_PERMISSION_APPLICABILITY_V1/CHECK.py","integrity"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-02","ac":["AC-01","AC-02"],"cwd":".","command":["python","docs/05_任务交接/H70_STRIPE_ANONYMOUS_PERMISSION_APPLICABILITY_V1/CHECK.py","sources"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-03","ac":["AC-02","AC-03","AC-04"],"cwd":".","command":["python","docs/05_任务交接/H70_STRIPE_ANONYMOUS_PERMISSION_APPLICABILITY_V1/CHECK.py","artifacts"],"expected_exit_code":0,"mandatory":true}
+  ]
+}

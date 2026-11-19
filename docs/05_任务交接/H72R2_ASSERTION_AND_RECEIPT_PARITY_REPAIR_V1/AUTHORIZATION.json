@@ -1,0 +1,18 @@
+{
+ "schema":"h72r2-project-owner-authorization/v1",
+ "task_id":"H72R2_ASSERTION_AND_RECEIPT_PARITY_REPAIR_V1",
+ "authorized_at_utc":"2026-11-15T12:39:00Z",
+ "authorized_by":"Project Owner",
+ "instruction":"直接执行H72R2，无需等待Evaluator正式冻结",
+ "authorization_type":"OWNER_DIRECT_BOUNDED_OFFLINE_EXECUTION",
+ "evaluator_freeze":"BYPASSED_NOT_APPROVED",
+ "active_minutes":30,
+ "wall_minutes":90,
+ "wall_deadline_utc":"2026-11-15T14:09:00Z",
+ "absolute_expiry_utc":"2026-11-16T04:08:37Z",
+ "max_implementation_approaches":1,
+ "max_l2_attempts":2,
+ "max_l3_attempts":1,
+ "cumulative_active_budget_minutes":480,
+ "external_actions":{"network":0,"api":0,"download":0,"install":0,"service":0,"browser":0,"payment":0,"model":0,"git_commit":0,"git_push":0,"history_rewrite":0}
+}

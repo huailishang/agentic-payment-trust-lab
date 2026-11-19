@@ -1,0 +1,21 @@
+{
+  "modules": {
+    "agentic_payment_experiment.trusted_execution.credential_possession": {
+      "path": "docs/05_任务交接/H80_VERIFIED_FACT_CONTEXT_BINDING_REPAIR_V1/references/before_h80/src/agentic_payment_experiment/trusted_execution/credential_possession.py",
+      "sha256": "ecea0b6d674d71b92de0cf148be2aff0b158cb11d5f62d5ac61a37d66b38650c"
+    },
+    "agentic_payment_experiment.trusted_execution.execution_facts": {
+      "path": "docs/05_任务交接/H80_VERIFIED_FACT_CONTEXT_BINDING_REPAIR_V1/references/before_h80/src/agentic_payment_experiment/trusted_execution/execution_facts.py",
+      "sha256": "5ff68c16330d3a6570d6a9b53f406a55cd5ee99207867532af74461fd76eeef6"
+    }
+  },
+  "fixture": {
+    "path": "docs/05_任务交接/H80_VERIFIED_FACT_CONTEXT_BINDING_REPAIR_V1/references/before_h80/tests/trusted_execution/test_payment_binding.py",
+    "sha256": "78deb5062a2f23a28a0897f9b15cb4d6bf92b6ea68feac4404504eb9d056c639"
+  },
+  "observed_slots_only": [
+    "M01",
+    "M02"
+  ],
+  "not_git_head": true
+}

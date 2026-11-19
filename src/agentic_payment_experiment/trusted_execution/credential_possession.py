@@ -46,6 +46,9 @@ class CredentialPossessionVerificationFact:
     issued_at_epoch: int | None
     observed_at_epoch: int | None
     max_age_seconds: int
+    verified_agent_ref: str | None = None
+    verified_provider_ref: str | None = None
+    verified_executor_instance_ref: str | None = None
 
 
 def verify_x509_svid_credential_possession(
@@ -338,6 +341,9 @@ def verify_x509_svid_credential_possession(
         proof_of_possession_valid=True,
         freshness_valid=True,
         replay_detected=False,
+        verified_agent_ref=expected_agent_ref,
+        verified_provider_ref=expected_provider_ref,
+        verified_executor_instance_ref=expected_executor_instance_ref,
         **common,
     )
 
@@ -360,6 +366,9 @@ def _fact(
     issued_at_epoch: int | None,
     observed_at_epoch: int | None,
     max_age_seconds: int,
+    verified_agent_ref: str | None = None,
+    verified_provider_ref: str | None = None,
+    verified_executor_instance_ref: str | None = None,
 ) -> CredentialPossessionVerificationFact:
     return CredentialPossessionVerificationFact(
         status=status,
@@ -379,6 +388,9 @@ def _fact(
         issued_at_epoch=issued_at_epoch,
         observed_at_epoch=observed_at_epoch,
         max_age_seconds=max_age_seconds,
+        verified_agent_ref=verified_agent_ref,
+        verified_provider_ref=verified_provider_ref,
+        verified_executor_instance_ref=verified_executor_instance_ref,
     )
 
 

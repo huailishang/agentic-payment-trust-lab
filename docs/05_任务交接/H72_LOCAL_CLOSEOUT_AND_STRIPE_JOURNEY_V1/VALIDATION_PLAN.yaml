@@ -1,0 +1,231 @@
+{
+  "schema": "evaluator-executor-validation-plan/v1",
+  "task_id": "H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1",
+  "checks": [
+    {
+      "id": "VP-01",
+      "ac": [
+        "AC-02"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1/CHECK.py",
+        "environment"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-02",
+      "ac": [
+        "AC-01",
+        "AC-10"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1/CHECK.py",
+        "preservation"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-03",
+      "ac": [
+        "AC-01"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H71R2_CAPTURE_FINALIZATION_GATE_REPAIR_V1/CHECK.py",
+        "artifacts"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-04",
+      "ac": [
+        "AC-02",
+        "AC-11"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H71R2_CAPTURE_FINALIZATION_GATE_REPAIR_V1/PROBES_LEGACY.py"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-05",
+      "ac": [
+        "AC-02",
+        "AC-11"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H71R2_CAPTURE_FINALIZATION_GATE_REPAIR_V1/PROBES_LIFECYCLE.py"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-06",
+      "ac": [
+        "AC-02",
+        "AC-04",
+        "AC-11"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H68R_STRIPE_CHECKOUT_LOCAL_TRUST_REPAIR_V1/CHECK.py",
+        "safety"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-07",
+      "ac": [
+        "AC-02",
+        "AC-11"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H68R_STRIPE_CHECKOUT_LOCAL_TRUST_REPAIR_V1/CHECK.py",
+        "regressions"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-08",
+      "ac": [
+        "AC-02",
+        "AC-10"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1/CHECK.py",
+        "p0-receipt"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-09",
+      "ac": [
+        "AC-03"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1/CHECK.py",
+        "qualification"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-10",
+      "ac": [
+        "AC-04"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1/CHECK.py",
+        "governance"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-11",
+      "ac": [
+        "AC-05",
+        "AC-06",
+        "AC-07"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1/CHECK.py",
+        "journeys"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-12",
+      "ac": [
+        "AC-08"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1/CHECK.py",
+        "notifications"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-13",
+      "ac": [
+        "AC-09"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1/CHECK.py",
+        "provider-audit"
+      ],
+      "evaluator_command": [
+        "python",
+        "docs/05_任务交接/H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1/OBSERVE.py",
+        "--role",
+        "evaluator",
+        "--read-only"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-14",
+      "ac": [
+        "AC-10"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1/CHECK.py",
+        "budget-privacy"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    },
+    {
+      "id": "VP-15",
+      "ac": [
+        "AC-11",
+        "AC-12"
+      ],
+      "cwd": ".",
+      "command": [
+        "python",
+        "docs/05_任务交接/H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1/CHECK.py",
+        "summary"
+      ],
+      "expected_exit_code": 0,
+      "mandatory": true
+    }
+  ]
+}

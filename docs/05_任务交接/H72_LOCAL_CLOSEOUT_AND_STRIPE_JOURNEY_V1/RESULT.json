@@ -1,0 +1,94 @@
+{
+  "schema": "h72-executor-result/v1",
+  "task_id": "H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1",
+  "recorded_at_utc": "2026-11-15T08:44:03.738119+00:00",
+  "executor_status": "BLOCKED",
+  "outcome": "EXECUTION_FAILED",
+  "reason_code": "FIRST_REAL_N01_URL_FRAGMENT_REJECTED_THEN_FIXED_BUT_SINGLE_LISTENER_BUDGET_CONSUMED",
+  "baseline_head": "c6c617c9e20e227c7bfe967cc86ed9a102034036",
+  "external_qualification": {
+    "frozen_official_cli": "PASS",
+    "anonymous_challenge_posts": 1,
+    "anonymous_provision_posts": 1,
+    "stripe_test_credentials": "PASS_PRIVATE",
+    "initial_provider_session_list_http": 200,
+    "native_chrome": "PASS",
+    "local_merchant": "PASS",
+    "real_cli_webhook_listener_ready": true,
+    "test_webhook_signing_secret_private": true,
+    "actual_webhook_received": false
+  },
+  "journeys": {
+    "N01": {
+      "status": "PARTIAL_REAL_EXTERNAL_SESSION_OPEN_UNPAID",
+      "sessions_created": 1,
+      "session_id_sha256": "52bfe0c5680193d1ca12bf78a3572e7d4e188f0932f0cc2607ee545c9fe1d79a",
+      "payment_submissions": 0,
+      "success_delivery_receipts": 0,
+      "patched_url_validation": "PASS"
+    },
+    "C01": {
+      "status": "NOT_EXECUTED_DEPENDENCY"
+    },
+    "R01": {
+      "status": "NOT_EXECUTED_DEPENDENCY"
+    },
+    "D01": {
+      "status": "NOT_EXECUTED_DEPENDENCY"
+    }
+  },
+  "before_qualified_journeys": 0,
+  "after_qualified_journeys": 0,
+  "real_provider_readback": {
+    "original_session_http": 200,
+    "status": "open",
+    "payment_status": "unpaid",
+    "test_mode": true,
+    "currency": "usd",
+    "amount_minor": 100,
+    "payment_intents_list_count": 0,
+    "charges_list_count": 0
+  },
+  "local_validation": {
+    "true_entrypoint_negative_tests": 16,
+    "new_url_safety_tests": 6,
+    "existing_safety": 9,
+    "regression_tests": 74,
+    "legacy_capture": 11,
+    "lifecycle": 9,
+    "original_p0_receipt_sha256": "1a0fef1472fe82206c6e57b072da66181dad02b4f6d6d273c9b60982e101483d",
+    "pr1_sha256": "f2aa72bb48bc653e0db76a732ad95b551c70af4ae7eaea40440be71955f7c93d",
+    "pr2_sha256": "6974ad06b5b7964669d05a84d7ff63af9853154248bd049442688a904f17d4dc",
+    "pr3_sha256": "4b402a3a21fe7a0985a9c12b5c2015ea8583d61dfb7c26a4b434767858e753d0"
+  },
+  "resources": {
+    "total_active_minutes_upper_bound": 61.17,
+    "api_live": 4,
+    "api_executor_read": 4,
+    "api_evaluator_read": 0,
+    "cli_http": 2,
+    "cli_bytes": 11929882,
+    "cli_transfer_attempts": 1,
+    "browser_actions": 1,
+    "checkout_sessions_created": 1,
+    "payment_submissions": 0,
+    "merchant_starts": 1,
+    "listener_starts": 1,
+    "merchant_running": false,
+    "listener_running": false,
+    "ledger_rows": 28,
+    "resource_rows": 14
+  },
+  "formal_l2": "NOT_RUN_UNMET_MANDATORY_JOURNEYS",
+  "independent_evaluator_l3": "NOT_RUN",
+  "requirements_to_resume": [
+    "Amend the single CLI listener start limit: original 1/1 consumed, require >=1 additional",
+    "Amend merchant start total from 2 to at least 3, to allow N01 resume and R01 real restart",
+    "Read original session status before any browser/payment; do not create second N01 session",
+    "If original N01 expires, decide whether any new session budget and contract change is allowed",
+    "Retain reserved evaluator independent L3 after complete L2; no fake Gate"
+  ],
+  "commit": false,
+  "push": false,
+  "secrets_or_checkout_urls_in_repo": false
+}

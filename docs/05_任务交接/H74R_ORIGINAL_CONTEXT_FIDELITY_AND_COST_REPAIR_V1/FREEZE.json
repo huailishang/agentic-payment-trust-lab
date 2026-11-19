@@ -1,0 +1,31 @@
+{
+  "task_id": "H74R_ORIGINAL_CONTEXT_FIDELITY_AND_COST_REPAIR_V1",
+  "at_utc": "2026-11-16T06:50:29.671434+00:00",
+  "files": {
+    "BASELINE.json": "ab910a8b595bb4b1b7154b9b4ea331c8416f46ebaa2566532f9462fb09d65da1",
+    "CHECK.py": "7cee290b22c5303feef0032ab763867b7a2d7d523c1bc90281579fafb3adb302",
+    "CONTRACT.md": "7bbea0c18206bacfab533206e5981fbf2961cd50e509fe8502fa96b5604b377d",
+    "evidence/preparation/DIFF_CHECK.stderr.log": "e8627e26c7a697a4a5d76524ad04add10a3a229fbe45bec2baa190c890ea3ac4",
+    "evidence/preparation/DIFF_CHECK.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/preparation/DOCUMENT_VALIDATOR.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/preparation/DOCUMENT_VALIDATOR.stdout.log": "bc32c85ec78d2448a592c80347ce6857654cba96d2d9b6a5d6f13a0d7875c591",
+    "evidence/preparation/READINESS.json": "e655b4a1a43f1c7738f9a6a6f46315adb56de2341646cca232efe54c2d63e42f",
+    "EXECUTOR_START.md": "a97021a1408b4c7ed0a6f70e21b108765fcd7014ba174404fa0c99976a5b7d20",
+    "HOLDOUT.py": "636dc8bb9984c4688c44e16ccb71049c2253aa73f87b8fc59521a3dbcc4dcfbd",
+    "PREPARATION.md": "57ab945b9c76795c94a58ae221c6133a3bdbac2b79d588b2747feb148406fcbe",
+    "PREPARE.py": "12de947f3e68e4fb8154ec0e697d7ed475e5c5d32c35f59fff8f13b2b2fefa1f",
+    "references/before_repair/CURRENT.md": "c6a91fb6716c5e5d858d350665d8bec36e15353176521a0cc5185cd1e392f69f",
+    "references/before_repair/PROJECT_BOTTLENECK_MAP.md": "37fbaa4b834f8e07ddd607e68437418d9b2dbe59cc80364dcbd4e46e8883dc0d",
+    "references/before_repair/REMOTE_HANDOFF.md": "ddbaedc7d4267950bd6b915e5202a36639f03bc4d9cafdd94ccab800d6f03750",
+    "references/rejected_source/src/agentic_payment_experiment/adapters/stripe_checkout.py": "347f4c3f9ad8a4f2020490057edb83f34a4887ab9bac4c2868459e2e6e3c399d",
+    "references/rejected_source/src/agentic_payment_experiment/stripe_authority_context.py": "fbd5648d0d6cb0abb4175c58f2749525b1cf7a10d46190718375a54c4ad14743",
+    "references/rejected_source/src/agentic_payment_experiment/stripe_checkout_lab.py": "28ca8b113f5bf170ea7220f14b4a2d4620c1653d4fb1494f5a11a13e7631af76",
+    "references/rejected_source/tests/test_stripe_authority_context.py": "031ff6ad687ea9006c8e431fef39440ef7c355b3f98ae2c5db7ace3423804cce",
+    "runtime/userbase/Python312/site-packages/tests/__init__.py": "b6024584b85de29b6d0156378773ab5504d562c2c1914415ea52892ce39c2d29",
+    "VALIDATION_PLAN.yaml": "9709164a8238a8c1fe54f9f830b22de3e6988003deada1f277c8bfdad4f6aa41",
+    "evidence/preparation/FINALIZE.py": "c6e5f3c32ea24b130f62720d6589b5f1ed0871bb8f3aab2ce140bc23997bb2b0",
+    "evidence/preparation/FIRST_FREEZE.before.json": "dbdf139c3bc9c2dba84ce2747fd609c194f258c172b4c01c04f8795e076ccda8",
+    "evidence/preparation/CLOSE.json": "9155f3b2b48ccbc8b5e82a5465965c623e55c3648cab6464cb6add49274b465b"
+  },
+  "finalized_at_utc": "2026-11-16T06:52:55.700021+00:00"
+}

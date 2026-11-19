@@ -1,0 +1,40 @@
+{
+  "schema": "h77r2-initial-source/v1",
+  "files": {
+    "AUDIT.py": {
+      "source": "docs/05_任务交接/H77R_NATIVE_PATH_CALLER_REPAIR_V1/AUDIT.py",
+      "initial_sha256": "83cfd98d3c65fbd2b408d8dc93731331af001aef802fac8b2011cf89aba955a1",
+      "executor_mutable": false
+    },
+    "CHECK.py": {
+      "source": "docs/05_任务交接/H77R_NATIVE_PATH_CALLER_REPAIR_V1/CHECK.py",
+      "initial_sha256": "246643f7c1ad832bcf92ff431d9caa9574e2c80a9bccdc3f3af8c254a0a76ea2",
+      "executor_mutable": false
+    },
+    "BOOTSTRAP.py": {
+      "source": "docs/05_任务交接/H77R_NATIVE_PATH_CALLER_REPAIR_V1/BOOTSTRAP.py",
+      "initial_sha256": "be3b26ff38eca1d3768a718b0035f16c5052f51c0d2e1e3d5d2e228ef82113d7",
+      "executor_mutable": false
+    },
+    "RUN.py": {
+      "source": "docs/05_任务交接/H77R_NATIVE_PATH_CALLER_REPAIR_V1/RUN.py",
+      "initial_sha256": "c211bd9b6ace4dd50580a32acfcacd6b6650b2811a38b1cdd522da5d6d6b4eb9",
+      "executor_mutable": false
+    },
+    "WORKLOAD.py": {
+      "source": "docs/05_任务交接/H77R_NATIVE_PATH_CALLER_REPAIR_V1/WORKLOAD.py",
+      "initial_sha256": "744b94958df8f0f015ef5049ed19ae76c3ea9869a27e8fa3d304e601c9f466b1",
+      "executor_mutable": true
+    },
+    "TASK_TESTS.py": {
+      "source": "docs/05_任务交接/H77R_NATIVE_PATH_CALLER_REPAIR_V1/TASK_TESTS.py",
+      "initial_sha256": "6f6b44bba4873fe04c8eb43425f27645cf3b43f714c140f9c081dd47d472d4b2",
+      "executor_mutable": true
+    },
+    "SEAM_CHECK.py": {
+      "source": "docs/05_任务交接/H77R_NATIVE_PATH_CALLER_REPAIR_V1/SEAM_CHECK.py",
+      "initial_sha256": "29d8d326bc1e8a0eedeb3b81fbc7d746cbea39c9163c084c2997bcdc2ca0ca2a",
+      "executor_mutable": false
+    }
+  }
+}

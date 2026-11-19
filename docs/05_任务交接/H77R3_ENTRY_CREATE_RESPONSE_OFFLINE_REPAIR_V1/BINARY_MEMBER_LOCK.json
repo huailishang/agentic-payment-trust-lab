@@ -1,0 +1,22 @@
+{
+  "schema": "h77r2-exact-members/v1",
+  "archive_sha256": "7bcf5e167151a1fc58293768462b44e155ba8784214582aefa6adf18c633d1d5",
+  "archive_size": 70187551,
+  "spire_version": "1.16.0",
+  "binaries": {
+    "spire-server": {
+      "archive_member": "spire-1.16.0/bin/spire-server",
+      "size": 179378008,
+      "sha256": "459983629a053f81901491425f465848f1894d678a4747e8906f6b4eada392d9"
+    },
+    "spire-agent": {
+      "archive_member": "spire-1.16.0/bin/spire-agent",
+      "size": 78437656,
+      "sha256": "b5a35df17f4491c55e5f37d2e34e35bfa81f4199311c9932cd6b174145ced9ce"
+    }
+  },
+  "total_binary_bytes": 257815664,
+  "source_catalog": "docs/05_任务交接/H77R_NATIVE_PATH_CALLER_REPAIR_V1/evidence/evaluator_review/ARCHIVE_CATALOG.json",
+  "source_catalog_sha256": "871f7a3fd75d6e7e7beb8f3f1b92547aec5b7ab3a28bb183db861b1dcf166082",
+  "no_floating_size_ceiling": true
+}

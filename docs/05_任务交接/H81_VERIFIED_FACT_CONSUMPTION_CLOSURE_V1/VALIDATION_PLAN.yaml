@@ -1,0 +1,73 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: H81_VERIFIED_FACT_CONSUMPTION_CLOSURE_V1
+checks:
+- id: VP-01
+  ac:
+  - AC-01
+  cwd: .
+  command:
+  - python
+  - -B
+  - docs/05_任务交接/H81_VERIFIED_FACT_CONSUMPTION_CLOSURE_V1/CHECK.py
+  - preservation
+  expected_exit_code: 0
+  mandatory: true
+- id: VP-02
+  ac:
+  - AC-02
+  - AC-03
+  cwd: .
+  command:
+  - python
+  - -B
+  - docs/05_任务交接/H81_VERIFIED_FACT_CONSUMPTION_CLOSURE_V1/COMPARE.py
+  - --phase
+  - executor
+  expected_exit_code: 0
+  mandatory: true
+  evaluator_command:
+  - python
+  - -B
+  - docs/05_任务交接/H81_VERIFIED_FACT_CONSUMPTION_CLOSURE_V1/COMPARE.py
+  - --phase
+  - evaluator
+- id: VP-03
+  ac:
+  - AC-04
+  cwd: .
+  command:
+  - python
+  - -B
+  - docs/05_任务交接/H81_VERIFIED_FACT_CONSUMPTION_CLOSURE_V1/CHECK.py
+  - regressions
+  expected_exit_code: 0
+  mandatory: true
+- id: VP-04
+  ac:
+  - AC-01
+  cwd: .
+  command:
+  - python
+  - -B
+  - docs/05_任务交接/H81_VERIFIED_FACT_CONSUMPTION_CLOSURE_V1/CHECK.py
+  - preservation
+  expected_exit_code: 0
+  mandatory: true
+- id: VP-05
+  ac:
+  - AC-05
+  cwd: .
+  command:
+  - python
+  - -B
+  - docs/05_任务交接/H81_VERIFIED_FACT_CONSUMPTION_CLOSURE_V1/EVIDENCE.py
+  - --phase
+  - executor
+  expected_exit_code: 0
+  mandatory: true
+  evaluator_command:
+  - python
+  - -B
+  - docs/05_任务交接/H81_VERIFIED_FACT_CONSUMPTION_CLOSURE_V1/EVIDENCE.py
+  - --phase
+  - evaluator

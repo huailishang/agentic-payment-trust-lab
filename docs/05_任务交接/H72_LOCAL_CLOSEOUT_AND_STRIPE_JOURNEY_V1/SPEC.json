@@ -1,0 +1,210 @@
+{
+  "schema": "h72-combined-execution-spec/v1",
+  "task_id": "H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1",
+  "hypothesis_id": "H-72",
+  "api_version": "2026-10-28.endive",
+  "status": "CONTRACT_FROZEN_AUTHORIZED",
+  "boundary": "CONTROLLED_MERCHANT_EXTERNAL_STRIPE_TEST",
+  "resource_file": "RESOURCE.txt",
+  "currency": "usd",
+  "amount_minor": 100,
+  "phases": [
+    "P0_LOCAL_CLOSEOUT",
+    "P1_QUALIFICATION",
+    "P2_N01",
+    "P3_C01",
+    "P4_R01",
+    "P5_D01",
+    "P6_L2",
+    "P7_L3"
+  ],
+  "outcomes": [
+    "COMPLETE",
+    "QUALIFICATION_LIMIT",
+    "LOCAL_FAILED",
+    "EXECUTION_FAILED",
+    "SAFETY_STOP",
+    "AUTHORIZATION_PENDING"
+  ],
+  "budgets": {
+    "active_minutes": 480,
+    "wall_hours": 24,
+    "local_closeout_active_minutes": 60,
+    "local_closeout_wall_minutes": 90,
+    "implementation_approaches": 2,
+    "local_closeout_implementation_approaches": 1,
+    "l2_attempts": 2,
+    "l3_attempts": 1,
+    "anonymous_provision_flows": 1,
+    "challenge_posts": 1,
+    "provision_posts": 1,
+    "checkout_sessions": 4,
+    "payment_submissions": 3,
+    "successful_payments": 3,
+    "total_amount_minor": 300,
+    "controlled_api_calls": 120,
+    "live_api_calls": 80,
+    "executor_readback_calls": 20,
+    "evaluator_readback_calls": 20,
+    "public_reference_http": 24,
+    "public_reference_bytes": 8388608,
+    "browser_actions": 80,
+    "download_http": 12,
+    "download_transfer_attempts": 4,
+    "download_received_bytes": 67108864,
+    "merchant_process_starts": 2,
+    "merchant_process_total_minutes": 180,
+    "listener_process_starts": 1,
+    "listener_total_minutes": 120,
+    "per_request_timeout_seconds": 60,
+    "recommended_request_timeout_seconds": 30,
+    "new_python_packages": 0,
+    "new_browsers": 0,
+    "external_model_calls": 0,
+    "real_money_payments": 0,
+    "commits": 0,
+    "pushes": 0
+  },
+  "accounting": {
+    "provision_posts": "Included in live_api_calls, not additive",
+    "retries_and_failures": "Count before scheduling and persist each terminal outcome",
+    "browser_subresources": "Record observable count; unknown remains UNKNOWN, separate from controlled server API budget",
+    "download_redirects": "Each HTTP request and partial body counts",
+    "authorization_expiry": "Absolute grant timestamp plus 24 hours; no automatic renewal",
+    "run_expiry": "Earlier of authorization expiry or first Executor BEGIN plus 24 hours",
+    "p0_limits": "Sub-budgets within total, not additive",
+    "formal_gates": "P0 captured diagnostics; 2 total end-of-package L2 and 1 final independent L3; no old task gate budget inherited",
+    "minor_revisions": "In-scope fixes may repeat within time/cost limits; two approaches means materially different mechanisms, not each edit; preserve measured attempts and source hashes"
+  },
+  "retry_policy": {
+    "read_only_max_attempts_per_unit": 4,
+    "download_max_transfer_attempts": 4,
+    "idempotent_post_max_attempts": 2,
+    "provision_max_actual_dispatches": 1,
+    "max_parallelism": 1,
+    "transient_failures": ["DNS_OR_CONNECT_TIMEOUT", "CONNECTION_RESET", "READ_TIMEOUT", "INCOMPLETE_BODY", "HTTP_429", "HTTP_5XX"],
+    "backoff_seconds": [2, 5, 10],
+    "honor_retry_after": true,
+    "hard_failures": ["HTTP_401", "HTTP_403", "TLS_CERTIFICATE_VALIDATION", "PAYMENT_STATUS_UNKNOWN", "WRONG_ACCOUNT_OR_MODE", "SECURITY_COUNTEREXAMPLE"],
+    "hard_failures_scope": "No blind retry of the failed unit; PAYMENT_STATUS_UNKNOWN forbids another write/payment submission and requires read recovery of the original object, rather than prohibiting that recovery",
+    "success_sufficiency": "Stop retrying a unit once its required verified evidence is complete; never repeat a completed payment or recreate unknown state",
+    "budget_inheritance": "All attempts use existing role/time/byte budgets, without resets"
+  },
+  "executor_autonomy": {
+    "document": "AUTONOMY.md",
+    "equivalent_existing_tool_routes": true,
+    "reorder_independent_steps": true,
+    "repair_in_scope_without_reconfirmation": true,
+    "hard_dependencies": ["P0_BEFORE_ANY_EXTERNAL_ACTION", "QUALIFICATION_BEFORE_FIRST_PAYMENT", "N01_BEFORE_FAILURE_JOURNEYS", "ACTUAL_PAYMENT_BEFORE_RECOVERY", "L2_BEFORE_ACCEPTANCE_AND_L3"],
+    "forbidden_changes": ["HYPOTHESIS", "AC_SEMANTICS", "SOURCE_OR_API_VERSION", "FINANCIAL_OR_ENVIRONMENT_LIMIT", "SECURITY_RULES", "AUTHORIZATION_SCOPE", "HISTORICAL_EVIDENCE"]
+  },
+  "synthetic_contact": "h72-checkout-lab@example.invalid",
+  "cases": [
+    {
+      "id": "N01",
+      "kind": "NORMAL",
+      "checkout_sessions": 1,
+      "successful_payments": 1,
+      "success_deliveries": 1,
+      "min_delivery_attempts": 1
+    },
+    {
+      "id": "C01",
+      "kind": "CANCEL",
+      "checkout_sessions": 1,
+      "successful_payments": 0,
+      "success_deliveries": 0,
+      "min_delivery_attempts": 0
+    },
+    {
+      "id": "R01",
+      "kind": "PAYMENT_UNKNOWN_RECOVERY",
+      "checkout_sessions": 1,
+      "successful_payments": 1,
+      "success_deliveries": 1,
+      "min_delivery_attempts": 1,
+      "merchant_restarts": 1
+    },
+    {
+      "id": "D01",
+      "kind": "DELIVERY_RECOVERY",
+      "checkout_sessions": 1,
+      "successful_payments": 1,
+      "success_deliveries": 1,
+      "min_delivery_attempts": 2,
+      "replay_actual_verified_event": true
+    }
+  ],
+  "allowed_product_files": [
+    "src/agentic_payment_experiment/adapters/stripe_checkout.py",
+    "src/agentic_payment_experiment/stripe_checkout_lab.py",
+    "scripts/validation/stripe_checkout_lab.py"
+  ],
+  "allowed_new_test": "tests/test_h72_stripe_journey.py",
+  "original_test_modules": [
+    "tests.test_stripe_checkout_adapter",
+    "tests.test_stripe_checkout_lab",
+    "tests.test_order_validation",
+    "tests.test_payment_recovery",
+    "tests.test_lifecycle",
+    "tests.trusted_execution.test_governed_action",
+    "tests.trusted_execution.test_context_policy"
+  ],
+  "required_actual_test_counts": {
+    "safety": 9,
+    "regressions": 74,
+    "legacy_capture": 11,
+    "capture_lifecycle": 9
+  },
+  "local_gate_inheritance": {
+    "previous_task": "H71R3_CONDA_AGENT_TEST_IMPORT_ISOLATION_V1",
+    "previous_execution_status": "UNEXECUTED",
+    "protection": "New baseline and current-task checker; never reuse old router/scope checks blindly",
+    "history_verdicts": "No rehabilitation or overwritten Gate"
+  },
+  "qualification_limit": {
+    "allowed_phase": "P1_QUALIFICATION",
+    "requires_p0_pass": true,
+    "completed_journeys": 0,
+    "journey_status": "NOT_EXECUTED_DEPENDENCY",
+    "partial_resources_inventory_required": true,
+    "forbidden_causes": [
+      "ordinary_repairable_task_script_error",
+      "safety_counterexample",
+      "missing_human_authorization",
+      "later_business_failure"
+    ],
+    "project_impact": "INCONCLUSIVE"
+  },
+  "external_requirement_impact": {
+    "profile": "PCAC-AGENTPAY",
+    "requirement_ids": [
+      "PCAC-06",
+      "PCAC-07",
+      "PCAC-08",
+      "PCAC-09",
+      "PCAC-11",
+      "PCAC-12",
+      "PCAC-15",
+      "PCAC-18",
+      "PCAC-20"
+    ],
+    "applicability": [
+      "CORE",
+      "ADAPTER",
+      "EVIDENCE_ONLY"
+    ],
+    "maturity_scope": "New H72 four-journey composite slice only, not entire capability families",
+    "maturity_before": "M0",
+    "maturity_after": "M0",
+    "target_maturity": "M4",
+    "test_evidence": "Frozen 15-check plan, original 9/74/11/9 and current-scope negative checks",
+    "trace_evidence": "Future stage evidence, provider readback, raw notifications and unique delivery receipts",
+    "residual_risk": [
+      "Real actor authenticity unknown",
+      "Production credential governance unknown",
+      "No real settlement or merchant adoption claim",
+      "Security control increment NOT_MEASURED"
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "h77r-copy/v1",
+  "files": {
+    "AUDIT.py": {
+      "source": "docs/05_任务交接/H77_WSL_REAL_SOURCE_INDEPENDENT_CLOSURE_V1/AUDIT.py",
+      "source_sha256": "83cfd98d3c65fbd2b408d8dc93731331af001aef802fac8b2011cf89aba955a1",
+      "new_sha256": "83cfd98d3c65fbd2b408d8dc93731331af001aef802fac8b2011cf89aba955a1",
+      "change": "BYTE_IDENTICAL"
+    },
+    "CHECK.py": {
+      "source": "docs/05_任务交接/H77_WSL_REAL_SOURCE_INDEPENDENT_CLOSURE_V1/CHECK.py",
+      "source_sha256": "9f0931f000628c741b7fffe33aee4f3900c01ad859f945cc70a6ca19bdeddc93",
+      "new_sha256": "246643f7c1ad832bcf92ff431d9caa9574e2c80a9bccdc3f3af8c254a0a76ea2",
+      "change": "one caller --out expression .as_posix()"
+    },
+    "BOOTSTRAP.py": {
+      "source": "docs/05_任务交接/H77_WSL_REAL_SOURCE_INDEPENDENT_CLOSURE_V1/BOOTSTRAP.py",
+      "source_sha256": "be3b26ff38eca1d3768a718b0035f16c5052f51c0d2e1e3d5d2e228ef82113d7",
+      "new_sha256": "be3b26ff38eca1d3768a718b0035f16c5052f51c0d2e1e3d5d2e228ef82113d7",
+      "change": "BYTE_IDENTICAL"
+    },
+    "RUN.py": {
+      "source": "docs/05_任务交接/H77_WSL_REAL_SOURCE_INDEPENDENT_CLOSURE_V1/RUN.py",
+      "source_sha256": "c211bd9b6ace4dd50580a32acfcacd6b6650b2811a38b1cdd522da5d6d6b4eb9",
+      "new_sha256": "c211bd9b6ace4dd50580a32acfcacd6b6650b2811a38b1cdd522da5d6d6b4eb9",
+      "change": "BYTE_IDENTICAL"
+    },
+    "WORKLOAD.py": {
+      "source": "docs/05_任务交接/H77_WSL_REAL_SOURCE_INDEPENDENT_CLOSURE_V1/WORKLOAD.py",
+      "source_sha256": "744b94958df8f0f015ef5049ed19ae76c3ea9869a27e8fa3d304e601c9f466b1",
+      "new_sha256": "744b94958df8f0f015ef5049ed19ae76c3ea9869a27e8fa3d304e601c9f466b1",
+      "change": "BYTE_IDENTICAL"
+    },
+    "TASK_TESTS.py": {
+      "source": "docs/05_任务交接/H77_WSL_REAL_SOURCE_INDEPENDENT_CLOSURE_V1/TASK_TESTS.py",
+      "source_sha256": "6f6b44bba4873fe04c8eb43425f27645cf3b43f714c140f9c081dd47d472d4b2",
+      "new_sha256": "6f6b44bba4873fe04c8eb43425f27645cf3b43f714c140f9c081dd47d472d4b2",
+      "change": "BYTE_IDENTICAL"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+# H69落盘与执行入口
+
+本包尚未执行外部动作。Executor在本包RUN.py内实现合同规定的有界资格探测；不改产品或其它任务。SPEC是字段清单；公私材料分别写入，禁止把原始创建输出/签名秘密打印到工具。
+
+公开RESULT字段严格等于SPEC.result_fields。creation取NOT_SENT/CREATED/FAILED/UNKNOWN；account_ref只有CREATED时才为原account_id的SHA-256，其余null。reason_code为大写英文/数字/下划线诊断码，不含HTTP正文。所有会话/付款/浏览器计数固定0。
+
+私有根目录由H69_PRIVATE_DIR指定且必须在仓库外；路径不写公开材料。SNAPSHOT.json含schema=h69-qualification-private/v1、同run_id、creation、http数组、listener。provision成功后CREDENTIALS.json仅记录本次key/account_id，须与原生provision响应一致；不得读已有账户。SNAPSHOT原始字节摘要写公开RESULT。
+
+http每条字段见SPEC；challenge/provision还必须提供request_body_file。body_file/body_sha256为实际HTTP响应文件及字节摘要；传输失败二者null、status=null、error取TIMEOUT/DNS/TLS/NETWORK，保留对应私有执行日志。HTTP非200保留实际正文；不通过解析错误丢失它。每阶段固定URL，记录UTC起止。只允许真实现场初始账户GET进入该数组，L2/L3回查另存，不改已封存SNAPSHOT。
+
+若宿主等前置条件失败且未发任何HTTP，stage=preflight、creation=NOT_SENT，http=[]，额外preflight_file指向包含run_id/eligible=false及实际宿主探针原文的私有JSON；不能只凭公开布尔值认定原因。
+
+listener字段见SPEC，并在attempted=true时额外记录receiver_stopped=true和archive_file，后者指向私有原始ZIP文件，需复算实际大小/字节SHA。stdout_file/stderr_file为原始私有文件，不能去掉原监听READY和签名秘密后再声称原文；CHECK只输出固定结论。按账本记录两个任务进程起止/退出，保留pid到进程/配置的关联供L3审阅，不碰其它进程。未运行时attempted/ready=false，相关引用可null。
+
+账本固定seq/event/attempt_id/kind/at；END加status，取SUCCEEDED/FAILED/INPUT_LIMIT/UNKNOWN。kind只允许active_work、implementation、l2、l3、challenge、provision、account_get、executor_readback、evaluator_readback、download、listener、local_server。所有物质尝试在动作前BEGIN，动作后END；download END必须有实际bytes。执行期间允许active_work/L2/L3开着，其它尝试必须在验收前关闭；最终CHECK budget --closed。
+
+先CHECK integrity，追加active_work/implementation后编写RUN与便宜离线检查；实现关闭后再按合同执行一次现场阶段。正式L2用公共runner --mode executor，出证据后REPORT提交。Evaluator用全新H69_EVALUATOR_NONCE（至少32字符）运行同计划evaluator模式；只GET本账户，不创建第二个环境。未创建或写结果未知时只复核原始失败接线，不重发写请求。
+
+任何失败都保留。INPUT_LIMIT是测量状态；验收通过只说明该状态有足够证据，并不把失败平台写成可用。后续托管结账与真实通知均未测。

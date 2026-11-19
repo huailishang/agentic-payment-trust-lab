@@ -1,0 +1,19 @@
+{
+  "schema": "h76-technical-content-freeze/v1",
+  "authority": "OWNER_APPROVED_2026-11-16T11:59:25Z; execution permitted within AUTHORIZATION.md",
+  "contract_state": "CONTRACT_FROZEN",
+  "files": {
+    "CONTRACT.md": "14bf19857d9f421f98839d826e38ea458532cdef73c2f75b4a4ee5d384ad58cd",
+    "RUNTIME_PROTOCOL.md": "284af84b7e9f3e8c0b1520bef02ea4c54efb71e8a8e7b777047213a01a3a865a",
+    "REVIEW_PROCEDURE.md": "9b8a235003491879cb43bc6a11e642fd9c5e7cf9e403ed3f565b7df79e511969",
+    "NEGATIVE_ORACLES.json": "754a86aadcfea24b8f2f052c2ba73ec2cd7e445c548505b5372bb6dfcea95cee",
+    "VALIDATION_PLAN.yaml": "3feeff8ef97d8d4aeec10dc00f04f680c0d71fc648f138146e8548df12253ffb",
+    "ASSET_LOCK.json": "9aa45b2f1823f6aa9a90cc3665acf61cf15f09b411189e51cb9d2524622227ae",
+    "requirements.lock": "eb5881b75a79662db7b4127a52326bb9dd810c963818e4c554d1846e1ff839b8",
+    "CHECK.py": "6302e2e5696d99c92f6775a76eda921ff210a7d32e01e903ee1ffdeb4b758f16",
+    "BOOTSTRAP.py": "04ac24f08d280cfd4d9dfb59e18580ae36d2b529bf99fe7414d405065f0485f0",
+    "DESIGN_CHECK.py": "f6c8dd2f1a2abbdbcc8651601f755aa27f2337da715447b8eabaf970fdf110d2",
+    "AUTHORIZATION_REQUEST.md": "d51dbf70151d704be05166d794b33eeb123204bee2ecf61bd1fca29e8f65c7ae",
+    "BASELINE.json": "992da46bd52b7b721e4fac8348437abbe9beb2ecbc401438f1307f12f3b167d2"
+  }
+}

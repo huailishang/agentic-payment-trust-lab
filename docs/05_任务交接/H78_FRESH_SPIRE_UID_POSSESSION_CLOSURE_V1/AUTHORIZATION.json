@@ -1,0 +1,32 @@
+{
+  "schema": "h78-explicit-authority/v1",
+  "task_id": "H78_FRESH_SPIRE_UID_POSSESSION_CLOSURE_V1",
+  "status": "GRANTED",
+  "source": "2026-11-17 当前chat：Human紧接上一条列举H78精确范围的确认问题回复。",
+  "owner_quote": "批准",
+  "flags": {
+    "authorization_existing_wsl": true,
+    "authorization_local_service": true,
+    "authorization_ephemeral_test_credentials": true
+  },
+  "scope": {
+    "distribution": "Ubuntu",
+    "spire_version": "1.16.0",
+    "executor_asset_preflights": 1,
+    "evaluator_asset_preflights": 1,
+    "executor_issuer_attempts": 0,
+    "evaluator_issuer_attempts": 1,
+    "server_starts": 1,
+    "agent_starts": 1,
+    "network": "local loopback and own Unix sockets only; no intentional external requests",
+    "downloads": 0,
+    "installs": 0,
+    "external_api_calls": 0,
+    "payments": 0,
+    "commit": false,
+    "push": false
+  },
+  "note": "Explicit new H78 grant; older failed task budgets and pre-approval records remain unchanged.",
+  "approved_question": "是否批准 H78：现有 Ubuntu WSL、双方各一次资产预检、评估者唯一一次发行（Server/Agent 各启动一次）及临时测试凭据？不下载、安装、外部请求、付款或提交推送。",
+  "approved_utc": "2026-11-17 08:15:42 UTC"
+}

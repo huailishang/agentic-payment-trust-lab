@@ -1,0 +1,69 @@
+{
+  "schema": "h71r-corrected-permission-matrix/v1",
+  "original_h71_verdict": "REJECTED",
+  "rows": [
+    {
+      "id": "account_read",
+      "observed": "H69同一匿名环境Account GET已出现403（初始、Executor、Evaluator各一次）；这是对该账户读取端点的实际拒绝观察。",
+      "documented": "Stripe keys文档说明访问范围由密钥类型及具体权限决定，不等同于对所有端点的放行保证。",
+      "unknown": "不能从Account 403推导所有资源不可读；也不能推定匿名环境的独立账户身份已被验证。",
+      "observations": []
+    },
+    {
+      "id": "checkout_required_endpoints",
+      "observed": "H71三个固定列表GET均取得HTTP 200，原文可验证完整JSON空列表(data=[])且has_more=false；三个结果及SHA256已消费，矩阵承认实际已测。",
+      "documented": "Stripe keys文档说明API密钥用于鉴权并决定资源访问权限；具体本密钥的读取能力以这三份HTTP实证为准。",
+      "unknown": "Checkout Session写入权限、支付意图创建、授权/监听/交付/真实支付均未测；列表200不保证写权限或生产支付能力。",
+      "observations": [
+        {
+          "url": "https://api.stripe.com/v1/checkout/sessions?limit=100",
+          "status": 200,
+          "body_sha256": "52327060e3d8b1209098119dc95e1a5abc9ff67a9153fc698663f2aa4b799ad6",
+          "empty": true,
+          "has_more": false
+        },
+        {
+          "url": "https://api.stripe.com/v1/payment_intents?limit=100",
+          "status": 200,
+          "body_sha256": "fd4d7e2f41cba69d122807fa0be5fd62e9b687d17c0e3c6e0fe97cbe752e56c0",
+          "empty": true,
+          "has_more": false
+        },
+        {
+          "url": "https://api.stripe.com/v1/charges?limit=100",
+          "status": 200,
+          "body_sha256": "37a0979163fe80f5416304be32d40be6771041c717fca5f385d838ef18ef51af",
+          "empty": true,
+          "has_more": false
+        }
+      ]
+    },
+    {
+      "id": "test_listener",
+      "observed": "H71由于下载输入受限，Stripe CLI与test listener没有运行，也没有监听到Webhook事件。",
+      "documented": "Stripe CLI listen文档说明可监听webhook events并转发至应用，--forward-to描述了目标URL；这是通用命令功能而非本环境资格。",
+      "unknown": "本环境是否允许CLI认证、启动监听、实际收到事件及交付回调均UNKNOWN。",
+      "observations": []
+    },
+    {
+      "id": "same_environment_binding",
+      "observed": "H69 provision与H71三GET共享原凭据上下文记录；H71原文与H69环境材料可作上下文关联。",
+      "documented": "Stripe文档说明不同key类型及权限控制API资源访问，本地上下文关联不自动构成账户身份或交易绑定证明。",
+      "unknown": "独立账户身份保证、写入和监听与该环境的真实绑定链尚未测量。",
+      "observations": []
+    }
+  ],
+  "source_notes": [
+    {
+      "claim": "Stripe keys文档正文明确API密钥用于鉴权及控制可访问资源，说明通用权限机制；并不保证某个rkcs_test_密钥拥有Checkout写入或listener权限。",
+      "source_id": "keys_documentation",
+      "quote": "Stripe uses API keys to authenticate requests from your integration and determine which Stripe resources it can access. Choose the key type that matches where your code runs and grant server-side keys only the permissions your integration needs."
+    },
+    {
+      "claim": "Stripe CLI官方listen文档正文说明CLI能监听webhook事件并转发到应用，但不能据此声称H71已实际启动listener或收到事件。",
+      "source_id": "cli_listen_documentation",
+      "quote": "Listen for [webhook events](/webhooks) and forward them to your application. Trigger and resend webhook events."
+    }
+  ],
+  "interpretation_limits": "原三GET读取已证实，仅证明单次同凭据下指定列表资源可读且列表完整为空；文档说明通用能力，不能代替当前环境实际执行、支付或监听证据。"
+}

@@ -1,0 +1,20 @@
+{
+  "schema":"h71-existing-envelope-suballocation/v1",
+  "task_id":"H71_STRIPE_EXISTING_SANDBOX_LONG_QUALIFICATION_V1",
+  "status":"GRANTED_WITHIN_EXISTING_H68_ENVELOPE",
+  "human_quote":"同意按 H68 授权范围执行",
+  "approved_at":"2026-11-12T00:52:09Z",
+  "source":"../H68_STRIPE_CHECKOUT_SANDBOX_JOURNEY_V1/AUTHORIZATION.json",
+  "original_deadline":"2026-11-13T00:59:06+00:00",
+  "decision_owner":"Evaluator",
+  "allocation":"Existing H69 credential context only; three pre-existing whitelisted list GETs, separate three-GET readbacks per actor, unused pinned CLI download/listener and isolated local browser probe; no new environment/session/payment or deadline reset.",
+  "authorization_api_call":true,
+  "authorization_install":true,
+  "authorization_local_service":true,
+  "authorization_browser_test_only":true,
+  "authorization_test_payments":false,
+  "authorization_commit":false,
+  "authorization_push":false,
+  "authorization_history_rewrite":false,
+  "current_user_preference":"Longer bounded execution package with multiple automatic steps and one final independent review; quality gates unchanged. This preference grants no new payment or identity authority."
+}

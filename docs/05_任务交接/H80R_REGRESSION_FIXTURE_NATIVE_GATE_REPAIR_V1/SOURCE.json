@@ -1,0 +1,16 @@
+{
+  "schema": "h79-captured-h78-input/v1",
+  "source_directory": "docs/05_任务交接/H78_FRESH_SPIRE_UID_POSSESSION_CLOSURE_V1/evidence/evaluator_runs/7efc9f24b12c47389c5aee779843c425",
+  "public_inputs": {
+    "RESULT.json": "d6833095964bb71739a3e018a231a1aac44decb14b1e6c576349a20a39759eb4",
+    "root.pem": "d759a3ffbf9e658a656918426fc19c154aa8c63d001471bdd106faec8cc143cc",
+    "leaf.pem": "16d01b9bfb16580c7ae1abee5df0860caa755b3a0d895e182e453711d758a9e2",
+    "payload.bin": "472e4ebed5fde952f1e5311bec4fce79cd8de09389c00adbf4ab32bbea11cb08",
+    "signature.b64": "d0cad5ff9e088febcaa3dddd17a109ab951453d26468b6787b9ee2f9b97280c2",
+    "SOURCE.json": "b5abd275317a9c2665973826e8c7dac28b1cca69d996330f0a87e88770d10d08",
+    "PUBLIC_INDEX.json": "818b6a7c5349f77804089a157062da22bccf030cc141012adcf1012ff7e13a55"
+  },
+  "source_review": "docs/05_任务交接/H78_FRESH_SPIRE_UID_POSSESSION_CLOSURE_V1/REVIEW.md",
+  "source_review_sha256": "231014fb0bd3ff79c636f9bb847ce32fba6cdd0334ad2a0225d63f5c0bda362e",
+  "time_mode": "captured observation; not current authentication"
+}

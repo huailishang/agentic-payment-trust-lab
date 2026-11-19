@@ -1,0 +1,21 @@
+{
+  "schema": "h72r2-source-attestation/v1",
+  "task_id": "H72R2_ASSERTION_AND_RECEIPT_PARITY_REPAIR_V1",
+  "created_at_utc": "2026-11-15T13:10:09.812646+00:00",
+  "baseline_sha256": "89ac9e8cfe39427b6d2f4c47aa52d31717f0bb44084996ebe660a4d12632d7b1",
+  "frozen_inputs_sha256": "6ded4e0af7de3b9b802f0ea0f639b8528ae8e8c0eae3c95c2121ee183a5b106a",
+  "source_sha256": {
+    "CHECK.py": "6889d535eccd4c1f95c08fed96d7384263c2fa8724e730c96d5a015854f23090",
+    "NATIVE.py": "251bc249ec9f002c4ef666a248ccc1011fd6e6d7c2656215d5e0bcadf65f1322",
+    "NATIVE_NEGATIVES.py": "d512309b6bd7038b89e5cf46d1a7335054acdb9d8356d832a7a3226d85bc733f",
+    "NEGATIVE_TESTS.py": "812f2644927880d9c29cb12d36408b947319c70a7ff43d50cff383683f8e3c19",
+    "HOLDOUT.py": "ecf88e802323248dee9a41b26a502cd50902e36b1d6b47ace53130ee830210e1",
+    "runtime/userbase/Python312/site-packages/tests/__init__.py": "ee26c4fd71d372b33a2ad76c2866963756e2182f310a9b8067a9e12c0523e9c5"
+  },
+  "parent_sources_overwritten": 0,
+  "new_external_actions": 0,
+  "evaluator_freeze": "BYPASSED_NOT_APPROVED",
+  "amended_at_utc": "2026-11-15T13:24:31.578840+00:00",
+  "original_attestation_sha256": "6eb393b8a48fa224e310ba2fed7e90e0fb1c925bf54c76854b5e235416004adb",
+  "reason": "owner-authorized no-code metadata reseal for second public L2"
+}

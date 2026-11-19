@@ -1,0 +1,147 @@
+{
+  "schema": "h76-asset-lock/v1",
+  "metadata_only": true,
+  "platform": "linux/amd64",
+  "observed_utc": "2026-11-16T09:14:38.432441+00:00",
+  "spire_version": "1.16.0",
+  "spire_source_commit": "872c1d55b4d5ac7fc1bf05f0760f2ca740ab37aa",
+  "public_metadata_evidence": "docs/05_任务交接/H75_REAL_AUTHORITY_SOURCE_QUALIFICATION_V1/evidence/continuation/20261116T091438Z/ASSET_METADATA.json",
+  "public_metadata_sha256": "349a92e135f23e617e558906608af014e5f86a2cc9abb062d97c86c1370e6803",
+  "files": [
+    {
+      "filename": "spire-1.16.0-linux-amd64-musl.tar.gz",
+      "url": "https://github.com/spiffe/spire/releases/download/v1.16.0/spire-1.16.0-linux-amd64-musl.tar.gz",
+      "size": 70187551,
+      "sha256": "7bcf5e167151a1fc58293768462b44e155ba8784214582aefa6adf18c633d1d5",
+      "license": "Apache-2.0",
+      "role": "issuer_agent_binaries"
+    },
+    {
+      "filename": "cryptography-50.0.2-cp311-abi3-manylinux_2_28_x86_64.whl",
+      "url": "https://files.pythonhosted.org/packages/1a/f1/b474e930c4d910328780e3940da76f5aa5cbc48ce1fc14e44d239d9ea9db/cryptography-50.0.2-cp311-abi3-manylinux_2_28_x86_64.whl",
+      "size": 4753050,
+      "sha256": "4061c0079120205fb760c58acab6443e217307dcf05e3702cf970e0689972856",
+      "license": "Apache-2.0 OR BSD-3-Clause",
+      "role": "holder_signing_dependency",
+      "package": "cryptography",
+      "version": "50.0.2"
+    },
+    {
+      "filename": "cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "url": "https://files.pythonhosted.org/packages/b1/db/dceb9dd5b231e1da801793f8acc9f3c52a7e1afe40bb1aae37e02b0faad5/cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "size": 221822,
+      "sha256": "c1453022f490d2459a11819d83ad1d586e9ff65a12ac3e705ffebd46d3685dcf",
+      "license": "MIT-0",
+      "role": "holder_signing_dependency",
+      "package": "cffi",
+      "version": "2.1.1"
+    },
+    {
+      "filename": "pycparser-3.12-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/b6/ae/315bbeee126a769cbde43cf4908acb4b40408d8bf8bbf334dd7368d8dadf/pycparser-3.12-py3-none-any.whl",
+      "size": 62600,
+      "sha256": "a076f3f489b39b43ed13563a1dafe42447445bec2e294154ec5c57fcdda4c85e",
+      "license": "BSD-3-Clause",
+      "role": "holder_signing_dependency",
+      "package": "pycparser",
+      "version": "3.12"
+    }
+  ],
+  "python_image": {
+    "tag": "python:3.12.13-slim-bookworm",
+    "index_digest": "sha256:4766d8b510c428e595d74b9cc5bbb2fae8e26316fffb4adc89908d79aacd58a2",
+    "linux_amd64_digest": "sha256:6e13e65c55e33adf203d77ee371cf8bf5d81bd4902ef07565721f46bf44917af",
+    "compressed_layer_bytes": 45421630,
+    "layers": [
+      {
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "digest": "sha256:039e6f9f9752f74a3ff4a6a224f64c7c864da16ed98f882107704328f41b9c42",
+        "size": 28232590
+      },
+      {
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "digest": "sha256:e8e392f3681c10ad9c2b19ab6614fd158f6d5a03e0f71694aea9429d38813dbd",
+        "size": 3520804
+      },
+      {
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "digest": "sha256:8e0b0d5a4a0425bc991b95b78af125c6005a0a82a89011f076802a0265d8ff32",
+        "size": 13667988
+      },
+      {
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "digest": "sha256:1634f3c69c84a41815c187086e80cf5fdec289c6ce620014ef3ca9b54c019279",
+        "size": 248
+      }
+    ],
+    "config": {
+      "mediaType": "application/vnd.oci.image.config.v1+json",
+      "digest": "sha256:64d91f7b885eed272bba87909446b12ff408d4aaa5f1a0e9ca787bbea1a020b9",
+      "size": 5676
+    }
+  },
+  "image_reference": "docker.io/library/python@sha256:6e13e65c55e33adf203d77ee371cf8bf5d81bd4902ef07565721f46bf44917af",
+  "file_body_bytes_first_attempt": 75225023,
+  "estimated_image_layer_compressed_bytes": 45421630,
+  "estimated_first_transfer_body_bytes": 120646653,
+  "actual_runtime_download_bytes": "NOT_RUN",
+  "docker_internal_wire_bytes": "UNKNOWN",
+  "licenses": {
+    "spire": "Apache-2.0, fixed source LICENSE archived",
+    "python_image_recipe": "MIT; https://github.com/docker-library/python/blob/master/LICENSE",
+    "python_runtime": "PSF-2.0 and bundled notices; verify image LICENSE",
+    "base_os": "Debian mixed component licenses; no complete transitive audit or production claim",
+    "wheels": "PyPI license_expression locked; inspect downloaded .dist-info/licenses before execution"
+  },
+  "fixed_sources": [
+    {
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/spiffe/spire/872c1d55b4d5ac7fc1bf05f0760f2ca740ab37aa/LICENSE",
+      "sha256": "39ce806fa2687a8d8d6a8a8d57bfec8b2fc29fe2a9ae2023020390aabb2de82d",
+      "evidence": "evidence\\continuation\\20261116T091438Z\\source_LICENSE"
+    },
+    {
+      "path": "cmd/spire-agent/cli/api/fetch_x509.go",
+      "url": "https://raw.githubusercontent.com/spiffe/spire/872c1d55b4d5ac7fc1bf05f0760f2ca740ab37aa/cmd/spire-agent/cli/api/fetch_x509.go",
+      "sha256": "19a49970677f7ac8805e3f4f6d3b896ea1609dd51bfdc07500462b63b344b032",
+      "evidence": "evidence\\continuation\\20261116T091438Z\\source_cmd__spire-agent__cli__api__fetch_x509.go"
+    },
+    {
+      "path": "cmd/spire-server/cli/bundle/show.go",
+      "url": "https://raw.githubusercontent.com/spiffe/spire/872c1d55b4d5ac7fc1bf05f0760f2ca740ab37aa/cmd/spire-server/cli/bundle/show.go",
+      "sha256": "d848313d8a3e0f5ab34bf41959f9b0852d675d68c742148355ee5ec1dcbc456a",
+      "evidence": "evidence\\continuation\\20261116T091438Z\\source_cmd__spire-server__cli__bundle__show.go"
+    },
+    {
+      "path": "doc/plugin_server_nodeattestor_jointoken.md",
+      "url": "https://raw.githubusercontent.com/spiffe/spire/872c1d55b4d5ac7fc1bf05f0760f2ca740ab37aa/doc/plugin_server_nodeattestor_jointoken.md",
+      "sha256": "117c8df02067189e2c48f6a2a513f4585380e87fddeff8ba33e19916f16fba35",
+      "evidence": "evidence\\continuation\\20261116T091438Z\\source_doc__plugin_server_nodeattestor_jointoken.md"
+    },
+    {
+      "path": "doc/plugin_agent_workloadattestor_unix.md",
+      "url": "https://raw.githubusercontent.com/spiffe/spire/872c1d55b4d5ac7fc1bf05f0760f2ca740ab37aa/doc/plugin_agent_workloadattestor_unix.md",
+      "sha256": "3f7009617b47c901d97bbdb4f27db53073436b2b6c5c766de3217abef5dcc435",
+      "evidence": "evidence\\continuation\\20261116T091438Z\\source_doc__plugin_agent_workloadattestor_unix.md"
+    },
+    {
+      "path": "conf/server/server.conf",
+      "url": "https://raw.githubusercontent.com/spiffe/spire/872c1d55b4d5ac7fc1bf05f0760f2ca740ab37aa/conf/server/server.conf",
+      "sha256": "ae521436d2be39ea2e2553034b349bb3f4c16a12f995fa3f0d04dfc9c612356e",
+      "evidence": "evidence\\continuation\\20261116T091438Z\\source_conf__server__server.conf"
+    },
+    {
+      "path": "conf/agent/agent.conf",
+      "url": "https://raw.githubusercontent.com/spiffe/spire/872c1d55b4d5ac7fc1bf05f0760f2ca740ab37aa/conf/agent/agent.conf",
+      "sha256": "9cc52bee608f5f736d24822314447c3250cb60109d6dd49312af4099b6ad07ba",
+      "evidence": "evidence\\continuation\\20261116T091438Z\\source_conf__agent__agent.conf"
+    }
+  ],
+  "metadata_failure_preservation": {
+    "initial_attempt_metadata": "docs/05_任务交接/H75_REAL_AUTHORITY_SOURCE_QUALIFICATION_V1/evidence/continuation/ASSET_METADATA.json",
+    "initial_recorded_body_bytes": 41738,
+    "initial_omitted_size_limited_body_read_bytes": 2097153,
+    "correction": "initial summary omitted rejected large body; actual read counted here, original retained",
+    "second_attempt_recorded_body_bytes": 5262244
+  }
+}

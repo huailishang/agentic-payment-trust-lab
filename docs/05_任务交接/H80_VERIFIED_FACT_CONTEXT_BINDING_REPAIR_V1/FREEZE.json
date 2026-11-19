@@ -1,0 +1,26 @@
+{
+  "files": {
+    "BASELINE.json": "2b8161abbbbdc8faaf0d8ccc36d5d067e9ed5669a69f644a8f44934203c8573f",
+    "BOOTSTRAP.py": "ce9094466b1fa6224011eaccd550b5008aa23173465dc60a42b748e529811de8",
+    "CHECK.py": "99c011241bd4cf1d201b148ff2a3f776e7a5d6ae1a0513b35a8b29423913d783",
+    "CONTRACT.md": "5e1278ad6ddc961c4c673d9f63ae7f6db4ca889f1a45f903e7741dff07720a0d",
+    "EXECUTOR_README.md": "fbd55b9826c89f2a8ae4d5f1f0fd1a5cceb1c988d7658344aa3b8e506d526cb7",
+    "PARENT_ACCEPTANCE_CHECK.json": "4086a52f98167c65aa8e5eaa6968816522e38dc3d0d627902e5a36999ba0cd36",
+    "PREPARE.py": "68d6f72aa7a89a2be32d09693d6e521cba91d25fc160023f1a6af163b106ceab",
+    "READINESS.json": "8105df3416f1d862435ca929425a77099b5cf5f8dfb4346902b9632f22e6524d",
+    "SEAL.py": "e4245016dd828132d08dc599d03856b0be7aa11606cc9432ddca579ea64f91cd",
+    "SOURCE.json": "830f3d7e56af4fffa9c906fb20fc0486201f6763912373de83bce93d7c7b2f45",
+    "VALIDATION_PLAN.yaml": "6d51849d836891e2fd7c19b8f3e3fdeea63943eab5382326d2b680729662623d",
+    "evidence/evaluator_readiness_fix/BASELINE_INITIAL.json": "b55a3518f7e9ab256ae221c1f9cd6f60abd412b51ef2b165b0bcd49a707ec82e",
+    "evidence/evaluator_readiness_fix/FREEZE_INITIAL.json": "3bb7941d95a2be9f49a7d8729cb07098473b2836b89ce0c3ea61c1063ea31b21",
+    "evidence/evaluator_readiness_fix/PREPARE_INITIAL.py": "4e49edcf5e84c99fc852670279e69e3c27241283e062bd5a3a049ddd0d6b16f4",
+    "evidence/evaluator_readiness_fix/READINESS_INITIAL.json": "f196f22178520bbba8623992b55996edce8770317df7138e8ddecdef3ac29fb6",
+    "evidence/evaluator_readiness_fix/RESEAL.py": "df5f0b5ba64ac71036ce26147ed7c90e0faeb312fde183628a7273f1be1aba12",
+    "references/before_h80/CURRENT.md": "1648539b1cf982b0ff4dab909ffc00131ad94fccbb2431d2047bf29ac3488ad7",
+    "references/before_h80/REMOTE_HANDOFF.md": "4ddbb1fd5d29078d65781342bfba9bd47e1ac807f25ef18a4d15c308d7f90a7b",
+    "references/before_h80/docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md": "1d6fa6c4bdf4029e835f833dbdbcc70de7b91119eda1236723df9354d2fcf3af",
+    "references/before_h80/src/agentic_payment_experiment/trusted_execution/credential_possession.py": "ecea0b6d674d71b92de0cf148be2aff0b158cb11d5f62d5ac61a37d66b38650c",
+    "references/before_h80/src/agentic_payment_experiment/trusted_execution/execution_facts.py": "5ff68c16330d3a6570d6a9b53f406a55cd5ee99207867532af74461fd76eeef6",
+    "references/before_h80/tests/trusted_execution/test_payment_binding.py": "78deb5062a2f23a28a0897f9b15cb4d6bf92b6ea68feac4404504eb9d056c639"
+  }
+}

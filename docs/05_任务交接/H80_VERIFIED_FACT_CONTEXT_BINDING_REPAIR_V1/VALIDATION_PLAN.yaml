@@ -1,0 +1,27 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: H80_VERIFIED_FACT_CONTEXT_BINDING_REPAIR_V1
+checks:
+- id: VP-01
+  ac: [AC-01]
+  cwd: .
+  command: [python, -B, docs/05_任务交接/H80_VERIFIED_FACT_CONTEXT_BINDING_REPAIR_V1/CHECK.py, preservation]
+  expected_exit_code: 0
+  mandatory: true
+- id: VP-02
+  ac: [AC-02, AC-03]
+  cwd: .
+  command: [python, -B, docs/05_任务交接/H80_VERIFIED_FACT_CONTEXT_BINDING_REPAIR_V1/CHECK.py, behavior]
+  expected_exit_code: 0
+  mandatory: true
+- id: VP-03
+  ac: [AC-04]
+  cwd: .
+  command: [python, -B, docs/05_任务交接/H80_VERIFIED_FACT_CONTEXT_BINDING_REPAIR_V1/CHECK.py, regressions]
+  expected_exit_code: 0
+  mandatory: true
+- id: VP-04
+  ac: [AC-01, AC-04]
+  cwd: .
+  command: [python, -B, docs/05_任务交接/H80_VERIFIED_FACT_CONTEXT_BINDING_REPAIR_V1/CHECK.py, preservation]
+  expected_exit_code: 0
+  mandatory: true

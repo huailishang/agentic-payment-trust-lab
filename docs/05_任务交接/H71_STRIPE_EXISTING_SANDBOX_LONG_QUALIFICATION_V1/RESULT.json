@@ -1,0 +1,14 @@
+{
+  "account_assurance": "PROVISION_CREDENTIAL_CONTEXT_ONLY",
+  "account_ref": "0215b5164ed5fc568c47232cf381a5612fa6428c9071fbd3f5f26cacb4999a6f",
+  "checkout_sessions": 0,
+  "checkout_write_permission": "NOT_MEASURED",
+  "decision": "INPUT_LIMIT",
+  "payments": 0,
+  "private_snapshot_sha256": "fe98140cf0b2933c4a5340bfc22a8608fcb1786e0ab6945e408c9d5952c9a46f",
+  "reason_code": "PINNED_DOWNLOAD_HTTP_NONE",
+  "run_id": "h71-existing-anon-20261112-001",
+  "schema": "h71-long-qualification-result/v1",
+  "stage": "download",
+  "task_id": "H71_STRIPE_EXISTING_SANDBOX_LONG_QUALIFICATION_V1"
+}

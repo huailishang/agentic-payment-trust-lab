@@ -1,0 +1,12 @@
+{
+  "schema": "h72r-frozen-inputs/v1",
+  "task_id": "H72R_OFFLINE_REVIEW_GATE_CLOSURE_V1",
+  "sha256": {
+    "CONTRACT.md": "2da5e661c8f19c0e97e68922b28124fde8d308e3cde494e9a8c184c5c9be71df",
+    "VALIDATION_PLAN.yaml": "c34e1e99b9a54f3bf0e49c0d321881fae014409b6be8f099090fba2a4ac07dd7",
+    "EXECUTOR_START.md": "d83b0f072695a2aab66ddee0bdc1fa84615f17e05a65774cbc479802d2e598af",
+    "FREEZE.py": "d018cb99afae26d9b31d300aaf2533efdced492073c7620ceed466abede44772",
+    "BASELINE.json": "fe362ea291a7155c10ee924b8f45c190b0985f086ee9227313a218b7a3518b3f"
+  },
+  "pre_handoff_enumeration_correction": true
+}

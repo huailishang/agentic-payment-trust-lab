@@ -1,13 +1,15 @@
 # 远端统一交接入口
 
-当前任务和权限以仓库根CURRENT.md为准。H66独立研究PASS，但只证明通用机制，IronClaw停留参考；不开始适配。下一任务H67_ACP_MCP_IDEMPOTENCY_CONTRACT_MEASUREMENT_V1已冻结，尚未执行；H65R原预算拒收及CartTrace当前六例停止保持。
+根CURRENT.md唯一可变路由。当前H81_VERIFIED_FACT_CONSUMPTION_CLOSURE_V1，capability_experiment/CONTRACT_FROZEN/Executor，地图2026-11-18-r137；尚未执行。
 
-执行者从docs/05_任务交接/H67_ACP_MCP_IDEMPOTENCY_CONTRACT_MEASUREMENT_V1/EXECUTOR_START.md开始；合同、计划、检查器、公开输入摘要、SOURCE_BUNDLE投影及上游许可证均在Git中。不要根据旧路由修改历史门禁。
+H80原拒收/整体效果未定保持，B-23仍未闭合。H80R有执行前原生入口阻塞报告，正式实现/L2/L3均0，冻结和报告30文件原件保留。按Human此次指示，小测试错误并入下一瓶颈包前置；H80R被H81替换，不再执行，也不记为正式门禁失败或能力完成。
 
-可用标准Python运行H67 CHECK.py package/source；全部输入来自公开固定包，无旧原始缓存、解码器或新下载依赖。H67不继承H66公开GET权限。只测5工具meta中的键要求，10探针及5示例观察不是完整RPC验证或付款调用；package通过不是正式L2/L3通过。
+H81主目标是证明已验证事实只能归给对应Agent/Provider/Executor，闭合来源→消费归因→治理结果→独立证据这一段。沿用H80唯一产品变化，不叠加新机制。S0只修原测试一项identity输入并核本会话原生入口；当前两产品/原支付fixture与所有断言锁定。只有Bash入口则在正式预算前停止，不靠WSLENV中转。
 
-同步范围为可公开的代码、治理合同、计划、历史报告脱敏展示和摘要。原始日志、完整源数据、解码环境、工作目录快照及安全扫描标出的测试材料保留本地；它们不会因统一推送变成公开附件。H64R原REPORT含工作站路径，原件保持在本地，远端使用该任务PUBLIC_REPORT.md。
+包内自动衔接：S0前置→S1用锁定原两源码和当前源码对原H79 M01/M02做同来源/同输入对照，修复后运行完整原矩阵→S2全部必要回归→S3从原文重算CLOSURE.json、统一报告/SEAL提交→S4接受不变快照后唯一独立L3。原基线只重放已证两槽，不扩充H79历史未测项；本地callback非付款、原observed非当前认证。
 
-本地和远端版本化内容的核验：正常fetch后比较HEAD与origin/main，并检查git diff origin/main及git status。忽略目录属于执行输入边界，不代表提交内容不同。历史冻结门禁在对应原快照复现；不要在新治理路由下把历史HEAD/工作区差异当成产品回归。
+最多2实现/2L2/1独立L3，已知测试/原生导入问题可在限定范围自动修复，成功即停；新安全/其他业务失败、产品需变或范围/权限变化停止交Evaluator。父H80 2/2/0和H80R0/0/0保留；原28/18/6、130与来源16/4正21负/8门禁必须实际通过，不相加冒充独立覆盖。一个完整包提交，不逐步骤Human复核。
 
-Human既有授权允许Evaluator按localagent-common/security-hooks正常提交推送；pre-commit与pre-push均必须执行。Executor四项Git/API旗标仍false；H67网络/安装/服务/产品/模型/钱包/付款0，无资金或凭据变更授权。
+r136旧地图、CURRENT/REMOTE与四实现文件逐字快照；H80R原30文件、原2517保护、全部H80/H79/H78失败/签收历史及共享工具保持。BEFORE_LOCK明确修复前两模块和原fixture的原字节路径，当前源码亦锁定，不把HEAD混作修复前工作树。完整合同、执行入口、报告模板与五项验证计划见H81目录。
+
+无WSL/服务/新凭据/私钥/网络/安装/下载/API/浏览器/真实付款/提交推送权限，父物理许可不续。只有原M02错误晋级1→0、正对照保持、安全与回归无退化并经全部独立AC签收，才关闭B-23本地代表消费切片；随后停止同类扩例并比较生命周期等下一瓶颈，不自动开始外部接入。

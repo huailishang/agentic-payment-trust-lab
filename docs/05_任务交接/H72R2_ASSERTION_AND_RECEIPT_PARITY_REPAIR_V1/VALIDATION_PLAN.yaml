@@ -1,0 +1,18 @@
+{
+  "schema":"evaluator-executor-validation-plan/v1",
+  "task_id":"H72R2_ASSERTION_AND_RECEIPT_PARITY_REPAIR_V1",
+  "checks":[
+    {"id":"VP-01","ac":["AC-07"],"cwd":".","command":["python","docs/05_任务交接/H72R2_ASSERTION_AND_RECEIPT_PARITY_REPAIR_V1/CHECK.py","environment"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-02","ac":["AC-01","AC-06","AC-07"],"cwd":".","command":["python","docs/05_任务交接/H72R2_ASSERTION_AND_RECEIPT_PARITY_REPAIR_V1/CHECK.py","preservation"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-03","ac":["AC-02"],"cwd":".","command":["python","docs/05_任务交接/H72R2_ASSERTION_AND_RECEIPT_PARITY_REPAIR_V1/CHECK.py","native"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-04","ac":["AC-03"],"cwd":".","command":["python","docs/05_任务交接/H72R2_ASSERTION_AND_RECEIPT_PARITY_REPAIR_V1/CHECK.py","receipt"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-05","ac":["AC-04"],"cwd":".","command":["python","docs/05_任务交接/H72R2_ASSERTION_AND_RECEIPT_PARITY_REPAIR_V1/CHECK.py","negatives"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-06","ac":["AC-05"],"cwd":".","command":["python","docs/05_任务交接/H72R2_ASSERTION_AND_RECEIPT_PARITY_REPAIR_V1/CHECK.py","holdout"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-07","ac":["AC-06"],"cwd":".","command":["python","docs/05_任务交接/H71R2_CAPTURE_FINALIZATION_GATE_REPAIR_V1/PROBES_LEGACY.py"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-08","ac":["AC-06"],"cwd":".","command":["python","docs/05_任务交接/H71R2_CAPTURE_FINALIZATION_GATE_REPAIR_V1/PROBES_LIFECYCLE.py"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-09","ac":["AC-06"],"cwd":".","command":["python","docs/05_任务交接/H68R_STRIPE_CHECKOUT_LOCAL_TRUST_REPAIR_V1/CHECK.py","safety"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-10","ac":["AC-06"],"cwd":".","command":["python","docs/05_任务交接/H68R_STRIPE_CHECKOUT_LOCAL_TRUST_REPAIR_V1/CHECK.py","regressions"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-11","ac":["AC-06"],"cwd":".","command":["python","-m","unittest","tests.test_h72_stripe_journey"],"expected_exit_code":0,"mandatory":true},
+    {"id":"VP-12","ac":["AC-01","AC-06","AC-07"],"cwd":".","command":["python","docs/05_任务交接/H72R2_ASSERTION_AND_RECEIPT_PARITY_REPAIR_V1/CHECK.py","summary"],"expected_exit_code":0,"mandatory":true}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "files": {
+    "CONTRACT.md": "ce78304ec94d745d076e905e0ad4a1ac0b7f4ea37875ee4bcbba5813339f131c",
+    "VALIDATION_PLAN.yaml": "59b6b0db20cadcb0d275579a3ae45bd5fcb159678180bfec6e7a988dc7fab5f0",
+    "COPY_MANIFEST.json": "4ca4b84c9aaed8f424ee1e02d4e99cc8b7a4ca2cb186f83b173d2d13b0e5aba7",
+    "CHECK.py": "246643f7c1ad832bcf92ff431d9caa9574e2c80a9bccdc3f3af8c254a0a76ea2",
+    "AUDIT.py": "83cfd98d3c65fbd2b408d8dc93731331af001aef802fac8b2011cf89aba955a1",
+    "BOOTSTRAP.py": "be3b26ff38eca1d3768a718b0035f16c5052f51c0d2e1e3d5d2e228ef82113d7",
+    "RUN.py": "c211bd9b6ace4dd50580a32acfcacd6b6650b2811a38b1cdd522da5d6d6b4eb9",
+    "WORKLOAD.py": "744b94958df8f0f015ef5049ed19ae76c3ea9869a27e8fa3d304e601c9f466b1",
+    "TASK_TESTS.py": "6f6b44bba4873fe04c8eb43425f27645cf3b43f714c140f9c081dd47d472d4b2",
+    "SEAM_CHECK.py": "29d8d326bc1e8a0eedeb3b81fbc7d746cbea39c9163c084c2997bcdc2ca0ca2a",
+    "BASELINE.json": "90e838f12c76a7006e2554152ed73240e1d437f75817824418cc43b2f6414471",
+    "PREPARE.py": "8a2a4da9c302b4f50fa38d5598b89f3c462bd8962867edba3aacf5d8ffbc8804"
+  }
+}

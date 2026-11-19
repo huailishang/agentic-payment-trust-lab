@@ -1,0 +1,17 @@
+{
+  "at_utc": "2026-11-17T11:24:22.607260+00:00",
+  "package_ready": true,
+  "syntax_checked": [
+    "BOOTSTRAP.py",
+    "CHECK.py",
+    "PREPARE.py",
+    "RUN.py"
+  ],
+  "protected_files": 2361,
+  "planned_probe_slots": 6,
+  "measurement_runs": 0,
+  "formal_l2": 0,
+  "formal_l3": 0,
+  "new_issuer_runs": 0,
+  "source_mode": "captured H78 public observation, not current authentication"
+}

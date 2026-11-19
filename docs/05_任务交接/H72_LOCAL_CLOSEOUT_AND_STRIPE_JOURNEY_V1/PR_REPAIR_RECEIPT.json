@@ -1,0 +1,174 @@
+{
+  "schema": "h72-pr-receipt/v1",
+  "task_id": "H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1",
+  "began_at_utc": "2026-11-15T07:51:48+00:00",
+  "completed_at_utc": "2026-11-15T08:06:42.054240+00:00",
+  "baseline_head": "c6c617c9e20e227c7bfe967cc86ed9a102034036",
+  "baseline_sha256": "46abfc09f0663b2e331fdfb449275187d6e28ca5582e056c75a384282db08b95",
+  "authorization_sha256": "fd3e8e9ce1f65c68ddf9d31275bd79ec4e132e84e0fb6c1b7b1f44ed9378a536",
+  "reauthorization_sha256": "58cd2c960831aed96115ef14310d7de31118f28b9ddecbf11310c8153fa1535c",
+  "source_sha256": {
+    "CHECK.py": "c570dc1f135f4eac0ab5ec4a27a6d97f02cf1a374b561311b6371faa821d359c",
+    "RUN.py": "285a02b36981c43936a444b1725b0252acefb3a4e166520bd58a79689ceb6430",
+    "PR_RECEIPT_GUARD.py": "e2365c6ef3a963ca8423d7590edabb2bd96bbc08c0f75bcbf94088eed37bbc05",
+    "PR_NEGATIVE_TESTS.py": "02f1509a89de715166adf0cd05730c16b871ba637a72813d52298d88a8facf73",
+    "PR_CAPTURE.py": "9c8a67f620dfbbe2f1efedd2c47c976990157c815aaf882b8c82e3b8f3cf0070",
+    "tests_init.py": "fe3a00671c536f0f840906ed282882f8e24dd742433d688d582ca0ae4ff182fb",
+    "H68R_CHECK.py": "fd1d12ff3f2bc2328f8e1830bd9b96f075c5ce384ab85c83c8a8d55b56f180b6",
+    "H71R2_PROBES_LEGACY.py": "fba747f79a17c25c31da8bf93a11a7d43b9685b122542701b9376a32307cb1fd",
+    "H71R2_PROBES_LIFECYCLE.py": "5a655f3d2302b28dc8265494f71626a775df196ed8c4d85c9c65b4dccfd7097f",
+    "capture_evidence.py": "b6df40f52e44ff019ec88742592eedc466c63388ec8f5cfd876a7060cf31aa1c"
+  },
+  "product_sha256": {
+    "src/agentic_payment_experiment/adapters/stripe_checkout.py": "eda7bf9da2b0f1bb724f9f6a63814521ab0d67085e1c9bcf8ebaf3221c0321a7",
+    "src/agentic_payment_experiment/stripe_checkout_lab.py": "6c6b6495b05797b1c8db575cd736834a5c0f217598d9a6ec213ad51e77baa95e",
+    "scripts/validation/stripe_checkout_lab.py": "afe2f4e55d823b66b2356816486f0eef020252dcc8e6c67664647a2f66b77bc5"
+  },
+  "test_counts": {
+    "safety": 9,
+    "regressions": 74,
+    "legacy_capture": 11,
+    "capture_lifecycle": 9
+  },
+  "negative_fixture_tests": 16,
+  "commands": [
+    {
+      "label": "PR-ENV-01",
+      "command_argv": [
+        "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\agent\\python.exe",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1\\CHECK.py",
+        "environment"
+      ],
+      "exit_code": 0,
+      "meta_sha256": "e89c9915c0120cedb45e3d9188bd34ca45398bd30199fdddec50564f5360e2db",
+      "stdout_sha256": "796098d24d27453297b760b556e8eb8b6b285128fee8ad679a02e967f3c09200",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 2577,
+      "stderr_bytes": 0,
+      "test_count": null,
+      "started_at_utc": "2026-11-15T08:06:03.133608+00:00",
+      "finished_at_utc": "2026-11-15T08:06:03.716510+00:00"
+    },
+    {
+      "label": "PR-PRES-01",
+      "command_argv": [
+        "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\agent\\python.exe",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1\\CHECK.py",
+        "preservation"
+      ],
+      "exit_code": 0,
+      "meta_sha256": "1a8a61d4a09fe9a3ffcb55e47481c71f787cadb40a771041b8b1c5336790098d",
+      "stdout_sha256": "61d5b31f17643846b66d9344382d3ddf9816d7bd84dced4bce47d6537492c708",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 968,
+      "stderr_bytes": 0,
+      "test_count": null,
+      "started_at_utc": "2026-11-15T08:06:04.231455+00:00",
+      "finished_at_utc": "2026-11-15T08:06:05.558448+00:00"
+    },
+    {
+      "label": "PR-SELF-01",
+      "command_argv": [
+        "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\agent\\python.exe",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\H72_LOCAL_CLOSEOUT_AND_STRIPE_JOURNEY_V1\\CHECK.py",
+        "p0-selftest"
+      ],
+      "exit_code": 0,
+      "meta_sha256": "377d411c20e6c22845c6426ef459f484e7f5e8b9963527ac8b40521e9c11bdb2",
+      "stdout_sha256": "f53f6739fb9fe47fd9de2c9ee6f75c12da26229bd93fb17879f5f5ef2e5844ea",
+      "stderr_sha256": "a21b5294d7c14ab7d028894fedd455a2be586a445e2ada930f5cafe68f42a7ce",
+      "stdout_bytes": 59,
+      "stderr_bytes": 2175,
+      "test_count": 16,
+      "started_at_utc": "2026-11-15T08:06:06.043692+00:00",
+      "finished_at_utc": "2026-11-15T08:06:36.324852+00:00"
+    },
+    {
+      "label": "PR-SAFE-01",
+      "command_argv": [
+        "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\agent\\python.exe",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\H68R_STRIPE_CHECKOUT_LOCAL_TRUST_REPAIR_V1\\CHECK.py",
+        "safety"
+      ],
+      "exit_code": 0,
+      "meta_sha256": "fdf72d9ab1850d00c5ef3fc8a40db681fbc918906b543a454de5941ed4499408",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "ecc9f65df0120c6f1dd36a990796e16d6a682625eb6b7d044a825b65377d9093",
+      "stdout_bytes": 0,
+      "stderr_bytes": 1177,
+      "test_count": 9,
+      "started_at_utc": "2026-11-15T08:06:36.944016+00:00",
+      "finished_at_utc": "2026-11-15T08:06:38.249851+00:00"
+    },
+    {
+      "label": "PR-REG-01",
+      "command_argv": [
+        "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\agent\\python.exe",
+        "-m",
+        "unittest",
+        "tests.test_stripe_checkout_adapter",
+        "tests.test_stripe_checkout_lab",
+        "tests.test_order_validation",
+        "tests.test_payment_recovery",
+        "tests.test_lifecycle",
+        "tests.trusted_execution.test_governed_action",
+        "tests.trusted_execution.test_context_policy"
+      ],
+      "exit_code": 0,
+      "meta_sha256": "3157f8817b27ab81b3c7a51e5818545b57714aaf101a684ce258a9430cd65757",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "000dad97b4dfbb6903f2da8d82535eb2257ba95c7321fcd13572e65a5cb4bf5a",
+      "stdout_bytes": 0,
+      "stderr_bytes": 178,
+      "test_count": 74,
+      "started_at_utc": "2026-11-15T08:06:38.738680+00:00",
+      "finished_at_utc": "2026-11-15T08:06:40.092371+00:00"
+    },
+    {
+      "label": "PR-LEG-01",
+      "command_argv": [
+        "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\agent\\python.exe",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\H71R2_CAPTURE_FINALIZATION_GATE_REPAIR_V1\\PROBES_LEGACY.py"
+      ],
+      "exit_code": 0,
+      "meta_sha256": "662de3b092fadaca082fd6b79255f020c8100120a5a9904ffd57c7b46fe295ae",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "a2bab2840296b359bc3b606c49ddc7d684a42cf56cc974c4d80bb507997c8b47",
+      "stdout_bytes": 0,
+      "stderr_bytes": 1340,
+      "test_count": 11,
+      "started_at_utc": "2026-11-15T08:06:40.580624+00:00",
+      "finished_at_utc": "2026-11-15T08:06:41.066137+00:00"
+    },
+    {
+      "label": "PR-LIFE-01",
+      "command_argv": [
+        "D:\\SoftWare\\Anaconda\\workspace\\.conda\\envs\\agent\\python.exe",
+        "D:\\SoftWare\\VScode\\install\\Project\\agentic-payment-trust-lab\\docs\\05_任务交接\\H71R2_CAPTURE_FINALIZATION_GATE_REPAIR_V1\\PROBES_LIFECYCLE.py"
+      ],
+      "exit_code": 0,
+      "meta_sha256": "fc6b65f06d6b571db54a49e0596298d2cd0bb36661676aafefde18bad5ec8968",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "5591e9432869fe2d4bb38963203781db6f4f65b00d2a77f3605beca0ff3a28b0",
+      "stdout_bytes": 0,
+      "stderr_bytes": 1292,
+      "test_count": 9,
+      "started_at_utc": "2026-11-15T08:06:41.563612+00:00",
+      "finished_at_utc": "2026-11-15T08:06:41.996633+00:00"
+    }
+  ],
+  "guardrail_status": "PASS_WITH_NEGATIVE_FIXTURES",
+  "original_p0_receipt_sha256": "1a0fef1472fe82206c6e57b072da66181dad02b4f6d6d273c9b60982e101483d",
+  "external_side_effects": {
+    "network": 0,
+    "installs": 0,
+    "services": 0,
+    "browser_actions": 0,
+    "payments": 0
+  },
+  "notes": [
+    "Original P0 and evaluator counterexamples unchanged.",
+    "16 actual-entrypoint positive/negative fixture tests, not the old five superficial assertions.",
+    "Native Windows reparse retained on real preservation gate; fixture result never admits external use."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "h71-long-qualification-spec/v1",
+  "original_deadline": "2026-11-13T00:59:06+00:00",
+  "api_version": "2026-10-28.endive",
+  "phases": ["prerequisites", "source_review", "readonly", "download", "listen", "browser_local"],
+  "urls": ["https://api.stripe.com/v1/checkout/sessions?limit=100", "https://api.stripe.com/v1/payment_intents?limit=100", "https://api.stripe.com/v1/charges?limit=100"],
+  "decisions": ["READ_AND_LISTEN_READY", "INPUT_LIMIT", "AUTH_EXPIRED"],
+  "budgets": {"active_seconds":7200,"wall_seconds":14400,"implementation":2,"l2":3,"l3":1,"source_http":24,"source_body_bytes":8388608,"per_source_url":2,"live_get":3,"executor_readback":3,"evaluator_readback":3,"download":3,"download_bytes":67108864,"cli_offline":2,"listener":1,"local_server":1,"service_seconds":60,"browser_action":8},
+  "cli": {"version":"1.55.10","url":"https://github.com/stripe/stripe-cli/releases/download/v1.55.10/stripe_1.55.10_windows_x86_64.zip","archive_bytes":11929882,"archive_sha256":"ea273eaabe6641fc960c7b7fcdb1a7e6cb45ca47fe8202c91b2ef89458ccd937"},
+  "events": ["checkout.session.completed","checkout.session.expired","payment_intent.succeeded"],
+  "forbidden_flags": ["--live","--latest","--skip-verify","--api-key"],
+  "account_assurance": "PROVISION_CREDENTIAL_CONTEXT_ONLY",
+  "public_fields": ["schema","task_id","run_id","decision","reason_code","stage","private_snapshot_sha256","account_ref","account_assurance","checkout_write_permission","checkout_sessions","payments"]
+}

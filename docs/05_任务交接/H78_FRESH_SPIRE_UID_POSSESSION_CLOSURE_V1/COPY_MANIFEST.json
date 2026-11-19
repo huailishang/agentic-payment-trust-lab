@@ -1,0 +1,55 @@
+{
+  "schema": "h78-source-copy/v1",
+  "files": {
+    "WORKLOAD.py": {
+      "source": "docs/05_任务交接/H77R3_ENTRY_CREATE_RESPONSE_OFFLINE_REPAIR_V1/WORKLOAD.py",
+      "initial_sha256": "b0817be01d5ad1cb756ccd122add5afc2e09588060d948806b749e1485c1aaf8",
+      "copy_rule": "byte_exact"
+    },
+    "RUN.py": {
+      "source": "docs/05_任务交接/H77R3_ENTRY_CREATE_RESPONSE_OFFLINE_REPAIR_V1/RUN.py",
+      "initial_sha256": "c211bd9b6ace4dd50580a32acfcacd6b6650b2811a38b1cdd522da5d6d6b4eb9",
+      "copy_rule": "byte_exact"
+    },
+    "TASK_TESTS.py": {
+      "source": "docs/05_任务交接/H77R3_ENTRY_CREATE_RESPONSE_OFFLINE_REPAIR_V1/TASK_TESTS.py",
+      "initial_sha256": "b8265edd1cb6842e0522c7daa213859f080438e9750d902a335edfcce518c880",
+      "copy_rule": "byte_exact"
+    },
+    "BINARY_MEMBER_LOCK.json": {
+      "source": "docs/05_任务交接/H77R3_ENTRY_CREATE_RESPONSE_OFFLINE_REPAIR_V1/BINARY_MEMBER_LOCK.json",
+      "initial_sha256": "9f074d7d486badb23c5b29238fd3a2df41e6109854e645f971fc080a3144568b",
+      "copy_rule": "byte_exact"
+    },
+    "AUDIT.py": {
+      "source": "docs/05_任务交接/H77R2_REAL_ARCHIVE_PREFLIGHT_REPAIR_V1/AUDIT.py",
+      "initial_sha256": "83cfd98d3c65fbd2b408d8dc93731331af001aef802fac8b2011cf89aba955a1",
+      "copy_rule": "byte_exact"
+    },
+    "CHECK.py": {
+      "source": "docs/05_任务交接/H77R2_REAL_ARCHIVE_PREFLIGHT_REPAIR_V1/CHECK.py",
+      "initial_sha256": "246643f7c1ad832bcf92ff431d9caa9574e2c80a9bccdc3f3af8c254a0a76ea2",
+      "copy_rule": "candidate_adaptation"
+    },
+    "BOOTSTRAP.py": {
+      "source": "docs/05_任务交接/H77R2_REAL_ARCHIVE_PREFLIGHT_REPAIR_V1/BOOTSTRAP.py",
+      "initial_sha256": "be3b26ff38eca1d3768a718b0035f16c5052f51c0d2e1e3d5d2e228ef82113d7",
+      "copy_rule": "candidate_adaptation"
+    },
+    "ASSET_PREFLIGHT.py": {
+      "source": "docs/05_任务交接/H77R2_REAL_ARCHIVE_PREFLIGHT_REPAIR_V1/ASSET_PREFLIGHT.py",
+      "initial_sha256": "44542b7e0f476edff3c7730bfa367e073a8fae85bba09805f6b62f22bff12df2",
+      "copy_rule": "byte_exact"
+    },
+    "PROTOCOL_CHECK.py": {
+      "source": "docs/05_任务交接/H77R3_ENTRY_CREATE_RESPONSE_OFFLINE_REPAIR_V1/CHECK.py",
+      "initial_sha256": "fa70a7c89ab84a33633030c7d8d74f7c0c9ecb877f3f6223b8c5ae712e068987",
+      "copy_rule": "byte_exact"
+    },
+    "evidence/preparation/H76_INPUT_SEAL.json": {
+      "source": "docs/05_任务交接/H77R2_REAL_ARCHIVE_PREFLIGHT_REPAIR_V1/evidence/preparation/H76_INPUT_SEAL.json",
+      "initial_sha256": "aa8af2c9149c61068f40d0c0898fcbf025a2d1817fb363fc4d309ff614aeab9d",
+      "copy_rule": "byte_exact"
+    }
+  }
+}

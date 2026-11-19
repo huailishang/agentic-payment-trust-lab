@@ -1,0 +1,14 @@
+{
+  "account_ref": "0215b5164ed5fc568c47232cf381a5612fa6428c9071fbd3f5f26cacb4999a6f",
+  "browser_actions": 0,
+  "checkout_sessions": 0,
+  "creation": "CREATED",
+  "decision": "INPUT_LIMIT",
+  "payments": 0,
+  "private_snapshot_sha256": "7e45682201e69662010e3b2fea026606d66a2c9159dc93536a4472c25c38e5a0",
+  "reason_code": "ACCOUNT_HTTP_403",
+  "run_id": "h69-anon-20261112-001",
+  "schema": "h69-qualification-result/v1",
+  "stage": "account",
+  "task_id": "H69_STRIPE_ANONYMOUS_SANDBOX_QUALIFICATION_V1"
+}

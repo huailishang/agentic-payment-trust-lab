@@ -1,0 +1,47 @@
+{
+  "schema": "h73-measurement-spec/v1",
+  "task_id": "H73_AUTHORITY_CONTINUITY_MEASUREMENT_V1",
+  "cases": ["N01", "C01", "R01", "D01"],
+  "boundaries": ["SESSION_CREATE", "PRE_PAYMENT", "RECOVERY_OR_TERMINAL"],
+  "fields": ["operation_binding", "authority_scope_version", "amount_currency_payee_resource", "confirmation_binding", "validity_times", "provenance_origin", "execution_observation", "renewal_or_recovery_basis"],
+  "statuses": ["ORIGINAL_OBSERVED", "EXPLICIT_REAUTH", "CODE_RECONSTRUCTED", "MISSING", "CONFLICT", "UNKNOWN", "NOT_APPLICABLE"],
+  "layers": ["TASK_PERMISSION", "DOMAIN_AUTHORITY", "EXTERNAL_PAYMENT", "CODE_STRUCTURE"],
+  "decisions": ["RECOMMEND_MINIMAL_CAPABILITY", "STOP_VIEW", "INPUT_LIMIT", "STOP_ESCALATE"],
+  "source_kinds": ["code", "observation", "owner_permission", "review", "private_json", "private_sqlite"],
+  "private_json_allowed_top_keys": ["operation_id", "run_id", "case_id", "order_id", "request_id", "payment_id", "resource_sha256", "amount_minor", "currency", "created_at", "updated_at", "mandate_id", "authority_ref", "authority_version", "confirmation_id", "confirmed_at", "expires_at", "quote_expires_at", "context", "gate_context", "mandate", "order", "request", "confirmation"],
+  "private_sqlite_columns": ["operation_id", "run_id", "case_id", "order_id", "request_id", "payment_id", "session_id", "resource_sha256", "amount_minor", "currency", "state", "intent_id", "charge_id", "created_at", "updated_at"],
+  "reference_format": {
+    "public_json": {"source": "source-id-from-INPUTS", "pointer": "/existing/json/pointer"},
+    "public_text": {"source": "source-id-from-INPUTS", "lines": [1, 3]},
+    "private_json": {"source": "PRIVATE:n01_operation", "pointer": "/order_id"},
+    "private_sqlite": {"source": "PRIVATE:merchant_operations", "pointer": "/operations/N01/order_id"}
+  },
+  "matrix_structure": {
+    "schema": "h73-matrix/v1",
+    "cells": "12 entries, exact case/boundary pairs, each has applicable:boolean, reason:string, fields:all 8 field entries, time_evaluation, time_evidence:refs",
+    "field_entry": "status, layer, refs:[], reason; ORIGINAL_OBSERVED/EXPLICIT_REAUTH additionally direct_binding:true",
+    "time_evaluation": ["VALID", "EXPIRED", "RENEWED", "UNKNOWN", "NOT_APPLICABLE"]
+  },
+  "result_structure": {
+    "schema": "h73-result/v1",
+    "task_id": "same as spec",
+    "decision": "one frozen decision",
+    "rationale": "source-based reasoning",
+    "identity_assurance": "UNKNOWN_REAL_SOURCE",
+    "product_delta": "NOT_APPLICABLE",
+    "historical_verdicts_preserved": true,
+    "private_inventory": "n01_top_keys:list; operations_columns:list; cases_present:list; no original values",
+    "common_breaks": "[{family,kind:AUDIT_EVIDENCE_GAP|UNSAFE_ALLOW,case,boundary,field,refs,reason}], >=2 distinct pairs of same family for recommendation; code-only and unread input do not qualify",
+    "next_package": "null or {capability,consumer,seam,same_baseline_controls,estimated_cost,residual_risks}",
+    "stop_or_unblock_condition": "explicit condition"
+  },
+  "known_boundaries": [
+    "Factory current-time synthetic authority is known; not a newly discovered vulnerability.",
+    "Owner resume permission exists; task permission and domain confirmation must be evaluated separately.",
+    "C01 has no payment; PRE_PAYMENT is NOT_APPLICABLE.",
+    "R01 recovery is read-only reconciliation, not a new payment authorization.",
+    "D01 is delivery bookkeeping recovery, not HTTP retransmission.",
+    "Missing original timestamps imply UNKNOWN expiry; session creation time does not establish original confirmation time.",
+    "An uninspected private source is INPUT_LIMIT, not evidence that no record exists anywhere."
+  ]
+}

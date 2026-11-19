@@ -1,0 +1,23 @@
+{
+  "schema": "h71r2-preserved-input-seal/v1",
+  "parent_failed_ac": [
+    "AC-04",
+    "AC-05"
+  ],
+  "previous_h71r_verdict": "REJECTED",
+  "passed_projection_files": {
+    "docs/05_任务交接/H71R_RELIABLE_TRANSFER_EVIDENCE_REPAIR_V1/EVIDENCE_CORRECTION.json": "acb1b20825d8166ab2822f0ca661ab3e25fcc65456e40172ad289d7e0e2e86f0",
+    "docs/05_任务交接/H71R_RELIABLE_TRANSFER_EVIDENCE_REPAIR_V1/CORRECTED_MATRIX.json": "c2ec99859820da6ed85ec1cc0ccd88d0a6927a6dd147a6a6ec6d3046cb752ef0",
+    "docs/05_任务交接/H71R_RELIABLE_TRANSFER_EVIDENCE_REPAIR_V1/EVIDENCE_GOLD.json": "0bd1a383e8defd7dcf18495ddaac35406571919e54df2786ec40cdc0b0a72832"
+  },
+  "correction_sha256": "acb1b20825d8166ab2822f0ca661ab3e25fcc65456e40172ad289d7e0e2e86f0",
+  "matrix_sha256": "c2ec99859820da6ed85ec1cc0ccd88d0a6927a6dd147a6a6ec6d3046cb752ef0",
+  "old_implementation_sha256": "e7496950e552e8a75421a8c21b7eb84fda54101b49619b46a681ada7ba58e3ad",
+  "old_candidate_snapshot_sha256": "6050d8a3c2c6714f194a9834301a3a13d9e4a8b5b3f31c4a9ea3739eff5afd9a",
+  "snapshot_classification_sha256": "99499c6876c80903a37a26e8ee327ff7ca062434683631accfdcffd76e9338d2",
+  "prior_governance": {
+    "CURRENT.md": "098b00b5cd5fa30790dc3aa590b644c581fe34703d196f03800ce82f8bd8f704",
+    "REMOTE_HANDOFF.md": "c786c840bd3a469a3e66ac09f658264762e090a70e5925c14beb05b0d35d73e1",
+    "map_r116": "8a1c0c0d4f5f87bb1ce765216b6bedeb75ed876f6d08748f0714d14c14acef70"
+  }
+}

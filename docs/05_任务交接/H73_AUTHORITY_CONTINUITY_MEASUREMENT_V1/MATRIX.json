@@ -1,0 +1,2902 @@
+{
+  "schema": "h73-matrix/v1",
+  "task_id": "H73_AUTHORITY_CONTINUITY_MEASUREMENT_V1",
+  "method_version": "one-off-offline-v1",
+  "cells": [
+    {
+      "case": "N01",
+      "boundary": "SESSION_CREATE",
+      "applicable": true,
+      "reason": "原创建边界；后存操作行和原会话收据可精确联结，但不是执行前完整领域对象快照。",
+      "fields": {
+        "operation_binding": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "当前保留历史操作行的order/request/payment/session与该旅程会话摘要精确联结；仅证明原业务操作/会话身份，未保存该边界执行前的完整授权关系。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/operation_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/order_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/request_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/payment_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/session_id"
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "authority_scope_version": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂定义USD1、合成merchant/digital、agent及v1默认；选定历史JSON与operations没有mandate/authority_version快照。只可静态说明构造规则，不能还原当时实际授权对象。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                16,
+                40
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                91,
+                103
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            }
+          ]
+        },
+        "amount_currency_payee_resource": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "该历史行直接保留100 minor/usd/resource摘要且与实收资源联结；完整tuple中的payee仅在工厂静态合成，故全字段不标原始观察。会话相等/金额相同不代替收款方和授权绑定。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/amount_minor"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/currency"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/resource_sha256"
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                23,
+                40
+              ]
+            }
+          ]
+        },
+        "confirmation_binding": {
+          "status": "MISSING",
+          "layer": "DOMAIN_AUTHORITY",
+          "reason": "在已完整清点的公共JSON、N01六键JSON及operations固定列中，未保存该边界的confirmation_id、原确认内容/hash、authority/order版本绑定；代码能构造但不代表原确认存在或不存在于其他未授权来源。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                65
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/order_id"
+            }
+          ]
+        },
+        "validity_times": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "仅代码给出调用时t、mandate=t+1h、quote/confirmation=t+30min、confirmed=t-2s；没有原领域时间，operations created_at/updated_at及收据at不是原确认时间，expiry只能UNKNOWN。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                19,
+                24
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                26,
+                29
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                62
+              ]
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/created_at"
+            }
+          ]
+        },
+        "provenance_origin": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂构造local-test主体和USER_CONFIRMED/PROTOCOL_VERIFIED标签；这是受控合成标记。无原发行者、真实用户认证、持有证明或签名信任源的直接证据；负责人运行许可与真实身份分开。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                41,
+                57
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                82,
+                87
+              ]
+            }
+          ]
+        },
+        "execution_observation": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "初次创建运行记录报URL校验失败且native_created=false；稍后精确原操作匹配读回1个open/unpaid会话，区分本地收据失败和外部已建事实，不改旧报告。",
+          "refs": [
+            {
+              "source": "p1:LISTENER_AND_N01_RESULT.json",
+              "pointer": "/reason_code"
+            },
+            {
+              "source": "p1:LISTENER_AND_N01_RESULT.json",
+              "pointer": "/native_checkout_created"
+            },
+            {
+              "source": "p1:N01_ORIGINAL_SESSION_READBACK.json",
+              "pointer": "/matched_operation_count"
+            },
+            {
+              "source": "p1:N01_ORIGINAL_SESSION_READBACK.json",
+              "pointer": "/session_status"
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "renewal_or_recovery_basis": {
+          "status": "NOT_APPLICABLE",
+          "layer": "TASK_PERMISSION",
+          "reason": "初次创建在08:54:39Z续行前，由初始任务许可覆盖，不倒套后来的续授。此处不是原领域授权或用户确认充分性的结论。",
+          "refs": [
+            {
+              "source": "h72:AUTHORIZATION.json",
+              "pointer": "/granted_at_utc"
+            },
+            {
+              "source": "h72:AUTHORIZATION.json",
+              "pointer": "/expires_at_utc"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/human_message_at_utc"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/created_at"
+            }
+          ]
+        }
+      },
+      "time_evaluation": "UNKNOWN",
+      "time_evidence": [
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/N01/created_at"
+        },
+        {
+          "source": "resumed:journey_N01.json",
+          "pointer": "/at"
+        },
+        {
+          "source": "h72_operation",
+          "lines": [
+            19,
+            24
+          ]
+        }
+      ],
+      "time_reason": "领域原确认/授权/报价时间未观察；本边界expiry未知。任务许可时序独立可核；恢复不引入新付款确认义务。"
+    },
+    {
+      "case": "N01",
+      "boundary": "PRE_PAYMENT",
+      "applicable": true,
+      "reason": "实际付款点击边界；收据是回调后的历史观察，不能据其ALLOW倒推所有原输入。",
+      "fields": {
+        "operation_binding": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "当前保留历史操作行的order/request/payment/session与该旅程会话摘要精确联结；仅证明原业务操作/会话身份，未保存该边界执行前的完整授权关系。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/operation_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/order_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/request_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/payment_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/session_id"
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "authority_scope_version": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂定义USD1、合成merchant/digital、agent及v1默认；选定历史JSON与operations没有mandate/authority_version快照。只可静态说明构造规则，不能还原当时实际授权对象。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                16,
+                40
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                91,
+                103
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            }
+          ]
+        },
+        "amount_currency_payee_resource": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "该历史行直接保留100 minor/usd/resource摘要且与实收资源联结；完整tuple中的payee仅在工厂静态合成，故全字段不标原始观察。会话相等/金额相同不代替收款方和授权绑定。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/amount_minor"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/currency"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/resource_sha256"
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                23,
+                40
+              ]
+            }
+          ]
+        },
+        "confirmation_binding": {
+          "status": "MISSING",
+          "layer": "DOMAIN_AUTHORITY",
+          "reason": "在已完整清点的公共JSON、N01六键JSON及operations固定列中，未保存该边界的confirmation_id、原确认内容/hash、authority/order版本绑定；代码能构造但不代表原确认存在或不存在于其他未授权来源。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                65
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/order_id"
+            }
+          ]
+        },
+        "validity_times": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "仅代码给出调用时t、mandate=t+1h、quote/confirmation=t+30min、confirmed=t-2s；没有原领域时间，operations created_at/updated_at及收据at不是原确认时间，expiry只能UNKNOWN。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                19,
+                24
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                26,
+                29
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                62
+              ]
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/created_at"
+            }
+          ]
+        },
+        "provenance_origin": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂构造local-test主体和USER_CONFIRMED/PROTOCOL_VERIFIED标签；这是受控合成标记。无原发行者、真实用户认证、持有证明或签名信任源的直接证据；负责人运行许可与真实身份分开。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                41,
+                57
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                82,
+                87
+              ]
+            }
+          ]
+        },
+        "execution_observation": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "原付款点击收据记录同会话、100 minor/usd、ALLOW、callback_count=1。收据产生在回调后，是执行观察而不是执行前授权快照。",
+          "refs": [
+            {
+              "source": "resumed:payment_click_N01.json",
+              "pointer": "/at"
+            },
+            {
+              "source": "resumed:payment_click_N01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "resumed:payment_click_N01.json",
+              "pointer": "/amount_minor"
+            },
+            {
+              "source": "resumed:payment_click_N01.json",
+              "pointer": "/currency"
+            },
+            {
+              "source": "resumed:payment_click_N01.json",
+              "pointer": "/gate_final_decision"
+            },
+            {
+              "source": "resumed:payment_click_N01.json",
+              "pointer": "/gate_callback_count"
+            }
+          ],
+          "direct_binding": true
+        },
+        "renewal_or_recovery_basis": {
+          "status": "EXPLICIT_REAUTH",
+          "layer": "TASK_PERMISSION",
+          "reason": "08:54:39Z负责人明确继续原任务，发生在本点击前且原任务截止内；N01原会话沿用合法。该任务许可不补造领域确认、版本、收款方或有效期，也不能据缺记录认定越权。",
+          "refs": [
+            {
+              "source": "owner:resume",
+              "pointer": "/human_quote"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/scope"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/human_message_at_utc"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/original_authorization_expires_at_utc"
+            },
+            {
+              "source": "resumed:payment_click_N01.json",
+              "pointer": "/at"
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        }
+      },
+      "time_evaluation": "UNKNOWN",
+      "time_evidence": [
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/N01/created_at"
+        },
+        {
+          "source": "resumed:journey_N01.json",
+          "pointer": "/at"
+        },
+        {
+          "source": "h72_operation",
+          "lines": [
+            19,
+            24
+          ]
+        }
+      ],
+      "time_reason": "领域原确认/授权/报价时间未观察；本边界expiry未知。任务许可时序独立可核；恢复不引入新付款确认义务。"
+    },
+    {
+      "case": "N01",
+      "boundary": "RECOVERY_OR_TERMINAL",
+      "applicable": true,
+      "reason": "续行原会话后付款与交付终态；不创建第二会话。",
+      "fields": {
+        "operation_binding": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "当前保留历史操作行的order/request/payment/session与该旅程会话摘要精确联结；仅证明原业务操作/会话身份，未保存该边界执行前的完整授权关系。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/operation_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/order_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/request_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/payment_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/session_id"
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "authority_scope_version": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂定义USD1、合成merchant/digital、agent及v1默认；选定历史JSON与operations没有mandate/authority_version快照。只可静态说明构造规则，不能还原当时实际授权对象。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                16,
+                40
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                91,
+                103
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            }
+          ]
+        },
+        "amount_currency_payee_resource": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "该历史行直接保留100 minor/usd/resource摘要且与实收资源联结；完整tuple中的payee仅在工厂静态合成，故全字段不标原始观察。会话相等/金额相同不代替收款方和授权绑定。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/amount_minor"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/currency"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/resource_sha256"
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                23,
+                40
+              ]
+            }
+          ]
+        },
+        "confirmation_binding": {
+          "status": "MISSING",
+          "layer": "DOMAIN_AUTHORITY",
+          "reason": "在已完整清点的公共JSON、N01六键JSON及operations固定列中，未保存该边界的confirmation_id、原确认内容/hash、authority/order版本绑定；代码能构造但不代表原确认存在或不存在于其他未授权来源。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                65
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/order_id"
+            }
+          ]
+        },
+        "validity_times": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "仅代码给出调用时t、mandate=t+1h、quote/confirmation=t+30min、confirmed=t-2s；没有原领域时间，operations created_at/updated_at及收据at不是原确认时间，expiry只能UNKNOWN。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                19,
+                24
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                26,
+                29
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                62
+              ]
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/N01/created_at"
+            }
+          ]
+        },
+        "provenance_origin": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂构造local-test主体和USER_CONFIRMED/PROTOCOL_VERIFIED标签；这是受控合成标记。无原发行者、真实用户认证、持有证明或签名信任源的直接证据；负责人运行许可与真实身份分开。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                41,
+                57
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                82,
+                87
+              ]
+            }
+          ]
+        },
+        "execution_observation": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "续行原会话后付款与交付终态；不创建第二会话。仅本例历史收据和精确操作联结支持该窄范围终态。",
+          "refs": [
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/provider_payment_status"
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/new_checkout_sessions"
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/hosted_test_payments_clicked"
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/delivery/successful_delivery_count"
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "renewal_or_recovery_basis": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "续行原会话后付款与交付终态；不创建第二会话。历史记录不显示第二付款；不是领域授权重新生效。任务许可另见owner:resume。",
+          "refs": [
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/provider_payment_status"
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/new_checkout_sessions"
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/hosted_test_payments_clicked"
+            },
+            {
+              "source": "resumed:journey_N01.json",
+              "pointer": "/delivery/successful_delivery_count"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/human_quote"
+            }
+          ],
+          "direct_binding": true
+        }
+      },
+      "time_evaluation": "UNKNOWN",
+      "time_evidence": [
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/N01/created_at"
+        },
+        {
+          "source": "resumed:journey_N01.json",
+          "pointer": "/at"
+        },
+        {
+          "source": "h72_operation",
+          "lines": [
+            19,
+            24
+          ]
+        }
+      ],
+      "time_reason": "领域原确认/授权/报价时间未观察；本边界expiry未知。任务许可时序独立可核；恢复不引入新付款确认义务。"
+    },
+    {
+      "case": "C01",
+      "boundary": "SESSION_CREATE",
+      "applicable": true,
+      "reason": "原创建边界；后存操作行和原会话收据可精确联结，但不是执行前完整领域对象快照。",
+      "fields": {
+        "operation_binding": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "当前保留历史操作行的order/request/payment/session与该旅程会话摘要精确联结；仅证明原业务操作/会话身份，未保存该边界执行前的完整授权关系。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/operation_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/order_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/request_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/payment_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/session_id"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "authority_scope_version": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂定义USD1、合成merchant/digital、agent及v1默认；选定历史JSON与operations没有mandate/authority_version快照。只可静态说明构造规则，不能还原当时实际授权对象。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                16,
+                40
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                91,
+                103
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            }
+          ]
+        },
+        "amount_currency_payee_resource": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "该历史行直接保留100 minor/usd/resource摘要且与实收资源联结；完整tuple中的payee仅在工厂静态合成，故全字段不标原始观察。会话相等/金额相同不代替收款方和授权绑定。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/amount_minor"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/currency"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/resource_sha256"
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                23,
+                40
+              ]
+            }
+          ]
+        },
+        "confirmation_binding": {
+          "status": "MISSING",
+          "layer": "DOMAIN_AUTHORITY",
+          "reason": "在已完整清点的公共JSON、N01六键JSON及operations固定列中，未保存该边界的confirmation_id、原确认内容/hash、authority/order版本绑定；代码能构造但不代表原确认存在或不存在于其他未授权来源。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                65
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/order_id"
+            }
+          ]
+        },
+        "validity_times": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "仅代码给出调用时t、mandate=t+1h、quote/confirmation=t+30min、confirmed=t-2s；没有原领域时间，operations created_at/updated_at及收据at不是原确认时间，expiry只能UNKNOWN。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                19,
+                24
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                26,
+                29
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                62
+              ]
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/created_at"
+            }
+          ]
+        },
+        "provenance_origin": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂构造local-test主体和USER_CONFIRMED/PROTOCOL_VERIFIED标签；这是受控合成标记。无原发行者、真实用户认证、持有证明或签名信任源的直接证据；负责人运行许可与真实身份分开。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                41,
+                57
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                82,
+                87
+              ]
+            }
+          ]
+        },
+        "execution_observation": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "本例历史operations行保存唯一session，精确联结旅程终态；只能后验确认会话存在和操作绑定，未保存独立创建gate的完整原输入。",
+          "refs": [
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/session_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/created_at"
+            }
+          ],
+          "direct_binding": true
+        },
+        "renewal_or_recovery_basis": {
+          "status": "EXPLICIT_REAUTH",
+          "layer": "TASK_PERMISSION",
+          "reason": "负责人明确续行同H72四旅程且保留原预算/截止；续授早于本例登记。只认任务运行层，不将原话提升为真实用户领域确认或身份认证。",
+          "refs": [
+            {
+              "source": "owner:resume",
+              "pointer": "/human_quote"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/scope"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/human_message_at_utc"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/original_authorization_expires_at_utc"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/created_at"
+            }
+          ],
+          "direct_binding": true
+        }
+      },
+      "time_evaluation": "UNKNOWN",
+      "time_evidence": [
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/C01/created_at"
+        },
+        {
+          "source": "resumed:journey_C01.json",
+          "pointer": "/at"
+        },
+        {
+          "source": "h72_operation",
+          "lines": [
+            19,
+            24
+          ]
+        }
+      ],
+      "time_reason": "领域原确认/授权/报价时间未观察；本边界expiry未知。任务许可时序独立可核；恢复不引入新付款确认义务。"
+    },
+    {
+      "case": "C01",
+      "boundary": "PRE_PAYMENT",
+      "applicable": false,
+      "reason": "C01创建后取消且零付款、零交付，没有实际付款前边界；provider expired是会话取消，不是领域确认过期。",
+      "fields": {
+        "operation_binding": {
+          "status": "NOT_APPLICABLE",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "C01创建后取消且零付款、零交付，没有实际付款前边界；provider expired是会话取消，不是领域确认过期。",
+          "refs": [
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/hosted_test_payments_clicked"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/delivery_attempt_count"
+            }
+          ]
+        },
+        "authority_scope_version": {
+          "status": "NOT_APPLICABLE",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "C01创建后取消且零付款、零交付，没有实际付款前边界；provider expired是会话取消，不是领域确认过期。",
+          "refs": [
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/hosted_test_payments_clicked"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/delivery_attempt_count"
+            }
+          ]
+        },
+        "amount_currency_payee_resource": {
+          "status": "NOT_APPLICABLE",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "C01创建后取消且零付款、零交付，没有实际付款前边界；provider expired是会话取消，不是领域确认过期。",
+          "refs": [
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/hosted_test_payments_clicked"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/delivery_attempt_count"
+            }
+          ]
+        },
+        "confirmation_binding": {
+          "status": "NOT_APPLICABLE",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "C01创建后取消且零付款、零交付，没有实际付款前边界；provider expired是会话取消，不是领域确认过期。",
+          "refs": [
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/hosted_test_payments_clicked"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/delivery_attempt_count"
+            }
+          ]
+        },
+        "validity_times": {
+          "status": "NOT_APPLICABLE",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "C01创建后取消且零付款、零交付，没有实际付款前边界；provider expired是会话取消，不是领域确认过期。",
+          "refs": [
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/hosted_test_payments_clicked"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/delivery_attempt_count"
+            }
+          ]
+        },
+        "provenance_origin": {
+          "status": "NOT_APPLICABLE",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "C01创建后取消且零付款、零交付，没有实际付款前边界；provider expired是会话取消，不是领域确认过期。",
+          "refs": [
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/hosted_test_payments_clicked"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/delivery_attempt_count"
+            }
+          ]
+        },
+        "execution_observation": {
+          "status": "NOT_APPLICABLE",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "C01创建后取消且零付款、零交付，没有实际付款前边界；provider expired是会话取消，不是领域确认过期。",
+          "refs": [
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/hosted_test_payments_clicked"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/delivery_attempt_count"
+            }
+          ]
+        },
+        "renewal_or_recovery_basis": {
+          "status": "NOT_APPLICABLE",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "C01创建后取消且零付款、零交付，没有实际付款前边界；provider expired是会话取消，不是领域确认过期。",
+          "refs": [
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/hosted_test_payments_clicked"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/delivery_attempt_count"
+            }
+          ]
+        }
+      },
+      "time_evaluation": "NOT_APPLICABLE",
+      "time_evidence": []
+    },
+    {
+      "case": "C01",
+      "boundary": "RECOVERY_OR_TERMINAL",
+      "applicable": true,
+      "reason": "原会话取消/未付终态，不要求新的付款确认。",
+      "fields": {
+        "operation_binding": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "当前保留历史操作行的order/request/payment/session与该旅程会话摘要精确联结；仅证明原业务操作/会话身份，未保存该边界执行前的完整授权关系。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/operation_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/order_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/request_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/payment_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/session_id"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "authority_scope_version": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂定义USD1、合成merchant/digital、agent及v1默认；选定历史JSON与operations没有mandate/authority_version快照。只可静态说明构造规则，不能还原当时实际授权对象。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                16,
+                40
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                91,
+                103
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            }
+          ]
+        },
+        "amount_currency_payee_resource": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "该历史行直接保留100 minor/usd/resource摘要且与实收资源联结；完整tuple中的payee仅在工厂静态合成，故全字段不标原始观察。会话相等/金额相同不代替收款方和授权绑定。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/amount_minor"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/currency"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/resource_sha256"
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                23,
+                40
+              ]
+            }
+          ]
+        },
+        "confirmation_binding": {
+          "status": "MISSING",
+          "layer": "DOMAIN_AUTHORITY",
+          "reason": "在已完整清点的公共JSON、N01六键JSON及operations固定列中，未保存该边界的confirmation_id、原确认内容/hash、authority/order版本绑定；代码能构造但不代表原确认存在或不存在于其他未授权来源。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                65
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/order_id"
+            }
+          ]
+        },
+        "validity_times": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "仅代码给出调用时t、mandate=t+1h、quote/confirmation=t+30min、confirmed=t-2s；没有原领域时间，operations created_at/updated_at及收据at不是原确认时间，expiry只能UNKNOWN。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                19,
+                24
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                26,
+                29
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                62
+              ]
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/C01/created_at"
+            }
+          ]
+        },
+        "provenance_origin": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂构造local-test主体和USER_CONFIRMED/PROTOCOL_VERIFIED标签；这是受控合成标记。无原发行者、真实用户认证、持有证明或签名信任源的直接证据；负责人运行许可与真实身份分开。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                41,
+                57
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                82,
+                87
+              ]
+            }
+          ]
+        },
+        "execution_observation": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "原会话取消/未付终态，不要求新的付款确认。仅本例历史收据和精确操作联结支持该窄范围终态。",
+          "refs": [
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/provider_status"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/payment_status"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/hosted_test_payments_clicked"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/delivery_attempt_count"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "renewal_or_recovery_basis": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "原会话取消/未付终态，不要求新的付款确认。历史记录不显示第二付款；不是领域授权重新生效。任务许可另见owner:resume。",
+          "refs": [
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/provider_status"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/payment_status"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/hosted_test_payments_clicked"
+            },
+            {
+              "source": "resumed:journey_C01.json",
+              "pointer": "/delivery_attempt_count"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/human_quote"
+            }
+          ],
+          "direct_binding": true
+        }
+      },
+      "time_evaluation": "UNKNOWN",
+      "time_evidence": [
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/C01/created_at"
+        },
+        {
+          "source": "resumed:journey_C01.json",
+          "pointer": "/at"
+        },
+        {
+          "source": "h72_operation",
+          "lines": [
+            19,
+            24
+          ]
+        }
+      ],
+      "time_reason": "领域原确认/授权/报价时间未观察；本边界expiry未知。任务许可时序独立可核；恢复不引入新付款确认义务。"
+    },
+    {
+      "case": "R01",
+      "boundary": "SESSION_CREATE",
+      "applicable": true,
+      "reason": "原创建边界；后存操作行和原会话收据可精确联结，但不是执行前完整领域对象快照。",
+      "fields": {
+        "operation_binding": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "当前保留历史操作行的order/request/payment/session与该旅程会话摘要精确联结；仅证明原业务操作/会话身份，未保存该边界执行前的完整授权关系。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/operation_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/order_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/request_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/payment_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/session_id"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "authority_scope_version": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂定义USD1、合成merchant/digital、agent及v1默认；选定历史JSON与operations没有mandate/authority_version快照。只可静态说明构造规则，不能还原当时实际授权对象。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                16,
+                40
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                91,
+                103
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            }
+          ]
+        },
+        "amount_currency_payee_resource": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "该历史行直接保留100 minor/usd/resource摘要且与实收资源联结；完整tuple中的payee仅在工厂静态合成，故全字段不标原始观察。会话相等/金额相同不代替收款方和授权绑定。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/amount_minor"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/currency"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/resource_sha256"
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                23,
+                40
+              ]
+            }
+          ]
+        },
+        "confirmation_binding": {
+          "status": "MISSING",
+          "layer": "DOMAIN_AUTHORITY",
+          "reason": "在已完整清点的公共JSON、N01六键JSON及operations固定列中，未保存该边界的confirmation_id、原确认内容/hash、authority/order版本绑定；代码能构造但不代表原确认存在或不存在于其他未授权来源。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                65
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/order_id"
+            }
+          ]
+        },
+        "validity_times": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "仅代码给出调用时t、mandate=t+1h、quote/confirmation=t+30min、confirmed=t-2s；没有原领域时间，operations created_at/updated_at及收据at不是原确认时间，expiry只能UNKNOWN。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                19,
+                24
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                26,
+                29
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                62
+              ]
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/created_at"
+            }
+          ]
+        },
+        "provenance_origin": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂构造local-test主体和USER_CONFIRMED/PROTOCOL_VERIFIED标签；这是受控合成标记。无原发行者、真实用户认证、持有证明或签名信任源的直接证据；负责人运行许可与真实身份分开。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                41,
+                57
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                82,
+                87
+              ]
+            }
+          ]
+        },
+        "execution_observation": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "本例历史operations行保存唯一session，精确联结旅程终态；只能后验确认会话存在和操作绑定，未保存独立创建gate的完整原输入。",
+          "refs": [
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/session_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/created_at"
+            }
+          ],
+          "direct_binding": true
+        },
+        "renewal_or_recovery_basis": {
+          "status": "EXPLICIT_REAUTH",
+          "layer": "TASK_PERMISSION",
+          "reason": "负责人明确续行同H72四旅程且保留原预算/截止；续授早于本例登记。只认任务运行层，不将原话提升为真实用户领域确认或身份认证。",
+          "refs": [
+            {
+              "source": "owner:resume",
+              "pointer": "/human_quote"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/scope"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/human_message_at_utc"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/original_authorization_expires_at_utc"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/created_at"
+            }
+          ],
+          "direct_binding": true
+        }
+      },
+      "time_evaluation": "UNKNOWN",
+      "time_evidence": [
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/R01/created_at"
+        },
+        {
+          "source": "resumed:journey_R01.json",
+          "pointer": "/at"
+        },
+        {
+          "source": "h72_operation",
+          "lines": [
+            19,
+            24
+          ]
+        }
+      ],
+      "time_reason": "领域原确认/授权/报价时间未观察；本边界expiry未知。任务许可时序独立可核；恢复不引入新付款确认义务。"
+    },
+    {
+      "case": "R01",
+      "boundary": "PRE_PAYMENT",
+      "applicable": true,
+      "reason": "实际付款点击边界；收据是回调后的历史观察，不能据其ALLOW倒推所有原输入。",
+      "fields": {
+        "operation_binding": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "当前保留历史操作行的order/request/payment/session与该旅程会话摘要精确联结；仅证明原业务操作/会话身份，未保存该边界执行前的完整授权关系。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/operation_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/order_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/request_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/payment_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/session_id"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "authority_scope_version": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂定义USD1、合成merchant/digital、agent及v1默认；选定历史JSON与operations没有mandate/authority_version快照。只可静态说明构造规则，不能还原当时实际授权对象。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                16,
+                40
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                91,
+                103
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            }
+          ]
+        },
+        "amount_currency_payee_resource": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "该历史行直接保留100 minor/usd/resource摘要且与实收资源联结；完整tuple中的payee仅在工厂静态合成，故全字段不标原始观察。会话相等/金额相同不代替收款方和授权绑定。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/amount_minor"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/currency"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/resource_sha256"
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                23,
+                40
+              ]
+            }
+          ]
+        },
+        "confirmation_binding": {
+          "status": "MISSING",
+          "layer": "DOMAIN_AUTHORITY",
+          "reason": "在已完整清点的公共JSON、N01六键JSON及operations固定列中，未保存该边界的confirmation_id、原确认内容/hash、authority/order版本绑定；代码能构造但不代表原确认存在或不存在于其他未授权来源。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                65
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/order_id"
+            }
+          ]
+        },
+        "validity_times": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "仅代码给出调用时t、mandate=t+1h、quote/confirmation=t+30min、confirmed=t-2s；没有原领域时间，operations created_at/updated_at及收据at不是原确认时间，expiry只能UNKNOWN。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                19,
+                24
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                26,
+                29
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                62
+              ]
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/created_at"
+            }
+          ]
+        },
+        "provenance_origin": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂构造local-test主体和USER_CONFIRMED/PROTOCOL_VERIFIED标签；这是受控合成标记。无原发行者、真实用户认证、持有证明或签名信任源的直接证据；负责人运行许可与真实身份分开。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                41,
+                57
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                82,
+                87
+              ]
+            }
+          ]
+        },
+        "execution_observation": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "原付款点击收据记录同会话、100 minor/usd、ALLOW、callback_count=1。收据产生在回调后，是执行观察而不是执行前授权快照。",
+          "refs": [
+            {
+              "source": "resumed:payment_click_R01.json",
+              "pointer": "/at"
+            },
+            {
+              "source": "resumed:payment_click_R01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "resumed:payment_click_R01.json",
+              "pointer": "/amount_minor"
+            },
+            {
+              "source": "resumed:payment_click_R01.json",
+              "pointer": "/currency"
+            },
+            {
+              "source": "resumed:payment_click_R01.json",
+              "pointer": "/gate_final_decision"
+            },
+            {
+              "source": "resumed:payment_click_R01.json",
+              "pointer": "/gate_callback_count"
+            }
+          ],
+          "direct_binding": true
+        },
+        "renewal_or_recovery_basis": {
+          "status": "EXPLICIT_REAUTH",
+          "layer": "TASK_PERMISSION",
+          "reason": "08:54:39Z负责人明确继续原任务，发生在本点击前且原任务截止内；N01原会话沿用合法。该任务许可不补造领域确认、版本、收款方或有效期，也不能据缺记录认定越权。",
+          "refs": [
+            {
+              "source": "owner:resume",
+              "pointer": "/human_quote"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/scope"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/human_message_at_utc"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/original_authorization_expires_at_utc"
+            },
+            {
+              "source": "resumed:payment_click_R01.json",
+              "pointer": "/at"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        }
+      },
+      "time_evaluation": "UNKNOWN",
+      "time_evidence": [
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/R01/created_at"
+        },
+        {
+          "source": "resumed:journey_R01.json",
+          "pointer": "/at"
+        },
+        {
+          "source": "h72_operation",
+          "lines": [
+            19,
+            24
+          ]
+        }
+      ],
+      "time_reason": "领域原确认/授权/报价时间未观察；本边界expiry未知。任务许可时序独立可核；恢复不引入新付款确认义务。"
+    },
+    {
+      "case": "R01",
+      "boundary": "RECOVERY_OR_TERMINAL",
+      "applicable": true,
+      "reason": "付款后UNKNOWN→商户重启→只读原付款对账，不要求重新付款或另续付费授权。",
+      "fields": {
+        "operation_binding": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "当前保留历史操作行的order/request/payment/session与该旅程会话摘要精确联结；仅证明原业务操作/会话身份，未保存该边界执行前的完整授权关系。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/operation_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/order_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/request_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/payment_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/session_id"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "authority_scope_version": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂定义USD1、合成merchant/digital、agent及v1默认；选定历史JSON与operations没有mandate/authority_version快照。只可静态说明构造规则，不能还原当时实际授权对象。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                16,
+                40
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                91,
+                103
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            }
+          ]
+        },
+        "amount_currency_payee_resource": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "该历史行直接保留100 minor/usd/resource摘要且与实收资源联结；完整tuple中的payee仅在工厂静态合成，故全字段不标原始观察。会话相等/金额相同不代替收款方和授权绑定。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/amount_minor"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/currency"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/resource_sha256"
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                23,
+                40
+              ]
+            }
+          ]
+        },
+        "confirmation_binding": {
+          "status": "MISSING",
+          "layer": "DOMAIN_AUTHORITY",
+          "reason": "在已完整清点的公共JSON、N01六键JSON及operations固定列中，未保存该边界的confirmation_id、原确认内容/hash、authority/order版本绑定；代码能构造但不代表原确认存在或不存在于其他未授权来源。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                65
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/order_id"
+            }
+          ]
+        },
+        "validity_times": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "仅代码给出调用时t、mandate=t+1h、quote/confirmation=t+30min、confirmed=t-2s；没有原领域时间，operations created_at/updated_at及收据at不是原确认时间，expiry只能UNKNOWN。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                19,
+                24
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                26,
+                29
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                62
+              ]
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/R01/created_at"
+            }
+          ]
+        },
+        "provenance_origin": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂构造local-test主体和USER_CONFIRMED/PROTOCOL_VERIFIED标签；这是受控合成标记。无原发行者、真实用户认证、持有证明或签名信任源的直接证据；负责人运行许可与真实身份分开。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                41,
+                57
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                82,
+                87
+              ]
+            }
+          ]
+        },
+        "execution_observation": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "付款后UNKNOWN→商户重启→只读原付款对账，不要求重新付款或另续付费授权。仅本例历史收据和精确操作联结支持该窄范围终态。",
+          "refs": [
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/unknown_before_restart"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/actual_merchant_restarts"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/recovery_status"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/retry_allowed"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/delivery/successful_delivery_count"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "renewal_or_recovery_basis": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "付款后UNKNOWN→商户重启→只读原付款对账，不要求重新付款或另续付费授权。历史记录不显示第二付款；不是领域授权重新生效。任务许可另见owner:resume。",
+          "refs": [
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/unknown_before_restart"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/actual_merchant_restarts"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/recovery_status"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/retry_allowed"
+            },
+            {
+              "source": "resumed:journey_R01.json",
+              "pointer": "/delivery/successful_delivery_count"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/human_quote"
+            }
+          ],
+          "direct_binding": true
+        }
+      },
+      "time_evaluation": "UNKNOWN",
+      "time_evidence": [
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/R01/created_at"
+        },
+        {
+          "source": "resumed:journey_R01.json",
+          "pointer": "/at"
+        },
+        {
+          "source": "h72_operation",
+          "lines": [
+            19,
+            24
+          ]
+        }
+      ],
+      "time_reason": "领域原确认/授权/报价时间未观察；本边界expiry未知。任务许可时序独立可核；恢复不引入新付款确认义务。"
+    },
+    {
+      "case": "D01",
+      "boundary": "SESSION_CREATE",
+      "applicable": true,
+      "reason": "原创建边界；后存操作行和原会话收据可精确联结，但不是执行前完整领域对象快照。",
+      "fields": {
+        "operation_binding": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "当前保留历史操作行的order/request/payment/session与该旅程会话摘要精确联结；仅证明原业务操作/会话身份，未保存该边界执行前的完整授权关系。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/operation_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/order_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/request_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/payment_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/session_id"
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "authority_scope_version": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂定义USD1、合成merchant/digital、agent及v1默认；选定历史JSON与operations没有mandate/authority_version快照。只可静态说明构造规则，不能还原当时实际授权对象。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                16,
+                40
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                91,
+                103
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            }
+          ]
+        },
+        "amount_currency_payee_resource": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "该历史行直接保留100 minor/usd/resource摘要且与实收资源联结；完整tuple中的payee仅在工厂静态合成，故全字段不标原始观察。会话相等/金额相同不代替收款方和授权绑定。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/amount_minor"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/currency"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/resource_sha256"
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                23,
+                40
+              ]
+            }
+          ]
+        },
+        "confirmation_binding": {
+          "status": "MISSING",
+          "layer": "DOMAIN_AUTHORITY",
+          "reason": "在已完整清点的公共JSON、N01六键JSON及operations固定列中，未保存该边界的confirmation_id、原确认内容/hash、authority/order版本绑定；代码能构造但不代表原确认存在或不存在于其他未授权来源。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                65
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/order_id"
+            }
+          ]
+        },
+        "validity_times": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "仅代码给出调用时t、mandate=t+1h、quote/confirmation=t+30min、confirmed=t-2s；没有原领域时间，operations created_at/updated_at及收据at不是原确认时间，expiry只能UNKNOWN。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                19,
+                24
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                26,
+                29
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                62
+              ]
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/created_at"
+            }
+          ]
+        },
+        "provenance_origin": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂构造local-test主体和USER_CONFIRMED/PROTOCOL_VERIFIED标签；这是受控合成标记。无原发行者、真实用户认证、持有证明或签名信任源的直接证据；负责人运行许可与真实身份分开。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                41,
+                57
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                82,
+                87
+              ]
+            }
+          ]
+        },
+        "execution_observation": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "本例历史operations行保存唯一session，精确联结旅程终态；只能后验确认会话存在和操作绑定，未保存独立创建gate的完整原输入。",
+          "refs": [
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/session_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/created_at"
+            }
+          ],
+          "direct_binding": true
+        },
+        "renewal_or_recovery_basis": {
+          "status": "EXPLICIT_REAUTH",
+          "layer": "TASK_PERMISSION",
+          "reason": "负责人明确续行同H72四旅程且保留原预算/截止；续授早于本例登记。只认任务运行层，不将原话提升为真实用户领域确认或身份认证。",
+          "refs": [
+            {
+              "source": "owner:resume",
+              "pointer": "/human_quote"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/scope"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/human_message_at_utc"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/original_authorization_expires_at_utc"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/created_at"
+            }
+          ],
+          "direct_binding": true
+        }
+      },
+      "time_evaluation": "UNKNOWN",
+      "time_evidence": [
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/D01/created_at"
+        },
+        {
+          "source": "resumed:journey_D01.json",
+          "pointer": "/at"
+        },
+        {
+          "source": "h72_operation",
+          "lines": [
+            19,
+            24
+          ]
+        }
+      ],
+      "time_reason": "领域原确认/授权/报价时间未观察；本边界expiry未知。任务许可时序独立可核；恢复不引入新付款确认义务。"
+    },
+    {
+      "case": "D01",
+      "boundary": "PRE_PAYMENT",
+      "applicable": true,
+      "reason": "实际付款点击边界；收据是回调后的历史观察，不能据其ALLOW倒推所有原输入。",
+      "fields": {
+        "operation_binding": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "当前保留历史操作行的order/request/payment/session与该旅程会话摘要精确联结；仅证明原业务操作/会话身份，未保存该边界执行前的完整授权关系。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/operation_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/order_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/request_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/payment_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/session_id"
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "authority_scope_version": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂定义USD1、合成merchant/digital、agent及v1默认；选定历史JSON与operations没有mandate/authority_version快照。只可静态说明构造规则，不能还原当时实际授权对象。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                16,
+                40
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                91,
+                103
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            }
+          ]
+        },
+        "amount_currency_payee_resource": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "该历史行直接保留100 minor/usd/resource摘要且与实收资源联结；完整tuple中的payee仅在工厂静态合成，故全字段不标原始观察。会话相等/金额相同不代替收款方和授权绑定。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/amount_minor"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/currency"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/resource_sha256"
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                23,
+                40
+              ]
+            }
+          ]
+        },
+        "confirmation_binding": {
+          "status": "MISSING",
+          "layer": "DOMAIN_AUTHORITY",
+          "reason": "在已完整清点的公共JSON、N01六键JSON及operations固定列中，未保存该边界的confirmation_id、原确认内容/hash、authority/order版本绑定；代码能构造但不代表原确认存在或不存在于其他未授权来源。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                65
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/order_id"
+            }
+          ]
+        },
+        "validity_times": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "仅代码给出调用时t、mandate=t+1h、quote/confirmation=t+30min、confirmed=t-2s；没有原领域时间，operations created_at/updated_at及收据at不是原确认时间，expiry只能UNKNOWN。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                19,
+                24
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                26,
+                29
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                62
+              ]
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/created_at"
+            }
+          ]
+        },
+        "provenance_origin": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂构造local-test主体和USER_CONFIRMED/PROTOCOL_VERIFIED标签；这是受控合成标记。无原发行者、真实用户认证、持有证明或签名信任源的直接证据；负责人运行许可与真实身份分开。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                41,
+                57
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                82,
+                87
+              ]
+            }
+          ]
+        },
+        "execution_observation": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "原付款点击收据记录同会话、100 minor/usd、ALLOW、callback_count=1。收据产生在回调后，是执行观察而不是执行前授权快照。",
+          "refs": [
+            {
+              "source": "resumed:payment_click_D01.json",
+              "pointer": "/at"
+            },
+            {
+              "source": "resumed:payment_click_D01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "resumed:payment_click_D01.json",
+              "pointer": "/amount_minor"
+            },
+            {
+              "source": "resumed:payment_click_D01.json",
+              "pointer": "/currency"
+            },
+            {
+              "source": "resumed:payment_click_D01.json",
+              "pointer": "/gate_final_decision"
+            },
+            {
+              "source": "resumed:payment_click_D01.json",
+              "pointer": "/gate_callback_count"
+            }
+          ],
+          "direct_binding": true
+        },
+        "renewal_or_recovery_basis": {
+          "status": "EXPLICIT_REAUTH",
+          "layer": "TASK_PERMISSION",
+          "reason": "08:54:39Z负责人明确继续原任务，发生在本点击前且原任务截止内；N01原会话沿用合法。该任务许可不补造领域确认、版本、收款方或有效期，也不能据缺记录认定越权。",
+          "refs": [
+            {
+              "source": "owner:resume",
+              "pointer": "/human_quote"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/scope"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/human_message_at_utc"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/original_authorization_expires_at_utc"
+            },
+            {
+              "source": "resumed:payment_click_D01.json",
+              "pointer": "/at"
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        }
+      },
+      "time_evaluation": "UNKNOWN",
+      "time_evidence": [
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/D01/created_at"
+        },
+        {
+          "source": "resumed:journey_D01.json",
+          "pointer": "/at"
+        },
+        {
+          "source": "h72_operation",
+          "lines": [
+            19,
+            24
+          ]
+        }
+      ],
+      "time_reason": "领域原确认/授权/报价时间未观察；本边界expiry未知。任务许可时序独立可核；恢复不引入新付款确认义务。"
+    },
+    {
+      "case": "D01",
+      "boundary": "RECOVERY_OR_TERMINAL",
+      "applicable": true,
+      "reason": "交付记账/收据故障恢复与通知重放去重；不外推HTTP传输重试。",
+      "fields": {
+        "operation_binding": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "当前保留历史操作行的order/request/payment/session与该旅程会话摘要精确联结；仅证明原业务操作/会话身份，未保存该边界执行前的完整授权关系。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/operation_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/order_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/request_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/payment_id"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/session_id"
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "authority_scope_version": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂定义USD1、合成merchant/digital、agent及v1默认；选定历史JSON与operations没有mandate/authority_version快照。只可静态说明构造规则，不能还原当时实际授权对象。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                16,
+                40
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                91,
+                103
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            }
+          ]
+        },
+        "amount_currency_payee_resource": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "该历史行直接保留100 minor/usd/resource摘要且与实收资源联结；完整tuple中的payee仅在工厂静态合成，故全字段不标原始观察。会话相等/金额相同不代替收款方和授权绑定。",
+          "refs": [
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/amount_minor"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/currency"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/resource_sha256"
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                23,
+                40
+              ]
+            }
+          ]
+        },
+        "confirmation_binding": {
+          "status": "MISSING",
+          "layer": "DOMAIN_AUTHORITY",
+          "reason": "在已完整清点的公共JSON、N01六键JSON及operations固定列中，未保存该边界的confirmation_id、原确认内容/hash、authority/order版本绑定；代码能构造但不代表原确认存在或不存在于其他未授权来源。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                65
+              ]
+            },
+            {
+              "source": "product:stripe_checkout_lab.py",
+              "lines": [
+                39,
+                51
+              ]
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/original_session_sha256"
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/order_id"
+            }
+          ]
+        },
+        "validity_times": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "仅代码给出调用时t、mandate=t+1h、quote/confirmation=t+30min、confirmed=t-2s；没有原领域时间，operations created_at/updated_at及收据at不是原确认时间，expiry只能UNKNOWN。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                19,
+                24
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                26,
+                29
+              ]
+            },
+            {
+              "source": "h72_operation",
+              "lines": [
+                58,
+                62
+              ]
+            },
+            {
+              "source": "PRIVATE:merchant_operations",
+              "pointer": "/operations/D01/created_at"
+            }
+          ]
+        },
+        "provenance_origin": {
+          "status": "CODE_RECONSTRUCTED",
+          "layer": "CODE_STRUCTURE",
+          "reason": "工厂构造local-test主体和USER_CONFIRMED/PROTOCOL_VERIFIED标签；这是受控合成标记。无原发行者、真实用户认证、持有证明或签名信任源的直接证据；负责人运行许可与真实身份分开。",
+          "refs": [
+            {
+              "source": "h72_operation",
+              "lines": [
+                41,
+                57
+              ]
+            },
+            {
+              "source": "product:models.py",
+              "lines": [
+                82,
+                87
+              ]
+            }
+          ]
+        },
+        "execution_observation": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "交付记账/收据故障恢复与通知重放去重；不外推HTTP传输重试。仅本例历史收据和精确操作联结支持该窄范围终态。",
+          "refs": [
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/same_signed_event_replay_deduplicated"
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/successful_delivery_once"
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/delivery/delivery_attempts"
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/delivery/successful_delivery_count"
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/original_session_sha256"
+            }
+          ],
+          "direct_binding": true
+        },
+        "renewal_or_recovery_basis": {
+          "status": "ORIGINAL_OBSERVED",
+          "layer": "EXTERNAL_PAYMENT",
+          "reason": "交付记账/收据故障恢复与通知重放去重；不外推HTTP传输重试。历史记录不显示第二付款；不是领域授权重新生效。任务许可另见owner:resume。",
+          "refs": [
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/same_signed_event_replay_deduplicated"
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/successful_delivery_once"
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/delivery/delivery_attempts"
+            },
+            {
+              "source": "resumed:journey_D01.json",
+              "pointer": "/delivery/successful_delivery_count"
+            },
+            {
+              "source": "owner:resume",
+              "pointer": "/human_quote"
+            }
+          ],
+          "direct_binding": true
+        }
+      },
+      "time_evaluation": "UNKNOWN",
+      "time_evidence": [
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/D01/created_at"
+        },
+        {
+          "source": "resumed:journey_D01.json",
+          "pointer": "/at"
+        },
+        {
+          "source": "h72_operation",
+          "lines": [
+            19,
+            24
+          ]
+        }
+      ],
+      "time_reason": "领域原确认/授权/报价时间未观察；本边界expiry未知。任务许可时序独立可核；恢复不引入新付款确认义务。"
+    }
+  ],
+  "status_interpretation": "ORIGINAL_OBSERVED且EXTERNAL_PAYMENT仅原历史执行/标识观察（可后于边界）；EXPLICIT_REAUTH且TASK_PERMISSION仅负责人运行许可。DOMAIN_AUTHORITY没有任何ORIGINAL_OBSERVED/EXPLICIT_REAUTH声明；完整领域绑定必须有执行前原件，不能用ALLOW结果替代。"
+}

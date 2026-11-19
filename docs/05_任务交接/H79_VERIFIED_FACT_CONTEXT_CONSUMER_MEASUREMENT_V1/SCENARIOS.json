@@ -1,0 +1,56 @@
+{
+  "schema": "h79-consumer-context-matrix/v1",
+  "cases": [
+    {
+      "id": "M01",
+      "agent": "h76-agent",
+      "provider": "h76-provider",
+      "executor": "h76-executor",
+      "credential_ref": "SOURCE",
+      "identity_status": "active"
+    },
+    {
+      "id": "M02",
+      "agent": "h79-other-agent",
+      "provider": "h76-provider",
+      "executor": "h76-executor",
+      "credential_ref": "SOURCE",
+      "identity_status": "active"
+    },
+    {
+      "id": "M03",
+      "agent": "h76-agent",
+      "provider": "h79-other-provider",
+      "executor": "h76-executor",
+      "credential_ref": "SOURCE",
+      "identity_status": "active"
+    },
+    {
+      "id": "M04",
+      "agent": "h76-agent",
+      "provider": "h76-provider",
+      "executor": "h79-other-executor",
+      "credential_ref": "SOURCE",
+      "identity_status": "active"
+    },
+    {
+      "id": "M05",
+      "agent": "h76-agent",
+      "provider": "h76-provider",
+      "executor": "h76-executor",
+      "credential_ref": "DIFFERENT",
+      "identity_status": "active"
+    },
+    {
+      "id": "M06",
+      "agent": "h76-agent",
+      "provider": "h76-provider",
+      "executor": "h76-executor",
+      "credential_ref": "SOURCE",
+      "identity_status": "revoked"
+    }
+  ],
+  "stop_on_first_context_counterexample": true,
+  "callback_semantics": "local list marker only; no payment",
+  "time_semantics": "captured H78 observation replay"
+}

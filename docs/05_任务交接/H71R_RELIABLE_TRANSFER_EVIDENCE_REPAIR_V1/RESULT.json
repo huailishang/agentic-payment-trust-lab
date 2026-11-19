@@ -1,0 +1,23 @@
+{
+  "task_id": "H71R_RELIABLE_TRANSFER_EVIDENCE_REPAIR_V1",
+  "decision": "REPAIR_COMPLETE",
+  "original_h71_verdict": "REJECTED",
+  "correction_sha256": "acb1b20825d8166ab2822f0ca661ab3e25fcc65456e40172ad289d7e0e2e86f0",
+  "matrix_sha256": "c2ec99859820da6ed85ec1cc0ccd88d0a6927a6dd147a6a6ec6d3046cb752ef0",
+  "side_effects": {
+    "network_requests": 0,
+    "downloads": 0,
+    "runtime_api": 0,
+    "browser_actions": 0,
+    "local_services": 0,
+    "installs": 0,
+    "environments": 0,
+    "checkout_sessions": 0,
+    "payments": 0,
+    "commits": 0,
+    "pushes": 0
+  },
+  "external_qualification": "NOT_MEASURED",
+  "project_impact": "NOT_APPLICABLE",
+  "note": "This is a repair completion candidate; L2 and independent Evaluator L3 remain separate acceptance steps."
+}

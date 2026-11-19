@@ -1,0 +1,22 @@
+{
+  "at_utc": "2026-11-18T02:03:21.522714+00:00",
+  "package_ready": true,
+  "syntax_checked": [
+    "BEFORE.py",
+    "BOOTSTRAP.py",
+    "CHECK.py",
+    "COMPARE.py",
+    "EVIDENCE.py",
+    "PREPARE.py",
+    "RUN_SUPPORT.py",
+    "SEAL.py"
+  ],
+  "protected_files": 2548,
+  "product_test_edits": 0,
+  "before_or_after_behavior_runs": 0,
+  "formal_l2": 0,
+  "formal_l3": 0,
+  "new_issuer_runs": 0,
+  "h80_formal_l2_consumed": 2,
+  "h80r_attempts_consumed": 0
+}

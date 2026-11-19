@@ -1,0 +1,190 @@
+{
+  "schema": "h73-result/v1",
+  "task_id": "H73_AUTHORITY_CONTINUITY_MEASUREMENT_V1",
+  "decision": "RECOMMEND_MINIMAL_CAPABILITY",
+  "rationale": "已完整清点33个公共源及两白名单私有材料；N01/R01/D01三个不同旅程的真实历史ALLOW/1点击收据均与对应唯一操作行精确联结，而这些已存执行审计记录缺少所消费原领域确认/授权版本/有效期的可回查快照引用。这是测得的重复审计事实断点（3个独立历史边界），不是仅重复同工厂代码或已知合成身份。明确08:54:39Z负责人续行许可有效覆盖任务运行；无法核原领域时刻，不能认定过期、无确认或越权。建议后续仅建设原授权事实保存和读取接缝，由Evaluator另冻合同；不扩大为真实身份或生产支付。",
+  "identity_assurance": "UNKNOWN_REAL_SOURCE",
+  "product_delta": "NOT_APPLICABLE",
+  "historical_verdicts_preserved": true,
+  "private_inventory": {
+    "n01_top_keys": [
+      "operation_id",
+      "order_id",
+      "payment_id",
+      "request_id",
+      "resource_sha256",
+      "run_id"
+    ],
+    "operations_columns": [
+      "operation_id",
+      "run_id",
+      "case_id",
+      "order_id",
+      "request_id",
+      "payment_id",
+      "session_id",
+      "resource_sha256",
+      "amount_minor",
+      "currency",
+      "state",
+      "intent_id",
+      "charge_id",
+      "created_at",
+      "updated_at"
+    ],
+    "cases_present": [
+      "C01",
+      "D01",
+      "N01",
+      "R01"
+    ]
+  },
+  "common_breaks": [
+    {
+      "family": "ORIGINAL_DOMAIN_AUTHORITY_SNAPSHOT_NOT_RETRACEABLE_IN_SELECTED_STORES",
+      "kind": "AUDIT_EVIDENCE_GAP",
+      "case": "N01",
+      "boundary": "PRE_PAYMENT",
+      "field": "confirmation_binding",
+      "refs": [
+        {
+          "source": "resumed:payment_click_N01.json",
+          "pointer": "/original_session_sha256"
+        },
+        {
+          "source": "resumed:payment_click_N01.json",
+          "pointer": "/gate_final_decision"
+        },
+        {
+          "source": "resumed:payment_click_N01.json",
+          "pointer": "/gate_callback_count"
+        },
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/N01/session_id"
+        },
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/N01/order_id"
+        }
+      ],
+      "reason": "此独立历史点击收据ALLOW/1与本例操作行精确联结，但完整收据键和operations列均没有其所消费原confirmation/authority版本/时间快照引用；完整白名单私有清点已完成。断点是该已存审计链无法回指原领域事实，不是错误放行；其他私有原件未读，不声称全局无记录。"
+    },
+    {
+      "family": "ORIGINAL_DOMAIN_AUTHORITY_SNAPSHOT_NOT_RETRACEABLE_IN_SELECTED_STORES",
+      "kind": "AUDIT_EVIDENCE_GAP",
+      "case": "R01",
+      "boundary": "PRE_PAYMENT",
+      "field": "confirmation_binding",
+      "refs": [
+        {
+          "source": "resumed:payment_click_R01.json",
+          "pointer": "/original_session_sha256"
+        },
+        {
+          "source": "resumed:payment_click_R01.json",
+          "pointer": "/gate_final_decision"
+        },
+        {
+          "source": "resumed:payment_click_R01.json",
+          "pointer": "/gate_callback_count"
+        },
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/R01/session_id"
+        },
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/R01/order_id"
+        }
+      ],
+      "reason": "此独立历史点击收据ALLOW/1与本例操作行精确联结，但完整收据键和operations列均没有其所消费原confirmation/authority版本/时间快照引用；完整白名单私有清点已完成。断点是该已存审计链无法回指原领域事实，不是错误放行；其他私有原件未读，不声称全局无记录。"
+    },
+    {
+      "family": "ORIGINAL_DOMAIN_AUTHORITY_SNAPSHOT_NOT_RETRACEABLE_IN_SELECTED_STORES",
+      "kind": "AUDIT_EVIDENCE_GAP",
+      "case": "D01",
+      "boundary": "PRE_PAYMENT",
+      "field": "confirmation_binding",
+      "refs": [
+        {
+          "source": "resumed:payment_click_D01.json",
+          "pointer": "/original_session_sha256"
+        },
+        {
+          "source": "resumed:payment_click_D01.json",
+          "pointer": "/gate_final_decision"
+        },
+        {
+          "source": "resumed:payment_click_D01.json",
+          "pointer": "/gate_callback_count"
+        },
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/D01/session_id"
+        },
+        {
+          "source": "PRIVATE:merchant_operations",
+          "pointer": "/operations/D01/order_id"
+        }
+      ],
+      "reason": "此独立历史点击收据ALLOW/1与本例操作行精确联结，但完整收据键和operations列均没有其所消费原confirmation/authority版本/时间快照引用；完整白名单私有清点已完成。断点是该已存审计链无法回指原领域事实，不是错误放行；其他私有原件未读，不声称全局无记录。"
+    }
+  ],
+  "next_package": {
+    "capability": "仅使受控Stripe操作保存并回查实际消费的原领域授权/确认快照及明确续授关系；不可用重建对象回填历史原件。",
+    "consumer": "现有StripeLabLedger操作读取、StripeCheckoutAdapter付款前校验和N01恢复加载调用点；R01只读原付款对账继续独立。",
+    "seam": "在现有操作登记/执行前保存一个最小不可变authority事实对象或内容摘要引用，绑定operation、order及version、authority及version、amount/currency/payee/resource、confirmation内容/hash与confirmed_at/expires_at/quote期限、来源类别；恢复加载验证原对象。明确续授另建新事实并关联旧事实及任务许可，缺原件返回明确未知/需确认，不默默按当前时间重建。最终形态待Evaluator合同决策，不在H73实现。",
+    "same_baseline_controls": "同一冻结基线、隔离离线副本：原对象保存→恢复一致为正对照；改版本/收款方/金额/内容/资源及原确认到期、缺快照、仅改当前时间重建为负对照；真实明确续授另对象方可恢复新执行资格。R01已付只读查询不要求新付费确认、C01零付款、D01仅记账恢复作为守护边界。历史H72原件不回填、不重付。",
+    "estimated_cost": "估计单一最小能力包Executor约90分钟、独立Evaluator约45分钟；0新增外部/模型服务费用，不继承H73或H72权限。实施与必要回归必须重新冻结预算、AC和来源，超出即停止。",
+    "residual_risks": "原合成确认无法追溯还原；未授权私有材料是否另含快照未知，需独立Evaluator回查本包允许源后判断是否值得建设。持久化不证明真实用户同意、强认证、签名发行者、密钥治理、生产结算或合规；新增事实对象需最小化数据和完整性保护。"
+  },
+  "stop_or_unblock_condition": "本轮取证充分即停止，不继续加样本或产品实现。Evaluator独立逐源核三历史断点及既有消费者；若只是既知边界或找到充分原始事实则STOP_VIEW，缺必要来源则INPUT_LIMIT；只有共同断点成立才另冻上述单一能力，潜在UNSAFE_ALLOW则STOP_ESCALATE。",
+  "measurements": {
+    "cases": 4,
+    "boundaries": 12,
+    "field_entries": 96,
+    "applicable_boundaries": 11,
+    "observed_payment_clicks": 3,
+    "clicks_exactly_joined_to_operations": 3,
+    "direct_original_domain_authority_snapshots_in_allowed_records": 0,
+    "snapshot_count_scope": "仅冻结源内可回查原件；不是历史原对象实际存在数或全局存在数",
+    "unsafe_allow_proved": false,
+    "domain_expiry": "UNKNOWN",
+    "statuses": {
+      "ORIGINAL_OBSERVED": 26,
+      "CODE_RECONSTRUCTED": 44,
+      "MISSING": 11,
+      "NOT_APPLICABLE": 9,
+      "EXPLICIT_REAUTH": 6
+    }
+  },
+  "competing_explanations": [
+    "合法负责人续行解释任务为何继续，不补造领域原快照，也不是越权证据。",
+    "工厂每次以当前时间合成是已知测试机制；本次新增测量是三份独立历史点击收据与实际白名单操作行联结后的缺引用，不能单凭该机制宣称漏洞。",
+    "其他未授权私有输入可能保存额外事实；未读取不等于不存在。推荐限于已观察审计链，若独立复核必须依赖那些材料则INPUT_LIMIT。"
+  ],
+  "external_requirement_impact": {
+    "profile": "PCAC-AGENTPAY",
+    "requirement_ids": [
+      "PCAC-07",
+      "PCAC-08",
+      "PCAC-09",
+      "PCAC-12",
+      "PCAC-15",
+      "PCAC-20"
+    ],
+    "applicability": "CORE/ADAPTER/EVIDENCE_ONLY按冻结合同",
+    "maturity_before": "UNCHANGED_PRODUCT_MATURITY",
+    "maturity_after": "UNCHANGED_PRODUCT_MATURITY",
+    "measurement_before": "unknown",
+    "measurement_after": "measured scoped audit gap; original expiry and real identity unknown",
+    "test_evidence": "冻结六VP及六损坏控制；正式成绩见L2，独立L3待Evaluator",
+    "trace_evidence": [
+      "MATRIX.json",
+      "derived/JOINS_AND_TIMELINE.json",
+      "derived/SOURCE_INVENTORY.json"
+    ],
+    "residual_risk": "不构成产品增量、真实身份/凭据治理/签名能力或监管合规结论。"
+  }
+}

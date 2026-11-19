@@ -1,0 +1,26 @@
+{
+  "files": {
+    "BASELINE.json": "38907b448df8fb0203d05076c6ab9c3edff42e362b7996151a958c80bda31f83",
+    "BOOTSTRAP.py": "5911d28b565538907e213f3721bc6c7db96fe83bc7520a6171222f53edacb294",
+    "CHECK.py": "93fdea979710c75ed1c853d2b7f0b59e6475b71dcf14be0f385e3a0e1117da52",
+    "CONTRACT.md": "06fb606823d462ac7b287f0893adcf9b7a13cdb8076cdab20d64859ca14cd3a8",
+    "EXECUTOR_README.md": "2805bea8e5dacdf1654947e552bc97f39b4602067953a06d9db05cda149f0c77",
+    "PARENT_SNAPSHOT.json": "f890946993ff6a37ec82e2cbf912500e85be12b49ffdd035c087daadfd5158b8",
+    "PREPARE.py": "78b5f4953ed80235e3ffedd62c2bd42f73690286a1f3140b7f4fc6b9f3e03878",
+    "READINESS.json": "1d567b843853b8102af0a5a3f6563190b493b22cbd99ed50fcefc127607732a3",
+    "REPORT_TEMPLATE.md": "9bcfc8ead86eac6407becbda70f320c61781e7a7ea76d52a82acdc7c42e29e2d",
+    "SEAL.py": "948900b5f3ef7308d1888018e7b591b4fdbb4fdddfd04803fb50da90dbeba58d",
+    "SOURCE.json": "830f3d7e56af4fffa9c906fb20fc0486201f6763912373de83bce93d7c7b2f45",
+    "VALIDATION_PLAN.yaml": "160c72307f7475d938d82f2d6abd1f95f0c044cb2271d2e82fe9a60871bc4de1",
+    "references/before_h80r/CURRENT.md": "cef3b76b6f29905e4918f2b3a9577dc6c817c02aaec8f42d69151567ab77a353",
+    "references/before_h80r/REMOTE_HANDOFF.md": "ec5699d10e088b0df8f9aecabfabfb728ffc4f660e0d4e33a480c24bf6a5d576",
+    "references/before_h80/src/agentic_payment_experiment/trusted_execution/credential_possession.py": "ecea0b6d674d71b92de0cf148be2aff0b158cb11d5f62d5ac61a37d66b38650c",
+    "references/before_h80/src/agentic_payment_experiment/trusted_execution/execution_facts.py": "5ff68c16330d3a6570d6a9b53f406a55cd5ee99207867532af74461fd76eeef6",
+    "references/before_h80/tests/trusted_execution/test_payment_binding.py": "78deb5062a2f23a28a0897f9b15cb4d6bf92b6ea68feac4404504eb9d056c639",
+    "references/before_h80r/docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md": "16317902a3f37772b17ca2b7aaa8487faa4dc4c74801827c180b3677aced2d0d",
+    "references/before_h80r/src/agentic_payment_experiment/trusted_execution/credential_possession.py": "c31da4d9b66438a16e2e9b586539f90a0e042975c524eeeeb759c87ce22d1bcb",
+    "references/before_h80r/src/agentic_payment_experiment/trusted_execution/execution_facts.py": "85d17741f991679c60ae329fdccf9f4aea72c46f4022505eff0f058e7cc7fd2e",
+    "references/before_h80r/tests/trusted_execution/test_credential_context_consumption.py": "3777ed9d5cf47b745333e5a83c1ea159ef342dce1c47cdfad471de452b2de15b",
+    "references/before_h80r/tests/trusted_execution/test_payment_binding.py": "d9487f33ae1072db2a3df2d38c27bfed71663cf0de7b0fd0bfc9f6151202db96"
+  }
+}

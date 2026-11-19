@@ -1,0 +1,17 @@
+{
+  "schema": "h74r-parent-cost-reconciliation/v1",
+  "parent_task_id": "H74_DURABLE_AUTHORITY_CONTEXT_V1",
+  "parent_ledger_sha256": "af6de84ed239e225dcfb5d69834d4a22e58996d515bfed6611c77c4c426e7a80",
+  "parent_submission_sha256": "ec1fdfe1f7d9b83d483eca1b1f8f57a7fbb82bf532c4b3f12ff0f25e8af6e10c",
+  "parent_review_sha256": "f6b92d38f4b74ce974b3333b8a504d88bccab620b6d829108cd987e4fd65c18c",
+  "baseline_head": "61414d05521f7c9fe15cf0299b48b25916f5fa0e",
+  "original_executor_minutes": 20.825250133333334,
+  "conservative_executor_minutes": 25.0192,
+  "added_closeout_minutes": 4.193949866666666,
+  "boundary_utc": "2026-11-16T06:24:00+00:00",
+  "actual_active_minutes": "UNKNOWN",
+  "parent_evaluator_minutes": 19.284441,
+  "reason": "Parent executor closed ledger before subsequent report/submission writes. Conservative upper bound extends parent executor coverage to 2026-11-16T06:24:00Z, the following evaluator boundary; old immutable parent ledger and evidence stay unchanged. Mtime supports continued work but is not actual active time or a proof of exceeding budget. Parent implementation/L2/L3 counts remain 1/1/1; repair counts stay independent.",
+  "mtime_is_approximate_support_only": true,
+  "parent_artifacts_modified": false
+}

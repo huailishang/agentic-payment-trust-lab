@@ -1,0 +1,20 @@
+{
+  "schema": "h69-authorization-suballocation/v1",
+  "task_id": "H69_STRIPE_ANONYMOUS_SANDBOX_QUALIFICATION_V1",
+  "status": "GRANTED_WITHIN_EXISTING_H68_ENVELOPE",
+  "human_quote": "同意按 H68 授权范围执行",
+  "original_approved_at": "2026-11-12T00:52:09Z",
+  "source": "../H68_STRIPE_CHECKOUT_SANDBOX_JOURNEY_V1/AUTHORIZATION.json",
+  "decision_owner": "Evaluator",
+  "decision": "Explicitly allocate unused anonymous-create, pinned-download, local-listener and own-account-read permission; no new create opportunity, reset or expiry extension.",
+  "original_deadline": "2026-11-13T00:59:06+00:00",
+  "authorization_api_call": true,
+  "authorization_install": true,
+  "authorization_local_service": true,
+  "authorization_browser_test_only": false,
+  "authorization_test_payments": false,
+  "authorization_commit": false,
+  "authorization_push": false,
+  "authorization_history_rewrite": false,
+  "qualification_only": true
+}

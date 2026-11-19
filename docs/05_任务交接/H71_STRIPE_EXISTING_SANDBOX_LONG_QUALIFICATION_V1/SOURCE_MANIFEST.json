@@ -1,0 +1,24 @@
+{
+  "sources": [
+    {
+      "id": "keys_documentation",
+      "url": "https://docs.stripe.com/keys",
+      "file": "sources/keys_documentation.txt",
+      "sha256": "52eba99fdbaea41673b1305a41aa733ac0e4786ef0654b87d657ed5cbb23e11b",
+      "bytes": 859501,
+      "started_at": "2026-11-12T13:41:39.615515+00:00",
+      "finished_at": "2026-11-12T13:41:41.777904+00:00",
+      "status": 200
+    },
+    {
+      "id": "cli_listen_documentation",
+      "url": "https://docs.stripe.com/cli/listen",
+      "file": "sources/cli_listen_documentation.txt",
+      "sha256": "ae92f416f82171b54fa0572ec38b200c219eb134cca4612fdd58fbf007ae4925",
+      "bytes": 166944,
+      "started_at": "2026-11-12T13:41:41.826909+00:00",
+      "finished_at": "2026-11-12T13:41:48.275592+00:00",
+      "status": 200
+    }
+  ]
+}

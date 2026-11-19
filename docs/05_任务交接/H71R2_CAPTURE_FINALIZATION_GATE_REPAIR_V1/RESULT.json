@@ -1,0 +1,24 @@
+{
+  "task_id": "H71R2_CAPTURE_FINALIZATION_GATE_REPAIR_V1",
+  "decision": "REPAIR_COMPLETE",
+  "previous_h71r_verdict": "REJECTED",
+  "implementation_sha256": "78b690e1ce628cf8f43ed05c713196b210027548f3b078abb81a84c042759804",
+  "input_correction_sha256": "acb1b20825d8166ab2822f0ca661ab3e25fcc65456e40172ad289d7e0e2e86f0",
+  "input_matrix_sha256": "c2ec99859820da6ed85ec1cc0ccd88d0a6927a6dd147a6a6ec6d3046cb752ef0",
+  "side_effects": {
+    "network_requests": 0,
+    "downloads": 0,
+    "runtime_api": 0,
+    "browser_actions": 0,
+    "local_services": 0,
+    "installs": 0,
+    "environments": 0,
+    "checkout_sessions": 0,
+    "payments": 0,
+    "commits": 0,
+    "pushes": 0
+  },
+  "project_impact": "NOT_APPLICABLE",
+  "external_qualification": "NOT_MEASURED",
+  "implementation_scope": "Offline bounded capture ownership and archive-finalization error preservation only"
+}

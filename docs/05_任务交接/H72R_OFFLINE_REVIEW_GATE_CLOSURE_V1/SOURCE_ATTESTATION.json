@@ -1,0 +1,19 @@
+{
+  "schema": "h72r-current-source-attestation/v1",
+  "task_id": "H72R_OFFLINE_REVIEW_GATE_CLOSURE_V1",
+  "created_at_utc": "2026-11-15T10:34:25.193182+00:00",
+  "baseline_sha256": "fe362ea291a7155c10ee924b8f45c190b0985f086ee9227313a218b7a3518b3f",
+  "frozen_inputs_sha256": "e2c784c56e3c2b4b8ab535763133a487d471c828f926aa5b3905ea31a18991e6",
+  "source_sha256": {
+    "CHECK.py": "96c723647a8af7a35375acf86d5306abb10ba6415754db70ffff21e9b9095781",
+    "NATIVE.py": "251bc249ec9f002c4ef666a248ccc1011fd6e6d7c2656215d5e0bcadf65f1322",
+    "NATIVE_NEGATIVES.py": "a3519b6d059f23732173a33bedc3dd97d59a76e7a874872b154a278381bc0889",
+    "NEGATIVE_TESTS.py": "e66a6a5eb86f543ed5470e588ac6abbd41fd1103866272ff65f6421558bf712e",
+    "OFFLINE_EVIDENCE.py": "b13652002dec2c4171261a0422cf08b9e312914b631f441f25d0b23f900ac98b",
+    "runtime/userbase/Python312/site-packages/tests/__init__.py": "ee26c4fd71d372b33a2ad76c2866963756e2182f310a9b8067a9e12c0523e9c5"
+  },
+  "original_H72_source_overwrites": 0,
+  "original_H72_L3_overwrites": 0,
+  "new_external_network_calls": 0,
+  "validation_role": "Executor"
+}

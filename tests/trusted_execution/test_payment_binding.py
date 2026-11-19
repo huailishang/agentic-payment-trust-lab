@@ -255,6 +255,9 @@ class PaymentExecutionBindingTests(unittest.TestCase):
             issued_at_epoch=1,
             observed_at_epoch=2,
             max_age_seconds=300,
+            verified_agent_ref="agent-1",
+            verified_provider_ref="offline-provider-1",
+            verified_executor_instance_ref="executor-1",
         )
         outcome, calls = self.execute(
             identity=replace(self.identity, credential_ref="credential-1"),

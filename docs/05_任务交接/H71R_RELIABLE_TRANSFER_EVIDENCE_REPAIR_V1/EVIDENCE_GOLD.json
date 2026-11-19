@@ -1,0 +1,58 @@
+{
+  "schema": "h71r-preserved-evidence-gold/v1",
+  "parent_failed_ac": ["AC-02", "AC-07"],
+  "snapshot_sha256": "fe98140cf0b2933c4a5340bfc22a8608fcb1786e0ab6945e408c9d5952c9a46f",
+  "gets": [
+    {
+      "url": "https://api.stripe.com/v1/checkout/sessions?limit=100",
+      "status": 200,
+      "body_sha256": "52327060e3d8b1209098119dc95e1a5abc9ff67a9153fc698663f2aa4b799ad6",
+      "empty": true,
+      "has_more": false
+    },
+    {
+      "url": "https://api.stripe.com/v1/payment_intents?limit=100",
+      "status": 200,
+      "body_sha256": "fd4d7e2f41cba69d122807fa0be5fd62e9b687d17c0e3c6e0fe97cbe752e56c0",
+      "empty": true,
+      "has_more": false
+    },
+    {
+      "url": "https://api.stripe.com/v1/charges?limit=100",
+      "status": 200,
+      "body_sha256": "37a0979163fe80f5416304be32d40be6771041c717fca5f385d838ef18ef51af",
+      "empty": true,
+      "has_more": false
+    }
+  ],
+  "failed_source_attempts": [
+    "h71-source-sandbox_source",
+    "h71-source-cli_root_source"
+  ],
+  "matrix_ids": [
+    "account_read",
+    "checkout_required_endpoints",
+    "test_listener",
+    "same_environment_binding"
+  ],
+  "sources": {
+    "keys_documentation": {
+      "repo_file": "docs/05_任务交接/H71_STRIPE_EXISTING_SANDBOX_LONG_QUALIFICATION_V1/sources/keys_documentation.txt",
+      "url": "https://docs.stripe.com/keys",
+      "sha256": "52eba99fdbaea41673b1305a41aa733ac0e4786ef0654b87d657ed5cbb23e11b"
+    },
+    "cli_listen_documentation": {
+      "repo_file": "docs/05_任务交接/H71_STRIPE_EXISTING_SANDBOX_LONG_QUALIFICATION_V1/sources/cli_listen_documentation.txt",
+      "url": "https://docs.stripe.com/cli/listen",
+      "sha256": "ae92f416f82171b54fa0572ec38b200c219eb134cca4612fdd58fbf007ae4925"
+    }
+  },
+  "source_read_limit_per_failure": 2097153,
+  "download_read_limit": 67108865,
+  "historical_received_bytes": "UNKNOWN; must not backfill synthetic counterexample values",
+  "prior_governance": {
+    "CURRENT.md": "6b1580caafa0014569449152f86d94021cad0ab92855e8ce35bd19d7bf737101",
+    "REMOTE_HANDOFF.md": "caef758aecab577e34b6f1a90e036ecde30af8f1ef06f332d99dfb5028b0a841",
+    "map_r115": "6164a448664a8a2c287368ed2349943b643057df516ed339823a8476c2302da7"
+  }
+}

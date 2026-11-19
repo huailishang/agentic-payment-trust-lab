@@ -1,0 +1,105 @@
+{
+  "schema": "h68-stripe-result/v1",
+  "task_id": "H68_STRIPE_CHECKOUT_SANDBOX_JOURNEY_V1",
+  "run_id": "h68-local-preflight-20261112",
+  "started_at": "2026-11-12T00:59:06Z",
+  "finished_at": "2026-11-12T02:50:13.308326+00:00",
+  "decision": "INPUT_LIMIT",
+  "reason": "HOSTED_BROWSER_AUTOMATION_NOT_AVAILABLE",
+  "limitation": "Chrome native CDP pipe and loopback port capability probes both failed. No official Stripe sandbox or hosted Checkout session was created.",
+  "security_control_increment": "NOT_MEASURED",
+  "private_snapshot_sha256": null,
+  "baseline_external_qualified_journeys": 0,
+  "qualified_external_journeys": 0,
+  "environment": {
+    "stripe_test_account_created": false,
+    "stripe_cli_downloaded": false,
+    "checkout_sessions_created": 0,
+    "payment_submissions": 0,
+    "successful_test_payments": 0,
+    "real_money_transferred": false,
+    "webhook_events_received": 0,
+    "external_api_requests": 0
+  },
+  "local_checks": {
+    "new_tests_passed": 13,
+    "legacy_tests_passed": 61,
+    "combined_tests_passed": 74,
+    "package_integrity": "PASS",
+    "workflow_validation": "PASS",
+    "budget_closed": "PASS",
+    "checker_selftest": "PASS_PREPARATION_ONLY",
+    "formal_l2": "FAIL",
+    "formal_l2_mandatory_checks_passed": 4,
+    "formal_l2_mandatory_checks_failed": 2,
+    "formal_l2_gate": "evidence/l2_blocked/L2-GATE.json",
+    "formal_l3": "NOT_RUN"
+  },
+  "browser_qualification": [
+    {
+      "method": "chrome_devtools_pipe",
+      "status": "INPUT_LIMIT",
+      "reason": "devtools_pipe_unavailable"
+    },
+    {
+      "method": "chrome_loopback_cdp_port",
+      "status": "INPUT_LIMIT",
+      "reason": "devtools_loopback_unreachable"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "N01",
+      "status": "NOT_EXECUTED",
+      "operation_id": null,
+      "order_id": null,
+      "session_ref": null,
+      "intent_ref": null,
+      "charge_ref": null,
+      "external_payment_verified": false,
+      "delivery_verified": false
+    },
+    {
+      "case_id": "C01",
+      "status": "NOT_EXECUTED",
+      "operation_id": null,
+      "order_id": null,
+      "session_ref": null,
+      "intent_ref": null,
+      "charge_ref": null,
+      "external_payment_verified": false,
+      "delivery_verified": false
+    },
+    {
+      "case_id": "R01",
+      "status": "NOT_EXECUTED",
+      "operation_id": null,
+      "order_id": null,
+      "session_ref": null,
+      "intent_ref": null,
+      "charge_ref": null,
+      "external_payment_verified": false,
+      "delivery_verified": false
+    },
+    {
+      "case_id": "D01",
+      "status": "NOT_EXECUTED",
+      "operation_id": null,
+      "order_id": null,
+      "session_ref": null,
+      "intent_ref": null,
+      "charge_ref": null,
+      "external_payment_verified": false,
+      "delivery_verified": false
+    }
+  ],
+  "evidence_paths": [
+    "ATTEMPT_LEDGER.jsonl",
+    "REPORT.md"
+  ],
+  "notes": [
+    "All local tests use synthetic fixtures, not verified Stripe provider objects.",
+    "No independent provider readback is possible without a sandbox account and test data.",
+    "No L2/L3 pass or project security-control gain is claimed."
+  ]
+}

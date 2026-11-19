@@ -1,0 +1,26 @@
+{
+  "task_id": "H74_DURABLE_AUTHORITY_CONTEXT_V1",
+  "schema": "h74-scope/v1",
+  "mutable_existing": ["src/agentic_payment_experiment/stripe_checkout_lab.py", "src/agentic_payment_experiment/adapters/stripe_checkout.py"],
+  "allowed_new": ["src/agentic_payment_experiment/stripe_authority_context.py", "tests/test_stripe_authority_context.py"],
+  "units": ["N01_COLD_RESUME", "R01_PAID_READ_ONLY_RECOVERY", "D01_RECEIPT_RECOVERY"],
+  "required_test_classes": ["AuthorityStoreCases", "StoredAdapterCases", "AuthorityDenialCases"],
+  "test_obligations": [
+    "Cold child process loads complete original GateContext graph including typed money/time/provenance and confirmation snapshot.",
+    "Persist before fake side effect; same fact idempotent; altered original context same operation rejected.",
+    "Stored create and browser payment consume DB context and original operation bindings; count actual callbacks.",
+    "Unknown/missing snapshot, wrong expected hash and cross-operation reference reject before fake client/browser callbacks.",
+    "Mutate authority_contexts.payload_json with original expected reference: load/consume fail closed.",
+    "Old confirmation with changed order version, amount, payee or resource rejects; no replacement of stored original.",
+    "Current clock advanced beyond original expiry or future confirmation rejects; rebuilding same IDs with new times cannot overwrite.",
+    "C01 no payment, R01 already-paid read-only recovery despite original expiry, D01 receipt bookkeeping replay has no extra payment/successful delivery."
+  ],
+  "measurement_schema": "h74-measurement/v1",
+  "unit_result_keys": ["unit", "input_sha256", "original_graph_sha256", "reloaded_graph_sha256", "snapshot_sha256", "cold_process", "original_times_preserved", "consumer_or_recovery_observed", "unexpected_payment_callbacks", "raw_evidence"],
+  "side_effect_limits": {"network": 0, "api": 0, "install": 0, "service": 0, "browser": 0, "payment": 0, "model": 0},
+  "budget_minutes": {"Executor": 105, "Evaluator": 45, "combined": 150},
+  "same_baseline_rules": "Old src snapshot is reconstructed from locked original bytes. Baseline UNSUPPORTED_DURABLE_API means absence of the API, not a security failure. Compare the same synthetic cases/clock/schema after the change; local fake callbacks only. Historical H72 objects are never reconstructed as observed facts.",
+  "authority_api": {"record": "record_authority(operation_id, ctx, *, resource_sha256, recorded_at) -> sha256", "load": "load_authority(operation_id, *, expected_sha256) -> GateContext", "create": "create_stored_session(store, *, operation_id, expected_authority_sha256, success_url, cancel_url, now)", "pay": "authorize_stored_browser_payment(store, *, operation_id, expected_authority_sha256, now, browser_payment)"},
+  "storage_minimum": {"table": "authority_contexts", "columns": ["snapshot_sha256", "operation_id", "payload_json"], "immutability": "same operation cannot silently replace original fact; explicit renewal flow is outside this packet"},
+  "residual_boundary": "Local content addressing is not authenticated consent or a signature trust root; a writer controlling both DB and expected references is outside this integrity claim. Legacy entrypoints remain compatible; only the new stored path receives this capability claim."
+}

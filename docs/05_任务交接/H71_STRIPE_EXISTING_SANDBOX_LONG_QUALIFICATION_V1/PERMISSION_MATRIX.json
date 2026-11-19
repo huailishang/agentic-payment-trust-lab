@@ -1,0 +1,55 @@
+{
+  "rows": [
+    {
+      "id": "account_read",
+      "operation": "GET /v1/account",
+      "key_family": "rkcs_test_ anonymous restricted sandbox credential",
+      "observed": "H69 original and both actor-specific /v1/account GET attempts returned HTTP 403.",
+      "documented": "Official key documentation describes restricted keys, but UNKNOWN for this anonymous key's account endpoint.",
+      "unknown": "Exact restricted key permission policy and whether this 403 is sandbox-specific.",
+      "refs": [
+        {
+          "source_id": "keys_documentation",
+          "quote": "Restricted API keys-selector\" aria-hidden=\"false\" class=\"sn-o2xpkb\"><a"
+        }
+      ]
+    },
+    {
+      "id": "checkout_required_endpoints",
+      "operation": "GET checkout.sessions/payment_intents/charges (limit=100) in frozen order",
+      "key_family": "rkcs_test_ anonymous restricted sandbox credential",
+      "observed": "NOT_MEASURED at source review; only actual bounded runtime GETs can establish observations.",
+      "documented": "UNKNOWN for this anonymous key's entitlement; general key documentation does not grant it.",
+      "unknown": "List GET allow/deny, object completeness and any Checkout creation permission.",
+      "refs": [
+        {
+          "source_id": "keys_documentation",
+          "quote": "Restricted API keys-selector\" aria-hidden=\"false\" class=\"sn-o2xpkb\"><a"
+        }
+      ]
+    },
+    {
+      "id": "test_listener",
+      "operation": "Stripe CLI 1.55.10 test-mode listen to local 127.0.0.1",
+      "key_family": "rkcs_test_ current H69 credential only",
+      "observed": "NOT_MEASURED; must meet three list GET preconditions.",
+      "documented": "Official CLI documentation describes a local listener; UNKNOWN for this sandbox key specifically.",
+      "unknown": "Current key supports CLI handshake, test events and isolated config.",
+      "refs": [
+        {
+          "source_id": "cli_listen_documentation",
+          "quote": "listen\">\n                      Listen for events\n                    <"
+        }
+      ]
+    },
+    {
+      "id": "same_environment_binding",
+      "operation": "H69 original provision credential/account to H71 three GETs",
+      "key_family": "rkcs_test_ original provision response, no native Account identity",
+      "observed": "H69 confirmed original provision bytes and credential/account id; Account GET 403.",
+      "documented": "UNKNOWN for this exact restricted key family from archived official source bytes; original H69 provision proves PROVISION_CREDENTIAL_CONTEXT_ONLY, not native account assurance.",
+      "unknown": "Whether this credential can read required sandbox resources or prove independent merchant identity.",
+      "refs": []
+    }
+  ]
+}

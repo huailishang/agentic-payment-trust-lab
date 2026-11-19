@@ -1,0 +1,27 @@
+{
+  "schema": "h74-freeze/v1",
+  "task_id": "H74_DURABLE_AUTHORITY_CONTEXT_V1",
+  "at_utc": "2026-11-16T01:56:43.029212+00:00",
+  "files": {
+    "BASELINE.json": "e587715c338c1f681e49f1f1e9a3a4669e11599d2b3b355bf0307ba034d8e8e2",
+    "BASELINE_PROBE.py": "b0ce2da47c228974b153a02904cdf068d7598fdf81778b9dbf230f399b7656fd",
+    "CHECK.py": "7d3c9569d8aeebab2ccb8c7ca3c5d03ca4ba5d51d21ab52797ea083f46e32e3a",
+    "CONTRACT.md": "b10c9d319e8d0b539e8e8999a4b5a951a68866d428e1c025151dec66ec407d48",
+    "evidence/preparation/DIFF_CHECK.stderr.log": "e8627e26c7a697a4a5d76524ad04add10a3a229fbe45bec2baa190c890ea3ac4",
+    "evidence/preparation/DIFF_CHECK.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/preparation/DOCUMENT_VALIDATOR.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/preparation/DOCUMENT_VALIDATOR.stdout.log": "bc32c85ec78d2448a592c80347ce6857654cba96d2d9b6a5d6f13a0d7875c591",
+    "evidence/preparation/READINESS.json": "f8550490097ef73453963f0e9ca0d8639a303b849e8659d7ed16478ab55a7990",
+    "EXECUTOR_START.md": "b990b52be1c93e9fa94fe32233805fa00fb29912962284302c1b744f03c658d1",
+    "PREPARATION.md": "51b48bd14f862641c0d2c1ac779cc28f2bdd50f61a1d7791dd808cab4f6384be",
+    "PREPARE.py": "b1df0643df2615b53964dfd420e9009b5fd6bb1a4cf673e2339962cf20ab9056",
+    "references/before_h74/CURRENT.md": "29a0c6d931ad680e407884716c12cd598bf43d7caf5d6cc62e52fb6a3ccaf766",
+    "references/before_h74/PROJECT_BOTTLENECK_MAP.md": "535acc2367d8bc711a4d33484404a2e36c1e10437792f513c5499f0476799424",
+    "references/before_h74/REMOTE_HANDOFF.md": "85b182bfa415aadc32c1ae2f8191de63ac42f4ef106f88ee188930c01074036f",
+    "references/initial_source/src/agentic_payment_experiment/adapters/stripe_checkout.py": "31b24f50dc1c236bf6a74cd173f9260b4fd680acdeb119873324ad1dca1c8d83",
+    "references/initial_source/src/agentic_payment_experiment/stripe_checkout_lab.py": "6c6b6495b05797b1c8db575cd736834a5c0f217598d9a6ec213ad51e77baa95e",
+    "runtime/userbase/Python312/site-packages/tests/__init__.py": "f2563ebf06fb71852aca1b7a2bba7ac070bee150be810a0846f5c565126e9a6e",
+    "SPEC.json": "62fdda186be00fea482082f1af5cd78ef9caa5dbfe01488bf739dedf4f4039d3",
+    "VALIDATION_PLAN.yaml": "0b97796d12a138acf12ab4906986a5a116baa2785928b6fcea46b4192e927407"
+  }
+}

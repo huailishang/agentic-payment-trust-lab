@@ -1,0 +1,93 @@
+{
+  "baseline_head": "61414d05521f7c9fe15cf0299b48b25916f5fa0e",
+  "executor_charged_minutes": 7.8822464,
+  "executor_status": "SUBMITTED_FOR_REVIEW",
+  "executor_window_coverage_end_utc": "2026-11-16T07:11:04.621784+00:00",
+  "external_actions": {
+    "api": 0,
+    "browser": 0,
+    "install": 0,
+    "model": 0,
+    "network": 0,
+    "payment": 0,
+    "service": 0
+  },
+  "files": {
+    "ATTEMPT_LEDGER.json": "c5069f0e81a3f83be3ade523f5ffb3360818072997d7fb56864bd5b07112f45c",
+    "COST_RECONCILIATION.json": "d82d1d42594b81f807e32ce1c9a64be80bde7116457c73e41cd683fa99f84a20",
+    "REPORT.md": "3d8a46453b15b8922c12f72ff6b83da19ede42810321b6219f11c2e108a87ab0",
+    "RUN_CLOSE.py": "8fb960201699685e89ac74ebf9ea5b7416f54f512611afeb251c64c16e40e601",
+    "RUN_ENV.cmd": "ffc1140270a822ab945f12d8a4e92c22f1225bb6001b4207df3067682ec0a698",
+    "derived/DIFF_CHECK.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "derived/DIFF_CHECK.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "derived/FINAL_COST.json": "0df5fb6bc6dc4294b36e249d974bfe8ef28fccda9a9cb933b045e9aea9aa54f5",
+    "derived/FINAL_STATUS.txt": "4e1d365f1114c896d6f8f13313740cc60da8c842f618898fa669f21a62ed0116",
+    "derived/SOURCE_DIFF.patch": "c701eb179a62a015d006e5322973c0bcd274f2ad0b351fc4d4181e8b20c9ddab",
+    "derived/SOURCE_HASHES.json": "705adc49f79e07a8671c870da76facc7356b7419a0fadf08b1825daf40929989",
+    "derived/WORKFLOW_VALIDATOR.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "derived/WORKFLOW_VALIDATOR.stdout.log": "bc32c85ec78d2448a592c80347ce6857654cba96d2d9b6a5d6f13a0d7875c591",
+    "evidence/holdout/INDEPENDENT_PROBES.json": "9e0d51e37425df0a57f0585b4d0c70a30515e507bad7ef6d9b4113735f5d3f91",
+    "evidence/l2_attempt_001/EV-01.meta.json": "3877023460aadb8e4d855525f4c6ca84329028508d003f2bc9d7b14fe5f216ef",
+    "evidence/l2_attempt_001/EV-01.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/l2_attempt_001/EV-01.stdout.log": "fc14fc495f4d5853bf348becf68e7fe8fdcfdf010db3f18eb8fda85044013d67",
+    "evidence/l2_attempt_001/EV-02.meta.json": "9277843504ee1c97ecf60f4be20685490ca0b63f01b043a9d0760f4eff3836ec",
+    "evidence/l2_attempt_001/EV-02.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/l2_attempt_001/EV-02.stdout.log": "8cd6a80e7c245915d751ea7f5956f4efe079ab6095b0f54e3e2d64c119a53dd0",
+    "evidence/l2_attempt_001/EV-03.meta.json": "8b5b0c2fef939b52d46cef27c6534f54544bbff7d33c0a21fe217e5724b3f2d8",
+    "evidence/l2_attempt_001/EV-03.stderr.log": "cbad925b030adc6afdc44807d5c1c3af6362cefa383d57c24c51cfac65c26ab5",
+    "evidence/l2_attempt_001/EV-03.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/l2_attempt_001/EV-04.meta.json": "f2f45d51a1431503b252a389259041e41577cf8e0ba201952a5df10b7193fa20",
+    "evidence/l2_attempt_001/EV-04.stderr.log": "613345b2e569f41102e358d3b188ce28b18f98cd92fb1a8f8752f32e7bd33b9d",
+    "evidence/l2_attempt_001/EV-04.stdout.log": "47b659dbf6e73c172c3bb863e588ed538e307e9c6e962928b8cc1cec35da92da",
+    "evidence/l2_attempt_001/EV-05.meta.json": "9a54b08ac710e6c2c052f3e2774dd07ecab5053aacaddd724313a5f95ae3c775",
+    "evidence/l2_attempt_001/EV-05.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/l2_attempt_001/EV-05.stdout.log": "5c36e4a86d299ddd56dfa3036efb417353e867371b70b44824931be145cc1722",
+    "evidence/l2_attempt_001/EV-06.meta.json": "1a57ba9c75013b5ba6c492929827a6b3afeedefd3405915508be7c0d6ce072b1",
+    "evidence/l2_attempt_001/EV-06.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/l2_attempt_001/EV-06.stdout.log": "b47217a5c8badc35728156b1a9128146ac22621c7f8378f2c6f28645a81a3bcf",
+    "evidence/l2_attempt_001/L2-GATE.json": "0cd42d127db2563aa4c98db3a964b37a7fdd61958d0a2f945f965f4ae86088ef",
+    "evidence/l2_attempt_001/L2-GATE.md": "5a8fb60370131c0bfd84a188088455dc6471a00a69d2d7d97d201d2bf60a0e0a",
+    "evidence/preparation/CLOSE.json": "9155f3b2b48ccbc8b5e82a5465965c623e55c3648cab6464cb6add49274b465b",
+    "evidence/preparation/DIFF_CHECK.stderr.log": "e8627e26c7a697a4a5d76524ad04add10a3a229fbe45bec2baa190c890ea3ac4",
+    "evidence/preparation/DIFF_CHECK.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/preparation/DOCUMENT_VALIDATOR.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/preparation/DOCUMENT_VALIDATOR.stdout.log": "bc32c85ec78d2448a592c80347ce6857654cba96d2d9b6a5d6f13a0d7875c591",
+    "evidence/preparation/FINALIZE.py": "c6e5f3c32ea24b130f62720d6589b5f1ed0871bb8f3aab2ce140bc23997bb2b0",
+    "evidence/preparation/FIRST_FREEZE.before.json": "dbdf139c3bc9c2dba84ce2747fd609c194f258c172b4c01c04f8795e076ccda8",
+    "evidence/preparation/PACKAGE_FINAL.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/preparation/PACKAGE_FINAL.stdout.log": "bdd8bd3a5c5ae62e0cd3e432db262e7fec247c1282daaa910e4eef7d39630266",
+    "evidence/preparation/READINESS.json": "e655b4a1a43f1c7738f9a6a6f46315adb56de2341646cca232efe54c2d63e42f"
+  },
+  "git_commit": false,
+  "git_push": false,
+  "independent_review": "PENDING",
+  "l2_gate": {
+    "attempt_count": 1,
+    "checks_total": 6,
+    "path": "evidence/l2_attempt_001/L2-GATE.json",
+    "result": "PASS",
+    "sha256": "0cd42d127db2563aa4c98db3a964b37a7fdd61958d0a2f945f965f4ae86088ef"
+  },
+  "l3_executed_by_executor": false,
+  "old_parent_artifacts_modified": false,
+  "schema": "h74r-submission/v1",
+  "source_files": {
+    "src/agentic_payment_experiment/stripe_authority_context.py": {
+      "changed": true,
+      "parent_rejected_sha256": "fbd5648d0d6cb0abb4175c58f2749525b1cf7a10d46190718375a54c4ad14743",
+      "repair_sha256": "7db3153d0c1961e28086f6c8e2dbe8c454db4abf3941a13a928153b98df8e40b"
+    },
+    "src/agentic_payment_experiment/stripe_checkout_lab.py": {
+      "changed": true,
+      "parent_rejected_sha256": "28ca8b113f5bf170ea7220f14b4a2d4620c1653d4fb1494f5a11a13e7631af76",
+      "repair_sha256": "af1b278056e97ee040434cd5d91645249c0d97c21c4fded79404b0d837f5fb40"
+    },
+    "tests/test_stripe_authority_context.py": {
+      "changed": true,
+      "parent_rejected_sha256": "031ff6ad687ea9006c8e431fef39440ef7c355b3f98ae2c5db7ace3423804cce",
+      "repair_sha256": "8aed2621efd094f9815d014c2d599aca3ffadd160cdaea6d73ee6da251923a11"
+    }
+  },
+  "submitted_at_utc": "2026-11-16T07:10:35.147053+00:00",
+  "task_id": "H74R_ORIGINAL_CONTEXT_FIDELITY_AND_COST_REPAIR_V1"
+}

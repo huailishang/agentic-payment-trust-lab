@@ -1,0 +1,51 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: H74_DURABLE_AUTHORITY_CONTEXT_V1
+checks:
+  - id: VP-01
+    ac: [AC-01]
+    cwd: .
+    command: [python, -B, docs/05_任务交接/H74_DURABLE_AUTHORITY_CONTEXT_V1/CHECK.py, preservation]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-02
+    ac: [AC-07]
+    cwd: .
+    command: [python, -B, docs/05_任务交接/H74_DURABLE_AUTHORITY_CONTEXT_V1/CHECK.py, baseline]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-03
+    ac: [AC-02]
+    cwd: .
+    command: [python, -B, -m, unittest, tests.test_stripe_authority_context.AuthorityStoreCases]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-04
+    ac: [AC-03, AC-05]
+    cwd: .
+    command: [python, -B, -m, unittest, tests.test_stripe_authority_context.StoredAdapterCases]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-05
+    ac: [AC-04]
+    cwd: .
+    command: [python, -B, -m, unittest, tests.test_stripe_authority_context.AuthorityDenialCases]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-06
+    ac: [AC-06]
+    cwd: .
+    command: [python, -B, docs/05_任务交接/H74_DURABLE_AUTHORITY_CONTEXT_V1/CHECK.py, regressions]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-07
+    ac: [AC-07]
+    cwd: .
+    command: [python, -B, docs/05_任务交接/H74_DURABLE_AUTHORITY_CONTEXT_V1/CHECK.py, impact]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-08
+    ac: [AC-01, AC-08]
+    cwd: .
+    command: [python, -B, docs/05_任务交接/H74_DURABLE_AUTHORITY_CONTEXT_V1/CHECK.py, final]
+    expected_exit_code: 0
+    mandatory: true

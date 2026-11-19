@@ -1,0 +1,118 @@
+{
+  "schema": "h68-stripe-spec/v1",
+  "task_id": "H68_STRIPE_CHECKOUT_SANDBOX_JOURNEY_V1",
+  "hypothesis_id": "H-68",
+  "api_version": "2026-10-28.endive",
+  "boundary": "CONTROLLED_MERCHANT_EXTERNAL_STRIPE_TEST",
+  "resource_file": "RESOURCE.txt",
+  "currency": "usd",
+  "amount_minor": 100,
+  "cases": [
+    {
+      "id": "N01",
+      "kind": "NORMAL",
+      "paid": true,
+      "success_deliveries": 1,
+      "min_delivery_attempts": 1
+    },
+    {
+      "id": "C01",
+      "kind": "CANCEL",
+      "paid": false,
+      "success_deliveries": 0,
+      "min_delivery_attempts": 0
+    },
+    {
+      "id": "R01",
+      "kind": "PAYMENT_UNKNOWN_RECOVERY",
+      "paid": true,
+      "success_deliveries": 1,
+      "min_delivery_attempts": 1
+    },
+    {
+      "id": "D01",
+      "kind": "DELIVERY_RECOVERY",
+      "paid": true,
+      "success_deliveries": 1,
+      "min_delivery_attempts": 2
+    }
+  ],
+  "budgets": {
+    "active_minutes": 480,
+    "wall_hours": 24,
+    "implementation_attempts": 2,
+    "l2_attempts": 2,
+    "l3_attempts": 1,
+    "anonymous_provision_attempts": 1,
+    "checkout_sessions": 4,
+    "payment_submissions": 3,
+    "successful_payments": 3,
+    "total_amount_minor": 300,
+    "controlled_api_calls": 120,
+    "live_api_calls": 80,
+    "executor_readback_calls": 20,
+    "evaluator_readback_calls": 20,
+    "browser_actions": 80,
+    "download_attempts": 3,
+    "download_bytes": 67108864,
+    "per_request_timeout_seconds": 30
+  },
+  "source_scope": "Official documentation plus release source, not runtime-qualified",
+  "synthetic_contact": "h68-checkout-lab@example.invalid",
+  "runtime_authorization_required": [
+    "authorization_api_call",
+    "authorization_install",
+    "authorization_local_service",
+    "authorization_browser_test_only",
+    "authorization_test_payments"
+  ],
+  "public_result_schema": "h68-stripe-result/v1",
+  "private_snapshot_schema": "h68-stripe-provider/v1",
+  "new_product_files": [
+    "src/agentic_payment_experiment/adapters/stripe_checkout.py",
+    "src/agentic_payment_experiment/stripe_checkout_lab.py",
+    "tests/test_stripe_checkout_adapter.py",
+    "tests/test_stripe_checkout_lab.py",
+    "scripts/validation/stripe_checkout_lab.py"
+  ],
+  "executor_task_outputs": [
+    "RUN.py",
+    "RESULT.json",
+    "REPORT.md",
+    "ATTEMPT_LEDGER.jsonl",
+    "derived/",
+    "versions/",
+    "evidence/"
+  ],
+  "ledger_kinds": [
+    "active_work",
+    "implementation",
+    "l2",
+    "l3",
+    "anonymous_provision",
+    "live_api",
+    "executor_readback",
+    "evaluator_readback",
+    "browser_action",
+    "download",
+    "service"
+  ],
+  "legacy_tests": [
+    "tests.test_order_validation",
+    "tests.test_payment_recovery",
+    "tests.test_lifecycle",
+    "tests.trusted_execution.test_governed_action",
+    "tests.trusted_execution.test_context_policy"
+  ],
+  "acceptance_criteria": [
+    "AC-01",
+    "AC-02",
+    "AC-03",
+    "AC-04",
+    "AC-05",
+    "AC-06",
+    "AC-07",
+    "AC-08",
+    "AC-09"
+  ]
+}

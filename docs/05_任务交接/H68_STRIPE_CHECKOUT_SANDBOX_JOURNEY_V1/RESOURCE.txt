@@ -1,0 +1,2 @@
+H68 controlled digital resource version 1.
+This is a synthetic lab resource for delivery verification.

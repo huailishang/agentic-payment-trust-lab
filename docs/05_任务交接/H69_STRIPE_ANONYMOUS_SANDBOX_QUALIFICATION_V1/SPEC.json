@@ -1,0 +1,21 @@
+{
+  "task_id": "H69_STRIPE_ANONYMOUS_SANDBOX_QUALIFICATION_V1",
+  "schema": "h69-qualification-spec/v1",
+  "api_version": "2026-10-28.endive",
+  "original_deadline": "2026-11-13T00:59:06+00:00",
+  "synthetic_email": "h68-checkout-lab@example.invalid",
+  "decisions": ["ELIGIBLE", "INPUT_LIMIT", "UNKNOWN_PROVISION_RESULT"],
+  "stages": ["preflight", "challenge", "provision", "account", "download", "listen", "complete"],
+  "budgets": {"active_minutes": 45, "wall_minutes": 120, "implementation": 1, "l2": 2, "l3": 1, "challenge": 1, "provision": 1, "account_get": 2, "executor_readback": 2, "evaluator_readback": 2, "download": 3, "download_bytes": 67108864, "listener": 1, "local_server": 1, "service_seconds": 60},
+  "cli": {"version": "1.55.10", "url": "https://github.com/stripe/stripe-cli/releases/download/v1.55.10/stripe_1.55.10_windows_x86_64.zip", "archive_bytes": 11929882, "archive_sha256": "ea273eaabe6641fc960c7b7fcdb1a7e6cb45ca47fe8202c91b2ef89458ccd937"},
+  "public_schema": "h69-qualification-result/v1",
+  "private_schema": "h69-qualification-private/v1",
+  "result_fields": ["schema", "task_id", "run_id", "decision", "stage", "reason_code", "creation", "account_ref", "private_snapshot_sha256", "checkout_sessions", "payments", "browser_actions"],
+  "private_fields": ["schema", "run_id", "creation", "http", "listener"],
+  "http_record_fields": ["method", "url", "status", "error", "body_file", "body_sha256", "started_at", "finished_at"],
+  "creation_values": ["NOT_SENT", "CREATED", "FAILED", "UNKNOWN"],
+  "private_manifest": "SNAPSHOT.json",
+  "private_credentials": "CREDENTIALS.json",
+  "listener_fields": ["attempted", "ready", "test_mode", "stopped", "stdout_file", "stderr_file", "archive_sha256", "config_isolated", "key_in_argv"],
+  "executor_outputs": ["RUN.py", "RESULT.json", "REPORT.md", "ATTEMPT_LEDGER.jsonl", "evidence/", "versions/"]
+}

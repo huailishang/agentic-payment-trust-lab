@@ -1,0 +1,23 @@
+# H71 公私证据与执行接口
+
+七步顺序见CONTRACT。执行者只实现本包RUN和取证；不从checker构造成功事实。所有JSON UTF-8且禁止重复key；所有物质尝试动作前BEGIN，完成END，seq连续，原失败/版本不删除。来源矩阵与引用字段沿用H70，SOURCE_CHECK为原H70检查器的独立字节副本，只复用其离线sources函数，不执行其旧路由或旧预算检查。
+
+SOURCE_MANIFEST.json含sources数组，项为id/url/file/sha256/bytes/started_at/finished_at/status；成功正文在sources/，官方原始字节。PERMISSION_MATRIX.json含四个rows，每行id/operation/key_family/observed/documented/unknown/refs；refs为{source_id,quote}连续原文片段。无引用时documented含UNKNOWN；记录来源未知不能省略维度。
+
+公开RESULT字段严格等于SPEC.public_fields。schema=h71-long-qualification-result/v1，task_id/唯一run_id，decision见SPEC，stage为六phase之一或complete；reason_code大写诊断码；account_ref沿用H69去敏账户引用，account_assurance固定PROVISION_CREDENTIAL_CONTEXT_ONLY，checkout_write_permission=NOT_MEASURED，checkout_sessions/payments整数0。private_snapshot_sha256为本包私有SNAPSHOT原字节摘要。若无法找到原材料，报告BLOCKED并具体说明INPUT_LIMIT；必要原文不可复核时L2不得提交签收，不能补建环境或伪造account_ref。
+
+H71_PRIVATE_DIR为新的仓库外私有目录；旧材料通过H69_PRIVATE_DIR原位读取，可复用已存在的评估者仓库外定位信息，不让Human再次提供密钥。若材料确实不可访问，记录具体INPUT_LIMIT。原材料始终只读。只把key/account复制到本包私有CREDENTIALS.json供独立回查，核与原provision一致，不把旧私有路径写公开记录。
+
+SNAPSHOT.json含schema=h71-long-qualification-private/v1、run_id、h69_snapshot_sha256、key_sha256、account_ref、phases、http、listener、browser。phases为SPEC六id到{status,reason}的对象：status=PASS/INPUT_LIMIT/NOT_RUN，首个INPUT_LIMIT之后全部现场phase为NOT_RUN。后续离线回归/整理不写成现场阶段成功。h69_snapshot_sha256必须等于H69 RESULT中封存值，key_sha256和account_ref与原材料一致。
+
+http仅现场三个GET按SPEC.urls顺序记录，项含method/url/started_at/finished_at/status/error/body_file/body_sha256/key_sha256。status=null时保留TIMEOUT/DNS/TLS/NETWORK类别，body_file/sha=null；HTTP失败保留原文，不能吞错。读取上限2MiB；超大正文按失败保存实际截断标识，不能继续。全部阶段失败也保存SNAPSHOT和真实停止理由。
+
+listener至少含attempted/ready/test_mode/config_isolated/key_in_argv/stopped/receiver_stopped/archive_file/stdout_file/stderr_file。运行时另附argv（无key）、配置路径（仅私有）、key_sha256、listener_pid/receiver_pid/exit_code、实际配置来源核对；原ZIP和版本/help文件在私有目录。READY必须原文含Ready!与本次whsec，停止须有PID/退出关联。没有运行时attempted/ready=false，其它引用null。本包不生成事件；可能自主出现的辅助流量如实单列。
+
+browser含attempted/isolated/clicked/observed/closed/proof_file；本地实测成功时布尔全true、observed=H71_LOCAL_CLICK_OK。proof_file为私有实际工具操作和输出索引，必须证明新隔离上下文、本次点击、状态与关闭；不是手写预期页面源码。最多8操作，每次入账。浏览器不打开Stripe托管页或已有用户页。
+
+账本行seq/event/attempt_id/kind/at；END含status=SUCCEEDED/FAILED/INPUT_LIMIT/UNKNOWN。kind为active_work/implementation/source_http/live_get/executor_readback/evaluator_readback/download/cli_offline/listener/local_server/browser_action/l2/l3。source_http BEGIN含url，END含bytes/http_status；live_get/actor读回BEGIN含固定url，END含http_status；download BEGIN含url、END含bytes。source重定向每跳计，单URL2；现场/各actor三个URL各至多1次，失败不重试。现场记录started_at/finished_at须在对应BEGIN/END内，不能在END后才写finished_at。服务END含owned_pid/stopped，运行最多60秒；启动失败尚无子进程时以started=false/owned_pid=null/stopped=true及私有异常证明记录。主动区间不重叠。门禁运行可有active_work/L2/L3未结束，提交前全部关闭。
+
+READBACK_{actor}.json由冻结CHECK产生，nonce由Evaluator独立随机生成（至少32字符）；同actor既有标记先审nonce/run/checker/body摘要，不再请求。真实三GET及原始响应私有保存，公开marker仅摘要/状态/匹配结果。若RESULT非READ_AND_LISTEN_READY则仅审停止原文，不额外发请求。正式L3仅此只读回查，不重跑监听/浏览器/下载。
+
+运行前核原截止与共享额度；不要更改HOME，不把key放命令行，不从CLI已有配置获取账户。原生Windows环境显式处理路径与CLI config选项，WSL只能在宿主/挂载/配置隔离均有证据时作为桥接，不引入新依赖。不可行则停止并如实报告。

@@ -1,0 +1,85 @@
+{
+  "schema": "h68r-local-trust-repair-result/v1",
+  "task_id": "H68R_STRIPE_CHECKOUT_LOCAL_TRUST_REPAIR_V1",
+  "task_kind": "repair",
+  "baseline_head": "c6c617c9e20e227c7bfe967cc86ed9a102034036",
+  "decision": "LOCAL_REPAIR_PASSED_AWAITING_INDEPENDENT_L3",
+  "executor_status": "SUBMITTED_FOR_REVIEW",
+  "external_qualified_checkout_journeys": 0,
+  "security_control_increment": "NOT_MEASURED_EXTERNALLY",
+  "scope": "offline_only",
+  "fixes": [
+    {
+      "ac": "AC-01",
+      "category": "confirmation_action_freshness",
+      "before": "expired/future confirmation could invoke callback",
+      "after": "blocked at actual create/pay timestamp",
+      "evidence": "VP-02"
+    },
+    {
+      "ac": "AC-02",
+      "category": "persisted_original_session_binding",
+      "before": "foreign provider_ref could be RECOVERED",
+      "after": "payment and observation require persisted session/request/order/payment binding",
+      "evidence": "VP-02"
+    },
+    {
+      "ac": "AC-03",
+      "category": "payment_notification_business_binding",
+      "before": "foreign payment intent signature accepted",
+      "after": "payment-intent event requires already independently confirmed original intent and operation",
+      "evidence": "VP-02"
+    },
+    {
+      "ac": "AC-04",
+      "category": "sqlite_connection_ownership",
+      "before": "Windows temporary db cleanup errors and open handles",
+      "after": "all success/error transactions commit/rollback and always close real SQLite handle",
+      "evidence": "VP-02,VP-03 and Windows-native"
+    }
+  ],
+  "checks": {
+    "frozen_integrity": "PASS",
+    "offline_safety_tests": {
+      "passed": 9,
+      "failed": 0,
+      "linux": "PASS",
+      "windows_anaconda": "PASS"
+    },
+    "legacy_and_local_regressions": {
+      "passed": 74,
+      "failed": 0,
+      "linux": "PASS",
+      "windows_anaconda": "PASS"
+    },
+    "l2_gate": "PASS",
+    "l2_check_count": 3,
+    "l2_mandatory_failures": 0,
+    "l2_summary": "evidence/l2_attempt_001/L2-GATE.json",
+    "l3_gate": "NOT_RUN_EVALUATOR_OWNED"
+  },
+  "environment": {
+    "windows_runtime": "D:\\SoftWare\\Anaconda\\install\\python.exe",
+    "external_api_calls": 0,
+    "browser_actions": 0,
+    "payments": 0,
+    "installations": 0,
+    "commits": 0,
+    "pushes": 0
+  },
+  "product_files_changed": [
+    "src/agentic_payment_experiment/adapters/stripe_checkout.py",
+    "src/agentic_payment_experiment/stripe_checkout_lab.py"
+  ],
+  "evidence": [
+    "evidence/l2_attempt_001/L2-GATE.json",
+    "evidence/windows_native/safety.stderr.log",
+    "evidence/windows_native/regressions.stderr.log",
+    "ATTEMPT_LEDGER.jsonl"
+  ],
+  "limitations": [
+    "Passed offline safety and native Windows only; independent Evaluator L3 still required.",
+    "H68 parent task remains BLOCKED and actual Stripe hosted Checkout remains unmeasured.",
+    "This H68R contract explicitly forbids Stripe API, browser, installation, payment and push."
+  ]
+}
