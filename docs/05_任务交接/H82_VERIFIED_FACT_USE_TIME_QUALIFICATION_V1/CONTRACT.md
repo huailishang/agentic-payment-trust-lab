@@ -5,6 +5,7 @@ Task kind: capability_experiment
 Execution mode: **measurement-only(仅测量)**  
 Workflow: `evaluator-executor-workflow/v2.2`  
 **Contract state: CONTRACT_FROZEN / Evaluator 已制定，下一角色 Executor**  
+**A1 environment amendment 2026-11-20**: `AMENDMENT_ENV_20261120.md` 已获负责人最新授权，优先 Conda `agent`、现有 WSL/Python3.11+ 可回退。原环境专属限制由 A1 替代，原五项 AC、15项原件 SHA 与所有金融安全约束不变。
 Dispatch: `SINGLE`  
 Baseline HEAD: `61414d05521f7c9fe15cf0299b48b25916f5fa0e`  
 Project map: docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md
@@ -43,18 +44,18 @@ H-82-CANDIDATE的可证伪假设：在当前受保护源码中，消费者使用
 ## 3. 受控输入、冻结脚本与强制运行环境
 
 - 固定原件：`SOURCE_LOCK.json`对15项原源码、相关原测试、H81独立终验文件、原项目地图r138与本轮前置审计按SHA-256锁定；`baseline_head`仅锁原提交，不覆盖工作区已存在、尚未提交的H80/H81代码。不能用`git show HEAD`代替已冻结工作树版本。
-- 固定测量工具：`CHECK.py` SHA-256=`2ba0801715263b681ba25ac61498c0a2e0b76d8ce5013447302aef43256f38e0`。
+- A1重新冻结测量工具：`CHECK.py` SHA-256=`fd20a33968cdadb368bd08b6d7ba0ecb49215efc69a4b3128be7f066077998ea`（原版SHA与可审计差异见`AMENDMENT_ENV_20261120.md`；仅改变运行平台守卫，测量断言未变）。
 - 固定输入清单：`SOURCE_LOCK.json` SHA-256=`07c376a0febe04b7e936e9d56dc940c6d9b965a7ffef20af180dcd1ca385c47f`。
 - 固定验证计划：`VALIDATION_PLAN.yaml` SHA-256=`38f509761447365d39f3bf74ca90a9e83ed8ff79d80cca51382a003264ab356e`。
 - 前一任务H81已接受SUBMISSION SHA-256=`72cd569ad2f5274c32511135c1c97c0e4469c5f0e5cf742ff3cd1ab590a762ba`，其2647项接受与独立L3不因本任务重复验收。
-- **只允本机原生Windows + 既有Conda `agent` Python运行冻结验证。** WSL/Bash作为Windows Python传输桥、WSL原生运行、Docker/新增服务、安装/下载均**不授权**；`CHECK.py`主动拒绝非Windows运行。若原生入口不可用，直接交`BLOCKED`证据，不以环境变通替代授权。
+- **A1 环境准入：** 优先既有Windows Conda `agent`，若当前连接无法调用，则允许既有 WSL/Linux Python3.11+ 离线执行（必要时可用已存在的WSL→Windows Python传输）。本轮已确认 WSL `/usr/bin/python3` 为3.12.3且具备既有依赖；禁止因环境来源不符直接阻塞。无授权的新安装、新服务、API或真实支付仍禁止；正式运行须记录解释器、环境依赖和原始证据。
 - 测量脚本只读，原生Python标准库驱动已存在模块与测试；所构造Fact是**合成对象、不经加密验证**，仅用于消费者接口资格判断；不发证书，不联网，不打开钱包，不执行真实支付callback。
 
 ## 4. 完整执行步骤（在同一合同内自动推进）
 
 | 阶段 | 执行者行动 | 继续/停止条件 |
 | --- | --- | --- |
-| S0 原件锁与运行入口 | 记录基线/当前git状态，核15项SHA、冻结脚本和计划摘要；核既有原生Windows Conda `agent`入口，无新安装 | 输入漂移或无允许的原生运行入口→BLOCKED，不得修产品/冻结文件 |
+| S0 原件锁与运行入口 | 记录基线/当前git状态，核15项SHA、冻结脚本和计划摘要；优先核既有Conda `agent`，不可调用时核WSL Python3.11+现有依赖，无新安装 | 原件漂移或所有可用本地离线解释器均无法运行→BLOCKED，不得修产品/冻结文件 |
 | S1 现有能力及输入资格 | 执行`VP-02 inventory`，列出历史观察时刻、证书有效期、Nonce、撤销标志、引用轮换、身份晋级、支付P3现有语义；四类权威来源标`MEASURED/UNKNOWN/OUT_OF_SCOPE` | 没有真实权威来源→继续做**接口层**合成探针；不得假装生产事实 |
 | S2 单变量离线探针 | `VP-03 probe`：正常事实晋级VERIFIED；只变化**外部模拟使用时刻**不注入函数，比较输出；各单变量对照分别改`identity.status`、当前credential ref、fact的`freshness_valid`、已验证Agent上下文 | 基线或控制结果偏离合同时停止；外部时间标签结果仅能解释为“本函数不使用该输入”，不是真实过期/安全失效 |
 | S3 最小守护回归 | `VP-04 regressions`对原五组凭据、上下文、身份、支付绑定和ES256测试重新执行；禁止skip/削弱/修原代码 | 有任何新回归失败→BLOCKED/REJECTED候选，不为成功改旧测试 |
@@ -80,15 +81,15 @@ Executor可写：本H82下`REPORT.md`、`SUBMISSION.json`、`ATTEMPT_LEDGER.json
 
 ## Exclusions / 明确排除
 
-不允许真实凭据/状态服务/支付、私钥、WSL、网络、安装下载和产品代码改动；不得借用H81专属环境例外。
+不允许真实凭据/状态服务/支付、私钥、网络API、安装下载和产品代码改动；A1单独批准现有WSL及其他合格本地离线Python执行，不依赖H81环境例外。
 
 ## 7. Cost, authorization and stop conditions / 成本、停止条件与授权
 
-预算：**1个只读测量周期；最多2次正式L2（第二次仅原生Python启动/环境错误且不动冻结代码时）；最多1次正式L3；并发1**。每项测试子进程上限100秒，5项门禁，0新服务、0真实凭据、0外部API/支付、0产品实现修改。廉价L1仅1轮。成功即停，禁止靠增加样本或重跑获得“产品改善”。原H80 2实现/2失败L2、H81实际1实现登记/1L2/1L3以及其它历史消耗独立保留，当前包预算不清零旧成本。
+预算：**1个只读测量周期；最多2次正式L2（第二次仅本地Python启动/环境错误且不动已重冻结代码时）；最多1次正式L3；并发1**。每项测试子进程上限100秒，5项门禁，0新服务、0真实凭据、0外部API/支付、0产品实现修改。廉价L1仅1轮。成功即停，禁止靠增加样本或重跑获得“产品改善”。原H80 2实现/2失败L2、H81实际1实现登记/1L2/1L3以及其它历史消耗独立保留，当前包预算不清零旧成本。
 
-立即停止：15项源SHA任一不符、原生环境不可用、合成对照不符、原测试失败、时间/身份权威来源需要扩大权限、需要新增实现或修改支付策略、L2重试超限、任何新证书/私钥/网络/资金动作被提出。先交Evaluator，不自发扩包；非权威数据标`UNKNOWN/NOT_JUDGEABLE`是合规输出，不为求“找到漏洞”强改结果。
+立即停止：15项源SHA任一不符、所有合格已有本地解释器均不可用、合成对照不符、原测试失败、时间/身份权威来源需要扩大权限、需要新增实现或修改支付策略、L2重试超限、任何新证书/私钥/网络/资金动作被提出。先交Evaluator，不自发扩包；非权威数据标`UNKNOWN/NOT_JUDGEABLE`是合规输出，不为求“找到漏洞”强改结果。
 
-当前所有结构化授权标志只允许`authorization_reference_read=true`；commit、push、历史重写、API、安装、下载、WSL、服务、浏览器、测试/真实付款、容器、临时新凭据全部false。负责人授权**制定执行包**，不代表授权真实支付、对外接入或篡改冻结资料；合同授权的只是本地原生离线检查与报告工作。
+当前结构化授权仅`authorization_reference_read=true`、`authorization_existing_wsl=true`；commit、push、历史重写、API、安装、下载、服务、浏览器、测试/真实付款、容器安装和临时新凭据仍false。负责人授权**制定执行包**，不代表授权真实支付、对外接入或篡改冻结资料；合同授权的只是本地原生离线检查与报告工作。
 
 ## 8. 验收后项目决策
 

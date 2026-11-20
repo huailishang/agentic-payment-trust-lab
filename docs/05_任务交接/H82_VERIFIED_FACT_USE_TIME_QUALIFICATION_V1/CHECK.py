@@ -32,9 +32,11 @@ def fail(message):
     raise AssertionError(message)
 
 
-def check_native():
-    if os.name != "nt":
-        fail("H82 formal gate is native-Windows-only; no WSL/Bash/Windows bridge authority is frozen")
+def check_runtime():
+    # H82 A1 2026-11-20: runtime platform is not a trust assertion.
+    # Preserve all original data, behavioral, and regression checks.
+    if sys.version_info < (3, 11):
+        fail("H82 requires Python >= 3.11 in an existing local environment")
 
 
 def preservation():
@@ -239,7 +241,7 @@ def main():
                                          "regressions", "qualification"))
     parser.add_argument("--phase", choices=("executor", "evaluator"), default="executor")
     options = parser.parse_args()
-    check_native()
+    check_runtime()
     if options.mode != "preservation":
         preservation()
     {"preservation": preservation, "inventory": inventory, "probe": lambda: probe(options.phase),
