@@ -1,0 +1,23 @@
+{
+  "schema": "h85-local-execution-authorization/v1",
+  "task_id": "H85_WEBSHOP_ACTION_TIME_AUTHORITY_CONSUMPTION_V1",
+  "user_instruction": "不用经过我授权，你继续完善新执行包即可",
+  "interpretation": "按上一轮已列明的 H85 本地隔离范围完成制包并交接，无需另设人工确认节点。本轮只进行制包验证。此记录仅适用于 H85。",
+  "enabled_flags": [
+    "authorization_ephemeral_test_credentials",
+    "authorization_existing_wsl",
+    "authorization_local_service"
+  ],
+  "role_live_attempt_limit": 1,
+  "scope": "每角色各一次现有 Ubuntu WSL、仅本机回环及专属 socket 的隔离 SPIRE、同次临时凭据发行、独占登记创建/删除和归属清理。",
+  "forbidden": [
+    "真实资金",
+    "外部测试支付",
+    "外部 API 或网络",
+    "下载",
+    "安装",
+    "Git 提交",
+    "Git 推送",
+    "历史改写"
+  ]
+}

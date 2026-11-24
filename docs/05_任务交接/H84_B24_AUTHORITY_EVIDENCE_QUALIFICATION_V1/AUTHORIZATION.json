@@ -1,0 +1,18 @@
+{
+  "task_id": "H84_B24_AUTHORITY_EVIDENCE_QUALIFICATION_V1",
+  "status": "GRANTED",
+  "owner_quote": "授权上述操作，直接继续开始",
+  "source": "2026-11-24 14:29 +08:00 本次聊天；针对前一回复列出的三项操作",
+  "flags": {
+    "authorization_existing_wsl": true,
+    "authorization_local_service": true,
+    "authorization_ephemeral_test_credentials": true,
+    "authorization_commit": false,
+    "authorization_push": false,
+    "authorization_api_call": false,
+    "authorization_install": false,
+    "authorization_artifact_download": false,
+    "authorization_test_payments": false
+  },
+  "scope": "既有WSL；仅本轮隔离SPIRE服务、临时测试凭据及本轮隔离登记调整；真实资金、外部API、安装下载、Git提交推送均禁止。按草案两角色各至多一次观察窗和一次资格变更，冻结前仅做资产预检。"
+}

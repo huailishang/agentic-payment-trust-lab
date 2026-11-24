@@ -620,6 +620,24 @@ def integration_phase(args: argparse.Namespace) -> int:
         callback_calls.append("offline_checkout_seam")
         return str(offline_execution["callback_result_ref"])
 
+    # Explicit H85 experiment: the integration caller owns acquisition,
+    # verification and clock; the default P9 path is unchanged.
+    credential_kwargs = {}
+    authority_observation = None
+    authority_source = getattr(args, "action_time_source", None)
+    if authority_source is not None:
+        from uuid import uuid4
+        from action_time_authority import collect
+        governed_action = replace(
+            governed_action, action_id=f"{governed_action.action_id}-h85-{uuid4().hex}"
+        )
+        fact, use_at, authority_observation = collect(
+            authority_source, action=governed_action, order=order, mandate=mandate,
+            request=bound_request, payment=payment_candidate,
+            confirmation=confirmation, identity=identity,
+        )
+        credential_kwargs = {"credential_possession_fact": fact,
+                             "credential_use_at_epoch": use_at}
     gate_webshop_buy_now = api["gate_webshop_buy_now"]
     gate = gate_webshop_buy_now(
         adaptation=adaptation,
@@ -635,6 +653,7 @@ def integration_phase(args: argparse.Namespace) -> int:
         confirmation_record=confirmation,
         authorized_adaptation=adaptation,
         governed_action=governed_action,
+        **credential_kwargs,
     )
     require(
         getattr(gate.decision, "value", str(gate.decision)) == "ALLOW",
@@ -915,6 +934,14 @@ def integration_phase(args: argparse.Namespace) -> int:
             "experiment_context_promoted_to_webshop_fact": False,
         },
     }
+    if getattr(args, "action_time_baseline", False):
+        from action_time_authority import business_snapshot, digest
+        snapshot = business_snapshot(order, mandate, bound_request, confirmation)
+        result["action_time_baseline"] = {"business_digest": digest(snapshot),
+                                          "business_snapshot": snapshot}
+    if authority_observation is not None:
+        authority_observation["governed_action_binding"] = gate.governed_action_fact.status.name
+        result["action_time_authority"] = authority_observation
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(
         json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n",

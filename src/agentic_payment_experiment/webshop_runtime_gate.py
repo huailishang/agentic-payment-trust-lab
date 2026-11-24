@@ -21,6 +21,7 @@ from .payment_execution import observe_payment_execution_gate
 from .trusted_execution import (
     ConfirmationRecord,
     ContextPolicyFact,
+    CredentialPossessionVerificationFact,
     GovernedActionBindingFact,
     GovernedPaymentAction,
     KnownPaymentAttemptPreflightFact,
@@ -82,6 +83,8 @@ def gate_webshop_buy_now(
     checkout_callback: Callable[[], Any] | None,
     *,
     current_credential_ref: str | None = None,
+    credential_possession_fact: CredentialPossessionVerificationFact | None = None,
+    credential_use_at_epoch: int | None = None,
     confirmation_record: ConfirmationRecord | None = None,
     seen_request_ids: Collection[str] = (),
     authorized_adaptation: WebShopCommerceAdaptation | None = None,
@@ -218,8 +221,25 @@ def gate_webshop_buy_now(
             callback_failure.append(type(exc).__name__)
             return _CALLBACK_FAILURE_SENTINEL
 
+    qualified_fact: CredentialPossessionVerificationFact | None = None
+    qualification_reason: str | None = None
+    if credential_possession_fact is not None:
+        if type(credential_possession_fact) is not CredentialPossessionVerificationFact:
+            qualification_reason = "webshop:credential_fact_invalid_type"
+        elif (
+            type(credential_use_at_epoch) is not int
+            or credential_use_at_epoch <= 0
+            or type(credential_possession_fact.observed_at_epoch) is not int
+            or credential_possession_fact.observed_at_epoch <= 0
+        ):
+            qualification_reason = "webshop:credential_use_time_missing_or_invalid"
+        elif credential_possession_fact.observed_at_epoch != credential_use_at_epoch:
+            qualification_reason = "webshop:credential_use_time_mismatch"
+        else:
+            qualified_fact = credential_possession_fact
+
     def observe_runtime(decision: Decision) -> RuntimeGateRecord:
-        return observe_payment_execution_gate(
+        record = observe_payment_execution_gate(
             decision,
             mandate,
             adaptation.order,
@@ -230,8 +250,15 @@ def gate_webshop_buy_now(
             current_provider_ref=current_provider_ref,
             current_executor_instance_ref=current_executor_instance_ref,
             current_credential_ref=current_credential_ref,
+            credential_possession_fact=qualified_fact,
             context_policy_fact=context_policy_fact,
         )
+        if qualification_reason is not None:
+            record = replace(
+                record,
+                reason_codes=tuple(sorted(set((*record.reason_codes, qualification_reason)))),
+            )
+        return record
 
     known_attempt_fact: KnownPaymentAttemptPreflightFact | None = None
     if type(known_payment_attempts) is not tuple or known_payment_attempts:

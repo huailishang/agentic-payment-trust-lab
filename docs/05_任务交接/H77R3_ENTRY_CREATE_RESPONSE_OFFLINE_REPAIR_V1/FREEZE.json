@@ -1,0 +1,22 @@
+{
+  "schema": "h77r3-freeze/v1",
+  "files": {
+    "BASELINE.json": "31dc01c60d13d49f6b4fcb7e71e1d8e74a8e219ee554efd3f525f925a91dbe4f",
+    "BINARY_MEMBER_LOCK.json": "9f074d7d486badb23c5b29238fd3a2df41e6109854e645f971fc080a3144568b",
+    "BOOTSTRAP.py": "95a6506c05f5b213f31939b405aba03f39102ec07ddf5938668c192a8905553a",
+    "CHECK.py": "fa70a7c89ab84a33633030c7d8d74f7c0c9ecb877f3f6223b8c5ae712e068987",
+    "CONTRACT.md": "7c390c0b18734b3dd16231a11f1e4c47b4160653f869d2ffe3073ec95922d2bf",
+    "PREPARE.py": "78cd3522cc5e1a9dcc34241f3474d54cb9b10d09be6404c587b1805d3709682b",
+    "RUN.py": "c211bd9b6ace4dd50580a32acfcacd6b6650b2811a38b1cdd522da5d6d6b4eb9",
+    "SOURCE_LOCK.json": "5ea56e4f3d62f8ed49f9cc3fdcdf50a60c70985a3de2c05cac952c7780a4d055",
+    "TASK_TESTS.py": "b8265edd1cb6842e0522c7daa213859f080438e9750d902a335edfcce518c880",
+    "VALIDATION_PLAN.yaml": "eb5b5e8003672536b4299b3f2ee02e7cb14a2d0352072614204b30ae6189572a",
+    "fixtures/agent_list.redacted.json": "78d4214a58a23a97049e49b55481c31f9d8eca1d4542e8f9569f6201208bf8c4",
+    "fixtures/entry_create.redacted.json": "c75273185cbffcf48863d7e68fd9210ea3038ed8be35134394813147e80b4989",
+    "references/before_repair/CURRENT_REJECTED.md": "d3855653f9f28013b789e8f850b7177d7124fb0a88e9f89e3ae1578fd22a123e",
+    "references/before_repair/final_workflow.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "references/before_repair/final_workflow.stdout.log": "bc32c85ec78d2448a592c80347ce6857654cba96d2d9b6a5d6f13a0d7875c591",
+    "references/before_repair/PROJECT_BOTTLENECK_MAP_r131.md": "08c04a7d9f64aca12a66d7e8da3b2bdf253477a726e17f06d55bbea99ca3ec2f",
+    "references/before_repair/REMOTE_HANDOFF.md": "2f5dc86daa44002f76873ab645616399d16a68c527097774ea7536beae3b52a2"
+  }
+}
