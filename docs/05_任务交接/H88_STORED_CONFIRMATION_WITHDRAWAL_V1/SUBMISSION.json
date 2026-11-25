@@ -1,0 +1,30 @@
+{
+  "task_id": "H88_STORED_CONFIRMATION_WITHDRAWAL_V1",
+  "head": "df4073d95f718f06216c94d39046de6025ea33ad",
+  "classification": "EXECUTOR_SUBMISSION",
+  "files": {
+    "CURRENT.md": "bae6bcfcfae0e84dbe7fe9f10ebde869dc5a836fbfb4dc91e823378bc89d457e",
+    "src/agentic_payment_experiment/stripe_checkout_lab.py": "679b4fbf5c3ab67b649490c41c82bdf35d97070985dc6cae0a78c24e13b9738e",
+    "src/agentic_payment_experiment/adapters/stripe_checkout.py": "83b46d1c558e856d33aad8442303bb6868e141f0a0c3e3e58da2d59f9170bb62",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/REPORT.md": "d52470a015bb98630da0949cd1cc9d056eeec0743d77f179827ddc0251b6f916",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/ATTEMPT_LEDGER.jsonl": "0955eb3985bf01489581f05a9e0f6dbb21b047f73e9f569547ec35c56e6daffd",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/FREEZE.json": "f1191a2ea09b32e75301b00cd5ec33b47c90161eb6f9c2116346fbc5f7529e84",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/EV-01.meta.json": "f4ffa5285ede1eedf0e1b0c56d31a1289d022e7f666e4b00bdb3a5ab0922ff96",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/EV-01.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/EV-01.stdout.log": "7f6b97964388e97d12b118c85640e5474a854b88f81242e1ed8a44d9d22cd9b0",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/EV-02.meta.json": "231efe56213038fa602d07dd4a1f3ca0b5c739d9e16ddaca0e37ec367cc06332",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/EV-02.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/EV-02.stdout.log": "1f44b46e9a5c5f2049e6f1e99074ea271e93f3b21a936a6b0e315769d0d12562",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/EV-03.meta.json": "2f307533a1ff84a4683974ca78eb68cd2b6d5b632d5d0e3510e2aa5eceb19df1",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/EV-03.stderr.log": "94a0660e0cd425013581a0e3ba12d080910c20fb434d39e5c0dea879c22bb0df",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/EV-03.stdout.log": "1f2e87c364d06c90ef1e7170132049a7acf78a67716b089dc796342017246f4e",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/EV-04.meta.json": "fdde002ad54af75990365846cd79e9606a2daedd40863ec1a63ae4c4f405f190",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/EV-04.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/EV-04.stdout.log": "7f6b97964388e97d12b118c85640e5474a854b88f81242e1ed8a44d9d22cd9b0",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/L2-GATE.json": "997aa140ca19f830fd62d060699b35f4b31bcbbc6022a6f1250464810f85a55b",
+    "docs/05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/evidence/l2-attempt-1/L2-GATE.md": "a8803e42157d9398cd0b090baef6e6a8c595c448855e9a5e21f2110fba4601ae"
+  },
+  "formal_l2": "PASS",
+  "independent_l3": "NOT_RUN",
+  "note": "CURRENT hash records pre-acceptance router; evaluator may change routing after verifying this snapshot."
+}

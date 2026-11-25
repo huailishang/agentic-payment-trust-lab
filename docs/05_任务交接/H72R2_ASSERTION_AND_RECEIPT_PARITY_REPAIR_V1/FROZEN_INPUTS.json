@@ -1,0 +1,16 @@
+{
+  "schema": "h72r2-frozen-inputs/v1",
+  "task_id": "H72R2_ASSERTION_AND_RECEIPT_PARITY_REPAIR_V1",
+  "sealed_at_utc": "2026-11-15T13:10:09.806873+00:00",
+  "sha256": {
+    "CONTRACT.md": "d49e0bf621cd0a2d4960e89612367784664066aaa24c8f2cff87fe62cd05b3a0",
+    "VALIDATION_PLAN.yaml": "16fb10a8b9387c83d235d1440a7e03977f782325d72ed749b2202940fb51db34",
+    "AUTHORIZATION.json": "678923bf1e54e001f933c5b2b1662ec3631ef2e2bd7d7f06b88c8f8c4b48d86c",
+    "EXECUTOR_START.md": "78b4f9660121d7295845140850675bfbaa1584e93132d01ce933a92efe527d7d",
+    "BASELINE.json": "89ac9e8cfe39427b6d2f4c47aa52d31717f0bb44084996ebe660a4d12632d7b1",
+    "runtime/SEAL_BASELINE.py": "fb2500b68c6a3ab7df7fcfd20053d05d4d3457b2181a94f31ebca96f29de340a"
+  },
+  "amended_at_utc": "2026-11-15T13:24:31.543283+00:00",
+  "reason": "owner-authorized workflow-v2.2 structural compliance; original lock archived; no functional changes",
+  "first_public_L2_gate_sha256": "8e5927e72e0ef9418fe4f3406d1433fa1e6a0ae854ae5f98b1331ce754a37ccb"
+}

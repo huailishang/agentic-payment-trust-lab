@@ -1,11 +1,11 @@
 # Agentic Payment Trust Lab 项目瓶颈地图
 
-Map revision: 2026-11-24-r143
-Last reviewed: 2026-11-24
+Map revision: 2026-11-25-r154
+Last reviewed: 2026-11-25
 Map owner: Evaluator / Human Task Owner
 Status: ACTIVE
 
-H84 独立签收 PASS / NOT_APPLICABLE / CONTINUE。已复现本地 SPIRE 工作负载失去发放资格和受控 WebShop 身份降级。同类驱动测量停止。B-24 仍为第一瓶颈。H85 已冻结为单一能力实验，验证已有受治理动作的消费入口能否自行承担按次取证与时钟责任。现场限两角色各一次本地隔离运行，制包期间未消耗。B-23 由 H81 关闭，H80 原拒收保留。
+H91签收保持。H92候选1原回归独立107通过/2失败/15未运行；已发生创建而返回/终结记录丢失后，裸NO_EFFECT能把PENDING改为LOCAL_QUIESCENT。H92拒收/REGRESSED/CONTINUE，正式L2/L3均0。B-27仍第一；H93统一闭合兼容、终结证据及六族生命周期，累计仍2候选/2L2/1L3，尚未执行；E/F边界保持。
 
 ## Project outcome / 项目结果
 
@@ -18,10 +18,10 @@ H84 独立签收 PASS / NOT_APPLICABLE / CONTINUE。已复现本地 SPIRE 工作
 | 阶段 | 状态 | 声明边界 |
 | --- | --- | --- |
 | A 评测与治理底座 | 本地阶段关闭 | 固定基线、守护线与独立复核已有代表证据 |
-| B 授权、绑定、来源、执行前治理 | 本地阶段关闭 | 明示授权、绑定、确认、来源与受治理执行 |
+| B 授权、绑定、来源、执行前治理 | 局部撤回/停用切片关闭，H91签收，H92拒收，H93统一闭合冻结 | 停止先于准入要阻断；准入先于停止须保留在途事实和未决，不能承诺物理取消；H93统一修复兼容/终结证据并验排序/不重放/原生视图，未预报改善 |
 | C 支付生命周期、恢复、补救证据连续性 | 本地阶段关闭 | 代表性恢复/补救链；H62增加单个商城订单恢复切片 |
 | D 责任归因与可消费审计链 | 本地阶段关闭 | Consumer/Read Model/Player（消费器/读取模型/播放器）已有代表覆盖 |
-| E 主体真实性、凭证与签署指令 | 实际来源、B-23 消费归因、B-24 本地时点资格和受控来源变化代表切片已完成 | H81 跨 Agent 错误晋级 1→0。H83 已签收本地资格校验，H84 验证了同 UID 实际发放资格变化。使用时点的消费者责任、生产可信授时、实时撤销/轮换及真实组织/用户/硬件强认证仍待证实 |
+| E 主体真实性、凭证与签署指令 | 本地来源、消费归因、时点资格和单入口取证责任代表切片完成 | H85 L2/L3 各4/4，入口按次取得挑战证明，明确拒绝后身份降为BOUND；实际采用、生产可信时钟、撤销/轮换及组织/用户/硬件强认证仍待证据 |
 | F 外部协议、SDK与消费者适用性 | 受控代表切片阶段关闭；未来真实接入条件仍受证据/授权约束 | 原4会话/3付款/3收款、通知/恢复及H72R2独立12/12保持；预算例外归档后修复PASS/STOP，旧拒收不追认，真实主体/生产PSP/独立采用未闭合 |
 
 ## End-to-end capability chain / 端到端能力链
@@ -31,6 +31,36 @@ H84 独立签收 PASS / NOT_APPLICABLE / CONTINUE。已复现本地 SPIRE 工作
 H62使单个本地异常类型从“付款成功而订单缺失，只能查询”前移为“新批准→原生订单事务→唯一收据→重放同结果”；仍不代表真实商户订单、用户身份或履约完成。
 
 ## Measurement basis / 测量基础
+
+- measured（H92独立checkpoint）：575保护PASS、两许可产品文件保持；原回归再现107通过/2失败/15未运行。模拟create=[1,0,0]且返回/终结写丢失，停止后PENDING；裸NO_EFFECT受理后LOCAL_QUIESCENT，原合同证据条件失败。REJECTED/REGRESSED/CONTINUE；不是接受后正式L3，正式L2/L3=0。H93保全拒收快照、沿同一机制统一闭合，外部权限不变。见H92/REVIEW.md及evidence/evaluator_checkpoint/AUDIT.json。
+
+- measured（H91独立终验）：L2/L3各6/6，八AC、六族13行、124/124零跳过、499冻结/62接受项保持，六份原始JSON语义一致。独立复算O5/O6/O7窗口覆盖A/B，原生gate八首观察无停止字段，关联来自测试。R1–R5十查询/二十新入口DENY，UNKNOWN/PENDING安全未决，迟到成功/已付恢复保持；R4为ledger CANCELLED与合成FAILED/BLOCKED不同投影。PASS/NOT_APPLICABLE/CONTINUE，无产品改善；停止整类重复测量。见 [H91复核](../05_任务交接/H91_SHUTDOWN_INFLIGHT_ORDERING_MEASUREMENT_V1/REVIEW_SCENARIO.md)。
+- source-inspected / frozen design（H92制包）：现有事务可用于原子写停止和唯一准入，三个新Interface及控制表尚不存在，制包baseline已确认缺失、无产品运行。冻结一个表/两个产品文件的持久控制机制；O5/O6目标DENY/0，O7已准入在途仍ALLOW但原生可追溯且不得虚报全部取消。两入口丢返回及仅准入崩溃后不重放、旧库/坏事实/恢复/124回归统一2实现/2L2/1L3。仅设计，不计成绩。
+
+- source-inspected / limited L1（r152制包）：十个原生符号与七表已定位；门禁记录在回调返回后形成，停止读取与执行分离；recover_original委托assess_payment_recovery，候选重试不直接执行支付。只有普通读取不能建立持久准入承诺。纯观察器正控制与8坏投影通过；O1正常创建与R1 UNKNOWN/两次重开查询/停止后两入口拒绝的抽样在第二次L1通过。第一次因任务辅助函数调用错误失败，原始三件套/修正前脚本保持；产品未改。该抽样不是13行完整矩阵、正式L2或独立L3。
+- frozen design（H91 Amendment02）：六族统一覆盖，8顺序+5恢复共13行，H90/H88守护和原124回归，公共六VP/八AC；冻结后当前脚本最多一次修正、2L2/1独立L3。产品只读、附加权限全false。下一能力须依据共同原因与场景承诺，禁止按每行继续派补丁。
+
+- governance correction（r151）：本次无新产品运行或能力增益。r150未先确定执行准入和关停承诺就把读取后窗口排为首个独立包，粒度偏细；用户要求场景级规划后撤回旧派发。H91原始合同/检查器/锁及preflight保持，正式矩阵未运行。先盘点未执行、准入/发送交界、在途未知、已成功、重启/重放及状态不可信的共同验收合同，再冻结整类测量/能力包。不能把所有行写成已缺能力或要求生产采用先行。
+
+- measured（H90 终验）：L2 两轮 5/6、6/6，唯一独立 L3 6/6，七 AC、124 原回归零跳过、384 保护及接受后58不可变项保持。两侧8行同输入，停止表示0→1，A/B/C同事件DENY、回调及create/GET/click增量全0，D正常。H88、旧库、已付恢复和不可读/坏锚拒绝保持。PASS/IMPROVED/SWITCH。仅提交先于读取保证；整表丢失重开、读取后交错、真实控制与渠道失效未测。见 [H90复核](../05_任务交接/H90_STORED_MANDATE_SHUTDOWN_V1/REVIEW.md)。
+- source-inspected / unknown（H91制包）：两个stored入口读取停止事实后另行读取操作并调用原动作，付款另有GET到click间隔。尚无该窗口的实际交错成绩。冻结只测量、8行、同一H89合成图和两个本地SQLite句柄；调度只置于现有方法返回边界，不改产品判断。测量不能把H90排除的顺序写成既有合同违规。
+
+- measured（H89 终验）：L2/L3 各 6/6，七 AC、124 原回归零跳过、325 保护及 24 接受文件保持。12 行独立复算，两个单次事件各只阻断目标，正常控制全保持，整份事件受理为零。共同断点为原生账本缺整份接收、两个门禁只消费按操作绑定的单次事实。PASS/NOT_APPLICABLE/CONTINUE。见 [H89 复核](../05_任务交接/H89_MANDATE_SHUTDOWN_PROPAGATION_MEASUREMENT_V1/REVIEW.md)。
+- measured / estimated（H90 制包）：固定 H89 四位置正对照、角色/时间/快照、执行及防错条件，候选仅两产品文件。目标是停止表示 0→1，受理后同键三状态 DENY 与零副作用，D 和历史守护保持。最多两版/两次 L2/一次 L3，当前只有旧基线，无 H90 运行成绩。
+
+- measured（2026-11-25 H88 独立终验）：L2/L3 各4/4、六 AC 通过，268 保护/25 接受项保持，124/124 回归零跳过。正常 create/GET/click=1/1/1；创建前和已建未付时登记合法撤回，重开后两个入口 CONFIRMATION_REQUIRED、增量0/0/0。补充同库两操作事件复用拒绝，四类损坏事实×两入口均 fail closed，原图保持、临时库清理通过。PASS/IMPROVED/SWITCH，停止 B-25 同类扩例。仅本地受信任调用方的单次确认及提交先于读取保证，不外推真实用户/整份委托/竞态。见 [H88 复核](../05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/REVIEW.md)。
+
+- source-inspected / unknown（H89 制包）：IntentMandate 定义含 mandate_id/user_id/authority_version，无撤销状态；当前账本仅有 operation_id 绑定的 confirmation_withdrawals，两个 stored 入口消费该单次事实。整份委托的原生接收面和跨操作效果尚未系统实测。H89 冻结同库三个同委托动作加一个其它委托对照，以两个独立库比较无撤回/单次撤回并清点整份接收能力；不将缺接收入口写成已撤销后误付款。此项是待测假设，不是新能力成绩。
+
+- measured（H87 独立终验）：三轮正式 L2 为 2/4、3/4、4/4，负责人续行记录保持。唯一 L3 4/4、六 AC 通过、124 项原回归零跳过、56 项接受文件与 198 项冻结输入保持。正向创建 ALLOW/1，直接 REVOKED 拒绝前置副作用，原图写接口拒绝该更新。重开后仍为未撤回的 CONFIRMED，旧图付款 ALLOW/GET1/点击1。两个 stored 动作均读同一原图边界，付款路径独立实测。未观察到已受理撤回后付款。PASS/NOT_APPLICABLE/CONTINUE。见 [H87 复核](../05_任务交接/H87_AUTHORIZATION_WITHDRAWAL_PROPAGATION_MEASUREMENT_V1/REVIEW.md)。
+
+- measured / estimated（H88 制包）：原生 Python 枚举原 124 项，使用原合成时间和临时旧库确认两条正常入口为 ALLOW，创建/GET/模拟点击各 1。无撤回入口，原图登记拒绝 REVOKED，作为前后对照的基线。H88 的唯一主要变化是本地持久化撤回事实及既有门禁消费。两个产品文件，最多 2 版实现、2 次 L2、1 次 L3，无额外权限。尚无 H88 产品实现或正式门禁成绩。见 [H88 基线](../05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/BASELINE.json) 与 [合同](../05_任务交接/H88_STORED_CONFIRMATION_WITHDRAWAL_V1/CONTRACT.md)。
+
+- estimated / source-inspected（2026-11-24 H87制包）：HEAD已由负责人同步到df4073d，H85/H86历史HEAD不追改。现有ConfirmationStatus含REVOKED，直接入口检查确认状态，StripeLabLedger保存不可变原授权图，stored入口重新载入该图。组合行为、撤回更新的可接收性与副作用次数尚未实测。H87冻结输入锁、四VP和六AC，以原模拟客户端与临时SQLite量出直接/持久化/重启差异。124项原测试仅枚举、未执行，正式L2/L3=0。
+
+- measured（2026-11-24 H86终验）：正式离线L2/L3各2/2、113项输入零漂移、12个AST直接调用位置及动态kwargs可定位。Runner是离线场景；Stripe已验收受控TEST交易而当次Agent凭据Fact消费未定位；WebShop有H85本地实验来源。实际消费者完整采用链仍UNKNOWN。STOP同仓视图扫描与本地扩例，下一进入条件是实际消费者入口、责任方和可复核脱敏逐次记录。见 [H86复核](../05_任务交接/H86_ACTUAL_CONSUMER_EVIDENCE_QUALIFICATION_V1/REVIEW.md)。
+
+- measured（2026-11-24 H85 独立终验）：L2/L3 各4/4，六项 AC 通过，原86项零跳过。136接受、6候选及11/210/284冻结保护项零漂移。公开原件78/80项独立复算签名、nonce动作摘要、业务快照、UID/socket、拒绝及清理。两轮分别2/3探针，约6.2935/10.9753秒取得明确拒绝。默认BOUND，入口自行取证VERIFIED，拒绝后BOUND，均ALLOW/1。历史P9业务快照与当前身份资格的实验关联有明确边界，生产采用UNKNOWN。见 [H85终验](../05_任务交接/H85_WEBSHOP_ACTION_TIME_AUTHORITY_CONSUMPTION_V1/REVIEW.md)。
 
 - measured（2026-11-24 H84 独立终验）：正式 L2/L3 各 4/4、五项 AC 通过。118 提交、9 冻结、232 保护项零漂移，双方各 83 公开证据摘要一致。独立使用新根、新 nonce、同一锁定 SPIRE 资产，两轮均为 UID1001 初始发放和签名有效，登记各删一次，第二探针得到明确拒绝且旧证书仍在有效期。删除到拒绝观测约 5.242/5.206 秒。驱动供给本次 Fact 或省略旧 Fact，WebShop 分别为 VERIFIED / ALLOW / 1 和 BOUND / ALLOW / 1。原 86 项通过、零跳过，清理通过，产品改动和外部支付为零。结论覆盖受控来源与实验驱动关联。见 [H84 终验](../05_任务交接/H84_B24_AUTHORITY_EVIDENCE_QUALIFICATION_V1/REVIEW.md)。
 
@@ -160,24 +190,27 @@ H62使单个本地异常类型从“付款成功而订单缺失，只能查询�
 | B-21 | 外部可执行测试环境与治理/恢复接缝 | 受控四功能事实、H72R2独立技术门禁及明确预算例外闭合；修复PASS/STOP，旧拒收不改判；真实生产接入/独立采用仍未知 | STAGE_CLOSED_CONTROLLED_REPRESENTATIVE_SLICE |
 | B-22 | 外部操作的授权/确认事实连续性 | H74R原反例/成本闭合，正常本地stored路径代表切片关闭；legacy未强制迁移，历史外部交易未补造快照，真实外部采用未知 | LOCAL_STORED_REPRESENTATIVE_SLICE_CLOSED |
 | B-23 | 已验证凭据事实的消费上下文 | H79独立反例后H80被拒收，H81完整L2/L3各5/5、2647接受文件零漂移，M02错误晋级1→0、M01保持、33观测/10负例/必要回归均通过；历史身份事实不可外推为当前认证 | LOCAL_REPRESENTATIVE_SLICE_CLOSED / H81_PASS_IMPROVED_STOP |
-| B-24 | 已验证事实的使用时点有效性/撤销与轮换连续性 | H83 本地时点接缝、H84 受控实际发放资格变化已签收。已有受治理动作的入口按次取证、时钟及调用责任待验证 | ACTIVE / CONTROLLED_SOURCE_TRANSITION_MEASURED / CONSUMER_RESPONSIBILITY_REQUIRED |
+| B-24 | 已验证事实的使用时点有效性/撤销与轮换连续性 | H85本地受治理入口责任切片签收，实际采用、生产时钟和权威状态责任待证 | LOCAL_CONSUMER_SLICE_CLOSED / ACTUAL_CONSUMER_EVIDENCE_REQUIRED |
+| B-25 | 已保存批准之后的用户确认撤回传播 | H88 独立签收本地受信任单次撤回、两 stored 入口、重开库及必要守护；停止同类扩例 | LOCAL_REPRESENTATIVE_SLICE_CLOSED / H88_PASS_IMPROVED_STOP |
+| B-26 | 整份用户委托停止的跨操作传播 | H90 独立6/6、七AC签收三同键状态、D隔离和历史守护；限停止先提交后读取 | LOCAL_REPRESENTATIVE_SLICE_CLOSED / H90_PASS_IMPROVED_STOP |
+| B-27 | 授权撤回与停用的生命周期处置闭环 | H91测量签收；H92候选回归失败且无证据终结虚报静止，H93同机制统一修复并验整表 | ACTIVE / H93_CONTRACT_FROZEN_EVIDENCE_CLOSURE |
 
 ## Active bottleneck / 当前第一瓶颈
 
-Active bottleneck ID: B-24
+Active bottleneck ID: B-27
 
-B-15、B-21/B-22 及 B-23 的代表切片保持关闭。B-24 直接影响支付治理使用时点身份保证的证据资格。外部 PSP 或第二平台需要额外授权，B-20 的工具幂等方向仍延期，均无法回答当前权威来源问题。
+B-15、B-21/B-22、B-23、B-24、B-25与B-26本地代表切片保持关闭。当前第一问题是现有局部通过尚不能回答“用户停用后，未开始、在途、已成功、重启恢复的各笔交易最终如何处理”。先把受理、禁止新准入、在途结果和处置责任区分，避免将源码上的读后窗口直接定性成漏洞。该场景横跨B/C/D，已有能力应复用，但停止与恢复的组合不能靠单模块PASS推定。相比旧凭证缺独立消费点、B-24缺实际采用材料及B-20人工延期，场景合同和本地组合证据有更直接价值。真实渠道取消和恶意存储回滚仍受独立前提约束。
 
-H84 补上同个实际本地工作负载的来源变化证据。驱动判断后供给或省略 Fact，现有受治理动作入口按次调用来源、持有时钟和关联动作的能力仍为 UNKNOWN。本地静态回查定位了同旅程入口及其原生受治理动作，下一包只检验该入口。继续重复发行或测试驱动传参无法回答剩余问题。
+H86仅测仓内采用资格。项目目标在本地可重置边界，实际生产采用不是全部后续能力测量的前置条件。H87不重复身份发行/时点扩例，测量另一控制事件——原批准保存之后的新确认撤回。旧原图保真与新撤回信号的接收责任各自独立记录。
 
 ## Active hypothesis / 当前假设
 
-Hypothesis ID: H-85-WEBSHOP-ACTION-TIME-AUTHORITY-CONSUMPTION
-Hypothesis status: CONTRACT_FROZEN / EXECUTOR_HANDOFF
+Hypothesis ID: H-93-STORED-ACTION-EVIDENCE-CLOSURE
+Hypothesis status: CONTRACT_FROZEN / CAPABILITY_EXPERIMENT
 
-单一同旅程 WebShop 入口若能在执行前持有自己的取证和时钟责任，就能用当次有效来源晋级 VERIFIED，并在明确拒绝或缺证时保持 BOUND，同时保持原确认、授权与付款语义。先确认离线基线、既有输入、可观察动作关联和授权，再进行一次成对受控对照。此假设只及本地入口。
+同一SQLite事务序列原子判定停止与唯一动作准入，准入先提交后才进入原门禁/替身动作，可使O5/O6新规则下可靠拒绝，已准入的O7保留在途；持久事实同时防止ADMITTED/UNKNOWN重放，并支撑原生恢复及只读生命周期视图。普通read_clear不能改名充当新能力。原身份/绑定/策略/确认门禁保持，先准入不等于最终允许付款。
 
-若已有获准复核、按次绑定的实际消费者证据，切换为核验责任链。若 H85 同一入口无法在边界内建立关联或同次前置不通过，保留 UNKNOWN 并停止现场。H84 的本地服务、临时发行和登记调整额度已各角色用尽。
+H93继承候选1，先修兼容与无证据终结；累计仅剩1候选/2L2/1L3。单一主变化仍为一个本地持久执行控制事实Module，不另建Runtime/状态机；只改账本与Stripe adapter两个产品文件，新增单控制表。接受/准入全局sequence、终结/未知和恢复关联、只读视图在同包建设，按H93的S0–S5前置自动继续，统一L2/L3。旧库停止保留并标历史顺序缺失，不伪造过去；真实取消、外部凭证/主体、恶意存储回滚继续受条件约束。
 
 ## Candidate experiments / 候选与比较
 
@@ -185,7 +218,13 @@ Hypothesis status: CONTRACT_FROZEN / EXECUTOR_HANDOFF
 | --- | --- |
 | 实际SPIRE来源的独立新鲜复验 | STOP_H78_SOURCE_SLICE：已独立签收，停止同源发行/扩例，组织/用户/生命周期不外推 |
 | 已验证事实的消费上下文保真 | CLOSED_B23_H81：L2/L3各5/5签收；错误归因1→0，停止同类扩例，不重跑历史拒收/来源 |
-| 历史身份事实的使用时点和来源状态连续性 | H83 本地时点接缝、H84 受控发放变化已签收。H85 已冻结，考察现有入口按次取证与治理动作的关联，现场尚未执行 |
+| 保存后单次确认撤回传播 | STOP：H88 已独立签收本地代表切片，不继续扩字段、UI 或同类案例 |
+| 整份委托停止的跨操作传播 | STOP：H90本地提交先于读取切片独立签收，不继续同类扩例 |
+| 旧支付凭证使用时有效性 | WATCH / REFERENCE_ONLY：先有真实可回查的停止事实，再选定一个合成或获授权的凭证消费点进行同凭证前后对照。FluxA 材料作为机制与证据参考 |
+| 读取与副作用间的在途竞态 | H91场景内候选诊断，不再独立FIRST；先决定原生业务准入和关停承诺，再判读后继续是否需修 |
+| 授权停用的生命周期处置闭环 | FIRST / H93：H91整表证据已足够停止重复测量，建设持久准入/停止排序及原生生命周期证据，已有恢复守护复用 |
+| 整表丢失/备份回滚后停止事实连续性 | WATCH：H90只验现存事实及当前句柄查询不可用，未验重开后的完整性；先明确存储威胁模型，不宣称抗回滚 |
+| 历史身份事实的使用时点和来源状态连续性 | H83/H84/H85本地代表切片签收，H86仓内资格已测。STOP本地扩例，实际采用链待材料 |
 | 原上下文stored切片 | STOP：H74R闭合本地代表性断点，不再扩字段/Case，外部legacy采用不升级 |
 | 真实主体/发行者/强认证/凭据治理 | DEFER_EXECUTION：重要且未证实，真实来源与消费者/权限条件尚不足；H73不替代此能力 |
 | CartTrace固定六预览 | REFERENCE_ONLY（只参考）；来源资格测量完成，STOP_PREVIEW_VIEW，不升级ABSORB（吸收）或导入产品；不外推整个源 |
@@ -203,13 +242,37 @@ Hypothesis status: CONTRACT_FROZEN / EXECUTOR_HANDOFF
 
 ## Reassessment triggers / 继续、停止与切换
 
-- CONTINUE（继续）：H85 以现有同旅程集成入口完成离线基线、按次取证的范围验证和本包授权后，运行单个实际隔离来源的成对对照。全部 AC 通过即完成该本地消费者责任切片。产品要求与权威状态来源明确后，才评估更高保证的业务策略或用户撤销。
+- CONTINUE_H92：原生持久排序、O5/O6前置拒绝、O7在途不假取消、UNKNOWN不重放、恢复/原生视图及全部守护统一通过；只有仍有重要共同断点且净收益值得才续包，否则STOP/SWITCH。
+- STOP_H92：停止后新准入、无可信准入副作用、重复/UNKNOWN重放、旧图/已付漂移、未知伪报完成、必要回归/清理失败、超预算/范围/权限立即保全交Evaluator。不能以重新定义read_clear回避能力要求。
+- STOP/SWITCH_H91：场景整表在当前边界内有代表证据、未知安全停留和责任明确后停止扩例；无共同收益或需真实渠道/新权限时重排。已付不可逆动作不因停用被改写成取消。
+- STOP_ZERO_TOLERANCE：停止先于读取仍放行、错绑定受理、读状态未知仍放行、历史漂移或守护失败立即保全交Evaluator；读取后窗口是待测边界，记录后只完成冻结守护，不自行修产品。
+- STOP_H90：受理后副作用、错绑定受理、不可读放行、历史漂移、对照或清理失败、突破预算或新权限需求，立即保全并交 Evaluator。
 - INPUT_LIMIT（输入受限）：下载/解码/预算不足与数据本身无证据区分；保留失败和限额记录，后续授权/资源取舍再评估，不无限重试。
 - STOP（停止）：H77–H79正式L3及H78同源发行不重跑；H80拒收/H80R被替代保持，H81一次正式L2与唯一L3通过后STOP同类扩例。H84 的双角色一次现场均已完成，STOP 同一驱动扩例。B-24 若证据仅涵盖历史 observed 时点或无法确定使用时点与权威状态，保留 NOT_JUDGEABLE 并停止扩大安全效果声明。
 - SWITCH（切换）：首选实际不可用且另一个候选有更明确权限及可判定证据时重新比较，不能自动注册其它平台或启用钱包；新的零容忍反例仍可触发优先级重评。
 - H72旧许可不继承。H75超限/UNKNOWN、H76三轮偏差、H77正式L3=1/WSL0、H77R正式L3=1/发行尝试1/服务0保持。H77R2正式L3=1/发行尝试1/Server1+Agent1/UID与签名0、双方各1预检分列。H77R3所有WSL/服务/发行权限false，不续用父额度；历史费用UNKNOWN保持，无总体时间自设上限。
 
 ## Historical preservation / 历史保护与新基线
+
+r153原字节归档archive/PROJECT_BOTTLENECK_MAP_20261125_r153.md。H93继承H92全部575保护（原地图映射归档）及拒收候选/原L1/报告/checkpoint；原合同、计划和checker不回写。累计预算不重置；H93只增终结证据负例并等价修正两处NO_EFFECT正控制。
+
+r152原字节归档为 `archive/PROJECT_BOTTLENECK_MAP_20261125_r152.md`。H91在原r152完成唯一L3、62接受项保持、终态validator OK，CURRENT.final.md已保全。H92锁将原current-map引用映射到r152归档，当前r153另锁；H91原合同/报告/提交/正式证据不回写，不在新产品上追改原成绩。
+
+r151原字节归档为 `archive/PROJECT_BOTTLENECK_MAP_20261125_r151.md`；重冻前路由保存于H91/evidence/scenario/preparation/CURRENT.before-refreeze.md。Amendment02采用独立SCENARIO_INPUTS/计划/检查器/报告路径，显式保护旧H91锁、合同、检查器、两次原生L1原件与修正前脚本。正式L2/L3额度尚未用，不改H88/H90裁决。
+
+r150原字节归档为 `archive/PROJECT_BOTTLENECK_MAP_20261125_r150.md`。原H91仍0L2/0L3/矩阵未运行；CURRENT.before-scenario-replan.md保存原派发。r151是用户纠正粒度后的显式规划变更，无新能力或历史裁决变更。原H91冻结锁指向r150时只能作历史复现，不在r151下重跑并误报漂移。
+
+r149原字节归档为 `archive/PROJECT_BOTTLENECK_MAP_20261125_r149.md`。H90先在原r149完成独立L3、58项提交保持与终态结构校验，CURRENT.final.md保存后才切r150。H91锁将历史地图键映射到r149原件，当前r150另锁；H90合同、报告、L2/L3、提交与原失败原件不回写。
+
+r148 原字节归档为 `archive/PROJECT_BOTTLENECK_MAP_20261125_r148.md`，与 H89 接受记录的摘要一致。H89 终验及 L2/L3 保全。H90 输入锁将 H89 已签收的 r148 显式映射到归档，与当前 r149 分开保护。历史测量结论限当时的产品和地图。
+
+r147 原字节保存于 `archive/PROJECT_BOTTLENECK_MAP_20261124_r147.md`，其摘要已由 H88 接受快照与 POSTCHECK 交叉核对。H88 在地图变更前已终验及结构校验，最终路由存于 H88/evidence/evaluator/CURRENT.final.md。H89 的 INPUTS 将旧当前地图键显式映射到 r147 归档，当前 r148 单独保护；不得在新治理路由下重跑旧严格地图断言并误判旧产品漂移。旧报告、L2/L3、接受快照及裁决不回写。
+
+r145原字节保存于 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_20261124_r145.md`，SHA-256 `86b5b38785124825b59457bdb9d94e1b5a0fc63e77f4f99f070bb37741bd1a9b`。H86终态路由保存在H87/evidence/preparation/CURRENT.before.md。H87以已同步HEAD df4073d建立新锁，不机械重跑旧HEAD冻结门禁。旧证据与结论按原字节保留。
+
+r144 原字节保存于 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_20261124_r144.md`，SHA-256 `78a51112f79f517d5c1de05fc8bccf45c896be35078b0f412fbff42526a74fd1`。H86最终结构校验通过后保存CURRENT.final.r144.md，再更新本治理修订。
+
+r143 原字节保存于 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_20261124_r143.md`，SHA-256 `c01e5ddfe9c9bc42b0d01ebdca0ff919fe331b72f10ec3a6af1adcada9df019f`。H85独立终态结构校验通过后保存CURRENT.final.md，再切换本修订。历史严格回查使用原地图字节。
 
 r142 原字节保存于 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_20261124_r142.md`，SHA-256 `bb21522d1e1691d7662b6020ea024882bb55dbbecaed66f746dec8c06bb1ec93`。H85 原草案路由按原字节保存在本任务证据目录。
 
@@ -277,9 +340,25 @@ r104原字节保存为 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_2026
 
 ## Revision log / 修订记录
 
+| 2026-11-25-r153 | H91独立PASS/NOT_APPLICABLE/CONTINUE，六VP/八AC、13行、124回归/499保护/62接受保持；停止重复测量。冻结H92一个持久控制机制共同处理准入/停用排序、不重放、恢复与原生视图，2实现/2L2/1L3；尚未实现或预报改善。 |
+
+| 2026-11-25-r152 | Human要求制定新包；核定原生责任后H91 Amendment02冻结六族13行完整measurement包、六VP/八AC、124回归、2L2/1L3。制包观察器及O1/R1第二次原生L1通过，首脚本调用失败保留；产品0改、完整矩阵与正式Gate未运行，不计能力增益。 |
+
+| 2026-11-25-r151 | Human要求按异常场景整体规划，撤回H91独立细节派发；显式Amendment01接管，Evaluator/DRAFT。B-27重定位为停用生命周期闭环，先核业务准入和组合证据再统一冻结；H88/H90及H91原0/0保持，不计能力增益。 |
+
+| 2026-11-25-r150 | H90 PASS/IMPROVED/SWITCH，独立L3 6/6、七AC、124回归和384保护保持；B-26“提交先于读取”切片关闭。B-27升为只测量第一瓶颈，冻结H91八步顺序测量包，产品只读、无外部权限；未执行H91正式门禁。 |
+
+| 2026-11-25-r149 | H89 PASS/NOT_APPLICABLE/CONTINUE，L2/L3 各6/6，独立复算12行，整份停止接收缺口成立。冻结 H90 八步骤本地能力包，FluxA 用作执行责任与证据参考，旧凭证及渠道验证维持候选。 |
+
+| 2026-11-25-r148 | H88 PASS/IMPROVED/SWITCH，L2/L3 各4/4、124回归、268保护、25接受保持；B-25 本地代表切片关闭。归档 r147，冻结 H89 八步骤整份委托停止传播测量，B-26 第一瓶颈，无产品/外部新权限。 |
+
 | 2026-11-24-r141 | H83 PASS / IMPROVED / STOP，L2/L3 各 3/3，五项 AC 和 86 项原回归通过。本地使用时点切片关闭，真实来源、状态和时钟仍未知。H84 进入证据资格草案。 |
 | 2026-11-24-r142 | H84 PASS / NOT_APPLICABLE / CONTINUE，两角色各一次本地实际发放资格测量，独立 L3 完成。B-24 仍优先，H85 聚焦现有受治理的 WebShop 动作入口，草案等待独立现场授权。 |
 | 2026-11-24-r143 | H85 冻结并交接 Executor，明确受限现场及一次性额度，机器检查器补齐。不计任何 H85 实现、正式门禁或现场结果。 |
+| 2026-11-24-r144 | H85 PASS/IMPROVED/STOP，关闭本地单入口取证责任切片，H86只读测量现有实际消费者证据资格。 |
+| 2026-11-24-r145 | H86 PASS/NOT_APPLICABLE/STOP。仓内113输入、12直接调用定位；实际采用链UNKNOWN。停止同源扩例，等实际消费者逐次材料再冻结核验。 |
+| 2026-11-24-r146 | 纠正实际生产采用作为全局前置的过度限制。B-25保存后确认撤回传播提升为measurement-only首瓶颈，H87冻结交接。原B-24及H85/H86成绩与未知保持。 |
+| 2026-11-24-r147 | H87 独立 PASS/NOT_APPLICABLE/CONTINUE，原图登记无法表示后续撤回。归档 r146，冻结 H88 单一能力包及基线，B-25 保持首位。 |
 | 2026-11-23-r140 | H83 冻结一处本地 WebShop 使用时点资格。从 H78 公共材料独立复算 VALID，原入口 BOUND/ALLOW/1 模拟回调，86 旧回归通过。L2/L3 与产品结果待执行。付款策略及生产权威结论沿用此前边界。 |
 | 2026-11-23-r139 | H82 独立 PASS / INCONCLUSIVE / STOP，L2/L3 各 5/5，原回归 44/44，45 项接受快照零漂移。本地接口确认，实时状态和生产上游仍未知。B-24 保持第一瓶颈，H83 草案待具体消费者与权威来源。r138 原字节归档。 |
 | 2026-11-19-r138 | H81正式L2/L3各5/5，原2548保护和修正后2647提交独立零漂移，M02错误身份晋级1→0/M01保持，原33观测、10负例及全部必要回归通过；PASS/IMPROVED/STOP B-23本地代表消费切片。封存stdout先空后写SHA单项透明修正，旧清单字节保留；r137按原字节归档。下一B-24仅高优先只读测量候选，H82未冻结/未执行，真实use-time撤销轮换与强认证未知。 |
@@ -336,3 +415,5 @@ r105原字节归档于 `docs/01_项目现状/archive/PROJECT_BOTTLENECK_MAP_2026
 | 2026-11-08-r102 | H63R PASS，独立L3 3/3及30映射语义复核；原H63拒收保留；停止六预览资格研究。B-18独立控制效果证据仍缺，新来源未就绪，无下一执行包；E/F和支付权限不升级。归档r101。 |
 | 2026-11-07-r101 | H62既有PASS/IMPROVED/STOP；归档r100，B-17本地切片关闭，B-18有界外部资料资格测量。非新产品成绩。 |
 | 2026-11-06-r100及更早 | 完整原文见归档，不改历史合同/结论。 |
+
+| 2026-11-25-r154 | H92阻塞候选独立拒收/REGRESSED，H93统一闭合冻结；累计预算不续期，产品未改。 |

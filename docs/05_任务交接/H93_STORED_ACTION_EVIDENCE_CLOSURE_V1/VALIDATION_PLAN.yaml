@@ -1,0 +1,45 @@
+schema: evaluator-executor-validation-plan/v1
+task_id: H93_STORED_ACTION_EVIDENCE_CLOSURE_V1
+checks:
+  - id: VP-01
+    ac: [AC-02, AC-07, AC-08]
+    cwd: .
+    command: [python, -B, docs/05_任务交接/H93_STORED_ACTION_EVIDENCE_CLOSURE_V1/CHECK.py, protocol]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-02
+    ac: [AC-03, AC-05, AC-07, AC-08]
+    cwd: .
+    command: [python, -B, docs/05_任务交接/H93_STORED_ACTION_EVIDENCE_CLOSURE_V1/CHECK.py, matrix]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-03
+    ac: [AC-04, AC-07, AC-08]
+    cwd: .
+    command: [python, -B, docs/05_任务交接/H93_STORED_ACTION_EVIDENCE_CLOSURE_V1/CHECK.py, uncertain]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-04
+    ac: [AC-01, AC-06, AC-08]
+    cwd: .
+    command: [python, -B, docs/05_任务交接/H93_STORED_ACTION_EVIDENCE_CLOSURE_V1/CHECK.py, guards]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-05
+    ac: [AC-06, AC-08]
+    cwd: .
+    command: [python, -B, docs/05_任务交接/H93_STORED_ACTION_EVIDENCE_CLOSURE_V1/CHECK.py, regressions]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-06
+    ac: [AC-01, AC-08]
+    cwd: .
+    command: [python, -B, docs/05_任务交接/H93_STORED_ACTION_EVIDENCE_CLOSURE_V1/CHECK.py, preserve]
+    expected_exit_code: 0
+    mandatory: true
+  - id: VP-07
+    ac: [AC-02, AC-04, AC-07, AC-08]
+    cwd: .
+    command: [python, -B, docs/05_任务交接/H93_STORED_ACTION_EVIDENCE_CLOSURE_V1/SUPPLEMENT.py]
+    expected_exit_code: 0
+    mandatory: true

@@ -10,7 +10,7 @@ import hashlib
 import hmac
 import json
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime, timezone
 from decimal import Decimal
 from typing import Callable, Mapping
@@ -25,7 +25,9 @@ from ..models import (
 from ..order_validation import validate_order
 from ..payment_execution import observe_payment_execution_gate
 from ..trusted_execution import ContextPolicyFact, RuntimeGateRecord
-from ..trusted_execution.confirmation import ConfirmationRecord, verify_confirmation_binding
+from ..trusted_execution.confirmation import (
+    ConfirmationRecord, ConfirmationStatus, verify_confirmation_binding,
+)
 from ..trusted_execution.binding import BindingStatus
 from ..validator import validate_request
 
@@ -259,44 +261,118 @@ class StripeCheckoutAdapter:
 
         return _gate(ctx, decision, invoke)
 
+    @staticmethod
+    def _effective_stored_authority(store, operation_id, expected_authority_sha256):
+        ctx = store.load_authority(operation_id, expected_sha256=expected_authority_sha256)
+        shutdown = store.get_mandate_shutdown(
+            operation_id, expected_sha256=expected_authority_sha256
+        )
+        if shutdown is not None:
+            return ctx, True
+        fact = store.get_confirmation_withdrawal(
+            operation_id, expected_sha256=expected_authority_sha256
+        )
+        if fact is not None:
+            ctx = replace(ctx, confirmation_record=replace(
+                ctx.confirmation_record, status=ConfirmationStatus.REVOKED
+            ))
+        return ctx, False
+
+    @staticmethod
+    def _shutdown_gate(ctx):
+        def forbidden():
+            raise StripeCheckoutError("mandate_shutdown_callback_forbidden")
+        return _gate(ctx, Decision.DENY, forbidden)
+
+    @staticmethod
+    def _execute_stored_action(store, ctx, admission, invoke):
+        decision = Decision(admission["decision"])
+        if decision is Decision.DENY and admission["reason"] == "stored_action_original_state_invalid":
+            # begin has already committed the native denial; retain the legacy
+            # business-state error without calling the provider or bypassing control.
+            raise StripeCheckoutError(
+                "stored_create_original_operation_not_new"
+                if admission["action"] == "CREATE_SESSION"
+                else "stored_browser_original_session_not_open"
+            )
+        if decision is not Decision.ALLOW:
+            def forbidden():
+                raise StripeCheckoutError("stored_action_callback_forbidden")
+            return _gate(ctx, decision, forbidden)
+        # begin_stored_action has committed before this boundary. No SQLite
+        # write lock is held during the existing gate or provider callback.
+        ref = admission["admission_ref"]
+        if not ref:
+            raise StripeCheckoutError("stored_action_admission_missing")
+        try:
+            result = invoke()
+        except BaseException:
+            # If recording UNKNOWN itself fails, the committed ADMITTED fact
+            # still prevents replay. Preserve the original exception.
+            try:
+                store.finish_stored_action(ref, outcome="UNKNOWN")
+            except Exception:
+                pass
+            raise
+        gate = result.gate if isinstance(result, CheckoutReceipt) else result
+        store.finish_stored_action(
+            ref, outcome="COMPLETED" if gate.callback_executed else "NO_EFFECT",
+            result_ref=gate.callback_result_ref,
+            gate_record={"decision": gate.final_decision.value,
+                         "callback_count": gate.callback_count,
+                         "reason": list(gate.reason_codes)},
+        )
+        return result
+
     def create_stored_session(
         self, store, *, operation_id: str, expected_authority_sha256: str,
         success_url: str, cancel_url: str, now: datetime,
     ) -> CheckoutReceipt | RuntimeGateRecord:
-        """Only database-loaded original authority can reach the existing create gate."""
-        ctx = store.load_authority(
-            operation_id, expected_sha256=expected_authority_sha256
+        """Only committed admission and the existing create gate can reach a provider."""
+        ctx, _ = self._effective_stored_authority(
+            store, operation_id, expected_authority_sha256
         )
-        operation = store.get(operation_id)
-        if operation["state"] != "CREATED" or operation["session_id"] is not None:
-            raise StripeCheckoutError("stored_create_original_operation_not_new")
-        return self.create_session(
-            ctx, run_id=operation["run_id"],
-            operation_id=operation["operation_id"],
-            resource_sha256=operation["resource_sha256"],
-            success_url=success_url, cancel_url=cancel_url, now=now,
+        admission = store.begin_stored_action(
+            operation_id, expected_sha256=expected_authority_sha256, action="CREATE_SESSION"
         )
+
+        def invoke():
+            operation = store.get(operation_id)
+            if operation["state"] != "CREATED" or operation["session_id"] is not None:
+                raise StripeCheckoutError("stored_create_original_operation_not_new")
+            return self.create_session(
+                ctx, run_id=operation["run_id"],
+                operation_id=operation["operation_id"],
+                resource_sha256=operation["resource_sha256"],
+                success_url=success_url, cancel_url=cancel_url, now=now,
+            )
+
+        return self._execute_stored_action(store, ctx, admission, invoke)
 
     def authorize_stored_browser_payment(
         self, store, *, operation_id: str, expected_authority_sha256: str,
         now: datetime, browser_payment: Callable[[str], None],
     ) -> RuntimeGateRecord:
-        """Recheck stored graph and persisted original session before browser effect."""
-        ctx = store.load_authority(
-            operation_id, expected_sha256=expected_authority_sha256
+        """Use committed admission, original session and the existing browser gate."""
+        ctx, _ = self._effective_stored_authority(
+            store, operation_id, expected_authority_sha256
         )
-        operation = store.get(operation_id)
-        if (
-            operation["state"] != "SESSION_OPEN"
-            or not operation["session_id"]
-        ):
-            raise StripeCheckoutError("stored_browser_original_session_not_open")
-        return self.authorize_browser_payment(
-            ctx, session_id=operation["session_id"], now=now,
-            browser_payment=browser_payment,
-            resource_sha256=operation["resource_sha256"],
-            run_id=operation["run_id"], operation_id=operation["operation_id"],
+        admission = store.begin_stored_action(
+            operation_id, expected_sha256=expected_authority_sha256, action="BROWSER_PAYMENT"
         )
+
+        def invoke():
+            operation = store.get(operation_id)
+            if operation["state"] != "SESSION_OPEN" or not operation["session_id"]:
+                raise StripeCheckoutError("stored_browser_original_session_not_open")
+            return self.authorize_browser_payment(
+                ctx, session_id=operation["session_id"], now=now,
+                browser_payment=browser_payment,
+                resource_sha256=operation["resource_sha256"],
+                run_id=operation["run_id"], operation_id=operation["operation_id"],
+            )
+
+        return self._execute_stored_action(store, ctx, admission, invoke)
 
 
 class StripeTestAPI:

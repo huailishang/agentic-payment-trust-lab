@@ -1,0 +1,25 @@
+{
+  "schema": "h83-frozen-execution-packet/v1",
+  "task_id": "H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1",
+  "sealed_at_utc": "2026-11-23T13:08:47.0302602+00:00",
+  "baseline_head": "69a0512d9b4235b01acec173765a35ab2939f827",
+  "map_revision": "2026-11-23-r140",
+  "active_bottleneck": "B-24",
+  "allowed_product_file": "src/agentic_payment_experiment/webshop_runtime_gate.py",
+  "frozen_sha256": {
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/CONTRACT.md": "048139a6022a5241f78ab0043b6a4907a7301f71a373d44e8ce35ca185a7f0b4",
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/CHECK.py": "b718554f20ab97f14fe658073909a73fe00b80a544582b2e14e8cb02a1016425",
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/VALIDATION_PLAN.yaml": "edd3b01135d122f30e3ca0012dec858732a0230554d67ef6820d72e3efb8593a",
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/EXECUTOR_START.md": "bc1bc226a17b73d2e479234d2b3bf4b7a77de32c2a1fe45b1038c84b9d0c083e",
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/SOURCE_LOCK.json": "26ce455593b98dc5af91bf6a0c82ed6f589fe43f692fd1752e3ef45fdc2c08f2",
+    "docs/01_项目现状/PROJECT_BOTTLENECK_MAP.md": "d1f95e959617fd5da097def4c9a67745c732687a05dea29f6d8cbb9658c640eb",
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/evidence/preparation/CONTRACT_DRAFT.md": "f62dcb8adf57600337f63d763c1de71fe4aed44d61a15d760198cf61da1cd97d",
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/evidence/preparation/CURRENT_DRAFT.md": "ca6b18072b12318fe3910589d3ed434924b96b9ebf1218d6ffd053a9d8806344",
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/evidence/preparation/PRE-01.meta.json": "162b92e55cc6939ad55bce13b1d2eef95597240c1f9c8e06f90b6817afcb7575",
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/evidence/preparation/PRE-01.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/evidence/preparation/PRE-01.stdout.log": "5677cd3c70c9be34e49181aa2fe1f386b13d8b8f5b08fe156027ce68ef29ee8b",
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/evidence/preparation/PRE-02.meta.json": "5cc543da773a131e62fc9630fba6c8da3158abc192bcc4d53a5eba27eff0d45f",
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/evidence/preparation/PRE-02.stderr.log": "c448ef110c14758ccbbb55b838d14f0ca2c22ad778a50bf88ec7119a502c3593",
+    "docs/05_任务交接/H83_P3_AUTHORITY_SOURCE_QUALIFICATION_V1/evidence/preparation/PRE-02.stdout.log": "56254f0e89970b29eb54f8efad0d58e911067feefdc87d6aad05a707fb93405d"
+  }
+}
